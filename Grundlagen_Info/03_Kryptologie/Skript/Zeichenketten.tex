@@ -125,48 +125,47 @@ n = len("hallo") # 5
 \lstinline|s[index]| & Greift auf das Zeichen an der Index-Position \lstinline|index| zu. Bei negativen Indizes zählt man von rechts. & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
 s = "hallo"
-c0 = s[0]  # "h"
-c1 = s[1]  # "a"
-c2 = s[-1] # "o"
+s[0]  # "h"
+s[1]  # "a"
+s[-1] # "o"
 \end{lstlisting}
 \end{minipage}
  \\\midrule
 \lstinline|s[start:end]| & Extrahiert den Teiltext vom Index \lstinline|start| bis und ohne \lstinline|end| & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-s1 = "hallo"
-s2 = s1[1:4] # "all"
+text = "hallo"
+text[1:4] # "all"
 \end{lstlisting}
 \end{minipage}\\\midrule\midrule
 \lstinline|ord(c)| & Gibt die Position des Zeichens \lstinline|c| in der \href{https://en.wikipedia.org/wiki/List_of_Unicode_characters}{Unicode-Tabelle} zurück & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-n1 = ord('A') # 65
-n2 = ord('B') # 66
-n3 = ord('Z') # 90
+ord('A') # 65
+ord('B') # 66
+ord('Z') # 90
 \end{lstlisting}
 \end{minipage}\\\midrule
 \lstinline|chr(n)| & Gibt das Zeichen an der \lstinline|n|-ten Position der \href{https://en.wikipedia.org/wiki/List_of_Unicode_characters}{Unicode-Tabelle} zurück & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-c1 = chr(65) # "A"
-c2 = chr(66) # "B"
-c3 = chr(67) # "C"
+chr(65) # "A"
+chr(66) # "B"
+chr(67) # "C"
 \end{lstlisting}\end{minipage}\\\midrule\midrule
-\lstinline|s1.count(s2)| & Zählt, wie oft der Text \lstinline|s2| im Text \lstinline|s1| vorkommt & \begin{minipage}{\linewidth}
+\lstinline|text1.count(text2)| & Zählt, wie oft der Text \lstinline|text2| im Text \lstinline|text1| vorkommt & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-s1 = "Das Haus ist gross und das Dach ist grün."
-s2 = "ist"
-n = s1.count(s2) # 2
+text = "Das Haus ist gross und das Dach ist grün."
+n = text.count("ist") # 2
 \end{lstlisting}
 \end{minipage}\\\midrule
-\lstinline|s1.find(s2)| & Gibt den niedrigsten Index des Teiltexts \lstinline|s2| zurück, falls dieser vorhanden ist, ansonsten \lstinline|-1| & \begin{minipage}{\linewidth}
+\lstinline|text1.find(text2)| & Gibt den niedrigsten Index des Teiltexts \lstinline|text2| zurück, falls dieser vorhanden ist, ansonsten \lstinline|-1| & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-s = "Das Haus ist gross und das Dach ist grün."
-n = s.find("ist") # 9
+text = "Das Haus ist gross und das Dach ist grün."
+text.find("ist") # 9
 \end{lstlisting}
 \end{minipage}\\\midrule
-\lstinline|s1.replace(old, new)| & Ersetzt alle Vorkommen des Teil-Texts \lstinline|old| durch \lstinline|new|. & \begin{minipage}{\linewidth}
+\lstinline|text.replace(old, new)| & Ersetzt alle Vorkommen des Teil-Texts \lstinline|old| durch \lstinline|new|. & \begin{minipage}{\linewidth}
 \begin{lstlisting}[numbers=none]
-s1 = "hallo"
-s2 = s1.replace("a", "e") # "hello"
+text = "hallo"
+text = text.replace("a", "e") # "hello"
 \end{lstlisting}
 \end{minipage}
 \end{tabular}
@@ -174,7 +173,7 @@ s2 = s1.replace("a", "e") # "hello"
 \label{tab:string-op}
 \end{table}
 \begin{myexercise}
-Schreiben Sie ein Programm, um jeden Buchstaben \enquote{e / E} des folgenden Texts durch den Buchstaben \enquote{a / A} zu ersetzen:
+Schreiben Sie ein Programm, um jeden Buchstaben \enquote{e} oder \enquote{E} des folgenden Texts durch den Buchstaben \enquote{a} oder \enquote{A} zu ersetzen:
 
 \begin{lstlisting}
 my_text = "Eines Tages entschied der Elefant, einen edlen Teppich zu weben."
@@ -191,7 +190,7 @@ print(my_text)
 \end{myexercise}
 
 \begin{myexercise}
-Schreiben Sie ein Programm, um zu zählen, wie häufig der Buchstabe \enquote{e / E} im gesamten folgenden Text vorkommt:
+Schreiben Sie ein Programm, um zu zählen, wie häufig der Buchstabe \enquote{e} oder \enquote{E} im gesamten folgenden Text vorkommt:
 
 \begin{lstlisting}
 my_text = "Eines Tages entschied der Elefant, einen edlen Teppich zu weben."
@@ -200,9 +199,7 @@ my_text = "Eines Tages entschied der Elefant, einen edlen Teppich zu weben."
 \begin{myanswer}
 \begin{lstlisting}
 my_text = "Eines Tages entschied der Elefant, einen edlen Teppich zu weben."
-n_e = my_text.count("e")
-n_e += my_text.count("E")
-print(n_e) # 15
+print(my_text.count("e") + my_text.count("E")) # 15
 \end{lstlisting}
 \end{myanswer}
 \end{myexercise}
@@ -253,14 +250,14 @@ Die Lösung für \cref{ex:zweiertausch} könnte in Python wie folgt implementier
  \begin{tabular}{l|p{0.3\linewidth}|p{0.4\linewidth}}
  \textbf{Python} & \textbf{Beschreibung} & \textbf{Beispiel} \\\midrule\midrule
  
- \lstinline|s1.split(sep)| & Zerlegt den Text an jedem \texttt{sep} und gibt eine Liste der Teiltexte zurück.  & \begin{minipage}{\linewidth}
+ \lstinline|text.split(sep)| & Zerlegt den Text an jedem \texttt{sep} und gibt eine Liste der Teiltexte zurück.  & \begin{minipage}{\linewidth}
  \begin{lstlisting}[numbers=none]
-s = "a,b,c"
-li = s.split(",") 
+text = "a,b,c"
+liste_texte = text.split(",") 
 # ["a", "b", "c"]
 \end{lstlisting}
  \end{minipage}\\\midrule
-  \lstinline|s.join(li)| & Verbindet die Elemente von \texttt{li} zu einem Text, getrennt durch den Text \texttt{s}.  & \begin{minipage}{\linewidth}
+  \lstinline|sep.join(liste)| & Verbindet die Elemente von \texttt{liste} zu einem Text, getrennt durch den Text \texttt{sep}.  & \begin{minipage}{\linewidth}
   \begin{lstlisting}[numbers=none]
 txt = ":".join(["a", "b", "c"]) 
 # "a:b:c"
@@ -268,14 +265,14 @@ txt = ":".join(["a", "b", "c"])
   \end{minipage}\\\midrule
    \lstinline|str(n)| & Zahl \texttt{n} in einen Text (engl. \textit{string}) umwandeln  & \begin{minipage}{\linewidth}
    \begin{lstlisting}[numbers=none]
- n = 10
- s = str(n) # "10"
+ zahl = 10
+ zahl_als_text = str(zahl) # "10"
 \end{lstlisting}
    \end{minipage}\\\midrule
     \lstinline|int(s)| & Text \texttt{s} in eine ganze Zahl (engl. \textit{integer}) umwandeln  & \begin{minipage}{\linewidth}
     \begin{lstlisting}[numbers=none]
-s = "10"
-n = int(s) # 10
+zahl_als_text = "10"
+zahl = int(zahl_als_text) # 10
 \end{lstlisting}
     \end{minipage}
  \end{tabular}
