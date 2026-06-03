@@ -157,7 +157,7 @@
 						domain=0:17,
 						samples=18,
 						xlabel={$n$},
-						ylabel={$\text{Bin}(n)$},
+						ylabel={$\abs{\text{Bin}(n)}$},
 						xtick={0, 1, 2, ..., 17},
 						ytick={0, 1, ..., 5},
 						grid=major,
@@ -193,7 +193,6 @@
 			\end{tikzpicture}
 		\end{figure}
 	\end{solution}
-
 
 	\question[2] Im Unterricht haben wir die Python \lstinline|sieb| wie in \cref{listing:sieb} implementiert.
 	Schreiben Sie eine Python-Funktion \lstinline|def Prim(n)|, welche \lstinline|sieb| verwendet um die Funktion $\text{Prim}(n)$ für eine gegebene natürliche Zahl $n$ zu berechnen.

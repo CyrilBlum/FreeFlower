@@ -304,6 +304,12 @@
 
 % A comprehensive (SI) units package
 \usepackage{siunitx}
+% Swiss number format: \num{1000000} gives you 1'000'000, and \num{0.12345} gives you 0.12345 (no change).
+% The apostrophe is used as a thousands separator, and the decimal marker is a period.
+\sisetup{
+  group-separator = {\,\textnormal{\textquotesingle}\,},
+  output-decimal-marker = {.}
+}
 
 % A font for the pigpen (or masonic) cipher
 \usepackage{pigpen}

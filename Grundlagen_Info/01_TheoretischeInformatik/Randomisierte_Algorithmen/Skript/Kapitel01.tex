@@ -47,7 +47,7 @@ In diesem Unterabschnitt stellen wir die nötigen mathematischen Werkzeuge vor, 
 Es ist wichtig, diese Werkzeuge gut zu verstehen.
 
 \subsection{Fundamentalsatz der Arithmetik / Primfaktorzerlegung}
-Jede natürliche Zahl lässt sich als Produkt von endlich vielen Primzahlen darstellen. Ordnet man diese Primzahlen der Grösse nach, so ist diese Darstellung sogar eindeutig.
+Jede natürliche Zahl \(n \geq 2\) lässt sich als Produkt von endlich vielen Primzahlen darstellen. Ordnet man diese Primzahlen der Grösse nach, so ist diese Darstellung sogar eindeutig.
 
 Insbesondere kann man jede natürliche Zahl $n\geq 2$ eindeutig darstellen als
 \begin{align}
@@ -251,8 +251,8 @@ In der Form \ref{eq:quadrat} werden wir den Primzahlsatz später verwenden.
 \begin{myexcursion}\label{myexcursion:finiteN}
 	Der Primzahlsatz in \cref{mytheorem:primzahlsatz} macht eine Aussage über einen Grenzwert, sagt jedoch nichts für endliches $n$ aus. Wir wollen aber die Zahl $n/\ln(n)$ als Approximation für $\text{Prim}(n)$ für endliches $n$ verwenden. Es gibt verschiedene mathematische Resultate, welche dieses Vorgehen rechtfertigen. So bewies im Februar 2010\cite{EstimatePrimes} Pierre Dusart das folgende präzisere Resultat zu $\text{Prim}(n)$:
 	\begin{align}
-		\text{Prim}(n) & \geq \frac{n}{\ln(n) - 1}, \quad\text{für } n\geq 5393,    \\
-		\text{Prim}(n) & \leq \frac{n}{\ln(n) - 1.1}, \quad\text{für } n\geq 60184.
+		\text{Prim}(n) & \geq \frac{n}{\ln(n) - 1}, \quad\text{für } n\geq \num{5393},    \\
+		\text{Prim}(n) & \leq \frac{n}{\ln(n) - 1.1}, \quad\text{für } n\geq \num{60184}.
 	\end{align}
 \end{myexcursion}
 
@@ -410,7 +410,7 @@ Die Laufzeit des \textit{Siebs des Eratosthenes} kann an zwei Stellen deutlich v
 
 \begin{myexercise}
 	\begin{aenum}
-		\item Bestimme $\text{Prim}(n)$ für $n = 10'000'000$ (zehn Millionen) mithilfe der Funktion \lstinline|prim| (aus \cref{myexercise:implementVerbesserung1} oder \cref{myexercise:implementVerbesserung2}) und vergleiche den Wert mit der Schätzung $n/\ln{n}$.
+		\item Bestimme $\text{Prim}(n)$ für $n = \num{10000000}$ mithilfe der Funktion \lstinline|prim| (aus \cref{myexercise:implementVerbesserung1} oder \cref{myexercise:implementVerbesserung2}) und vergleiche den Wert mit der Schätzung $n/\ln\lr{n}$.
 		Wie gross ist der relative Fehler der Schätzung?
 
 		\item Lade das Python-Programm {\tt prim\_plots.py} von Moodle herunter und führe es aus. Betrachte den generierten Plot. Was sagt der Plot aus? Wie sind die Achsen skaliert?
@@ -421,7 +421,7 @@ Die Laufzeit des \textit{Siebs des Eratosthenes} kann an zwei Stellen deutlich v
 	\end{aenum}
 	\begin{myanswer}
 		\begin{aenum}
-			\item Das Python-Programm liefert $\text{Prim}(10000000) = 664'579$. Die Schätzung liefert $10^7/\ln{(10^7)}\approx 62'0421$. Der relative Fehler ist etwa $6.645$ Prozent.
+			\item Das Python-Programm liefert $\text{Prim}(10000000) = \num{664579}$. Die Schätzung liefert $10^7/\ln{(10^7)}\approx \num{620421}$. Der relative Fehler ist etwa $6.645$ Prozent.
 
 			\item Beide Achsen sind logarithmiert. Der Plot zeigt, wie stark $f(n) = \text{Prim}(n)$ verglichen mit der linearen Funktion $g(n) = n$ wächst.
 
@@ -454,7 +454,7 @@ for n in N:
 	\begin{myanswer}
 		Der entsprechende Code ist:
 		\begin{lstlisting}[language=Python,numbers=none]
-# quotient Prim(n)/n
+# Quotient: Prim(n) / (n / ln(n))
 ratio = []
 for k in range(len(N)):
     ratio.append(results[k] / N[k])
@@ -494,7 +494,7 @@ def Bin(n):
     while n > 0:
         binary_str = str(n % 2) + binary_str
         n = n // 2
-        return binary_str
+    return binary_str
 \end{lstlisting}
 	\end{myanswer}
 \end{mychallenge}
@@ -601,7 +601,7 @@ Jetzt analysieren wir die Arbeit von $R = (R_1,R_2)$. Zuerst bestimmen wir die K
 \subsubsection{Kommunikationsaufwand}
 Die einzige Kommunikation (ohne die optionale Phase 4, sonst kommt noch 1 Bit hinzu) besteht darin, dass $R_1$ die binären Darstellungen der Zahlen $s$ und $p$ an $R_2$ schickt.
 
-Die Primzahl $p$ wurde definitionsgemäss als $p \leq n^2$ gewählt und da $n^2$ keine Primzahl ist, gilt $p < n^2$. Die Zahl $s$ erfüllt als Rest bei der Division durch $p$ die Ungleichung $s < p$. Damit gilt also $s < p < n^2$. Der gesamte Kommunikationsaufwand, wir nennen ihn $A$, ist die Summe der Längen der kürzesten binären Darstellungen von $p$ und $s$:
+Die Primzahl $p$ wurde definitionsgemäss als $p \leq n^2$ gewählt und da $n^2$ keine Primzahl ist, gilt $p < n^2$. Die Zahl $s$ erfüllt als Rest bei der Division durch $p$ die Ungleichung $s < p$. Damit gilt also $s < p < n^2$. Der gesamte Kommunikationsaufwand, wir nennen ihn $A$, ist die Summe der Längen der kürzesten binären Darstellungen\footnote{Der Einfachheit halber gehen wir hier davon aus, dass $s\neq 0$ ist. Die binäre Darstellungslänge von $0$ wäre natürlich $1$.} von $p$ und $s$:
 \begin{align*}
 	A := \ceil{\log_2\lr{p + 1}} + \ceil{\log_2\lr{s + 1}}.
 \end{align*}
@@ -624,7 +624,7 @@ für alle natürlichen Zahlen $m$ und reellen Zahlen $x>0$. Zusammengefasst gilt
 \end{align*}
 
 \begin{myexercise}
-	Bestimmen Sie eine möglichst gute obere Schranke für den Kommunikationsaufwand $A$, falls $n:=10^{16}$.
+	Bestimmen Sie eine sinnvolle obere Schranke für den Kommunikationsaufwand $A$, falls $n:=10^{16}$.
 	\begin{myanswer}
 		\begin{align*}
 			A \leq                             &                           \\
@@ -656,7 +656,7 @@ Bei der Analyse der Fehlerwahrscheinlichkeit unterscheiden wir zwei Möglichkeit
 	\begin{align*}
 		\text{Nummer}(x)-\text{Nummer}(y) = x'\cdot p -  y'\cdot p = (x'-y')\cdot p.
 	\end{align*}
-	Das Protokoll entscheidet also genau dann falsch, wenn die Primzahl $p$ die Zahl
+	Das Protokoll entscheidet also (unter der Voraussetzung $x \neq y$) genau dann falsch, wenn die Primzahl $p$ die Zahl
 	\begin{align*}
 		\abs{\text{Nummer}(x)-\text{Nummer}(y)}
 	\end{align*}
@@ -669,15 +669,19 @@ Bei der Analyse der Fehlerwahrscheinlichkeit unterscheiden wir zwei Möglichkeit
 	\begin{align}\label{eq:diffw}
 		w := \abs{\text{Nummer}(x)-\text{Nummer}(y)} < 2^n.
 	\end{align}
-	Gemäss dem Fundamentalsatz der Arithmetik (Primfaktorzerlegung), können wir $w$ auf eindeutige Weise\footnote{In \cref{myexercise:wgreater1} erklären Sie, warum $w\geq 2$ gilt.} als $w = p_1^{i_1}p_2^{i_2}\ldots p_k^{i_k}$ darstellen, wobei $p_1<p_2<\ldots<p_k$ Primzahlen  und $i_1, i_2,\ldots ,i_k$ positive ganze Zahlen sind. Unser Ziel ist zu beweisen, dass $k\leq n-1$ ist. Dass $w$ also höchstens $n-1$ verschiedene Primfaktoren besitzt.
+	Gemäss dem Fundamentalsatz der Arithmetik (Primfaktorzerlegung), können wir $w\geq 2$ auf eindeutige Weise\footnote{In \cref{myexercise:wgreater1} erklären Sie, warum $w\geq 2$ gilt.} als $w = p_1^{i_1}p_2^{i_2}\ldots p_k^{i_k}$ darstellen, wobei $p_1<p_2<\ldots<p_k$ Primzahlen  und $i_1, i_2,\ldots ,i_k$ positive ganze Zahlen sind. Unser Ziel ist zu beweisen, dass $k\leq n-1$ ist. Dass $w$ also höchstens $n-1$ verschiedene Primfaktoren besitzt.
 	\begin{myproof}
-		Wir beweisen diese Aussage indirekt (durch Widerspruch).
-
-		Angenommen die Aussage wäre falsch, also $k\geq n$. Dann ist für genügend grosse $n$
+		Angenommen die Aussage wäre falsch, also $k\geq n$. Dann gilt
 		\begin{align*}
-			w = p_1^{i_1}p_2^{i_2}\ldots p_k^{i_k} \geq p_1p_2\ldots p_n > 1\cdot 2\cdot 3\cdot \ldots \cdot n = n! > 2^n.
+			w
+			= p_1^{i_1}p_2^{i_2}\ldots p_k^{i_k}
+			\geq p_1p_2\ldots p_n
+			\geq 2\cdot3\cdot4\cdot\ldots\cdot(n+1)
+			> 2^n.
 		\end{align*}
-		Dies ist aber ein Widerspruch zur Tatsache, dass $w < 2^n$. Damit ist unsere Annahme falsch und $w$ kann nicht mehr als $n-1$ unterschiedliche Primfaktoren haben.
+		Dies ist aber ein Widerspruch zur Tatsache, dass $w<2^n$.
+		Damit ist unsere Annahme falsch und $w$ kann nicht mehr als $n-1$
+		unterschiedliche Primfaktoren haben.
 	\end{myproof}
 	Da jede Primzahl aus $\lrc{2,3,\ldots ,n^2}$ die gleiche Wahrscheinlichkeit hat, (zufällig) gewählt zu werden, ist die Wahrscheinlichkeit, ein $p$ zu wählen, das $w$ teilt, (für genügend grosses $n$) höchstens
 	\begin{align*}
