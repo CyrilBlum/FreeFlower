@@ -24,8 +24,8 @@ Installieren Sie Git mit folgendem Befehl:
 # macOS
 brew install git
 
-# Linux (Ubuntu/Debian)
-sudo apt install git
+# Windows (Powershell)
+winget install --id Git.Git -e --source winget
 \end{lstlisting}
 
 Für Windows: Laden Sie Git von \url{https://git-scm.com/download/win} herunter und installieren Sie es.
@@ -53,12 +53,11 @@ ssh -T git@github.com
 \end{lstlisting}
 
 \subsection*{Git konfigurieren}
-Damit bei jedem commit auf Git die richtigen Angaben verwendet werden, konfigurieren Sie Git mit Ihrem Namen und Ihrer E-Mail-Adresse. Zusätzlich stellen Sie den Standard-Branch auf \lstinline|main| ein:
+Damit bei jedem commit auf Git die richtigen Angaben verwendet werden, konfigurieren Sie Git mit Ihrem Namen und Ihrer E-Mail-Adresse.
 
 \begin{lstlisting}[style=bash]
 git config --global user.name "Vorname Nachname"
 git config --global user.email "vorname.nachname@stud.edu.zh.ch"
-git config --global init.defaultBranch main
 \end{lstlisting}
 
 \subsection*{Neues Repository auf GitHub}

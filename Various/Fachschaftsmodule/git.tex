@@ -168,6 +168,15 @@
     \end{center}
 \end{frame}
 
+\begin{frame}[fragile]{Unterschiede visualisieren}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{Various/Fachschaftsmodule/Diff-Visualisierung.png}
+    \end{figure}
+    \begin{center}
+        Demo auf GitHub: \url{https://github.com/CyrilBlum/FreeFlower}
+    \end{center}
+\end{frame}
 
 % Remote Zusammenarbeit
 \begin{frame}{Zusammenarbeit: Remote (Push / Pull)}
@@ -187,7 +196,7 @@
 
 % Organisieren: Repo-Struktur
 \begin{frame}{Repo-Struktur: sauber und verständlich}
-    
+
     \begin{figure}
         \centering
         \begin{tikzpicture}[level distance=8mm, sibling distance=18mm, every node/.style={font=\small}]
@@ -250,30 +259,12 @@
 \end{frame}
 
 % Mini-Übung
-\begin{frame}{Mini-Übung (im Computerraum)}
-    \begin{myExBox}[title=Mini-Übung: Repository anlegen und erste Schritte]
-        Legen Sie in GitHub Desktop ein neues Repository an (\url{https://github.com}), erstellen Sie die Datei \texttt{ideen.md} in VS Code, führen Sie einen Commit mit kurzer Nachricht aus und pushen Sie zum Remote. Öffnen Sie anschliessend den Verlauf (History) und betrachten Sie die Differenzen.
-        \tcblower
-        \textbf{Hinweis}: Verwenden Sie GitHub Desktop; die GUI zeigt History und Diff sichtbar.
+\begin{frame}[fragile]{Übungen: GitHub}
+    \begin{myExBox}[title={GitHub einrichten, Repo erstellen}]
+        \small
+        \url{https://cyrilblum.github.io/FreeFlower/github-setup.html}\\
+        \qrcode{https://cyrilblum.github.io/FreeFlower/github-setup.html}
     \end{myExBox}
-\end{frame}
-
-\begin{frame}[fragile]{Technische Aspekte}
-    \begin{myExBox}[title=\emoji{key} SSH-Keys für Passwortlose Authentifizierung]
-    \begin{enumerate}
-        \item SSH-Key generieren: 
-        \begin{lstlisting}[style=bash]
-            ssh-keygen -t ed25519 -C "your@email.com"
-        \end{lstlisting}
-        \item SSH-Key zu GitHub hinzufügen: Kopieren Sie den Inhalt von 
-        \begin{lstlisting}[style=bash]
-            cat ~/.ssh/id_ed25519.pub
-        \end{lstlisting}
-        und fügen Sie ihn in GitHub unter \texttt{Settings > SSH and GPG keys} hinzu.
-        \item Testen: Versuchen Sie, ein Repository zu klonen oder zu pushen, um die Verbindung zu testen. Sie sollten keine Passwortabfrage mehr erhalten.
-    \end{enumerate}
-    \end{myExBox}
-    
 \end{frame}
 
 
