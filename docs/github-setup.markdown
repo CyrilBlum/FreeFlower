@@ -1,7 +1,8 @@
 ---
 layout: default
 title: GitHub einrichten
-nav_order: 5
+parent: Technische Seiten
+nav_order: 2
 ---
 
 # GitHub einrichten

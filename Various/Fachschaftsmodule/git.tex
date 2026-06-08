@@ -105,6 +105,30 @@
         \node (p) {\enquote{Wenn Sie etwas nicht reproduzieren können, haben Sie es nicht sauber dokumentiert.}};
     \end{tikzpicture}
 \end{frame}
+\begin{frame}[fragile]{Aufgabe}
+    \begin{myExBox}[title=Aufgabe: Ordnerstruktur und Dokumentation anlegen]
+        \scriptsize
+        Legen Sie eine konsistente Ordnerstruktur für Ihre Maturaarbeit an (z.\,B. \texttt{dokumentation/}, \texttt{daten/}, \texttt{code/}, \texttt{literatur/}, \texttt{präsentation/}). 
+        
+        Erstellen Sie eine kurze Dokumentation (z.\,B. in einer \texttt{README.md}), z.B.::
+
+        \begin{lstlisting}[style=bash, basicstyle=\color{white}\ttfamily\scriptsize, breaklines=true]
+# Maturaarbeit: Titel der Arbeit
+## Ordnerstruktur
+- dokumentation/: Alle Dokumente, Berichte, Protokolle
+- daten/: Rohdaten, Aufbereitete Daten
+- code/: Alle Skripte, Jupyter Notebooks
+- literatur/: Alle Literaturquellen, PDFs, Zitate
+- präsentation/: Alle Präsentationsdateien, Folien, Grafiken
+## Dokumentation
+- Alle Schritte der Datenaufbereitung, Analyse und Ergebnisse werden hier dokumentiert.
+        \end{lstlisting}
+        MarkDown-Syntax: \url{https://www.markdownguide.org/basic-syntax/}
+        
+        Legen Sie einen separaten Ordner für Backups an und stellen Sie sicher, dass Rohdaten nicht überschrieben werden.
+    \end{myExBox}
+\end{frame}
+
 
 % Warum Versionierung?
 \begin{frame}{Warum Versionierung?}
@@ -268,40 +292,6 @@
 \end{frame}
 
 
-\begin{frame}{Todo-Liste / Task-Umgebung}
-    \centering
-    \begin{tikzpicture}[every node/.style={align=center}]
-        \node[draw, rounded corners, fill=blue!6] (t1) {`TODO.md` im Repo};
-        \node[draw, rounded corners, fill=green!6, right=of t1] (t2) {GitHub Issues / Projects};
-        \node[draw, rounded corners, fill=orange!6, below=of $(t1)!0.5!(t2)$] (t3) {Kanban / Week Planning Layer};
-        \draw[->] (t1) -- (t2);
-        \draw[->] (t2) -- (t3);
-    \end{tikzpicture}
-    \vspace{0.6em}
-    \begin{block}{Empfehlung}
-        Einfache `TODO.md` für persönliche Tasks, Issues für kollaboratives Tracking, Kanban/Calendar-Layer für Zeitplanung.
-    \end{block}
-\end{frame}
-
-\begin{frame}{Konkrete Todo-Liste}
-    \begin{myExBox}[title=Konkrete Todo-Liste]
-        Repository initialisieren und \texttt{README.md} anlegen\\
-        Ordnerstruktur erstellen (\texttt{dokumentation/}, \texttt{daten/}, \texttt{code/})\\
-        \texttt{TODO.md} mit ersten Aufgaben anlegen\\
-        \texttt{Week Planning}-Layer im Kalender anlegen (wöchentliche Tasks)\\
-        Erste Sitzung: Recherche (Datum eintragen)
-        \tcblower
-        \textbf{Ziel}: Erste Struktur, erste Termine und erstes Tracking.
-    \end{myExBox}
-\end{frame}
-
-% Abschlussfolie
-\begin{frame}{Was bewusst weglassen wird}
-    \centering
-    \begin{block}{Ausklammern in dieser Doppellektion}
-        Branches im Detail, Merge-Konflikte tief, Rebase, Pull-Request-Workflow, Git-Flow und ausführliche Kommandozeilen-Tricks.
-    \end{block}
-\end{frame}
 
 \begin{frame}{Weiterführende Ressourcen}
     \centering
