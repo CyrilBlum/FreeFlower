@@ -1,0 +1,139 @@
+\newtoggle{withbonus} \settoggle{withbonus}{false} % set true to show bonus points in grade table
+
+\lstset{style=Python}
+
+% setting underlying course name (Grundlagenfach Mathematik, §-Unterricht, \ldots)
+\newcommand{\mycourse}{Informatik}
+% name of the class
+\newcommand{\myclass}{2. Klassen}
+% set date
+\newcommand{\mydate}{03. Juni 2024}
+
+\title{\textbf{Theoretische Informatik: Randomisierte Algorithmen}}
+\author{Thomas Graf\\
+	\mycourse, \myclass}
+\date{\mydate}
+\maketitle
+\thispagestyle{headandfoot}
+
+\begin{center}
+	\fbox{\parbox{140mm}{\centering
+			\begin{itemize}
+				\item Dauer der Prüfung: $50$ Minuten
+				      %\item \textbf{Zeige in jeder Aufgabe unbedingt Deine Schritte!}
+				\item Erlaubte Hilfsmittel:
+				      \begin{itemize}
+					      \item Schreibzeug
+					      \item \textbf{ohne Taschenrechner}
+				      \end{itemize}
+			\end{itemize}}}
+\end{center}
+\vspace{10mm}
+
+\begin{center}
+	Vorname: \rule{45mm}{0.8pt}\qquad Nachname: \rule{45mm}{0.8pt}
+\end{center}
+\vspace{20mm}
+
+\begin{center}
+	\iftoggle{withbonus} {
+		\combinedgradetable[h][questions]
+	} {
+		\gradetable[h][questions]
+	}
+\end{center}
+\vspace{15mm}
+\begin{center}
+	Note:
+	\vspace{10mm}
+
+	\rule{8mm}{1.2pt}
+\end{center}
+%\thispagestyle{empty}
+\clearpage
+
+
+
+
+\section*{Prüfung: Randomisierte Algorithmen \& Kommunikationsprotokolle}
+
+\begin{questions}
+
+\question \textbf{Deterministik vs. Zufall}
+Erklären Sie präzise: Warum ist ein randomisierter Algorithmus für das Problem des Dateivergleichs ($x=y$?) potenziell effizienter als jeder denkbare deterministische Algorithmus? Gehen Sie dabei auf die untere Schranke der Bit-Übertragungen ein.
+\begin{solution}
+	Deterministische Algorithmen benötigen im Worst-Case immer den Austausch von $n$ Bits (Communication Complexity $D(EQ)=n$). Ein randomisierter Algorithmus kann durch den Einsatz von Zufall die Menge der zu sendenden Informationen massiv reduzieren, indem er nur einen \enquote{Fingerabdruck} (Hash/Modulo-Rest) vergleicht, wobei er eine winzige Fehlerwahrscheinlichkeit in Kauf nimmt.
+\end{solution}
+\droptotalpoints
+
+\question \textbf{Berechnung der Nummer}
+Gegeben sind zwei Rechner mit den Datensätzen $x = 1101$ und $y = 1011$.
+\begin{parts}
+	\part Berechnen Sie $\text{Nummer}(x)$ und $\text{Nummer}(y)$.
+	\part Bestimmen Sie die Differenz $w = |\text{Nummer}(x) - \text{Nummer}(y)|$.
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part $\text{Nummer}(1101) = 2^3 + 2^2 + 2^0 = 8 + 4 + 1 = 13$. \\
+		      $\text{Nummer}(1011) = 2^3 + 2^1 + 2^0 = 8 + 2 + 1 = 11$.
+		\part $w = |13 - 11| = 2$.
+	\end{parts}
+\end{solution}
+\droptotalpoints
+
+\question \textbf{Protokoll-Simulation und Kollision}
+Angenommen, Rechner $R_1$ hat $x=1101$ ($13$) und $R_2$ hat $y=1011$ ($11$).
+Das Protokoll wählt zufällig eine Primzahl $p \leq n^2$.
+\begin{parts}
+	\part Das Protokoll wählt $p = 3$. Berechnen Sie $s$ (Zürich) und $q$ (Boston). Was ist die Ausgabe des Protokolls?
+	\part Das Protokoll wählt $p = 2$. Berechnen Sie $s$ und $q$. Welches Problem tritt hier auf, obwohl $x \neq y$ gilt? Wie nennt man dieses Ereignis?
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part $s = 13 \pmod 3 = 1$. $q = 11 \pmod 3 = 2$. Da $s \neq q$, ist die Ausgabe "ungleich" (Korrekt).
+		\part $s = 13 \pmod 2 = 1$. $q = 11 \pmod 2 = 1$. Die Ausgabe ist "gleich". Dies ist ein \textbf{False Positive} (Kollision), da $x \neq y$, aber der Rest gleich ist.
+	\end{parts}
+\end{solution}
+\droptotalpoints
+
+\question \textbf{Primzahlsatz und Skalierung}
+Wir betrachten einen riesigen Datensatz mit $n = \num{1000000}$ Bits.
+\begin{parts}
+	\part Schätzen Sie mithilfe des Primzahlsatzes $\text{Prim}(n^2)$ ab. Nutzen Sie die Formel aus \cref{mytheorem:primzahlsatz}.
+	\part Wie viele Bits müssen im schlimmsten Fall übertragen werden, um die Primzahl $p$ und den Rest $s$ zu senden, wenn $p \leq n^2$? Nutzen Sie $A \leq 4\lceil \log_2(n) \rceil$.
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part $n^2 = (10^6)^2 = 10^{12}$. \\
+		      $\text{Prim}(10^{12}) \approx \frac{10^{12}}{\ln(10^{12})} = \frac{10^{12}}{12 \cdot \ln(10)} \approx \num{36191206825}$.
+		\part $A \leq 4 \cdot \lceil \log_2(10^6) \rceil \approx 4 \cdot 20 = 80$ Bits.
+	\end{parts}
+\end{solution}
+\droptotalpoints
+
+\question \textbf{Sieb des Eratosthenes - Code-Verständnis}
+Im Skript wurde erklärt, dass man beim Streichen der Vielfachen erst bei $p^2$ beginnen muss.
+Erklären Sie kurz, warum alle Vielfachen $h \cdot p$ mit $h < p$ bereits gestrichen sein müssen.
+\begin{solution}
+	Jedes Vielfache $h \cdot p$ mit $h < p$ hat einen Primfaktor $p' \leq h$, der kleiner als $p$ ist. Da der Algorithmus die Primzahlen der Reihe nach durchgeht, wurde dieses Vielfache bereits gestrichen, als die Vielfachen von $p'$ bearbeitet wurden.
+\end{solution}
+\droptotalpoints
+
+\question \textbf{Warum Primzahlen? (Vertiefung)}
+Nehmen wir an, wir haben einen Datensatz der Länge $n=10$. Die Differenz $w := \abs{\text{Nummer}(x) - \text{Nummer}(y)}$ ist also kleiner als $2^{10} = \num{1024}$.
+Das Protokoll wählt eine Zahl aus dem Bereich bis $n^2 = 100$.
+\begin{parts}
+	\part Wie viele Primzahlen stehen im Bereich $\lrs{2, 100}$ zur Auswahl? Wie viele Primfaktoren kann $w$ höchstens haben? Berechnen Sie die maximale Fehlerwahrscheinlichkeit.
+	\part Nehmen wir an, wir würden \textbf{beliebige} natürliche Zahlen im Bereich $\lrc{2, \dots, 100}$ wählen. Betrachten Sie den Fall $w = 720$. Wie viele Teiler hat $w$ in diesem Bereich? (Hinweis: $720 = 2^4 \cdot 3^2 \cdot 5$). Warum ist die Fehlerwahrscheinlichkeit hier höher?
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part Es gibt 25 Primzahlen bis 100. Da das Produkt der ersten 5 Primzahlen ($2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 = 2310$) bereits grösser als $w < 1024$ ist, kann $w$ höchstens $k=4$ verschiedene Primfaktoren haben. Die Fehlerwahrscheinlichkeit ist $P \leq \frac{k}{\text{Prim}(n^2)} = 4/25 = 0.16$.
+		\part Die Zahl $720$ hat im Bereich $[2, 100]$ folgende 23 Teiler: 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90.
+		      Wählt man eine beliebige zahl aus $\lrc{2, \dots, 100}$ (99 Möglichkeiten), ist die Fehlerwahrscheinlichkeit $23/99 \approx 0.232$.
+		      Primzahlen sind effizienter, weil eine Zahl zwar viele Teiler haben kann, aber nur sehr wenige \textit{Primteiler}. Dies erlaubt eine viel schärfere (niedrigere) Schranke für die Fehlerwahrscheinlichkeit.
+	\end{parts}
+\end{solution}
+\droptotalpoints
+
+\end{questions}
