@@ -33,17 +33,18 @@ git --version
 
 Öffnen Sie [github.com](https://github.com) und klicken Sie auf Sign up. Folgen Sie den Schritten, um einen neuen Account zu erstellen.
 
-## 🏆 Challenge: SSH-Schlüssel erstellen und hinterlegen
 
-Damit Sie Änderungen später ohne Passwortabfrage zu GitHub pushen können, erstellen Sie ein SSH-Schlüsselpaar und hinterlegen den Public Key auf GitHub.
+> 🏆 Challenge: SSH-Schlüssel erstellen und hinterlegen
+>
+> Damit Sie Änderungen später ohne Passwortabfrage zu GitHub pushen können, erstellen Sie ein SSH-Schlüsselpaar und hinterlegen den Public Key auf GitHub.
+> Führen Sie diese Befehle im Terminal aus (**ersetzen Sie zuvor die Email-Adressse durch Ihre echte Email-Adresse**):
+> ```bash
+> ssh-keygen -t ed25519 -C "vorname.nachname@stud.edu.zh.ch" # SSH-Schlüsselpaar erstellen
+> # Public Key in Zwischenablage kopieren
+> pbcopy < ~/.ssh/id_ed25519.pub  
+> ```
 
-Führen Sie diese Befehle im Terminal aus (**ersetzen Sie zuvor die Email-Adressse durch Ihre echte Email-Adresse**):
 
-```bash
-ssh-keygen -t ed25519 -C "vorname.nachname@stud.edu.zh.ch" # SSH-Schlüsselpaar erstellen
-# Public Key in Zwischenablage kopieren
-pbcopy < ~/.ssh/id_ed25519.pub  
-```
 
 Kopieren Sie den ausgegebenen Public Key und fügen Sie ihn auf GitHub unter Settings > SSH and GPG keys > New SSH key ein.
 
@@ -119,7 +120,10 @@ All diese Schritte können direkt in VS Code mit der Source-Control-Ansicht durc
 - Nutzen Sie Branches für neue Features oder größere Änderungen, um die Hauptentwicklungslinie stabil zu halten.
 - Ziehen Sie regelmäßig Änderungen vom Remote-Repository, um Konflikte zu vermeiden.
 
-# 🏆 Challenge: Task-Listen mit `GitHub Issues`
+# GitHub Issues und Projects
+## Task-Listen mit `GitHub Issues`
+GitHub Issues bieten eine einfache Möglichkeit, Aufgaben zu organisieren und zu verfolgen. Sie können Issues für Fehler, neue Features oder allgemeine Aufgaben erstellen. Später können Sie Ihre Aufgaben übersichtlich visualisieren, zum Beispiel mit einem Kanban-Board oder einem GANTT-Chart.
+
 Erstellen Sie ein neues Issue in Ihrem Repository und fügen Sie eine Task-Liste hinzu:
 
 ```
@@ -127,3 +131,12 @@ Erstellen Sie ein neues Issue in Ihrem Repository und fügen Sie eine Task-Liste
 - [ ] Aufgabe 2: ... 
 - [ ] Aufgabe 3: ... 
 ```
+
+## Visualisierung mit GitHub Projects
+GitHub Projects ermöglicht es Ihnen, Issues und Pull Requests in einem Kanban-Board oder GANTT-Chart zu organisieren. Sie können Spalten für verschiedene Phasen Ihres Projekts erstellen (z.B. To Do, In Progress, Done) und Issues per Drag-and-Drop verschieben. 
+
+Ein Projekt kann folgendermassen erstellt werden:
+![GitHub Project erstellen](assets/images/git/create-project.png)
+
+Ein Kanban-Board könnte zum Beispiel so aussehen:
+![GitHub Projects Kanban-Board](assets/images/git/kanban.png)

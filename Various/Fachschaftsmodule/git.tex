@@ -10,34 +10,21 @@
 
 % Lernziele
 \begin{frame}[fragile]{Lernziele}
-    \begin{itemize}
-        \item[\faSquare] Sie können eine grössere Arbeit in Teilaufgaben zerlegen
+    \begin{itemize}[<+->]
+        \item[\faSquare] Sie können Ihre Maturitätsarbeit in Teilaufgaben zerlegen
+        \item[\faSquare] Sie können die Zeitplanung Ihrer Maturaarbeit mit einem GANTT-Chart visualisieren
+        \item[\faSquare] Sie können einen Kalender-Layer für die Wochenplanung anlegen
+        \item[\faSquare] Sie können ein einfaches Arbeitsjournal führen
+        \item[\faSquare] Sie können eine sinnvolle Ordnerstruktur und Dokumentation anlegen
+        \item[\faSquare] Sie verstehen den Unterschied zwischen Backup und Versionierung 
         \item[\faSquare] Sie verstehen, warum Versionierung wichtig ist
-        \item[\faSquare] Sie kennen einfache Git-Grundkonzepte und bewährte Arbeitsweisen
-        \item[\faSquare] Sie können Ihre Maturaarbeit technisch sauber organisieren
+        \item[\faSquare] Sie kennen einfache Git-Grundkonzepte und bewährte Arbeitsweisen mit Git, GitHub und VSCode
     \end{itemize}
 \end{frame}
 
-% 1. Einstieg: Das Problem
-\begin{frame}{1. Einstieg: Das Problem (10 min)}
-    \centering
-    \begin{block}{Beispielgeschichte}
-        \texttt{Maturaarbeit.docx}\\\pause
-        \texttt{Maturaarbeit\_final.docx}\\\pause
-        \texttt{Maturaarbeit\_final2.docx}\\\pause
-        \texttt{Maturaarbeit\_final\_wirklich\_final.docx}
-    \end{block}
-    \pause
-    \vspace{0.6em}
-    \begin{itemize}
-        \item Wenn Sie etwas nicht reproduzieren können, haben Sie es nicht sauber dokumentiert.
-        \item Was passiert bei einem Fehler?
-        \item Wie arbeiten Sie zusammen?
-    \end{itemize}
-\end{frame}
 
-% 2. Projektorganisation allgemein
-\begin{frame}{2. Projektorganisation allgemein}{Zerlegung des Problems in grobe Schritte mit GANTT-Chart}
+% Projektorganisation allgemein
+\begin{frame}{Projektorganisation allgemein}{Zerlegung des Problems in grobe Schritte mit GANTT-Chart}
     \textbf{GANTT-Charts}: Projektzeitplan, Aufgaben und Abhängigkeiten. Zeitleiste mit Balken für Aufgaben, Meilensteine, Ressourcenplanung. Hilft bei Planung, Überwachung und Kommunikation von Fortschritt.
     \begin{figure}
         \centering
@@ -47,9 +34,7 @@
 
 \begin{frame}
     \begin{myExBox}[title=Übung: GANTT-Chart für die Maturaarbeit erstellen]
-        Erstellen Sie einen einfachen GANTT-Chart mit den Hauptschritten Ihrer Maturaarbeit (Recherche, Datenaufbereitung, Schreiben, Revision) und planen Sie die zeitliche Abfolge über die nächsten Monate. Berücksichtigen Sie dabei auch Pufferzeiten für unerwartete Verzögerungen.
-        \tcblower
-        \textbf{Ziel}: Klarer Überblick über die zeitliche Planung und Abfolge der Arbeitsschritte.
+        Machen wir später mit GitHub Projects!
     \end{myExBox}
 \end{frame}
 
@@ -72,7 +57,6 @@
         \includegraphics[width=\textwidth]{Various/Fachschaftsmodule/Calendar-Planning.png}
     \end{figure}
     \vspace{0.6em}
-
 \end{frame}
 
 \begin{frame}{Übung: Eigenen Kalender-Layer anlegen}
@@ -85,16 +69,16 @@
 \end{frame}
 
 
-\begin{frame}{2. Projektorganisation allgemein}{Ordnerstruktur und Dokumentation}
+\begin{frame}{Projektorganisation allgemein}{Ordnerstruktur und Dokumentation}
     \centering
     \begin{tikzpicture}[level distance=8mm, sibling distance=16mm, every node/.style={font=\small\ttfamily}]
         \node[draw, rectangle, rounded corners, fill=yellow!6] (root) {Maturaarbeit/}
-        child { node[draw, rectangle, fill=green!6] {dokumentation/} }
-        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {daten/} }
-        child { node[draw, rectangle, fill=green!6] {bilder/} }
-        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {code/} }
-        child { node[draw, rectangle, fill=green!6] {literatur/} }
-        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {präsentation/} };
+        child { node[draw, rectangle, fill=green!6] {Dokumentation/} }
+        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Daten/} }
+        child { node[draw, rectangle, fill=green!6] {Bilder/} }
+        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Code/} }
+        child { node[draw, rectangle, fill=green!6] {Literatur/} }
+        child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Präsentation/} };
     \end{tikzpicture}
     \vspace{0.6em}
     \begin{block}{Kernpunkte}
@@ -108,26 +92,67 @@
 \begin{frame}[fragile]{Aufgabe}
     \begin{myExBox}[title=Aufgabe: Ordnerstruktur und Dokumentation anlegen]
         \scriptsize
-        Legen Sie eine konsistente Ordnerstruktur für Ihre Maturaarbeit an (z.\,B. \texttt{dokumentation/}, \texttt{daten/}, \texttt{code/}, \texttt{literatur/}, \texttt{präsentation/}). 
-        
+        Legen Sie eine konsistente Ordnerstruktur für Ihre Maturaarbeit an (z.\,B. \texttt{Dokumentation/}, \texttt{Daten/}, \texttt{Code/}, \texttt{Literatur/}, \texttt{Präsentation/}).
+
         Erstellen Sie eine kurze Dokumentation (z.\,B. in einer \texttt{README.md}), z.B.::
 
         \begin{lstlisting}[style=bash, basicstyle=\color{white}\ttfamily\scriptsize, breaklines=true]
 # Maturaarbeit: Titel der Arbeit
 ## Ordnerstruktur
-- dokumentation/: Alle Dokumente, Berichte, Protokolle
-- daten/: Rohdaten, Aufbereitete Daten
-- code/: Alle Skripte, Jupyter Notebooks
-- literatur/: Alle Literaturquellen, PDFs, Zitate
-- präsentation/: Alle Präsentationsdateien, Folien, Grafiken
+- Dokumentation/: Alle Dokumente, Berichte, Protokolle
+- Daten/: Rohdaten, Aufbereitete Daten
+- Code/: Alle Skripte, Jupyter Notebooks
+- Literatur/: Alle Literaturquellen, PDFs, Zitate
+- Präsentation/: Alle Präsentationsdateien, Folien, Grafiken
 ## Dokumentation
 - Alle Schritte der Datenaufbereitung, Analyse und Ergebnisse werden hier dokumentiert.
         \end{lstlisting}
         MarkDown-Syntax: \url{https://www.markdownguide.org/basic-syntax/}
-        
+
         Legen Sie einen separaten Ordner für Backups an und stellen Sie sicher, dass Rohdaten nicht überschrieben werden.
     \end{myExBox}
 \end{frame}
+
+\begin{frame}[fragile]{Forschungsjournal}
+    \small
+    
+    Ein Forschungsjournal hält Versuche, Parameter und Ergebnisse fest. So sehen Sie schnell, was funktioniert hat, was nicht und warum.\pause
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{p{2.7cm} p{4.0cm} p{3.3cm}}
+            \small
+            \textbf{Datum} & \textbf{Versuch / Einstellung}                   & \textbf{Ergebnis}                         \\
+            \midrule\midrule
+            2026-05-12     & Versuch A durchgeführt. Temperatur 40 $^\circ$C. & Ergebnis unbrauchbar.                     \\\midrule\pause
+            2026-05-15     & Versuch wiederholt. Temperatur 60 $^\circ$C.     & Ergebnis deutlich besser.                 \\\midrule\pause
+            2026-05-20     & Versuch mit 80 $^\circ$C durchgeführt.           & Ergebnis schlechter als bei 60 $^\circ$C. \\
+        \end{tabular}
+    \end{table}\pause
+    \textbf{Empfohlene Tools}: Markdown-Dateien (in VS Code), physisches Notizbuch, OneNote, Word-Dokument.\\
+    \url{https://cyrilblum.github.io/FreeFlower/markdown-tutorial.html}\\[.5cm]
+    \resizebox{1cm}{!}{\qrcode{https://cyrilblum.github.io/FreeFlower/markdown-tutorial.html}}
+\end{frame}
+
+
+% Versionierung
+\begin{frame}{Versionierung}{Das Problem}
+    \centering
+    \begin{block}{Beispielgeschichte}
+        \texttt{Maturaarbeit.docx}\\\pause
+        \texttt{Maturaarbeit\_final.docx}\\\pause
+        \texttt{Maturaarbeit\_final2.docx}\\\pause
+        \texttt{Maturaarbeit\_final\_wirklich\_final.docx}
+    \end{block}
+    \pause
+    \vspace{0.6em}
+    \begin{itemize}[<+->]
+        \item Wenn Sie etwas nicht reproduzieren können, haben Sie es nicht sauber dokumentiert.
+        \item Was passiert bei einem Fehler?
+        \item Wie arbeiten Sie zusammen?
+    \end{itemize}
+\end{frame}
+
 
 
 % Warum Versionierung?
@@ -144,6 +169,26 @@
         \end{tikzpicture}
     \end{center}
 \end{frame}
+
+\begin{frame}[fragile]{Backup $\neq$ Versionierung}
+    \centering
+    \renewcommand{\arraystretch}{1.25}
+    \small
+    \begin{tabular}{p{2.7cm} c c p{4.4cm}}
+        \textbf{Situation}            & \textbf{Backup} & \textbf{Git} & \textbf{Kurz gesagt}                                                 \\
+        \hline
+        Festplatte kaputt             & \cmark          & \xmark       & Backup rettet die Daten auf einem anderen Medium.                    \\
+        Datei versehentlich gelöscht  & \cmark          & teilweise    & Backup hilft, Git hilft nur, wenn die Datei bereits versioniert war. \\
+        Fehler vor 2 Wochen eingebaut & \xmark          & \cmark       & Git bringt Sie gezielt auf einen früheren Stand zurück.              \\
+        Experiment rückgängig machen  & \xmark          & \cmark       & Git erlaubt Ausprobieren ohne Angst vor dem Rückweg.                 \\
+    \end{tabular}
+
+    \vspace{0.8em}
+    \begin{block}{Merksatz}
+        Backups schützen vor Datenverlust. Git schützt vor Fehlentscheidungen im Verlauf der Arbeit.
+    \end{block}
+\end{frame}
+
 
 % Einfache Arbeitsroutine
 \begin{frame}[fragile]{Einfacher Workflow}
@@ -278,7 +323,7 @@
 \begin{frame}{Tipps für die Maturaarbeit}
     \centering
     \begin{block}{Kurz und praktisch}
-        Zu jedem Meilenstein ein kurzes, aussagekräftiges Commit. Branches für Experimente. Aufbau und Data-Handling in `docs/` dokumentieren. Grosse Daten ausserhalb des Repos sichern und verlinken.
+        Zu jedem Meilenstein ein kurzes, aussagekräftiges Commit. Branches für Experimente. Aufbau und Data-Handling in `Dokumentation/` dokumentieren. Grosse Daten ausserhalb des Repos sichern und verlinken.
     \end{block}
 \end{frame}
 
