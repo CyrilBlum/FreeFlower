@@ -16,7 +16,7 @@
         \item[\faSquare] Sie können einen Kalender-Layer für die Wochenplanung anlegen
         \item[\faSquare] Sie können ein einfaches Arbeitsjournal führen
         \item[\faSquare] Sie können eine sinnvolle Ordnerstruktur und Dokumentation anlegen
-        \item[\faSquare] Sie verstehen den Unterschied zwischen Backup und Versionierung 
+        \item[\faSquare] Sie verstehen den Unterschied zwischen Backup und Versionierung
         \item[\faSquare] Sie verstehen, warum Versionierung wichtig ist
         \item[\faSquare] Sie kennen einfache Git-Grundkonzepte und bewährte Arbeitsweisen mit Git, GitHub und VSCode
     \end{itemize}
@@ -115,7 +115,7 @@
 
 \begin{frame}[fragile]{Forschungsjournal}
     \small
-    
+
     Ein Forschungsjournal hält Versuche, Parameter und Ergebnisse fest. So sehen Sie schnell, was funktioniert hat, was nicht und warum.\pause
 
     \begin{table}[H]
@@ -263,32 +263,7 @@
     \end{center}
 \end{frame}
 
-% Organisieren: Repo-Struktur
-\begin{frame}{Repo-Struktur: sauber und verständlich}
-
-    \begin{figure}
-        \centering
-        \begin{tikzpicture}[level distance=8mm, sibling distance=18mm, every node/.style={font=\small}]
-            \node[draw, rectangle, rounded corners, fill=yellow!6] (root) {projekt/}
-            child { node[draw, rectangle, fill=green!6] {data/} }
-            child { node[draw, rectangle, fill=green!6] {src/} }
-            child { node[draw, rectangle, fill=green!6] {docs/} }
-            child { node[draw, rectangle, fill=green!6] {figures/} };
-        \end{tikzpicture}
-    \end{figure}
-    \vspace{0.6em}
-    Spezielle Dateien in (fast) jedem Repo:
-    \begin{itemize}
-        \item \texttt{README.md} (Projektbeschreibung, Anleitungen)
-        \item \texttt{LICENSE} (Rechte und Nutzung)
-        \item \texttt{.gitignore} (Dateien, die nicht versioniert werden sollen)
-    \end{itemize}
-    \begin{center}
-        Beispiel: \url{https://github.com/CyrilBlum/FreeFlower}
-    \end{center}
-\end{frame}
-
-% Konflikte visualisiert
+% Konflikte
 \begin{frame}{Konflikte (einfach visualisiert)}
     \centering
     \begin{tikzpicture}[every node/.style={font=\small}]
@@ -299,6 +274,35 @@
         \draw[->, thick] (other) -- node[midway,below]{Merge?} (main);
         \node[below=18mm of main, font=\scriptsize] {Konflikte entstehen bei gleichzeitigen Änderungen derselben Stelle.};
     \end{tikzpicture}
+\end{frame}
+
+% Organisieren: Repo-Struktur
+\begin{frame}{Repo-Struktur}{Spezielle Dateien}
+
+    \begin{figure}
+        \centering
+        \begin{tikzpicture}[level distance=8mm, sibling distance=18mm, every node/.style={font=\small}]
+            \node[draw, rectangle, rounded corners, fill=yellow!6] (root) {Maturitätsarbeit/}
+            child { node[draw, rectangle, fill=green!6] {Dokumentation/} }
+            child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Daten/} }
+            child { node[draw, rectangle, fill=green!6] {Bilder/} }
+            child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Code/} }
+            child { node[draw, rectangle, fill=green!6] {Literatur/} }
+            child { node[draw, rectangle, fill=green!6, yshift=-7mm] {Präsentation/} };
+        \end{tikzpicture}
+    \end{figure}
+    \vspace{0.6em}
+    Spezielle Dateien in (fast) jedem Repo:
+    \begin{center}
+        \begin{tabular}{ r|l }
+            \texttt{README.md} & Projektbeschreibung, Anleitungen \\
+            \texttt{LICENSE} & Rechte und Nutzung \\
+            \texttt{.gitignore} & Dateien, die nicht versioniert werden sollen \\
+        \end{tabular}
+    \end{center}
+    \begin{center}
+        Beispiel: \url{https://github.com/CyrilBlum/FreeFlower}
+    \end{center}
 \end{frame}
 
 % Tools und Plattformen
@@ -323,14 +327,20 @@
 \begin{frame}{Tipps für die Maturaarbeit}
     \centering
     \begin{block}{Kurz und praktisch}
-        Zu jedem Meilenstein ein kurzes, aussagekräftiges Commit. Branches für Experimente. Aufbau und Data-Handling in `Dokumentation/` dokumentieren. Grosse Daten ausserhalb des Repos sichern und verlinken.
+        \begin{itemize}[<+->]
+            \item Zu jedem Meilenstein ein kurzes, aussagekräftiges Commit.
+            \item Commit-Nachrichten können auch zur Dokumentation im Arbeitsjournal verwendet werden.
+            \item Branches für Experimente.
+            \item Aufbau und Data-Handling in `\texttt{Dokumentation/}` dokumentieren.
+            \item Grosse Daten ausserhalb des Repos sichern und verlinken und mit `\texttt{.gitignore}` ignorieren.
+        \end{itemize}
     \end{block}
 \end{frame}
 
 % Mini-Übung
 \begin{frame}[fragile]{Übungen: GitHub}
     \begin{myExBox}[title={GitHub einrichten, Repo erstellen}]
-        \small
+        \scriptsize
         \url{https://cyrilblum.github.io/FreeFlower/github-setup.html}\\
         \qrcode{https://cyrilblum.github.io/FreeFlower/github-setup.html}
     \end{myExBox}
