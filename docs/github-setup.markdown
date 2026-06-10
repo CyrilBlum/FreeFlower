@@ -11,7 +11,7 @@ Diese Seite führt Sie Schritt für Schritt durch die grundlegende Einrichtung v
 
 ## Git installieren
 
-Öffnen Sie ein Terminal (MacOS) bzw. PowerShell (Windows) und installieren Sie Git mit dem passenden Befehl für Ihr System.
+Öffnen Sie ein Terminal (MacOS) bzw. PowerShell (Windows, muss als Administrator ausgeführt werden) und installieren Sie Git mit dem passenden Befehl für Ihr System.
 
 MacOS:
 ```bash
@@ -40,9 +40,18 @@ git --version
 > Führen Sie diese Befehle im Terminal aus (**ersetzen Sie zuvor die Email-Adressse durch Ihre echte Email-Adresse**):
 > ```bash
 > ssh-keygen -t ed25519 -C "vorname.nachname@stud.edu.zh.ch" # SSH-Schlüsselpaar erstellen
-> # Public Key in Zwischenablage kopieren
-> pbcopy < ~/.ssh/id_ed25519.pub  
 > ```
+> Danach müssen Sie den öffentlichen Schlüssel aus der Datei `~/.ssh/id_ed25519.pub` kopieren. Nutzen Sie dafür diesen Befehl:
+>
+>Für MacOS/Linux:
+>```bash
+>pbcopy < ~/.ssh/id_ed25519.pub
+>```
+>Für Windows:
+>```bash
+>cat ~/.ssh/id_ed25519.pub | clip
+>```
+>
 >
 >Kopieren Sie den ausgegebenen Public Key und fügen Sie ihn auf GitHub unter Settings > SSH and GPG keys > New SSH key ein.
 >
