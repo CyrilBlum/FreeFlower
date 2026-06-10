@@ -2,7 +2,7 @@
 layout: default
 title: Markdown-Arbeitsjournal
 parent: Technische Seiten
-nav_order: 3
+nav_order: 2
 ---
 
 # Markdown für ein Arbeitsjournal

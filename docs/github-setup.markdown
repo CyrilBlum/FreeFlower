@@ -2,7 +2,7 @@
 layout: default
 title: GitHub einrichten
 parent: Technische Seiten
-nav_order: 2
+nav_order: 3
 ---
 
 # GitHub einrichten
@@ -43,18 +43,16 @@ git --version
 > # Public Key in Zwischenablage kopieren
 > pbcopy < ~/.ssh/id_ed25519.pub  
 > ```
-
-
-
-Kopieren Sie den ausgegebenen Public Key und fügen Sie ihn auf GitHub unter Settings > SSH and GPG keys > New SSH key ein.
-
-Testen Sie danach die Verbindung:
-
-```bash
-ssh -T git@github.com
-```
-
-Sollte eine Willkommensnachricht von GitHub erscheinen, die bestätigt, dass die Verbindung funktioniert.
+>
+>Kopieren Sie den ausgegebenen Public Key und fügen Sie ihn auf GitHub unter Settings > SSH and GPG keys > New SSH key ein.
+>
+>Testen Sie danach die Verbindung:
+>
+>```bash
+>ssh -T git@github.com
+>```
+>
+>Sollte eine Willkommensnachricht von GitHub erscheinen, die bestätigt, dass die Verbindung funktioniert.
 
 ## Git konfigurieren
 
