@@ -342,3 +342,5 @@ main copy*
 Various/Wahlpflichtmodul\ Statistik/*.csv
 
 Logos/build/
+
+*.db
