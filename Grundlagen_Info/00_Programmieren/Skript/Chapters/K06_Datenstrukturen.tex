@@ -315,15 +315,10 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 	      \]
 
 	      Für eine Liste mit 6 Elementen ergibt das $\displaystyle\sum_{m=1}^{5} m = 1 + 2 + 3 + 4 + 5 = 15$ Vergleiche.
-	\item Im Mathematikunterricht lernen Sie, dass die Gleichheit
-	      \[
-		      (n-1) + (n-2) + \ldots + 2 + 1 = \displaystyle\sum_{m=1}^{n-1} m = \textcolor{ForestGreen}{\frac{1}{2}n^2 - \frac{1}{2}n}
-	      \]
-	      gilt. Damit bleibt die Anzahl der Vergleiche von Bubble-Sort auch mit dieser Optimierung im Wesentlichen quadratisch.
 \end{itemize}
 
 \begin{myremark}[Beweis der Laufzeit der optimierten Version]
-
+\label{myremark:laufzeit_bubble_sort}
 	Die Summe alles natürlichen Zahlen von 1 bis $k$ lässt sich folgendermassen als Formel ausdrücken:
 	\begin{align*}
 		\displaystyle\sum_{m=1}^{k} m & = \textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(k-2)} + \textcolor{red}{(k-1)} + \textcolor{blue}{k} \\
@@ -336,22 +331,22 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 	Die Formel $\frac{(n-1) \cdot n}{2}$ ergibt sich aus der Tatsache, dass die Summe der ersten $k$ natürlichen Zahlen durch die Formel $\frac{k \cdot (k + 1)}{2}$ gegeben ist. Wenn wir für $k$ $n-1$ einsetzen, erhalten wir die Anzahl der Vergleiche in der optimierten Version des Bubble-Sort-Algorithmus: $\frac{(n-1) \cdot n}{2}$.
 \end{myremark}
 
-\begin{myremark}[Laufzeitkomplexität beider Varianten]
-	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
+\begin{myremark}[Laufzeitkomplexität beider Varianten: Big-O-Notation]
+	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ (\enquote{Big O von f von n}) angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
+
+	In der Big-O-Notation werden nur die dominanten Terme berücksichtigt, da sie den Hauptfaktor für das Wachstum der Laufzeit darstellen. In unserem Fall haben sowohl die nicht optimierte als auch die optimierte Version des Bubble-Sort-Algorithmus eine quadratische Komponente ($n^2$), die dominiert, wenn $n$ sehr gross wird. Daher wird die Laufzeit beider Varianten als $O(n^2)$ ausgedrückt, obwohl die optimierte Version tatsächlich weniger Vergleiche durchführt als die nicht optimierte Version. Entscheidend ist nur der Term, der das Wachstum der Laufzeit dominiert, und in diesem Fall ist es die quadratische Komponente $n^2$.
 	\begin{itemize}
 		\item \textbf{nicht optimierte Version:} Die Anzahl der Vergleiche beträgt \[(n-1)^2 = \colorbox{yellow}{\ensuremath{n^2}} - 2n + 1\]
 		      In der Big O-Notation wird dies als $O(n^2)$ ausgedrückt, da die quadratische Komponente $n^2$ dominiert, wenn $n$ sehr gross wird.
-		\item \textbf{optimierte Version:} Die Anzahl der Vergleiche entspricht der Summe der Zahlen von 1 bis $n-1$, was durch die Formel $\frac{(n-1) \cdot n}{2}$ gegeben ist.
-		      \[\frac{n-1}{2} \cdot n = \frac{1}{2}\colorbox{yellow}{\ensuremath{n^2}} - \frac{1}{2}n\]
+		\item \textbf{optimierte Version:} Die Anzahl der Vergleiche entspricht der Summe der Zahlen von 1 bis $n-1$, was durch die Formel $\frac{(n-1) \cdot n}{2}$ gegeben ist (s. \cref{myremark:laufzeit_bubble_sort}).
+		      \[\frac{(n-1) \cdot n}{2}  = \frac{1}{2}\colorbox{yellow}{\ensuremath{n^2}} - \frac{1}{2}n\]
 		      Auch hier dominiert die quadratische Komponente $\frac{1}{2}n^2$, wenn $n$ sehr gross wird, sodass die Laufzeit ebenfalls als $O(n^2)$ ausgedrückt wird.
 	\end{itemize}
 	Wir sehen also, dass die Optimierung die Anzahl der Vergleiche reduziert, aber die grundsätzliche Komplexität des Algorithmus bleibt $O(n^2)$.
 \end{myremark}
 
-Im Allgemeinen wächst die Anzahl der Vergleiche beim Bubble-Sort-Algorithmus quadratisch mit der Länge der Liste, also $O(n^2)$. Die Optimierung reduziert die Anzahl der Vergleiche, ändert aber nichts an der grundsätzlichen Komplexität.
-
 \subsubsection{Such-Algorithmen}
-In der Informatik stellt sich häufig die Frage, wie man möglichst schnell herausfinden kann, ob eine bestimmte Zahl in einer Liste enthalten ist.
+In der Informatik stellt sich häufig die Frage, wie man möglichst schnell herausfinden kann, ob eine bestimmte Zahl in einer Liste enthalten ist. Dies kann beispielsweise bei der Suche nach einem Namen in einem Telefonbuch oder bei der Suche nach einem Produkt in einem Online-Shop der Fall sein. Die Effizienz der Suche hängt stark davon ab, wie die Daten organisiert sind.
 
 Ist die Liste unsortiert, wie zum Beispiel bei \lstinline|x = [5, 3, 8, 20, 2, 10]|, bleibt uns nichts anderes übrig, als jedes Element der Liste einzeln zu überprüfen. Dies entspricht einer linearen Suche, bei der im ungünstigsten Fall alle Elemente betrachtet werden müssen.
 
@@ -447,6 +442,13 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 	\end{myanswer}
 \end{mychallenge}
 
+\begin{mychallenge}[Laufzeitkomplexität eines Codes analysieren]
+	Betrachten Sie folgenden Codes, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
+	\lstinputlisting[language=Python,caption=\texttt{count\_common\_elements.py},label=listing:count_common_elements]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/count_common_elements.py}
+	\begin{myanswer}
+		Die Laufzeitkomplexität dieses Codes ist $O(n \cdot m)$, wobei $n$ die Länge der ersten Liste (\lstinline|liste1|) und $m$ die Länge der zweiten Liste (\lstinline|liste2|) ist. Dies liegt daran, dass der Code zwei verschachtelte Schleifen verwendet: Die äussere Schleife durchläuft jedes Element in \lstinline|liste1| (was $n$ Schritte erfordert), und für jedes Element in \lstinline|liste1| durchläuft die innere Schleife jedes Element in \lstinline|liste2| (was $m$ Schritte erfordert). Daher multiplizieren sich die Anzahl der Schritte der beiden Schleifen, was zu einer Gesamtzahl von $n \cdot m$ Schritten führt.
+	\end{myanswer}
+\end{mychallenge}
 
 \begin{myexercise}
 	Verwenden Sie die folgende Liste: \lstinline|[-20, -17, -13, -13, 2, 5, 7, 7, 9, 10]|. Vollziehen Sie den Ablauf des Programms für folgende Werte
