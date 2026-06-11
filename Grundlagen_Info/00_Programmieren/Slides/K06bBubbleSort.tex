@@ -37,19 +37,19 @@
 
 \begin{frame}{Einen Wert Suchen}
 	\only<1-2>{
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=.9\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}
-		\end{figure}
-		\only<2>{Wie viele Dinge müssen wir im schlimmsten Fall anschauen, um einen Gegenstand im Koffer zu finden (wenn der Koffer $n$ Gegenstände enthält)?}
-	}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.9\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}
+			\end{figure}
+			\only<2>{Wie viele Dinge müssen wir im schlimmsten Fall anschauen, um einen Gegenstand im Koffer zu finden (wenn der Koffer $n$ Gegenstände enthält)?}
+		}
 	\only<3->{
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=.9\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}
-		\end{figure}
-		\only<4->{Und hier?}
-	}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.9\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}
+			\end{figure}
+			\only<4->{Und hier?}
+		}
 
 \end{frame}
 
@@ -184,6 +184,40 @@ for _ in range(len(x) - 1):
 		      \[\sum_{m=1}^{n-1}m = 1 + 2 + 3 + \dots + (n-1) = \frac{(n-1) \cdot n}{2}\]
 		      \pause $\Rightarrow$ Falls die Liste 6 Elemente enthält: $\displaystyle\sum_{m=1}^{5}m = 1 + 2 + 3 + 4 + 5 = 15$ = $\frac{5 \cdot 6}{2}$ Vergleiche
 	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Laufzeit des Algorithmus}
+	\begin{itemize}
+		\item \textbf{Laufzeitkomplexität} = Wie ändert sich die Anzahl der Schritte, wenn die Länge der Eingabe (z.B. die Länge der Liste) wächst?
+		\item \textbf{Big-O-Notation} = Standardnotation, um die Laufzeitkomplexität von Algorithmen zu beschreiben (z.B. $O(n)$, $O(n^2)$, $O(\log n)$)
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Laufzeit des Algorithmus}{Nicht optimierte Version}
+	\begin{align*}
+		 & (n-1)^2                                        \\
+		 \only<2->{& = \colorbox{yellow}{\ensuremath{n^2}} - 2n + 1 \\}
+		 \only<3->{& \Rightarrow O(n^2)                             }
+	\end{align*}
+\end{frame}
+
+\begin{frame}[fragile]{Laufzeit des Algorithmus}{Optimierte Version}
+	\begin{align*}
+		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Terme: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
+		\only<2->{
+			& = \overset{\text{Anzahl Paare: }\frac{n-1}{2}}{\overbrace{\textcolor{blue}{(1 + (n-1))} + \textcolor{red}{(2 + (n-2))} + \textcolor{ForestGreen}{(3 + (n-3))} + \ldots }}\\
+		}
+		\only<3->{
+			& = \textcolor{blue}{n} + \textcolor{red}{n} + \textcolor{ForestGreen}{n} + \ldots \\
+		}
+		\only<4->{& = \frac{(n-1) \cdot n}{2}\\}
+		\only<5->{& = \frac{1}{2}\colorbox{yellow}{\ensuremath{n^2}} - \frac{1}{2}n\\}
+		\only<6->{& \Rightarrow O(n^2)}
+	\end{align*}
+\end{frame}
+
+\begin{frame}[fragile]{Laufzeitkomplexität eines Codes analysieren}
+	Betrachten Sie folgenden Codes, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
+	\lstinputlisting[language=Python, basicstyle=\scriptsize\ttfamily,label=listing:count_common_elements]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/count_common_elements.py}
 \end{frame}
 
 

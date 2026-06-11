@@ -317,19 +317,7 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 	      Für eine Liste mit 6 Elementen ergibt das $\displaystyle\sum_{m=1}^{5} m = 1 + 2 + 3 + 4 + 5 = 15$ Vergleiche.
 \end{itemize}
 
-\begin{myremark}[Beweis der Laufzeit der optimierten Version]
-\label{myremark:laufzeit_bubble_sort}
-	Die Summe alles natürlichen Zahlen von 1 bis $k$ lässt sich folgendermassen als Formel ausdrücken:
-	\begin{align*}
-		\displaystyle\sum_{m=1}^{k} m & = \textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(k-2)} + \textcolor{red}{(k-1)} + \textcolor{blue}{k} \\
-		                              & = \textcolor{blue}{(1 + k)} + \textcolor{red}{(2 + (k-1))} + \textcolor{ForestGreen}{(3 + (k-2))} + \ldots                                                       \\
-		                              & = \textcolor{blue}{(k + 1)} + \textcolor{red}{(k + 1)} + \textcolor{ForestGreen}{(k + 1)} + \ldots                                                               \\
-		                              & = \frac{k \cdot (k + 1)}{2}\\
-											  & = \frac{1}{2}k^2 + \frac{1}{2}k
-	\end{align*}
 
-	Die Formel $\frac{(n-1) \cdot n}{2}$ ergibt sich aus der Tatsache, dass die Summe der ersten $k$ natürlichen Zahlen durch die Formel $\frac{k \cdot (k + 1)}{2}$ gegeben ist. Wenn wir für $k$ $n-1$ einsetzen, erhalten wir die Anzahl der Vergleiche in der optimierten Version des Bubble-Sort-Algorithmus: $\frac{(n-1) \cdot n}{2}$.
-\end{myremark}
 
 \begin{myremark}[Laufzeitkomplexität beider Varianten: Big-O-Notation]
 	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ (\enquote{Big O von f von n}) angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
@@ -343,6 +331,21 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 		      Auch hier dominiert die quadratische Komponente $\frac{1}{2}n^2$, wenn $n$ sehr gross wird, sodass die Laufzeit ebenfalls als $O(n^2)$ ausgedrückt wird.
 	\end{itemize}
 	Wir sehen also, dass die Optimierung die Anzahl der Vergleiche reduziert, aber die grundsätzliche Komplexität des Algorithmus bleibt $O(n^2)$.
+\end{myremark}
+
+\begin{myremark}[Laufzeit der optimierten Version]
+\label{myremark:laufzeit_bubble_sort}
+	Die Summe aller natürlichen Zahlen von 1 bis $n-2$ lässt sich folgendermassen als Formel ausdrücken:
+	\begin{align*}
+		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Terme: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
+		& = \overset{\text{Anzahl Paare: }\frac{n-1}{2}}{\overbrace{\textcolor{blue}{(1 + (n-1))} + \textcolor{red}{(2 + (n-2))} + \textcolor{ForestGreen}{(3 + (n-3))} + \ldots }}\\
+		& = \textcolor{blue}{n} + \textcolor{red}{n} + \textcolor{ForestGreen}{n} + \ldots \\
+		& = \frac{n-1}{2} \cdot n\\
+		& = \frac{1}{2}\colorbox{yellow}{\ensuremath{n^2}} - \frac{1}{2}n\\
+		& \Rightarrow O(n^2)
+	\end{align*}
+
+	In der ersten Zeile haben wir die Summe der Zahlen von 1 bis $n-1$ aufgeschrieben, die Summe setzt sich aus $n-1$ Termen zusammen. In der zweiten Zeile haben wir die Terme paarweise (mit gleichen Farben) addiert, so dass wir nun nur noch halb so viele Terme ($\frac{n-1}{2}$) haben. Jeder dieser Terme ist gleich $n$. Wir haben also am Schluss $\frac{n-1}{2}$ Terme, die alle gleich $n$ sind, was zu $\frac{(n-1) \cdot n}{2}$ führt. In der letzten Zeile haben wir die Formel in eine Form gebracht, die die quadratische Komponente $n^2$ hervorhebt, um die Laufzeit in der Big O-Notation zu bestimmen.
 \end{myremark}
 
 \subsubsection{Such-Algorithmen}
