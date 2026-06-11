@@ -202,7 +202,7 @@ for _ in range(len(x) - 1):
 
 \begin{frame}[fragile]{Laufzeit des Algorithmus}{Optimierte Version}
 	\begin{align*}
-		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Terme: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
+		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Summanden: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
 		\only<2->{
 			& = \overset{\text{Anzahl Paare: }\frac{n-1}{2}}{\overbrace{\textcolor{blue}{(1 + (n-1))} + \textcolor{red}{(2 + (n-2))} + \textcolor{ForestGreen}{(3 + (n-3))} + \ldots }}\\
 		}
