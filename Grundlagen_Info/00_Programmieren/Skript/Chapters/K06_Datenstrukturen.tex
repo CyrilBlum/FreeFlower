@@ -335,9 +335,9 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 
 \begin{myremark}[Laufzeit der optimierten Version]
 \label{myremark:laufzeit_bubble_sort}
-	Die Summe aller natürlichen Zahlen von 1 bis $n-2$ lässt sich folgendermassen als Formel ausdrücken:
+	Die Summe aller natürlichen Zahlen von 1 bis $n-1$ lässt sich folgendermassen als Formel ausdrücken:
 	\begin{align*}
-		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Terme: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
+		\sum_{m=1}^{n-1} m & = \overset{\text{Anzahl Summanden: }n-1}{\overbrace{\textcolor{blue}{1} + \textcolor{red}{2} + \textcolor{ForestGreen}{3} + \ldots + \textcolor{ForestGreen}{(n-3)} + \textcolor{red}{(n-2)} + \textcolor{blue}{(n-1)}}} \\
 		& = \overset{\text{Anzahl Paare: }\frac{n-1}{2}}{\overbrace{\textcolor{blue}{(1 + (n-1))} + \textcolor{red}{(2 + (n-2))} + \textcolor{ForestGreen}{(3 + (n-3))} + \ldots }}\\
 		& = \textcolor{blue}{n} + \textcolor{red}{n} + \textcolor{ForestGreen}{n} + \ldots \\
 		& = \frac{n-1}{2} \cdot n\\
@@ -345,7 +345,7 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 		& \Rightarrow O(n^2)
 	\end{align*}
 
-	In der ersten Zeile haben wir die Summe der Zahlen von 1 bis $n-1$ aufgeschrieben, die Summe setzt sich aus $n-1$ Termen zusammen. In der zweiten Zeile haben wir die Terme paarweise (mit gleichen Farben) addiert, so dass wir nun nur noch halb so viele Terme ($\frac{n-1}{2}$) haben. Jeder dieser Terme ist gleich $n$. Wir haben also am Schluss $\frac{n-1}{2}$ Terme, die alle gleich $n$ sind, was zu $\frac{(n-1) \cdot n}{2}$ führt. In der letzten Zeile haben wir die Formel in eine Form gebracht, die die quadratische Komponente $n^2$ hervorhebt, um die Laufzeit in der Big O-Notation zu bestimmen.
+	In der ersten Zeile haben wir die Summe der Zahlen von 1 bis $n-1$ aufgeschrieben, die Summe setzt sich aus $n-1$ Summanden (Bestandteilen) zusammen. In der zweiten Zeile haben wir die Summanden mit gleichen Farben zu Paaren zusammengefasst, so dass wir nun nur noch halb so viele Paare ($\frac{n-1}{2}$) haben. Jedes dieser Paare ist gleich $n$. Wir haben also am Schluss $\frac{n-1}{2}$ Paare, die alle gleich $n$ sind, was zu $\frac{(n-1)}{2}\cdot n$ führt. In der letzten Zeile haben wir die Formel in eine Form gebracht, die die quadratische Komponente $n^2$ hervorhebt, um die Laufzeit in der Big-O-Notation zu bestimmen.
 \end{myremark}
 
 \subsubsection{Such-Algorithmen}
