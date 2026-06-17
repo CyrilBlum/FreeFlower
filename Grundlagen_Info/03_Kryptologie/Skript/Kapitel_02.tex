@@ -333,10 +333,7 @@ Der Kasiski-Test erlaubt uns, Hinweise auf die Schlüssellänge zu erhalten, ohn
 	\item Die Sequenzen \texttt{HMP} und \texttt{IKB} erscheinen je zweimal im Geheimtext.
 	\item Die Sequenz \texttt{HMP} befindet sich an den Positionen 7 und 19. Die Differenz zwischen diesen Positionen beträgt 12. Wenn beide \texttt{HMP} das gleiche Trigramm kodieren (in diesem Fall das Trigramm \texttt{EIN}), muss die Schlüssellänge ein Teiler von 12 sein.
 	\item Die Sequenz \texttt{IKB} befindet sich an den Positionen 24 und 32. Die Differenz zwischen diesen Positionen beträgt 8. Wenn beide \texttt{IKB} das gleiche Trigramm kodieren, muss die Schlüssellänge ein Teiler von 8 sein.
-	      %   \begin{tcolorbox}
-	      %       $\mathbf{\underset{\text{Position 1 \texttt{IKB}}}{8}+\underset{\text{Anzahl Codewörter}}{6}\times \underset{\text{Codewort-Länge!}}{\blue{4}} = \underset{\text{Position 2 \texttt{IKB}}}{32}}$
-	      %   \end{tcolorbox}
-	\item Die gemeinsamen Teiler von 24 und 8 sind 1, 2 und 4. Die Schlüssellänge muss einer dieser Teiler sein. Aus dieser Information alleine können wir die Schlüssellänge nicht eindeutig bestimmen, aber wir haben die Anzahl der Möglichkeiten bereits stark eingeschränkt. In diesem Fall ist die korrekte Schlüssellänge 4.
+	\item Die gemeinsamen Teiler von 12 und 8 sind 1, 2 und 4. Die Schlüssellänge muss einer dieser Teiler sein. Aus dieser Information alleine können wir die Schlüssellänge nicht eindeutig bestimmen, aber wir haben die Anzahl der Möglichkeiten bereits stark eingeschränkt. In diesem Fall ist die korrekte Schlüssellänge 4.
 \end{itemize}
 \end{myexample}
 
