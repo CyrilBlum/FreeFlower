@@ -1,0 +1,219 @@
+% command to make sure colorboxes don't create whitespace between code lines
+\fboxsep=.6pt
+
+% default settings for listings (assuming Python/MicroPython context as per complexity.tex)
+\lstset{style=python, basicstyle=\ttfamily\footnotesize}
+
+\title[Robotik]{Analoge Signale \& PWM}
+\subtitle{Potentiometer, Dimmung und die digitale Kerze}
+
+% \author[Graf, Thomas] 
+% {}
+
+\institute[KLW] 
+{
+	Kantonsschule Im Lee
+}
+
+\date[\today] 
+
+\logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
+
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+
+\frame{\titlepage}
+
+\begin{frame}{Motivation: Die Welt ist nicht nur 0 oder 1}
+	\begin{itemize}[<+->]
+		\item Bisher haben wir meist \textbf{digital} gedacht:
+		\begin{itemize}
+			\item Schalter an oder aus.
+			\item LED leuchtet oder leuchtet nicht.
+		\end{itemize}
+		\item Unsere Umwelt ist jedoch \textbf{analog}:
+		\begin{itemize}
+			\item Die Helligkeit der Sonne nimmt stufenlos zu.
+			\item Ein Lautstärkeregler hat unendlich viele Zwischenstufen.
+			\item Temperaturen springen nicht von 20 auf 21 Grad.
+		\end{itemize}
+		\item \textbf{Ziel heute:} Wie versteht ein digitaler Computer diese analogen Werte?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Diskussion im Plenum}
+	Wo begegnen uns im Alltag analoge Eingabegeräte, die wir mit einem Computer (oder Mikrocontroller) steuern möchten?
+	\pause
+	\begin{itemize}[<+->]
+		\item Gaspedal im Auto / E-Scooter
+		\item Joystick-Achsen beim Gaming
+		\item Lichtdimmer an der Wand
+		\item Thermostat-Drehregler
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Lernziele für zwei Lektionen}
+	\begin{itemize}[<+->]
+		\item Sie verstehen den Unterschied zwischen \textbf{Analog-In} (ADC) und \textbf{Analog-Out} (PWM).
+		\item Sie können ein Potentiometer auslesen und die Werte im Code verarbeiten.
+		\item Sie können die Helligkeit einer LED stufenlos steuern.
+		\item Sie implementieren eine \enquote{digitale Kerze}, die realistisches Flackern simuliert.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Der Analog-Digital-Wandler (ADC)}
+	\begin{itemize}[<+->]
+		\item Ein Computer kennt nur Bits ($0$ und $1$). 
+		\item Ein ADC (Analog-to-Digital Converter) misst eine Spannung und wandelt sie in eine Zahl um.
+		\item \textbf{Beispiel 10-Bit Auflösung:}
+		\begin{itemize}
+			\item $0$ Volt $\rightarrow$ Zahl $0$
+			\item $3.3$ Volt $\rightarrow$ Zahl $1023$ ($2^{10} - 1$)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Hardware: Das Potentiometer}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{itemize}[<+->]
+				\item Ein veränderbarer Widerstand.
+				\item Durch Drehen verändern wir das Spannungsverhältnis am mittleren Pin.
+				\item \textbf{Anschluss:} 
+				\begin{enumerate}
+					\item $3.3$V (VCC)
+					\item Signal (Analog Pin)
+					\item GND
+				\end{enumerate}
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			% Platzhalter für eine Skizze oder Foto
+			\centering
+			\fbox{Grafik: Potentiometer Schema}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Eingabe messen}
+	\begin{myexercise}
+    Stellen Sie sich vor, wir lesen ein Potentiometer mit einem 10-Bit ADC aus. Der gelesene Wert ist $512$.
+    
+    Welche Spannung liegt (bei einer Referenz von $3.3$V) ungefähr am Pin an?
+	\end{myexercise}
+\end{frame}
+
+\begin{frame}
+\begin{myanswer}
+    Da $512$ genau die Hälfte von $1024$ ist, liegt die Spannung bei der Hälfte der Referenzspannung:
+    \[ \frac{512}{1024} \cdot 3.3V = 1.65V \]
+\end{myanswer}
+\end{frame}
+
+\begin{frame}{Ausgabe: Wie dimmen wir eine LED?}
+	\begin{itemize}[<+->]
+		\item Ein digitaler Pin kann nur \textbf{AN} ($3.3$V) oder \textbf{AUS} ($0$V).
+		\item Wir können die Spannung am Pin meist \textit{nicht} direkt senken.
+		\item \textbf{Trick:} Pulsweitenmodulation (PWM).
+		\item Wir schalten die LED so schnell an und aus, dass das menschliche Auge nur die \enquote{mittlere} Helligkeit wahrnimmt.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{PWM: Duty Cycle (Tastgrad)}
+	\begin{itemize}[<+->]
+		\item \textbf{10\% Duty Cycle:} Kurz AN, lange AUS $\rightarrow$ Dunkel.
+		\item \textbf{50\% Duty Cycle:} Gleich lang AN wie AUS $\rightarrow$ Mittlere Helligkeit.
+		\item \textbf{90\% Duty Cycle:} Fast immer AN $\rightarrow$ Hell.
+	\end{itemize}
+	\vspace{0.5cm}
+	\begin{center}
+		\begin{tikzpicture}[scale=0.7]
+			% 25% PWM
+			\draw[thick] (0,1) -- (0.5,1) -- (0.5,0) -- (2,0) -- (2,1) -- (2.5,1) -- (2.5,0) -- (4,0);
+			\node at (-1,0.5) {25\%};
+			% 75% PWM
+			\draw[thick] (6,1) -- (7.5,1) -- (7.5,0) -- (8,0) -- (8,1) -- (9.5,1) -- (9.5,0) -- (10,0);
+			\node at (5,0.5) {75\%};
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Projekt: Die digitale Kerze}
+	\begin{itemize}[<+->]
+		\item Eine echte Kerze brennt nicht konstant.
+		\item Das Flackern ist eine Mischung aus \textbf{Zufall} und \textbf{schnellen Helligkeitswechseln}.
+	\end{itemize}
+	\pause
+	\begin{myexercise}
+		Entwerfen Sie einen Algorithmus (Pseudocode), der eine LED wie eine Kerze flackern lässt. Nutzen Sie dafür PWM-Werte zwischen $0$ und $255$.
+	\end{myexercise}
+\end{frame}
+
+\begin{frame}{Projekt: Bau der flackernden Kerze}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\textbf{Materialliste:}
+			\begin{itemize}
+				\item Mikrocontroller (ESP32 / Pico)
+				\item 1x LED (Gelb oder Orange)
+				\item 1x Vorwiderstand (220 $\Omega$)
+				\item 1x Potentiometer
+				\item Breadboard \& Kabel
+				\item \textit{Optional:} Transparentpapier für den \enquote{Schirm}
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\fbox{Grafik: Steckplan LED + Poti}
+			\vspace{0.5cm}
+			\begin{itemize}
+				\item LED an PWM-Pin
+				\item Poti an ADC-Pin
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Der Algorithmus: Was macht eine Kerze aus?}
+	\begin{itemize}[<+->]
+		\item \textbf{Basis-Helligkeit:} Ein konstanter Lichtstrom (eingestellt via Poti).
+		\item \textbf{Rauschen:} Kleine, schnelle Änderungen der Helligkeit.
+		\item \textbf{Flackern:} Gelegentliche, grössere \enquote{Sprünge} nach unten (Windstoss).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{myanswer}
+    Mögliche Umsetzung in MicroPython:
+\begin{lstlisting}[language=Python]
+import machine, time, random
+
+led = machine.PWM(machine.Pin(15))
+led.freq(1000)
+
+while True:
+    # Erzeuge zufaellige Helligkeit (flackern)
+    brightness = random.randint(20, 150) 
+    led.duty_u16(brightness * 256) # auf 16-bit skalieren
+    
+    # Zufallige kurze Pause
+    time.sleep_ms(random.randint(10, 100))
+\end{lstlisting}
+\end{myanswer}
+\end{frame}
+
+\begin{frame}{Challenge: Kombinieren!}
+	\begin{myexercise}
+		Erstellen Sie ein Programm, das:
+		\begin{enumerate}
+			\item Den \textbf{Grund-Helligkeitswert} einer Kerze über ein Potentiometer einstellt.
+			\item Das Flackern (Zufall) um diesen Grundwert herum variiert.
+		\end{enumerate}
+	\end{myexercise}
+\end{frame}
+
+\begin{frame}{Zusatzaufgabe für Profis}
+	\begin{itemize}
+		\item Verwenden Sie \textbf{zwei LEDs} (z.B. Rot und Gelb), um ein realistischeres Farbspektrum beim Flackern zu erzeugen.
+		\item Implementieren Sie ein \enquote{Auspusten}: Wenn der ADC-Wert (z.B. von einem Geräuschsensor oder durch schnelles Drehen des Potis) einen Schwellenwert überschreitet, geht die Kerze aus.
+	\end{itemize}
+\end{frame}
