@@ -227,7 +227,7 @@ liste_rabatte = [30, 40, 30, 35, 20, 15, 35]
 
 	Der rabattierte Preis eines einzelnen Produkts wird folgendermassen berechnet:
 	\begin{lstlisting}
-preis_rabattiert = preis_normal * (1 - rabatt_in_prozent / 100)
+preis_rabattiert = preis_ohne_rabatt * (100 - rabatt_prozent) / 100
 \end{lstlisting}
 	Schreiben Sie eine Funktion, die die rabattierten Preise für alle Produkte berechnet und als Liste auf der Konsole ausgibt. Sie müssen die Preise nicht runden.
 

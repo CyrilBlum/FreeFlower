@@ -35,6 +35,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    # Add TeX Live to PATH
+    - name: Add TeX Live to PATH
+      run: echo "/mnt/HC_Volume_100926434/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
+
     # Debug runner environment
     - name: Debug runner environment
       shell: bash
