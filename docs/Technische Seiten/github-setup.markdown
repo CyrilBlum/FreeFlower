@@ -3,6 +3,7 @@ layout: default
 title: GitHub einrichten
 parent: Technische Seiten
 nav_order: 3
+permalink: /github-setup.html
 ---
 
 # GitHub einrichten

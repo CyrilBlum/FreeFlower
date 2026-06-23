@@ -3,6 +3,7 @@ layout: default
 title: VS Code + Python Setup
 parent: Technische Seiten
 nav_order: 1
+permalink: /vscode-python-setup.html
 ---
 
 # VS Code für Python einrichten (macOS und Windows)

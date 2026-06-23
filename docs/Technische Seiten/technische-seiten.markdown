@@ -3,6 +3,7 @@ layout: default
 title: Technische Seiten
 nav_order: 7
 has_children: true
+permalink: /technische-seiten.html
 ---
 
 # Technische Seiten
