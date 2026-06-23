@@ -304,36 +304,69 @@ Folgender Code zeigt, wie der Bubble-Sort-Algorithmus in Python implementiert we
 	\end{myanswer}
 \end{myexercise}
 
-Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die Laufzeit des Algorithmus quadratisch mit der Anzahl der Werte in der Liste wächst. Dies macht den Bubble-Sort-Algorithmus für grosse Datenmengen ineffizient. Aufgrund der inneren Schleife (\lstinline|for _ in range(n - 1 - i)|) kann die Laufzeit noch geringfügig verbessert werden: In jedem Durchlauf der äusseren Schleife ist das jeweils grösste Element bereits an die richtige Position gewandert, sodass die innere Schleife jedes Mal um ein Element kürzer wird.
+\subsubsection{Zeitkomplexität}
 
-\begin{itemize}
-	\item \textbf{nicht optimierte Version:} Die Anzahl der Vergleiche beträgt \[(n-1)^2\]
-	      Das bedeutet: Für eine Liste mit 6 Elementen sind das $5^2 = 25$ Vergleiche.
-	\item \textbf{optimierte Version:} Die Anzahl der Vergleiche entspricht der Summe der Zahlen von 1 bis $n-1$:
-	      \[
-		      (n-1) + (n-2) + \ldots + 2 + 1 = \displaystyle\sum_{m=1}^{n-1} m = \frac{(n-1) \cdot n}{2}
-	      \]
+Um zu verstehen, wie lange ein Algorithmus benötigt, um eine Aufgabe zu lösen, ist es wichtig, die Zeitkomplexität des Algorithmus zu analysieren. Wenn ein Algorithmus beispielsweise mit grösserwerdender Anzahl Zahlen im Quadrat länger dauert, ist dies viel ungünstiger als ein Algorithmus, der so lange dauert, wie die Anzahl der Zahlen. In der Informatik wird die Zeitkomplexität eines Algorithmus oft in Bezug auf die Eingabegrösse angegeben, um zu verstehen, wie sich die Laufzeit des Algorithmus mit zunehmender Eingabegrösse verändert. Im vorliegenden Fall ist die Eingabegrösse die Anzahl der Werte in der Liste, die sortiert werden soll.
 
-	      Für eine Liste mit 6 Elementen ergibt das $\displaystyle\sum_{m=1}^{5} m = 1 + 2 + 3 + 4 + 5 = 15$ Vergleiche.
-\end{itemize}
+Der Bubble-Sort-Algorithmus verwendet zwei verschachtelte Schleifen: die äussere Schleife durchläuft die Liste $n-$ Mal, und die innere Schleife durchläuft die Liste ebenfalls $n-1$ Mal, um die benachbarten Werte zu vergleichen und zu vertauschen. Die gesamte Anzahl der Vergleiche, die der Algorithmus durchführt, ist also $(n-1)^2$. Durch Umformung dieser Gleichung erhalten wir:
+\[(n-1)^2=\colorbox{yellow}{\ensuremath{n^2}}-2n+1\]
+Wir erkennen, dass bei sehr grossen Werten von $n$ die quadratische Komponente $\colorbox{yellow}{\ensuremath{n^2}}$ dominiert, während die lineare Komponente $-2n$ und die Konstante $1$ im Vergleich vernachlässigbar werden. Daher wird die Zeitkomplexität des Bubble-Sort-Algorithmus als $O(n^2)$ ausgedrückt (s. \cref{mydefinition:big_o_notation}).
 
-
-
-\begin{myremark}[Laufzeitkomplexität beider Varianten: Big-O-Notation]
+\begin{mydefinition}[Big-O-Notation]
+	\label{mydefinition:big_o_notation}
 	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ (\enquote{Big O von f von n}) angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
 
-	In der Big-O-Notation werden nur die dominanten Terme berücksichtigt, da sie den Hauptfaktor für das Wachstum der Laufzeit darstellen. In unserem Fall haben sowohl die nicht optimierte als auch die optimierte Version des Bubble-Sort-Algorithmus eine quadratische Komponente ($n^2$), die dominiert, wenn $n$ sehr gross wird. Daher wird die Laufzeit beider Varianten als $O(n^2)$ ausgedrückt, obwohl die optimierte Version tatsächlich weniger Vergleiche durchführt als die nicht optimierte Version. Entscheidend ist nur der Term, der das Wachstum der Laufzeit dominiert, und in diesem Fall ist es die quadratische Komponente $n^2$.
+	In der Big-O-Notation werden nur die dominanten Terme berücksichtigt, da sie den Hauptfaktor für das Wachstum der Laufzeit darstellen. Im Fall von Bubble Sort dominiert die quadratische Komponente ($n^2$), wenn $n$ sehr gross wird. Daher wird die Laufzeit des Algorithmus als $O(n^2)$ ausgedrückt. Entscheidend ist nur der Term, der das Wachstum der Laufzeit dominiert, und in diesem Fall ist es die quadratische Komponente $n^2$.
+
+	Verschiedene typische Laufzeiten von Algorithmen werden in der Big-O-Notation wie folgt ausgedrückt:
 	\begin{itemize}
-		\item \textbf{nicht optimierte Version:} Die Anzahl der Vergleiche beträgt \[(n-1)^2 = \colorbox{yellow}{\ensuremath{n^2}} - 2n + 1\]
+		\item $O(1)$: konstante Laufzeit, unabhängig von der Eingabegrösse
+		\item $O(\log n)$: logarithmische Laufzeit, z.B. bei binärer Suche
+		\item $O(n)$: lineare Laufzeit, z.B. bei einfacher Iteration durch eine Liste
+		\item $O(n \log n)$: lineare-logarithmische Laufzeit, z.B. bei effizienten Sortieralgorithmen wie Mergesort oder Quicksort
+		\item $O(n^2)$: quadratische Laufzeit, z.B. bei einfachen Sortieralgorithmen wie Bubble Sort oder Insertion Sort
+		\item $O(n^3)$: kubische Laufzeit, z.B. bei bestimmten Algorithmen für Matrizenmultiplikation
+		\item $O(2^n)$: exponentielle Laufzeit, z.B. bei bestimmten rekursiven Algorithmen
+		\item $O(n!)$: faktoriale Laufzeit, z.B. bei bestimmten Brute-Force-Algorithmen
+	\end{itemize}
+
+	Einige dieser Laufzeiten sind in \cref{fig:big-o-complexities} grafisch dargestellt, um die Unterschiede in der Wachstumsrate zu verdeutlichen.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]{Grundlagen_Info/00_Programmieren/Skript/Figures/big_o_complexities_plot.pdf}
+		\caption{Grafischer Vergleich wichtiger Laufzeiten in Abhängigkeit von der Eingabegrösse $n$}
+		\label{fig:big-o-complexities}
+	\end{figure}
+\end{mydefinition}
+
+
+\begin{myexample}[Laufzeitkomplexität beider Bubble-Sort-Varianten: Big-O-Notation]
+	Die Laufzeitkomplexität des Bubble-Sort-Algorithmus kann folgendermassen in der Big-O-Notation ausgedrückt werden:
+	\begin{itemize}
+		\item \textbf{nicht optimierte Version:} Da wir zwei verschachtelte Schleifen haben, die je $n-1$ Durchläufe machen, beträgt die Anzahl der Vergleiche \[(n-1)^2\]
+		      Das bedeutet: Für eine Liste mit 6 Elementen sind das $5^2 = 25$ Vergleiche.
+		      Die Anzahl der Vergleiche beträgt \[(n-1)^2 = \colorbox{yellow}{\ensuremath{n^2}} - 2n + 1\]
 		      In der Big O-Notation wird dies als $O(n^2)$ ausgedrückt, da die quadratische Komponente $n^2$ dominiert, wenn $n$ sehr gross wird.
-		\item \textbf{optimierte Version:} Die Anzahl der Vergleiche entspricht der Summe der Zahlen von 1 bis $n-1$, was durch die Formel $\frac{(n-1) \cdot n}{2}$ gegeben ist (s. \cref{myremark:laufzeit_bubble_sort}).
+		\item \textbf{optimierte Version:}
+		      In der optimierten Version wird die innere Schleife nach jedem Durchlauf der äusseren Schleife um 1 verkleinert, da das grösste Element nach jedem Durchlauf an die richtige Position verschoben wird. Daher werden im ersten Durchlauf $n-1$ Vergleiche durchgeführt, im zweiten Durchlauf $n-2$ Vergleiche, und so weiter, bis im letzten Durchlauf nur noch 1 Vergleich durchgeführt wird. Die Anzahl der Vergleiche entspricht daher der Summe der Zahlen von 1 bis $n-1$. Für eine Liste mit 6 Elementen ergibt das also beispielsweise $\displaystyle\sum_{m=1}^{5} m = 1 + 2 + 3 + 4 + 5 = 15$ Vergleiche.
+
+		      Diese Summe der Zahlen von 1 bis $n-1$ kann mit folgender Formel berechnet werden:
+		      \[
+			      (n-1) + (n-2) + \ldots + 2 + 1 = \displaystyle\sum_{m=1}^{n-1} m = \frac{(n-1) \cdot n}{2}
+		      \]
+
+		      Die Herleitung dieser Formel ist in \cref{myremark:laufzeit_bubble_sort} dargestellt.
+
+
+		      Die Formel lässt sich wie folgt umformen, um die quadratische Komponente $n^2$ hervorzuheben:
 		      \[\frac{(n-1) \cdot n}{2}  = \frac{1}{2}\colorbox{yellow}{\ensuremath{n^2}} - \frac{1}{2}n\]
-		      Auch hier dominiert die quadratische Komponente $\frac{1}{2}n^2$, wenn $n$ sehr gross wird, sodass die Laufzeit ebenfalls als $O(n^2)$ ausgedrückt wird.
+		      Auch in der \enquote{optimierten} Version dominiert die quadratische Komponente $n^2$, wenn $n$ sehr gross wird, sodass die Laufzeit ebenfalls als $O(n^2)$ ausgedrückt wird.
 	\end{itemize}
 	Wir sehen also, dass die Optimierung die Anzahl der Vergleiche reduziert, aber die grundsätzliche Komplexität des Algorithmus bleibt $O(n^2)$.
-\end{myremark}
+\end{myexample}
 
-\begin{myremark}[Laufzeit der optimierten Version]
+\begin{myexample}[Laufzeit der optimierten Version]
 	\label{myremark:laufzeit_bubble_sort}
 	Die Summe aller natürlichen Zahlen von 1 bis $n-1$ lässt sich folgendermassen als Formel ausdrücken:
 	\begin{align*}
@@ -346,7 +379,7 @@ Der Algorithmus hat eine Zeitkomplexität von $O(n^2)$, was bedeutet, dass die L
 	\end{align*}
 
 	In der ersten Zeile haben wir die Summe der Zahlen von 1 bis $n-1$ aufgeschrieben, die Summe setzt sich aus $n-1$ Summanden (Bestandteilen) zusammen. In der zweiten Zeile haben wir die Summanden mit gleichen Farben zu Paaren zusammengefasst, so dass wir nun nur noch halb so viele Paare ($\frac{n-1}{2}$) haben. Jedes dieser Paare ist gleich $n$. Wir haben also am Schluss $\frac{n-1}{2}$ Paare, die alle gleich $n$ sind, was zu $\frac{(n-1)}{2}\cdot n$ führt. In der letzten Zeile haben wir die Formel in eine Form gebracht, die die quadratische Komponente $n^2$ hervorhebt, um die Laufzeit in der Big-O-Notation zu bestimmen.
-\end{myremark}
+\end{myexample}
 
 \subsubsection{Such-Algorithmen}
 In der Informatik stellt sich häufig die Frage, wie man möglichst schnell herausfinden kann, ob eine bestimmte Zahl in einer Liste enthalten ist. Dies kann beispielsweise bei der Suche nach einem Namen in einem Telefonbuch oder bei der Suche nach einem Produkt in einem Online-Shop der Fall sein. Die Effizienz der Suche hängt stark davon ab, wie die Daten organisiert sind.
@@ -494,7 +527,7 @@ Häufig müssen Listen verändert werden, beispielsweise um Elemente hinzuzufüg
 	Funktionen und Methoden sind beides Möglichkeiten, um eine bestimmte Aufgabe auszuführen. Der Hauptunterschied zwischen ihnen besteht darin, dass Funktionen unabhängig von einem Objekt (Variable) definiert werden, während Methoden an ein Objekt (Variable) gebunden sind und auf dieses Objekt angewendet werden.
 
 	Ein Beispiel für eine Funktion ist:
-	
+
 	\begin{minipage}{\textwidth}
 
 		\begin{lstlisting}
