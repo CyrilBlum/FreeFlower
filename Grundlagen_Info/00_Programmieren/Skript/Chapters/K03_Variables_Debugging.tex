@@ -312,7 +312,7 @@ Zeichenketten können verkettet, also aneinandergehängt werden:
 	wort = "Kan" + "tons" + "schule"
 	print(wort) # Kantonsschule
 \end{lstlisting}
-Die \enquote{Addition} von Strings wird \emph{Konkatenation}\index{Konkatenation} (Englisch: \emph{concatenation}) genannt.
+Das Zusammenfügen, also die \enquote{Addition} von Strings wird \emph{Konkatenation}\index{Konkatenation} (Englisch: \emph{concatenation}) genannt.
 
 Strings können mithilfe des \lstinline{*}-Operators vervielfacht werden:
 \begin{lstlisting}
@@ -410,6 +410,7 @@ m = 30
 quot = n / m
 print(f"{n} durch {m} ist {quot:.2f}")
 \end{lstlisting}
+Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungszeichen zu setzen. Sie sollten dabei beobachten, dass der Text \lstinline|{n} durch {m} ist {quot:.2f}| unverändert ausgegeben wird, da die Variablen nicht ausgewertet werden. Durch das kleine \lstinline|f| vor den Anführungszeichen wird Python angewiesen, die Variablen innerhalb der geschweiften Klammern auszuwerten und deren Wert an dieser Stelle einzufügen.
 \end{myexample}
 
 \begin{myexercise}
