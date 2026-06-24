@@ -209,14 +209,14 @@ Wenn die Schlüssellänge eines mit Vigenère verschlüsselten Texts bekannt ist
 Das Vorgehen ist exemplarisch in \cref{myexample:vigHaufigkeitGruppen} beschrieben.
 
 \begin{myexample}[Häufigkeitsanalyse von Vigenère bei bekannter Schlüssellänge]\label{myexample:vigHaufigkeitGruppen}
-Angenommen, wir wüssten, dass folgender Kyrptotext durch die Verwendung eines  Vigenère-Schlüssels der Länge 3 entstanden ist:
+Angenommen, wir wüssten, dass folgender Kryptotext durch die Verwendung eines  Vigenère-Schlüssels der Länge 3 entstanden ist:
 
 \texttt{\colorstring[ForestGreen,RoyalBlue,Crimson]{MKUMYBVFLZDHZGOMKAMTRMKAPCAUGPVGNIPGMULMNLMKUOGUWOTMPNTGPKJKMPZCGZAGUNTBMJSQPNAOVZILVFPMKJPOPBIHVBLUJLZBLVILVKLAULQEOJKUINSMKUCPKNTLCGTQEOUGPVGZTGIMPZQPKQGZMTNMILVFKQGMCGYAQSKJLAGLTGUOGZKJHNHLVKZBYPMFPMOLQPLQEOJKUAQNTWLKMSQEOUGPVDLAVLZUVOCUHKULGTOGMCGOTGCWPYCJPOGTLCZMKUDGYAWUSGULCZAOLQPLSWUAVKITBVVLZNLQFLBKJPMVMPUBGQMVGBPPKJAHGPKJUMPUQEOBGPVGUAVYQEOCPKJKUVKLMKUOTVMUZMTLZOHTGYOGDMULVCSAKULKLAGUIWNMPITKJSGUEGUVFHANPMDL}}
 
 Alle grünen Buchstaben entstanden durch eine Verschiebung entsprechende dem ersten Buchstaben des Vigenère-Schlüssels, alle blauen Buchstaben durch eine Verschiebung entsprechend dem zweiten Buchstaben des Vigenère-Schlüssels und alle roten Buchstaben durch eine Verschiebung entsprechend dem dritten Buchstaben des Vigenère-Schlüssels.
 
 \par
-Wenn wir die grünen, blauen und roten blauen Buchstaben jeweils zu einem eigenen Kyrptotext zusammenfassen, erhalten wir drei verschiedene Kryptotexte, welche jeweils durch eine Caesar-Verschiebung entstanden.
+Wenn wir die grünen, blauen und roten blauen Buchstaben jeweils zu einem eigenen Kryptotext zusammenfassen, erhalten wir drei verschiedene Kryptotexte, welche jeweils durch eine Caesar-Verschiebung entstanden.
 Damit können wir die auf jede der drei Gruppen (grün, blau, rot) die Häufigkeitsanalyse (genau analog zu \cref{sec:kryptoanalyse_caesar}) anwenden, um innerhalb der jeweiligen Gruppe die Verschiebung zu erraten, welche durch den entsprechenden Vigenère-Schlüsselbuchstaben definiert ist.
 
 \par
@@ -639,7 +639,7 @@ Essentiell handelt es sich beim \gls{OTP} um dasselbe Verschlüsselungsverfahren
 	\begin{description}
 		\item[Klartextalphabet:] Alphabet der lateinischen Grossbuchstaben.
 		\item[Kryptotextalphabet:] Alphabet der lateinischen Grossbuchstaben.
-		\item[Schlüsselmenge:] Alle denkbaren Texte bestehend aus lateinischen Grossbuchstaben, welche dieselbe Länge haben wie der Klartext. Es ist wichtig, dass für jeden Klartext ein Schlüssel zufällig generiert wird.
+		\item[Schlüsselmenge:] alle denkbaren Texte, bestehend aus lateinischen Grossbuchstaben, welche dieselbe Länge haben wie der Klartext. Es ist wichtig, dass für jeden Klartext ein Schlüssel zufällig generiert wird.
 		\item[Verschlüsselung:] Gegeben ist ein zufällig gewählter Schlüssel $s$ aus der Schlüsselmenge. Der gegebene Klartext wird nun (wie gewohnt) mit Hilfe der Vigenère-Tabelle mit dem Schlüssel $s$ verschlüsselt. Der Schlüssel darf danach nicht mehr verwendet werden.
 		\item[Entschlüsselung:] Gegeben ist ein zufällig gewählter Schlüssel $s$ aus der Schlüsselmenge. Der gegebene Kryptotext wird (wie gewohnt) durch Vigenère mit dem Schlüssel $s$ entschlüsselt.
 	\end{description}
