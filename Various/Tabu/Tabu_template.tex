@@ -1,7 +1,8 @@
+\geometry{paperwidth=22cm, paperheight=8cm, margin=0.5cm}
 \begin{document}
 
 % Seitengeometrie für Tabu-Karten (Querformat 21:9)
-\newgeometry{paperwidth=42cm, paperheight=18cm, margin=0.5cm}
+
 \pagestyle{empty}
 
 \huge
@@ -40,6 +41,8 @@
     \newpage
 }
 
+\newgeometry{paperwidth=42cm,paperheight=18cm,margin=0.5cm}
+
 \section*{\Huge Tabu}
 \textbf{Ablauf}
 \begin{itemize}
@@ -58,6 +61,7 @@
 \end{itemize}
 
 \newpage
+\restoregeometry
 
 \tabucard{Beispiel: Turtle}{
 Schildkröte, zeichnen, Python, Code, Spirale
