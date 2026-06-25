@@ -1,0 +1,65 @@
+\begin{document}
+
+% Seitengeometrie für Tabu-Karten (Querformat 21:9)
+\newgeometry{paperwidth=42cm, paperheight=18cm, margin=0.5cm}
+\pagestyle{empty}
+
+\huge
+\newcommand{\tabucard}[2]{
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=black,
+        boxrule=2pt,
+        arc=0pt,
+        height=\textheight,
+        width=\textwidth,
+        valign=center,
+        halign=center,
+        nobeforeafter
+    ]
+        \vspace*{\fill}
+        \begin{center}
+            \textbf{\Huge #1}
+            
+            \vspace{1.5cm}
+            
+            \begin{tcolorbox}[
+                colback=lightgray,
+                colframe=black,
+                boxrule=1.5pt,
+                arc=4pt,
+                width=0.85\textwidth,
+                nobeforeafter
+            ]
+                \textbf{\Large Tabu-Wörter:} \\[0.5cm]
+                \Large #2
+            \end{tcolorbox}
+        \end{center}
+        \vspace*{\fill}
+    \end{tcolorbox}
+    \newpage
+}
+
+\section*{\Huge Tabu}
+\textbf{Ablauf}
+\begin{itemize}
+\item \textbf{2 Gruppen}
+\item \textbf{Ziel}: Möglichst viele Wörter erraten
+\item \emoji{hourglass} \textbf{Zeit}: \textbf{1 Minute} pro Gruppe 
+\item Möglichkeit, \textbf{1 Wort pro Runde} zu \textbf{überspringen}
+\item Je nach Zeit: \textbf{Finale} \emoji{trophy}
+\end{itemize}
+
+\textbf{Regeln}:
+\begin{itemize}
+\item \textbf{Verboten}: Wort selber und Tabu-Wörter
+\item \textbf{Keine Wörter übersetzen} (weder Wort selber noch Tabu-Wörter)
+\item \textbf{Keine Teil-Wörter} erlaubt (z.B. Fahrradlenker $\rightarrow$ \sout{Fahrrad}, \sout{Lenker})
+\end{itemize}
+
+\newpage
+
+\tabucard{Beispiel: Turtle}{
+Schildkröte, zeichnen, Python, Code, Spirale
+}
+

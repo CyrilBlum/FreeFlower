@@ -1,0 +1,10 @@
+# Tabu Kategorien - Toggles (true = aktiviert, false = deaktiviert)
+
+Informatik: true
+Jugendwörter: true
+Musik: true
+Essen: true
+Sport: true
+Schule: true
+Tiere: true
+Sonstiges: true

@@ -1,0 +1,362 @@
+\begin{document}
+
+% Seitengeometrie für Tabu-Karten (Querformat 21:9)
+\newgeometry{paperwidth=42cm, paperheight=18cm, margin=0.5cm}
+\pagestyle{empty}
+
+\huge
+\newcommand{\tabucard}[2]{
+    \begin{tcolorbox}[
+        colback=white,
+        colframe=black,
+        boxrule=2pt,
+        arc=0pt,
+        height=\textheight,
+        width=\textwidth,
+        valign=center,
+        halign=center,
+        nobeforeafter
+    ]
+        \vspace*{\fill}
+        \begin{center}
+            \textbf{\Huge #1}
+            
+            \vspace{1.5cm}
+            
+            \begin{tcolorbox}[
+                colback=lightgray,
+                colframe=black,
+                boxrule=1.5pt,
+                arc=4pt,
+                width=0.85\textwidth,
+                nobeforeafter
+            ]
+                \textbf{\Large Tabu-Wörter:} \\[0.5cm]
+                \Large #2
+            \end{tcolorbox}
+        \end{center}
+        \vspace*{\fill}
+    \end{tcolorbox}
+    \newpage
+}
+
+\section*{\Huge Tabu}
+\textbf{Ablauf}
+\begin{itemize}
+\item \textbf{2 Gruppen}
+\item \textbf{Ziel}: Möglichst viele Wörter erraten
+\item \emoji{hourglass} \textbf{Zeit}: \textbf{1 Minute} pro Gruppe 
+\item Möglichkeit, \textbf{1 Wort pro Runde} zu \textbf{überspringen}
+\item Je nach Zeit: \textbf{Finale} \emoji{trophy}
+\end{itemize}
+
+\textbf{Regeln}:
+\begin{itemize}
+\item \textbf{Verboten}: Wort selber und Tabu-Wörter
+\item \textbf{Keine Wörter übersetzen} (weder Wort selber noch Tabu-Wörter)
+\item \textbf{Keine Teil-Wörter} erlaubt (z.B. Fahrradlenker $\rightarrow$ \sout{Fahrrad}, \sout{Lenker})
+\end{itemize}
+
+\newpage
+
+\tabucard{Beispiel: Turtle}{
+Schildkröte, zeichnen, Python, Code, Spirale
+}
+
+\tabucard{Hacker}{
+Illegal, Passwort, Sicherheitslücke, Daten
+}
+
+\tabucard{Moodle}{
+Kurs, Plattform, Intranet
+}
+
+\tabucard{Eminem}{
+Rapper, alt, schnell
+}
+
+\tabucard{Router}{
+Internet, Netzwerk, Verbindung, WLAN
+}
+
+\tabucard{Roboter}{
+Automatisch, mechanisch, programmieren, bewegen
+}
+
+\tabucard{Känguru}{
+Australien, Hüpfen, Beutel
+}
+
+\tabucard{Sigma}{
+Griechisch, Jugendwort, Stolz, Einsam
+}
+
+\tabucard{Liste}{
+Mehrere, Elemente, Python, Variable
+}
+
+\tabucard{Flugzeug}{
+Fliegen, Pilot, reisen
+}
+
+\tabucard{Pyramide}{
+Ägypten, Dreieck, Pharao, Grab
+}
+
+\tabucard{Excel}{
+Tabelle, rechnen, Microsoft
+}
+
+\tabucard{Beispiel}{
+Turtle, Beispiel
+}
+
+\tabucard{NPC}{
+Game, Spielfigur, langweilig, Abkürzung
+}
+
+\tabucard{Datenschutz}{
+Persönlich, Privat(sphäre), Sicherheit
+}
+
+\tabucard{Bizeps}{
+Muskeln, Training, Bodybuilding
+}
+
+\tabucard{Bit}{
+kleinste, Information, 0, 1
+}
+
+\tabucard{Elon Musk}{
+Reich, Amerika, Trump, USA, Tesla, X, Space X
+}
+
+\tabucard{Kamel}{
+Tier, Reiten, Wüste, Höcker
+}
+
+\tabucard{Banane}{
+Essen, Frucht, Gelb
+}
+
+\tabucard{Rizz}{
+Charisma, Jugendwort
+}
+
+\tabucard{IP}{
+Adresse, Computer, Zahl, Abkürzung
+}
+
+\tabucard{Verschlüsselung}{
+Caesar, Sicher(heit), Kryptologie, Kryptografie
+}
+
+\tabucard{AI}{
+ChatGPT, KI, Künstliche Intelligenz
+}
+
+\tabucard{Talahon}{
+Jugendwort, Macho, Männer, Arabisch
+}
+
+\tabucard{Gesichtserkennung}{
+Kamera, China, Überwachung
+}
+
+\tabucard{Marc Sway}{
+Musik, gelb, Chor
+}
+
+\tabucard{Internet Explorer}{
+langsam, veraltet, Browser, Microsoft, Webseite
+}
+
+\tabucard{Drip}{
+Jugendwort, Style, cool
+}
+
+\tabucard{Diagramm}{
+Balken, Säulen, Bild, Excel
+}
+
+\tabucard{Firewall}{
+Schutz, Netzwerk, Angreifer, blockieren, Feuer
+}
+
+\tabucard{Haarklammer}{
+Mädchen, Frisur, Schönheit
+}
+
+\tabucard{Cookies}{
+Website, Informationen, speichern, Tracking
+}
+
+\tabucard{baba}{
+Jugendwort, Türkisch, Vater, cool
+}
+
+\tabucard{Filius}{
+Netzwerk, Programm
+}
+
+\tabucard{Senf}{
+Sauce, Ketchup, Mayo
+}
+
+\tabucard{Leistungsnachweis}{
+Deutsch, Friedli, Sturm \& Drang, Auftrag
+}
+
+\tabucard{Algorithmus}{
+Schritt, lösen, Problem, Prozess, sortieren
+}
+
+\tabucard{Binäre Suche}{
+Mitte, Zahl, grösser, kleiner
+}
+
+\tabucard{Nagellack}{
+Kosmetik, Finger, farbig
+}
+
+\tabucard{Bubble Sort}{
+Austauschen, sortieren, Algorithmus
+}
+
+\tabucard{Fussball}{
+Sport, Spielen, Feld
+}
+
+\tabucard{Binär}{
+Dezimal, umrechnen, Zahlen
+}
+
+\tabucard{Schwerpunktfach}{
+Wählen, Lektionen, Kantonsschule (Kanti)
+}
+
+\tabucard{Schwingungen}{
+Physik, Esoterisch
+}
+
+\tabucard{Tiramisu}{
+Dessert, süss, Löffelbiscuits
+}
+
+\tabucard{Zelle}{
+Excel, Formel, Wert
+}
+
+\tabucard{Sheesh}{
+Erstaunen, Ausruf, Slang
+}
+
+\tabucard{Byte}{
+8, Information, 0, 1
+}
+
+\tabucard{Aura}{
+Jugendwort, Tiktok, Ausstrahlung, Minus, Plus
+}
+
+\tabucard{Blevita}{
+Darvida, z'Nüni
+}
+
+\tabucard{Hip-Hop}{
+Gangster, rap, lyrics, beat, Musik
+}
+
+\tabucard{Endlosschleife}{
+Absturz, Computer, Fehler, Code
+}
+
+\tabucard{Fajitas}{
+Mexikanisch, Wrap, Poulet, Guacamole
+}
+
+\tabucard{Proteinpulver}{
+Shake, Muskeln, Sport
+}
+
+\tabucard{Klassenlager}{
+Woche, Ausflug, Schule
+}
+
+\tabucard{Tesla}{
+Elon Musk, Auto, elektrisch
+}
+
+\tabucard{Chaya}{
+Jugendwort, Frau, Mädchen
+}
+
+\tabucard{SQL-Abfrage}{
+Datenbank, SELECT, Abfrage, Tabelle
+}
+
+\tabucard{Red Bull}{
+Flügel, Koffein, Getränk/trinken
+}
+
+\tabucard{Tabu}{
+Jetzt, Spiel, raten
+}
+
+\tabucard{Lee}{
+Schule, Ort, Kantonsschule
+}
+
+\tabucard{Kran}{
+Bauarbeiten, tragen, schwer, hoch
+}
+
+\tabucard{Brownies}{
+Backen, Schokolade, Essen, süss
+}
+
+\tabucard{Meme}{
+Beschriftung, Spiel, Bild
+}
+
+\tabucard{For-Schleife}{
+Wiederholen, Code, durchlaufen, mehrmals
+}
+
+\tabucard{Nerd}{
+Informatik, Freizeit, Geek
+}
+
+\tabucard{Kartentrick}{
+Zauberer, Selbstkorrigierende Codes
+}
+
+\tabucard{Bahnhof}{
+Zug, Bus, Winterthur, Zürich, SBB
+}
+
+\tabucard{Hello World}{
+Buch, Hannah Fry, Unterricht, Lesen
+}
+
+\tabucard{Rektor}{
+Chef, Schule, Lehrer
+}
+
+\tabucard{Proteinriegel}{
+Snack, Sport, Muskeln
+}
+
+\tabucard{Parameter}{
+Variable, Funktion, Definition
+}
+
+\tabucard{InstaHub}{
+Instagram, SQL, Plattform
+}
+
+\tabucard{Döner}{
+Brot, Fleisch, Sandwich
+}
+
+\end{document}

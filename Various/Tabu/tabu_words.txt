@@ -1,0 +1,89 @@
+category: Informatik
+Algorithmus | Schritt, lösen, Problem, Prozess, sortieren
+Bubble Sort | Austauschen, sortieren, Algorithmus
+SQL-Abfrage | Datenbank, SELECT, Abfrage, Tabelle
+Excel | Tabelle, rechnen, Microsoft
+Router | Internet, Netzwerk, Verbindung, WLAN
+Verschlüsselung | Caesar, Sicher(heit), Kryptologie, Kryptografie
+Filius | Netzwerk, Programm
+Gesichtserkennung | Kamera, China, Überwachung
+Binär | Dezimal, umrechnen, Zahlen
+Diagramm | Balken, Säulen, Bild, Excel
+Hello World | Buch, Hannah Fry, Unterricht, Lesen
+NPC | Game, Spielfigur, langweilig, Abkürzung
+Zelle | Excel, Formel, Wert
+Internet Explorer | langsam, veraltet, Browser, Microsoft, Webseite
+Firewall | Schutz, Netzwerk, Angreifer, blockieren, Feuer
+Bit | kleinste, Information, 0, 1
+IP | Adresse, Computer, Zahl, Abkürzung
+Byte | 8, Information, 0, 1
+For-Schleife | Wiederholen, Code, durchlaufen, mehrmals
+Liste | Mehrere, Elemente, Python, Variable
+Parameter | Variable, Funktion, Definition
+AI | ChatGPT, KI, Künstliche Intelligenz
+Binäre Suche | Mitte, Zahl, grösser, kleiner
+Cookies | Website, Informationen, speichern, Tracking
+Hacker | Illegal, Passwort, Sicherheitslücke, Daten
+InstaHub | Instagram, SQL, Plattform
+Nerd | Informatik, Freizeit, Geek
+Endlosschleife | Absturz, Computer, Fehler, Code
+Datenschutz | Persönlich, Privat(sphäre), Sicherheit
+
+category: Jugendwörter
+Chaya | Jugendwort, Frau, Mädchen
+Sigma | Griechisch, Jugendwort, Stolz, Einsam
+baba | Jugendwort, Türkisch, Vater, cool
+Aura | Jugendwort, Tiktok, Ausstrahlung, Minus, Plus
+Talahon | Jugendwort, Macho, Männer, Arabisch
+Drip | Jugendwort, Style, cool
+Rizz | Charisma, Jugendwort
+Sheesh | Erstaunen, Ausruf, Slang
+
+category: Musik
+Marc Sway | Musik, gelb, Chor
+Eminem | Rapper, alt, schnell
+Hip-Hop | Gangster, rap, lyrics, beat, Musik
+
+category: Essen
+Banane | Essen, Frucht, Gelb
+Brownies | Backen, Schokolade, Essen, süss
+Döner | Brot, Fleisch, Sandwich
+Proteinriegel | Snack, Sport, Muskeln
+Blevita | Darvida, z'Nüni
+Senf | Sauce, Ketchup, Mayo
+Tiramisu | Dessert, süss, Löffelbiscuits
+Fajitas | Mexikanisch, Wrap, Poulet, Guacamole
+Red Bull | Flügel, Koffein, Getränk/trinken
+
+category: Sport
+Fussball | Sport, Spielen, Feld
+Proteinpulver | Shake, Muskeln, Sport
+Bizeps | Muskeln, Training, Bodybuilding
+
+category: Schule
+Lee | Schule, Ort, Kantonsschule
+Leistungsnachweis | Deutsch, Friedli, Sturm \& Drang, Auftrag
+Klassenlager | Woche, Ausflug, Schule
+Rektor | Chef, Schule, Lehrer
+Schwerpunktfach | Wählen, Lektionen, Kantonsschule (Kanti)
+Moodle | Kurs, Plattform, Intranet
+
+category: Tiere
+Kamel | Tier, Reiten, Wüste, Höcker
+Känguru | Australien, Hüpfen, Beutel
+Roboter | Automatisch, mechanisch, programmieren, bewegen
+
+category: Sonstiges
+Beispiel | Turtle, Beispiel
+Haarklammer | Mädchen, Frisur, Schönheit
+Bahnhof | Zug, Bus, Winterthur, Zürich, SBB
+Kran | Bauarbeiten, tragen, schwer, hoch
+Schwingungen | Physik, Esoterisch
+Meme | Beschriftung, Spiel, Bild
+Flugzeug | Fliegen, Pilot, reisen
+Pyramide | Ägypten, Dreieck, Pharao, Grab
+Elon Musk | Reich, Amerika, Trump, USA, Tesla, X, Space X
+Tesla | Elon Musk, Auto, elektrisch
+Kartentrick | Zauberer, Selbstkorrigierende Codes
+Nagellack | Kosmetik, Finger, farbig
+Tabu | Jetzt, Spiel, raten
