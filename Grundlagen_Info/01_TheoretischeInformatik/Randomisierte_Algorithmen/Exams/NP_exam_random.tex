@@ -1,0 +1,197 @@
+\newtoggle{withbonus}
+\settoggle{withbonus}{false} % set true to show bonus points in grade table
+
+% setting underlying course name
+\newcommand{\mycourse}{Informatik}
+
+% name of the class
+\newcommand{\myclass}{\faPeace\faIceCream~2. Klassen~\faIceCream\faPeace}
+
+% set date
+\newcommand{\mydate}{Freitag, 26. Juni 2026}
+
+\title{\textbf{randomisierte Algorithmen, Graphen, Datenintegrität}}
+\author{Thomas Graf\\
+\mycourse, \myclass}
+\date{\mydate}
+\maketitle
+\thispagestyle{headandfoot}
+
+\begin{center}
+	\fbox{\parbox{140mm}{\centering
+			\begin{itemize}
+				\item Dauer der Prüfung: $45$ Minuten
+				\item erlaubte Hilfsmittel:
+				\begin{itemize}
+					\item Schreibzeug
+					\item \textbf{ohne Taschenrechner}
+				\end{itemize}
+			\end{itemize}}}
+\end{center}
+
+\vspace{10mm}
+
+\begin{center}
+	Vorname: \rule{45mm}{0.8pt}\qquad Nachname: \rule{45mm}{0.8pt}
+\end{center}
+
+\vspace{20mm}
+
+\begin{center}
+	\iftoggle{withbonus}{
+		\combinedgradetable[h][questions]
+	}{
+		\gradetable[h][questions]
+	}
+\end{center}
+
+\vspace{15mm}
+
+\begin{center}
+	Note:
+	\vspace{10mm}
+
+	\rule{8mm}{1.2pt}
+\end{center}
+
+\clearpage
+
+
+\begin{questions}
+\question
+\begin{parts}
+  \part[1] Es sei $x := 0011011$ ein binärer String. Bestimmen Sie $\text{Nummer}(x)$. 
+  \part[1] Bestimmen Sie $\text{Bin}(25)$.
+  \part[1] Für einen binären String $x$ gilt 
+  \begin{align*}
+   \text{Nummer}(x) = 2^k - 1.
+  \end{align*}
+  Dabei ist $k$ eine positive natürliche Zahl. Bestimmen Sie $\abs{x}$ in Abhängigkeit von $k$.
+  \part[1] Bestimmen Sie $\text{Prim}(40)$.
+    \part[1] Ronald Rivest möchte unser randomisierte Kommunikationsprotokoll für die beiden Datensätze $x := 001110$ und $y := 1110$ durchführen. Was ist hier das Problem? Welchen Rat würden Sie Donald geben?
+\end{parts}
+
+\question[2] In Zürich sei der Datensatz $x := 001111$ auf dem Rechner $R_1$ abgespeichert. $R_1$ wird das Kommunikationsprotokoll mit einem Rechner $R_2$ in Boston durchführen.
+Dabei sei $y$ der Datensatz, welcher auf $R_2$ abgespeichert ist. In Zürich wurde zufällig die Primzahl $p := 7$ gewählt. Geben Sie ein konkretes Beispiel eines (sinnvollen) Datensatzes $y$, sodass das Protokoll falsch entscheiden wird.
+
+\question Gegeben seien zwei Datensätze $x$ und $y$ mit einer jeweiligen Länge von $10^{24}$ Bits. 
+\begin{parts}
+\part[2] Geben Sie eine vernünftige obere Schranke für den Kommunikationsaufwand unseres Kommunikationsprotokolls zum Abgleich von $x$ und $y$ an.
+\part[1] Wie viele Bits müsste ein deterministischer Algorithmus zur Beantwortung der Frage $x\stackrel{?}{=}y$ mindestens kommunizieren?
+\end{parts}
+\droptotalpoints
+
+\question[1]
+Gegeben sind zwei Funktionen $f$ und $g$, welche auf ganz $\N$ definiert sind und $g(n) \neq 0$ für alle $n\in\N$. Es gelte die Gleichung
+\begin{align}\label{eq:limit}
+  \lim_{n\to\infty}\frac{f(n)}{g(n)} = 1.
+\end{align}
+Ist es korrekt, dass \cref{eq:limit} die Gleichung
+\begin{align*}
+  \lim_{n\to\infty} \abs{f(n) - g(n)} = 0
+\end{align*}
+impliziert? Begründen Sie die Behauptung oder finden Sie ein Gegenbeispiel.
+
+\clearpage
+
+\question
+\textbf{Graphentheorie: Eulerwege}
+
+Gegeben ist ein ungerichteter Graph mit den Knoten
+\[
+	V = \{A, B, C, D, E\}
+\]
+und den Kanten
+\[
+	E = \{\{A,B\}, \{A,C\}, \{B,C\}, \{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\}\}.
+\]
+
+\begin{parts}
+	\part[1] Bestimmen Sie die Grade der Knoten $A$ und $B$. \vspace{20mm}
+	\part[1] Existiert in diesem Graphen ein Eulerweg? Begründen Sie Ihre Antwort kurz mit Hilfe der Knotengrade. \vspace{20mm}
+\end{parts}
+\droptotalpoints
+
+\begin{solution}
+\begin{enumerate}
+	\item Grad($A$) = 2 (verbunden mit $B, C$). \\
+	Grad($B$) = 4 (verbunden mit $A, C, D, E$).
+	\item Ein Eulerweg existiert genau dann, wenn es höchstens zwei Knoten mit ungeradem Grad gibt.
+	Prüfen wir die restlichen Grade:
+	Grad($C$) = 4, aber Grad($D$) = 3 und Grad($E$) = 3.
+	Da es genau zwei Knoten ($D$ und $E$) mit ungeradem Grad gibt, existiert \textbf{ein} Eulerweg.
+\end{enumerate}
+\end{solution}
+
+\clearpage
+
+\question[3]
+\textbf{Dijkstra-Algorithmus vervollständigen}
+Vervollständigen Sie den in \cref{listing:Dijkstra} gezeigten Pseudocode des Dijkstra-Algorithmus, indem Sie die fehlenden Teile einfügen. Die fehlenden Teile sind mit Punkten markiert. Die Variablen $d_s[u]$ und $c(u,v)$ bezeichnen die Distanz von Knoten $s$ zu Knoten $u$ und die Kosten der Kante von Knoten $u$ zu Knoten $v$.
+\begin{lstlisting}[language=Python,numbers=none,escapeinside={(*}{*)},caption=\texttt{Dijkstra-Algorithmus},label=listing:Dijkstra]
+### Dijkstra-Algorithmus ###
+
+## Initialisierung ##
+für alle Knoten u des Graphen setze:
+    (*$d_s[u] = .....$*)
+(*$d_s[s] \leftarrow 0$*)
+(*$S \leftarrow \emptyset$*)
+(*$Q \leftarrow $*) Menge aller Knoten des Graphen
+
+## Schritte ##
+solange ..... nicht leer ist, mach:
+    (*$u\leftarrow$*) Knoten aus (*$Q$*) mit kleinstem (*$d_s[u]$*)
+    (*$Q \leftarrow Q \setminus \lrc{u}$*)
+    (*$S\leftarrow S \cup \lrc{u}$*)
+
+    für alle von (*$u$*) direkt erreichbaren Knoten (*$v$*) mach:
+        # ist der Weg von (*$s$*) nach (*$v$*) kürzer über (*$u$*)?
+        falls ......................... dann:
+            (*$d_s[v] \leftarrow d_s[u] + c(u,v)$*)
+\end{lstlisting}
+
+
+\clearpage
+
+
+\question
+\textbf{Fehlererkennung und -korrektur}
+
+Gegeben ist eine binäre Kodierung mit den folgenden drei gültigen Codewörtern:
+\begin{itemize}
+	\item $C_1 = 00000$
+	\item $C_2 = 00111$
+	\item $C_3 = 11100$
+\end{itemize}
+
+\begin{parts}
+	\part[1] Bestimmen Sie den minimalen Abstand dieser Kodierung. \vspace{15mm}
+	\part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher erkannt} werden? \vspace{15mm}
+	\part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher korrigiert} werden? \vspace{15mm}
+\end{parts}
+
+\begin{solution}
+\begin{enumerate}
+	\item Die Abstände sind
+	\begin{align*}
+		d(C_1, C_2) &= 3 \\
+		d(C_1, C_3) &= 3 \\
+		d(C_2, C_3) &= 4
+	\end{align*}
+	Der minimale Abstand ist also \(d_{\min} = 3\).
+
+	\item Sicher erkannt werden können
+	\[
+		d_{\min} - 1 = 2
+	\]
+	Bitfehler.
+
+	\item Sicher korrigiert werden können
+	\[
+		\left\lfloor \frac{d_{\min} - 1}{2} \right\rfloor = \left\lfloor \frac{2}{2} \right\rfloor = 1
+	\]
+	Bitfehler.
+\end{enumerate}
+\end{solution}
+
+\end{questions}

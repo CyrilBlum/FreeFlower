@@ -1,0 +1,312 @@
+\newtoggle{withbonus} \toggletrue{withbonus} % set true to show bonus points in grade table
+
+% setting underlying course name (Grundlagenfach Mathematik, §-Unterricht, \ldots)
+\newcommand{\mycourse}{Grundlagenfach Informatik}
+% set date
+\newcommand{\mydate}{Dienstag, 07.04.2026}
+
+% name of the class
+\newcommand{\myclass}{Klasse 2c}
+\title{\textbf{Hardware, Endliche Automaten, Laufzeitkomplexität}}
+\author{Thomas Graf\\
+	\mycourse, \myclass}
+\date{\mydate}
+\maketitle
+\thispagestyle{headandfoot}
+
+\begin{center}
+	\fbox{\parbox{140mm}{\centering
+			\begin{itemize}
+				\item Dauer der Prüfung: $45$ Minuten
+				      %\item \textbf{Zeige in jeder Aufgabe unbedingt Deine Schritte!}
+				\item Erlaubte Hilfsmittel:
+				      \begin{itemize}
+					      \item Schreibzeug
+					            %\item Taschenrechner
+				      \end{itemize}
+			\end{itemize}}}
+\end{center}
+\vspace{10mm}
+
+\begin{center}
+	Vorname: \rule{45mm}{0.8pt}\qquad Nachname: \rule{45mm}{0.8pt}
+\end{center}
+\vspace{20mm}
+
+\begin{center}
+	\iftoggle{withbonus} {
+		\combinedgradetable[h][questions]
+	} {
+		\gradetable[h][questions]
+	}
+\end{center}
+\vspace{15mm}
+\begin{center}
+	Note:
+	\vspace{10mm}
+
+	\rule{8mm}{1.2pt}
+\end{center}
+%\thispagestyle{empty}
+\clearpage
+
+
+\begin{questions}
+	\question
+	\begin{parts}
+		\part[1] Welche logische Funktion wird durch zwei parallel geschaltete Schalter $A$ und $B$ realisiert, damit eine LED leuchtet?
+		\begin{checkboxes}
+			\choice \textsc{XOR}
+			\correctchoice \textsc{OR}
+			\choice \textsc{AND}
+		\end{checkboxes}
+
+		\part[1] Welche Formel beschreibt das Carry-Out-Bit $C_{out}$ eines Volladdierers?
+		\begin{checkboxes}
+			\choice $C_{out} = A \oplus B \oplus C_{in}$
+			\correctchoice $C_{out} = (A\;\operatorname{AND}\;B)\;\operatorname{OR}\;(C_{in}\;\operatorname{AND}\;(A\oplus B))$
+			\choice $C_{out} = A \oplus B$
+			\choice keine der obigen Antworten ist richtig
+		\end{checkboxes}
+	\end{parts}
+	\droptotalpoints
+
+
+	\question[2]{\textbf{Anzahl der Elemente in einer Sprache bestimmen}}
+
+	Es sei $\Sigma = \lrc{0,1,2}$ ein Alphabet und $n\in\N$ gegeben. Bestimmen Sie die Anzahl der verschiedenen Wörter der Länge $n$ über $\Sigma$, welche mindestens eine $0$ und mindestens eine $2$ enthalten.
+	\begin{solution}
+		Insgesamt gibt es $3^n$ Wörter der Länge $n$ über $\Sigma$.
+
+		Wir zählen die Wörter, welche nicht beide Bedingungen erfüllen. Wörter ohne $0$ gibt es $2^n$, Wörter ohne $2$ gibt es ebenfalls $2^n$. Das Wort, welches weder $0$ noch $2$ enthält, ist nur das Wort $11\ldots 1$ und wurde doppelt gezählt.
+
+		Daher ist die gesuchte Anzahl
+		\[
+			3^n - 2\cdot 2^n + 1
+			=
+			3^n - 2^{n+1} + 1.
+		\]
+	\end{solution}
+	\droptotalpoints
+
+	\vspace{5cm}
+
+	\clearpage
+
+	\question{\textbf{Endlichen Automaten zeichnen}}
+
+	Gegeben ist die Sprache
+	\[
+		L_1 := \setcm{x00y1}{x,y\in\lrc{0,1}^*}.
+	\]
+	\begin{parts}
+		\part[1] Nennen Sie ein kürzestes Wort in $L_1$.
+		\begin{solution}
+			Ein kürzestes Wort ist
+			\[
+				001.
+			\]
+		\end{solution}
+
+		\vspace{4cm}
+
+		\part[2] Entwerfen Sie einen endlichen Automaten in Diagrammform, welcher $L_1$ akzeptiert.
+		\begin{solution}
+			\begin{figure}[H]
+				\centering
+				\begin{tikzpicture}[->,>=stealth',shorten >=1pt,node distance=3.2cm,semithick]
+					\tikzstyle{every state}=[fill=green!10,draw=black,text=black,minimum size=1.4cm]
+
+					\node[initial,state] (q0) {$q_0$};
+					\node[state] (q1) [right of=q0] {$q_1$};
+					\node[state] (q2) [right of=q1] {$q_2$};
+					\node[state] (q3) [right of=q2] {$q_3$};
+					\node[state,accepting] (q4) [right of=q3] {$q_4$};
+
+\path
+(q0) edge [loop above] node {$1$} (q0)
+(q0) edge [above] node {$0$} (q1)
+(q1) edge [above] node {$0$} (q2)
+(q1) edge [bend left, above] node {$1$} (q0)
+(q2) edge [loop above] node {$0$} (q2)
+(q2) edge [above] node {$1$} (q4)
+(q4) edge [loop above] node {$1$} (q4)
+(q4) edge [bend left, below] node {$0$} (q3)
+(q3) edge [loop above] node {$0$} (q3)
+(q3) edge [bend left, above] node {$1$} (q4);
+				\end{tikzpicture}
+				\caption{Endlicher Automat für die Sprache $L_1$}
+			\end{figure}
+		\end{solution}
+	\end{parts}
+	\droptotalpoints
+
+\clearpage
+\question{\textbf{\red{Nicht reguläre} Sprache}}
+
+Gegeben sei die Sprache
+\begin{align*}
+	L_2 := \setcm{w\in\lrc{a,b}^*}{\abs{w}_a = 2\abs{w}_b}
+\end{align*}
+über dem Alphabet $\lrc{a,b}$.
+
+Dabei bezeichnet $\abs{w}_a$ die Anzahl der Buchstaben $a$ im Wort $w$
+und $\abs{w}_b$ die Anzahl der Buchstaben $b$ im Wort $w$.
+
+\begin{parts}
+
+\part[1]
+Nenne genau drei verschiedene Wörter, die in $L_2$ liegen.
+
+\begin{solution}
+\[
+aab,\qquad aba,\qquad baa
+\]
+\end{solution}
+
+\vspace{3cm}
+
+\part[2]
+Zeige, dass $L_2$ \red{nicht regulär} ist.
+
+\begin{solution}
+Angenommen, $L_2$ sei regulär. Dann existiert ein endlicher Automat
+\[
+A=(Q,\lrc{a,b},\delta,q_0,F),
+\]
+welcher $L_2$ akzeptiert.
+
+Sei $m:=|Q|$ die Anzahl seiner Zustände.
+
+Wir betrachten nun die $m+1$ verschiedenen Wörter
+\[
+a^2,a^4,a^6,\ldots,a^{2m+2}.
+\]
+
+Nach dem Schubfachprinzip existieren zwei Zahlen
+\[
+1\le i<j\le m+1
+\]
+mit
+\[
+\hat{\delta}(q_0,a^{2i})
+=
+\hat{\delta}(q_0,a^{2j}).
+\]
+
+Nach der im Unterricht bewiesenen Aussage gilt deshalb für jedes Wort
+$z\in\lrc{a,b}^*$
+\[
+a^{2i}z\in L_2
+\iff
+a^{2j}z\in L_2.
+\]
+
+Wir wählen nun
+\[
+z:=b^i.
+\]
+
+Dann gilt
+\[
+a^{2i}b^i\in L_2,
+\]
+da
+\[
+\abs{a^{2i}b^i}_a=2i
+\qquad\text{und}\qquad
+\abs{a^{2i}b^i}_b=i.
+\]
+
+Andererseits gilt wegen $j>i$
+\[
+a^{2j}b^i\notin L_2,
+\]
+da
+\[
+\abs{a^{2j}b^i}_a=2j>2i=2\abs{a^{2j}b^i}_b.
+\]
+
+Dies ist ein Widerspruch.
+
+Also war unsere Annahme falsch und $L_2$ ist nicht regulär.
+\end{solution}
+
+\end{parts}
+
+\droptotalpoints
+	\clearpage
+
+	\question Bestimme jeweils die Worst-Case-Laufzeit der folgenden Algorithmen in Abhängigkeit von $n\in\N$.
+	\begin{parts}
+		\part[1] \leavevmode
+		\begin{lstlisting}[language=Python]
+result = 0
+for i in range(n):
+    for j in range(i):
+        result += 1
+		\end{lstlisting}
+		\begin{checkboxes}
+			\choice linear
+			\choice proportional zu $\sqrt{n}$
+			\choice logarithmisch
+			\correctchoice quadratisch
+			\choice proportional zu $n\log(n)$
+			\choice keine der obigen Antworten ist richtig
+		\end{checkboxes}
+
+		\part[1] \leavevmode
+		\begin{lstlisting}[language=Python]
+result = 0
+i = 1
+while i * i <= n:
+    result += i
+    i += 1
+		\end{lstlisting}
+		\begin{checkboxes}
+			\choice linear
+			\correctchoice proportional zu $\sqrt{n}$
+			\choice logarithmisch
+			\choice quadratisch
+			\choice proportional zu $n\log(n)$
+			\choice keine der obigen Antworten ist richtig
+		\end{checkboxes}
+
+		\part[1] \leavevmode
+		\begin{lstlisting}[language=Python]
+result = 0
+for i in range(n):
+    j = 1
+    while j <= n:
+        result += 1
+        j *= 2
+		\end{lstlisting}
+		\begin{checkboxes}
+			\choice linear
+			\choice proportional zu $\sqrt{n}$
+			\choice logarithmisch
+			\choice quadratisch
+			\correctchoice proportional zu $n\log(n)$
+			\choice keine der obigen Antworten ist richtig
+		\end{checkboxes}
+
+		\part[1] \leavevmode
+		\begin{lstlisting}[language=Python]
+result = 0
+i = n
+while i >= 1:
+    result += 1
+    i //= 3
+		\end{lstlisting}
+		\begin{checkboxes}
+			\choice proportional zu $n\log(n)$
+			\choice proportional zu $\sqrt{n}$
+			\correctchoice logarithmisch
+			\choice quadratisch
+			\choice linear
+			\choice keine der obigen Antworten ist richtig
+		\end{checkboxes}
+	\end{parts}
+	\droptotalpoints
+
+\end{questions}

@@ -136,4 +136,40 @@ Das Protokoll wählt eine Zahl aus dem Bereich bis $n^2 = 100$.
 \end{solution}
 \droptotalpoints
 
+
+\question Aus der Physik wissen wir, dass die Ausprägungen zweier diskreter Merkmale $x$ und $y$ (die wir exakt messen können) zueinander proportional sind, mit Proportionalitätskonstante $\gamma > 0$, also $y=\gamma x$. Sei $n\in\N, n>2$. Wir haben einen Datensatz von $n$ Messpaaren 
+\begin{align*}
+	(x_1,y_1),(x_2,y_2),...,(x_n,y_n)
+\end{align*}
+von Ausprägungen der proportionalen Merkmale $x$ und $y$ gegeben. Es gilt also $y_i = \gamma x_i$ für alle $i\in\lrc{1,2,...,n}$.
+\begin{parts}
+\part[2] Beweisen Sie die Gleichheit
+\begin{align*}
+	\Bar{y} = \gamma\Bar{x}.
+\end{align*}
+
+\begin{solution}
+Wir berechnen
+\begin{align*}
+    \Bar{y} = \frac{1}{n}\sum_{i=1}^n y_i = \frac{1}{n}\sum_{i=1}^n \gamma x_i = \gamma\lr{\frac{1}{n}\sum_{i=1}^n x_i} = \gamma\Bar{x}
+\end{align*}
+\end{solution}
+
+\part[2] Der Korrelationskoeffizient $r$ sei für den gegebenen Datensatz definiert. Berechnen Sie $r$ und vereinfachen Sie so weit wie möglich. Zeigen Sie Ihre Schritte.
+\begin{solution}
+Da die Messwerte $x_i$ und $y_i$ proportional zueinander sind mit positiver Proportionalitätskonstante $\gamma>0$, können wir annehmen, dass die beiden Merkmale perfekt positiv korreliert sind mit Korrelationskoeffizient $r = 1$. In der Tat weisen wir diese Vermutung mit der folgenden Berechnung nach. Wir berechnen $r$ für den gegebenen Datensatz. Dabei müssen wir nichts weiter tun, als die gegebenen Grössen in die Definition von $r$ einzusetzen und zu vereinfachen:
+\begin{align*}
+    r := &\frac{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})(y_i-\Bar{y})}{\sqrt{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})^2}\cdot\sqrt{\displaystyle\sum_{i=1}^n(y_i-\Bar{y})^2}} = \\
+    &\frac{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})(\gamma x_i-\gamma\Bar{x})}{\sqrt{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})^2}\cdot\sqrt{\displaystyle\sum_{i=1}^n(\gamma x_i-\gamma\Bar{x})^2}} = \\
+    &\frac{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})(\gamma(x_i-\Bar{x}))}{\sqrt{\displaystyle\sum_{i=1}^n(x_i-\Bar{x})^2}\cdot\sqrt{\displaystyle\sum_{i=1}^n(\gamma(x_i-\Bar{x}))^2}} = \\
+    &\frac{\gamma\displaystyle\sum_{i=1}^n(x_i-\Bar{x})^2}{\gamma\displaystyle\sum_{i=1}^n(x_i-\Bar{x})^2} = 1.
+\end{align*}
+\end{solution}
+\droptotalpoints
+
+\end{parts}
+
+
 \end{questions}
+
+

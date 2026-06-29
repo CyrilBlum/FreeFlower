@@ -1,0 +1,243 @@
+\newtoggle{withbonus} \settoggle{withbonus}{false} % set true to show bonus points in grade table
+
+% setting underlying course name (Grundlagenfach Mathematik, §-Unterricht, \ldots)
+\newcommand{\mycourse}{Informatik}
+% name of the class
+\newcommand{\myclass}{\faPeace\faIceCream~Elisea-Sofia Nydegger, 2f~\faIceCream\faPeace}
+% set date
+\newcommand{\mydate}{Dienstag, 23. Juni 2026}
+
+\title{\textbf{randomisierte Algorithmen, Graphen, Datenintegrität}}
+\author{Thomas Graf\\
+\mycourse, \myclass}
+\date{\mydate}
+\maketitle
+\thispagestyle{headandfoot}		
+
+\begin{center}
+	\fbox{\parbox{140mm}{\centering
+			\begin{itemize}
+				\item Dauer der Prüfung: $60$ Minuten
+				%\item \textbf{Zeige in jeder Aufgabe unbedingt Deine Schritte!}
+				\item erlaubte Hilfsmittel:
+				\begin{itemize}
+				    \item Schreibzeug
+            \item \textbf{ohne Taschenrechner}
+				\end{itemize}
+	\end{itemize}}}
+\end{center}
+\vspace{10mm}
+
+\begin{center}
+	Vorname: \rule{45mm}{0.8pt}\qquad Nachname: \rule{45mm}{0.8pt}
+\end{center}
+\vspace{20mm}
+
+\begin{center}
+	\iftoggle{withbonus} {
+		\combinedgradetable[h][questions]
+	} {
+		\gradetable[h][questions]
+	}
+\end{center}
+\vspace{15mm}
+\begin{center}
+	Note: 
+	\vspace{10mm}
+	
+	\rule{8mm}{1.2pt}
+\end{center}
+%\thispagestyle{empty}
+
+\clearpage
+
+\begin{questions}
+% 2c
+\question
+\begin{parts}
+  \part[1] Bestimmen Sie $\text{Nummer}(0101111)$. \vspace{20mm}
+  \part[1] Bestimmen Sie ein binäres Wort (einen binären String) $x$, sodass $\text{Nummer}(x) = 57$. \vspace{20mm}
+  \part[1] Berechnen Sie $\abs{\text{Bin}(3099)}$. \vspace{20mm}
+  \part
+  Sei $y$ die binäre Darstellung ($2$-adische Darstellung) der drittgrössten Zahl, welche mit $7$ Bits dargestellt werden kann. 
+  \begin{subparts}
+    \subpart[1] Wie sieht $y$ aus? \vspace{15mm}
+    \subpart[1] Bestimmen Sie $\text{Nummer}\lr{y}$. \vspace{15mm}
+  \end{subparts}
+  \part[1] Berechnen Sie (stellen Sie ohne Logarithmus dar) die Zahl $\ceil{\log_6\lr{180}}$. \vspace{20mm}
+  \part[1] Bestimmen Sie $\text{Prim(37)}$. \vspace{20mm}
+  \part[1] Nennen Sie (konkrete) positive natürliche Zahlen $x, y$ und $z$, sodass zwar die Relation
+\begin{align*}
+  x < y < z
+\end{align*}
+gilt, aber nicht die Relation
+\begin{align*}
+  \abs{\text{Bin}(x)} < \abs{\text{Bin}(y)} < \abs{\text{Bin}(z)}.
+\end{align*}
+\vspace{20mm}
+\end{parts}
+\droptotalpoints
+
+\begin{solution}
+\begin{enumerate}
+  \item \(\text{Nummer}(0101111) = 0 \cdot 2^6 + 1 \cdot 2^5 + 0 \cdot 2^4 + 1 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 = 32 + 8 + 4 + 2 + 1 = 47\).
+  \item Um $\text{Nummer}(x) = 57$ zu erhalten, wandeln wir 57 in Binär um: $57 = 32 + 16 + 8 + 1 = 2^5 + 2^4 + 2^3 + 2^0$. Also ist $x = 111001$.
+  \item Die Zahl 3099 liegt zwischen $2^{11} = 2048$ und $2^{12} = 4096$. Daher benötigt sie 12 Bits zur Darstellung. $|\text{Bin}(3099)| = 12$.
+  \item
+  \begin{enumerate}
+    \item Die grösste Zahl mit 7 Bits ist $2^7 - 1 = 127 = 1111111_2$.
+    Die zweitgrösste ist $126 = 1111110_2$.
+    Die drittgrösste ist $125 = 1111101_2$. Also $y = 1111101$.
+    \item \(\text{Nummer}(y) = 125\).
+  \end{enumerate}
+  \item Wir suchen die kleinste ganze Zahl $k$ mit $6^k \ge 180$.
+  $6^1 = 6$, 
+  $6^2 = 36$, 
+  $6^3 = 216$. 
+  Da $6^2 < 180 < 6^3$, ist $\log_6(180)$ zwischen 2 und 3.
+  Daher ist $\lceil\log_6(180)\rceil = 3$.
+  \item Die 37. Primzahl ist 157.
+  \item Wir suchen $x < y < z$ aber nicht $|\text{Bin}(x)| < |\text{Bin}(y)| < |\text{Bin}(z)|$.
+  Dies tritt auf, wenn die Bitlänge nicht strikt mit dem Wert wächst, z.B. wenn eine Zahl eine neue Bitlänge erreicht und die nächste Zahl die gleiche Bitlänge hat.
+  Beispiel:
+  $x = 3 \implies \text{Bin}(3) = 11_2$, $|\text{Bin}(3)| = 2$
+  $y = 4 \implies \text{Bin}(4) = 100_2$, $|\text{Bin}(4)| = 3$
+  $z = 5 \implies \text{Bin}(5) = 101_2$, $|\text{Bin}(5)| = 3$
+  Hier gilt $3 < 4 < 5$.
+  Aber $|\text{Bin}(x)| = 2$, $|\text{Bin}(y)| = 3$, $|\text{Bin}(z)| = 3$.
+  Die Relation $2 < 3 < 3$ ist falsch, da $3 < 3$ falsch ist.
+  Also sind $x=3, y=4, z=5$ ein gültiges Beispiel.
+\end{enumerate}
+\end{solution}
+
+\question[3] Gegeben sind die beiden Datensätze
+\begin{itemize}
+  \item $x := 001001$ in Zürich und
+  \item $y := 101011$ in Boston.
+\end{itemize}
+Berechnen Sie die exakte Fehlerwahrscheinlichkeit des Kommunikationsprotokolls in diesem Fall.
+\vspace{40mm}
+\begin{solution}
+  Die Datensätze sind $x = 001001$ und $y = 101011$.
+  Die Länge der Datensätze ist $n=6$.
+  Zuerst wandeln wir die Binärzahlen in Dezimalzahlen um:
+  $\text{Nummer}(x) = 0 \cdot 2^5 + 0 \cdot 2^4 + 1 \cdot 2^3 + 0 \cdot 2^2 + 0 \cdot 2^1 + 1 \cdot 2^0 = 8 + 1 = 9$.
+  $\text{Nummer}(y) = 1 \cdot 2^5 + 0 \cdot 2^4 + 1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 = 32 + 8 + 2 + 1 = 43$.
+  Die Differenz ist $|x-y| = |9 - 43| = 34$.
+  Das Protokoll wählt eine Primzahl $p$ zufällig aus der Menge der Primzahlen $\le n^2$.
+  $n^2 = 6^2 = 36$.
+  Die Primzahlen $\le 36$ sind: $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31$.
+  Es gibt insgesamt 11 solche Primzahlen.
+  Ein Fehler tritt auf, wenn $x \neq y$ aber $x \pmod p = y \pmod p$. Dies ist äquivalent dazu, dass $p$ ein Teiler von $|x-y|$ ist.
+  Die Primfaktoren von $34$ sind $2$ und $17$.
+  Von den 11 Primzahlen $\le 36$ sind genau 2 Primzahlen (2 und 17) Teiler von 34.
+  Die exakte Fehlerwahrscheinlichkeit ist die Anzahl der "fehlerverursachenden" Primzahlen geteilt durch die Gesamtzahl der Primzahlen im Bereich.
+  Fehlerwahrscheinlichkeit = $\frac{2}{11}$.
+\end{solution}
+
+\clearpage
+\question
+\begin{parts}
+\part[2]
+Für die Fehlerwahrscheinlichkeit $r$ des Protokolls haben wir die Abschätzung
+\begin{align*}
+    r \leq \frac{n-1}{\text{Prim}(n^2)}\leq \frac{n-1}{n^2/\ln(n^2)}\leq\frac{\ln(n^2)}{n}
+\end{align*}
+gefunden. Dabei ist $n$ die Länge der jeweiligen Datensätze (in Bits). Erklären Sie, warum wir im Protokoll eine Primzahl $p \leq n^2$ wählen und nicht lediglich eine Primzahl $p \leq n$.
+\vspace{40mm}
+\part[1] Neben der wiederholten Durchführung des Protokolls könnte man die Fehlerwahrscheinlichkeit auch verringern, indem man anstelle unseres Protokolls $R$ ein leicht angepasstes Protokoll $R'$ betrachtet. $R'$ arbeitet exakt so wie $R$ mit der einzigen Änderung, dass $R'$ eine Primzahl zufällig aus der Menge $\lrc{2, 3, \ldots , n^r}$ statt aus der Menge $\lrc{2, 3, \ldots , n^2}$ wählt. Berechnen Sie die Fehlerwahrscheinlichkeit von $R'$ für jede natürliche Zahl $r > 2$ und vergleichen Sie diese mit der Fehlerwahrscheinlichkeit von $R$.
+\vspace{40mm}
+\end{parts}
+\droptotalpoints
+
+
+\question \textbf{Graphentheorie: Eulerwege} \\
+Gegeben ist ein ungerichteter Graph mit den Knoten $V = \{A, B, C, D, E\}$ und den Kanten $E = \{\{A,B\}, \{A,C\}, \{B,C\}, \{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\}\}$.
+\begin{parts}
+    \part[1] Bestimmen Sie die Grade der Knoten $A$ und $B$. \vspace{20mm}
+    \part[1] Existiert in diesem Graphen ein Eulerkreis? Begründen Sie Ihre Antwort kurz mit Hilfe der Knotengrade. \vspace{20mm}
+\end{parts}
+\droptotalpoints
+\begin{solution}
+    \part Grad($A$) = 2 (verbunden mit $B, C$). \\
+    Grad($B$) = 4 (verbunden mit $A, C, D, E$).
+    \part Ein Eulerkreis existiert genau dann, wenn alle Knotengrade gerade sind. 
+    Prüfen wir die restlichen Grade: 
+    Grad($C$) = 4, aber Grad($D$) = 3 und Grad($E$) = 3. 
+    Da die Knoten $D$ und $E$ einen ungeraden Grad haben, existiert \textbf{kein} Eulerkreis.
+\end{solution}
+
+\clearpage
+\question[3] \textbf{Modifikation des Dijkstra-Algorithmus} \\
+\begin{lstlisting}[language=Python,numbers=none,escapeinside={(*}{*)},caption=\texttt{Dijkstra-Algorithmus},label=listing:Dijkstra]
+### Dijkstra-Algorithmus ###
+
+## Initialisierung ##
+für alle Knoten u des Graphen setze:
+    (*$d_s[u] = \infty$*)
+(*$d_s[s] \leftarrow 0$*)
+(*$S \leftarrow \emptyset$*)
+(*$Q \leftarrow $*) Menge aller Knoten des Graphen
+
+## Schritte ##
+solange (*$Q$*) nicht leer ist, mach:
+    (*$u\leftarrow$*) Knoten aus (*$Q$*) mit kleinstem (*$d_s[u]$*)
+    (*$Q \leftarrow Q \setminus \lrc{u}$*)
+    (*$S\leftarrow S \cup \lrc{u}$*)
+
+    für alle von (*$u$*) direkt erreichbaren Knoten (*$v$*) mach:
+        # ist der Weg von (*$s$*) nach (*$v$*) kürzer über (*$u$*)?
+        falls (*$d_s[u] + c(u,v) < d_s[v]$*) dann:
+            (*$d_s[v] \leftarrow d_s[u] + c(u,v)$*)
+\end{lstlisting}
+Jeder Kante $(u, v)$ ist eine Wahrscheinlichkeit $P((u, v)) \in \ioc{0}{1}$ zugeordnet, dass die Verbindung funktioniert. Die Zuverlässigkeit eines Pfades ist das \textbf{Produkt} der Wahrscheinlichkeiten aller Kanten auf diesem Pfad.
+
+Kreuzen Sie für die drei wesentlichen Änderungen am Pseudocode jeweils die korrekte Option an, damit der Algorithmus den zuverlässigsten Pfad findet:
+
+    \textbf{1. Initialisierung (Startwerte für $u \neq s$ und Startknoten $s$):}
+    \begin{checkboxes}
+        \choice $d_s[u] = \infty$ und $d_s[s] = 0$
+        \CorrectChoice $d_s[u] = 0$ und $d_s[s] = 1$
+        \choice $d_s[u] = 1$ und $d_s[s] = 0$
+    \end{checkboxes}
+
+    \textbf{2. Knotenauswahl (Kriterium für den nächsten Knoten $u$ aus $Q$):}
+    \begin{checkboxes}
+        \choice Wähle $u$ mit dem kleinsten $d_s[u]$
+        \choice Wähle $u$ zufällig aus $Q$
+        \CorrectChoice Wähle $u$ mit dem grössten $d_s[u]$
+    \end{checkboxes}
+
+    \textbf{3. Relaxation (Bedingung für das Update von $d_s[v]$):}
+    \begin{checkboxes}
+        \choice Falls $d_s[u] + P((u, v)) < d_s[v]$
+        \CorrectChoice Falls $d_s[u] \cdot P((u, v)) > d_s[v]$
+        \choice Falls $d_s[u] \cdot P((u, v)) < d_s[v]$
+    \end{checkboxes}
+\begin{solution}
+    \begin{enumerate}
+        \item \textbf{Initialisierung}: Alle Distanzwerte $d_s[u]$ müssen zu Beginn auf $0$ gesetzt werden (da wir die Wahrscheinlichkeit maximieren wollen), statt auf $\infty$. Der Startknoten $d_s[s]$ wird auf $1$ gesetzt.
+        \item \textbf{Knotenauswahl}: In jedem Schritt muss der Knoten $u \in Q$ mit dem \textbf{maximalen} (statt minimalen) aktuellen Wert $d_s[u]$ gewählt werden.
+        \item \textbf{Relaxation}: Der Vergleich und das Update müssen die Multiplikation verwenden: 
+        \textit{Falls} $d_s[u] \cdot P((u, v)) > d_s[v]$, \textit{dann} $d_s[v] \leftarrow d_s[u] \cdot P((u, v))$.
+    \end{enumerate}
+\end{solution}
+\question \textbf{Fehlererkennung und -korrektur} \\
+Gegeben ist eine binäre Kodierung mit den folgenden drei gültigen Codewörtern:
+\begin{itemize}
+    \item $C_1 = 00000$
+    \item $C_2 = 00111$
+    \item $C_3 = 11100$
+\end{itemize}
+\begin{parts}
+    \part[1] Bestimmen Sie den minimalen Abstand dieser Kodierung. \vspace{15mm}
+    \part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher erkannt} werden? \vspace{15mm}
+    \part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher korrigiert} werden? \vspace{15mm}
+\end{parts}
+\begin{solution}
+    \part Abstände: $d(C_1, C_2) = 3$, $d(C_1, C_3) = 3$, $d(C_2, C_3) = 4$. Der minimale Abstand ist $d_{min} = 3$.
+    \part Erkannt werden können $d_{min} - 1 = 2$ Fehler.
+    \part Korrigiert werden können $\lfloor (d_{min} - 1) / 2 \rfloor = 1$ Fehler.
+\end{solution}
+
+\end{questions}

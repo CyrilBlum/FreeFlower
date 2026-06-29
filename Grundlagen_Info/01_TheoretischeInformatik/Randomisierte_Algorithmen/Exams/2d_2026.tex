@@ -1,0 +1,356 @@
+\newtoggle{withbonus}
+\settoggle{withbonus}{false} % set true to show bonus points in grade table
+
+% setting underlying course name
+\newcommand{\mycourse}{Informatik}
+
+% name of the class
+\newcommand{\myclass}{\faPeace\faIceCream~Klasse 2f~\faIceCream\faPeace}
+
+% set date
+\newcommand{\mydate}{Donnerstag, 18. Juni 2026}
+
+\title{\textbf{randomisierte Algorithmen, Graphen, Datenintegrität}}
+\author{Thomas Graf\\
+\mycourse, \myclass}
+\date{\mydate}
+\maketitle
+\thispagestyle{headandfoot}
+
+\begin{center}
+	\fbox{\parbox{140mm}{\centering
+			\begin{itemize}
+				\item Dauer der Prüfung: $60$ Minuten
+				\item erlaubte Hilfsmittel:
+				\begin{itemize}
+					\item Schreibzeug
+					\item \textbf{ohne Taschenrechner}
+				\end{itemize}
+			\end{itemize}}}
+\end{center}
+
+\vspace{10mm}
+
+\begin{center}
+	Vorname: \rule{45mm}{0.8pt}\qquad Nachname: \rule{45mm}{0.8pt}
+\end{center}
+
+\vspace{20mm}
+
+\begin{center}
+	\iftoggle{withbonus}{
+		\combinedgradetable[h][questions]
+	}{
+		\gradetable[h][questions]
+	}
+\end{center}
+
+\vspace{15mm}
+
+\begin{center}
+	Note:
+	\vspace{10mm}
+
+	\rule{8mm}{1.2pt}
+\end{center}
+
+\clearpage
+
+\begin{questions}
+
+% 2c
+\question
+\begin{parts}
+	\part[1] Bestimmen Sie $\text{Nummer}(0101111)$. \vspace{20mm}
+
+	\part[1] Bestimmen Sie ein binäres Wort (einen binären String) $x$, sodass $\text{Nummer}(x) = 57$. \vspace{20mm}
+
+	\part[1] Berechnen Sie $\abs{\text{Bin}(3099)}$. \vspace{20mm}
+
+	\part
+	Sei $y$ die binäre Darstellung ($2$-adische Darstellung) der drittgrössten Zahl, welche mit $7$ Bits dargestellt werden kann.
+	\begin{subparts}
+		\subpart[1] Wie sieht $y$ aus? \vspace{15mm}
+		\subpart[1] Bestimmen Sie $\text{Nummer}\lr{y}$. \vspace{15mm}
+	\end{subparts}
+
+	\part[1] Berechnen Sie die Zahl $\ceil{\log_6\lr{180}}$. \vspace{20mm}
+
+	\part[1] Bestimmen Sie $\text{Prim}(37)$. \vspace{20mm}
+
+	\part[1] Nennen Sie positive natürliche Zahlen $x, y$ und $z$, sodass zwar
+	\begin{align*}
+		x < y < z
+	\end{align*}
+	gilt, aber nicht
+	\begin{align*}
+		\abs{\text{Bin}(x)} < \abs{\text{Bin}(y)} < \abs{\text{Bin}(z)}.
+	\end{align*}
+	\vspace{20mm}
+\end{parts}
+\droptotalpoints
+
+\begin{solution}
+\begin{enumerate}
+	\item \(\text{Nummer}(0101111) = 32 + 8 + 4 + 2 + 1 = 47\).
+
+	\item \(57 = 32 + 16 + 8 + 1 = 2^5 + 2^4 + 2^3 + 2^0\). Also ist \(x = 111001\).
+
+	\item Die Zahl \(3099\) liegt zwischen \(2^{11} = 2048\) und \(2^{12} = 4096\). Daher gilt
+	\[
+		\abs{\text{Bin}(3099)} = 12.
+	\]
+
+	\item
+	\begin{enumerate}
+		\item Die drittgrösste Zahl mit \(7\) Bits ist \(125 = 1111101_2\). Also ist \(y = 1111101\).
+		\item \(\text{Nummer}(y) = 125\).
+	\end{enumerate}
+
+	\item Es gilt \(6^2 = 36 < 180 < 216 = 6^3\). Daher ist
+	\[
+		\ceil{\log_6\lr{180}} = 3.
+	\]
+
+	\item Die \(37\). Primzahl ist \(157\).
+
+	\item Ein mögliches Beispiel ist \(x = 3\), \(y = 4\), \(z = 5\). Dann gilt
+	\[
+		\abs{\text{Bin}(3)} = 2, \qquad
+		\abs{\text{Bin}(4)} = 3, \qquad
+		\abs{\text{Bin}(5)} = 3.
+	\]
+	Also gilt zwar \(3 < 4 < 5\), aber nicht \(2 < 3 < 3\).
+\end{enumerate}
+\end{solution}
+
+\question[3]
+Gegeben sind die beiden Datensätze
+\begin{itemize}
+	\item $x := 100110$ in Zürich und
+	\item $y := 010111$ in Boston.
+\end{itemize}
+Berechnen Sie die exakte Fehlerwahrscheinlichkeit des Kommunikationsprotokolls in diesem Fall.
+\vspace{40mm}
+
+\begin{solution}
+	Die Datensätze haben Länge \(n = 6\). Also wird eine Primzahl \(p \leq n^2 = 36\) zufällig gewählt.
+
+	Es gilt
+	\[
+		100110_2 = 38
+		\qquad \text{und} \qquad
+		010111_2 = 23.
+	\]
+	Damit ist
+	\[
+		\abs{x-y} = 15.
+	\]
+	Ein Fehler tritt genau dann auf, wenn \(p\) die Zahl \(15\) teilt.
+
+	Die Primzahlen kleiner oder gleich \(36\) sind
+	\[
+		2,3,5,7,11,13,17,19,23,29,31.
+	\]
+	Davon teilen nur \(3\) und \(5\) die Zahl \(15\). Somit beträgt die exakte Fehlerwahrscheinlichkeit
+	\[
+		\frac{2}{11}.
+	\]
+\end{solution}
+
+\clearpage
+
+\question
+\begin{parts}
+	\part[2]
+	Für die Fehlerwahrscheinlichkeit $r$ des Protokolls haben wir die Abschätzung
+	\begin{align*}
+		r \leq \frac{n-1}{\text{Prim}(n^2)}
+		\leq \frac{n-1}{n^2/\ln(n^2)}
+		\leq \frac{\ln(n^2)}{n}
+	\end{align*}
+	gefunden. Dabei ist $n$ die Länge der jeweiligen Datensätze in Bits. Erklären Sie, warum wir im Protokoll eine Primzahl $p \leq n^2$ wählen und nicht lediglich eine Primzahl $p \leq n$.
+	\vspace{40mm}
+
+	\part[1]
+	Neben der wiederholten Durchführung des Protokolls könnte man die Fehlerwahrscheinlichkeit auch verringern, indem man anstelle unseres Protokolls $R$ ein leicht angepasstes Protokoll $R'$ betrachtet. $R'$ arbeitet exakt so wie $R$ mit der einzigen Änderung, dass $R'$ eine Primzahl zufällig aus der Menge $\lrc{2, 3, \ldots , n^r}$ statt aus der Menge $\lrc{2, 3, \ldots , n^2}$ wählt. Berechnen Sie die Fehlerwahrscheinlichkeit von $R'$ für jede natürliche Zahl $r > 2$ und vergleichen Sie diese mit der Fehlerwahrscheinlichkeit von $R$.
+	\vspace{40mm}
+\end{parts}
+\droptotalpoints
+
+\question
+\textbf{Graphentheorie: Eulerwege}
+
+Gegeben ist ein ungerichteter Graph mit den Knoten
+\[
+	V = \{A, B, C, D, E\}
+\]
+und den Kanten
+\[
+	E = \{\{A,B\}, \{A,C\}, \{B,C\}, \{B,D\}, \{B,E\}, \{C,D\}, \{C,E\}, \{D,E\}\}.
+\]
+
+\begin{parts}
+	\part[1] Bestimmen Sie die Grade der Knoten $A$ und $B$. \vspace{20mm}
+	\part[1] Existiert in diesem Graphen ein Eulerkreis? Begründen Sie Ihre Antwort kurz mit Hilfe der Knotengrade. \vspace{20mm}
+\end{parts}
+\droptotalpoints
+
+\begin{solution}
+\begin{enumerate}
+	\item Grad($A$) = 2 und Grad($B$) = 4.
+
+	\item Ein Eulerkreis existiert genau dann, wenn alle Knotengrade gerade sind. Es gilt
+	\[
+		\deg(A)=2, \quad \deg(B)=4, \quad \deg(C)=4, \quad \deg(D)=3, \quad \deg(E)=3.
+	\]
+	Da \(D\) und \(E\) ungeraden Grad haben, existiert kein Eulerkreis.
+\end{enumerate}
+\end{solution}
+
+\clearpage
+
+\question[3]
+\textbf{Modifikation des Dijkstra-Algorithmus}
+
+\begin{lstlisting}[language=Python,numbers=none,escapeinside={(*}{*)},caption=\texttt{Dijkstra-Algorithmus},label=listing:Dijkstra]
+### Dijkstra-Algorithmus ###
+
+## Initialisierung ##
+für alle Knoten u des Graphen setze:
+    (*$d_s[u] = \infty$*)
+(*$d_s[s] \leftarrow 0$*)
+(*$S \leftarrow \emptyset$*)
+(*$Q \leftarrow $*) Menge aller Knoten des Graphen
+
+## Schritte ##
+solange (*$Q$*) nicht leer ist, mach:
+    (*$u\leftarrow$*) Knoten aus (*$Q$*) mit kleinstem (*$d_s[u]$*)
+    (*$Q \leftarrow Q \setminus \lrc{u}$*)
+    (*$S\leftarrow S \cup \lrc{u}$*)
+
+    für alle von (*$u$*) direkt erreichbaren Knoten (*$v$*) mach:
+        # ist der Weg von (*$s$*) nach (*$v$*) kürzer über (*$u$*)?
+        falls (*$d_s[u] + c(u,v) < d_s[v]$*) dann:
+            (*$d_s[v] \leftarrow d_s[u] + c(u,v)$*)
+\end{lstlisting}
+
+Im Standard-Dijkstra-Algorithmus siehe \cref{listing:Dijkstra} suchen wir den Pfad mit der minimalen \textit{Summe} der Kantengewichte. Nehmen wir nun an, wir suchen in einem Kommunikationsnetzwerk den Weg mit der \textbf{maximalen Zuverlässigkeit}.
+
+Jeder Kante $(u, v)$ ist eine Wahrscheinlichkeit $P((u, v)) \in \ioc{0}{1}$ zugeordnet, dass die Verbindung funktioniert. Die Zuverlässigkeit eines Pfades ist das \textbf{Produkt} der Wahrscheinlichkeiten aller Kanten auf diesem Pfad.
+
+Kreuzen Sie für die drei wesentlichen Änderungen am Pseudocode jeweils die korrekte Option an, damit der Algorithmus den zuverlässigsten Pfad findet:
+
+\textbf{1. Initialisierung:}
+\begin{checkboxes}
+	\choice $d_s[u] = \infty$ und $d_s[s] = 0$
+	\CorrectChoice $d_s[u] = 0$ und $d_s[s] = 1$
+	\choice $d_s[u] = 1$ und $d_s[s] = 0$
+\end{checkboxes}
+
+\textbf{2. Knotenauswahl:}
+\begin{checkboxes}
+	\choice Wähle $u$ mit dem kleinsten $d_s[u]$
+	\choice Wähle $u$ zufällig aus $Q$
+	\CorrectChoice Wähle $u$ mit dem grössten $d_s[u]$
+\end{checkboxes}
+
+\textbf{3. Relaxation:}
+\begin{checkboxes}
+	\choice Falls $d_s[u] + P((u, v)) < d_s[v]$
+	\CorrectChoice Falls $d_s[u] \cdot P((u, v)) > d_s[v]$
+	\choice Falls $d_s[u] \cdot P((u, v)) < d_s[v]$
+\end{checkboxes}
+
+\begin{solution}
+\begin{enumerate}
+	\item Alle Distanzwerte \(d_s[u]\) werden zu Beginn auf \(0\) gesetzt. Der Startknoten erhält den Wert \(d_s[s] = 1\).
+
+	\item In jedem Schritt muss der Knoten \(u \in Q\) mit dem grössten aktuellen Wert \(d_s[u]\) gewählt werden.
+
+	\item Der Vergleich und das Update verwenden Multiplikation:
+	\[
+		d_s[u] \cdot P((u,v)) > d_s[v].
+	\]
+\end{enumerate}
+\end{solution}
+
+\clearpage
+
+\question[2]
+\textbf{EAN-13 Prüfziffer}
+
+Ein EAN-13-Code besteht aus 12 Ziffern $x_1 \ldots x_{12}$ und einer Prüfziffer $x_{13}$. Die gewichtete Summe $s$ berechnet sich nach der Formel:
+\[
+	s = x_1 + x_3 + x_5 + x_7 + x_9 + x_{11}
+	+ 3 \cdot (x_2 + x_4 + x_6 + x_8 + x_{10} + x_{12}).
+\]
+Die Prüfziffer $x_{13}$ wird anschliessend so gewählt, dass $s + x_{13}$ durch 10 teilbar ist.
+
+Berechnen Sie die Prüfziffer $x_{13}$ für die folgende Ziffernfolge:
+\[
+	\texttt{541230981246}.
+\]
+\vspace{30mm}
+
+\begin{solution}
+	Summe der ungeraden Stellen:
+	\[
+		5 + 1 + 3 + 9 + 1 + 4 = 23.
+	\]
+	Summe der geraden Stellen:
+	\[
+		4 + 2 + 0 + 8 + 2 + 6 = 22.
+	\]
+	Diese wird mit \(3\) gewichtet:
+	\[
+		3 \cdot 22 = 66.
+	\]
+	Die Gesamtsumme ist
+	\[
+		s = 23 + 66 = 89.
+	\]
+	Damit \(89 + x_{13}\) durch \(10\) teilbar ist, muss \(x_{13} = 1\) sein.
+\end{solution}
+
+\question
+\textbf{Fehlererkennung und -korrektur}
+
+Gegeben ist eine binäre Kodierung mit den folgenden drei gültigen Codewörtern:
+\begin{itemize}
+	\item $C_1 = 101010$
+	\item $C_2 = 110110$
+	\item $C_3 = 001011$
+\end{itemize}
+
+\begin{parts}
+	\part[1] Bestimmen Sie den minimalen Abstand dieser Kodierung. \vspace{15mm}
+	\part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher erkannt} werden? \vspace{15mm}
+	\part[1] Wie viele Bitfehler können mit dieser Kodierung \textit{sicher korrigiert} werden? \vspace{15mm}
+\end{parts}
+
+\begin{solution}
+\begin{enumerate}
+	\item Die Abstände sind
+	\[
+		d(C_1, C_2) = 3, \qquad
+		d(C_1, C_3) = 2, \qquad
+		d(C_2, C_3) = 3.
+	\]
+	Der minimale Abstand ist also \(d_{\min} = 2\).
+
+	\item Sicher erkannt werden können
+	\[
+		d_{\min} - 1 = 1
+	\]
+	Bitfehler.
+
+	\item Sicher korrigiert werden können
+	\[
+		\left\lfloor \frac{d_{\min} - 1}{2} \right\rfloor = 0
+	\]
+	Bitfehler.
+\end{enumerate}
+\end{solution}
+
+\end{questions}
