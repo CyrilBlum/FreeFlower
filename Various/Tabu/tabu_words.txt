@@ -28,6 +28,7 @@ InstaHub | Instagram, SQL, Plattform
 Nerd | Informatik, Freizeit, Geek
 Endlosschleife | Absturz, Computer, Fehler, Code
 Datenschutz | Persönlich, Privat(sphäre), Sicherheit
+Grok | LLM, ChatGPT, Gemini, KI
 
 category: Jugendwörter
 Chaya | Jugendwort, Frau, Mädchen
@@ -62,7 +63,7 @@ Bizeps | Muskeln, Training, Bodybuilding
 
 category: Schule
 Lee | Schule, Ort, Kantonsschule
-Leistungsnachweis | Deutsch, Friedli, Sturm \& Drang, Auftrag
+Leistungsnachweis | Deutsch, Sturm \& Drang, Auftrag
 Klassenlager | Woche, Ausflug, Schule
 Rektor | Chef, Schule, Lehrer
 Schwerpunktfach | Wählen, Lektionen, Kantonsschule (Kanti)
