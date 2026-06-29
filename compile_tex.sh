@@ -247,7 +247,7 @@ article_topics=(
     "MA_Thesis_Guidelines_de:Various/MA Thesis/MA Thesis Guidelines de.tex"
     "MA_Thesis_Ideas:Various/MA Thesis/Ideas MA Projects.tex"
     "Filme:Various/Filme.tex"
-    "Tabu:Various/Tabu.tex"
+    "Tabu:Various/Tabu/Tabu.tex"
     "Fun_Quotes:Various/Fun_Quotes"
 )
 
