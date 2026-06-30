@@ -942,52 +942,52 @@ Gemeinsame Wahlkurse: {'Informatik'}
 \end{myexercise}
 
 
-\section{Tupel}
-Tupel sind eine weitere grundlegende Datenstruktur in Python, die Ähnlichkeiten mit Listen aufweisen, sich aber in einem entscheidenden Punkt unterscheiden: ihrer Unveränderlichkeit.
+\section{Tuple}
+Tuples sind eine weitere grundlegende Datenstruktur in Python, die Ähnlichkeiten mit Listen aufweisen, sich aber in einem entscheidenden Punkt unterscheiden: ihrer Unveränderlichkeit.
 
 \begin{mydefinition}
-	Ein Tupel in Python ist eine geordnete, unveränderliche Sammlung von Elementen.
-	Tupel sind ähnlich wie Listen, können aber nach ihrer Erstellung nicht mehr verändert werden.
+	Ein Tuple in Python ist eine geordnete, unveränderliche Sammlung von Elementen.
+	Tuples sind ähnlich wie Listen, können aber nach ihrer Erstellung nicht mehr verändert werden.
 	Man erstellt sie, indem man Elemente in runde Klammern setzt, getrennt durch Kommas.
 \end{mydefinition}
 
-Tupel in Python haben die folgenden Eigenschaften:
+Tuples in Python haben die folgenden Eigenschaften:
 \begin{itemize}
 	\item \textbf{Unveränderlichkeit (Immutability):} Versucht man, ein Element zu ändern, erhält man eine Fehlermeldung. Zum Beispiel würde \lstinline|koordinaten[0] = 5| einen Fehler verursachen.
 	\item \textbf{Geordnetheit:} Die Reihenfolge der Elemente bleibt erhalten.
-	\item \textbf{Heterogenität:} Ein Tupel kann verschiedene Datentypen enthalten, wie ganze Zahlen, Zeichenketten oder sogar andere Tupel. Zum Beispiel: \lstinline|person = ('Anna', 30, True)|.
-	\item \textbf{Anwendungsbereiche:} Tupel werden oft verwendet, wenn man sicherstellen will, dass Daten nicht versehentlich geändert werden, wie z. B. bei Datenbankkoordinaten, Rückgabewerten von Funktionen oder als Schlüssel in einem Wörterbuch.
+	\item \textbf{Heterogenität:} Ein Tuple kann verschiedene Datentypen enthalten, wie ganze Zahlen, Zeichenketten oder sogar andere Tuples. Zum Beispiel: \lstinline|person = ('Anna', 30, True)|.
+	\item \textbf{Anwendungsbereiche:} Tuples werden oft verwendet, wenn man sicherstellen will, dass Daten nicht versehentlich geändert werden, wie z. B. bei Datenbankkoordinaten, Rückgabewerten von Funktionen oder als Schlüssel in einem Wörterbuch.
 \end{itemize}
 
-Tupel sind besonders nützlich, wenn Sie eine feste Anzahl von Elementen haben, die zusammengehören, wie z. B. die Koordinaten eines Punktes in einem 2D-Raum (x, y). Tupel können auch als Rückgabewerte von Funktionen verwendet werden, um mehrere Werte gleichzeitig zurückzugeben.
+Tuples sind besonders nützlich, wenn Sie eine feste Anzahl von Elementen haben, die zusammengehören, wie z. B. die Koordinaten eines Punktes in einem 2D-Raum (x, y). Tuples können auch als Rückgabewerte von Funktionen verwendet werden, um mehrere Werte gleichzeitig zurückzugeben.
 
-\begin{myexample}[Tupel für 2D-Koordinaten]
+\begin{myexample}[Tuples für 2D-Koordinaten]
 	\leavevmode
 	\begin{lstlisting}[language=Python]
-# ein Tupel (für 2D-Koordinaten) erstellen
+# ein Tuple (für 2D-Koordinaten) erstellen
 koordinaten = (10, 20)
 
-# das Tupel mit print ausgeben
+# das Tuple mit print ausgeben
 print(koordinaten)
 
-# das erste Element des Tupels ausgeben (Index 0)
+# das erste Element des Tuples ausgeben (Index 0)
 print(koordinaten[0])
 
-# das zweite Element des Tupels ausgeben (Index 1)
+# das zweite Element des Tuples ausgeben (Index 1)
 print(koordinaten[1])
 
-# Error! Tupel sind unveränderlich!
+# Error! Tuples sind unveränderlich!
 koordinaten[0] = 5
 \end{lstlisting}
 \end{myexample}
 
-\begin{myexample}[Tupel für Rückgabewerte von Funktionen]
+\begin{myexample}[Tuples für Rückgabewerte von Funktionen]
 	\leavevmode
 	\begin{lstlisting}[language=Python]
 def berechne_summe_und_produkt(a, b):
 	summe = a + b
 	produkt = a * b
-	return summe, produkt  # Rückgabe als Tupel
+	return summe, produkt  # Rückgabe als Tuple
 
 summe, produkt = berechne_summe_und_produkt(3, 4)
 print("Summe:", summe)       # Summe: 7
@@ -997,13 +997,19 @@ print("Produkt:", produkt)   # Produkt: 12
 
 \begin{myexercise}[Funktion mit mehreren Rückgabewerten]
 
-	Schreiben Sie eine Funktion \lstinline|min_max(liste)|, die eine Liste von Zahlen als Eingabe erhält und ein Tupel zurückgibt, das die kleinste und die grösste Zahl in der Liste enthält.
+	Schreiben Sie eine Funktion \lstinline|min_max(liste)|, die eine Liste von Zahlen als Eingabe erhält und ein Tuple zurückgibt, das die kleinste und die grösste Zahl in der Liste enthält.
 
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{min\_max.py},label=listing:min_max]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/min_max.py}
 	\end{myanswer}
 
 \end{myexercise}
+
+\begin{myremark}[Nützlichkeit von Tuples und Rückgabewerte]
+	Tuples sind besonders nützlich, wenn Sie eine feste Anzahl von Elementen haben, die zusammengehören, wie z. B. die Koordinaten eines Punktes in einem 2D-Raum (x, y). Tuples können auch als Rückgabewerte von Funktionen verwendet werden, um mehrere Werte gleichzeitig zurückzugeben.
+
+	Weshalb geben Funktionen mit mehreren Rückgabewerten ein Tuple zurück, anstatt eine Liste zu verwenden? In Python gibt es keine speziellen ``mehrfachen Rückgabewerte''. Stattdessen fasst die Sprache mehrere Werte automatisch zu einem Tuple zusammen. Ein Tuple eignet sich dafür besonders gut, weil es eine feste Anzahl von Werten mit einer festen Bedeutung beschreibt (z. B. Breite und Höhe oder Quotient und Rest). Listen hingegen stehen eher für veränderbare Sammlungen von Elementen. Dass Tuples unveränderlich sind, ist dabei ein zusätzlicher Vorteil, aber nicht der Hauptgrund für ihre Verwendung.
+\end{myremark}
 
 \section{Weitere Aufgaben}
 \begin{myexercise}[Notenspiegel für mehrere Personen]
