@@ -243,7 +243,7 @@ article_topics=(
     # Various
     "Semesterplanung:Grundlagen_Info/Various/Semesterplanung"
     "Benotung:Grundlagen_Info/Various/Benotung"
-    "Interessenwoche_Ablauf:Interessenwochen/Wn_Gf_Web/Eingabe_Projektidee"
+    "Interessenwoche_Ablauf:Interessenwochen/Wn_Gf_Web/Beschreibung"
     "Interessenwoche_Auftrag:Interessenwochen/Wn_Gf_Web/Auftrag"
     "MA_Thesis_Guidelines:Various/MA Thesis/MA Thesis Guidelines.tex"
     "MA_Thesis_Guidelines_de:Various/MA Thesis/MA Thesis Guidelines de.tex"
