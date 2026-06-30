@@ -178,7 +178,7 @@ sql = """
 """
 cursor.execute(sql, (username, password))
 \end{lstlisting}
-Die Fragezeichen \lstinline|?| dienen als Platzhalter für die Werte, welche in der zweiten Zeile als Tupel übergeben werden. Auf diese Weise wird sichergestellt, dass die Benutzereingaben nicht als SQL-Befehle interpretiert werden können, sondern nur als Werte in die Tabelle eingefügt werden.
+Die Fragezeichen \lstinline|?| dienen als Platzhalter für die Werte, welche in der zweiten Zeile als tuple übergeben werden. Auf diese Weise wird sichergestellt, dass die Benutzereingaben nicht als SQL-Befehle interpretiert werden können, sondern nur als Werte in die Tabelle eingefügt werden.
     \begin{myanswer}
         \begin{lstlisting}
 from sqlite3 import *
