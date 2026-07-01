@@ -319,12 +319,47 @@ Variablen, welche im Hauptprogramm (nicht eingerückt) erstellt werden, sind sog
 \end{myexercise}
 
 \begin{myexercise}
-	Was könnte der Vorteil von \textit{lokalen Variablen} sein?
+	\lstinputlisting[language=Python,caption=\texttt{fehlerscope.py},label=listing:scope]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Functions/fehlerscope.py}
+	\begin{enumerate}
+		\item Führen Sie das Programm aus.
+		\item Weshalb entsteht der Fehler?
+		\item Wie könnte man das Problem lösen?
+	\end{enumerate}
 	\begin{myanswer}
-		Falls Sie mehrere Funktionen schreiben, können Sie dieselben Variabelnamen und Parameter-Namen innerhalb der Funktionen verwenden, da diese nichts miteinander zu tun haben. Im Code aus \cref{ex:local-global} hätten wir auch in beiden Funktionen \texttt{laenge} schreiben können.
+		\begin{enumerate}
+			\item -
+			\item Das Programm führt zu einer Fehlermeldung, da die Variable \lstinline|zaehler| innerhalb der Funktion \lstinline|erhoehe| nicht existiert. Obwohl es eine globale Variable mit dem Namen \lstinline|zaehler| gibt, ist diese innerhalb der Funktion nicht zugänglich.
+			\item Man könnte das Problem lösen, indem man die Zeile \lstinline|zaehler = 0| in die Funktion \lstinline|erhoehe| verschiebt. Dann wird die Variable \lstinline|zaehler| aber ausserhalb der Funktion nicht mehr existieren, was wahrscheinlich nicht das gewünschte Verhalten ist.
+		\end{enumerate}
 	\end{myanswer}
 \end{myexercise}
 
+\begin{myexercise}
+	\lstinputlisting[language=Python,caption=\texttt{scopeausgabevorhersagen.py},label=listing:scopeausgabevorhersagen]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Functions/scopeausgabevorhersagen.py}
+	\begin{enumerate}
+		\item \textbf{Beantworten Sie folgende Frage, bevor Sie das Programm ausführen:} Was glauben Sie, wird die Ausgabe des Programms sein?
+		\item Welche Variable ist global, welche lokal?
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item \begin{lstlisting}
+				5
+				6
+				100
+			\end{lstlisting}
+			\item \lstinline|x|: global (das \lstinline|x|, das in der Zeile \lstinline|x = 100| definiert wird; \lstinline|x| in der Funktion ist ein Parameter, also lokal), \lstinline|y|: lokal
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}
+% \subsection{Weitere Aufgaben}
+% \begin{myexercise}
+% 	Schreiben Sie eine Funktion \lstinline|rahmen(text)|, welche einen Text in einem Rahmen aus Sternen ausgibt. Verwenden Sie dazu die Funktion \lstinline|len|, um die Länge des Textes zu bestimmen, und verwenden Sie diese Länge, um die Anzahl Sterne zu berechnen, welche für den Rahmen benötigt werden.
+
+% 	\begin{myanswer}
+% 		\lstinputlisting[language=Python,caption=\texttt{sternenrahmen.py},label=listing:quadratzahl]{Grundlagen_Info/00_Programmieren/Skript/Code/Further\ Exercises/sternenrahmen.py}
+% 	\end{myanswer}
+% \end{myexercise}
+\newpage
 
 \section{Werte zurückgeben mit \texorpdfstring{\lstinline|return|}{return}}
 \subsection{Einzelne Funktionen}
@@ -539,7 +574,7 @@ def vieleck_muster(umfang, ecken):
 \end{myexample}
 
 
-\begin{myexercise}
+\begin{myexercise} \label{ex:notenskala}
 	Schreiben Sie eine Python-Funktion \lstinline|def notenskala(maxPunkte, erreichtePunkte)|, welche die erreichte Note in Abhängigkeit der maximal möglichen Punktzahl und der erreichten Punktzahl berechnet und per \lstinline|return| zurückgibt. Verwenden Sie dafür die folgende Formel:
 
 	\[ \text{\texttt{note}} = \frac{\text{\texttt{erreichtePunkte}}}{\text{\texttt{maxPunkte}} }\cdot 5 + 1 \]
@@ -551,6 +586,15 @@ def notenskala(maxPunkte, erreichtePunkte):
 	\end{myanswer}
 \end{myexercise}
 
+\begin{myexercise}
+	Schreiben Sie ein Programm, das Notenschnitte berechnet. Als erstes soll das Programm den Nutzer Fragen, wie viele Prüfungen stattgefunden haben. Anschliessend soll der Benutzer für jede Prüfung die erreichte und die maximale Punktzahl eingeben.
+
+	Das Programm gibt dann die einzelnen Prüfungsnoten (berechnet mit der Funktion aus \cref{ex:notenskala}) und den Gesamtschnitt im Terminal aus.
+	\begin{myanswer}
+		\lstinputlisting[language=Python,caption=\texttt{notenschnitt.py},label=listing:notenschnitt]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Functions/notenschnitt.py}
+	\end{myanswer}
+
+\end{myexercise}
 
 \begin{myexercise}[Formel 1 \emoji{chequered-flag}]\label{ex:f1}
 	Ein Formel-1-Auto fährt eine bestimmte Strecke in einer bestimmten Zeit. Schreiben Sie eine Funktion \lstinline|durchschnittsgeschwindigkeit(strecke_km, zeit_min)|, die Strecke in Kilometern und Zeit in Minuten als Eingabe erhält und die durchschnittliche Geschwindigkeit in km/h per \lstinline|return| zurückgibt.
