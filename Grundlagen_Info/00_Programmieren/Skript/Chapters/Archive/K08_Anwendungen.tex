@@ -152,12 +152,50 @@ Sie lernen, wie Sie auf einzelne Bildpunkte (Pixel) zugreifen und deren Farbwert
 Schritt für Schritt werden Sie verschiedene Effekte wie Invertierungen, Filter oder das Erzeugen von Mustern für Schwarz-Weiss-, Graustufen- und Farbbilder programmieren.
 Diese Übungen bieten eine praktische Anwendung für viele der bisher gelernten Konzepte wie Schleifen und Listen in einem visuell ansprechenden Kontext.
 
-\subsection{Vorbereitung}
 
+\subsection{Schritt-für-Schritt-Anleitung}
+
+\subsubsection*{Schritt 1: Umgebung erstellen}
+Dies erstellt einen versteckten, isolierten "`Sandbox"'-Ordner namens \texttt{.venv} in Ihrem Projektverzeichnis, in dem alle Bibliotheken gespeichert werden.
+\begin{lstlisting}[language=bash]
+# Mac / Linux:
+python3 -m venv .venv
+
+# Windows:
+python -m venv .venv
+\end{lstlisting}
+
+\subsubsection*{Schritt 2: Umgebung aktivieren}
+Dies weist Ihren Computer an, diese spezifische Sandbox zu nutzen. \textbf{Wichtige Überprüfung:} Sie müssen \texttt{(.venv)} ganz am Anfang Ihrer Terminal-Befehlszeile sehen.
+\begin{lstlisting}[language=bash]
+# Mac / Linux:
+source .venv/bin/activate
+
+# Windows (PowerShell - Standard):
+.venv\Scripts\Activate.ps1
+
+# Windows (Eingabeaufforderung / CMD - Alternative):
+.venv\Scripts\activate.bat
+\end{lstlisting}
+
+\subsubsection*{Schritt 3: Bibliotheken installieren}
+Da Sie sich nun sicher innerhalb der virtuellen Umgebung befinden, können Sie die benötigten Kurs-Tools fehlerfrei installieren:
+\begin{lstlisting}[language=bash]
+pip install numpy matplotlib pillow
+\end{lstlisting}
+
+\vspace{1.5em}
+
+% --- Windows Troubleshooting Box ---
+\begin{tcolorbox}[title=\textbf{⚠️ Windows-Fehlerbehebung (Skript-Ausführungsfehler)}, fonttitle=\bfseries]
+Falls Studierende unter Windows eine rote Fehlermeldung erhalten (z.\,B. \textit{"...kann nicht geladen werden, da die Ausführung von Skripten auf diesem System deaktiviert ist"}), muss lediglich dieser Befehl \textbf{einmalig} in der PowerShell ausgeführt und Schritt 2 wiederholt werden:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{white}, frame=none]
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection*{Schritt 4: VS Code starten und Python-File öffnen}
 \begin{enumerate}
-	\item Öffnen Sie ein Terminal-Fenster in VS Code (\enquote{Terminal} $\rightarrow$ \enquote{New Terminal}).
-    \item Installieren Sie \texttt{pillow}, \texttt{matplotlib} sowie \texttt{numpy} mit pip:\\
-	\lstinline|pip install numpy matplotlib pillow|
 	\item Erstellen Sie auf Ihrem eigenen Rechner einen neuen Ordner \emoji{file-folder} mit dem Namen \texttt{Bilder\_Bearbeiten}.
 	\item Laden Sie die Datei \texttt{dateien.zip} von Moodle herunter, und zwar so, dass die Datei \texttt{dateien.zip} in dem neu angelegten Ordner \texttt{Bilder\_Bearbeiten} abgespeichert ist.
 	\item Die Datei \texttt{dateien.zip} ist komprimiert und muss zuerst entpackt werden. Entpacken geht ganz einfach so:
