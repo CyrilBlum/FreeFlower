@@ -85,7 +85,7 @@
 							\pgfmathsetmacro{\angle}{\startAngle + \i * \rotateAngle}
 							\pgfmathsetmacro{\radius}{\spacing * \i}
 							\pgfmathsetmacro{\scale}{\scaleFactor * (\i/\numberEmojis)} % Adjust the divisor for size variation
-							\pgfmathsetmacro{\emojiopacity}{\i /  \numberEmojis} % Adjust the divisor for size variation
+							\pgfmathsetmacro{\emojiopacity}{0.5 * \i /  \numberEmojis} % Adjust the divisor for size variation
 							% Increase spacing gradually
 							\pgfmathsetmacro{\spacing}{\spacing + \i/\numberEmojis} % Adjust the divisor for spacing variation
 							% Select the emoji to be placed in the spiral

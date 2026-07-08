@@ -30,17 +30,46 @@
 \newcommand{\thelogo}{Logos/FreeFlower.pdf}
 \newcommand{\logosize}{.5\textwidth}
 
-\settoggle{oneauthor}{true}
-\settoggle{twomainauthors}{false}
-\def\mainauthors{
-	Thomas Graf und Cyril Blum/cyril.blum@edu.zh.ch
-}
-\def\majorcontributors{
-	Thomas Graf/thomas.graf@edu.zh.ch
-}
-\def\firstmainauthor{Cyril Blum}
-\def\firstmainauthormail{cyril.blum@edu.zh.ch}
+\settoggle{emoji}{true}
 
+% macro for creating a title page
+\renewcommand{\maketitlepage}[2]{
+	% arg1: title
+	% arg2: subtitle
+	\begin{titlepage}
+		\vspace*{0.25\textheight}
+		\begin{center}
+			% logo
+			\iftoggle{includelogo}{\begin{figure}[H]\centering{\includegraphics[width=7cm]{Logos/Institutions/LeeLogo.pdf}}
+				\end{figure}}{}
+			\thesubject\\
+			\begin{tcolorbox}[enhanced,colframe=RoyalBlue!80,colback=RoyalBlue!20, hbox,lifted shadow={1mm}{-2mm}{3mm}{0.1mm}%
+						{Black!50!white}]
+				\begin{varwidth}{\textwidth}
+					\begin{center}
+						\ifblank{#2}{
+							% if no subtitle is given (#2 blank)
+							{\huge \textbf{#1}}\\
+							\iftoggle{emoji}{\makeSpiral}{}
+							{\large \textbf{Skript}}\\[0.2cm]
+						}{
+							% if #2 not blank
+							{\huge \textbf{#1}}\\
+							\iftoggle{emoji}{\makeSpiral}{}
+							{\large \textbf{#2}}\\[0.2cm]
+						}
+					\end{center}
+				\end{varwidth}
+			\end{tcolorbox}
+
+
+			{\large Kantonsschule im Lee, \today}
+
+			%      \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{LeeLogo}};
+
+		\end{center}
+	\end{titlepage}
+}
 \lhead[ \leftmark ]{\thetopic}
 \rhead[\thesubject]{\textcopyleft{} \thesubject, \the\year}
 
@@ -49,15 +78,9 @@
 
 % special case to make "diplomas" using the title page template
 \foreach \person/\platz/\mention in {
-% Livio Adorni/Honorable Mention/,
-% Jonas Billeter/Honorable Mention/,
-Lars Bärlocher/3. Platz/{herausragendes },
-Lars Konrad Gondorf/2. Platz/{herausragendes },
-Leon Kläui/3. Platz/{herausragendes },
-Yichen Liu/2. Platz/{herausragendes },
-Laurin Ott/2. Platz/{herausragendes },
-Dario Roni Parmaksiz/1. Platz/{herausragendes },
-Tiaan Penzhorn/1. Platz/{herausragendes }}{
-\maketitlepage{\textbf{\platz\\[.3cm]\person}}{Informatik-Interessenwoche zum Thema Web-Technologien\\[.3cm]Für ein \mention Projekt mit HTML, CSS und JS}
-}
+		% Livio Adorni/Honorable Mention/,
+		% Jonas Billeter/Honorable Mention/,
+		Lars Bärlocher/3. Platz/{herausragendes }}{
+		\maketitlepage{\textbf{\platz\\[.3cm]\person}}{Informatik-Interessenwoche zum Thema Web-Technologien\\[.3cm]Für ein \mention Projekt mit HTML, CSS und JS}
+	}
 \end{document}
