@@ -47,7 +47,7 @@ winget install -e --id Iterate.Cyberduck --scope machine --silent --accept-packa
 | Feld | Wert |
 |------|------|
 | **Protokoll** | SFTP (SSH File Transfer Protocol) |
-| **Server** | `webproj.in-form-atik.ch` |
+| **Server** | `88.198.193.239` |
 | **Port** | 22 |
 | **Benutzername** | `user1` (oder user2, user3, …) |
 | **Passwort** | [von der Lehrperson] |
