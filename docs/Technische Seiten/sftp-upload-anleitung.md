@@ -23,13 +23,17 @@ SFTP (SSH File Transfer Protocol) ist ein sicheres Protokoll zum Hochladen von D
 Verwenden Sie **Cyberduck**, einen kostenlosen SFTP-Client.
 
 **macOS:**
+
+Öffnen Sie das Terminal und führen Sie folgenden Befehl aus:
 ```bash
 brew install --cask cyberduck
 ```
 
 **Windows:**
+
+Öffnen Sie die PowerShell als Administrator und führen Sie folgenden Befehl aus:
 ```powershell
-winget install -e --id iterateGmbH.Cyberduck --scope machine --silent --accept-package-agreements --accept-source-agreements
+winget install -e --id Iterate.Cyberduck --scope machine --silent --accept-package-agreements --accept-source-agreements
 ```
 
 *(FileZilla ist eine Alternative mit ähnlicher Bedienung.)*
@@ -108,3 +112,14 @@ Nach dem ersten Upload:
 | Spezialzeichen in HTML falsch | HTML-Datei mit UTF-8 speichern, `<meta charset="UTF-8">` im `<head>` |
 
 **Tipp:** Öffnen Sie die Entwicklertools (`F12`) im Browser – dort sehen Sie Fehler.
+
+
+## Challenge: Eigene Domain kaufen und Webseite selber hosten
+
+Falls Sie Ihre eigene Domain besitzen, können Sie Ihre Website auch selbst hosten. Dazu benötigen Sie einen Webhoster, der SFTP unterstützt. Beliebte Anbieter sind:
+- [IONOS](https://www.ionos.de/)
+- [Strato](https://www.strato.de/)
+- [HostEurope](https://www.hosteurope.de/)
+- [Hetzner](https://www.hetzner.de/) (wird im Unterricht verwendet)
+
+Domains, also Web-Adressen, können Sie bei Anbietern wie [hostpoint.ch](https://www.hostpoint.ch/) oder [checkdomain.de](https://www.checkdomain.de/) kaufen. Dort können Sie auch gleich ein Hosting-Paket buchen, um Ihre Website online zu stellen.
