@@ -49,7 +49,7 @@ winget install -e --id Iterate.Cyberduck --scope machine --silent --accept-packa
 | **Protokoll** | SFTP (SSH File Transfer Protocol) |
 | **Server** | `88.198.193.239` |
 | **Port** | 22 |
-| **Benutzername** | `user1` (oder user2, user3, …) |
+| **Benutzername** | `user1` (oder `user2`, `user3`, …) |
 | **Passwort** | [von der Lehrperson] |
 
 Speichern Sie die Verbindung für späteren Zugriff.
