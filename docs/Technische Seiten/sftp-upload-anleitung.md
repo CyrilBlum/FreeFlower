@@ -51,6 +51,7 @@ winget install -e --id Iterate.Cyberduck --scope machine --silent --accept-packa
 | **Port** | 22 |
 | **Benutzername** | `user1` (oder `user2`, `user3`, …) |
 | **Passwort** | [von der Lehrperson] |
+| **Pfad** | `/var/www/webproj.in-form-atik.ch/public_html/` |
 
 Speichern Sie die Verbindung für späteren Zugriff.
 
