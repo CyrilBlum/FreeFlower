@@ -1,0 +1,247 @@
+\chapter{Logische Gatter}\label{ch:logische_gatter}
+
+\section{Bits -- die kleinste Informationseinheit}
+
+Ein Computer verarbeitet Informationen ausschliesslich in Form von \textbf{Bits}. Ein Bit (von \emph{binary digit}, dt. Binärstelle) kann genau zwei Zustände annehmen: \texttt{0} und \texttt{1}. Physikalisch entspricht dies auf einem Chip zwei verschiedenen Spannungsniveaus -- typischerweise \enquote{keine Spannung} ($\approx 0\,\mathrm{V}$) für den Wert \texttt{0} und \enquote{hohe Spannung} ($\approx 3{,}3\,\mathrm{V}$ oder $5\,\mathrm{V}$) für den Wert \texttt{1}.
+
+\begin{mydefinition}[Bit und Byte]
+    Ein \textbf{Bit} ist die kleinste digitale Informationseinheit und nimmt einen der zwei Werte $\{0, 1\}$ an.
+    
+    Ein \textbf{Byte} besteht aus $8$ Bits. Mit einem Byte können $2^8 = 256$ verschiedene Werte dargestellt werden.
+\end{mydefinition}
+
+Grössere Datenmengen werden in üblichen Vielfachen angegeben:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+        \textbf{Einheit} & \textbf{Abkürzung} & \textbf{Grösse} \\\midrule\midrule
+        Kilobyte & KB & $10^3$ Bytes $\approx 1\,000$ Bytes \\\midrule
+        Megabyte & MB & $10^6$ Bytes $\approx 1\,000\,000$ Bytes \\\midrule
+        Gigabyte & GB & $10^9$ Bytes \\\midrule
+        Terabyte & TB & $10^{12}$ Bytes \\
+    \end{tabular}
+    \caption{Gängige Einheiten für Datenmenge}
+    \label{tab:einheiten}
+\end{table}
+
+\begin{myexample}[Grösse von Dateien]
+    Ein kurzes Textdokument benötigt wenige Kilobytes, ein Foto einige Megabytes und ein HD-Film mehrere Gigabytes Speicherplatz.
+\end{myexample}
+
+\section{Logische Grundverknüpfungen}
+
+Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{Boolesche Funktionen}: Funktionen, die einen oder mehrere Bits als Eingabe erhalten und einen Bit als Ausgabe liefern. Die drei elementaren Verknüpfungen sind \textbf{NOT}, \textbf{AND} und \textbf{OR}.
+
+\subsection{NOT -- Negation}
+
+\begin{mydefinition}[NOT-Gatter]
+    Das \textbf{NOT-Gatter} (auch: Inverter) hat \emph{einen} Eingang $x$ und liefert den negierten Wert $\overline{x}$ als Ausgang. Es gilt:
+    \[
+        \overline{0} = 1 \qquad \overline{1} = 0.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \node[not gate, draw] (not1) at (0,0) {};
+        \draw (not1.input) -- ++(-0.7,0) node[left] {$x$};
+        \draw (not1.output) -- ++(0.7,0) node[right] {$\overline{x}$};
+    \end{tikzpicture}
+    \caption{Symbol des NOT-Gatters.}
+    \label{fig:not_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c||c}
+        $x$ & $\overline{x}$ \\\midrule\midrule
+        0 & 1 \\\midrule
+        1 & 0 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des NOT-Gatters.}
+    \label{tab:not}
+\end{table}
+
+\subsection{AND -- Konjunktion}
+
+\begin{mydefinition}[AND-Gatter]
+    Das \textbf{AND-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{beide} Eingänge \texttt{1} sind:
+    \[
+        x \wedge y = 1 \iff x = 1 \text{ und } y = 1.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \node[and gate, draw] (and1) at (0,0) {};
+        \draw (and1.input 1) -- ++(-0.7,0) node[left] {$x$};
+        \draw (and1.input 2) -- ++(-0.7,0) node[left] {$y$};
+        \draw (and1.output) -- ++(0.7,0) node[right] {$x \wedge y$};
+    \end{tikzpicture}
+    \caption{Symbol des AND-Gatters.}
+    \label{fig:and_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $x \wedge y$ \\\midrule\midrule
+        0 & 0 & 0 \\\midrule
+        0 & 1 & 0 \\\midrule
+        1 & 0 & 0 \\\midrule
+        1 & 1 & 1 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des AND-Gatters.}
+    \label{tab:and}
+\end{table}
+
+\begin{myexample}[Türschloss mit zwei Schlüsseln]
+    Stellen Sie sich ein Schloss vor, das sich nur öffnet, wenn \emph{zwei} Schlüssel gleichzeitig umgedreht werden. Dieses Schloss verhält sich wie ein AND-Gatter: Die Tür öffnet sich (\texttt{1}) nur dann, wenn Schlüssel 1 \emph{und} Schlüssel 2 gedreht sind.
+\end{myexample}
+
+\subsection{OR -- Disjunktion}
+
+\begin{mydefinition}[OR-Gatter]
+    Das \textbf{OR-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{mindestens einer} der Eingänge \texttt{1} ist:
+    \[
+        x \vee y = 1 \iff x = 1 \text{ oder } y = 1.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \node[or gate, draw] (or1) at (0,0) {};
+        \draw (or1.input 1) -- ++(-0.7,0) node[left] {$x$};
+        \draw (or1.input 2) -- ++(-0.7,0) node[left] {$y$};
+        \draw (or1.output) -- ++(0.7,0) node[right] {$x \vee y$};
+    \end{tikzpicture}
+    \caption{Symbol des OR-Gatters.}
+    \label{fig:or_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $x \vee y$ \\\midrule\midrule
+        0 & 0 & 0 \\\midrule
+        0 & 1 & 1 \\\midrule
+        1 & 0 & 1 \\\midrule
+        1 & 1 & 1 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des OR-Gatters.}
+    \label{tab:or}
+\end{table}
+
+\section{Das NAND-Gatter: Ein universelles Gatter}\label{sec:nand}
+
+\begin{mydefinition}[NAND-Gatter]
+    Das \textbf{NAND-Gatter} (von \emph{Not AND}) liefert die Negation des AND:
+    \[
+        x \uparrow y \;=\; \overline{x \wedge y}.
+    \]
+    Es gibt \texttt{0} aus, wenn \emph{beide} Eingänge \texttt{1} sind; sonst immer \texttt{1}.
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \node[nand gate, draw] (nand1) at (0,0) {};
+        \draw (nand1.input 1) -- ++(-0.7,0) node[left] {$x$};
+        \draw (nand1.input 2) -- ++(-0.7,0) node[left] {$y$};
+        \draw (nand1.output) -- ++(0.7,0) node[right] {$\overline{x \wedge y}$};
+    \end{tikzpicture}
+    \caption{Symbol des NAND-Gatters (AND mit Kreis am Ausgang).}
+    \label{fig:nand_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $\overline{x \wedge y}$ \\\midrule\midrule
+        0 & 0 & 1 \\\midrule
+        0 & 1 & 1 \\\midrule
+        1 & 0 & 1 \\\midrule
+        1 & 1 & 0 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des NAND-Gatters.}
+    \label{tab:nand}
+\end{table}
+
+Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen. Man sagt, NAND ist \textbf{funktional vollständig}. Tatsächlich sind moderne Computerchips intern zu einem grossen Teil aus NAND-Gattern aufgebaut -- Milliarden davon auf der Fläche eines Fingernagels.
+
+\begin{myexercise}
+    Zeigen Sie, dass sich das NOT-Gatter allein mit NAND-Gattern realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $x \uparrow x$ (also: $x$ NAND $x$) auf und vergleichen Sie diese mit der Wahrheitstabelle des NOT-Gatters.
+    \begin{myanswer}
+        \begin{center}
+            \begin{tabular}{c||c|c}
+                $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule\midrule
+                0 & 0 & 1 \\\midrule
+                1 & 1 & 0 \\
+            \end{tabular}
+        \end{center}
+        Die Spalte $\overline{x \wedge x}$ ist identisch mit der Wahrheitstabelle von NOT($x$). Ein NOT-Gatter kann also durch ein einziges NAND-Gatter, bei dem beide Eingänge verbunden sind, realisiert werden.
+    \end{myanswer}
+\end{myexercise}
+
+\section{Kombinierte Schaltungen: der Halbaddierer}\label{sec:halbaddierer}
+
+Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beispiel betrachten wir die binäre Addition zweier einstelliger Zahlen. Wenn zwei Bits $x$ und $y$ addiert werden, entsteht eine zweistellige Summe:
+
+\begin{center}
+    \begin{tabular}{cc}
+        $x$ & $y$ \\\midrule
+        0 & 0 \\
+        0 & 1 \\
+        1 & 0 \\
+        1 & 1 \\
+    \end{tabular}
+    \quad$\longrightarrow$\quad
+    \begin{tabular}{cc}
+        Übertrag $c$ & Summe $s$ \\\midrule
+        0 & 0 \\
+        0 & 1 \\
+        0 & 1 \\
+        1 & 0 \\
+    \end{tabular}
+\end{center}
+
+Die Summe $s$ entspricht $x \oplus y$ (XOR: genau dann \texttt{1}, wenn die Bits verschieden sind), der Übertrag $c$ entspricht $x \wedge y$ (AND):
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.3]
+        % XOR gate for sum
+        \node[xor gate, draw] (xor1) at (2, 0.5) {};
+        % AND gate for carry
+        \node[and gate, draw] (and1) at (2,-0.9) {};
+
+        % Inputs x
+        \draw (xor1.input 1) -- ++(-0.5,0) coordinate (xinxor) -- ++(-0.7,0) node[left] {$x$};
+        \draw (and1.input 1) -- ++(-0.5,0) coordinate (xinand);
+        \draw (xinxor) -- ++(0,-0.5) -- (xinand);
+
+        % Inputs y
+        \draw (xor1.input 2) -- ++(-0.3,0) coordinate (yinxor) -- ++(-0.9,0) node[left] {$y$};
+        \draw (and1.input 2) -- ++(-0.3,0) coordinate (yinand);
+        \draw (yinxor) -- ++(0,-0.5) -- (yinand);
+
+        % Outputs
+        \draw (xor1.output) -- ++(0.8,0) node[right] {$s$ (Summe)};
+        \draw (and1.output) -- ++(0.8,0) node[right] {$c$ (Übertrag)};
+    \end{tikzpicture}
+    \caption{Schaltplan eines Halbaddierers: XOR liefert die Summe, AND den Übertrag.}
+    \label{fig:halbaddierer}
+\end{figure}
+
+Solche Addierwerke werden in einer echten CPU zu vollständigen \textbf{Addierwerken} (englisch: \emph{adder}) zusammengeschaltet, die beliebig grosse Ganzzahlen addieren können.
+
+\begin{myexercise}
+    Überprüfen Sie anhand der Wahrheitstabelle, dass der Halbaddierer die binäre Addition korrekt berechnet: $1 + 1 = 10_2$ (dezimal: $2$), also Summe $= 0$ und Übertrag $= 1$.
+    \begin{myanswer}
+        Für $x=1, y=1$: XOR$(1,1) = 0$ (Summe), AND$(1,1) = 1$ (Übertrag). Das Ergebnis ist also die zweistellige Binärzahl \texttt{10}, was $2$ im Dezimalsystem entspricht. Korrekt.
+    \end{myanswer}
+\end{myexercise}
