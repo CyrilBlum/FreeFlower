@@ -1,12 +1,92 @@
 \chapter{Logische Gatter}\label{ch:logische_gatter}
 
-\section{Bits -- die kleinste Informationseinheit}
+\section{Vom Stromkreis zur Information}
 
-Ein Computer verarbeitet Informationen ausschliesslich in Form von \textbf{Bits}. Ein Bit (von \emph{binary digit}, dt. Binärstelle) kann genau zwei Zustände annehmen: \texttt{0} und \texttt{1}. Physikalisch entspricht dies auf einem Chip zwei verschiedenen Spannungsniveaus -- typischerweise \enquote{keine Spannung} ($\approx 0\,\mathrm{V}$) für den Wert \texttt{0} und \enquote{hohe Spannung} ($\approx 3{,}3\,\mathrm{V}$ oder $5\,\mathrm{V}$) für den Wert \texttt{1}.
+Bevor wir über Bits und Rechenregeln sprechen, starten wir bei der Hardware: Ein Chip ist zunächst ein Netzwerk aus leitenden Verbindungen und schaltenden Bauelementen. Die zentrale Idee lautet: \textbf{Elektrische Zustände werden als logische Zustände interpretiert}.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{scope}[shift={(0,0)}, local bounding box=openBB]
+            \coordinate (open-base) at (0,0);
+            \coordinate (open-bat-bot) at ($(open-base)+(0.6,0.8)$);
+            \coordinate (open-bat-top) at ($(open-base)+(0.6,2.2)$);
+            \coordinate (open-sw-left) at ($(open-base)+(2.0,2.2)$);
+            \coordinate (open-sw-right) at ($(open-base)+(2.9,2.2)$);
+            \coordinate (open-lamp) at ($(open-base)+(3.8,2.2)$);
+            \coordinate (open-ret) at ($(open-base)+(3.8,0.8)$);
+
+            \draw (open-bat-bot) -- (open-bat-top);
+            \draw ($(open-base)+(0.45,1.15)$) -- ($(open-base)+(0.75,1.15)$);
+            \draw ($(open-base)+(0.50,1.60)$) -- ($(open-base)+(0.70,1.60)$);
+            \node[left] at ($(open-base)+(0.35,1.35)$) {$U$};
+
+            \draw (open-bat-top) -- (open-sw-left);
+            \draw (open-sw-left) -- ($(open-sw-left)+(0.6,0.3)$);
+            \draw (open-sw-right) -- (open-lamp);
+            \draw (open-lamp) circle (0.35);
+            \draw ($(open-base)+(3.55,1.95)$) -- ($(open-base)+(4.05,2.45)$);
+            \draw (open-bat-bot) -- (open-ret) -- ($(open-lamp)+(0,-0.35)$);
+
+            \node at ($(open-base)+(2.35,2.65)$) {\tiny kein Kontakt};
+            \node at ($(open-base)+(3.8,1.3)$) {Last aus};
+            \node at ($(open-base)+(2.5,2.95)$) {Schalter offen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(openBB),inner sep=8pt] {};
+
+        \begin{scope}[shift={(6.2,0)}, local bounding box=closedBB]
+            \coordinate (closed-base) at (0,0);
+            \coordinate (closed-bat-bot) at ($(closed-base)+(0.6,0.8)$);
+            \coordinate (closed-bat-top) at ($(closed-base)+(0.6,2.2)$);
+            \coordinate (closed-sw-left) at ($(closed-base)+(2.0,2.2)$);
+            \coordinate (closed-sw-right) at ($(closed-base)+(2.6,2.2)$);
+            \coordinate (closed-lamp) at ($(closed-base)+(3.8,2.2)$);
+            \coordinate (closed-ret) at ($(closed-base)+(3.8,0.8)$);
+
+            \draw (closed-bat-bot) -- (closed-bat-top);
+            \draw ($(closed-base)+(0.45,1.15)$) -- ($(closed-base)+(0.75,1.15)$);
+            \draw ($(closed-base)+(0.50,1.60)$) -- ($(closed-base)+(0.70,1.60)$);
+            \node[left] at ($(closed-base)+(0.35,1.35)$) {$U$};
+
+            \draw (closed-bat-top) -- (closed-sw-left);
+            \fill (closed-sw-left) circle (0.04);
+            \fill (closed-sw-right) circle (0.04);
+            \draw[line width=0.5pt] (closed-sw-left) -- (closed-sw-right);
+            \draw (closed-sw-right) -- (closed-lamp);
+            \draw (closed-lamp) circle (0.35);
+            \fill (closed-lamp) circle (0.12);
+            \draw (closed-bat-bot) -- (closed-ret) -- ($(closed-lamp)+(0,-0.35)$);
+
+            \node at ($(closed-base)+(2.3,2.65)$) {\tiny Kontakt};
+            \node at ($(closed-base)+(3.8,1.3)$) {Last aktiv};
+            \node at ($(closed-base)+(2.5,2.95)$) {Schalter geschlossen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(closedBB),inner sep=8pt] {};
+    \end{tikzpicture}
+    \caption{Grundidee eines elektrischen Schaltnetzes: Kontakt \enquote{offen} oder \enquote{geschlossen}.}
+    \label{fig:stromkreis_grundidee}
+\end{figure}
+
+Ob Strom fliesst oder nicht, hängt davon ab, ob ein leitender Pfad existiert. In der Digitaltechnik werden solche physikalischen Zustände auf zwei logische Zustände abgebildet:
+\[
+    \text{niedrige Spannung} \longleftrightarrow 0,
+    \qquad
+    \text{hohe Spannung} \longleftrightarrow 1.
+\]
+
+Wichtig ist: In echten Schaltungen gibt es Rauschen, Verzögerungen und Fertigungstoleranzen. Deshalb arbeitet man mit \textbf{Spannungsbereichen} statt mit exakt einem Wert. Typisch ist zum Beispiel:
+\begin{itemize}
+    \item $0$ wird zuverlässig erkannt, wenn die Eingangsspannung hinreichend klein ist (nahe $0\,\mathrm{V}$),
+    \item $1$ wird zuverlässig erkannt, wenn die Eingangsspannung hinreichend gross ist (nahe Versorgungsspannung, z.B. $3{,}3\,\mathrm{V}$ oder $5\,\mathrm{V}$).
+\end{itemize}
+
+\section{Bits und Byte als Abstraktion}
+
+Ein Computer verarbeitet Informationen in Form von \textbf{Bits}. Ein Bit (von \emph{binary digit}, dt. Binärstelle) kann genau zwei Zustände annehmen: \texttt{0} oder \texttt{1}. Die elektrische Realität (Spannung, Strom, Ladung) wird damit auf eine stabile mathematische Darstellung reduziert.
 
 \begin{mydefinition}[Bit und Byte]
     Ein \textbf{Bit} ist die kleinste digitale Informationseinheit und nimmt einen der zwei Werte $\{0, 1\}$ an.
-    
+
     Ein \textbf{Byte} besteht aus $8$ Bits. Mit einem Byte können $2^8 = 256$ verschiedene Werte dargestellt werden.
 \end{mydefinition}
 
@@ -21,33 +101,97 @@ Grössere Datenmengen werden in üblichen Vielfachen angegeben:
         Gigabyte & GB & $10^9$ Bytes \\\midrule
         Terabyte & TB & $10^{12}$ Bytes \\
     \end{tabular}
-    \caption{Gängige Einheiten für Datenmenge}
+    \caption{Gängige Einheiten für Datenmengen.}
     \label{tab:einheiten}
 \end{table}
 
 \begin{myexample}[Grösse von Dateien]
-    Ein kurzes Textdokument benötigt wenige Kilobytes, ein Foto einige Megabytes und ein HD-Film mehrere Gigabytes Speicherplatz.
+    Ein kurzes Textdokument benötigt wenige Kilobytes, ein Foto einige Megabytes und ein hochauflösender Film mehrere Gigabytes Speicherplatz.
 \end{myexample}
+
+\section{Vom Transistor zum Gatter}
+
+In modernen Chips übernehmen \textbf{Transistoren} die Rolle extrem schneller Schalter. Ein logisches Gatter ist damit keine \enquote{magische Box}, sondern eine konkrete Schaltung aus vielen Transistoren.
+
+Die folgende Skizze zeigt die Grundidee eines \gls{CMOS}-Inverters (NOT-Gatter):
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{scope}[local bounding box=cmosBB]
+            \coordinate (cmos-base) at (0,0);
+            \coordinate (cmos-mid) at ($(cmos-base)+(2.5,2.0)$);
+            \coordinate (cmos-top) at ($(cmos-mid)+(0,1.8)$);
+            \coordinate (cmos-bot) at ($(cmos-mid)+(0,-1.6)$);
+            \coordinate (cmos-out) at ($(cmos-mid)+(0,-0.3)$);
+            \coordinate (cmos-out-right) at ($(cmos-out)+(1.0,0)$);
+
+            \draw (cmos-top) node {Versorgungsspannung};
+            \draw (cmos-bot) node {Masse (0\,V)};
+
+            \draw ($(cmos-mid)+(0,1.2)$) -- ($(cmos-mid)+(0,0.6)$);
+            \draw[rounded corners] ($(cmos-mid)+(-1.15,0.0)$) rectangle ($(cmos-mid)+(1.15,0.6)$);
+            \node at ($(cmos-mid)+(0,0.3)$) {p-Transistor};
+
+            \draw ($(cmos-mid)+(0,0.0)$) -- ($(cmos-mid)+(0,-0.6)$);
+            \draw (cmos-out) -- (cmos-out-right);
+            \node[above] at (cmos-out-right) {$y$};
+
+            \draw[rounded corners] ($(cmos-mid)+(-1.15,-1.2)$) rectangle ($(cmos-mid)+(1.15,-0.6)$);
+            \node at ($(cmos-mid)+(0,-0.9)$) {n-Transistor};
+            \draw ($(cmos-mid)+(0,-1.2)$) -- ($(cmos-mid)+(0,-1.6)$);
+
+            \draw ($(cmos-mid)+(-1.8,0.3)$) -- ($(cmos-mid)+(-0.8,0.3)$);
+            \draw ($(cmos-mid)+(-1.8,-0.9)$) -- ($(cmos-mid)+(-0.8,-0.9)$);
+            \node[left] at ($(cmos-mid)+(-1.8,-0.3)$) {$x$};
+        \end{scope}
+
+        \node[draw,rounded corners,fit=(cmosBB),inner sep=10pt] {};
+        \node[anchor=west, align=left] at (7.2,3.1) {$x=0 \Rightarrow$ oberer Transistor leitend,\ unterer sperrt};
+        \node[anchor=west] at (7.2,2.45) {$\Rightarrow y=1$};
+        \node[anchor=west, align=left] at (7.2,1.55) {$x=1 \Rightarrow$ oberer Transistor sperrt,\ unterer leitend};
+        \node[anchor=west] at (7.2,0.90) {$\Rightarrow y=0$};
+    \end{tikzpicture}
+    \caption{Prinzip eines CMOS-Inverters: Zwei komplementäre Transistoren erzeugen die Negation.}
+    \label{fig:cmos_inverter_prinzip}
+\end{figure}
+
+Dieses Prinzip wird für komplexere Gatter verallgemeinert. Aus vielen solcher Schaltstufen entstehen Rechenwerke, Speicher und am Ende ganze Prozessoren.
+
+\begin{mydefinition}[Hardware-relevante Kennwerte]
+    Reale Gatter werden nicht nur durch ihre Wahrheitstabelle beschrieben, sondern auch durch technische Kennwerte:
+    \begin{itemize}
+        \item \textbf{Propagationsverzögerung}: Zeit zwischen Eingangsänderung und stabiler Ausgangsänderung.
+        \item \textbf{Leistungsaufnahme}: Energiebedarf durch Schalten und Leckströme.
+        \item \textbf{Fan-out}: Anzahl von Eingängen, die ein Ausgang zuverlässig treiben kann.
+    \end{itemize}
+\end{mydefinition}
 
 \section{Logische Grundverknüpfungen}
 
-Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{Boolesche Funktionen}: Funktionen, die einen oder mehrere Bits als Eingabe erhalten und einen Bit als Ausgabe liefern. Die drei elementaren Verknüpfungen sind \textbf{NOT}, \textbf{AND} und \textbf{OR}.
+Die Grundlage aller Rechenoperationen eines Computers bilden \textbf{Boolesche Funktionen}: Funktionen, die einen oder mehrere Bits als Eingabe erhalten und genau ein Bit als Ausgabe liefern. Die drei elementaren Verknüpfungen sind \textbf{NOT}, \textbf{AND} und \textbf{OR}.
 
 \subsection{NOT -- Negation}
 
 \begin{mydefinition}[NOT-Gatter]
-    Das \textbf{NOT-Gatter} (auch: Inverter) hat \emph{einen} Eingang $x$ und liefert den negierten Wert $\overline{x}$ als Ausgang. Es gilt:
+    Das \textbf{NOT-Gatter} (auch: Inverter) hat \emph{einen} Eingang $x$ und liefert den negierten Wert $\overline{x}$ als Ausgang:
     \[
-        \overline{0} = 1 \qquad \overline{1} = 0.
+        \overline{0} = 1, \qquad \overline{1} = 0.
     \]
 \end{mydefinition}
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[circuit logic US, scale=1.4]
-        \node[not gate, draw] (not1) at (0,0) {};
-        \draw (not1.input) -- ++(-0.7,0) node[left] {$x$};
-        \draw (not1.output) -- ++(0.7,0) node[right] {$\overline{x}$};
+        \begin{scope}[local bounding box=notBB]
+            \coordinate (not-base) at (0,0);
+            \node[not gate, draw] (not1) at (not-base) {};
+            \coordinate (not-in-left) at ($(not1.input)+(-0.7,0)$);
+            \coordinate (not-out-right) at ($(not1.output)+(0.7,0)$);
+            \draw (not-in-left) -- (not1.input) node[left] {$x$};
+            \draw (not1.output) -- (not-out-right) node[right] {$\overline{x}$};
+        \end{scope}
+        \node[draw,rounded corners,fit=(notBB),inner sep=6pt] {};
     \end{tikzpicture}
     \caption{Symbol des NOT-Gatters.}
     \label{fig:not_gatter}
@@ -76,10 +220,17 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[circuit logic US, scale=1.4]
-        \node[and gate, draw] (and1) at (0,0) {};
-        \draw (and1.input 1) -- ++(-0.7,0) node[left] {$x$};
-        \draw (and1.input 2) -- ++(-0.7,0) node[left] {$y$};
-        \draw (and1.output) -- ++(0.7,0) node[right] {$x \wedge y$};
+        \begin{scope}[local bounding box=andBB]
+            \coordinate (and-base) at (0,0);
+            \node[and gate, draw] (and1) at (and-base) {};
+            \coordinate (and-in1-left) at ($(and1.input 1)+(-0.7,0)$);
+            \coordinate (and-in2-left) at ($(and1.input 2)+(-0.7,0)$);
+            \coordinate (and-out-right) at ($(and1.output)+(0.7,0)$);
+            \draw (and-in1-left) -- (and1.input 1) node[left] {$x$};
+            \draw (and-in2-left) -- (and1.input 2) node[left] {$y$};
+            \draw (and1.output) -- (and-out-right) node[right] {$x \wedge y$};
+        \end{scope}
+        \node[draw,circle,fit=(andBB),inner sep=6pt] {};
     \end{tikzpicture}
     \caption{Symbol des AND-Gatters.}
     \label{fig:and_gatter}
@@ -98,8 +249,8 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
     \label{tab:and}
 \end{table}
 
-\begin{myexample}[Türschloss mit zwei Schlüsseln]
-    Stellen Sie sich ein Schloss vor, das sich nur öffnet, wenn \emph{zwei} Schlüssel gleichzeitig umgedreht werden. Dieses Schloss verhält sich wie ein AND-Gatter: Die Tür öffnet sich (\texttt{1}) nur dann, wenn Schlüssel 1 \emph{und} Schlüssel 2 gedreht sind.
+\begin{myexample}[Zwei Freigaben für ein System]
+    Eine Maschine darf nur starten, wenn \emph{gleichzeitig} ein Schlüsselschalter aktiv ist und ein Sicherheitstaster gedrückt wird. Das Verhalten entspricht einem AND-Gatter.
 \end{myexample}
 
 \subsection{OR -- Disjunktion}
@@ -114,10 +265,17 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[circuit logic US, scale=1.4]
-        \node[or gate, draw] (or1) at (0,0) {};
-        \draw (or1.input 1) -- ++(-0.7,0) node[left] {$x$};
-        \draw (or1.input 2) -- ++(-0.7,0) node[left] {$y$};
-        \draw (or1.output) -- ++(0.7,0) node[right] {$x \vee y$};
+        \begin{scope}[local bounding box=orBB]
+            \coordinate (or-base) at (0,0);
+            \node[or gate, draw] (or1) at (or-base) {};
+            \coordinate (or-in1-left) at ($(or1.input 1)+(-0.7,0)$);
+            \coordinate (or-in2-left) at ($(or1.input 2)+(-0.7,0)$);
+            \coordinate (or-out-right) at ($(or1.output)+(0.7,0)$);
+            \draw (or-in1-left) -- (or1.input 1) node[left] {$x$};
+            \draw (or-in2-left) -- (or1.input 2) node[left] {$y$};
+            \draw (or1.output) -- (or-out-right) node[right] {$x \vee y$};
+        \end{scope}
+        \node[draw,circle,fit=(orBB),inner sep=6pt] {};
     \end{tikzpicture}
     \caption{Symbol des OR-Gatters.}
     \label{fig:or_gatter}
@@ -139,9 +297,9 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
 \section{Das NAND-Gatter: Ein universelles Gatter}\label{sec:nand}
 
 \begin{mydefinition}[NAND-Gatter]
-    Das \textbf{NAND-Gatter} (von \emph{Not AND}) liefert die Negation des AND:
+    Das \textbf{\gls{NAND}-Gatter} liefert die Negation des AND:
     \[
-        x \uparrow y \;=\; \overline{x \wedge y}.
+        x \uparrow y = \overline{x \wedge y}.
     \]
     Es gibt \texttt{0} aus, wenn \emph{beide} Eingänge \texttt{1} sind; sonst immer \texttt{1}.
 \end{mydefinition}
@@ -149,10 +307,17 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[circuit logic US, scale=1.4]
-        \node[nand gate, draw] (nand1) at (0,0) {};
-        \draw (nand1.input 1) -- ++(-0.7,0) node[left] {$x$};
-        \draw (nand1.input 2) -- ++(-0.7,0) node[left] {$y$};
-        \draw (nand1.output) -- ++(0.7,0) node[right] {$\overline{x \wedge y}$};
+        \begin{scope}[local bounding box=nandBB]
+            \coordinate (nand-base) at (0,0);
+            \node[nand gate, draw] (nand1) at (nand-base) {};
+            \coordinate (nand-in1-left) at ($(nand1.input 1)+(-0.7,0)$);
+            \coordinate (nand-in2-left) at ($(nand1.input 2)+(-0.7,0)$);
+            \coordinate (nand-out-right) at ($(nand1.output)+(0.7,0)$);
+            \draw (nand-in1-left) -- (nand1.input 1) node[left] {$x$};
+            \draw (nand-in2-left) -- (nand1.input 2) node[left] {$y$};
+            \draw (nand1.output) -- (nand-out-right) node[right] {$\overline{x \wedge y}$};
+        \end{scope}
+        \node[draw,circle,fit=(nandBB),inner sep=6pt] {};
     \end{tikzpicture}
     \caption{Symbol des NAND-Gatters (AND mit Kreis am Ausgang).}
     \label{fig:nand_gatter}
@@ -171,7 +336,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden sogenannte \textbf{
     \label{tab:nand}
 \end{table}
 
-Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen. Man sagt, NAND ist \textbf{funktional vollständig}. Tatsächlich sind moderne Computerchips intern zu einem grossen Teil aus NAND-Gattern aufgebaut -- Milliarden davon auf der Fläche eines Fingernagels.
+Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen. Man sagt, NAND ist \textbf{funktional vollständig}. In vielen Fertigungsprozessen ist es technologisch günstig, aus wenigen standardisierten Gattertypen sehr grosse Schaltungen aufzubauen.
 
 \begin{myexercise}
     Zeigen Sie, dass sich das NOT-Gatter allein mit NAND-Gattern realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $x \uparrow x$ (also: $x$ NAND $x$) auf und vergleichen Sie diese mit der Wahrheitstabelle des NOT-Gatters.
@@ -183,13 +348,13 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
                 1 & 1 & 0 \\
             \end{tabular}
         \end{center}
-        Die Spalte $\overline{x \wedge x}$ ist identisch mit der Wahrheitstabelle von NOT($x$). Ein NOT-Gatter kann also durch ein einziges NAND-Gatter, bei dem beide Eingänge verbunden sind, realisiert werden.
+        Die Spalte $\overline{x \wedge x}$ ist identisch mit der Wahrheitstabelle von NOT($x$). Ein NOT-Gatter kann also durch ein einziges NAND-Gatter realisiert werden, wenn beide Eingänge verbunden sind.
     \end{myanswer}
 \end{myexercise}
 
 \section{Kombinierte Schaltungen: der Halbaddierer}\label{sec:halbaddierer}
 
-Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beispiel betrachten wir die binäre Addition zweier einstelliger Zahlen. Wenn zwei Bits $x$ und $y$ addiert werden, entsteht eine zweistellige Summe:
+Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beispiel betrachten wir die binäre Addition zweier einstelliger Zahlen. Wenn zwei Bits $x$ und $y$ addiert werden, entsteht eine zweistellige Summe.
 
 \begin{center}
     \begin{tabular}{cc}
@@ -209,39 +374,47 @@ Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beis
     \end{tabular}
 \end{center}
 
-Die Summe $s$ entspricht $x \oplus y$ (XOR: genau dann \texttt{1}, wenn die Bits verschieden sind), der Übertrag $c$ entspricht $x \wedge y$ (AND):
+Die Summe $s$ entspricht $x \oplus y$ (\gls{XOR}: genau dann \texttt{1}, wenn die Bits verschieden sind), der Übertrag $c$ entspricht $x \wedge y$ (AND):
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[circuit logic US, scale=1.3]
-        % XOR gate for sum
-        \node[xor gate, draw] (xor1) at (2, 0.5) {};
-        % AND gate for carry
-        \node[and gate, draw] (and1) at (2,-0.9) {};
+        \begin{scope}[local bounding box=haBB]
+            \coordinate (ha-base) at (2,0.5);
+            \coordinate (ha-and-pos) at ($(ha-base)+(0,-1.4)$);
+            \node[xor gate, draw] (xor1) at (ha-base) {};
+            \node[and gate, draw] (and1) at (ha-and-pos) {};
 
-        % Inputs x
-        \draw (xor1.input 1) -- ++(-0.5,0) coordinate (xinxor) -- ++(-0.7,0) node[left] {$x$};
-        \draw (and1.input 1) -- ++(-0.5,0) coordinate (xinand);
-        \draw (xinxor) -- ++(0,-0.5) -- (xinand);
+            \coordinate (ha-x-left) at ($(xor1.input 1)+(-1.2,0)$);
+            \coordinate (ha-x-split) at ($(xor1.input 1)+(-0.5,0)$);
+            \coordinate (ha-x-and) at ($(and1.input 1)+(-0.5,0)$);
+            \draw (ha-x-left) -- (ha-x-split) -- (xor1.input 1);
+            \draw (ha-x-split) -- ++(0,-0.5) -- (ha-x-and) -- (and1.input 1);
+            \node[left] at (ha-x-left) {$x$};
 
-        % Inputs y
-        \draw (xor1.input 2) -- ++(-0.3,0) coordinate (yinxor) -- ++(-0.9,0) node[left] {$y$};
-        \draw (and1.input 2) -- ++(-0.3,0) coordinate (yinand);
-        \draw (yinxor) -- ++(0,-0.5) -- (yinand);
+            \coordinate (ha-y-left) at ($(xor1.input 2)+(-1.2,0)$);
+            \coordinate (ha-y-split) at ($(xor1.input 2)+(-0.3,0)$);
+            \coordinate (ha-y-and) at ($(and1.input 2)+(-0.3,0)$);
+            \draw (ha-y-left) -- (ha-y-split) -- (xor1.input 2);
+            \draw (ha-y-split) -- ++(0,-0.5) -- (ha-y-and) -- (and1.input 2);
+            \node[left] at (ha-y-left) {$y$};
 
-        % Outputs
-        \draw (xor1.output) -- ++(0.8,0) node[right] {$s$ (Summe)};
-        \draw (and1.output) -- ++(0.8,0) node[right] {$c$ (Übertrag)};
+            \coordinate (ha-s-right) at ($(xor1.output)+(0.8,0)$);
+            \coordinate (ha-c-right) at ($(and1.output)+(0.8,0)$);
+            \draw (xor1.output) -- (ha-s-right) node[right] {$s$ (Summe)};
+            \draw (and1.output) -- (ha-c-right) node[right] {$c$ (Übertrag)};
+        \end{scope}
+        \node[draw,circle,fit=(haBB),inner sep=8pt] {};
     \end{tikzpicture}
     \caption{Schaltplan eines Halbaddierers: XOR liefert die Summe, AND den Übertrag.}
     \label{fig:halbaddierer}
 \end{figure}
 
-Solche Addierwerke werden in einer echten CPU zu vollständigen \textbf{Addierwerken} (englisch: \emph{adder}) zusammengeschaltet, die beliebig grosse Ganzzahlen addieren können.
+In einer \gls{CPU} werden sehr viele solcher Stufen kaskadiert. Dabei werden die Hardware-Kennwerte aus den vorigen Abschnitten entscheidend: Verzögerungen addieren sich entlang des kritischen Pfads, und jeder zusätzliche Schaltvorgang erhöht den Energieverbrauch.
 
 \begin{myexercise}
     Überprüfen Sie anhand der Wahrheitstabelle, dass der Halbaddierer die binäre Addition korrekt berechnet: $1 + 1 = 10_2$ (dezimal: $2$), also Summe $= 0$ und Übertrag $= 1$.
     \begin{myanswer}
-        Für $x=1, y=1$: XOR$(1,1) = 0$ (Summe), AND$(1,1) = 1$ (Übertrag). Das Ergebnis ist also die zweistellige Binärzahl \texttt{10}, was $2$ im Dezimalsystem entspricht. Korrekt.
+        Für $x=1, y=1$: XOR$(1,1)=0$ (Summe), AND$(1,1)=1$ (Übertrag). Das Ergebnis ist also die zweistellige Binärzahl \texttt{10}, was $2$ im Dezimalsystem entspricht.
     \end{myanswer}
 \end{myexercise}

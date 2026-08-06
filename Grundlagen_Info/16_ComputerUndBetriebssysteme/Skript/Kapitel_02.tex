@@ -1,4 +1,4 @@
-\chapter{Aufbau eines Computers}\label{ch:aufbau_computer}
+\chapter[Aufbau eines Computers]{Aufbau eines Computers}\label{ch:aufbau_computer}
 
 \section{Überblick: Was ist ein Computer?}
 
@@ -116,12 +116,12 @@ Die CPU führt Anweisungen in einem einfachen, immer wiederholten Schema aus, de
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[
-        block/.style={draw, rounded corners, minimum width=3.5cm, minimum height=1.1cm, text centered, fill=RoyalBlue!15},
+        block/.style={draw, rounded corners, minimum width=3.5cm, minimum height=1.1cm, text centered, text width=3.5cm, fill=RoyalBlue!15},
         arrow/.style={->, thick}
     ]
-        \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \\ \small Befehl aus RAM holen};
-        \node[block] (decode)  at (5, 0)    {\textbf{2.\ Decode} \\ \small Befehl entschlüsseln};
-        \node[block] (execute) at (2.5,-2)  {\textbf{3.\ Execute} \\ \small Befehl ausführen};
+        \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
+        \node[block] (decode)  at (5, 0)    {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
+        \node[block] (execute) at (2.5,-2)  {\textbf{3.\ Execute} \newline \small Befehl ausführen};
 
         \draw[arrow] (fetch)   -- (decode);
         \draw[arrow] (decode)  -- (execute);

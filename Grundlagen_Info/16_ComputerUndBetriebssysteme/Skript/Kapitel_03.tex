@@ -53,7 +53,7 @@ Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (
 
         % CPU Slots
         \foreach \x/\lbl/\col in {0/Browser/Salmon!50, 1/Musik/DarkSeaGreen!50, 2/Editor/Goldenrod!40, 3/Browser/Salmon!50, 4/Musik/DarkSeaGreen!50, 5/Editor/Goldenrod!40, 6/Browser/Salmon!50, 7/Musik/DarkSeaGreen!50, 8/Editor/Goldenrod!40} {
-            \node[draw, fill=\col, minimum width=0.9cm, minimum height=0.8cm, text centered] at (\x*1.0+0.45, 0.7) {\lbl};
+            \node[draw, fill=\col, minimum width=0.9cm, minimum height=0.8cm, text centered] at (\x*1.5 - 2, 0.7) {\lbl};
         }
         \node at (4.5, -0.5) {Der Prozessor wechselt so schnell zwischen den Programmen, dass es sich für den Benutzer nach Gleichzeitigkeit anfühlt.};
     \end{tikzpicture}
@@ -84,14 +84,14 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[
-        step/.style={draw, rounded corners, fill=RoyalBlue!15, minimum width=5cm, minimum height=0.9cm, text centered},
+        stepc/.style={draw, rounded corners, fill=RoyalBlue!15, minimum width=5cm, minimum height=0.9cm, text centered},
         arrow/.style={->, thick}
     ]
-        \node[step, fill=Gray!25]       (hw)  at (0, 5)   {Tastatur-Hardware sendet elektrischen Impuls};
-        \node[step, fill=RoyalBlue!20]  (drv) at (0, 3.7) {Tastatur-Treiber übersetzt Impuls in Tastaturcode};
-        \node[step, fill=DarkSeaGreen!30](os)  at (0, 2.4) {Betriebssystem stellt Ereignis \enquote{Taste A gedrückt} bereit};
-        \node[step, fill=Goldenrod!30]  (app) at (0, 1.1) {Texteditor empfängt Ereignis und zeigt \texttt{A} an};
-        \node[step, fill=Salmon!30]     (out) at (0,-0.2) {Grafiksubsystem und Bildschirm-Treiber zeigen Pixel an};
+        \node[stepc, fill=Gray!25]       (hw)  at (0, 5)   {Tastatur-Hardware sendet elektrischen Impuls};
+        \node[stepc, fill=RoyalBlue!20]  (drv) at (0, 3.7) {Tastatur-Treiber übersetzt Impuls in Tastaturcode};
+        \node[stepc, fill=DarkSeaGreen!30](os)  at (0, 2.4) {Betriebssystem stellt Ereignis \enquote{Taste A gedrückt} bereit};
+        \node[stepc, fill=Goldenrod!30]  (app) at (0, 1.1) {Texteditor empfängt Ereignis und zeigt \texttt{A} an};
+        \node[stepc, fill=Salmon!30]     (out) at (0,-0.2) {Grafiksubsystem und Bildschirm-Treiber zeigen Pixel an};
 
         \draw[arrow] (hw) -- (drv);
         \draw[arrow] (drv) -- (os);

@@ -1,0 +1,95 @@
+\chapter{Was ist Informatik? Herkunft und Geschichte}\label{ch:geschichte_informatik}
+
+\section{Worum es in der Informatik geht}
+
+Informatik ist weit mehr als das Schreiben von Programmen. Das Fach beschäftigt sich mit der Frage, wie Informationen so dargestellt, verarbeitet, gespeichert und übertragen werden können, dass Menschen und Maschinen sie zuverlässig nutzen können.
+
+\begin{mydefinition}[Informatik]
+    Informatik ist die Wissenschaft von der systematischen Verarbeitung, Speicherung und Übertragung von Informationen mit Hilfe formaler Methoden und technischer Systeme.
+\end{mydefinition}
+
+Der Blick der Informatik richtet sich also auf zwei Ebenen zugleich: auf die \textbf{Idee} hinter einer Lösung und auf die \textbf{technische Umsetzung}. Darum gehören Algorithmen, Datenstrukturen, Netzwerke, Betriebssysteme und Hardware alle zum Fach.
+
+\section{Die Herkunft des Wortes}
+
+Das Wort \enquote{Informatik} ist noch nicht sehr alt. Es entstand im 20. Jahrhundert aus der Verbindung von \textbf{Information} und dem Gedanken der \textbf{automatischen Verarbeitung}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|p{8.2cm}}
+        \textbf{Sprache} & \textbf{Wort} & \textbf{Bedeutung} \\ \midrule\midrule
+        Französisch & informatique & Verbindung von \enquote{information} und \enquote{automatique}; gemeint ist automatische Informationsverarbeitung \\ \midrule
+        Deutsch & Informatik & im deutschsprachigen Raum als Bezeichnung für das Fachgebiet übernommen und verbreitet \\
+    \end{tabular}
+    \caption{Die Wortgeschichte zeigt: Informatik ist von Anfang an als Fach der automatischen Informationsverarbeitung gedacht.}
+    \label{tab:wortherkunft}
+\end{table}
+
+Im Alltag meint \enquote{Informatik} heute meist das Fachgebiet als Ganzes. Historisch stand aber zuerst die Frage im Vordergrund, wie man Informationen mit Maschinen verarbeiten kann. Genau daraus entwickelte sich später die moderne Computerwissenschaft.
+
+\section{Wichtige Stationen der Geschichte}
+
+Die Geschichte der Informatik ist keine gerade Linie, sondern eine Abfolge von Ideen, Maschinen und technischen Durchbrüchen. Einige Stationen sind besonders wichtig:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=1.1cm,y=1cm]
+           \begin{scope}[local bounding box=timelineBB]
+            \coordinate (timeline-start) at (0,0);
+            \coordinate (timeline-end) at (13.8,0);
+            \draw[thick,->] (timeline-start) -- (timeline-end) node[right] {Zeit};
+
+            \foreach \x/\year/\txt/\ticky/\labely in {
+                0.9/1837/Babbages analytische Maschine/-0.75/-1.55,
+                2.6/1843/Lovelaces Notizen zu Algorithmen/0.75/1.55,
+                4.8/1936/Turing beschreibt ein allgemeines Rechenmodell/-0.75/-1.55,
+                6.2/1941/Zuses Z3 als programmierbarer Rechner/0.75/1.55,
+                7.7/1946/ENIAC: grosser elektronischer Rechner/-0.75/-1.55,
+                9.0/1947/Erfindung des Transistors/0.75/1.55,
+                10.8/1969/ARPANET verbindet erste Rechner/-0.75/-1.55,
+                12.6/1989/Tim Berners-Lee entwickelt das World Wide Web/0.75/1.55
+            } {
+                \coordinate (pt) at (\x,0);
+                \draw[thick] (pt) -- ++(0,\ticky);
+                \node[font=\scriptsize, align=center, text width=2.5cm] at ($(pt)+(0,\labely)$) {\year\\\txt};
+            }
+        \end{scope}
+        % \node[draw,circle,fit=(timelineBB),inner sep=8pt] {};
+    \end{tikzpicture}
+    \caption{Ausgewählte Meilensteine der Informatikgeschichte.}
+    \label{fig:informatik_timeline}
+\end{figure}
+
+Einige der wichtigsten Entwicklungen sind:
+
+\begin{itemize}
+    \item Mechanische Rechenmaschinen zeigen schon früh, dass Berechnen automatisiert werden kann.
+    \item Theoretische Arbeiten beschreiben, was ein Rechner grundsätzlich leisten kann.
+    \item Elektronische Computer machen Rechnen viel schneller und zuverlässiger.
+    \item Das Internet und das World Wide Web vernetzen Rechner und Menschen weltweit.
+\end{itemize}
+
+\section{Persönlichkeiten, die das Fach geprägt haben}
+
+Viele Personen haben zur Entwicklung der Informatik beigetragen. Einige Namen tauchen besonders oft auf:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|p{6.1cm}|p{2.8cm}|p{1.8cm}}
+        	extbf{Person} & \textbf{Beitrag} & \textbf{Weiterführende Quelle} & \textbf{Zeitbereich} \\ \midrule\midrule
+        Charles Babbage & Entwarf im 19. Jahrhundert Maschinenideen, die als Vorläufer programmierbarer Computer gelten & \href{https://www.britannica.com/biography/Charles-Babbage}{Britannica} & 1791--1871 \\ \midrule
+        Ada Lovelace & Beschrieb früh, dass eine Maschine nicht nur rechnen, sondern auch allgemeine Anweisungen ausführen kann & \href{https://www.britannica.com/biography/Ada-Lovelace}{Britannica} & 1815--1852 \\ \midrule
+        Alan Turing & Legte theoretische Grundlagen dafür, was ein Computer überhaupt ist und welche Probleme berechenbar sind & \href{https://www.britannica.com/biography/Alan-Turing}{Britannica} & 1912--1954 \\ \midrule
+        Konrad Zuse & Baute mit der Z3 einen der ersten programmierbaren Rechner & \href{https://www.zib.de/konrad-zuse}{ZIB} & 1910--1995 \\ \midrule
+        Claude Shannon & Verknüpfte Logik und Schaltungen und machte damit die digitale Technik mathematisch beschreibbar & \href{https://www.britannica.com/biography/Claude-Shannon}{Britannica} & 1916--2001 \\ \midrule
+        Grace Hopper & Trug dazu bei, Programmieren für Menschen einfacher zu machen und moderne Programmiersprachen zu entwickeln & \href{https://www.britannica.com/biography/Grace-Hopper}{Britannica} & 1906--1992 \\
+    \end{tabular}
+    \caption{Einige prägende Persönlichkeiten der Informatikgeschichte.}
+    \label{tab:persoenlichkeiten}
+\end{table}
+
+\section{Warum diese Geschichte wichtig ist}
+
+Die Geschichte der Informatik zeigt, dass das Fach aus mehreren Blickwinkeln entstanden ist: aus Mathematik, Technik, Elektrotechnik und der praktischen Frage, wie Menschen mit Maschinen arbeiten können. Wer diese Herkunft kennt, versteht auch besser, warum Informatik sowohl abstrakte Ideen als auch konkrete Hardware umfasst.
+
+Im nächsten Kapitel geht es darum, wie diese Abstraktion auf der Ebene der Hardware beginnt: mit Bits, elektrischen Zuständen und logischen Gattern.
