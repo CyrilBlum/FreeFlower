@@ -144,7 +144,7 @@ Fehler:
 
 	\question[2] Wir haben die Kolmogorov-Komplexität für binäre Wörter definiert. Wie wird die Kolmogorov-Komplexität für eine natürliche Zahl $n$ definiert?
 	\begin{solution}
-	Die Kolmogorov-Komplexität $K(n)$ einer natürlichen Zahl $n$ ist $K(n) := K(bin(n))$.
+	Die Kolmogorov-Komplexität $C(n)$ einer natürlichen Zahl $n$ ist $C(n) := C(bin(n))$.
 	\end{solution}
 
 
@@ -153,7 +153,7 @@ Fehler:
 		$\ceil{\log_6\lr{54345120 + 1}} = 10$.
 	\end{solution}
 
-	\question[2] Sei $w_n := 0^{2^{n^3}}$ für jedes $n\in\N, n>0$ ein binäres Wort.	Gib eine (asymptotisch) möglichst gute obere Schranke für die Kolmogorov-Komplexität $K(w_n)$ von $w_n$ an, gemessen in der Länge $\abs{w_n}$ von $w_n$.
+	\question[2] Sei $w_n := 0^{2^{n^3}}$ für jedes $n\in\N, n>0$ ein binäres Wort.	Gib eine (asymptotisch) möglichst gute obere Schranke für die Kolmogorov-Komplexität $C(w_n)$ von $w_n$ an, gemessen in der Länge $\abs{w_n}$ von $w_n$.
 	\begin{solution}
 		Das folgende \texttt{C'++} Programm erzeugt das Wort $w_n$:
 		\begin{lstlisting}[language=C++,caption=$W_n$]
@@ -161,13 +161,12 @@ Fehler:
     #include <cmath> // für die pow Funktion
     
     void Wn() {
-        int k = ***n+++;
-        int k = pow(k, 3);
-        int k = pow(2, k);
+		Natural k = ***n+++;
+		k = pow(k, 3);
+		k = pow(2, k);
         for (int i = 1; i <= k; ++i) {
             std::cout << 0;
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
 		Es gilt $\abs{w_n} = 2^{n^3}$ und somit
@@ -177,15 +176,15 @@ Fehler:
 
 		Im Programm \texttt{Wn} ist einzig die binäre Kodierung von \texttt{n} abhängig von $n$ beziehungsweise von $w_n$. Der Rest des Programms ist unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich).
 
-		Damit existiert Konstanten $c_0$ und $c_1$, sodass
+		Damit existieren Konstanten $c_0$ und $c_1$, sodass
 \begin{align*}
-	K(w_n) &\leq c_0 + \ceil{\log_2(n+1)} \leq \log_2(n) + c_1 = \log_2\lr{\sqrt[3]{\log_2\lr{\abs{w_n}}}} + c_1 = \\
+	C(w_n) &\leq c_0 + \ceil{\log_2(n+1)} \leq \log_2(n) + c_1 = \log_2\lr{\sqrt[3]{\log_2\lr{\abs{w_n}}}} + c_1 = \\
 	&=\log_2\lr{\log_2\lr{\abs{w_n}}} / 3 + c_1
 \end{align*}
 für beliebiges natürliches $n>0$.
 	\end{solution}
 
-	\question[2] Gibt eine Funktion $f: \N\to\N$ an, sodass für jede natürliche Zahl $n$ mindestens drei Viertel der natürlichen Zahlen kleiner als $f(n)$ eine Kolmogorov-Komplexität von mindestens $2n$ haben.
+	\question[2] Gib eine Funktion $f: \N\to\N$ an, sodass für jede natürliche Zahl $n$ mindestens drei Viertel der natürlichen Zahlen kleiner als $f(n)$ eine Kolmogorov-Komplexität von mindestens $2n$ haben.
 
     Tipps:
     \begin{itemize}
@@ -193,28 +192,28 @@ für beliebiges natürliches $n>0$.
         \item Wähle $f(n)$ als das mindestens Vierfache dieser Anzahl.
     \end{itemize}
 	\begin{solution}
-		Die Anzahl unterschiedlicher nichtleerer Maschinencodes der Länge kleiner als $2n$ ist nicht grösser als
+		Die Anzahl aller Maschinencodes der Länge kleiner als $2n$ ist
 		\begin{align*}
-			\sum_{k = 1}^{2n-1}\lr{2^k} = 2^{2n} - 2.
+			\sum_{k = 0}^{2n-1}\lr{2^k} = 2^{2n} - 1.
 		\end{align*}
-		Es gibt also maximal $2^{2n} - 2$ binäre Wörter mit einer Kolmogorov-Komplexität kleiner als $2n$. Da alle natürlichen Zahlen paarweise verschiedene Binärdarstellungen haben, gibt es also höchstens $2^{2n} - 2$ natürliche Zahlen mit einer Kolmogorov-Komplexität kleiner als $2n$.
+		Es gibt also maximal $2^{2n} - 1$ binäre Wörter mit einer Kolmogorov-Komplexität kleiner als $2n$. Da alle natürlichen Zahlen paarweise verschiedene Binärdarstellungen haben, gibt es höchstens $2^{2n} - 1$ natürliche Zahlen mit einer Kolmogorov-Komplexität kleiner als $2n$.
 
 		\vspace{\baselineskip}
-		Damit ist die Wahl $f(n):= 4 \cdot 2^{2n}$ sinnvoll, denn $2^{2n} - 2 < 2^{2n} = \frac{f(n)}{4}$ und somit haben mehr als $3/4$ der natürlichen Zahlen kleiner als $f(n)$ eine Kolmogorov-Komplexität von mindestens $2n$.
+		Damit ist die Wahl $f(n):= 4 \cdot 2^{2n}$ sinnvoll, denn $2^{2n} - 1 < 2^{2n} = \frac{f(n)}{4}$ und somit haben mehr als $3/4$ der natürlichen Zahlen kleiner als $f(n)$ eine Kolmogorov-Komplexität von mindestens $2n$.
 	\end{solution}
 	
 	\question[2] Im Skript haben wir bewiesen:
 	\begin{center}
-        Das Problem, für jedes binäre Wort $w$ die Kolmogorov-Komplexität $K(w)$ zu berechnen, ist algorithmisch unlösbar (nicht berechenbar).
+        Das Problem, für jedes binäre Wort $w$ die Kolmogorov-Komplexität $C(w)$ zu berechnen, ist algorithmisch unlösbar (nicht berechenbar).
 	\end{center}
-    Erkläre die zentralen Ideen dieses Beweise in deinen eignen (präzisen) Worten.
+    Erkläre die zentralen Ideen dieses Beweises in deinen eigenen (präzisen) Worten.
 	\begin{solution}
-		Siehe das Theorem zur Nichtberechenbarkeit (im allgemeinen) der Kolmogorov-Komplexität im Skript.
+		Siehe das Theorem zur Nichtberechenbarkeit der Kolmogorov-Komplexität im Skript.
 	\end{solution}
 
 	\question[2] Gib eine streng monoton wachsende Folge $y_1,y_2,\ldots$ natürlicher Zahlen an, sodass eine Konstante $c$ existiert, sodass für alle $i\geq 1$
 	\begin{align*}
-		K\lr{y_i} \leq \ceil{\log_2\lr{\log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}}} + c
+		C\lr{y_i} \leq \ceil{\log_2\lr{\log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}}} + c
 	\end{align*}
 	gilt.
 	\begin{solution}
@@ -222,7 +221,7 @@ für beliebiges natürliches $n>0$.
 		\begin{align*}
 			y_i := \lr{2^{2^i}}^4 = 2^{2^{i+2}}
 		\end{align*}
-		für alle $n\in\N, n>0$. Offensichtlich ist diese Zahlenfolge streng monoton wachsend und $i = \log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}$.
+			für alle $i\in\N, i>0$. Offensichtlich ist diese Zahlenfolge streng monoton wachsend und $i = \log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}$.
 
 		\vspace{\baselineskip}
 		Die kürzeste binäre Darstellung von $y_i$ ist eine Eins gefolgt von $2^{i+2}$ Nullen, also $\text{bin}\lr{y_i} = 1(0)^{2^{i+2}}$. Das folgende \texttt{C'++} Programm erzeugt das Wort $y_i$:
@@ -231,19 +230,18 @@ für beliebiges natürliches $n>0$.
     #include <cmath> // für die pow Funktion
     
     void yi() {
-        int k = ***i+++;
-        int k = pow(2, k + 2);
+		Natural k = ***i+++;
+		k = pow(2, k + 2);
 		std::cout << 1;
         for (int j = 1; j <= k; ++j) {
             std::cout << 0;
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
-	Da alle Programme \texttt{yi} gleich sind bis auf die binäre Darstellung von $i$ folgt:
+		Da alle Programme \texttt{yi} bis auf die Binärdarstellung von $i$ gleich sind, folgt für geeignete Konstanten $c_0,c$:
 	\begin{align*}
-		K\lr{y_i} \leq \ceil{\log_2\lr{i}} + c = \ceil{\log_2\lr{\log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}}} + c
+		C\lr{y_i} &\leq \ceil{\log_2\lr{i+1}} + c_0\\
+		&\leq \ceil{\log_2\lr{\log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}}} + c.
 	\end{align*}
-	für eine geeignete Konstante $c$.
 	\end{solution}
 \end{questions}

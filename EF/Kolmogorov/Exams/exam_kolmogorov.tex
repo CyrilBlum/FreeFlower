@@ -88,7 +88,7 @@
 	\question
 	\begin{parts}
 		\part[1]
-		Formuliere die Definition der Kolmogorov-Komplexität $K(w)$ eines binären Wortes $w$.
+		Formuliere die Definition der plain Kolmogorov-Komplexität $C(w)$ eines binären Wortes $w$.
 		\begin{solution}
 	Betrachte die Definition der Kolmogorov-Komplexität im Skript.
 \end{solution}
@@ -99,9 +99,9 @@
 		\droptotalpoints
 	\end{parts}
 
-	\question[2] Wir betrachten die Wörter $w_n = 0^n1^{n^2}$ für alle $n\in\N$. Welches der folgenden drei Programme $A_n, B_n, C_n$ liefert asymptotisch die beste obere Schranke für die Kolmogorov-Komplexität von $w_n$? Begründe deine Antwort.
+	\question[2] Wir betrachten die Wörter $w_n = 0^n1^{n^2}$ für alle $n\in\N$. Welche der folgenden drei Programmschemata sind gültige \texttt{C'++}-Programme, und welche davon liefern asymptotisch die beste obere Schranke für die Kolmogorov-Komplexität von $w_n$? Begründe deine Antwort.
 
-	\textbf{Bemerkung:} Der Ausdruck \verb|n**2| in \cref{listing:Cn} ist als explizite binäre Darstellung der Zahl $n^2$ zu verstehen und trägt $\abs{\text{Bin}\lr{n^2}}$ viele Bits zur binären Länge von $C_n$ bei.
+	\textbf{Bemerkung:} Die Ausdrücke \verb|n| und \verb|n**2| zwischen den Escape-Sequenzen stehen für die konkreten Binärdarstellungen von $n$ beziehungsweise $n^2$. Beachte bei der Beurteilung von \cref{listing:Cn}, dass ein gültiges \texttt{C'++}-Programm zwar denselben binären Block mehrfach, aber nicht zwei verschiedene binäre Blöcke enthalten darf.
 \begin{lstlisting}[language=C++,caption=$A_n$]
     #include <iostream>
     #include <string>
@@ -116,7 +116,6 @@
         for (int j = 1; j <= y; ++j) {
             std::cout << 1;
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
 
@@ -133,7 +132,6 @@
                 std::cout << 1;
             }
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
 
@@ -148,22 +146,15 @@
         for (int i = 1; i <= ***n**2+++; ++i) { // n**2 entspricht n*n in C++ 
             std::cout << 1;
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
 	\begin{solution}
-		Es lässt sich leicht nachprüfen, dass alle drei Programme jeweils die Ausgabe $w_n$ generieren. Die oberen Schranken für $K(w_n)$ ergeben sich aus der Länge der Darstellung der jeweiligen Programme in Maschinencode. Die Programme haben alle eine Konstante Länge, bis auf die Teile, die vom Parameter $n$ abhängen. Die Darstellung der Zahl $n$ benötigt eine Länge von $\abs{\text{Bin}\lr{n}}$ Bits. Die beste obere Schranke liefert Programm $A_n$, da der Parameter $n$ nur einmal vorkommt. Die Länge des Maschinencodes von $A$ ist $\ceil{\log_2(n+1)} + c_A$ und somit liefert $A_n$ die obere Schranke
+		Die Programme $A_n$ und $B_n$ sind gültig und generieren jeweils $w_n$. In $B_n$ bezeichnen alle drei Vorkommen von \cppinline{***n+++} denselben binären Block; \texttt{g'++} speichert ihn nur einmal. Deshalb liefern beide Programme eine asymptotisch gleich gute obere Schranke:
 		\begin{align*}
-			K(w_n) \leq \ceil{\log_2(n+1)} + c_A.
+			C(w_n) &\leq \ceil{\log_2(n+1)} + c_A,\\
+			C(w_n) &\leq \ceil{\log_2(n+1)} + c_B.
 		\end{align*}
-		Analog liefert $B_n$ die Schranke
-		\begin{align*}
-			K(w_n) \leq 3\ceil{\log_2(n+1)} + c_B
-		\end{align*}
-		und $C_n$
-		\begin{align*}
-			K(w_n) \leq \ceil{\log_2(n+1)} + \ceil{\log_2\lr{n^2+1}} + c_C.
-		\end{align*}
+		Das Schema $C_n$ enthält dagegen die beiden verschiedenen Blöcke $bin(n)$ und $bin(n^2)$ und ist daher gemäss der Definition von \texttt{C'++} semantisch ungültig.
 	\end{solution}
 
 
@@ -175,7 +166,7 @@
 	\begin{align*}
 		w_n := 0^{2^{2^{2n^4}}} := 0^{2^{\lr{2^{\lr{2n^4}}}}}.
 	\end{align*}
-	Gib eine (asymptotisch) möglichst gute obere Schranke für die Kolmogorov-Komplexität $K(w_n)$ von $w_n$ an, gemessen in der Länge $\abs{w_n}$ von $w_n$.
+	Gib eine (asymptotisch) möglichst gute obere Schranke für die Kolmogorov-Komplexität $C(w_n)$ von $w_n$ an, gemessen in der Länge $\abs{w_n}$ von $w_n$.
 	\begin{solution}
 		Das folgende \texttt{C'++} Programm erzeugt das Wort $w_n$:
 		\begin{lstlisting}[language=C++,caption=$W_n$]
@@ -183,13 +174,12 @@
     #include <cmath> // für die pow Funktion
     
     void Wn() {
-        int k = ***n+++;
-        int k = 2 * pow(k, 4);
-        int k = pow(2, pow(2, k));
+		Natural k = ***n+++;
+		k = 2 * pow(k, 4);
+		k = pow(2, pow(2, k));
         for (int i = 1; i <= k; ++i) {
             std::cout << 0;
         }
-        std::cout << std::endl;
     }
 \end{lstlisting}
 		Die Maschinencodes dieser Programme $W_n$ sind alle identisch und unabhängig von $w_n$ (und haben somit eine konstante binäre Länge) mit Ausnahme der Darstellung von $n$ in der Zeile Nummer 2. Somit ist die binäre Länge eines Programms $W_n$ gegeben durch
@@ -198,7 +188,7 @@
 		\end{align*}
 		für eine Konstante $c$. Damit lässt sich die Kolmogorov-Komplexität von $w_n$ abschätzen durch
 		\begin{align*}
-			K(w_n) \leq \ceil{\log_2(n+1)} + c \leq \blue{\log_2(n)} + c'
+			C(w_n) \leq \ceil{\log_2(n+1)} + c \leq \blue{\log_2(n)} + c'
 		\end{align*}
 		für eine Konstante $c' := c + 1$. Die (binäre) Länge von $w_n$ ist
 		\begin{align*}
@@ -215,33 +205,31 @@
 		\end{align*}
 		Dies ergibt die obere Schranke
 		\begin{align*}
-			K(w_n) \leq \frac{1}{4}\log_2\lr{\log_2\lr{\log_2\lr{\abs{w_n}}}} + c''
+			C(w_n) \leq \frac{1}{4}\log_2\lr{\log_2\lr{\log_2\lr{\abs{w_n}}}} + c''
 		\end{align*}
 		für die Kolmogorov-Komplexität von $w_n$, wobei $c'':=c'-1/4$ eine Konstante ist.
 	\end{solution}
 
-	\question[1] Zeige, dass es für jede natürliche Zahl $n$ und jedes natürliche $i$ mit $i<n$ in dem Intervall $\ic{2^n}{2^{n+1} - 1}$ mindestens $2^n - 2^{n-i}$ natürliche Zahlen $x$ gibt mit $K(x) \geq n-i$.
+	\question[1] Zeige, dass es für jede natürliche Zahl $n$ und jedes natürliche $i$ mit $i<n$ in dem Intervall $\ic{2^n}{2^{n+1} - 1}$ mindestens $2^n - 2^{n-i}$ natürliche Zahlen $x$ gibt mit $C(x) \geq n-i$.
 	\begin{solution}
 		Das Intervall $\ic{2^n}{2^{n+1} - 1}$ enthält genau $2^n$ natürliche Zahlen mit einer kürzesten binären Darstellungslänge von $n + 1$.
-		Da die binären Darstellungen aller dieser Zahlen mit einer $1$ beginnen (die führende $1$ ist bereits gesetzt), können wir diese Zahlen identifizieren mit den binären Wörtern der Länge $n$.
-
-		Die Anzahl der verschiedenen nichtleeren Maschinencodes der Länge kleiner als $n - i$ ist höchstens
+		Die Anzahl aller Maschinencodes der Länge kleiner als $n-i$ ist
 		\begin{align*}
-			\sum_{k=1}^{n - i - 1} 2^k = 2^{n-i} - 2,
+			\sum_{k=0}^{n-i-1}2^k=2^{n-i}-1.
 		\end{align*}
-		da es für jede Länge nicht mehr Maschinencodes als nichtleere Binärstrings geben kann. Damit existieren maximal $2^{n-i} - 2$ Wörter $w$ mit $K(w) < n - i$. Für die Anzahl $m$ der binären Wörter $w$ der Länge $n$ mit $K(w)\geq n - i$ gilt also
+		Jeder Maschinencode generiert höchstens eine Binärdarstellung und damit höchstens eine natürliche Zahl. Somit haben höchstens $2^{n-i}-1$ Zahlen im betrachteten Intervall eine Kolmogorov-Komplexität kleiner als $n-i$. Für die Anzahl $m$ der übrigen Zahlen gilt daher
 		\begin{align*}
-			m\geq 2^n - (2^{n-1} - 2) > 2^n - 2^{n-i}.
+			m\geq2^n-(2^{n-i}-1)>2^n-2^{n-i}.
 		\end{align*}
 	\end{solution}
 	
 	\question[2] Beweise die folgende Behauptung:
 	\begin{center}
-		Für jede natürliche Zahl $n>0$ existiert (mindestens) ein binäres Wort $w$ der Länge $n$, für welches gilt
+		Für jede natürliche Zahl $n>0$ existiert mindestens ein binäres Wort $w$ der Länge $n$, für das gilt
 		\begin{align*}
-			K(w)\geq n = \abs{w},
+			C(w)\geq n = \abs{w},
 		\end{align*}
-		das heisst, für jede Länge $n$ existiert (mindestens) ein Wort dieser Länge, welches sich nicht komprimieren lässt.
+		das heisst, für jede Länge $n$ existiert mindestens ein Wort dieser Länge, das sich nicht komprimieren lässt.
 	\end{center}
 	\begin{solution}
 		Siehe das Theorem zur Existenz nichtkomprimierbarer Wörter im Skript.

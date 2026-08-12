@@ -1,18 +1,17 @@
 \chapter{Details}\label{ch:Details}
 
 \section{Werkzeuge}\label{sec:Werkzeuge}
-\begin{mydefinition}[$bin$ und $dec$]\label{mydefinition:binunddec}
+\begin{mydefinition}[$bin$ und $val_2$]\label{mydefinition:binunddec}
 \leavevmode
 \begin{itemize}
-	\item Es sei $n>0$ eine natürliche Zahl. Dann bezeichnen wir mit $bin(n)$ die binäre (Basis 2) Zahlendarstellung von $n$ ohne führende Nullen.
-	\item Es sei $n>0$ eine natürliche Zahl. Dann bezeichnen wir mit $dec(n)$ die dezimale (Basis 10) Zahlendarstellung von $n$ ohne führende Nullen.
-	\item Wir definieren zusätzlich $bin(0) := 0$ sowie $dec(0) := 0$.
+	\item Es sei $n>0$ eine natürliche Zahl. Dann bezeichnen wir mit $bin(n)$ die Binärdarstellung von $n$ ohne führende Nullen. Zusätzlich definieren wir $bin(0):=0$.
+	\item Für ein binäres Wort $x$ bezeichnet $val_2(x)$ den Zahlenwert von $x$ zur Basis 2. Führende Nullen sind dabei erlaubt; beispielsweise gilt $val_2(00101)=5$.
 \end{itemize}
 \end{mydefinition}
 
 
 \begin{mytheorem}[geometrische Summe]\label{mytheorem:geometrischeSumme}
-	Es sei $q \neq 0$ eine reelle Zahl und $n$ eine natürliche Zahl. Dann gilt
+	Es sei $q \neq 1$ eine reelle Zahl und $n$ eine natürliche Zahl. Dann gilt
 	\begin{align*}
 		\sum_{k = 0}^n q^k = q^0 + q^1 + \ldots + q^n = \frac{q^{n+1}-1}{q-1}.
 	\end{align*}
@@ -33,12 +32,12 @@
 
 
 \begin{mytheorem}[verallgemeinerte geometrische Summe]\label{mytheorem:verallgemeinertegeometrischeSumme}
-	Es sei $q \neq 0$ eine reelle Zahl und $n$ und $m\leq n$ natürliche Zahlen. Dann gilt
+	Es sei $q \neq 1$ eine reelle Zahl und es seien $m\leq n$ natürliche Zahlen. Dann gilt
 	\begin{align*}
 		\sum_{k = m}^n q^k = q^m + q^{m+1} + \ldots + q^n = \frac{q^{n+1}-q^m}{q-1}.
 	\end{align*}
 	\begin{myproof}
-		Unter Verwendung von \cref{mytheorem:geometrischeSumme} finden wir
+		Für $m=0$ ist dies genau \cref{mytheorem:geometrischeSumme}. Für $m>0$ finden wir unter Verwendung dieses Satzes
 		\begin{align*}
 			\sum_{k = m}^n q^k =
 			\sum_{k = 0}^n q^k - \sum_{k = 0}^{m-1} q^k =
@@ -49,21 +48,25 @@
 \end{mytheorem}
 
 
-\begin{mytheorem}[Anzahl Ziffern in Zahlendarstellung]\label{mytheorem:AnzahlZiffern}
-	Es seien $n>0$ und $b>1$ natürliche Zahlen. Die kürzeste $b$-adische Darstellung von $n$ (Darstellung ohne führende Nullen) hat genau $\ceil{\log_b(n + 1)}$ Stellen.
+\begin{mytheorem}[Anzahl Ziffern in einer Zahlendarstellung]\label{mytheorem:AnzahlZiffern}
+	Es seien $n>0$ und $b>1$ natürliche Zahlen. Die Darstellung von $n$ zur Basis $b$ ohne führende Nullen hat genau
+	\begin{align*}
+		\floor{\log_b(n)}+1=\ceil{\log_b(n + 1)}
+	\end{align*}
+	Stellen.
 	\begin{myproof}
-		Es sei $s$ die Anzahl der Stellen der kürzesten $b$-adischen Darstellung von $n$. Die grösste $s$-stellige Zahl in Basis $b$ (kürzeste Darstellung) ist
+		Es sei $s$ die Anzahl der Stellen der Darstellung von $n$ zur Basis $b$ ohne führende Nullen. Die grösste $s$-stellige Zahl zur Basis $b$ ist
 		\begin{align*}
 			 & \sum_{k = 0}^{s-1} (b-1)b^{k} = (b-1)\sum_{k = 0}^{s-1} b^{k} = (b-1)\frac{b^s - 1}{b - 1} = b^s - 1,
 		\end{align*}
-		wobei wir \cref{mytheorem:geometrischeSumme} verwendet haben. Die kleinste $s$-stellige Zahl Basis $b$ (kürzeste Darstellung) ist $b^{s-1}$. Somit gilt
+		wobei wir \cref{mytheorem:geometrischeSumme} verwendet haben. Die kleinste $s$-stellige Zahl zur Basis $b$ ist $b^{s-1}$. Somit gilt
 		\begin{align*}
 			b^{s-1} - 1 < n \leq b^s - 1 \iff \\
 			b^{s-1} < n + 1 \leq b^s \iff     \\
 			s-1 < \log_b(n+1) \leq s,
 		\end{align*}
 		wobei wir verwendet haben, dass $\log_b$ eine streng monoton wachsende Funktion ist.
-		Dann folgt aber $\ceil{\log_b(n + 1)} = s$.
+		Damit folgt $\ceil{\log_b(n + 1)} = s$. Aus $b^{s-1}\leq n<b^s$ folgt ausserdem $s-1\leq\log_b(n)<s$ und somit $\floor{\log_b(n)}+1=s$.
 	\end{myproof}
 \end{mytheorem}
 
@@ -100,10 +103,10 @@
 \end{mytheorem}
 
 \begin{mydefinition}
-	Es sei $\Sigma = \lrc{a_1, a_2 , \ldots, a_n}$, $n > 0$, ein Alphabet mit der Ordnung $a_1 < a_2 < \ldots < a_n$. Es seien $x, y$ beliebige Wörter über $\Sigma$. Wir definieren die kanonische Ordnung $<$ auf allen Wörter über $\Sigma$ wie folgt:
+	Es sei $\Sigma = \lrc{a_1, a_2 , \ldots, a_n}$, $n > 0$, ein Alphabet mit der Ordnung $a_1 < a_2 < \ldots < a_n$. Es seien $x, y$ beliebige Wörter über $\Sigma$. Wir definieren die kanonische Ordnung $<$ auf allen Wörtern über $\Sigma$ wie folgt:
 	\begin{enumerate}
 		\item Falls $x$ kürzer ist als $y$, dann gilt $x < y$.
-		\item Sind anderenfalls $x$ und $y$ gleich lang, dann gilt $x < y$ genau dann, wenn $x$ alphabetisch vor $y$ liegt.
+		\item Sind anderenfalls $x$ und $y$ gleich lang, dann gilt $x < y$ genau dann, wenn $x$ lexikographisch vor $y$ liegt.
 	\end{enumerate}
 \end{mydefinition}
 
