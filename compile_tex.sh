@@ -200,6 +200,7 @@ book_topics=(
     # Grundlagenfach Informatik
     "Programmieren:Grundlagen_Info/00_Programmieren/Skript/Skript.tex"
     "Zahlendarstellungen_und_Kodierungen:Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Skript/Skript.tex"
+    "Aufbau_und_Funktionsweise_eines_Computers:Grundlagen_Info/16_ComputerUndBetriebssysteme/Skript/Skript.tex"
     "Kryptologie:Grundlagen_Info/03_Kryptologie/Skript/Skript.tex"
     "Kompression:Grundlagen_Info/04_Kompression/Skript.tex"
     "Datenintegrität:Grundlagen_Info/05_Datenintegritaet/Skript/Skript.tex"

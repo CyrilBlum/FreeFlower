@@ -1,143 +1,414 @@
-\chapter{Betriebssystem und Software-Schichten}\label{ch:betriebssystem}
+\chapter{Logische Gatter}\label{ch:logische_gatter}
 
-\section{Das Problem der Komplexität}
+\section{Vom Stromkreis zur Information}
 
-Ein moderner Computer besteht aus einer Vielzahl unterschiedlicher Hardwarekomponenten: Prozessor, Arbeitsspeicher, Grafikkarte, Tastatur, Netzwerkkarte, Massenspeicher und viele mehr. Jede dieser Komponenten funktioniert nach eigenen Regeln und Protokollen. Es wäre völlig unpraktisch, wenn jedes Anwendungsprogramm (Textverarbeitung, Browser, Spiel, \ldots) direkt und auf unterster Ebene mit all dieser Hardware kommunizieren müsste.
-
-Hier setzt das \textbf{Betriebssystem} an: Es bildet eine einheitliche Schnittstelle zwischen der rohen Hardware und den Anwendungen.
-
-\section{Der Software-Stack}
-
-Man spricht von einem \textbf{Software-Stack} (Schichtenmodell), um die aufeinander aufbauenden Abstraktionsebenen eines Computers zu beschreiben:
+Wir wissen aus \cref{ch:zahlendarstellungen,ch:kodierungen} bereits, dass sich beliebige Informationen -- Zahlen, Buchstaben, Bilder -- als Folgen von \tib{Bits}\index{Bit} darstellen lassen (vgl. \cref{mydefinition:bit-byte}). Nun wollen wir der Frage nachgehen, wie ein Computer diese Nullen und Einsen tatsächlich \emph{physikalisch} verarbeitet. Wir starten dazu bei der Hardware: Ein Chip ist zunächst ein Netzwerk aus leitenden Verbindungen und schaltenden Bauelementen. Die zentrale Idee lautet: \textbf{Elektrische Zustände werden als logische Zustände interpretiert}.
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        layer/.style={draw, minimum width=8cm, minimum height=1cm, text centered, rounded corners=3pt},
-        every node/.style={font=\sffamily}
-    ]
-        \node[layer, fill=Salmon!40]        (app)  at (0, 3.5) {\textbf{Anwendungen} \quad (Browser, Textverarbeitung, Spiele, \ldots)};
-        \node[layer, fill=Goldenrod!35]     (api)  at (0, 2.2) {\textbf{Systemaufrufe / API} \quad (Schnittstelle zum Betriebssystem)};
-        \node[layer, fill=DarkSeaGreen!45]  (os)   at (0, 0.9) {\textbf{Betriebssystem} \quad (Prozess-, Speicher-, Dateiverwaltung)};
-        \node[layer, fill=RoyalBlue!20]     (drv)  at (0,-0.4) {\textbf{Treiber} \quad (Gerätespezifischer Programmcode)};
-        \node[layer, fill=Gray!30]          (hw)   at (0,-1.7) {\textbf{Hardware} \quad (CPU, RAM, SSD, Tastatur, Netzwerk, \ldots)};
+    \begin{tikzpicture}[scale=1.0]
+        \begin{scope}[shift={(0,0)}, local bounding box=openBB]
+            \coordinate (open-base) at (0,0);
+            \coordinate (open-bat-bot) at ($(open-base)+(0.6,0.8)$);
+            \coordinate (open-bat-top) at ($(open-base)+(0.6,2.2)$);
+            \coordinate (open-sw-left) at ($(open-base)+(2.0,2.2)$);
+            \coordinate (open-sw-right) at ($(open-base)+(2.9,2.2)$);
+            \coordinate (open-lamp) at ($(open-base)+(3.8,2.2)$);
+            \coordinate (open-ret) at ($(open-base)+(3.8,0.8)$);
 
-        \draw[<->, thick] (app)  -- (api);
-        \draw[<->, thick] (api)  -- (os);
-        \draw[<->, thick] (os)   -- (drv);
-        \draw[<->, thick] (drv)  -- (hw);
+            \draw (open-bat-bot) -- (open-bat-top);
+            \draw ($(open-base)+(0.45,1.15)$) -- ($(open-base)+(0.75,1.15)$);
+            \draw ($(open-base)+(0.50,1.60)$) -- ($(open-base)+(0.70,1.60)$);
+            \node[left] at ($(open-base)+(0.35,1.35)$) {$U$};
+
+            \draw (open-bat-top) -- (open-sw-left);
+            \draw (open-sw-left) -- ($(open-sw-left)+(0.6,0.3)$);
+            \draw (open-sw-right) -- (open-lamp);
+            \draw (open-lamp) circle (0.35);
+            \draw ($(open-base)+(3.55,1.95)$) -- ($(open-base)+(4.05,2.45)$);
+            \draw (open-bat-bot) -- (open-ret) -- ($(open-lamp)+(0,-0.35)$);
+
+            \node at ($(open-base)+(2.35,2.65)$) {\tiny kein Kontakt};
+            \node at ($(open-base)+(3.8,1.3)$) {Last aus};
+            \node at ($(open-base)+(2.5,2.95)$) {Schalter offen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(openBB),inner sep=8pt] {};
+
+        \begin{scope}[shift={(6.2,0)}, local bounding box=closedBB]
+            \coordinate (closed-base) at (0,0);
+            \coordinate (closed-bat-bot) at ($(closed-base)+(0.6,0.8)$);
+            \coordinate (closed-bat-top) at ($(closed-base)+(0.6,2.2)$);
+            \coordinate (closed-sw-left) at ($(closed-base)+(2.0,2.2)$);
+            \coordinate (closed-sw-right) at ($(closed-base)+(2.6,2.2)$);
+            \coordinate (closed-lamp) at ($(closed-base)+(3.8,2.2)$);
+            \coordinate (closed-ret) at ($(closed-base)+(3.8,0.8)$);
+
+            \draw (closed-bat-bot) -- (closed-bat-top);
+            \draw ($(closed-base)+(0.45,1.15)$) -- ($(closed-base)+(0.75,1.15)$);
+            \draw ($(closed-base)+(0.50,1.60)$) -- ($(closed-base)+(0.70,1.60)$);
+            \node[left] at ($(closed-base)+(0.35,1.35)$) {$U$};
+
+            \draw (closed-bat-top) -- (closed-sw-left);
+            \fill (closed-sw-left) circle (0.04);
+            \fill (closed-sw-right) circle (0.04);
+            \draw[line width=0.5pt] (closed-sw-left) -- (closed-sw-right);
+            \draw (closed-sw-right) -- (closed-lamp);
+            \draw (closed-lamp) circle (0.35);
+            \fill (closed-lamp) circle (0.12);
+            \draw (closed-bat-bot) -- (closed-ret) -- ($(closed-lamp)+(0,-0.35)$);
+
+            \node at ($(closed-base)+(2.3,2.65)$) {\tiny Kontakt};
+            \node at ($(closed-base)+(3.8,1.3)$) {Last aktiv};
+            \node at ($(closed-base)+(2.5,2.95)$) {Schalter geschlossen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(closedBB),inner sep=8pt] {};
     \end{tikzpicture}
-    \caption{Der Software-Stack: jede Schicht bietet der darüberliegenden Schicht Dienste an und verbirgt die Komplexität der darunter liegenden Schicht.}
-    \label{fig:software_stack}
+    \caption{Grundidee eines elektrischen Schaltnetzes: Kontakt \enquote{offen} oder \enquote{geschlossen}.}
+    \label{fig:stromkreis_grundidee}
 \end{figure}
 
-Jede Schicht \emph{abstrahiert} die Ebene darunter: Eine Anwendung muss nicht wissen, wie eine Festplatte physisch funktioniert -- sie bittet das Betriebssystem einfach darum, eine Datei zu öffnen.
+Ob Strom fliesst oder nicht, hängt davon ab, ob ein leitender Pfad existiert. In der Digitaltechnik werden solche physikalischen Zustände auf zwei logische Zustände abgebildet:
+\[
+    \text{niedrige Spannung} \longleftrightarrow 0,
+    \qquad
+    \text{hohe Spannung} \longleftrightarrow 1.
+\]
 
-\section{Aufgaben des Betriebssystems}
+\begin{myremark}[Warum ausgerechnet zwei Zustände?]
+    Wie wir in \cref{ch:zahlendarstellungen} gesehen haben, liesse sich eine Schaltung im Prinzip auch mit mehr als zwei Spannungspegeln realisieren (analog zu einem $b$-adischen Zahlensystem mit $b>2$). In der Praxis hat sich jedoch das Binärsystem durchgesetzt, da zwei klar unterscheidbare Zustände (\enquote{Strom fliesst} / \enquote{Strom fliesst nicht}) sehr zuverlässig und störungsresistent erkannt werden können.
+\end{myremark}
 
-Das Betriebssystem (englisch: \emph{operating system}, OS) übernimmt vier zentrale Aufgaben:
+Wichtig ist: In echten Schaltungen gibt es Rauschen, Verzögerungen und Fertigungstoleranzen. Deshalb arbeitet man mit \textbf{Spannungsbereichen} statt mit exakt einem Wert. Typisch ist zum Beispiel:
+\begin{itemize}
+    \item $0$ wird zuverlässig erkannt, wenn die Eingangsspannung hinreichend klein ist (nahe $0\,\mathrm{V}$),
+    \item $1$ wird zuverlässig erkannt, wenn die Eingangsspannung hinreichend gross ist (nahe Versorgungsspannung, z.B. $3{,}3\,\mathrm{V}$ oder $5\,\mathrm{V}$).
+\end{itemize}
 
-\subsection{Prozessverwaltung}
+\section{Vom Transistor zum Gatter}
 
-Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (Browser, Musik-Player, Textverarbeitung, \ldots). Da aber oft nur ein physischer Prozessorkern vorhanden ist (oder deutlich weniger als die Anzahl laufender Programme), teilt das Betriebssystem die CPU-Zeit durch raschen Wechsel auf:
+In modernen Chips übernehmen \tib{Transistoren}\index{Transistor} die Rolle extrem schneller Schalter. Ein logisches \tib{Gatter}\index{Gatter} ist damit keine \enquote{magische Box}, sondern eine konkrete Schaltung aus vielen Transistoren.
+
+Die folgende Skizze zeigt die Grundidee eines \gls{CMOS}-Inverters (NOT-Gatter):
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        proc/.style={draw, fill=RoyalBlue!20, minimum width=2cm, minimum height=0.8cm, text centered, rounded corners},
-        time/.style={->, thick},
-        every node/.style={font=\small}
-    ]
-        % Timeline
-        \draw[thick, ->] (-0.5,0) -- (9.5,0) node[right] {Zeit};
+    \begin{tikzpicture}[scale=1.0]
+        \begin{scope}[local bounding box=cmosBB]
+            \coordinate (cmos-base) at (0,0);
+            \coordinate (cmos-mid) at ($(cmos-base)+(2.5,2.0)$);
+            \coordinate (cmos-top) at ($(cmos-mid)+(0,1.8)$);
+            \coordinate (cmos-bot) at ($(cmos-mid)+(0,-1.6)$);
+            \coordinate (cmos-out) at ($(cmos-mid)+(0,-0.3)$);
+            \coordinate (cmos-out-right) at ($(cmos-out)+(1.0,0)$);
 
-        % CPU Slots
-        \foreach \x/\lbl/\col in {0/Browser/Salmon!50, 1/Musik/DarkSeaGreen!50, 2/Editor/Goldenrod!40, 3/Browser/Salmon!50, 4/Musik/DarkSeaGreen!50, 5/Editor/Goldenrod!40, 6/Browser/Salmon!50, 7/Musik/DarkSeaGreen!50, 8/Editor/Goldenrod!40} {
-            \node[draw, fill=\col, minimum width=0.9cm, minimum height=0.8cm, text centered] at (\x*1.5 - 2, 0.7) {\lbl};
-        }
-        \node at (4.5, -0.5) {Der Prozessor wechselt so schnell zwischen den Programmen, dass es sich für den Benutzer nach Gleichzeitigkeit anfühlt.};
+            \draw (cmos-top) node {Versorgungsspannung};
+            \draw (cmos-bot) node {Masse (0\,V)};
+
+            \draw ($(cmos-mid)+(0,1.2)$) -- ($(cmos-mid)+(0,0.6)$);
+            \draw[rounded corners] ($(cmos-mid)+(-1.15,0.0)$) rectangle ($(cmos-mid)+(1.15,0.6)$);
+            \node at ($(cmos-mid)+(0,0.3)$) {p-Transistor};
+
+            \draw ($(cmos-mid)+(0,0.0)$) -- ($(cmos-mid)+(0,-0.6)$);
+            \draw (cmos-out) -- (cmos-out-right);
+            \node[above] at (cmos-out-right) {$y$};
+
+            \draw[rounded corners] ($(cmos-mid)+(-1.15,-1.2)$) rectangle ($(cmos-mid)+(1.15,-0.6)$);
+            \node at ($(cmos-mid)+(0,-0.9)$) {n-Transistor};
+            \draw ($(cmos-mid)+(0,-1.2)$) -- ($(cmos-mid)+(0,-1.6)$);
+
+            \draw ($(cmos-mid)+(-1.8,0.3)$) -- ($(cmos-mid)+(-0.8,0.3)$);
+            \draw ($(cmos-mid)+(-1.8,-0.9)$) -- ($(cmos-mid)+(-0.8,-0.9)$);
+            \node[left] at ($(cmos-mid)+(-1.8,-0.3)$) {$x$};
+        \end{scope}
+
+        \node[draw,rounded corners,fit=(cmosBB),inner sep=10pt] {};
+        \node[anchor=west, align=left] at (7.2,3.1) {$x=0 \Rightarrow$ oberer Transistor leitend,\ unterer sperrt};
+        \node[anchor=west] at (7.2,2.45) {$\Rightarrow y=1$};
+        \node[anchor=west, align=left] at (7.2,1.55) {$x=1 \Rightarrow$ oberer Transistor sperrt,\ unterer leitend};
+        \node[anchor=west] at (7.2,0.90) {$\Rightarrow y=0$};
     \end{tikzpicture}
-    \caption{Zeitscheiben-Multitasking: Das Betriebssystem teilt die CPU-Zeit in kleine Scheiben auf.}
-    \label{fig:multitasking}
+    \caption{Prinzip eines CMOS-Inverters: Zwei komplementäre Transistoren erzeugen die Negation.}
+    \label{fig:cmos_inverter_prinzip}
 \end{figure}
 
-\subsection{Speicherverwaltung}
+Dieses Prinzip wird für komplexere Gatter verallgemeinert. Aus vielen solcher Schaltstufen entstehen Rechenwerke, Speicher und am Ende ganze Prozessoren.
 
-Das Betriebssystem weist jedem Prozess einen eigenen Bereich im RAM zu und stellt sicher, dass Prozesse nicht in den Speicherbereich anderer Prozesse eingreifen können (\emph{Speicherschutz}). Dies verhindert, dass ein fehlendes oder bösartiges Programm das gesamte System destabilisiert.
-
-\subsection{Dateisystem}
-
-Massenspeicher (SSD, HDD) speichern Daten als rohe Bitsequenzen. Das \textbf{Dateisystem} organisiert diese Bits in \textbf{Dateien} und \textbf{Verzeichnisse} (Ordner). Es legt fest, wo auf dem Speicher eine Datei beginnt, wie lang sie ist und welche Zugriffsrechte sie hat.
-
-\begin{myexample}[Dateisysteme]
-    Bekannte Dateisysteme sind NTFS (Windows), ext4 (Linux) und APFS (macOS). Sie sorgen u.\,a. dafür, dass eine Datei schnell gefunden werden kann und auch nach einem unerwarteten Stromausfall konsistent bleibt.
-\end{myexample}
-
-\subsection{Geräteverwaltung und Treiber}
-
-Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, USB-Gerät, \ldots) hat seine eigene Schnittstelle. \textbf{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
-
-\section{Zusammenspiel von Hardware, Betriebssystem und Anwendungen}
-
-Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert, wenn eine Benutzerin die Taste \texttt{A} drückt und das Zeichen im Texteditor erscheint:
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[
-        stepc/.style={draw, rounded corners, fill=RoyalBlue!15, minimum width=5cm, minimum height=0.9cm, text centered},
-        arrow/.style={->, thick}
-    ]
-        \node[stepc, fill=Gray!25]       (hw)  at (0, 5)   {Tastatur-Hardware sendet elektrischen Impuls};
-        \node[stepc, fill=RoyalBlue!20]  (drv) at (0, 3.7) {Tastatur-Treiber übersetzt Impuls in Tastaturcode};
-        \node[stepc, fill=DarkSeaGreen!30](os)  at (0, 2.4) {Betriebssystem stellt Ereignis \enquote{Taste A gedrückt} bereit};
-        \node[stepc, fill=Goldenrod!30]  (app) at (0, 1.1) {Texteditor empfängt Ereignis und zeigt \texttt{A} an};
-        \node[stepc, fill=Salmon!30]     (out) at (0,-0.2) {Grafiksubsystem und Bildschirm-Treiber zeigen Pixel an};
-
-        \draw[arrow] (hw) -- (drv);
-        \draw[arrow] (drv) -- (os);
-        \draw[arrow] (os) -- (app);
-        \draw[arrow] (app) -- (out);
-    \end{tikzpicture}
-    \caption{Ablauf von Tastendruck bis Bildschirmausgabe -- jede Schicht hat eine klar definierte Aufgabe.}
-    \label{fig:tastendruck}
-\end{figure}
-
-\begin{myexercise}
-    Ordnen Sie die folgenden Komponenten und Aktionen der richtigen Schicht im Software-Stack zu:
+\begin{mydefinition}[Hardware-relevante Kennwerte]
+    Reale Gatter werden nicht nur durch ihre Wahrheitstabelle beschrieben, sondern auch durch technische Kennwerte:
     \begin{itemize}
-        \item NTFS-Dateisystem
-        \item Google Chrome (Browser)
-        \item Ein C-Programm ruft \texttt{open("datei.txt")} auf
-        \item Der Grafikkartentreiber
-        \item Die CPU führt einen Maschinenbefehl aus
+        \item \tib{Propagationsverzögerung}\index{Propagationsverzögerung}: Zeit zwischen Eingangsänderung und stabiler Ausgangsänderung.
+        \item \tib{Leistungsaufnahme}\index{Leistungsaufnahme}: Energiebedarf durch Schalten und Leckströme.
+        \item \tib{Fan-out}\index{Fan-out}: Anzahl von Eingängen, die ein Ausgang zuverlässig treiben kann.
     \end{itemize}
-    \begin{myanswer}
-        \begin{itemize}
-            \item NTFS-Dateisystem $\to$ Betriebssystem (Teil des OS-Kernels)
-            \item Google Chrome $\to$ Anwendung
-            \item \texttt{open("datei.txt")} $\to$ Systemaufruf / API
-            \item Grafikkartentreiber $\to$ Treiber
-            \item CPU führt Maschinenbefehl aus $\to$ Hardware
-        \end{itemize}
-    \end{myanswer}
-\end{myexercise}
+\end{mydefinition}
 
-\section{Bekannte Betriebssysteme}
+\section{Logische Grundverknüpfungen}
+
+Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funktionen}\index{Boolesche Funktion}: Funktionen, die einen oder mehrere Bits als Eingabe erhalten und genau ein Bit als Ausgabe liefern. Die drei elementaren Verknüpfungen sind \tib{NOT}\index{NOT-Gatter}, \tib{AND}\index{AND-Gatter} und \tib{OR}\index{OR-Gatter}.
+
+\subsection{NOT -- Negation}
+
+\begin{mydefinition}[NOT-Gatter]
+    Das \textbf{NOT-Gatter} (auch: Inverter) hat \emph{einen} Eingang $x$ und liefert den negierten Wert $\overline{x}$ als Ausgang:
+    \[
+        \overline{0} = 1, \qquad \overline{1} = 0.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=notBB]
+            \coordinate (not-base) at (0,0);
+            \node[not gate, draw] (not1) at (not-base) {};
+            \coordinate (not-in-left) at ($(not1.input)+(-0.7,0)$);
+            \coordinate (not-out-right) at ($(not1.output)+(0.7,0)$);
+            \draw (not-in-left) -- (not1.input) node[left] {$x$};
+            \draw (not1.output) -- (not-out-right) node[right] {$\overline{x}$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des NOT-Gatters.}
+    \label{fig:not_gatter}
+\end{figure}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{l|l|l}
-        \textbf{Betriebssystem} & \textbf{Hersteller} & \textbf{Typisches Einsatzgebiet} \\\midrule\midrule
-        Windows 11              & Microsoft           & PC, Laptops \\\midrule
-        macOS                   & Apple               & Mac-Computer \\\midrule
-        Linux (Ubuntu, Debian \ldots) & Open Source  & Server, PCs, eingebettete Systeme \\\midrule
-        Android                 & Google              & Smartphones, Tablets \\\midrule
-        iOS                     & Apple               & iPhone, iPad \\
+    \begin{tabular}{c||c}
+        $x$ & $\overline{x}$ \\\midrule\midrule
+        0 & 1 \\\midrule
+        1 & 0 \\
     \end{tabular}
-    \caption{Auswahl verbreiteter Betriebssysteme.}
-    \label{tab:betriebssysteme}
+    \caption{Wahrheitstabelle des NOT-Gatters.}
+    \label{tab:not}
 \end{table}
 
-\begin{myremark}[Open Source]
-    Linux ist \textbf{Open Source}: Der Quellcode des Betriebssystems ist öffentlich einsehbar und kann von jedem verändert und weiterverteilt werden. Dies macht Linux besonders verbreitet im Serverbereich (über 90\,\% der Webserver laufen unter Linux) und in eingebetteten Systemen (Smartphones mit Android, Router, Smart-TVs, \ldots).
+\subsection{AND -- Konjunktion}
+
+\begin{mydefinition}[AND-Gatter]
+    Das \textbf{AND-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{beide} Eingänge \texttt{1} sind:
+    \[
+        x \wedge y = 1 \iff x = 1 \text{ und } y = 1.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=andBB]
+            \coordinate (and-base) at (0,0);
+            \node[and gate, draw] (and1) at (and-base) {};
+            \coordinate (and-in1-left) at ($(and1.input 1)+(-0.7,0)$);
+            \coordinate (and-in2-left) at ($(and1.input 2)+(-0.7,0)$);
+            \coordinate (and-out-right) at ($(and1.output)+(0.7,0)$);
+            \draw (and-in1-left) -- (and1.input 1) node[left] {$x$};
+            \draw (and-in2-left) -- (and1.input 2) node[left] {$y$};
+            \draw (and1.output) -- (and-out-right) node[right] {$x \wedge y$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des AND-Gatters.}
+    \label{fig:and_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $x \wedge y$ \\\midrule\midrule
+        0 & 0 & 0 \\\midrule
+        0 & 1 & 0 \\\midrule
+        1 & 0 & 0 \\\midrule
+        1 & 1 & 1 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des AND-Gatters.}
+    \label{tab:and}
+\end{table}
+
+\begin{myexample}[Zwei Freigaben für ein System]
+    Eine Maschine darf nur starten, wenn \emph{gleichzeitig} ein Schlüsselschalter aktiv ist und ein Sicherheitstaster gedrückt wird. Das Verhalten entspricht einem AND-Gatter.
+\end{myexample}
+
+\subsection{OR -- Disjunktion}
+
+\begin{mydefinition}[OR-Gatter]
+    Das \textbf{OR-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{mindestens einer} der Eingänge \texttt{1} ist:
+    \[
+        x \vee y = 1 \iff x = 1 \text{ oder } y = 1.
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=orBB]
+            \coordinate (or-base) at (0,0);
+            \node[or gate, draw] (or1) at (or-base) {};
+            \coordinate (or-in1-left) at ($(or1.input 1)+(-0.7,0)$);
+            \coordinate (or-in2-left) at ($(or1.input 2)+(-0.7,0)$);
+            \coordinate (or-out-right) at ($(or1.output)+(0.7,0)$);
+            \draw (or-in1-left) -- (or1.input 1) node[left] {$x$};
+            \draw (or-in2-left) -- (or1.input 2) node[left] {$y$};
+            \draw (or1.output) -- (or-out-right) node[right] {$x \vee y$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des OR-Gatters.}
+    \label{fig:or_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $x \vee y$ \\\midrule\midrule
+        0 & 0 & 0 \\\midrule
+        0 & 1 & 1 \\\midrule
+        1 & 0 & 1 \\\midrule
+        1 & 1 & 1 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des OR-Gatters.}
+    \label{tab:or}
+\end{table}
+
+\begin{myexercise}\label{myexercise:gatter-anwendung}
+    Ein Fahrstuhl darf sich nur dann in Bewegung setzen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten ist \emph{oder} der Notfall-Modus deaktiviert ist. Modellieren Sie diese Bedingung mithilfe von AND-, OR- und NOT-Gattern und geben Sie die zugehörige logische Formel an.
+    \begin{myanswer}
+        Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel
+        \begin{align*}
+            t \wedge (\overline{u} \vee \overline{n}).
+        \end{align*}
+        Die Schaltung besteht also aus zwei NOT-Gattern (für $\overline{u}$ und $\overline{n}$), einem OR-Gatter und einem abschliessenden AND-Gatter.
+    \end{myanswer}
+\end{myexercise}
+
+\section{Das NAND-Gatter: Ein universelles Gatter}\label{sec:nand}
+
+\begin{mydefinition}[NAND-Gatter]
+    Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} liefert die Negation des AND:
+    \[
+        x \uparrow y = \overline{x \wedge y}.
+    \]
+    Es gibt \texttt{0} aus, wenn \emph{beide} Eingänge \texttt{1} sind; sonst immer \texttt{1}.
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=nandBB]
+            \coordinate (nand-base) at (0,0);
+            \node[nand gate, draw] (nand1) at (nand-base) {};
+            \coordinate (nand-in1-left) at ($(nand1.input 1)+(-0.7,0)$);
+            \coordinate (nand-in2-left) at ($(nand1.input 2)+(-0.7,0)$);
+            \coordinate (nand-out-right) at ($(nand1.output)+(0.7,0)$);
+            \draw (nand-in1-left) -- (nand1.input 1) node[left] {$x$};
+            \draw (nand-in2-left) -- (nand1.input 2) node[left] {$y$};
+            \draw (nand1.output) -- (nand-out-right) node[right] {$\overline{x \wedge y}$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des NAND-Gatters (AND mit Kreis am Ausgang).}
+    \label{fig:nand_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $\overline{x \wedge y}$ \\\midrule\midrule
+        0 & 0 & 1 \\\midrule
+        0 & 1 & 1 \\\midrule
+        1 & 0 & 1 \\\midrule
+        1 & 1 & 0 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des NAND-Gatters.}
+    \label{tab:nand}
+\end{table}
+
+Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen. Man sagt, NAND ist \tib{funktional vollständig}\index{funktional vollständig}. In vielen Fertigungsprozessen ist es technologisch günstig, aus wenigen standardisierten Gattertypen sehr grosse Schaltungen aufzubauen.
+
+\begin{myexercise}\label{myexercise:nand-not}
+    Zeigen Sie, dass sich das NOT-Gatter allein mit NAND-Gattern realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $x \uparrow x$ (also: $x$ NAND $x$) auf und vergleichen Sie diese mit der Wahrheitstabelle des NOT-Gatters.
+    \begin{myanswer}
+        \begin{center}
+            \begin{tabular}{c||c|c}
+                $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule\midrule
+                0 & 0 & 1 \\\midrule
+                1 & 1 & 0 \\
+            \end{tabular}
+        \end{center}
+        Die Spalte $\overline{x \wedge x}$ ist identisch mit der Wahrheitstabelle von NOT($x$). Ein NOT-Gatter kann also durch ein einziges NAND-Gatter realisiert werden, wenn beide Eingänge verbunden sind.
+    \end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}
+    Zeigen Sie, wie sich ein AND-Gatter allein aus NAND-Gattern aufbauen lässt. Nutzen Sie dazu \cref{myexercise:nand-not}.
+    \begin{myanswer}
+        Ein AND-Gatter ist die Negation eines NAND-Gatters: $x \wedge y = \overline{x \uparrow y}$. Da wir aus \cref{myexercise:nand-not} bereits wissen, dass sich ein NOT-Gatter aus einem einzigen NAND-Gatter bauen lässt, genügt es, den Ausgang eines NAND-Gatters (für $x$ und $y$) in ein solches NOT-NAND-Gatter zu leiten. Insgesamt werden also zwei NAND-Gatter benötigt.
+    \end{myanswer}
+\end{mychallenge}
+
+\section{Kombinierte Schaltungen: der Halbaddierer}\label{sec:halbaddierer}
+
+Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beispiel betrachten wir die binäre Addition zweier einstelliger Zahlen -- also genau die Operation, die wir bereits in \cref{ch:zahlendarstellungen} von Hand ausgeführt haben. Wenn zwei Bits $x$ und $y$ addiert werden, entsteht eine zweistellige Summe.
+
+\begin{center}
+    \begin{tabular}{cc}
+        $x$ & $y$ \\\midrule
+        0 & 0 \\
+        0 & 1 \\
+        1 & 0 \\
+        1 & 1 \\
+    \end{tabular}
+    \quad$\longrightarrow$\quad
+    \begin{tabular}{cc}
+        Übertrag $c$ & Summe $s$ \\\midrule
+        0 & 0 \\
+        0 & 1 \\
+        0 & 1 \\
+        1 & 0 \\
+    \end{tabular}
+\end{center}
+
+Die Summe $s$ entspricht $x \oplus y$ (\gls{XOR}: genau dann \texttt{1}, wenn die Bits verschieden sind), der Übertrag $c$ entspricht $x \wedge y$ (AND):
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.3]
+        \begin{scope}[local bounding box=haBB]
+            \coordinate (ha-base) at (2,0.5);
+            \coordinate (ha-and-pos) at ($(ha-base)+(0,-1.4)$);
+            \node[xor gate, draw] (xor1) at (ha-base) {};
+            \node[and gate, draw] (and1) at (ha-and-pos) {};
+
+            \coordinate (ha-x-left) at ($(xor1.input 1)+(-1.2,0)$);
+            \coordinate (ha-x-split) at ($(xor1.input 1)+(-0.5,0)$);
+            \coordinate (ha-x-and) at ($(and1.input 1)+(-0.5,0)$);
+            \draw (ha-x-left) -- (ha-x-split) -- (xor1.input 1);
+            \draw (ha-x-split) -- ++(0,-0.5) -- (ha-x-and) -- (and1.input 1);
+            \node[left] at (ha-x-left) {$x$};
+
+            \coordinate (ha-y-left) at ($(xor1.input 2)+(-1.2,0)$);
+            \coordinate (ha-y-split) at ($(xor1.input 2)+(-0.3,0)$);
+            \coordinate (ha-y-and) at ($(and1.input 2)+(-0.3,0)$);
+            \draw (ha-y-left) -- (ha-y-split) -- (xor1.input 2);
+            \draw (ha-y-split) -- ++(0,-0.5) -- (ha-y-and) -- (and1.input 2);
+            \node[left] at (ha-y-left) {$y$};
+
+            \coordinate (ha-s-right) at ($(xor1.output)+(0.8,0)$);
+            \coordinate (ha-c-right) at ($(and1.output)+(0.8,0)$);
+            \draw (xor1.output) -- (ha-s-right) node[right] {$s$ (Summe)};
+            \draw (and1.output) -- (ha-c-right) node[right] {$c$ (Übertrag)};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Schaltplan eines Halbaddierers: XOR liefert die Summe, AND den Übertrag.}
+    \label{fig:halbaddierer}
+\end{figure}
+
+In einer \gls{CPU} werden sehr viele solcher Stufen kaskadiert. Dabei werden die Hardware-Kennwerte aus den vorigen Abschnitten entscheidend: Verzögerungen addieren sich entlang des kritischen Pfads, und jeder zusätzliche Schaltvorgang erhöht den Energieverbrauch.
+
+\begin{myexercise}
+    Überprüfen Sie anhand der Wahrheitstabelle, dass der Halbaddierer die binäre Addition korrekt berechnet: $1 + 1 = 10_2$ (dezimal: $2$), also Summe $= 0$ und Übertrag $= 1$.
+    \begin{myanswer}
+        Für $x=1, y=1$: XOR$(1,1)=0$ (Summe), AND$(1,1)=1$ (Übertrag). Das Ergebnis ist also die zweistellige Binärzahl \texttt{10}, was $2$ im Dezimalsystem entspricht.
+    \end{myanswer}
+\end{myexercise}
+
+\begin{myremark}[Vom Halbaddierer zum Volladdierer]
+    Ein Halbaddierer berücksichtigt keinen \tib{Übertrag}\index{Übertrag} aus einer vorangegangenen Stelle (vgl. die schriftliche Addition in \cref{ch:zahlendarstellungen}). Verbindet man zwei Halbaddierer geeignet mit einem zusätzlichen OR-Gatter, erhält man einen \tib{Volladdierer}\index{Volladdierer}, der auch einen eingehenden Übertrag $c_{\text{in}}$ verarbeiten kann. Kaskadiert man mehrere Volladdierer, lassen sich beliebig lange Binärzahlen addieren -- genau wie bei der schriftlichen Addition in \cref{ch:zahlendarstellungen}.
 \end{myremark}
+
+Wir haben nun gesehen, wie aus einzelnen Transistoren Gatter, und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. Im nächsten Kapitel betrachten wir, wie aus solchen Bausteinen ein vollständiger Computer aufgebaut wird.

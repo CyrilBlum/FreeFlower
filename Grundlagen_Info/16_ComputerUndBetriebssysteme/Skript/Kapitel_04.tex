@@ -1,0 +1,190 @@
+\chapter[Aufbau eines Computers]{Aufbau eines Computers}\label{ch:aufbau_computer}
+
+\section{Überblick: Was ist ein Computer?}
+
+Ein \tib{Computer}\index{Computer} (auch Rechner) ist eine Maschine, die nach einem gespeicherten Programm Daten verarbeitet. Er kann eingegebene Informationen in Ausgaben umwandeln -- sei es das Berechnen einer Summe, das Anzeigen eines Bildes oder das Abspielen von Musik. In \cref{ch:logische_gatter} haben wir gesehen, wie aus einzelnen Transistoren Gatter und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. In diesem Kapitel setzen wir diese Bausteine zu einem vollständigen Computer zusammen. Grundlegend gilt dabei:
+
+\begin{center}
+    \begin{tikzpicture}[node distance=1.5cm]
+        \node[draw, fill=RoyalBlue!15, minimum width=2.5cm, minimum height=1cm, rounded corners] (ein) {Eingabe};
+        \node[draw, fill=Goldenrod!30, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ein] (ver) {Verarbeitung};
+        \node[draw, fill=DarkSeaGreen!40, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ver] (aus) {Ausgabe};
+        \draw[->, thick] (ein) -- (ver);
+        \draw[->, thick] (ver) -- (aus);
+    \end{tikzpicture}
+\end{center}
+
+\section{Die Von-Neumann-Architektur}
+
+Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers John von Neumann aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}. Ihr entscheidendes Merkmal: \emph{Programm und Daten} werden im \emph{gleichen} Speicher abgelegt -- das Programm, das ein Computer ausführt, ist selbst ein Stück Daten (also eine Bitfolge, vgl. \cref{ch:kodierungen}), das jederzeit verändert oder ausgetauscht werden kann.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        block/.style={draw, minimum width=3cm, minimum height=1.2cm, text centered, rounded corners},
+        every path/.style={thick}
+    ]
+        % CPU box
+        \node[draw, dashed, minimum width=7.5cm, minimum height=3.5cm, rounded corners, label={north:{\textbf{CPU (Prozessor)}}}] (cpu) at (0,0) {};
+
+        \node[block, fill=Goldenrod!30] (alu)  at (-1.7, 0) {ALU};
+        \node[block, fill=RoyalBlue!15] (cw)   at ( 1.7, 0) {Steuerwerk};
+        \node[block, fill=Gray!20,      minimum width=1.4cm, minimum height=0.7cm] (reg) at (0,0) {Register};
+
+        \draw[<->] (alu) -- (reg);
+        \draw[<->] (reg) -- (cw);
+
+        % RAM
+        \node[block, fill=DarkSeaGreen!30, below=2cm of cpu] (ram) {Arbeitsspeicher (RAM)};
+
+        % Bus
+        \draw[<->, very thick] (cpu.south) -- (ram.north) node[midway, right=0.2cm] {Systembus};
+
+        % IO
+        \node[block, fill=Salmon!30, right=2.5cm of ram] (io) {Ein-/Ausgabe};
+        \node[block, fill=Orchid!25, left=2.5cm of ram] (stor) {Massenspeicher};
+
+        \draw[<->] (ram) -- (io);
+        \draw[<->] (ram) -- (stor);
+    \end{tikzpicture}
+    \caption{Vereinfachtes Schaubild der Von-Neumann-Architektur.}
+    \label{fig:von_neumann}
+\end{figure}
+
+Die Hauptkomponenten sind:
+
+\begin{description}
+    \item[\tib{CPU}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms aus. Enthält Steuerwerk, ALU und Register.
+    \item[\tib{Arbeitsspeicher (RAM)}\index{RAM}] Speichert aktuell laufende Programme und Daten. Der Inhalt geht beim Ausschalten verloren (\emph{flüchtig}).
+    \item[\tib{Massenspeicher}\index{Massenspeicher}] Dauerhafte Ablage von Programmen und Dateien (HDD, SSD). Der Inhalt bleibt auch ohne Strom erhalten (\emph{nicht flüchtig}).
+    \item[\tib{Ein-/Ausgabe}\index{Ein-/Ausgabe}] Verbindet den Computer mit der Aussenwelt: Tastatur, Maus, Bildschirm, Netzwerk, USB usw.
+    \item[\tib{Systembus}\index{Systembus}] Kommunikationskanal, über den alle Komponenten Daten und Steuersignale austauschen.
+\end{description}
+
+\begin{myremark}[Von Neumann vs.\ heute]
+    Heutige Prozessoren weichen in Details von Neumann ab (z.\,B. mehrere Kerne, Caches, getrennte Busse für Daten und Instruktionen), folgen aber dem grundlegenden Prinzip des gespeicherten Programms.
+\end{myremark}
+
+\begin{myexercise}
+    Warum ist es problematisch, wenn Programm und Daten im \emph{gleichen} Speicher liegen? Überlegen Sie, was passieren könnte, wenn ein fehlerhaftes Programm versehentlich in den Speicherbereich schreibt, in dem sein eigener Programmcode liegt.
+    \begin{myanswer}
+        Ein Programm könnte theoretisch seinen eigenen (oder einen fremden) Programmcode überschreiben, was zu unvorhersehbarem Verhalten oder einem Absturz führt. Aus diesem Grund übernimmt das Betriebssystem (siehe \cref{ch:betriebssystem}) die Aufgabe, den Speicherbereich verschiedener Programme voneinander zu isolieren (\tib{Speicherschutz}).
+    \end{myanswer}
+\end{myexercise}
+
+\section{Die CPU im Detail}
+
+\subsection{ALU -- Arithmetisch-logische Einheit}
+
+Die \tib{ALU}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der CPU. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl. \cref{sec:halbaddierer}).
+
+\subsection{Steuerwerk}
+
+Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert den Ablauf aller Operationen. Es liest Befehle aus dem Speicher, interpretiert sie und gibt der ALU und den übrigen Komponenten die entsprechenden Steuersignale.
+
+\subsection{Register}
+
+\tib{Register}\index{Register} sind sehr schnelle, aber winzige Zwischenspeicher direkt in der CPU. Sie halten die Werte, mit denen die ALU gerade rechnet (z.\,B. die zwei Summanden und das Resultat einer Addition). Typische Grösse: 64~Bit pro Register -- also 8 Byte (vgl. \cref{mydefinition:bit-byte}).
+
+\section{Arbeitsspeicher (RAM)}
+
+Der \tib{RAM}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Man kann sich den RAM als eine lange Tabelle vorstellen, in der jede Zeile einer \tib{Speicherzelle}\index{Speicherzelle} entspricht und eine eindeutige \tib{Adresse}\index{Adresse} hat:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{Adresse} & \textbf{Inhalt (1 Byte)} \\\midrule\midrule
+        \texttt{0x00} & \texttt{10110100} \\\midrule
+        \texttt{0x01} & \texttt{00001111} \\\midrule
+        \texttt{0x02} & \texttt{11001010} \\\midrule
+        $\vdots$ & $\vdots$ \\
+    \end{tabular}
+    \caption{Schematische Darstellung des RAM: jede Adresse zeigt auf eine Speicherzelle von einem Byte.}
+    \label{tab:ram}
+\end{table}
+
+\begin{myattention}
+    Die Adressen in \cref{tab:ram} sind in \tib{hexadezimaler Schreibweise}\index{Hexadezimalsystem} angegeben (vgl. \cref{section:stellenwertdarst}) -- daher das Präfix \texttt{0x}. Hexadezimalzahlen eignen sich hier besonders gut, da zwei Hex-Ziffern genau einem Byte entsprechen (vgl. \cref{ex:byte-max}).
+\end{myattention}
+
+Typische Grössen heutiger Rechner: 8--64~GB RAM (vgl. \cref{table:daten-groessenordnungen}). Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der CPU, der häufig benötigte Daten zwischenspeichert, um den langsameren RAM zu entlasten.
+
+\section{Massenspeicher}
+
+\begin{description}
+    \item[\tib{HDD}\index{HDD} (Hard Disk Drive)] Magnetische Scheiben speichern Bits als winzige magnetisierte Bereiche. Langsamer, aber billig und langlebig für grosse Datenmengen.
+    \item[\tib{SSD}\index{SSD} (Solid State Drive)] Daten werden in Flashspeicher-Zellen als elektrische Ladung gespeichert. Deutlich schneller als HDDs, keine beweglichen Teile.
+\end{description}
+
+\begin{myexample}[Unterschied RAM -- SSD]
+    Der RAM eines modernen Computers kann Daten mit Übertragungsraten von 30--50~GB/s lesen. Eine SSD schafft 1--7~GB/s, eine herkömmliche HDD nur ca.\ 100--200~MB/s. Je schneller der Speicher, desto kleiner und teurer pro Gigabyte.
+\end{myexample}
+
+\begin{myexercise}
+    Ein Foto mit einer Grösse von 24~MB soll von einer SSD (Lesegeschwindigkeit: 2~GB/s) geladen werden. Wie lange dauert dies ungefähr?
+    \begin{myanswer}
+        $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 0{,}012\,\mathrm{s} = 12\,\mathrm{ms}$.
+    \end{myanswer}
+\end{myexercise}
+
+\section{Der Fetch-Decode-Execute-Zyklus}\label{sec:fde}
+
+Die CPU führt Anweisungen in einem einfachen, immer wiederholten Schema aus, dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus}:
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        block/.style={draw, rounded corners, minimum width=3.5cm, minimum height=1.1cm, text centered, text width=3.5cm, fill=RoyalBlue!15},
+        arrow/.style={->, thick}
+    ]
+        \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
+        \node[block] (decode)  at (5, 0)    {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
+        \node[block] (execute) at (2.5,-2)  {\textbf{3.\ Execute} \newline \small Befehl ausführen};
+
+        \draw[arrow] (fetch)   -- (decode);
+        \draw[arrow] (decode)  -- (execute);
+        \draw[arrow] (execute.west) -- ++(-2.4,0) |- (fetch.south);
+    \end{tikzpicture}
+    \caption{Der Fetch-Decode-Execute-Zyklus: die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.}
+    \label{fig:fde}
+\end{figure}
+
+\begin{enumerate}
+    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch}: Das Steuerwerk liest den nächsten Befehl aus dem RAM an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
+    \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode}: Der Befehl wird in seine Bestandteile zerlegt: \emph{Was ist zu tun?} (z.\,B. Addieren) und \emph{Mit welchen Operanden?} (z.\,B. Register A und B).
+    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute}: Die ALU oder eine andere Komponente führt die Anweisung aus (z.\,B. $A + B$), das Ergebnis wird in ein Register oder zurück in den Speicher geschrieben, und der Programmzähler rückt weiter.
+\end{enumerate}
+
+\begin{myexercise}
+    Ein Prozessor hat eine Taktfrequenz von $3{,}6\,\mathrm{GHz}$ und führt im Durchschnitt 2 Befehle pro Taktzyklus aus.
+    \begin{enumerate}
+        \item Wie viele Befehle führt der Prozessor pro Sekunde aus?
+        \item Ein Programm besteht aus $7{,}2 \times 10^9$ Befehlen. Wie lange dauert die Ausführung?
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}
+            \item $3{,}6 \times 10^9 \,\mathrm{Hz} \times 2 = 7{,}2 \times 10^9$ Befehle pro Sekunde.
+            \item $\dfrac{7{,}2 \times 10^9}{7{,}2 \times 10^9\,\mathrm{s}^{-1}} = 1\,\mathrm{s}$.
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}
+    Der Addierbefehl \texttt{ADD R1, R2} weist die CPU an, den Inhalt der Register \texttt{R1} und \texttt{R2} zu addieren. Ordnen Sie die folgenden Teilschritte den drei Phasen Fetch, Decode und Execute zu:
+    \begin{itemize}
+        \item Der Programmzähler wird um eine Stelle weitergeschaltet.
+        \item Die ALU berechnet die Summe der beiden Register.
+        \item Das Steuerwerk erkennt, dass es sich um einen Additionsbefehl mit zwei Registeroperanden handelt.
+        \item Der Befehl \texttt{ADD R1, R2} wird als Bitfolge aus dem RAM gelesen.
+    \end{itemize}
+    \begin{myanswer}
+        \begin{itemize}
+            \item Befehl aus RAM lesen $\to$ Fetch
+            \item Programmzähler weiterschalten $\to$ Fetch
+            \item Befehl als Additionsbefehl mit zwei Registeroperanden erkennen $\to$ Decode
+            \item ALU berechnet Summe $\to$ Execute
+        \end{itemize}
+    \end{myanswer}
+\end{mychallenge}
+
+Wir haben nun gesehen, wie CPU, Arbeitsspeicher, Massenspeicher und Ein-/Ausgabe zusammenspielen, um Programme auszuführen. Im nächsten Kapitel betrachten wir, wie das Betriebssystem diese Hardware-Ressourcen verwaltet und den Anwendungen zugänglich macht.
