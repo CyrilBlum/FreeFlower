@@ -1,0 +1,81 @@
+%% =======================================================================
+%% DEFAULT NEUTRAL OPEN-SOURCE THEME
+%% =======================================================================
+%% Provides clean, standard Beamer styling and fallbacks for custom slide macros.
+
+\definecolor{FDUgreen}{RGB}{46,125,50}
+\definecolor{FDUblue}{RGB}{21,101,192}
+\definecolor{FDUteal}{RGB}{0,121,107}
+\definecolor{FDUink}{RGB}{33,33,33}
+
+\iftoggle{beamer}{
+	\setbeamercolor{frametitle}{fg=FDUblue}
+	\setbeamertemplate{navigation symbols}{}
+	\setbeamertemplate{footline}[frame number]
+
+	\providecommand{\thelektion}{}
+	\providecommand{\darkfootline}{\setbeamertemplate{footline}[frame number]}
+	\renewcommand{\darkfootline}{\setbeamertemplate{footline}[frame number]}
+
+	% Standard neutral slide macro fallbacks
+	\renewcommand{\FDUtitle}[1]{%
+	  \frametitle{#1}%
+	}
+
+	\renewcommand{\sectionframe}[3][FDUblue]{%
+	  \begin{center}
+	    \vspace*{1.5cm}
+	    {\usebeamercolor[fg]{frametitle}\LARGE\bfseries #2\par}
+	    \ifstrempty{#3}{}{\vspace{4mm}{\large #3\par}}
+	  \end{center}
+	}
+
+	\renewcommand{\centerstatement}[3][FDUgreen]{%
+	  \begin{center}
+	    \vspace*{1.2cm}
+	    {\Large\bfseries #2\par}
+	    \ifstrempty{#3}{}{\vspace{3mm}\normalfont\normalsize #3\par}
+	  \end{center}
+	}
+
+	\renewcommand{\lessontitle}[3]{%
+	  \begin{center}
+	    \vspace*{1.0cm}
+	    {\color{FDUblue}\small\bfseries #1\par}
+	    \vspace{2mm}
+	    {\Huge\bfseries #2\par}
+	    \vspace{4mm}
+	    {\large\color{gray} #3\par}
+	  \end{center}
+	}
+
+	\renewcommand{\personcard}[5]{%
+	  \begin{columns}[c,onlytextwidth]
+	    \begin{column}{.34\textwidth}
+	      \centering
+	      \includegraphics[width=\linewidth,height=48mm,keepaspectratio]{#3}
+	    \end{column}
+	    \begin{column}{.62\textwidth}
+	      {\color{FDUblue}\large\bfseries #1}\\[0.5mm]
+	      {\color{gray}\small #2}\\[3mm]
+	      {\normalsize #4}\\[3mm]
+	      {\itshape\small #5}
+	    \end{column}
+	  \end{columns}%
+	}
+
+	\renewcommand{\inventionframe}[3]{%
+	  \begin{center}
+	    {\color{FDUblue}\large\bfseries #1}\\[2mm]
+	    \includegraphics[width=.68\paperwidth,height=42mm,keepaspectratio]{#2}\\[2mm]
+	    {\small #3}
+	  \end{center}
+	}
+
+	\renewcommand{\auftragframe}[2]{%
+	  \frametitle{Auftrag}%
+	  \small\color{gray}Skript \enquote{Aufbau und Funktionsweise eines Computers}, #1\par
+	  \vspace{4mm}%
+	  #2
+	}
+}{}
