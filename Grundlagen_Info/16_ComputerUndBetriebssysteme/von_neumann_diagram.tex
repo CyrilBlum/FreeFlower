@@ -5,15 +5,15 @@
     % CPU box
     \node[draw, dashed, minimum width=8.8cm, minimum height=2.4cm, rounded corners=4pt, label={north:{\textbf{CPU (Prozessor)}}}] (cpu) at (0,0) {};
 
-    \node[block, fill=FDUgreen!25] (alu) at (-2.8, 0) {ALU};
+    \node[block, fill=ForestGreen!25] (alu) at (-2.8, 0) {ALU};
     \node[block, fill=Gray!20, minimum width=2.0cm] (reg) at (0, 0) {Register};
-    \node[block, fill=FDUblue!20] (cw) at ( 2.8, 0) {Steuerwerk};
+    \node[block, fill=RoyalBlue!20] (cw) at ( 2.8, 0) {Steuerwerk};
 
     \draw[<->] (alu) -- (reg);
     \draw[<->] (reg) -- (cw);
 
     % RAM
-    \node[block, fill=FDUteal!25, minimum width=4.0cm] (ram) at (0, -2.5) {Arbeitsspeicher (RAM)};
+    \node[block, fill=Teal!25, minimum width=4.0cm] (ram) at (0, -2.5) {Arbeitsspeicher (RAM)};
 
     % Systembus
     \draw[<->, line width=1.5pt] (cpu.south) -- (ram.north) node[midway, right=3pt, font=\small] {Systembus};

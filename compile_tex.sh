@@ -322,6 +322,20 @@ beamer_topics=(
     "markov_chains:Grundlagen_Info/10_KI_und_Algorithmen/Slides/markov_chains"
     "markov_appendix:Grundlagen_Info/10_KI_und_Algorithmen/Slides/markov_appendix"
 
+    # Computer und Betriebssysteme
+    "L01_WasIstInformatik:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L01_WasIstInformatik"
+    "L02_BasisgroessenUndStellenwert:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L02_BasisgroessenUndStellenwert"
+    "L03_UmrechnungUndHex:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L03_UmrechnungUndHex"
+    "L04_BinaerRechnenUndBits:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L04_BinaerRechnenUndBits"
+    "L05_ASCIIUndUTF8:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L05_ASCIIUndUTF8"
+    "L06_BilderUndFarben:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L06_BilderUndFarben"
+    "L07_DateiformateUndSpeicher:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L07_DateiformateUndSpeicher"
+    "L08_LogischeGatterI:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L08_LogischeGatterI"
+    "L09_LogischeGatterII:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L09_LogischeGatterII"
+    "L10_AufbauComputerI:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L10_AufbauComputerI"
+    "L11_AufbauComputerII:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L11_AufbauComputerII"
+    "L12_Betriebssystem:Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L12_Betriebssystem"
+
     # Ergänzungsfach Informatik #
     "complexity:EF/Complexity/complexity"
     # LaTeX
