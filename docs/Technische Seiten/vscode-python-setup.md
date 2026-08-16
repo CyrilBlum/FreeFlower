@@ -10,7 +10,7 @@ permalink: /vscode-python-setup.html
 
 Diese Seite enthält die vollständigen Schritte aus dem Kapitel "Getting Started", inklusive aller Abbildungen.
 
-## Installation von Python und VS Code
+## Installation von Python, VS Code und SafeExamBrowser
 
 Um mit dem Programmieren loslegen zu können, müssen Sie zuerst die Programmiersprache Python auf Ihrem Computer installieren sowie einen guten Code-Editor, mit dem Sie Python-Code schreiben und ausführen können. Ein solches Programm wird typischerweise IDE (Integrated Development Environment) genannt. In diesem Skript verwenden wir die kostenfreie Programmiersprache Python sowie die ebenfalls kostenfreie, weit verbreitete IDE Visual Studio Code (VS Code).
 

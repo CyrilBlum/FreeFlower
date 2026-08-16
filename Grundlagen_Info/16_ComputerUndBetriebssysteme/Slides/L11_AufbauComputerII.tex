@@ -1,0 +1,101 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L11 \textperiodcentered{} Aufbau eines Computers II}
+
+\begin{frame}\lessontitle{Lektion 11}{Aufbau eines Computers II}{RAM, Massenspeicher \& der Fetch-Decode-Execute-Zyklus \textperiodcentered{} Skript, Kapitel 5}\end{frame}
+
+\begin{frame}\FDUtitle{Der Arbeitsspeicher (RAM)}
+\begin{center}
+Stellen Sie sich RAM als eine lange Tabelle vor: jede Zeile ist eine Speicherzelle mit eindeutiger Adresse.
+\end{center}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        \textbf{Adresse} & \textbf{Inhalt (1 Byte)} \\\midrule\midrule
+        \texttt{0x00} & \texttt{10110100} \\\midrule
+        \texttt{0x01} & \texttt{00001111} \\\midrule
+        \texttt{0x02} & \texttt{11001010} \\\midrule
+        $\vdots$ & $\vdots$ \\
+    \end{tabular}
+\end{table}
+\begin{center}
+Die Adressen sind hexadezimal (Lektion 3) -- daher das Präfix \texttt{0x}.
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{RAM vs.\ Cache}
+\begin{itemize}\setlength\itemsep{7pt}
+  \item RAM ist \tib{flüchtig}: Inhalt geht beim Ausschalten verloren
+  \item Typische Grösse: 8--64 GB
+  \item Der \tib{Cache}: noch schneller, aber viel kleiner -- speichert häufig genutzte Daten zwischen
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Massenspeicher}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUteal}HDD
+\vspace{2mm}
+\normalsize Magnetische Scheiben speichern Bits als winzige magnetisierte Bereiche. Langsam, aber billig und langlebig.
+\end{column}
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUblue}SSD
+\vspace{2mm}
+\normalsize Daten als elektrische Ladung in Flashspeicher-Zellen. Deutlich schneller, keine beweglichen Teile.
+\end{column}
+\end{columns}
+\vspace{5mm}
+\begin{center}
+RAM: 30--50 GB/s \quad SSD: 1--7 GB/s \quad HDD: 100--200 MB/s
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Übung: Ladezeit}
+\begin{center}
+Ein Foto (24 MB) wird von einer SSD mit 2 GB/s Lesegeschwindigkeit geladen. Wie lange dauert das?
+\end{center}
+\only<2->{\begin{center}\Large $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 12\,\mathrm{ms}$\end{center}}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Fetch -- Decode -- Execute}{Wie die CPU Befehle abarbeitet}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Der Fetch-Decode-Execute-Zyklus}
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={draw, rounded corners, minimum width=3.2cm, minimum height=1.0cm, text centered, text width=3.2cm, fill=FDUblue!15},
+    arrow/.style={->, thick}
+]
+    \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
+    \node[block] (decode)  at (4.6, 0)  {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
+    \node[block] (execute) at (2.3,-1.9) {\textbf{3.\ Execute} \newline \small Befehl ausführen};
+    \draw[arrow] (fetch)   -- (decode);
+    \draw[arrow] (decode)  -- (execute);
+    \draw[arrow] (execute.west) -- ++(-2.1,0) |- (fetch.south);
+\end{tikzpicture}
+\end{center}
+\begin{center}Die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Was passiert in jeder Phase?}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+  \item \tib{Fetch}: Steuerwerk liest den nächsten Befehl aus dem RAM (Adresse = Programmzähler)
+  \item \tib{Decode}: Befehl wird zerlegt -- \emph{was} tun, \emph{mit welchen} Operanden?
+  \item \tib{Execute}: ALU (o.\,ä.) führt die Anweisung aus, Ergebnis wird gespeichert, Programmzähler rückt weiter
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Übung: Taktfrequenz}
+\begin{center}
+Ein Prozessor hat $3{,}6\,\mathrm{GHz}$ Taktfrequenz und führt im Schnitt 2 Befehle pro Taktzyklus aus.
+\vspace{3mm}
+
+Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $7{,}2\times 10^9$ Befehlen?
+\end{center}
+\only<2->{\begin{center}\Large $7{,}2\times 10^9$ Befehle/s $\quad\rightarrow\quad 1\,\mathrm{s}$\end{center}}
+\end{frame}
+
+\auftragframe{Kapitel 5, Abschnitte \enquote{Arbeitsspeicher (RAM)} bis \enquote{Der Fetch-Decode-Execute-Zyklus}}{%
+\aufgabebox{Teilschritte des Additionsbefehls den drei Phasen zuordnen}
+}
+

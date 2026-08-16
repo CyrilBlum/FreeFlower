@@ -1,0 +1,22 @@
+% ============================================================
+% Shared FDU corporate-design preamble for the "Aufbau und
+% Funktionsweise eines Computers" lesson slide decks.
+%
+% Adapted from: FDU/Unterricht/Erste Tage/Intro Presentation/main.tex
+% ============================================================
+\usepackage{etoolbox}
+\providetoggle{book}\providetoggle{article}\providetoggle{exam}\providetoggle{beamer}\providetoggle{flashcards}
+\providetoggle{german}\providetoggle{english}\providetoggle{emoji}\providetoggle{citations}
+\providetoggle{includelogo}\providetoggle{addheader}
+
+\settoggle{beamer}{true}
+\settoggle{german}{true}
+\settoggle{emoji}{true}
+
+\input{Preambles/pre_0_packages}    %% loading packages
+\input{Preambles/pre_1_options}     %% settings and options
+\input{Preambles/pre_2_macros}      %% macros
+\input{Preambles/pre_3_tikz}        %% tikz
+\input{Preambles/pre_4_custom_envs} %% custom environments
+\input{Preambles/pre_5_misc}        %% misc settings and FDU macros
+\input{Preambles/pre_6_glossaries}  %% glossaries

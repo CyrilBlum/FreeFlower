@@ -20,33 +20,7 @@ Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers 
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        block/.style={draw, minimum width=3cm, minimum height=1.2cm, text centered, rounded corners},
-        every path/.style={thick}
-    ]
-        % CPU box
-        \node[draw, dashed, minimum width=7.5cm, minimum height=3.5cm, rounded corners, label={north:{\textbf{CPU (Prozessor)}}}] (cpu) at (0,0) {};
-
-        \node[block, fill=Goldenrod!30] (alu)  at (-1.7, 0) {ALU};
-        \node[block, fill=RoyalBlue!15] (cw)   at ( 1.7, 0) {Steuerwerk};
-        \node[block, fill=Gray!20,      minimum width=1.4cm, minimum height=0.7cm] (reg) at (0,0) {Register};
-
-        \draw[<->] (alu) -- (reg);
-        \draw[<->] (reg) -- (cw);
-
-        % RAM
-        \node[block, fill=DarkSeaGreen!30, below=2cm of cpu] (ram) {Arbeitsspeicher (RAM)};
-
-        % Bus
-        \draw[<->, very thick] (cpu.south) -- (ram.north) node[midway, right=0.2cm] {Systembus};
-
-        % IO
-        \node[block, fill=Salmon!30, right=2.5cm of ram] (io) {Ein-/Ausgabe};
-        \node[block, fill=Orchid!25, left=2.5cm of ram] (stor) {Massenspeicher};
-
-        \draw[<->] (ram) -- (io);
-        \draw[<->] (ram) -- (stor);
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/von_neumann_diagram.tex}
     \caption{Vereinfachtes Schaubild der Von-Neumann-Architektur.}
     \label{fig:von_neumann}
 \end{figure}

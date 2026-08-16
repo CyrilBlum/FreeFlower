@@ -1,0 +1,93 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L10 \textperiodcentered{} Aufbau eines Computers I}
+
+\begin{frame}\lessontitle{Lektion 10}{Aufbau eines Computers I}{Von-Neumann-Architektur \& die CPU im Detail \textperiodcentered{} Skript, Kapitel 5}\end{frame}
+
+\begin{frame}\FDUtitle{Vom Gatter zum Computer}
+\begin{center}
+Wir kennen jetzt Gatter und den Halbaddierer.
+\vspace{4mm}
+
+Wie setzt man daraus einen \textbf{vollständigen Computer} zusammen?
+\end{center}
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm]
+    \node[draw, fill=FDUblue!15, minimum width=2.5cm, minimum height=1cm, rounded corners] (ein) {Eingabe};
+    \node[draw, fill=FDUgreen!35, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ein] (ver) {Verarbeitung};
+    \node[draw, fill=FDUteal!25, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ver] (aus) {Ausgabe};
+    \draw[->, thick] (ein) -- (ver);
+    \draw[->, thick] (ver) -- (aus);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Die Von-Neumann-Architektur}{1945, John von Neumann}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Das entscheidende Merkmal}
+\begin{center}
+\textbf{Programm und Daten} liegen im \textbf{gleichen} Speicher.
+\vspace{4mm}
+
+Das Programm ist selbst nur ein Stück Daten -- also eine Bitfolge, die jederzeit verändert oder ausgetauscht werden kann.
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Die Hauptkomponenten}
+\begin{center}
+\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/von_neumann_diagram.tex}
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Warum ist das riskant?}
+\begin{center}
+Was könnte passieren, wenn ein fehlerhaftes Programm versehentlich seinen eigenen Programmcode überschreibt?
+\end{center}
+\only<2->{
+\begin{center}\color{FDUteal}\bfseries Unvorhersehbares Verhalten oder Absturz -- deshalb übernimmt später das Betriebssystem den \enquote{Speicherschutz} (Lektion 12).\end{center}
+}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Die CPU im Detail}{ALU, Steuerwerk, Register}
+\end{frame}}
+
+\begin{frame}\FDUtitle{ALU -- Arithmetisch-logische Einheit}
+\begin{itemize}\setlength\itemsep{7pt}
+  \item Das \enquote{Rechenzentrum} der CPU
+  \item Arithmetische Operationen (Addition, Subtraktion, \ldots)
+  \item Logische Operationen (AND, OR, Vergleiche, \ldots)
+  \item Intern: eine grosse Anzahl kombinierter Logikgatter (z.\,B.\ Volladdierer)
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Steuerwerk \& Register}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUteal}Steuerwerk
+\vspace{2mm}
+\normalsize
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Steuert den Ablauf aller Operationen
+  \item Liest Befehle, interpretiert sie
+  \item Gibt Steuersignale an ALU \& Co.
+\end{itemize}
+\end{column}
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUblue}Register
+\vspace{2mm}
+\normalsize
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Sehr schnelle, winzige Zwischenspeicher
+  \item Halten die aktuellen Rechenwerte
+  \item Typische Grösse: 64 Bit (= 8 Byte)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\auftragframe{Kapitel 5, Abschnitte \enquote{Die Von-Neumann-Architektur} und \enquote{Die CPU im Detail}}{%
+\aufgabebox{Bauen Sie die Von-Neumann-Architektur aus dem Gedächtnis auf}
+}
+

@@ -1,0 +1,99 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L03 \textperiodcentered{} Umrechnung \& Hexadezimalsystem}
+
+\begin{frame}\lessontitle{Lektion 03}{Umrechnung \& Hexadezimalsystem}{Der Greedy-Algorithmus und die Basis 16 \textperiodcentered{} Skript, Kapitel 2}\end{frame}
+
+\begin{frame}\FDUtitle{Rückblick}
+\begin{align*}
+	(a_{n}a_{n-1}\ldots a_{1}a_{0})_{b} := a_n\cdot b^n + a_{n-1}\cdot b^{n-1} + \ldots + a_1\cdot b + a_0
+\end{align*}
+\begin{center}
+Heute: Wie rechnet man eine Dezimalzahl systematisch in ein anderes System um?
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Umrechnung: Basis 5}
+Wie lautet die $5$-adische Darstellung von $84_{10}$?
+\vspace{3mm}
+\only<1->{Verfügbare Potenzen: $5^0=1,\ 5^1=5,\ 5^2=25$ ($5^3=125>84$).}
+\only<2->{\begin{center}Grösstmögliche Potenz $5^2=25$: passt \textcolor{FDUteal}{\textbf{3-mal}} in 84. Rest: $84-3\cdot25=9$.\end{center}}
+\only<3->{\begin{center}$5^1=5$ passt \textcolor{FDUteal}{\textbf{1-mal}} in 9. Rest: $9-5=4$.\end{center}}
+\only<4->{\begin{center}$5^0=1$ passt \textcolor{FDUteal}{\textbf{4-mal}} in 4. Rest: 0.\end{center}}
+\only<5->{\begin{center}\Large $84_{10} = \textcolor{FDUteal}{3}\textcolor{FDUblue}{1}\textcolor{FDUgreen}{4}_5$\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Der Greedy-Algorithmus}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+  \item Wir haben stets mit der \textbf{grössten} Basisgrösse begonnen
+  \item \ldots und so viele Münzen davon verwendet wie möglich
+  \item Diese Methode heisst \tib{greedy} (\enquote{gierig})
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Übung: Dezimal $\rightarrow$ Binär}
+Wandeln Sie $29_{10}$ ins Binärsystem um.
+\only<1>{
+\begin{align*}
+\small
+	a_4\cdot \underbrace{2^4}_{=?} + a_3\cdot \underbrace{2^3}_{=?} + a_2\cdot \underbrace{2^2}_{=?} + a_1\cdot \underbrace{2^1}_{=?} + a_0\cdot \underbrace{2^0}_{=?}
+\end{align*}}
+\only<2>{
+\begin{align*}
+\small
+	a_4\cdot \underbrace{2^4}_{=16} + a_3\cdot \underbrace{2^3}_{=8} + a_2\cdot \underbrace{2^2}_{=4} + a_1\cdot \underbrace{2^1}_{=2} + a_0\cdot \underbrace{2^0}_{=1}
+\end{align*}}
+\only<3->{
+\begin{align*}
+\small
+	\textcolor{FDUteal}{\overbrace{1}^{a_4}}\cdot \underbrace{2^4}_{=16} + \textcolor{FDUteal}{\overbrace{1}^{a_3}}\cdot \underbrace{2^3}_{=8} + \textcolor{FDUteal}{\overbrace{1}^{a_2}}\cdot \underbrace{2^2}_{=4} + \textcolor{FDUteal}{\overbrace{0}^{a_1}}\cdot \underbrace{2^1}_{=2} + \textcolor{FDUteal}{\overbrace{1}^{a_0}}\cdot \underbrace{2^0}_{=1}
+\end{align*}}
+\only<4->{\begin{center}\Large Resultat: $29_{10}=11101_2$\end{center}}
+\end{frame}
+
+\auftragframe{Kapitel 2, Abschnitt \enquote{Umrechnungen zwischen Darstellungen}}{%
+\aufgabebox{Umrechnungsübungen Dezimal $\leftrightarrow$ $b$-adisch}
+}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Das Hexadezimalsystem}{Basis 16 -- warum reichen Ziffern allein nicht mehr aus?}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Wie viele Ziffern braucht ein $b$-adisches System?}
+\begin{itemize}\setlength\itemsep{7pt}
+  \item Binärsystem (2 Ziffern): grösste Ziffer ist $1$ ($=2-1$)
+  \item Dezimalsystem (10 Ziffern): grösste Ziffer ist $9$ ($=10-1$)
+  \item Allgemein: grösste Ziffer in einem $b$-adischen System ist $b-1$
+\end{itemize}
+\vspace{3mm}
+\begin{center}
+Was tun wir, wenn $b>10$? Die dezimale \enquote{10} ist ja selbst schon aus zwei Ziffern zusammengesetzt\ldots
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Das Hexadezimalsystem ($b=16$)}
+Ziffern sind letztlich nur \enquote{Zeichnungen} für Mengen -- wir können also auch Buchstaben verwenden:
+$$\lrc{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}$$
+\begin{center}
+z.\,B.\ steht $B$ für die Zahl \textit{elf}.
+\end{center}
+\vspace{3mm}
+\begin{center}
+\textbf{Frage}: Wie lautet $27_{10}$ hexadezimal?
+\end{center}
+\only<2->{\begin{center}\Large $27_{10} = 1\cdot 16^1 + 11\cdot 16^0 = 1B_{16}$\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Warum Hexadezimal in der Informatik?}
+\begin{center}
+Was ist die grösste binäre Zahl, die man mit 8 Bits (einem Byte) darstellen kann?
+\end{center}
+\only<2->{
+$$11111111_2 = 255_{10} = FF_{16}$$
+\begin{center}Zwei Hex-Ziffern genügen, um ein ganzes Byte kompakt darzustellen!\end{center}
+}
+\end{frame}
+
+\auftragframe{Kapitel 2, Abschnitt \enquote{Hexadezimalsystem}}{%
+\aufgabebox{Umrechnungsübungen ins Hexadezimalsystem}
+}
+

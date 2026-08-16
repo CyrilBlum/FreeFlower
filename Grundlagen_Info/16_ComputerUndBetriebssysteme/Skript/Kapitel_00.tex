@@ -54,10 +54,25 @@ Die Geschichte der Informatik ist keine gerade Linie, sondern eine Abfolge von I
                 \node[font=\scriptsize, align=center, text width=2.5cm] at ($(pt)+(0,\labely)$) {\year\\\txt};
             }
         \end{scope}
-        % \node[draw,circle,fit=(timelineBB),inner sep=8pt] {};
     \end{tikzpicture}
     \caption{Ausgewählte Meilensteine der Informatikgeschichte.}
     \label{fig:informatik_timeline}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=48mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/babbage_difference_engine.jpg}
+        \caption{Babbages \textit{Difference Engine No. 2} (Nachbau, London).}
+    \end{subfigure}\hfill
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=48mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/z3.jpg}
+        \caption{Nachbau von Konrad Zuses programmierbarer \textit{Z3} (1941).}
+    \end{subfigure}
+    \caption{Von mechanischen Zahnrädern zu elektromechanischen Relais.}
+    \label{fig:rechenmaschinen_geschichte}
 \end{figure}
 
 Einige der wichtigsten Entwicklungen sind:
@@ -76,7 +91,7 @@ Viele Personen haben zur Entwicklung der Informatik beigetragen. Einige Namen ta
 \begin{table}[H]
     \centering
     \begin{tabular}{l|p{6.1cm}|p{2.8cm}|p{1.8cm}}
-        	extbf{Person} & \textbf{Beitrag} & \textbf{Weiterführende Quelle} & \textbf{Zeitbereich} \\ \midrule\midrule
+        \textbf{Person} & \textbf{Beitrag} & \textbf{Weiterführende Quelle} & \textbf{Zeitbereich} \\ \midrule\midrule
         Charles Babbage & Entwarf im 19. Jahrhundert Maschinenideen, die als Vorläufer programmierbarer Computer gelten & \href{https://www.britannica.com/biography/Charles-Babbage}{Britannica} & 1791--1871 \\ \midrule
         Ada Lovelace & Beschrieb früh, dass eine Maschine nicht nur rechnen, sondern auch allgemeine Anweisungen ausführen kann & \href{https://www.britannica.com/biography/Ada-Lovelace}{Britannica} & 1815--1852 \\ \midrule
         Alan Turing & Legte theoretische Grundlagen dafür, was ein Computer überhaupt ist und welche Probleme berechenbar sind & \href{https://www.britannica.com/biography/Alan-Turing}{Britannica} & 1912--1954 \\ \midrule
@@ -87,6 +102,50 @@ Viele Personen haben zur Entwicklung der Informatik beigetragen. Einige Namen ta
     \caption{Einige prägende Persönlichkeiten der Informatikgeschichte.}
     \label{tab:persoenlichkeiten}
 \end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=.75\linewidth,height=44mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/lovelace.jpg}
+        \caption{Ada Lovelace (1815--1852)}
+    \end{subfigure}\hfill
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=.75\linewidth,height=44mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/turing.jpg}
+        \caption{Alan Turing (1912--1954)}
+    \end{subfigure}
+    \caption{Ada Lovelace verfasste den ersten Algorithmus; Alan Turing schuf das mathematische Modell des Computers.}
+    \label{fig:lovelace_turing}
+\end{figure}
+
+\begin{myquote}[Charles Babbage über die Fragen von Parlamentsabgeordneten]
+    \enquote{\textit{Bei zwei Gelegenheiten wurde ich von Abgeordneten gefragt: `Herr Babbage, wenn Sie falsche Zahlen in die Maschine eingeben, kommen dann die richtigen Antworten heraus?' Ich bin ausserstande, die Art von Gedankenverwirrung zu begreifen, die eine solche Frage hervorrufen könnte.}}
+\end{myquote}
+
+\begin{myquote}[Ada Lovelace (1843) über die Rolle von Maschinen]
+    \enquote{\textit{Die Analytical Engine hat keinerlei Anspruch darauf, irgendetwas von sich aus hervorzubringen. Sie kann alles tun, wozu wir sie anzuweisen wissen.}}
+\end{myquote}
+
+\begin{myquote}[Grace Hopper -- Informatikpionierin]
+    \enquote{\textit{Es ist viel einfacher, um Vergebung zu bitten, als um Erlaubnis.}}
+\end{myquote}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=46mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/enigma.jpg}
+        \caption{Deutsche Enigma-Chiffriermaschine.}
+    \end{subfigure}\hfill
+    \begin{subfigure}{.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=46mm,keepaspectratio]{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets/people/first_bug.jpg}
+        \caption{Der erste echte \textit{Bug}: Motte im Logbuch (1947).}
+    \end{subfigure}
+    \caption{Historische Fundstücke: Turings Entschlüsselung der Enigma und Grace Hoppers berühmter Motten-Bug.}
+    \label{fig:enigma_bug}
+\end{figure}
 
 \section{Warum diese Geschichte wichtig ist}
 

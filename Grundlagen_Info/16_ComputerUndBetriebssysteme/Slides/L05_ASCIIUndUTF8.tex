@@ -1,0 +1,78 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L05 \textperiodcentered{} ASCII \& UTF-8}
+
+\begin{frame}\lessontitle{Lektion 05}{Kodierung von Buchstaben}{ASCII und UTF-8 \textperiodcentered{} Skript, Kapitel 3}\end{frame}
+
+\begin{frame}\FDUtitle{Wie kodiert man Buchstaben?}
+\begin{center}
+Computer speichern nur Nullen und Einsen. Wie könnte man damit \textbf{Buchstaben} repräsentieren?
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{ASCII}
+\gls{ASCII} -- eine der ersten Text-Kodierungen
+\begin{itemize}\setlength\itemsep{6pt}
+	\item 1 Byte pro Zeichen -- z.\,B.\ \texttt{0100 0001} $\rightarrow$ A
+	\item 1 Bit war für Fehlerkontrolle reserviert (Paritätsbit)
+\end{itemize}
+\only<2->{
+\begin{center}
+	\textbf{Frage}: Wie viele Zeichen kann man mit einem Byte abbilden? Und mit nur 7 nutzbaren Bits (ASCII)?
+\end{center}
+}
+\only<3->{\begin{center}\Large $2^8 = 256,\quad 2^7 = 128$\end{center}}
+\end{frame}
+
+\begin{frame}[fragile]\FDUtitle{ASCII-Tabelle (Auszug)}
+\begin{table}[H]
+	\centering
+	\tiny
+	\begin{tabular}{cccc}
+		\toprule
+		Dezimal & Hexadezimal & Binär & Zeichen \\
+		\midrule
+		32 & 20 & 00100000 & Space \\
+		48 & 30 & 00110000 & 0 \\
+		49 & 31 & 00110001 & 1 \\\midrule
+		... & ... & ... & ... \\\midrule
+		65 & 41 & 01000001 & A \\
+		66 & 42 & 01000010 & B \\
+		67 & 43 & 01000011 & C \\\midrule
+		... & ... & ... & ... \\\midrule
+		97 & 61 & 01100001 & a \\
+		98 & 62 & 01100010 & b \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\begin{center}Vollständige Tabelle: Skript, Kapitel 3.\end{center}
+\end{frame}
+
+\begin{frame}[fragile]\FDUtitle{Entschlüsseln Sie!}
+\begin{center}
+\texttt{01101000 01100101 01101100 01101100 01101111}
+\end{center}
+\begin{center}
+Nutzen Sie die ASCII-Tabelle im Skript: welches Wort ist das?
+\end{center}
+\only<2->{\begin{center}\Large \texttt{hello}\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Die Grenzen von ASCII}
+\begin{center}
+128 Zeichen reichen bei weitem nicht für Umlaute, Akzente, Emojis, Sprachen wie Chinesisch, Arabisch, \ldots
+\end{center}
+\vspace{4mm}
+\begin{center}
+$\rightarrow$ \gls{UTF-8}: bis zu \textbf{4 Bytes} pro Zeichen
+\end{center}
+\only<2->{
+\begin{center}\textbf{Frage}: Wie viele Zeichen kann man mit 4 Bytes maximal abbilden?\end{center}
+}
+\only<3->{\begin{center}\Large $2^{32} = 4\,294\,967\,296$ (etwas weniger nutzbar, da Bits zur Längenangabe gebraucht werden)\end{center}}
+\end{frame}
+
+\auftragframe{Kapitel 3, Abschnitt \enquote{Kodierung von Buchstaben: ASCII-Tabellen und UTF-8}}{%
+\aufgabebox{Übungen zu ASCII und UTF-8}\\[3mm]
+\aufgabebox{Schreiben Sie Ihren Namen in ASCII-Kodierung}
+}
+

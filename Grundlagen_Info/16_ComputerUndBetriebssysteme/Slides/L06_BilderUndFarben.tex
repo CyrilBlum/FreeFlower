@@ -1,0 +1,103 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L06 \textperiodcentered{} Bilder \& Farben kodieren}
+
+\begin{frame}\lessontitle{Lektion 06}{Kodierung von Bildern \& Farben}{Pixel, RGB und Farbtiefe \textperiodcentered{} Skript, Kapitel 3}\end{frame}
+
+\begin{frame}[fragile]\FDUtitle{Ein Schwarz-Weiss-Bild}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lllll}
+		1 & 0 & 0 & 0 & 1 \\
+		0 & 1 & 0 & 1 & 0 \\
+		0 & 0 & 1 & 0 & 0 \\
+		0 & 1 & 0 & 1 & 0 \\
+		1 & 0 & 0 & 0 & 1
+	\end{tabular}
+\end{table}
+\begin{center}
+	Welches Bild wird dargestellt?\\
+	Wie viel Bit Speicherplatz benötigt es?
+\end{center}
+\only<2->{\begin{center}\color{FDUteal}\bfseries Ein Kreuz \textperiodcentered{} $5\cdot 5 = 25$ Bit\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Vom Pixel zum Bildschirm}
+\begin{columns}[c,onlytextwidth]
+\begin{column}{.46\textwidth}
+\centering
+\includegraphics[width=\linewidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/pixels}
+\end{column}
+\begin{column}{.46\textwidth}
+\tib{Pixel} = \enquote{picture} + \enquote{element}
+\vspace{2mm}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Winzige rot/grün/blau leuchtende \glspl{LED}
+  \item Kleinstes Bildelement eines Bildschirms
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}\FDUtitle{Additive Farbmischung}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/rgb-farbmischung-1}
+	\end{subfigure}
+	\begin{subfigure}{.49\textwidth}
+		\includegraphics[width=\textwidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/rgb-farbmischung-2}
+	\end{subfigure}
+\end{figure}
+\begin{center}Jede Farbe wird durch drei Werte (Rot, Grün, Blau) zwischen 0 und 255 kodiert.\end{center}
+\end{frame}
+
+\begin{frame}[fragile]\FDUtitle{RGB und Hexadezimal}
+24 Bit pro Farbe (je 8 Bit für R, G, B) $\rightarrow$ hexadezimal viel kompakter:
+\vspace{3mm}
+
+\texttt{\textcolor{red}{11111111}\textcolor{green!60!black}{00000000}\textcolor{blue}{00000000} = \#\textcolor{red}{FF}\textcolor{green!60!black}{00}\textcolor{blue}{00} = \textcolor{red}{255}, \textcolor{green!60!black}{0}, \textcolor{blue}{0}} = reines Rot
+
+\texttt{\textcolor{red}{10000000}\textcolor{green!60!black}{10000000}\textcolor{blue}{10000000} = \#\textcolor{red}{80}\textcolor{green!60!black}{80}\textcolor{blue}{80} = \textcolor{red}{128}, \textcolor{green!60!black}{128}, \textcolor{blue}{128}} = grau
+\vspace{3mm}
+\begin{center}
+Wie viele Farben lassen sich damit insgesamt darstellen? $\quad 2^{24}\approx 16.7$ Mio.
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Farbtiefe}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.85\linewidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/colordepth}
+\end{figure}
+\end{frame}
+
+\begin{frame}\FDUtitle{Farbtiefe: Beispiele}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.48\textwidth}
+		\centering
+		\includegraphics[height=38mm,keepaspectratio]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/colordepth-bar}
+	\end{subfigure}\hfill
+	\begin{subfigure}{.48\textwidth}
+		\centering
+		\includegraphics[height=38mm,keepaspectratio]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/colordepth-cat}
+	\end{subfigure}
+\end{figure}
+\vspace{-2mm}
+\begin{center}\small Je geringer die Farbtiefe, desto weniger fein abgestuft.\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{GIF und Farbpaletten}
+\begin{center}
+\gls{GIF}-Bilder unterscheiden meist 256 Farben. Wie viele Bits pro Pixel braucht das?
+\end{center}
+\only<2->{
+\begin{center}\Large 8 Bit\end{center}
+\begin{center}Statt für jedes Pixel dieselbe Anzahl Bits pro Farbe zu speichern, wird oft ein \tib{Index} auf eine Farbpalette verwendet.\end{center}}
+\end{frame}
+
+\auftragframe{Kapitel 3, Abschnitte \enquote{Kodierung von Bildern} und \enquote{Kodierung von Farben}}{%
+\aufgabebox{Speicherplatz-Übungen zu Bildern}\\[3mm]
+\challengebox{Farben anhand von Hex-Codes erraten}
+}
+

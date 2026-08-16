@@ -1,0 +1,123 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L12 \textperiodcentered{} Betriebssystem \& Software-Schichten}
+
+\begin{frame}\lessontitle{Lektion 12}{Betriebssystem \& Software-Schichten}{Vom Tastendruck bis zum Bildschirm \textperiodcentered{} Skript, Kapitel 6}\end{frame}
+
+\begin{frame}\FDUtitle{Das Problem der Komplexität}
+\begin{center}
+Ein Computer besteht aus vielen unterschiedlichen Hardwarekomponenten -- Prozessor, RAM, Grafikkarte, Tastatur, \ldots
+\vspace{4mm}
+
+Sollte jedes Programm direkt mit all dieser Hardware kommunizieren müssen?
+\end{center}
+\only<2->{\begin{center}\color{FDUteal}\bfseries Nein -- dafür gibt es das \textbf{Betriebssystem}.\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Der Software-Stack}
+\begin{center}
+\begin{tikzpicture}[
+    layer/.style={draw, minimum width=8cm, minimum height=0.9cm, text centered, rounded corners=3pt, font=\small},
+]
+    \node[layer, fill=Salmon!40]        (app)  at (0, 3.0) {\textbf{Anwendungen}};
+    \node[layer, fill=FDUgreen!35]      (api)  at (0, 1.9) {\textbf{Systemaufrufe / API}};
+    \node[layer, fill=FDUteal!35]       (os)   at (0, 0.8) {\textbf{Betriebssystem}};
+    \node[layer, fill=FDUblue!20]       (drv)  at (0,-0.3) {\textbf{Treiber}};
+    \node[layer, fill=Gray!30]          (hw)   at (0,-1.4) {\textbf{Hardware}};
+    \draw[<->, thick] (app) -- (api); \draw[<->, thick] (api) -- (os);
+    \draw[<->, thick] (os) -- (drv); \draw[<->, thick] (drv) -- (hw);
+\end{tikzpicture}
+\end{center}
+\begin{center}Jede Schicht abstrahiert die Komplexität der Ebene darunter.\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Abstraktion als roter Faden}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+  \item Ein Byte abstrahiert von einzelnen Bits (Lektion 4)
+  \item Ein Gatter abstrahiert von einzelnen Transistoren (Lektion 8)
+  \item Der Software-Stack abstrahiert von der konkreten Hardware
+\end{itemize}
+\vspace{3mm}
+\begin{center}\color{FDUteal}\bfseries Jede Schicht der Informatik baut auf einer einfacheren darunterliegenden Schicht auf.\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Vier Aufgaben des Betriebssystems}
+\begin{enumerate}\setlength\itemsep{7pt}
+  \item \tib{Prozessverwaltung} -- CPU-Zeit auf mehrere Programme aufteilen
+  \item \tib{Speicherverwaltung} -- jedem Prozess einen eigenen RAM-Bereich zuweisen
+  \item \tib{Dateisystem} -- Bits in Dateien und Verzeichnisse organisieren
+  \item \tib{Geräteverwaltung} -- Treiber für Drucker, Netzwerk, Grafikkarte, \ldots
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\FDUtitle{Multitasking}
+\begin{center}
+\begin{tikzpicture}[font=\small]
+    \draw[thick, ->] (-0.5,0) -- (9,0) node[right] {Zeit};
+    \foreach \x/\lbl/\col in {0/Browser/Salmon!50, 1/Musik/FDUgreen!50, 2/Editor/FDUteal!40, 3/Browser/Salmon!50, 4/Musik/FDUgreen!50, 5/Editor/FDUteal!40} {
+        \node[draw, fill=\col, minimum width=1.1cm, minimum height=0.8cm] at (\x*1.3, 0.7) {\lbl};
+    }
+\end{tikzpicture}
+\end{center}
+\begin{center}
+Der Prozessor wechselt so schnell zwischen Programmen (\tib{Zeitscheiben}), dass es sich für uns nach Gleichzeitigkeit anfühlt.
+\end{center}
+\only<2->{
+\begin{center}\textbf{Übung}: 5 Programme, je 20 ms Zeitscheibe -- wann ist ein Programm wieder an der Reihe?\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Speicherschutz \& Dateisystem}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUteal}Speicherschutz
+\vspace{2mm}
+\normalsize Verhindert, dass ein Prozess in den Speicherbereich eines anderen eingreift -- erinnert an das Risiko der Von-Neumann-Architektur (Lektion 10).
+\end{column}
+\begin{column}{.46\textwidth}
+\large\bfseries\color{FDUblue}Dateisystem
+\vspace{2mm}
+\normalsize Organisiert rohe Bitsequenzen auf SSD/HDD in Dateien und Verzeichnisse (z.\,B.\ NTFS, ext4, APFS).
+\end{column}
+\end{columns}
+\end{frame}
+% 
+\begin{frame}\FDUtitle{Vom Tastendruck zum Bildschirm}
+\begin{center}
+\begin{tikzpicture}[
+    stepc/.style={draw, rounded corners, fill=FDUblue!15, minimum width=8.5cm, minimum height=0.8cm, text centered, font=\small},
+    arrow/.style={->, thick}
+]
+    \node[stepc, fill=Gray!25]       (hw)  at (0, 3.2)  {Tastatur-Hardware sendet elektrischen Impuls};
+    \node[stepc, fill=FDUblue!20]    (drv) at (0, 2.1)  {Treiber übersetzt Impuls in Tastaturcode};
+    \node[stepc, fill=FDUteal!30]    (os)  at (0, 1.0)  {Betriebssystem meldet \enquote{Taste A gedrückt}};
+    \node[stepc, fill=FDUgreen!30]   (app) at (0,-0.1)  {Texteditor empfängt Ereignis, zeigt \texttt{A}};
+    \draw[arrow] (hw) -- (drv); \draw[arrow] (drv) -- (os); \draw[arrow] (os) -- (app);
+\end{tikzpicture}
+\end{center}
+\begin{center}Jede Schicht hat eine klar definierte Aufgabe.\end{center}
+\end{frame}
+% 
+\begin{frame}\FDUtitle{Bekannte Betriebssysteme}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l}
+        \textbf{OS} & \textbf{Hersteller} & \textbf{Einsatzgebiet} \\\midrule\midrule
+        Windows 11 & Microsoft & PC, Laptops \\\midrule
+        macOS & Apple & Mac-Computer \\\midrule
+        Linux & Open Source & Server, eingebettete Systeme \\\midrule
+        Android & Google & Smartphones, Tablets \\\midrule
+        iOS & Apple & iPhone, iPad \\
+    \end{tabular}
+\end{table}
+\begin{center}Über 90\,\% der Webserver laufen unter Linux -- Open-Source-Code, den jede/-r einsehen und verändern kann.\end{center}
+\end{frame}
+% 
+\begin{frame}
+\centerstatement[FDUblue]{Von der Kerbe im Ishango-Knochen bis zum Betriebssystem}{Wir haben den gesamten Weg verfolgt: Zahlendarstellung, Kodierung, logische Gatter, Computer-Hardware und Betriebssystem. Beschreiben Sie in eigenen Worten, was auf allen Ebenen passiert, wenn Sie \enquote{Strg+S} drücken.}
+\end{frame}
+
+\begin{frame}\FDUtitle{Auftrag}
+\normalsize\color{FDUink!70}Skript \enquote{Aufbau und Funktionsweise eines Computers}, Kapitel 6, gesamtes Kapitel
+\vspace{4mm}
+\aufgabebox{Komponenten dem Software-Stack zuordnen}\\[3mm]
+\challengebox{Der ganze Weg von \enquote{Strg+S} bis zur gespeicherten Datei}
+\end{frame}

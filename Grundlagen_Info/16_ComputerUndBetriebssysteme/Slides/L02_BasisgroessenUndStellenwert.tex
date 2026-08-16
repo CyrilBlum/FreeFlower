@@ -1,0 +1,188 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L02 \textperiodcentered{} Basisgrössen \& Stellenwertdarstellung}
+
+\begin{frame}\lessontitle{Lektion 02}{Basisgrössen \& Stellenwertdarstellung}{Von römischen Münzen zum Dezimal- und Binärsystem \textperiodcentered{} Skript, Kapitel 2}\end{frame}
+
+\begin{frame}\FDUtitle{Rückblick}
+Letztes Mal: die \tib{unäre} Zahlendarstellung.
+\vspace{3mm}
+\begin{center}
+||||||||||||||||||||||||||||||||||||||
+\end{center}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Ein einziges Symbol, Länge wächst linear
+  \item Heute: Kulturen der Antike verwendeten bereits \tib{mehrere} Symbole mit unterschiedlichem Wert
+\end{itemize}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Römische Zahlen}{Sieben Basisgrössen: $I, V, X, L, C, D, M$}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Basisgrössen: Römische Zahlen}
+\begin{center}
+Welche Zahl steckt dahinter?
+\end{center}
+\begin{equation*}
+	CCCCCLIIII
+\end{equation*}
+\only<2->{
+\begin{center}
+554 $\rightarrow$ Gibt es eine kürzere Darstellung?
+\end{center}}
+\only<3->{
+\begin{equation*}
+	DLIV
+\end{equation*}}
+\only<4->{\begin{center}\color{FDUteal}\bfseries Basisgrössen lassen sich wie \textbf{Münzen} verstehen.\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Die Münzen-Analogie}
+Eine Sammlung von Münzen heisst \tib{Zahlendarstellung} einer Zahl $m$, wenn:
+\begin{itemize}\setlength\itemsep{6pt}
+  \item \tib{Korrektheit}: die Summe der Münzenwerte gleich $m$ ist,
+  \item \tib{Minimalität}: keine Sammlung mit weniger Münzen existiert, deren Summe $m$ ist.
+\end{itemize}
+\vspace{3mm}
+\begin{center}
+Beispiel: $VII$ ist die minimale römische Münzendarstellung von \textit{sieben} (3 statt 7 Münzen).
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Nicht immer eindeutig}
+Wir haben folgende Münzen: \coin{1}\coin{2}\coin{3}\coin{5}\coin{10}
+\vspace{3mm}
+\begin{center}
+Wie stellt man die Zahl 4 dar?
+\end{center}
+\only<2->{
+\begin{itemize}
+\item \coin{1}\coin{3}
+\item \coin{2}\coin{2}
+\end{itemize}}
+\only<3->{
+\begin{center}\color{FDUteal}\bfseries $\rightarrow$ Die Darstellung ist minimal, aber nicht eindeutig.\end{center}
+}
+\end{frame}
+
+\auftragframe{Kapitel 2, Abschnitte \enquote{Ursprünge der Zahlendarstellung} und \enquote{Basisgrössen}}{%
+\aufgabebox{Erweitern Sie das römische Münzsystem (siehe Skript-Übung)}
+}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Stellenwertdarstellung}{Vom Dezimal- zum Binärsystem}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Warum unterschiedliche Zahlensysteme?}
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Zahlensysteme sind \enquote{willkürlich} und historisch entstanden
+  \item Computer arbeiten mit binären Zahlen $\lrc{0,1}$
+  \begin{itemize}
+    \item Schnelleres, zuverlässigeres Rechnen
+    \item \emoji{high-voltage} 1 = Strom fliesst, 0 = kein Strom
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Stellenwertdarstellung: Beobachtungen}
+\begin{itemize}\setlength\itemsep{8pt}
+    \item Alphabet des \enquote{normalen} Zahlensystems:
+    $$\lrc{0,1,2,3,4,5,6,7,8,9}$$
+    \begin{itemize}
+    \item \textcolor{FDUblue}{10-adisches} Zahlensystem, da 10 Zeichen
+    \item \textcolor{FDUteal}{Dezimalsystem} (lat.\ \textit{decem} $\rightarrow$ \enquote{zehn})
+    \end{itemize}
+    \item Alphabet des binären Zahlensystems:
+    $$\lrc{0,1}$$
+    \begin{itemize}
+    \item \textcolor{FDUblue}{2-adisches} Zahlensystem, da 2 Zeichen
+    \item \textcolor{FDUteal}{Binärsystem} (lat.\ \textit{binarius} $\rightarrow$ \enquote{zweifach})
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Dezimal $\rightarrow$ Binär: erste Beispiele}
+\only<1>{
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+         \textbf{Dezimal} & \textbf{Binär}  \\\midrule\midrule
+         $0$&$?_{2}$\\\hline
+         $1$&$?_{2}$\\\hline
+         $2$&$?_{2}$\\\hline
+         $3$&$?_{2}$\\\hline
+         $4$&$?_{2}$\\\hline
+         ...&...
+    \end{tabular}
+\end{table}
+}
+\only<2->{
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+         \textbf{Dezimal} & \textbf{Binär}  \\\midrule\midrule
+         $0$&$0_{2}$\\\hline
+         $1$&$1_{2}$\\\hline
+         $2$&$10_{2}$\\\hline
+         $3$&$11_{2}$\\\hline
+         $4$&$100_{2}$\\\hline
+         ...&...
+    \end{tabular}
+\end{table}
+}
+\only<3->{\begin{center}Wie rechnet man das systematisch um? $\rightarrow$ \tib{$b$-adische Zahlensysteme}\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Basisgrössen im Stellenwertsystem}
+Das \textcolor{FDUteal}{Dezimalsystem} hat die Basisgrössen
+$$10^0=1,\quad 10^1=10,\quad 10^2=100,\quad 10^3=1000,\ldots$$
+\rule{\textwidth}{0.4pt}
+Beispiel: Das Wort \textcolor{FDUteal}{$4605$} wird interpretiert als
+\only<1>{
+\begin{align*}
+    \textcolor{FDUteal}{\underbrace{\ldots}_{?}} \underbrace{10^3}_{?} +
+    \textcolor{FDUteal}{\underbrace{\ldots}_{?}} \underbrace{10^2}_{?} +
+    \textcolor{FDUteal}{\underbrace{\ldots}_{?}} \underbrace{10^1}_{?} +
+    \textcolor{FDUteal}{\underbrace{\ldots}_{?}} \underbrace{10^0}_{?}.
+\end{align*}}
+\only<2->{
+\begin{align*}
+    \textcolor{FDUteal}{4}\cdot \underbrace{10^3}_{1000} + \textcolor{FDUteal}{6}\cdot \underbrace{10^2}_{100} + \textcolor{FDUteal}{0}\cdot \underbrace{10^1}_{10} + \textcolor{FDUteal}{5}\cdot \underbrace{10^0}_{1}
+\end{align*}
+\only<3->{= vier Tausender $+$ sechs Hunderter $+$ null Zehner $+$ fünf Einer.}
+}
+\end{frame}
+
+\begin{frame}\FDUtitle{Definition: $b$-adische Zahlendarstellung}
+Für eine Basis $b\geq 2$ definieren wir
+\begin{align*}
+	(a_{n}a_{n-1}\ldots a_{1}a_{0})_{b} := a_n\cdot b^n + a_{n-1}\cdot b^{n-1} + \ldots + a_1\cdot b + a_0,
+\end{align*}
+wobei $a_0,\ldots,a_n \in \lrc{0,1,\ldots,b-1}$ \tib{Ziffern} genannt werden.
+\vspace{3mm}
+\begin{center}
+Beispiel ($b=3$): $\quad 211_3 = 2\cdot 3^2 + 1\cdot 3^1 + 1\cdot 3^0 = 22$
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Wichtige Beobachtung}
+\begin{center}
+Warum sind im $b$-adischen System nur Ziffern $0,\ldots,b-1$ erlaubt?
+\end{center}
+\only<2->{
+\begin{itemize}\setlength\itemsep{6pt}
+\item Beispiel: 13 Objekte im Dezimalsystem mit möglichst wenigen \enquote{Münzen} darstellen.
+\item 10 Einer lassen sich stets durch 1 Zehner ersetzen $\rightarrow$ 9 Münzen gespart.
+\begin{itemize}
+    \item Münzen vorher: \coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}\coin{1}
+    \item Münzen nachher: \coin{10}\coin{1}\coin{1}\coin{1}
+\end{itemize}
+\item Allgemein: $b$ Münzen vom Typ $b^k$ lassen sich immer durch eine Münze vom Typ $b^{k+1}$ ersetzen.
+\end{itemize}}
+\end{frame}
+
+\auftragframe{Kapitel 2, Abschnitt \enquote{Stellenwertdarstellung}}{%
+\aufgabebox{Übungen zur Umrechnung Binär $\leftrightarrow$ Dezimal}\\[3mm]
+\challengebox{Begründen Sie, warum Basis $b=1$ nicht sinnvoll ist}
+}
+

@@ -1,0 +1,101 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L04 \textperiodcentered{} Rechnen im Binärsystem \& Bits/Bytes}
+
+\begin{frame}\lessontitle{Lektion 04}{Rechnen im Binärsystem \& Bits/Bytes}{Schriftliche Addition, Überlauf und die kleinste Informationseinheit \textperiodcentered{} Skript, Kapitel 2/3}\end{frame}
+
+\begin{frame}\FDUtitle{Rechnen mit Zahlen}
+Addieren im Dezimalsystem ($49035_{10}$ + $718293_{10}$):
+\[
+\begin{array}{ccccccc}
+  & 0 & 4 & 9 & 0 & 3 & 5_{10} \\
++ & \underset{}{7} & \underset{1}{1} & \underset{}{8} & \underset{1}{2} & \underset{}{9} & \underset{}{3_{10}} \\
+\hline
+ & 7 & 6 & 7 & 3 & 2 & 8_{10} \\\hline\hline
+\end{array}
+\]
+\begin{center}Genau gleich funktioniert das Ganze im Binärsystem!\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Rechnen im Binärsystem}
+Nur 5 Regeln:
+\begin{itemize}
+\item 0 + 0 = 0
+\item 0 + 1 = 1
+\item 1 + 0 = 1
+\item 1 + 1 = 0, Übertrag 1
+\item 1 + 1 + 1 = 1, Übertrag 1
+\end{itemize}
+
+Beispiel ($101011_2$ + $111010_2$):
+\[
+\begin{array}{ccccccc}
+	& 1 & 0 & 1 & 0 & 1 & 1_2 \\
+	+ & \underset{1}{1} & \underset{1}{1} & \underset{}{1} & \underset{1}{0} & \underset{}{1} & \underset{}{0_2} \\
+	\hline
+	1 & 1 & 0 & 0 & 1 & 0 & 1_2 \\\hline\hline
+\end{array}
+\]
+\end{frame}
+
+\begin{frame}\FDUtitle{Was passiert bei Überlauf?}
+\begin{center}
+Rechnen Sie $11110001_2$ + $00001111_2$ in einer \textbf{8-Bit-Umgebung}. Was fällt auf?
+\end{center}
+\only<2->{
+\begin{center}
+Mathematisch korrekt wäre $100000000_2$ -- das sind aber \textbf{9} Bits!
+\end{center}
+\only<3->{\begin{center}\color{FDUteal}\bfseries In einer starren 8-Bit-Umgebung geht die führende 1 verloren $\rightarrow$ \tib{Overflow} (Überlauf).\end{center}}
+}
+\end{frame}
+
+\auftragframe{Kapitel 2, Abschnitt \enquote{Rechnen im Binärsystem}}{%
+\aufgabebox{Schriftliche Addition im Binär- und Hexadezimalsystem}\\[3mm]
+\challengebox{Was ist die grösste $n$-stellige Binärzahl?}
+}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Bits \& Bytes}{Wie zählt man mit Nullen und Einsen?}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Bits \& Bytes}
+\begin{itemize}[<+->]
+	\item \textbf{bit} = \enquote{\textit{\underline{bi}nary digi\underline{t}}}, \enquote{binäre Ziffer} (eine 0 oder eine 1)
+	\item \textbf{byte} = \enquote{Bissen} (von engl.\ \textit{bite} = Bissen, aus 8 bits) \emoji{yum}
+	\item Mit einem Byte lassen sich $2^8=256$ verschiedene Werte darstellen
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Führende Nullen}
+Die binäre Repräsentation der Dezimalzahl 22:
+\[00010110_2 = 22_{10}\]
+\begin{center}
+Bei Binärzahlen werden -- anders als bei Dezimalzahlen -- üblicherweise \textbf{alle} Bits ausgeschrieben.
+\end{center}
+\vspace{3mm}
+\begin{center}
+\textbf{Frage}: Wie stellt man $42_{10}$ mit einem Byte dar?
+\end{center}
+\only<2->{\begin{center}\Large $42_{10} = 00101010_2$\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Grössenordnungen}
+\begin{table}[H]
+	\footnotesize
+	\centering
+	\begin{tabular}{@{}l|rl@{}}
+		\toprule
+		\textbf{Einheit} & \textbf{Grösse} & Beispiel \\ \midrule
+		KB (Kilobyte) & $10^3$ B & eine Text-Datei \\
+		MB (Megabyte) & $10^6$ B & eine Musik-Datei \\
+		GB (Gigabyte) & $10^9$ B & eine Video-Datei \\
+		TB (Terabyte) & $10^{12}$ B & kleiner Firmen-Server \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\end{frame}
+
+\auftragframe{Kapitel 3, Abschnitt \enquote{Bits und Bytes}}{%
+\aufgabebox{Wie viele unterschiedliche Zeichen lassen sich mit $n$ Bits darstellen?}
+}
+

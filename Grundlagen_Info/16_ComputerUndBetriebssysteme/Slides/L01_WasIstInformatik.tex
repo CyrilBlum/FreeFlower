@@ -1,0 +1,128 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L01 \textperiodcentered{} Was ist Informatik?}
+
+\begin{frame}\lessontitle{Lektion 01}{Was ist Informatik?}{Herkunft und Geschichte des Fachs \textperiodcentered{} Skript, Kapitel 1}\end{frame}
+
+\begin{frame}\FDUtitle{Worum geht es in der Informatik?}
+Informatik ist weit mehr als das Schreiben von Programmen.
+\vspace{3mm}
+\begin{center}
+\enquote{\textit{Informatik}} = \enquote{Information} + \enquote{Automatik}
+\end{center}
+\vspace{3mm}
+Die Wissenschaft von der \textbf{systematischen} \ldots
+\begin{itemize}\setlength\itemsep{4pt}
+  \item Darstellung
+  \item Speicherung
+  \item Übertragung
+  \item Verarbeitung
+\end{itemize}
+\ldots von \textbf{Informationen} mit Hilfe formaler Methoden und technischer Systeme.
+\end{frame}
+
+\begin{frame}\FDUtitle{Zwei Ebenen}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.46\textwidth}
+  \large\bfseries\color{FDUteal}Die Idee
+  \vspace{2mm}
+  \normalsize\begin{itemize}\setlength\itemsep{6pt}
+    \item Algorithmen
+    \item Datenstrukturen
+    \item Wie löst man ein Problem?
+  \end{itemize}
+\end{column}
+\begin{column}{.46\textwidth}
+  \large\bfseries\color{FDUblue}Die Umsetzung
+  \vspace{2mm}
+  \normalsize\begin{itemize}\setlength\itemsep{6pt}
+    \item Hardware, Schaltungen
+    \item Netzwerke, Betriebssysteme
+    \item Wie baut man die Lösung?
+  \end{itemize}
+\end{column}
+\end{columns}
+\vfill\small\color{FDUteal}Dieses Semester begleitet uns beides -- von der Zahl bis zum fertigen Computer.
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Sechs Köpfe, die das Fach geprägt haben}{Was hat Informatik eigentlich mit diesen Menschen zu tun?}
+\end{frame}}
+
+\begin{frame}\personcard{Charles Babbage}{1791\,--\,1871, England}{\FDUassets/people/babbage.jpg}{Entwarf die \textbf{Difference Engine} und die \textbf{Analytical Engine} -- mechanische Maschinenideen, die als Vorläufer programmierbarer Computer gelten.}{Als ein Abgeordneter ihn fragte, ob bei falscher Eingabe die richtige Antwort herauskommen könne, entgegnete Babbage nur trocken, er könne \enquote{die Art der Gedankenverwirrung nicht begreifen}, die eine solche Frage hervorrufen könne.}\end{frame}
+
+\begin{frame}\inventionframe{Babbages Difference Engine}{\FDUassets/people/babbage_difference_engine.jpg}{Nachbau der Difference Engine No.\,2 (Science Museum London): eine rein mechanische Rechenmaschine mit tausenden Zahnrädern.}\end{frame}
+
+\begin{frame}\personcard{Ada Lovelace}{1815\,--\,1852, England}{\FDUassets/people/lovelace.jpg}{Schrieb 1843 den ersten veröffentlichten \textbf{Algorithmus} für eine Maschine (Berechnung der Bernoulli-Zahlen) -- gilt daher als erste Programmiererin der Geschichte.}{\enquote{The Analytical Engine has no pretensions whatever to originate anything. It can do whatever we know how to order it to perform.}\\[1mm]$\rightarrow$ eine Maschine tut nur, was man ihr vorgibt -- nicht mehr, nicht weniger.}\end{frame}
+
+\begin{frame}\personcard{Alan Turing}{1912\,--\,1954, England}{\FDUassets/people/turing.jpg}{Beschrieb 1936 mit der \textbf{Turingmaschine} ein universelles Rechenmodell -- die theoretische Grundlage jedes heutigen Computers. Half im 2.\,Weltkrieg, den Enigma-Code zu knacken.}{\enquote{We can only see a short distance ahead, but we can see plenty there that needs to be done.}}\end{frame}
+
+\begin{frame}\inventionframe{Die Enigma}{\FDUassets/people/enigma.jpg}{Eine deutsche Enigma-Verschlüsselungsmaschine: Turings \enquote{Bombe} half, ihren Code zu entschlüsseln -- ein Wendepunkt des Krieges.}\end{frame}
+
+\begin{frame}\personcard{Konrad Zuse}{1910\,--\,1995, Deutschland}{\FDUassets/people/zuse.jpg}{Baute 1941 mit der \textbf{Z3} den ersten funktionsfähigen, frei programmierbaren Computer der Welt -- elektromechanisch, mit Binärzahlen.}{Zuse entwickelte die Z3 in seiner Berliner Wohnung, während in den USA gleichzeitig staatlich finanzierte Grossprojekte wie der ENIAC entstanden.}\end{frame}
+
+\begin{frame}\inventionframe{Die Zuse Z3}{\FDUassets/people/z3.jpg}{Nachbau der Z3 im Deutschen Museum München: rund 2\,600 Relais, gesteuert durch Lochstreifen.}\end{frame}
+
+\begin{frame}\personcard{Claude Shannon}{1916\,--\,2001, USA}{\FDUassets/people/shannon.jpg}{Zeigte 1937, dass sich logische Aussagen (UND, ODER, NICHT) mit elektrischen Schaltkreisen realisieren lassen -- Geburtsstunde der digitalen Schaltungstechnik (siehe Kapitel 4, \enquote{Logische Gatter}).}{\enquote{Information is the resolution of uncertainty.}\\[1mm]Shannon gilt als Begründer der Informationstheorie und prägte den Begriff \textbf{bit}.}\end{frame}
+
+\begin{frame}\personcard{Grace Hopper}{1906\,--\,1992, USA}{\FDUassets/people/hopper.jpg}{Entwickelte den ersten \textbf{Compiler} und machte Programmiersprachen dadurch für Menschen lesbar (Vorläufer von COBOL).}{\enquote{It's easier to ask forgiveness than it is to get permission.}}\end{frame}
+
+\begin{frame}\inventionframe{Der erste \enquote{Bug}}{\FDUassets/people/first_bug.jpg}{9.\,September 1947: Hoppers Team findet eine Motte in einem Relais und klebt sie ins Logbuch -- daher stammt (der Legende nach) der Begriff \textbf{Bug} für einen Programmierfehler.}\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Woher stammen Zahlen eigentlich?}{Bevor wir zu Computern kommen: wie stellt man überhaupt eine Anzahl dar?}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Historischer Hintergrund: Der Ishango-Knochen}
+\begin{columns}[c,onlytextwidth]
+\begin{column}{.46\textwidth}
+\centering
+\includegraphics[height=42mm,keepaspectratio]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/ishango-bone}
+\end{column}
+\begin{column}{.46\textwidth}
+Ca.\ 20\,000 Jahre alt, gefunden in der heutigen Demokratischen Republik Kongo.
+\vspace{3mm}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Deutlich erkennbare, von Menschen eingeritzte Kerben
+  \item Vermutete Bedeutung: eine gezählte Anzahl (z.\,B.\ gefangener Fische)
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}\FDUtitle{Von der Kerbe zur Zahl}
+\begin{center}
+Stellen wir uns vor, die Kerben zählen gefangene Fische.
+\end{center}
+\begin{equation*}
+	\text{drei Kerben} \quad\leftrightarrow\quad \twemoji{tropical fish}\twemoji{tropical fish}\twemoji{tropical fish} \quad\leftrightarrow\quad |||
+	\quad\leftrightarrow\quad \text{\textbullet\textbullet\textbullet}
+\end{equation*}
+\begin{center}
+Alle vier Darstellungen verwenden nur \textbf{ein einziges} Symbol $\rightarrow$ \tib{unäre Zahlendarstellung}.
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Unäre Zahlendarstellung: Vor- und Nachteile}
+\begin{center}
+Was könnten Nachteile dieser Zahlendarstellung sein?
+\end{center}
+\only<2->{
+\vspace{-1mm}
+\begin{center}
+||||||||||||||||||||||||||||||||||||||
+\end{center}
+\vspace{-1mm}
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Wie liest man diese Zahl auf einen Blick?
+  \item Die Darstellungslänge wächst \textbf{linear} mit der Zahl -- ungeeignet für grosse Zahlen
+  \item Nicht besonders geeignet zum Rechnen
+\end{itemize}
+}
+\end{frame}
+
+\auftragframe{Kapitel 1 (Was ist Informatik?) \& Kapitel 2 (Zahlendarstellungen), Abschnitt \enquote{Ursprünge der Zahlendarstellung}}{%
+\aufgabebox{Lesen Sie die Übersicht zur Informatikgeschichte im Skript}\\[3mm]
+\aufgabebox{Übungen zur unären Zahlendarstellung}
+}
+
+

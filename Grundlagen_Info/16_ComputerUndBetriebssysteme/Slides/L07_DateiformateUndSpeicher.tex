@@ -1,0 +1,66 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L07 \textperiodcentered{} Dateiformate \& Speicherplatz}
+
+\begin{frame}\lessontitle{Lektion 07}{Dateiformate \& Speicherplatz}{Wie man aus Bits ein Dateiformat erkennt \textperiodcentered{} Skript, Kapitel 3}\end{frame}
+
+\begin{frame}\FDUtitle{Eine einfache Frage}
+\begin{center}
+Wir wissen: Computer speichern nur Nullen und Einsen.
+\vspace{4mm}
+
+Woher \enquote{weiss} ein Computer, ob eine Bitfolge ein Bild, eine Zahl, ein Buchstabe oder etwas anderes ist?
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Dateiformate geben Bedeutung}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{l|p{6.3cm}}
+		\textbf{Datei} & \textbf{Bedeutung (Beispiel)} \\\midrule
+		\texttt{.txt} & Zeichen: $<|\ldots$ \\
+		\texttt{.doc} & Formatierbefehl: \enquote{Einzug 1.75\,cm} \\
+		\texttt{.xls} & Zahl 9662249 in einer Zelle \\
+		\texttt{.gif} & Bildpunkt, indexiert (256 Farben, 1 Byte/Pixel) \\
+		\texttt{.bmp} & Bildpunkt, direkt (16.7\,Mio.\ Farben, 3 Bytes/Pixel) \\
+	\end{tabular}
+\end{table}
+\begin{center}Dieselbe Bitfolge kann je nach Dateiformat ganz unterschiedlich interpretiert werden!\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Speichergrössen}
+\begin{table}[H]
+	\footnotesize
+	\centering
+	\begin{tabular}{@{}l|rr|l@{}}
+		\toprule
+		\textbf{Masseinheit} & \multicolumn{2}{l|}{\textbf{Dezimalsystem}} & Grössenordnung                                   \\ \midrule
+		KB (Kilobyte)        & $10^3$ B                               & 1'000 B             & eine Text-Datei            \\
+		MB (Megabyte)        & $10^6$ B                                    & 1'000'000 B         & eine Musik-Datei           \\
+		GB (Gigabyte)        & $10^9$ B                                    & 1'000'000'000 B     & eine Video-Datei           \\
+		TB (Terabyte)        & $10^{12}$ B                                 & 1'000'000'000'000 B & kleiner Firmen-Server      \\
+		PB (Petabyte)        & $10^{15}$ B                                 & ...                 & Facebook-Server (Meta)     \\
+		EB (Exabyte)         & $10^{18}$ B                                 & ...                 & alle CERN-Daten            \\
+		ZB (Zettabyte)       & $10^{21}$ B                                 & ...                 & alle Daten ($\sim$ 100 ZB) \\ \bottomrule
+	\end{tabular}
+\end{table}
+\only<2->{
+\begin{center}
+	Wie nennt man ein \enquote{Megagramm} geläufiger? $\rightarrow$ eine Tonne
+\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Diskussion}
+\begin{center}
+Weshalb haben Festplatten häufig eine leicht kleinere Speichergrösse als angegeben, insbesondere unter Windows?
+\end{center}
+\only<2->{
+\begin{center}\small Hersteller rechnen mit $1\,\mathrm{GB}=10^9$ Byte, das Betriebssystem oft mit $1\,\mathrm{GiB}=2^{30}$ Byte -- ein kleiner, aber spürbarer Unterschied.\end{center}
+}
+\end{frame}
+
+\auftragframe{Kapitel 3, Abschnitte \enquote{Kodierung von weiteren Dateiformaten} und \enquote{Speicherplatz und Speicherbedarf}}{%
+\aufgabebox{Übungen zu Datei-Grössenordnungen}\\[3mm]
+\challengebox{Lesen Sie den Support-Artikel zu Speichergrössen}
+}
+

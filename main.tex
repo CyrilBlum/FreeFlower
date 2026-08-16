@@ -3,7 +3,7 @@
 
 %% BOOK
 % \documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
-\documentclass[a4paper,11pt,svgnames,oneside]{book}
+% \documentclass[a4paper,11pt,svgnames,oneside]{book}
 
 %% ARTICLE
 % \documentclass[svgnames,hyphens]{article}
@@ -13,8 +13,8 @@
 % \documentclass[11pt,addpoints,answers,svgnames]{exam}
 
 %% BEAMER
-% \documentclass[xcolor={table,dvipsnames,svgnames},hyphens]{beamer}
-% \documentclass[xcolor={table,dvipsnames,svgnames},hyphens,handout]{beamer}
+\documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}
+% \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens,handout]{beamer}
 
 %% FLASHCARDS
 % \documentclass[frame, avery5388, svgnames]{flashcards}
@@ -27,7 +27,7 @@
 %% set toggles (switches) for the document class
 \newtoggle{book} \newtoggle{article} \newtoggle{exam} \newtoggle{beamer} \newtoggle{flashcards} %% default value is 'false'
 
-\def\documentToggle{0} %% <---- choose number
+\def\documentToggle{3} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
 
 \ifnumequal{\documentToggle}{0}{\settoggle{book}{true}}{}     %% book (0)
 \ifnumequal{\documentToggle}{1}{\settoggle{article}{true}}{}  %% article (1)
@@ -246,6 +246,18 @@
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/markov_appendix}
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/decision_trees}
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/pagerank}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L01_WasIstInformatik}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L02_BasisgroessenUndStellenwert}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L03_UmrechnungUndHex}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L04_BinaerRechnenUndBits}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L05_ASCIIUndUTF8}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L06_BilderUndFarben}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L07_DateiformateUndSpeicher}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L08_LogischeGatterI}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L09_LogischeGatterII}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L10_AufbauComputerI}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L11_AufbauComputerII}
+		\input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L12_Betriebssystem}
 
 		% Ergänzungsfach Informatik
 		% \input{EF/Complexity/complexity}

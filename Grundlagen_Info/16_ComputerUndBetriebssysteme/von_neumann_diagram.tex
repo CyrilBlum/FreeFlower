@@ -1,0 +1,27 @@
+\begin{tikzpicture}[
+    block/.style={draw, minimum width=2.4cm, minimum height=1.0cm, text centered, rounded corners=3pt, font=\small},
+    every path/.style={thick}
+]
+    % CPU box
+    \node[draw, dashed, minimum width=8.8cm, minimum height=2.4cm, rounded corners=4pt, label={north:{\textbf{CPU (Prozessor)}}}] (cpu) at (0,0) {};
+
+    \node[block, fill=FDUgreen!25] (alu) at (-2.8, 0) {ALU};
+    \node[block, fill=Gray!20, minimum width=2.0cm] (reg) at (0, 0) {Register};
+    \node[block, fill=FDUblue!20] (cw) at ( 2.8, 0) {Steuerwerk};
+
+    \draw[<->] (alu) -- (reg);
+    \draw[<->] (reg) -- (cw);
+
+    % RAM
+    \node[block, fill=FDUteal!25, minimum width=4.0cm] (ram) at (0, -2.5) {Arbeitsspeicher (RAM)};
+
+    % Systembus
+    \draw[<->, line width=1.5pt] (cpu.south) -- (ram.north) node[midway, right=3pt, font=\small] {Systembus};
+
+    % Massenspeicher & IO
+    \node[block, fill=Orchid!25, minimum width=2.8cm] (stor) at (-3.7, -2.5) {Massenspeicher};
+    \node[block, fill=Salmon!30, minimum width=2.8cm] (io) at ( 3.7, -2.5) {Ein-/Ausgabe};
+
+    \draw[<->] (stor) -- (ram);
+    \draw[<->] (ram) -- (io);
+\end{tikzpicture}

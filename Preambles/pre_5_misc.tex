@@ -209,14 +209,135 @@
 	\lstinline[language=command.com,keywordstyle=\color{blue!35!white}\bfseries]^#2^}
 
 
+% Corporate colours (RGB values from the FDU design specifications)
+\definecolor{FDUgreen}{RGB}{178,196,89}
+\definecolor{FDUblue}{RGB}{10,159,227}
+\definecolor{FDUteal}{RGB}{39,125,112}
+\definecolor{FDUink}{RGB}{35,42,47}
+
+\iftoggle{beamer}{
+	\setbeamercolor{normal text}{fg=FDUink,bg=white}
+	\setbeamercolor{frametitle}{fg=FDUteal}
+	\setbeamertemplate{navigation symbols}{}
+	\tikzfading[name=footerfade,top color=transparent!100,bottom color=transparent!0]
+
+	\providecommand{\FDUassets}{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/assets}
+	\providecommand{\thelektion}{}
+
+	\setbeamertemplate{footline}{%
+	  \begin{tikzpicture}[remember picture,overlay]
+	    \node[anchor=south,inner sep=0pt,outer sep=0pt,yshift=0mm,opacity=.50,path fading=footerfade] at (current page.south)
+	      {\includegraphics[width=\paperwidth]{\FDUassets/Glatt_Linie_3_farbig_lang.pdf}};
+	    \node[anchor=south east,inner sep=0pt,xshift=-4mm,yshift=4.5mm] at (current page.south east)
+	      {\includegraphics[height=6mm]{\FDUassets/02_System_Stempelversion_Logo_RZ_schwarz.pdf}};
+	    \node[anchor=south west,font=\scriptsize\color{FDUink},xshift=8mm,yshift=4.5mm] at (current page.south west)
+	      {\thelektion};
+	    \node[anchor=south east,font=\scriptsize\color{FDUink},xshift=-45mm,yshift=4.5mm] at (current page.south east)
+	      {\insertframenumber};
+	  \end{tikzpicture}%
+	  \vspace{10mm}
+	}
+	\providecommand{\darkfootline}{%
+	  \begin{tikzpicture}[remember picture,overlay]
+	    \node[anchor=south,inner sep=0pt,outer sep=0pt,yshift=0mm,opacity=.50,path fading=footerfade] at (current page.south)
+	      {\includegraphics[width=\paperwidth]{\FDUassets/Glatt_Linie_3_farbig_lang.pdf}};
+	    \node[anchor=south east,inner sep=0pt,xshift=-4mm,yshift=4.5mm] at (current page.south east)
+	      {\includegraphics[height=6mm]{\FDUassets/logo-negativ.pdf}};
+	    \node[anchor=south west,font=\scriptsize\color{white!82},xshift=8mm,yshift=4.5mm] at (current page.south west)
+	      {\thelektion};
+	  \end{tikzpicture}%
+	  \vspace{10mm}
+	}
+
+	% ---- Reusable FDU content commands -------------------------------------------
+	\providecommand{\FDUtitle}[1]{%
+	  \vspace{2mm}%
+	  \begin{beamercolorbox}[wd=\paperwidth,sep=0pt,leftskip=8mm,rightskip=8mm]{frametitle}%
+	    \fontsize{20}{24}\selectfont\bfseries #1\par
+	  \end{beamercolorbox}%
+	  \vspace{3mm}%
+	}
+
+	\providecommand{\sectionframe}[3][FDUblue]{%
+	  \begin{tikzpicture}[remember picture,overlay]
+	    \fill[FDUink] (current page.south west) rectangle (current page.north east);
+	    \node[anchor=center,inner xsep=0pt,inner ysep=7mm] (sectioncontent) at (current page.center) {%
+	      \begin{minipage}{106mm}\raggedright
+	        {\color{FDUteal}\fontsize{31}{35}\selectfont\bfseries #2\par}
+	        \ifstrempty{#3}{}{\vspace{5mm}{\color{FDUgreen}\fontsize{15}{19}\selectfont #3\par}}
+	      \end{minipage}};
+	    \fill[#1] ($(sectioncontent.north west)+(-14mm,0)$) rectangle ($(sectioncontent.south west)+(-10mm,0)$);
+	  \end{tikzpicture}%
+	}
+
+	\providecommand{\centerstatement}[3][FDUgreen]{%
+	\begin{tikzpicture}[remember picture,overlay]
+	  \node[anchor=center,inner sep=0pt] (centerstatementcontent) at (current page.center) {%
+	    \begin{minipage}{117mm}\raggedright
+	      \fontsize{22}{27}\selectfont\bfseries\color{FDUink}#2\par
+	      \ifstrempty{#3}{}{\vspace{3mm}\normalfont\fontsize{14}{18}\selectfont\color{FDUink!75}#3}
+	    \end{minipage}};
+	  \fill[#1] ($(centerstatementcontent.north west)+(-11mm,0)$) rectangle ($(centerstatementcontent.south west)+(-8mm,0)$);
+	\end{tikzpicture}}
+
+	\providecommand{\lessontitle}[3]{%
+	\begin{tikzpicture}[remember picture,overlay]
+	  \fill[FDUink] (current page.south west) rectangle (current page.north east);
+	  \node[anchor=north west,inner sep=0pt,xshift=8mm,yshift=-8mm] at (current page.north west)
+	    {\includegraphics[height=7mm]{\FDUassets/logo-negativ.pdf}};
+	  \node[anchor=north west,font=\fontsize{12}{14}\selectfont\bfseries,text=FDUgreen] at ([xshift=10mm,yshift=-32mm]current page.north west) {#1};
+	  \node[anchor=north west,text width=140mm,align=left,font=\fontsize{27}{31}\selectfont\bfseries,text=white] at ([xshift=10mm,yshift=-42mm]current page.north west) {#2};
+	  \node[anchor=north west,text width=140mm,align=left,font=\fontsize{14}{18}\selectfont,text=FDUteal!85!white] at ([xshift=10mm,yshift=-64mm]current page.north west) {#3};
+	\end{tikzpicture}%
+	}
+
+	\providecommand{\personcard}[5]{%
+	\begin{columns}[c,onlytextwidth]
+	  \begin{column}{.34\textwidth}
+	    \centering
+	    \includegraphics[width=\linewidth,height=48mm,keepaspectratio]{#3}
+	  \end{column}
+	  \begin{column}{.62\textwidth}
+	    {\color{FDUteal}\fontsize{20}{24}\selectfont\bfseries #1}\\[0.5mm]
+	    {\color{FDUink!55}\small #2}\\[3mm]
+	    {\fontsize{11.5}{14.5}\selectfont #4}\\[3mm]
+	    {\color{FDUink!80}\itshape\fontsize{10.5}{13.5}\selectfont #5}
+	  \end{column}
+	\end{columns}%
+	}
+
+	\providecommand{\inventionframe}[3]{%
+	\begin{tikzpicture}[remember picture,overlay]
+	  \node[anchor=north west,font=\fontsize{16}{19}\selectfont\bfseries,text=FDUteal] at ([xshift=8mm,yshift=-6mm]current page.north west) {#1};
+	  \node[anchor=north,inner sep=0pt] at ([yshift=-15mm]current page.north) {\includegraphics[width=.68\paperwidth,height=42mm,keepaspectratio]{#2}};
+	  \node[anchor=south,text width=140mm,align=center,font=\fontsize{11}{14}\selectfont,text=FDUink!75] at ([yshift=12mm]current page.south) {#3};
+	\end{tikzpicture}%
+	}
+
+	\providecommand{\auftragframe}[2]{%
+	\FDUtitle{Auftrag}%
+	\normalsize\color{FDUink!70}Skript \enquote{Aufbau und Funktionsweise eines Computers}, #1\par
+	\vspace{4mm}%
+	#2%
+	}
+}{}
+
 % Boxen für Beamer-Aufgaben, -Abgaben, -Challenges und -Aufträge, in ähnlichem Farbschema wie Skript
+\ifcsname abgabebox\endcsname\else
 \NewTotalTCBox{\abgabebox}{ s m } {on line,colupper=white,colback=Purple,colframe=Purple, size=title} {\faArrowUp{} #2}
+\fi
 
-\NewTotalTCBox{\aufgabebox}{ s m } {on line,colupper=white,colback=RoyalBlue,colframe=RoyalBlue, size=title} {\faPencil*{} #2}
+\ifcsname aufgabebox\endcsname\else
+\NewTotalTCBox{\aufgabebox}{ s m } {on line,colupper=white,colback=FDUblue,colframe=FDUblue, size=title} {\faPencil*{} #2}
+\fi
 
+\ifcsname challengebox\endcsname\else
 \NewTotalTCBox{\challengebox}{ s m } {on line,colupper=white,colback=Gold!80!black,colframe=Gold!80!black, size=title} {\faTrophy{} Challenge: #2}
+\fi
 
+\ifcsname readbox\endcsname\else
 \NewTotalTCBox{\readbox}{ s m } {on line,colupper=white,colback=ForestGreen,colframe=ForestGreen, size=title} {\faBook{} #2}
+\fi
 
 \nottoggle{beamer}{
 	% To-Do-Listen, z.B. für Lernziele
