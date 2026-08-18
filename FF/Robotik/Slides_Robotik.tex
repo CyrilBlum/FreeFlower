@@ -1,7 +1,7 @@
 % command to make sure colorboxes don't create whitespace between code lines
 \fboxsep=.6pt
 
-% default settings for listings (MicroPython on the Raspberry Pi Pico)
+% default settings for listings (Arduino/C++)
 \lstset{style=python, basicstyle=\ttfamily\footnotesize}
 
 \title[Robotik]{Analoge Signale \& PWM}
@@ -29,7 +29,7 @@
 		\item erklären, wie ein ADC eine Spannung in eine Zahl übersetzt;
 		\item erklären, wie PWM mit digitalen Pulsen eine LED dimmt;
 		\item eine LED mit richtig gepoltem Anschluss und Vorwiderstand aufbauen;
-		\item den Algorithmus aus dem Video lesen und auf MicroPython übertragen;
+		\item den Algorithmus aus dem Video lesen und für einen Arduino programmieren;
 		\item eine LED-Kerze mit mehreren, unabhängig flackernden LEDs bauen.
 	\end{itemize}
 \end{frame}
@@ -55,10 +55,10 @@
 	\begin{itemize}[<+->]
 		\item Der ADC vergleicht die Eingangsspannung mit einer Referenzspannung.
 		\item Ein idealer ADC mit $n$ Bit liefert Werte von $0$ bis $2^n-1$.
-		\item Beispiel mit $n=10$ und $U_\mathrm{ref}=\qty{3.3}{\volt}$:
+		\item Beispiel mit $n=10$ und $U_\mathrm{ref}=\qty{5.0}{\volt}$ beim Arduino Uno:
 		\begin{itemize}
 			\item $\qty{0}{\volt}\rightarrow 0$
-			\item $\qty{3.3}{\volt}\rightarrow 1023$
+			\item $\qty{5.0}{\volt}\rightarrow 1023$
 		\end{itemize}
 	\end{itemize}
 	\[
@@ -69,15 +69,15 @@
 \begin{frame}{Eingabe messen}
 	\begin{myexercise}
 		Ein \qty{10}{\bit}-ADC liefert den Messwert $512$. Die Referenzspannung beträgt
-		$U_\mathrm{ref}=\qty{3.3}{\volt}$. Welche Spannung liegt ungefähr am Pin an?
+		$U_\mathrm{ref}=\qty{5.0}{\volt}$. Welche Spannung liegt ungefähr am Pin an?
 	\end{myexercise}
 \end{frame}
 
 \begin{frame}{Eingabe messen -- Lösung}
 	\begin{myanswer}
 		\[
-			U_\mathrm{in}=\frac{512}{1023}\cdot\qty{3.3}{\volt}
-			\approx\qty{1.65}{\volt}
+			U_\mathrm{in}=\frac{512}{1023}\cdot\qty{5.0}{\volt}
+			\approx\qty{2.50}{\volt}
 		\]
 		Der kleine Unterschied zwischen $1023$ und $1024$ ist hier praktisch nicht sichtbar:
 		$1023$ ist der grösste darstellbare Wert, $1024$ die Anzahl möglicher Werte.
@@ -88,10 +88,10 @@
 	\begin{columns}[T]
 		\begin{column}{0.55\textwidth}
 			\begin{itemize}[<+->]
-				\item Die beiden äusseren Pins kommen an \qty{3.3}{\volt} und GND.
+				\item Die beiden äusseren Pins kommen an \qty{5.0}{\volt} und GND.
 				\item Der mittlere Pin (Schleifer) kommt an einen ADC-Pin.
 				\item Beim Drehen ändert sich die Ausgangsspannung zwischen
-				\qty{0}{\volt} und \qty{3.3}{\volt}.
+				\qty{0}{\volt} und \qty{5.0}{\volt}.
 				\item Die Reihenfolge der äusseren Pins bestimmt nur die Drehrichtung.
 			\end{itemize}
 		\end{column}
@@ -100,7 +100,7 @@
 			\begin{tikzpicture}[thick,scale=.85]
 				\draw (0,0) node[below]{GND} -- (0,.4);
 				\draw (0,.4) -- (-.35,.65) -- (.35,1.0) -- (-.35,1.35) -- (.35,1.7) -- (0,1.95);
-				\draw (0,1.95) -- (0,2.35) node[above]{\qty{3.3}{\volt}};
+				\draw (0,1.95) -- (0,2.35) node[above]{\qty{5.0}{\volt}};
 				\draw[->] (1.5,1.2) -- (.25,1.2);
 				\draw (1.5,1.2) -- (2.1,1.2) node[right]{ADC};
 			\end{tikzpicture}
@@ -110,10 +110,10 @@
 
 \begin{frame}{Ausgabe: Wie dimmen wir eine LED?}
 	\begin{itemize}[<+->]
-		\item Ein digitaler Pin liefert näherungsweise \qty{0}{\volt} oder \qty{3.3}{\volt}.
+		\item Ein digitaler Pin des Arduino Uno liefert näherungsweise \qty{0}{\volt} oder \qty{5.0}{\volt}.
 		\item Bei der \textbf{Pulsweitenmodulation (PWM)} wird sehr schnell ein- und ausgeschaltet.
-		\item Bei einer PWM-Frequenz von z.\,B. \qty{1}{\kilo\hertz} dauert eine Periode
-		$T=1/f=\qty{1}{\milli\second}$.
+		\item Auf den Pins 9, 10 und 11 des Arduino Uno beträgt die PWM-Frequenz ungefähr
+		\qty{490}{\hertz}; eine Periode dauert somit etwa \qty{2.0}{\milli\second}.
 		\item Das Auge nimmt hauptsächlich die mittlere Helligkeit wahr.
 	\end{itemize}
 	\pause
@@ -159,14 +159,14 @@
 				$I\approx\qty{6}{\milli\ampere}$:
 			\end{itemize}
 			\[
-				R=\frac{\qty{3.3}{\volt}-\qty{2.0}{\volt}}{\qty{6}{\milli\ampere}}
-				\approx\qty{217}{\ohm}
+				I=\frac{\qty{5.0}{\volt}-\qty{2.0}{\volt}}{\qty{220}{\ohm}}
+				\approx\qty{14}{\milli\ampere}
 			\]
-			Ein Normwert von \qty{220}{\ohm} passt.
+			Ein Widerstand von \qty{220}{\ohm} begrenzt den Strom auf einen sicheren Wert.
 		\end{column}
 		\begin{column}{0.40\textwidth}
 			\centering
-			\begin{tikzpicture}[thick,scale=.78]
+			\begin{tikzpicture}[thick,scale=.70]
 				\node[left] at (0,2.6) {PWM-Pin};
 				\draw (0,2.6) -- (.7,2.6);
 				\draw (.7,2.6) -- (.95,2.85) -- (1.3,2.35) -- (1.65,2.85) -- (2,2.35) -- (2.25,2.6);
@@ -238,12 +238,12 @@ void loop() {
 	\end{myexercise}
 \end{frame}
 
-\begin{frame}{Material und Verdrahtung (Raspberry Pi Pico)}
+\begin{frame}{Material und Verdrahtung (Arduino Uno)}
 	\begin{columns}[T]
 		\begin{column}{0.48\textwidth}
 			\textbf{Material}
 			\begin{itemize}
-				\item Raspberry Pi Pico mit MicroPython
+				\item Arduino Uno mit USB-Kabel
 				\item je eine rote, orange und gelbe LED
 				\item drei Widerstände zu je \qty{220}{\ohm}
 				\item Breadboard und Jumper-Kabel
@@ -254,41 +254,40 @@ void loop() {
 		\begin{column}{0.48\textwidth}
 			\textbf{Verbindungen}
 			\begin{itemize}
-				\item GP13 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED rot $\rightarrow$ GND
-				\item GP14 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED orange $\rightarrow$ GND
-				\item GP15 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED gelb $\rightarrow$ GND
-				\item optionales Poti: \qty{3.3}{\volt}, GP26/ADC0, GND
+				\item Pin 9 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED rot $\rightarrow$ GND
+				\item Pin 10 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED orange $\rightarrow$ GND
+				\item Pin 11 $\rightarrow$ \qty{220}{\ohm} $\rightarrow$ LED gelb $\rightarrow$ GND
+				\item optionales Poti: \qty{5.0}{\volt}, A0, GND
 			\end{itemize}
 			\alert{Vor dem Umstecken: Stromversorgung trennen.}
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{MicroPython: Version wie im Video}
-\begin{lstlisting}[language=Python]
-from machine import Pin, PWM
-from random import randint
-from time import sleep_ms
+\begin{frame}[fragile]{Arduino: Version wie im Video}
+\begin{lstlisting}[language=C++,basicstyle=\ttfamily\scriptsize]
+const int ledPins[] = {9, 10, 11};
+const int ledCount = 3;
 
-leds = []
-for pin_number in (13, 14, 15):
-    pin = Pin(pin_number)
-    led = PWM(pin)
-    led.freq(1000)                 # 1 kHz
-    leds.append(led)
+void setup() {
+  for (int i = 0; i < ledCount; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
 
-while True:
-    for led in leds:
-        value_8bit = randint(135, 254)
-        led.duty_u16(value_8bit * 257)  # 8 Bit -> 16 Bit
-    sleep_ms(randint(0, 99))
+void loop() {
+  for (int i = 0; i < ledCount; i++) {
+    int brightness = random(135, 255);
+    analogWrite(ledPins[i], brightness);
+  }
+  delay(random(0, 100));
+}
 \end{lstlisting}
 	\begin{itemize}
-		\item \lstinline|duty_u16| erwartet eine \qty{16}{\bit}-Zahl. Der grösste mögliche Wert ist
-		$2^{16}-1=\num{65535}$; er bedeutet \qty{100}{\percent} Tastgrad.
-		\item Der Videocode verwendet \qty{8}{\bit}: $0$ bis $2^8-1=255$. Der Faktor
-		$\num{257}$ bildet diesen Bereich exakt auf $0$ bis $\num{65535}$ ab, denn
-		$255\cdot\num{257}=\num{65535}$.
+		\item \lstinline|analogWrite()| verwendet Werte von $0$ bis $255$:
+		$0$ bedeutet \qty{0}{\percent}, $255$ bedeutet \qty{100}{\percent} Tastgrad.
+		\item Die obere Grenze von \lstinline|random(135, 255)| gehört nicht dazu;
+		das Ergebnis liegt deshalb zwischen $135$ und $254$.
 	\end{itemize}
 \end{frame}
 
@@ -296,7 +295,7 @@ while True:
 	\begin{enumerate}[<+->]
 		\item Bauen Sie zuerst \textbf{eine} LED mit \qty{220}{\ohm} auf und testen Sie sie.
 		\item Ergänzen Sie die beiden weiteren LEDs -- jede mit eigenem Widerstand.
-		\item Übertragen und starten Sie das MicroPython-Programm.
+		\item Übertragen Sie den Sketch mit der Arduino IDE und starten Sie ihn.
 		\item Prüfen Sie: Flackern alle LEDs unabhängig? Bleiben sie stets leicht an?
 		\item Formen Sie einen Diffusor, ohne leitendes Material an die Kontakte zu bringen.
 		\item Variieren Sie Wertebereich und Pause und dokumentieren Sie Ihre beste Einstellung.
@@ -309,34 +308,36 @@ while True:
 		\textbf{Beobachtung} & \textbf{Prüfen} \\
 		\midrule
 		LED bleibt dunkel & Polung, GND-Verbindung, Pin-Nummer, Widerstand und Programmstart \\
-		LED leuchtet konstant & PWM-Objekt verwendet? Schleife aktiv? Richtiger GPIO? \\
+		LED leuchtet konstant & \lstinline|analogWrite()| verwendet? Schleife aktiv? Richtiger Pin? \\
 		Alle LEDs flackern gleich & Wird für jede LED ein neuer Zufallswert erzeugt? \\
 		Flackern wirkt hektisch & Untere Grenze der Pause erhöhen, z.\,B. auf \qty{20}{\milli\second} \\
-		Pico startet neu & Kurzschluss suchen; Stromversorgung sofort trennen \\
+		Arduino startet neu & Kurzschluss suchen; Stromversorgung sofort trennen \\
 		\bottomrule
 	\end{tabularx}
 \end{frame}
 
 \begin{frame}[fragile]{Erweiterung: Grundhelligkeit mit Potentiometer}
-\begin{lstlisting}[language=Python]
-from machine import ADC, Pin, PWM
-from random import randint
-from time import sleep_ms
+\begin{lstlisting}[language=C++,basicstyle=\ttfamily\scriptsize]
+const int ledPins[] = {9, 10, 11};
+const int ledCount = 3;
+const int potiPin = A0;
 
-poti = ADC(26)
-leds = []
-for pin_number in (13, 14, 15):
-    pin = Pin(pin_number)
-    led = PWM(pin)
-    led.freq(1000)
-    leds.append(led)
+void setup() {
+  for (int i = 0; i < ledCount; i++) {
+    pinMode(ledPins[i], OUTPUT);
+  }
+}
 
-while True:
-    base = poti.read_u16()             # 0..65535
-    minimum = base * 55 // 100         # nicht ganz dunkel
-    for led in leds:
-        led.duty_u16(randint(minimum, base))
-    sleep_ms(randint(20, 100))
+void loop() {
+  int potiValue = analogRead(potiPin);       // 0..1023
+  int base = map(potiValue, 0, 1023, 0, 255);
+  int minimum = base * 55 / 100;
+
+  for (int i = 0; i < ledCount; i++) {
+    analogWrite(ledPins[i], random(minimum, base + 1));
+  }
+  delay(random(20, 101));
+}
 \end{lstlisting}
 	Bei ganz zugedrehtem Poti ist auch \lstinline|base| gleich $0$; die Kerze ist dann aus.
 \end{frame}
@@ -358,10 +359,10 @@ while True:
 \begin{frame}{Abnahme: Funktioniert und verstanden?}
 	\begin{itemize}
 		\item[$\square$] Drei LEDs sind richtig gepolt und haben je einen Vorwiderstand.
-		\item[$\square$] Die PWM-Frequenz beträgt \qty{1}{\kilo\hertz}.
+		\item[$\square$] Die LEDs sind mit den PWM-Pins 9, 10 und 11 verbunden.
 		\item[$\square$] Jede LED erhält einen eigenen Zufallswert.
 		\item[$\square$] Helligkeit und Wartezeit variieren in sinnvollen Grenzen.
-		\item[$\square$] Ich kann ADC, PWM, Tastgrad und die Multiplikation mit $257$ erklären.
+		\item[$\square$] Ich kann ADC, PWM, Tastgrad und den Wertebereich $0$ bis $255$ erklären.
 		\item[$\square$] Ich kann zwei Parameter nennen, mit denen sich die Wirkung verändern lässt.
 	\end{itemize}
 \end{frame}
