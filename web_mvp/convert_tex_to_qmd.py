@@ -246,12 +246,17 @@ def convert_tex_content(tex_text):
     text = re.sub(r'\\begin\{itemize\}', '', text)
     text = re.sub(r'\\end\{itemize\}', '', text)
 
-    # Clean leading tab indents from lines to prevent accidental blockquote/code formatting
+    # Clean leading spaces and tabs outside explicit triple-backtick code blocks to prevent accidental indented code blocks
     cleaned_lines = []
+    in_code_block = False
     for line in text.split('\n'):
-        if not line.startswith('```') and not line.startswith('    '):
-            line = line.lstrip('\t')
-        cleaned_lines.append(line)
+        if line.strip().startswith('```'):
+            in_code_block = not in_code_block
+            cleaned_lines.append(line)
+        elif in_code_block:
+            cleaned_lines.append(line)
+        else:
+            cleaned_lines.append(line.strip())
     text = '\n'.join(cleaned_lines)
 
     text = re.sub(r'\\item\s*', '- ', text)
@@ -294,10 +299,12 @@ execute:
 format:
   html:
     page-layout: article
-    theme: cosmo
-    css: styles.css
     toc: true
-    toc-depth: 2
+    toc-depth: 3
+    toc-location: right
+    toc-title: "Auf dieser Seite"
+    highlight-style: dracula
+    css: styles.css
     code-copy: true
     code-fold: false
     include-in-header:

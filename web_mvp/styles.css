@@ -1,39 +1,90 @@
-/* VS Code Dark Modern & Ultra-Compact Theme for FreeFlower Web */
+/* FreeFlower Web - Professional Modern Tech Theme */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --vscode-bg: #1e1e1e;
-  --vscode-editor-bg: #1e1e1e;
-  --vscode-toolbar-bg: #252526;
-  --vscode-border: #3c3c3c;
-  --vscode-text: #d4d4d4;
-  --vscode-blue: #569cd6;
-  --vscode-purple: #c586c0;
-  --vscode-yellow: #dcdcaa;
-  --vscode-orange: #ce9178;
-  --vscode-green: #6a9955;
-  --vscode-teal: #4ec9b0;
-  --vscode-light-blue: #9cdcfe;
-  --vscode-number: #b5cea8;
-  --vscode-btn-green: #238636;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", ui-monospace, Menlo, Consolas, monospace;
+  
+  --vscode-bg: #18181b;
+  --vscode-editor-bg: #18181b;
+  --vscode-toolbar-bg: #27272a;
+  --vscode-border: #3f3f46;
+  --vscode-text: #f4f4f5;
+  --vscode-blue: #38bdf8;
+  --vscode-purple: #c084fc;
+  --vscode-yellow: #fde047;
+  --vscode-orange: #fb923c;
+  --vscode-green: #4ade80;
+  --vscode-teal: #2dd4bf;
+  --vscode-btn-green: #16a34a;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
-  color: #1f2328;
+  font-family: var(--font-sans);
+  color: #0f172a;
   background-color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.5;
   font-size: 0.88rem;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Remove sidebar completely and maximize content container space */
-.sidebar, #quarto-sidebar {
+/* Remove ONLY left sidebar (navigation between chapters is in top navbar) */
+#quarto-sidebar, .sidebar-navigation {
   display: none !important;
 }
 
-#quarto-content {
-  max-width: 1100px !important;
-  margin: 0 auto !important;
-  padding: 0.4rem 1rem !important;
+/* Subsection Navigator / Table of Contents (Right Margin Sidebar - High Contrast) */
+#quarto-margin-sidebar, nav#TOC, .margin-sidebar {
+  display: block !important;
+  font-family: var(--font-sans);
+}
+
+nav#TOC {
+  padding-left: 0.85rem !important;
+  border-left: 2px solid #e2e8f0 !important;
+  margin-top: 0.5rem !important;
+}
+
+#toc-title {
+  font-size: 0.76rem !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 0.5rem !important;
+}
+
+nav#TOC ul {
+  padding-left: 0 !important;
+  list-style: none !important;
+}
+
+nav#TOC li {
+  margin-bottom: 0.3rem !important;
+}
+
+nav#TOC a {
+  font-size: 0.78rem !important;
+  color: #475569 !important; /* High contrast Slate 600 */
+  text-decoration: none !important;
+  display: block !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+nav#TOC a:hover {
+  color: #0f172a !important; /* Deep Slate 900 text on hover (15:1 contrast) */
+  background-color: #f1f5f9 !important; /* Soft hover pill */
+  font-weight: 600 !important;
+}
+
+nav#TOC a.active {
+  color: #0284c7 !important; /* Tech Blue */
+  background-color: #e0f2fe !important;
+  font-weight: 600 !important;
 }
 
 main.content {
@@ -41,67 +92,81 @@ main.content {
 }
 
 /* ==========================================================================
-   Auto-Hiding Sticky Top Navbar
+   Auto-Hiding Sticky Top Navbar (Tech Modern Dark Glass)
    ========================================================================== */
 .navbar {
-  background-color: #1e1e1e !important;
-  border-bottom: 1px solid #333333;
-  padding: 0.2rem 0.8rem !important;
+  background: linear-gradient(180deg, #18181b 0%, #09090b 100%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.25rem 1rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .navbar-brand {
-  font-weight: 600;
-  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: -0.02em;
   color: #ffffff !important;
 }
 
 .nav-link {
-  color: #cccccc !important;
-  font-size: 0.76rem;
+  font-family: var(--font-sans);
+  color: #a1a1aa !important;
+  font-size: 0.78rem;
   font-weight: 500;
-  padding: 2px 6px !important;
+  padding: 3px 8px !important;
+  transition: all 0.15s ease;
 }
 
 .nav-link:hover, .nav-link.active {
   color: #ffffff !important;
-  background-color: #37373d;
-  border-radius: 4px;
+  background-color: #27272a;
+  border-radius: 5px;
 }
 
 /* ==========================================================================
-   Ultra-Compact Headings & Spacing
+   Typography & Techy Headings
    ========================================================================== */
 h1 {
-  font-size: 1.35rem;
-  font-weight: 600;
-  border-bottom: 1px solid #e1e4e8;
-  padding-bottom: 0.2em;
-  margin-top: 0.4rem;
-  margin-bottom: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.3em;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: 1.08rem;
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
   font-weight: 600;
-  border-bottom: 1px solid #eaeef2;
-  padding-bottom: 0.2em;
-  margin-top: 0.9rem;
-  margin-bottom: 0.3rem;
+  letter-spacing: -0.02em;
+  color: #1e293b;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.25em;
+  margin-top: 1.1rem;
+  margin-bottom: 0.4rem;
 }
 
 h3 {
-  font-size: 0.92rem;
+  font-family: var(--font-sans);
+  font-size: 0.96rem;
   font-weight: 600;
-  margin-top: 0.7rem;
-  margin-bottom: 0.25rem;
+  letter-spacing: -0.015em;
+  color: #334155;
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
 }
 
 p, ul, ol {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 
 /* ==========================================================================
-   High-Contrast Inline Code Styling (VS Code Dark Badge)
+   High-Contrast Light Inline Code Badge (Responsive & Non-Overflowing)
    ========================================================================== */
 code:not(pre code),
 p code,
@@ -109,63 +174,134 @@ li code,
 td code,
 th code,
 .callout code,
-.callout-body code,
-div code {
-  background-color: #1e1e1e !important;
-  color: #4ec9b0 !important; /* High contrast VS Code Teal */
-  border: 1px solid #3c3c3c !important;
-  padding: 0.1em 0.32em !important;
+.callout-body code {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 0.12em 0.38em !important;
   border-radius: 4px !important;
-  font-size: 82% !important;
-  font-weight: 500 !important;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
-  white-space: nowrap !important;
-}
-
-/* Static code blocks (VS Code Dark Modern) */
-pre.code-with-copy, .sourceCode {
-  background-color: var(--vscode-editor-bg) !important;
-  border: 1px solid var(--vscode-border) !important;
-  border-radius: 4px !important;
-  margin-top: 0.2rem !important;
-  margin-bottom: 0.35rem !important;
-}
-
-pre code {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
-  font-size: 0.68rem !important;
-  line-height: 1.25 !important;
-  padding: 4px 6px !important;
-  color: #d4d4d4 !important;
+  font-size: 84% !important;
+  font-weight: 600 !important;
+  font-family: var(--font-mono) !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  letter-spacing: 0 !important;
 }
 
 /* ==========================================================================
-   Pyodide Interactive Monaco Code Editor - VS CODE DARK THEME & COMPACT SIZE
+   Static Code Blocks (VS Code Dark Modern - Maximum Contrast & Full Height)
+   ========================================================================== */
+div.sourceCode,
+pre.sourceCode,
+pre.code-with-copy,
+.code-with-copy pre {
+  background-color: #18181b !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 6px !important;
+  margin-top: 0.35rem !important;
+  margin-bottom: 0.5rem !important;
+  padding: 10px 14px !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  white-space: pre !important;
+  line-height: 1.5 !important;
+  font-size: 0.78rem !important;
+  height: auto !important;
+  max-height: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+}
+
+div.sourceCode pre,
+pre.sourceCode code,
+pre.code-with-copy code,
+.code-with-copy pre code {
+  background-color: transparent !important;
+  color: #f4f4f5 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  border: none !important;
+  white-space: pre !important;
+  display: block !important;
+  height: auto !important;
+}
+
+/* High Specificity Syntax Highlighting Overrides for Dark Background */
+div.sourceCode code span.im,
+pre.sourceCode code span.im { color: #c084fc !important; }
+
+div.sourceCode code span.kw,
+pre.sourceCode code span.kw,
+div.sourceCode code span.cf,
+pre.sourceCode code span.cf { color: #38bdf8 !important; font-weight: 600 !important; }
+
+div.sourceCode code span.bu,
+pre.sourceCode code span.bu { color: #38bdf8 !important; }
+
+div.sourceCode code span.st,
+pre.sourceCode code span.st,
+div.sourceCode code span.vs,
+pre.sourceCode code span.vs,
+div.sourceCode code span.ch,
+pre.sourceCode code span.ch { color: #fb923c !important; }
+
+div.sourceCode code span.co,
+pre.sourceCode code span.co { color: #4ade80 !important; font-style: italic !important; }
+
+div.sourceCode code span.fu,
+pre.sourceCode code span.fu,
+div.sourceCode code span.fn,
+pre.sourceCode code span.fn { color: #fde047 !important; }
+
+div.sourceCode code span.dv,
+pre.sourceCode code span.dv,
+div.sourceCode code span.fl,
+pre.sourceCode code span.fl,
+div.sourceCode code span.bn,
+pre.sourceCode code span.bn { color: #a3e635 !important; }
+
+div.sourceCode code span.va,
+pre.sourceCode code span.va,
+div.sourceCode code span.at,
+pre.sourceCode code span.at,
+div.sourceCode code span.an,
+pre.sourceCode code span.an { color: #7dd3fc !important; }
+
+div.sourceCode code span.op,
+pre.sourceCode code span.op { color: #e4e4e7 !important; }
+
+div.sourceCode code span,
+pre.sourceCode code span { color: #f4f4f5 !important; }
+
+/* ==========================================================================
+   Pyodide Interactive Monaco Code Editor - VS CODE DARK & COMPACT SIZE
    ========================================================================== */
 
 /* Main Pyodide Cell Container */
 .qpyodide-interactive-area {
   border: 1px solid var(--vscode-border) !important;
-  border-radius: 4px !important;
-  margin-top: 0.2rem !important;
-  margin-bottom: 0.35rem !important;
+  border-radius: 6px !important;
+  margin-top: 0.35rem !important;
+  margin-bottom: 0.5rem !important;
   background-color: var(--vscode-editor-bg) !important;
   overflow: hidden !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Monaco Editor Container Overrides */
 .qpyodide-editor, .monaco-editor, .monaco-editor-background, .monaco-editor .margin {
-  background-color: #1e1e1e !important;
+  background-color: #18181b !important;
   border: none !important;
 }
 
 .monaco-editor .line-numbers {
-  color: #6e7681 !important;
+  color: #71717a !important;
   font-size: 11px !important;
 }
 
 .monaco-editor .view-line {
+  font-family: var(--font-mono) !important;
   font-size: 12px !important;
   line-height: 18px !important;
 }
@@ -174,9 +310,9 @@ pre code {
 .qpyodide-editor-toolbar {
   background-color: var(--vscode-toolbar-bg) !important;
   border-top: 1px solid var(--vscode-border) !important;
-  padding: 1px 4px !important;
-  min-height: 22px !important;
-  height: 24px !important;
+  padding: 2px 6px !important;
+  min-height: 24px !important;
+  height: 26px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -185,39 +321,41 @@ pre code {
 .qpyodide-editor-toolbar-left-buttons, .qpyodide-editor-toolbar-right-buttons {
   display: flex !important;
   align-items: center !important;
-  gap: 3px !important;
+  gap: 4px !important;
 }
 
-/* Compact Buttons */
+/* Compact Tech Buttons */
 .qpyodide-button {
+  font-family: var(--font-sans) !important;
   font-size: 0.65rem !important;
-  padding: 1px 6px !important;
-  height: 18px !important;
+  font-weight: 500 !important;
+  padding: 1px 7px !important;
+  height: 20px !important;
   line-height: 1.1 !important;
-  border-radius: 3px !important;
+  border-radius: 4px !important;
+  transition: all 0.15s ease !important;
 }
 
 .qpyodide-button-run {
   background-color: var(--vscode-btn-green) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   font-weight: 600 !important;
-  font-size: 0.66rem !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
 }
 
 .qpyodide-button-run:hover {
-  background-color: #2ea043 !important;
+  background-color: #15803d !important;
 }
 
 .qpyodide-button-reset, .qpyodide-button-copy {
-  background-color: #333333 !important;
-  color: #cccccc !important;
-  border: 1px solid #444444 !important;
-  font-size: 0.62rem !important;
+  background-color: #27272a !important;
+  color: #d4d4d8 !important;
+  border: 1px solid #3f3f46 !important;
 }
 
 .qpyodide-button-reset:hover, .qpyodide-button-copy:hover {
-  background-color: #444444 !important;
+  background-color: #3f3f46 !important;
   color: #ffffff !important;
 }
 
@@ -226,8 +364,8 @@ pre code {
 .qpyodide-output-code-area,
 div[id^="qpyodide-output-code-area"],
 div[id^="qpyodide-console-area"] {
-  background-color: #141414 !important;
-  color: #e6edf3 !important;
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
   border-top: 1px solid var(--vscode-border) !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -239,18 +377,18 @@ div[id^="qpyodide-console-area"] {
 .qpyodide-console-area code,
 .qpyodide-output-code-area pre,
 .qpyodide-output-code-area code {
-  color: #e6edf3 !important;
+  color: #f4f4f5 !important;
 }
 
 .qpyodide-output-code-stdout,
 pre.qpyodide-output-code-stdout,
 code.qpyodide-output-code-stdout,
 div.qpyodide-output-code-stdout {
-  background-color: #141414 !important;
-  color: #3fb950 !important;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  background-color: #09090b !important;
+  color: #4ade80 !important;
+  font-family: var(--font-mono) !important;
   font-size: 0.72rem !important;
-  line-height: 1.3 !important;
+  line-height: 1.35 !important;
   padding: 6px 10px !important;
   margin: 0 !important;
   border-top: 1px solid var(--vscode-border) !important;
@@ -262,11 +400,11 @@ div.qpyodide-output-code-stdout {
 pre.qpyodide-output-code-stderr,
 code.qpyodide-output-code-stderr,
 div.qpyodide-output-code-stderr {
-  background-color: #141414 !important;
-  color: #f85149 !important;
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  background-color: #09090b !important;
+  color: #f87171 !important;
+  font-family: var(--font-mono) !important;
   font-size: 0.72rem !important;
-  line-height: 1.3 !important;
+  line-height: 1.35 !important;
   padding: 6px 10px !important;
   margin: 0 !important;
   border-top: 1px solid var(--vscode-border) !important;
@@ -279,112 +417,119 @@ div.qpyodide-output-code-stderr {
    ========================================================================== */
 
 .callout {
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   border-width: 1px !important;
+  border-left-width: 4px !important;
   border-style: solid !important;
-  margin-top: 0.25rem !important;
-  margin-bottom: 0.4rem !important;
-  padding: 0.3rem 0.45rem !important;
+  margin-top: 0.35rem !important;
+  margin-bottom: 0.5rem !important;
+  padding: 0.4rem 0.6rem !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
 .callout .callout-title {
+  font-family: var(--font-sans) !important;
   font-weight: 600 !important;
-  font-size: 0.75rem !important;
-  margin-bottom: 0.1rem !important;
+  font-size: 0.78rem !important;
+  margin-bottom: 0.15rem !important;
 }
 
-/* 1. mydefinition (Goldenrod / Soft Goldenrod Yellow) */
+/* 1. mydefinition (Goldenrod / Amber Tint) */
 .env-definition, .callout-note.env-definition {
-  background-color: #fffbe6 !important;
-  border-color: #daa520 !important;
-  color: #7a5901 !important;
+  background-color: #fffbeb !important;
+  border-color: #f59e0b !important;
+  color: #92400e !important;
 }
 .env-definition .callout-title {
-  color: #7a5901 !important;
+  color: #78350f !important;
 }
 
-/* 2. myexample (DarkSeaGreen / Soft Green) */
+/* 2. myexample (DarkSeaGreen / Emerald Tint) */
 .env-example, .callout-note.env-example {
-  background-color: #f1f8f1 !important;
-  border-color: #66a166 !important;
-  color: #2d5a2d !important;
+  background-color: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
 }
 .env-example .callout-title {
-  color: #2d5a2d !important;
+  color: #047857 !important;
 }
 
-/* 3. myremark (Indigo / Soft Purple) */
+/* 3. myremark (Indigo / Purple Tint) */
 .env-remark, .callout-note.env-remark {
-  background-color: #f6f2fa !important;
-  border-color: #4b0082 !important;
-  color: #380062 !important;
+  background-color: #faf5ff !important;
+  border-color: #8b5cf6 !important;
+  color: #5b21b6 !important;
 }
 .env-remark .callout-title {
-  color: #380062 !important;
+  color: #6b21a8 !important;
 }
 
-/* 4. myexercise (RoyalBlue / Soft Blue) */
+/* 4. myexercise (RoyalBlue / Blue Tint) */
 .env-exercise, .callout-tip.env-exercise {
-  background-color: #edf4fe !important;
-  border-color: #4169e1 !important;
-  color: #1a365d !important;
+  background-color: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  color: #1e40af !important;
 }
 .env-exercise .callout-title {
-  color: #1a365d !important;
+  color: #1e3a8a !important;
 }
 
-/* 5. mychallenge (Gold!50!black / Soft Gold) */
+/* 5. mychallenge (Gold / Amber Warm Tint) */
 .env-challenge, .callout-warning.env-challenge {
-  background-color: #fffdf0 !important;
-  border-color: #b8860b !important;
-  color: #744210 !important;
+  background-color: #fff7ed !important;
+  border-color: #ea580c !important;
+  color: #9a3412 !important;
 }
 .env-challenge .callout-title {
-  color: #744210 !important;
+  color: #9a3412 !important;
 }
 
-/* 6. myattention / mycaution (Red!50!black / Soft Red) */
+/* 6. myattention / mycaution (Red / Rose Tint) */
 .env-attention, .callout-important.env-attention {
-  background-color: #fde8e8 !important;
-  border-color: #c53030 !important;
-  color: #742a2a !important;
+  background-color: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
 }
 .env-attention .callout-title {
-  color: #742a2a !important;
+  color: #881337 !important;
 }
 
-/* 7. myanswer (ForestGreen!10 / Soft Forest Green) */
+/* 7. myanswer (ForestGreen / Teal Tint) */
 .env-answer, .callout-caution.env-answer {
-  background-color: #edf7ed !important;
-  border-color: #2e7d32 !important;
-  color: #1b4332 !important;
+  background-color: #f0fdf4 !important;
+  border-color: #14b8a6 !important;
+  color: #115e59 !important;
 }
 .env-answer .callout-title {
-  color: #1b4332 !important;
+  color: #0f766e !important;
 }
 
-/* 8. myoverview (Yellow / Soft Yellow) */
+/* 8. myoverview (Yellow Tint) */
 .env-overview, .callout-note.env-overview {
-  background-color: #fffde7 !important;
-  border-color: #fbc02d !important;
-  color: #826200 !important;
+  background-color: #fefce8 !important;
+  border-color: #eab308 !important;
+  color: #854d0e !important;
 }
 
-/* Ultra-Compact Tables */
+/* Modern Tech Tables */
 table {
   border-collapse: collapse;
   width: 100%;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
   margin-bottom: 0.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 th, td {
-  border: 1px solid #d0d7de;
-  padding: 2px 5px;
-  font-size: 0.75rem;
+  border: 1px solid #e2e8f0;
+  padding: 3px 7px;
+  font-size: 0.78rem;
 }
 
 th {
-  background-color: #f6f8fa;
+  background-color: #f8fafc;
   font-weight: 600;
+  color: #334155;
 }
