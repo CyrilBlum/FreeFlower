@@ -1,0 +1,110 @@
+\begin{frame}{Symmetrische vs. Asymmetrische Kryptosysteme}
+	\begin{block}{Symmetrische Kryptosysteme (z.B. Caesar, Vigenère, OTP)}
+		Verwenden \textbf{demselben Schlüssel} zur Ver- und Entschlüsselung. Problem: Wie tauscht man den Schlüssel sicher aus?
+	\end{block}
+	
+	\pause
+	\begin{myidea}[Asymmetrische Kryptosysteme (Public-Key Kryptologie)]
+		Jede Person generiert ein Schlüsselpaar:
+		\begin{itemize}[<+->]
+			\item \textbf{Öffentlicher Schlüssel} (\emoji{key}): Wird allen bekannt gemacht. Jeder kann damit Nachrichten für den Empfänger verschlüsseln.
+			\item \textbf{Privater Schlüssel} (\emoji{lock}): Bleibt absolut geheim. Nur der Empfänger kann damit die Nachrichten entschlüsseln.
+		\end{itemize}
+	\end{myidea}
+\end{frame}
+
+\begin{frame}{Prinzip der Public-Key-Verschlüsselung}
+	\begin{figure}[H]
+		\centering
+		\resizebox{0.85\textwidth}{!}{%
+			\begin{tikzpicture}[node distance = 0.8cm and 1.8cm, 
+				data/.style={rectangle, rounded corners, text width=2.8cm, minimum height=0.9cm, text centered, draw=ForestGreen, fill=ForestGreen!20},
+				startstop/.style={rectangle, rounded corners, minimum height=0.9cm, minimum width=2.8cm, text width=2.4cm, text centered, draw=RoyalBlue, fill=RoyalBlue!20}]
+				
+				\node (plaintext) [data] {\emoji{woman-technologist} Alice};
+				\node (ciphertext) [data, right=of plaintext] {Verschlüsselter\\Text};
+				\node (publickey) [startstop, above=of ciphertext] {\emoji{key} Öffentlicher Schlüssel};
+				
+				\node (decryptedtext) [data, below=of ciphertext] {Verschlüsselter\\Text};
+				\node (privatekey) [startstop, below=of decryptedtext] {\emoji{lock} Privater Schlüssel};
+				\node (bob) [data, left=of decryptedtext] {\emoji{man-technologist} Bob};
+				
+				\draw [->, thick] (plaintext) -- (ciphertext);
+				\draw [->, thick] (ciphertext) -- (decryptedtext);
+				\draw [->, thick] (publickey) -- (ciphertext);
+				\draw [->, thick] (privatekey) -- (decryptedtext);
+				\draw [->, thick] (decryptedtext) -- (bob);
+				
+				\node at ($(plaintext.east)!0.5!(ciphertext.west)$) [above] {\tiny Klartext};
+				\node at ($(publickey.south)!0.5!(ciphertext.north)$) [left] {\tiny Verschlüsselung};
+				\node at ($(ciphertext.south)!0.5!(decryptedtext.north)$) [left] {\tiny Übertragung};
+				\node at ($(privatekey.north)!0.5!(decryptedtext.south)$) [left] {\tiny Entschlüsselung};
+				\node at ($(decryptedtext.west)!0.5!(bob.east)$) [above] {\tiny Klartext};
+			\end{tikzpicture}
+		}
+		\caption{Public-Key Kryptosystem}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Das RSA-Verfahren}
+	1977 von Ron Rivest, Adi Shamir und Leonard Adleman erfunden.
+	
+	\begin{mydefinition}[Mathematisches Fundament von RSA]
+		Es basiert auf der Schwierigkeit der \textbf{Primfaktorzerlegung}:
+		\begin{itemize}
+			\item Zwei grosse Primzahlen $p$ und $q$ miteinander zu multiplizieren ($n = p \cdot q$) ist extrem einfach.
+			\item Aus dem Produkt $n$ wieder die Primfaktoren $p$ und $q$ zu finden, ist für ausreichend grosse Zahlen praktisch unmöglich!
+		\end{itemize}
+	\end{mydefinition}
+\end{frame}
+
+\begin{frame}{RSA: Schlüsselerzeugung}
+	\begin{myprocedure}[RSA Schlüsselerzeugung]
+		{\small
+		\begin{enumerate}[<+->]
+			\item Wähle zwei Primzahlen $p$ und $q$.
+			\item Berechne RSA-Modul: $n = p \cdot q$.
+			\item Berechne Eulersche Phi-Funktion: $\varphi(n) = (p-1)(q-1)$.
+			\item Wähle Exponent $e$, so dass $\operatorname{ggT}(e, \varphi(n)) = 1$.
+			\item Berechne Entschlüsselungsexponent $d$: $(e \cdot d) \bmod \varphi(n) = 1$.
+			\item \textbf{Öffentlicher Schlüssel}: $(e, n)$, \textbf{Privater Schlüssel}: $(d, n)$.
+		\end{enumerate}
+		}
+	\end{myprocedure}
+\end{frame}
+
+\begin{frame}{RSA: Ver- und Entschlüsselung}
+	\begin{myprocedure}[RSA Ver- und Entschlüsselung]
+		\begin{itemize}[<+->]
+			\item \textbf{Verschlüsselung}: Klartext als Zahl $m$. Mit Bobs öffentlichem Schlüssel $(e, n)$:
+			      \[ c = m^e \bmod n \]
+			\item \textbf{Entschlüsselung}: Bob entschlüsselt Kryptotext $c$ mit seinem privaten Schlüssel $(d, n)$:
+			      \[ m = c^d \bmod n \]
+		\end{itemize}
+	\end{myprocedure}
+\end{frame}
+
+\begin{frame}{Rechenbeispiel zu RSA}
+	\begin{exampleblock}{RSA Zahlenbeispiel}
+		{\small
+		Primzahlen $p = 3, q = 11$.
+		\begin{itemize}[<+->]
+			\item $n = 3 \cdot 11 = 33$, \quad $\varphi(n) = (3-1)(11-1) = 2 \cdot 10 = 20$.
+			\item Wähle $e = 3$ (da $\operatorname{ggT}(3, 20) = 1$). Berechne $d$: $(3 \cdot d) \bmod 20 = 1 \implies d = 7$.
+			\item \textbf{Public Key}: $(3, 33)$, \textbf{Private Key}: $(7, 33)$.
+			\item \textbf{Verschlüsselung} von $m = 3$:
+			      $c = 3^3 \bmod 33 = 27 \bmod 33 = 27$
+			\item \textbf{Entschlüsselung} von $c = 27$:
+			      $m = 27^7 \bmod 33 = 3$
+		\end{itemize}
+		}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Auftrag: RSA-Verfahren}
+	\begin{itemize}
+		\item \aufgabebox{Lösen Sie Aufgabe 4.1 im Skript (RSA Schlüsselerzeugung \& Verschlüsselung)}
+		\item \challengebox{Challenge 4.3 im Skript: RSA mit Python für eigene Nachrichten}
+		\item Zeit: 15 Minuten
+	\end{itemize}
+\end{frame}

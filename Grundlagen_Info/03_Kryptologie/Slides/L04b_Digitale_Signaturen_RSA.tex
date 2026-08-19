@@ -1,0 +1,52 @@
+\begin{frame}{Digitale Signaturen mit RSA}
+	Neben der Verschlüsselung können asymmetrische Verfahren auch für \textbf{digitale Signaturen} genutzt werden.
+	
+	\begin{mydefinition}[Ziele digitaler Signaturen]
+		\begin{itemize}[<+->]
+			\item \textbf{Authentizität}: Garantiert die Identität des Absenders (nur der Besitzer des privaten Schlüssels konnte die Signatur erzeugen).
+			\item \textbf{Integrität}: Garantiert, dass die Nachricht auf dem Übertragungsweg nicht verändert wurde.
+		\end{itemize}
+	\end{mydefinition}
+\end{frame}
+
+\begin{frame}{Funktionsweise von RSA-Signaturen}
+	Beim Signieren wird die Rolle der Schlüssel vertauscht:
+	
+	\begin{myprocedure}[Digitale Signatur mit RSA]
+		{\small
+		\begin{enumerate}[<+->]
+			\item \textbf{Signaturerstellung (Absender)}:
+			      Alice berechnet den Hashwert $H(m)$ und signiert ihn mit ihrem \textbf{privaten Schlüssel} $(d, n)$:
+			      \[ s = H(m)^d \bmod n \]
+			      Sie sendet Nachricht $m$ und Signatur $s$ an Bob.
+			\item \textbf{Signaturüberprüfung (Empfänger)}:
+			      Bob prüft die Signatur mit Alices \textbf{öffentlichem Schlüssel} $(e, n)$:
+			      \[ H'(m) = s^e \bmod n \]
+			      Ist $H'(m) = H(m)$, ist die Signatur gültig!
+		\end{enumerate}
+		}
+	\end{myprocedure}
+\end{frame}
+
+\begin{frame}{Beispiel: RSA Digitale Signatur}
+	\begin{exampleblock}{Rechenbeispiel}
+		{\small
+		Alice nutzt ihren privaten Schlüssel $(d, n) = (7, 33)$ und öffentlichen Schlüssel $(e, n) = (3, 33)$. Die Nachricht sei $m = 15$.
+		
+		\begin{itemize}[<+->]
+			\item \textbf{Signaturerstellung}:
+			      $s = m^d \bmod n = 15^7 \bmod 33 = 27$
+			\item \textbf{Signaturüberprüfung}:
+			      $H'(m) = s^e \bmod n = 27^3 \bmod 33 = 15$
+			\item Da $H'(m) = 15 = m$, ist die Signatur authentisch und unverfälscht!
+		\end{itemize}
+		}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Auftrag: Digitale Signaturen}
+	\begin{itemize}
+		\item \aufgabebox{Lösen Sie Aufgabe 4.4 im Skript (Signatur erstellen und überprüfen)}
+		\item Zeit: 10 Minuten
+	\end{itemize}
+\end{frame}

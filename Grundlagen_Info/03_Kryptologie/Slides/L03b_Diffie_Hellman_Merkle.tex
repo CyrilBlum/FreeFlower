@@ -1,0 +1,68 @@
+\begin{frame}{Diffie-Hellman-Merkle-Schlüsseltausch (DHM)}
+	1976 erfanden Whitfield Diffie, Martin Hellman und Ralph Merkle das erste Verfahren für einen sicheren Schlüsselaustausch über unsichere Kanäle.
+	
+	\begin{myidea}[Diskretes Logarithmusproblem]
+		Das Verfahren basiert auf einer mathematischen \textbf{Einwegfunktion} modulo einer Primzahl $p$:
+		\begin{itemize}[<+->]
+			\item \textbf{Einfach}: $x = g^a \bmod p$ berechnen.
+			\item \textbf{Sehr schwer}: Aus $x, g, p$ den geheimen Exponenten $a$ zurückrechnen (\emph{Diskreter Logarithmus}).
+		\end{itemize}
+	\end{myidea}
+\end{frame}
+
+\begin{frame}{Ablauf des DHM-Protokolls}
+	\begin{myprocedure}[Protokoll \acrshort{DHM}]
+		{\small
+		Öffentlich vereinbarte Werte: Primzahl $p$ und Basis $g < p$.
+		
+		\begin{enumerate}[<+->]
+			\item \textbf{Alice}: Wählt geheime Zahl $a < p$. Berechnet $x := g^a \bmod p$ und sendet $x$ an Bob.
+			\item \textbf{Bob}: Wählt geheime Zahl $b < p$. Berechnet $y := g^b \bmod p$ und sendet $y$ an Alice.
+			\item \textbf{Alice} berechnet gemeinsamen Schlüssel:
+			      $s_{AB} := y^a \bmod p$.
+			\item \textbf{Bob} berechnet gemeinsamen Schlüssel:
+			      $s_{AB} := x^b \bmod p$.
+		\end{enumerate}
+		}
+	\end{myprocedure}
+\end{frame}
+
+\begin{frame}{Warum erhalten beide denselben Schlüssel?}
+	Aus den Potenzgesetzen folgt:
+	\[ (g^b)^a \bmod p = g^{b \cdot a} \bmod p = g^{a \cdot b} \bmod p = (g^a)^b \bmod p \]
+	
+	\pause
+	\begin{align*}
+		\text{Alice berechnet: } & y^a \bmod p = (g^b)^a \bmod p = \mathbf{g^{ab} \bmod p} \\
+		\text{Bob berechnet: }   & x^b \bmod p = (g^a)^b \bmod p = \mathbf{g^{ab} \bmod p}
+	\end{align*}
+	
+	\pause
+	\begin{alertblock}{Was sieht der Abhörer Eve?}
+		Eve sieht nur $p, g, x, y$. Ohne $a$ oder $b$ kann Eve $g^{ab} \bmod p$ nicht berechnen!
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Rechenbeispiel: DHM-Schlüsseltausch}
+	\begin{exampleblock}{Beispiel mit kleinen Zahlen}
+		Öffentliche Parameter: $p = 13$, $g = 2$.
+		
+		\begin{enumerate}[<+->]
+			\item \textbf{Alice} ($a = 5$):
+			      $x = 2^5 \bmod 13 = 32 \bmod 13 = 6$
+			\item \textbf{Bob} ($b = 4$):
+			      $y = 2^4 \bmod 13 = 16 \bmod 13 = 3$
+			\item \textbf{Alice}:
+			      $s_{AB} = y^a \bmod p = 3^5 \bmod 13 = 243 \bmod 13 = \mathbf{9}$
+			\item \textbf{Bob}:
+			      $s_{AB} = x^b \bmod p = 6^4 \bmod 13 = 1296 \bmod 13 = \mathbf{9}$
+		\end{enumerate}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Auftrag: Diffie-Hellman-Merkle}
+	\begin{itemize}
+		\item \aufgabebox{Lösen Sie die Aufgaben 3.2 und 3.3 im Skript}
+		\item Zeit: 15 Minuten
+	\end{itemize}
+\end{frame}

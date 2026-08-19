@@ -1,0 +1,78 @@
+\begin{frame}{Problem: Schlüsselaustausch über unsichere Kanäle}
+	\begin{myidea}[Schlüsseltausch ohne gemeinsamen Geheimschlüssel]
+		Wie können Alice und Bob vertraulich kommunizieren, wenn sie vorab keinen gemeinsamen geheimen Schlüssel vereinbart haben?
+	\end{myidea}
+	
+	\pause
+	\vspace{0.2cm}
+	\begin{block}{Die Kisten-Analogie (Truhe mit zwei Schlössern)}
+		{\small
+		\begin{enumerate}[<+->]
+			\item Alice legt Klartext in eine Truhe, verschliesst sie mit Schloss $A$ und schickt sie an Bob.
+			\item Bob schliesst zusätzlich sein eigenes Schloss $B$ an und schickt die Truhe zurück.
+			\item Alice entfernt ihr Schloss $A$ und schickt die Truhe erneut an Bob.
+			\item Bob entfernt sein Schloss $B$ und öffnet die Truhe.
+		\end{enumerate}
+		}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\begin{myprocedure}[Three-Pass Protocol mit Bin-OTP]
+		{\small
+		Alice hat Schlüssel $s_A$, Bob Schlüssel $s_B$. Alice will Klartext \textcolor{Blue}{$t$} senden.
+		
+		\begin{enumerate}[<+->]
+			\item \textbf{Schritt 1}: Alice verschlüsselt \textcolor{Blue}{$t$} mit $s_A$ ($k_A \rightarrow$ Bob):
+			      \[ k_A = \textcolor{Blue}{t} \oplus \textcolor{Red}{s_A} \]
+			\item \textbf{Schritt 2}: Bob verschlüsselt $k_A$ mit $s_B$ ($k_{AB} \rightarrow$ Alice):
+			      \[ k_{AB} = k_A \oplus \textcolor{ForestGreen}{s_B} = \textcolor{Blue}{t} \oplus \textcolor{Red}{s_A} \oplus \textcolor{ForestGreen}{s_B} \]
+			\item \textbf{Schritt 3}: Alice entfernt $s_A$ ($k_B \rightarrow$ Bob):
+			      \[ k_B = k_{AB} \oplus \textcolor{Red}{s_A} = \textcolor{Blue}{t} \oplus \textcolor{ForestGreen}{s_B} \]
+			\item \textbf{Schritt 4}: Bob entfernt $s_B$ und erhält den Klartext:
+			      \[ \textcolor{Blue}{t} = k_B \oplus \textcolor{ForestGreen}{s_B} \]
+		\end{enumerate}
+		}
+	\end{myprocedure}
+\end{frame}
+
+\begin{frame}{Beispiel: Drei-Wege-Schlüsseltausch}
+	\begin{exampleblock}{Rechenbeispiel}
+		Klartext $\textcolor{Blue}{t = 1100}$, Schlüssel Alice $\textcolor{Red}{s_A = 1011}$, Schlüssel Bob $\textcolor{ForestGreen}{s_B = 0110}$.
+		\begin{center}
+			\small
+			\begin{tabular}{c|l|c}
+				Schritt & Berechnung & Ergebnis \\ \hline
+				1 (Alice $\rightarrow$ Bob) & $k_A = \textcolor{Blue}{1100} \oplus \textcolor{Red}{1011}$ & $0111$ \\
+				2 (Bob $\rightarrow$ Alice) & $k_{AB} = 0111 \oplus \textcolor{ForestGreen}{0110}$ & $0001$ \\
+				3 (Alice $\rightarrow$ Bob) & $k_B = 0001 \oplus \textcolor{Red}{1011}$ & $1010$ \\
+				4 (Bob liest Klartext) & $t = 1010 \oplus \textcolor{ForestGreen}{0110}$ & $\textcolor{Blue}{1100}$
+			\end{tabular}
+		\end{center}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Sicherheit des Drei-Wege-Schlüsseltauschs}
+	Ist das Drei-Wege-Protokoll mit XOR wirklich sicher?
+	
+	\pause
+	\begin{alertblock}{Angriff durch Eve (Passives Abhören)}
+		{\small
+		Fängt Eve alle 3 Nachrichten ($k_A, k_{AB}, k_B$) ab, berechnet sie den Klartext $\textcolor{Blue}{t}$:
+		\begin{align*}
+			k_A \oplus k_{AB} \oplus k_B & = (\textcolor{Blue}{t} \oplus \textcolor{Red}{s_A}) \oplus (\textcolor{Blue}{t} \oplus \textcolor{Red}{s_A} \oplus \textcolor{ForestGreen}{s_B}) \oplus (\textcolor{Blue}{t} \oplus \textcolor{ForestGreen}{s_B}) \\
+			                             & = \textcolor{Blue}{t} \oplus (\textcolor{Red}{s_A} \oplus \textcolor{Red}{s_A}) \oplus (\textcolor{ForestGreen}{s_B} \oplus \textcolor{ForestGreen}{s_B}) = \textcolor{Blue}{t}
+		\end{align*}
+		}
+	\end{alertblock}
+	
+	\pause
+	\textbf{Fazit}: Das XOR-basierte Protokoll schützt nicht vor einem Abhörer!
+\end{frame}
+
+\begin{frame}{Auftrag: Drei-Wege-Schlüsseltausch}
+	\begin{itemize}
+		\item \aufgabebox{Lösen Sie Aufgabe 3.1 im Skript zu zweit.}
+		\item Zeit: 10 Minuten
+	\end{itemize}
+\end{frame}
