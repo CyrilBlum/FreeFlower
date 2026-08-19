@@ -785,15 +785,38 @@ Die Verschlüsselung mit dem binären \gls{OTP} erfolgt nun, indem Bit für Bit 
 \end{itemize}
 \end{myexample}
 
+\begin{myoverview}[Eigenschaften der XOR-Operation $\oplus$]\label{myoverview:xor-eigenschaften}
+Für beliebige binäre Folgen $a$, $b$ und $c$ derselben Länge besitzt die Operation $\oplus$ (XOR) die folgenden vier wesentlichen mathematischen Eigenschaften:
+\begin{enumerate}
+	\item \textbf{Kommutativität}: Die Reihenfolge der Operanden spielt bei der Operation $\oplus$ keine Rolle:
+	      \begin{align*}
+		      a \oplus b = b \oplus a.
+	      \end{align*}
+	\item \textbf{Neutrales Element}: Die Verknüpfung einer binären Folge mit einer Folge aus lauter Nullen ($0$) verändert die ursprüngliche Folge nicht:
+	      \begin{align*}
+		      a \oplus 0 = a.
+	      \end{align*}
+	\item \textbf{Selbstinversität}: Die Verknüpfung einer binären Folge mit sich selbst ergibt stets eine Folge aus lauter Nullen ($0$):
+	      \begin{align*}
+		      a \oplus a = 0.
+	      \end{align*}
+	\item \textbf{Assoziativität}: Die Klammerung mehrerer Operanden spielt bei der Verknüpfung keine Rolle:
+	      \begin{align*}
+		      (a \oplus b) \oplus c = a \oplus (b \oplus c).
+	      \end{align*}
+\end{enumerate}
+\end{myoverview}
+
 \begin{myexercise}
-	Berechnen Sie den Kryptotext zu dem gegebenen Klartext
+	Berechnen Sie zu folgendem Klartext
 	\begin{align*}
 		110010100
 	\end{align*}
 	und zum Schlüssel
 	\begin{align*}
-		101110001.
+		101110001
 	\end{align*}
+	den Kryptotext.
 	\begin{myanswer}
 		Der Kryptotext lautet
 		\[
