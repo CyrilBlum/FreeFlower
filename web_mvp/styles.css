@@ -100,14 +100,26 @@ p, ul, ol {
   margin-bottom: 0.35rem;
 }
 
-/* Inline code */
-code:not(pre code) {
-  background-color: #2d2d2d;
-  color: #9cdcfe;
-  padding: 0.08em 0.25em;
-  border-radius: 3px;
-  font-size: 76% !important;
+/* ==========================================================================
+   High-Contrast Inline Code Styling (VS Code Dark Badge)
+   ========================================================================== */
+code:not(pre code),
+p code,
+li code,
+td code,
+th code,
+.callout code,
+.callout-body code,
+div code {
+  background-color: #1e1e1e !important;
+  color: #4ec9b0 !important; /* High contrast VS Code Teal */
+  border: 1px solid #3c3c3c !important;
+  padding: 0.1em 0.32em !important;
+  border-radius: 4px !important;
+  font-size: 82% !important;
+  font-weight: 500 !important;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  white-space: nowrap !important;
 }
 
 /* Static code blocks (VS Code Dark Modern) */
