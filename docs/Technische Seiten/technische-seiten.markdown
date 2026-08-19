@@ -14,3 +14,4 @@ Folgende technischen Seiten enthalten diverse Anleitungen und Tipps zu Tools, we
 - [VS Code + Python Setup]({{ '/vscode-python-setup.html' | relative_url }})
 - [Markdown-Arbeitsjournal]({{ '/markdown-tutorial.html' | relative_url }})
 - [GitHub einrichten]({{ '/github-setup.html' | relative_url }})
+- [Lokale Installation von LaTeX]({{ '/latex-setup.html' | relative_url }})
