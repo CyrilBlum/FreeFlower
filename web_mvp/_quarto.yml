@@ -63,8 +63,12 @@ format:
             } else {
               navbar.style.transform = "translateY(0)";
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-          }, false);
+          document.addEventListener("click", function(e) {
+            let link = e.target.closest(".callout-header a");
+            if (link) {
+              e.stopPropagation();
+            }
+          }, true);
         });
         </script>
     filters:

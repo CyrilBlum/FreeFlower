@@ -134,9 +134,41 @@ def clean_tex_escapes(text):
     text = text.replace(r'\end{lstlisting}', '')
     return text
 
-def convert_tex_content(tex_text):
+def process_nested_command(text, cmd_name, convert_fn):
+    r"""Finds occurrences of \cmd_name{arg1}{arg2}... handling nested braces properly."""
+    pattern = r'\\' + cmd_name + r'\{'
+    while True:
+        m = re.search(pattern, text)
+        if not m:
+            break
+        start_pos = m.start()
+        curr_pos = m.end() - 1
+        args = []
+        while curr_pos < len(text) and text[curr_pos] == '{':
+            depth = 1
+            idx = curr_pos + 1
+            while idx < len(text) and depth > 0:
+                if text[idx] == '{':
+                    depth += 1
+                elif text[idx] == '}':
+                    depth -= 1
+                idx += 1
+            if depth == 0:
+                args.append(text[curr_pos + 1 : idx - 1])
+                curr_pos = idx
+                while curr_pos < len(text) and text[curr_pos].isspace():
+                    curr_pos += 1
+            else:
+                break
+        replacement = convert_fn(args)
+        text = text[:start_pos] + replacement + text[curr_pos:]
+    return text
+
+def convert_tex_content(tex_text, ch_num="1"):
     """Applies transformation rules to convert TeX markup to clean Quarto Markdown."""
     text = tex_text
+    exercise_counter = [0]
+    label_to_info = {}
 
     # Extract chapter title
     chapter_match = re.search(r'\\chapter\{([^\}]+)\}', text)
@@ -148,8 +180,28 @@ def convert_tex_content(tex_text):
     text = re.sub(r'\\begin\{minipage\}\{[^\}]*\}', '', text)
     text = re.sub(r'\\end\{minipage\}', '', text)
 
-    # Clean TeX comments (% ...)
-    text = re.sub(r'^\s*%.*$', '', text, flags=re.MULTILINE)
+    # 1. Protect lstlisting blocks from comment stripping
+    lst_blocks = []
+    def save_lst(m):
+        lst_blocks.append(m.group(0))
+        return f"___LSTLISTING_PLACEHOLDER_{len(lst_blocks)-1}___"
+    text = re.sub(r'\\begin\{lstlisting\}.*?\\end\{lstlisting\}', save_lst, text, flags=re.DOTALL)
+
+    # 2. Protect escaped percent signs (\%)
+    text = text.replace(r'\%', '___ESCAPED_PERCENT___')
+
+    # 3. Strip all TeX comments (% to end of line)
+    text = re.sub(r'%.*$', '', text, flags=re.MULTILINE)
+
+    # 4. Restore escaped percent signs
+    text = text.replace('___ESCAPED_PERCENT___', '%')
+
+    # 5. Restore lstlisting blocks
+    for i, block in enumerate(lst_blocks):
+        text = text.replace(f"___LSTLISTING_PLACEHOLDER_{i}___", block)
+
+    # Clean standalone TeX closing braces (e.g. from \iftoggle{...}{...}{})
+    text = re.sub(r'^\s*\}\s*$', '', text, flags=re.MULTILINE)
 
     # Clean texorpdfstring
     text = re.sub(r'\\texorpdfstring\{[^\}]*\\lstinline[\|!]([^\|!]+)[\|!][^\}]*\}\{([^\}]+)\}', r'`\1`', text)
@@ -187,16 +239,39 @@ def convert_tex_content(tex_text):
     text = re.sub(r'\\begin\{table\}(?:\[[^\]]*\])?\s*\\centering\s*\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}\s*(?:\\caption\{[^\}]*\})?\s*(?:\\label\{[^\}]*\})?\s*\\end\{table\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
     text = re.sub(r'\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
 
+    # Clean leftover LaTeX line breaks (\\) in prose text
+    text = re.sub(r'\\\\', '', text)
+
     # Convert Enumerate List
     text = re.sub(r'\\begin\{enumerate\}(.*?)\\end\{enumerate\}', convert_enumerate, text, flags=re.DOTALL)
 
     # Convert Custom Environments to Quarto Callouts wrapped in outer div for 100% CSS targeting
     def convert_env(txt, env_name, callout_type, env_class, default_title):
-        pattern = r'\\begin\{' + env_name + r'\}(?:\[([^\]]+)\])?'
+        pattern = r'\\begin\{' + env_name + r'\}(?:\[([^\]]+)\])?(?:\s*\\label\{([^\}]+)\})?'
         def replacer(m):
-            title = m.group(1) if m.group(1) else default_title
-            title = clean_tex_escapes(title)
-            return f"\n\n::: {{{env_class}}}\n::: {{{callout_type} icon=false}}\n### {title}\n"
+            raw_title = m.group(1) if m.group(1) else ""
+            label = m.group(2) if m.group(2) else ""
+            clean_title = clean_tex_escapes(raw_title)
+
+            if env_name in ("myexercise", "mychallenge"):
+                exercise_counter[0] += 1
+                num_str = f"{ch_num}.{exercise_counter[0]}"
+                prefix = "Aufgabe" if env_name == "myexercise" else "Challenge"
+                if clean_title:
+                    display_title = f"{prefix} {num_str}: {clean_title}"
+                else:
+                    display_title = f"{prefix} {num_str}"
+                if label:
+                    label_to_info[label] = {
+                        "num_str": num_str,
+                        "display_title": display_title,
+                        "prefix": prefix
+                    }
+            else:
+                display_title = clean_title if clean_title else default_title
+
+            id_attr = f" #{label}" if label else ""
+            return f"\n\n::: {{{env_class}{id_attr}}}\n::: {{{callout_type} icon=false}}\n### {display_title}\n"
         txt = re.sub(pattern, replacer, txt)
         txt = txt.replace(r'\end{' + env_name + r'}', '\n:::\n:::\n\n')
         return txt
@@ -209,15 +284,29 @@ def convert_tex_content(tex_text):
     text = convert_env(text, "myattention", ".callout-warning", ".env-attention", "Wichtiger Hinweis")
     text = convert_env(text, "mychallenge", ".callout-warning", ".env-challenge", "Challenge")
 
-    # Convert Solutions \begin{myanswer} ... \end{myanswer} into Collapsible Callouts
+    # Convert Solutions \begin{myanswer}[optional_label] ... \end{myanswer} into Collapsible Callouts
     def convert_answer(m):
-        ans = m.group(1).strip()
-        return f"\n\n::: {{.env-answer}}\n::: {{.callout-caution collapse=\"true\" icon=false}}\n### 💡 Musterlösung anzeigen\n{ans}\n:::\n:::\n\n"
+        opt_arg = m.group(1)
+        ans = m.group(2).strip()
+        if opt_arg:
+            label = opt_arg.strip()
+            info = label_to_info.get(label)
+            if info:
+                title = f"💡 Musterlösung zu {info['display_title']}"
+                ans = f"[↩ Zurück zu {info['display_title']}](#{label})\n\n" + ans
+            else:
+                title = "💡 Musterlösung anzeigen"
+                ans = f"[↩ Zurück zur Aufgabe](#{label})\n\n" + ans
+        else:
+            title = "💡 Musterlösung anzeigen"
+        return f"\n\n::: {{.env-answer}}\n::: {{.callout-caution collapse=\"true\" icon=false}}\n### {title}\n{ans}\n:::\n:::\n\n"
 
-    text = re.sub(r'\\begin\{myanswer\}(.*?)\\end\{myanswer\}', convert_answer, text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{myanswer\}(?:\[([^\]]+)\])?(.*?)\\end\{myanswer\}', convert_answer, text, flags=re.DOTALL)
 
-    # Convert Footnotes
-    text = re.sub(r'\\footnote\{([^\}]+)\}', r'^[\1]', text)
+    # Convert \url{}, \href{}{}, and \footnote{} with support for nested braces
+    text = process_nested_command(text, "url", lambda args: f"[{args[0]}]({args[0]})" if args else "")
+    text = process_nested_command(text, "href", lambda args: f"[{args[1]}]({args[0]})" if len(args) >= 2 else "")
+    text = process_nested_command(text, "footnote", lambda args: f"^[{args[0]}]" if args else "")
 
     # Convert Align Math
     text = re.sub(r'\\begin\{align\*\}(.*?)\\end\{align\*\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
@@ -232,12 +321,22 @@ def convert_tex_content(tex_text):
     text = re.sub(r'\\large', '', text)
     text = re.sub(r'\\faListUl', '', text)
 
-    # Clean up TeX artifacts: \cref{}, \label{}, \index{}, \url{}, \href{}
-    text = re.sub(r'\\cref\{[^\}]+\}', 'Abschnitt', text)
+    # Clean up TeX artifacts: \cref{}, \label{}, \index{}
+    def convert_cref(m):
+        ref_id = m.group(1).strip()
+        if "sol" in ref_id:
+            return "[Längere Lösungen](#laengere-loesungen)"
+        elif "fig:" in ref_id:
+            return "Abbildung"
+        elif ref_id in label_to_info:
+            info = label_to_info[ref_id]
+            return f"[{info['display_title']}](#{ref_id})"
+        else:
+            return "Abschnitt"
+
+    text = re.sub(r'\\cref\{([^\}]+)\}', convert_cref, text)
     text = re.sub(r'\\label\{[^\}]+\}', '', text)
     text = re.sub(r'\\index\{[^\}]+\}', '', text)
-    text = re.sub(r'\\url\{([^\}]+)\}', r'[\1](\1)', text)
-    text = re.sub(r'\\href\{([^\}]+)\}\{([^\}]+)\}', r'[\2](\1)', text)
 
     # Remove TeX figure environments and clean up unneeded TeX commands
     text = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', '', text, flags=re.DOTALL)
@@ -327,8 +426,12 @@ format:
             } else {
               navbar.style.transform = "translateY(0)";
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-          }, false);
+          document.addEventListener("click", function(e) {
+            let link = e.target.closest(".callout-header a");
+            if (link) {
+              e.stopPropagation();
+            }
+          }, true);
         });
         </script>
     filters:
@@ -347,7 +450,7 @@ def main():
 
         if tex_file.exists():
             tex_text = tex_file.read_text(encoding="utf-8")
-            chapter_title, qmd_body = convert_tex_content(tex_text)
+            chapter_title, qmd_body = convert_tex_content(tex_text, ch["num"])
 
             qmd_content = f"""---
 title: "{ch['num']}. {chapter_title}"

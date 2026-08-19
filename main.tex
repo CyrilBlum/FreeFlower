@@ -2,7 +2,8 @@
 %% choose document class (book / article / exam / beamer / flashcards)
 
 %% BOOK
-% \documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
+\documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
+% \documentclass[a4paper,11pt,svgnames,oneside]{book}
 
 %% ARTICLE
 % \documentclass[svgnames,hyphens]{article}
@@ -13,7 +14,7 @@
 
 %% BEAMER SLIDES (Choose aspect ratio: 169 = 16:9 widescreen, 43 = 4:3 standard, 1610 = 16:10)
 % \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer} %% 16:9 Widescreen (Recommended)
-\documentclass[aspectratio=43,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}  %% 4:3 Standard
+% \documentclass[aspectratio=43,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}  %% 4:3 Standard
 % \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens,handout]{beamer}
 
 %% FLASHCARDS
@@ -27,7 +28,7 @@
 %% set toggles (switches) for the document class
 \newtoggle{book} \newtoggle{article} \newtoggle{exam} \newtoggle{beamer} \newtoggle{flashcards} %% default value is 'false'
 
-\def\documentToggle{3} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
+\def\documentToggle{0} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
 
 \ifnumequal{\documentToggle}{0}{\settoggle{book}{true}}{}     %% book (0)
 \ifnumequal{\documentToggle}{1}{\settoggle{article}{true}}{}  %% article (1)
@@ -68,7 +69,7 @@
 %% BOOK
 \iftoggle{book} {%
 	%% Grundlagenfach Informatik
-	% \input{Grundlagen_Info/00_Programmieren/Skript/Skript.tex}
+	\input{Grundlagen_Info/00_Programmieren/Skript/Skript.tex}
 	% \input{Grundlagen_Info/01_TheoretischeInformatik/Randomisierte_Algorithmen/Skript/Skript.tex}
 	% \input{Grundlagen_Info/03_Kryptologie/Skript/Skript.tex}
 	% \input{Grundlagen_Info/04_Kompression/Skript.tex}
