@@ -1,6 +1,7 @@
 \chapter{Schlüsseltausch-Verfahren}\label{ch:schluesseltausch}
  \begin{figure}[H]
 	\centering
+	\small
 
 	\newcommand{\closedlock}[2]{%
 		\begin{scope}[shift={#1},scale=#2]
@@ -43,8 +44,6 @@
 
 	\newcommand{\lockbox}[3]{%
 		\begin{tikzpicture}[x=1cm,y=1cm]
-			% \draw[gray,line width=.7pt] (0,0.2) rectangle (2.85,1.42);
-
 			\ring{(.58,1.15)}{.27}
 			\ring{(1.76,1.15)}{.27}
 
@@ -69,160 +68,100 @@
 		\begin{tabular}{rll}
 			#1               & \texttt{#2} \\
 			$\oplus\quad$ #3 & \texttt{#4} \\
-			\midrule
+			\hline
 			#5               & \texttt{#6}
 		\end{tabular}
 	}
 
-	\newcommand{\messagearrow}[3]{%
-		\begin{tikzpicture}[x=1cm,y=1cm]
-			\node[font=\small] at (0,.32) {#1};
-			\draw[->,line width=.65pt] (#2,0) -- (#3,0);
-		\end{tikzpicture}
-	}
+	\begin{tikzpicture}[scale=0.88, every node/.style={transform shape}]
+		% Layout constants
+		\def\colL{-2}        % left column x
+		\def\colR{10}        % right column x
 
-	\begin{tabular}{c@{\hspace{.3cm}}c@{\hspace{.3cm}}c}
-		\textbf{Absender} &
-		&
-		\textbf{Empfänger}
-		\\
+		% Spaltentitel
+		\node[font=\bfseries] at (\colL, 0.4) {Absender};
+		\node[font=\bfseries] at (\colR, 0.4) {Empfänger};
 
-		\begin{minipage}{4.3cm}
-			\centering
-			\lockbox{c}{o}{%
-				\draw[->,line width=.45pt] (.88,-.28) -- (.88,.18);
-			}
-
-			\vspace{.25em}
-			Absender schliesst
-
-			\vspace{.8em}
+		% === SCHRITT 1: Absender schliesst & verschlüsselt ===
+		\node[anchor=north, align=center] (lockA1) at (\colL, 0) {
+			\lockbox{c}{o}{\draw[->,line width=.45pt] (.88,-.28) -- (.88,.18);}\\[.1em]
+			{\small Absender schliesst}
+		};
+		\node[anchor=north, below=0.1cm of lockA1] (tabA1) {
 			\xortable
 			{\textcolor{RoyalBlue}{Klartext}}{\textcolor{RoyalBlue}{101011}}
 			{\textcolor{red}{Absender-Schlüssel}}{\textcolor{red}{011011}}
 			{Erster Krypto-Text}{110000}
-		\end{minipage}
-		&
-		\messagearrow{Erster Krypto-Text: \texttt{110000}}{-1.75}{1.75}
-		&
-		\begin{minipage}{4.3cm}
-			\centering
-			\phantom{\lockbox{o}{o}{}}
+		};
 
-			\vspace{.25em}
-			\phantom{Empfänger wartet}
-
-			\vspace{.8em}
-			\phantom{\xortable
-			{Erster Krypto-Text}{110000}
-			{\textcolor{ForestGreen}{Empfänger-Schlüssel}}{\textcolor{ForestGreen}{101010}}
-			{Zweiter Krypto-Text}{011010}}
-		\end{minipage}
-		\\[1.2cm]
-
-		\begin{minipage}{4.3cm}
-			\centering
-			\phantom{\lockbox{o}{o}{}}
-
-			\vspace{.25em}
-			\phantom{Absender wartet}
-
-			\vspace{.8em}
-			\phantom{\xortable
-			{Zweiter Krypto-Text}{011010}
-			{\textcolor{red}{Absender-Schlüssel}}{\textcolor{red}{011011}}
-			{Dritter Krypto-Text}{000001}}
-		\end{minipage}
-		&
-		\messagearrow{Zweiter Krypto-Text: \texttt{011010}}{1.75}{-1.75}
-		&
-		\begin{minipage}{4.3cm}
-			\centering
-			\lockbox{c}{c}{%
-				\draw[->,line width=.45pt] (2.06,-.28) -- (2.06,.18);
-			}
-
-			\vspace{.25em}
-			Empfänger schliesst
-
-			\vspace{.8em}
+		% === SCHRITT 2: Empfänger schliesst & verschlüsselt ===
+		\node[anchor=north, align=center] (lockB1) at (\colR, -1) {
+			\lockbox{c}{c}{\draw[->,line width=.45pt] (2.06,-.28) -- (2.06,.18);}\\[.1em]
+			{\small Empfänger schliesst}
+		};
+		\node[anchor=north, below=0.1cm of lockB1] (tabB1) {
 			\xortable
 			{Erster Krypto-Text}{110000}
 			{\textcolor{ForestGreen}{Empfänger-Schlüssel}}{\textcolor{ForestGreen}{101010}}
 			{Zweiter Krypto-Text}{011010}
-		\end{minipage}
-		\\[1.2cm]
+		};
 
-		\begin{minipage}{4.3cm}
-			\centering
-			\lockbox{o}{c}{%
-				\draw[->,line width=.45pt] (.88,-.28) -- (.88,.18);
-			}
+		% Pfeil 1: Erster Krypto-Text  (links → rechts)
+		% Arrow from output row of tabA1 to input row of tabB1
+		\coordinate (a1start) at ([xshift=0.8cm]$(tabA1.south east)!0.17!(tabA1.north east)$);
+		\coordinate (a1end) at ([xshift=-0.8cm]$(tabB1.north west)!0.17!(tabB1.south west)$);
+		\draw[->, line width=.65pt] (a1start) -- (a1end)
+			node[pos=0.5, below, sloped, font=\small, align=center]
+			{Erster Krypto-Text:\\ \texttt{110000}};
 
-			\vspace{.25em}
-			Absender öffnet
-
-			\vspace{.8em}
+		% === SCHRITT 3: Absender öffnet & entschlüsselt ===
+		\node[anchor=north, align=center] (lockA2) at (\colL, -5) {
+			\lockbox{o}{c}{\draw[->,line width=.45pt] (.88,-.28) -- (.88,.18);}\\[.1em]
+			{\small Absender öffnet}
+		};
+		\node[anchor=north, below=0.1cm of lockA2] (tabA2) {
 			\xortable
 			{Zweiter Krypto-Text}{011010}
 			{\textcolor{red}{Absender-Schlüssel}}{\textcolor{red}{011011}}
 			{Dritter Krypto-Text}{000001}
-		\end{minipage}
-		&
-		\messagearrow{Dritter Krypto-Text: \texttt{000001}}{-1.75}{1.75}
-		&
-		\begin{minipage}{4.3cm}
-			\centering
-			\phantom{\lockbox{o}{o}{}}
+		};
 
-			\vspace{.25em}
-			\phantom{Empfänger wartet}
+		% Pfeil 2: Zweiter Krypto-Text  (rechts → links)
+		% Arrow from output row of tabB1 to input row of tabA2
+		\coordinate (a2start) at ([xshift=-0.8cm]$(tabB1.south west)!0.17!(tabB1.north west)$);
+		\coordinate (a2end) at ([xshift=0.8cm]$(tabA2.north east)!0.17!(tabA2.south east)$);
+		\draw[<-, line width=.65pt] (a2end) -- (a2start)
+			node[pos=0.5, below, sloped, font=\small, align=center]
+			{Zweiter Krypto-Text:\\ \texttt{011010}};
 
-			\vspace{.8em}
-			\phantom{\xortable
-			{Dritter Krypto-Text}{000001}
-			{\textcolor{ForestGreen}{Empfänger-Schlüssel}}{\textcolor{ForestGreen}{101010}}
-			{\textcolor{RoyalBlue}{Klartext}}{\textcolor{RoyalBlue}{101011}}}
-		\end{minipage}
-		\\[1.2cm]
-
-		\begin{minipage}{4.3cm}
-			\centering
-			\phantom{\lockbox{o}{o}{}}
-
-			\vspace{.25em}
-			\phantom{Absender fertig}
-
-			\vspace{.8em}
-			\phantom{\xortable
-			{\textcolor{RoyalBlue}{Klartext}}{\textcolor{RoyalBlue}{101011}}
-			{\textcolor{red}{Absender-Schlüssel}}{\textcolor{red}{011011}}
-			{Erster Krypto-Text}{110000}}
-		\end{minipage}
-		&
-		\begin{tikzpicture}[x=1cm,y=1cm]
-			\node[font=\small] at (0,0) {Empfänger erhält den Klartext};
-		\end{tikzpicture}
-		&
-		\begin{minipage}{4.3cm}
-			\centering
-			\lockbox{o}{o}{%
-				\draw[->,line width=.45pt] (2.06,-.28) -- (2.06,.18);
-			}
-
-			\vspace{.25em}
-			Empfänger öffnet
-
-			\vspace{.8em}
+		% === SCHRITT 4: Empfänger öffnet & entschlüsselt ===
+		\node[anchor=north, align=center] (lockB2) at (\colR, -7) {
+			\lockbox{o}{o}{\draw[->,line width=.45pt] (2.06,-.28) -- (2.06,.18);}\\[.1em]
+			{\small Empfänger öffnet}
+		};
+		\node[anchor=north, below=0.1cm of lockB2] (tabB2) {
 			\xortable
 			{Dritter Krypto-Text}{000001}
 			{\textcolor{ForestGreen}{Empfänger-Schlüssel}}{\textcolor{ForestGreen}{101010}}
 			{\textcolor{RoyalBlue}{Klartext}}{\textcolor{RoyalBlue}{101011}}
-		\end{minipage}
-	\end{tabular}
+		};
+
+		% Pfeil 3: Dritter Krypto-Text  (links → rechts)
+		% Arrow from output row of tabA2 to input row of tabB2
+		\coordinate (a3start) at ([xshift=0.8cm]$(tabA2.south east)!0.17!(tabA2.north east)$);
+		\coordinate (a3end) at ([xshift=-0.8cm]$(tabB2.north west)!0.17!(tabB2.south west)$);
+		\draw[->, line width=.65pt] (a3start) -- (a3end)
+			node[pos=0.5, below, sloped, font=\small, align=center]
+			{Dritter Krypto-Text:\\ \texttt{000001}};
+
+		% --- Abschluss ---
+		\node[font=\small, align=center, below=0.2cm of tabB2] {Empfänger erhält den Klartext};
+	\end{tikzpicture}
 
 	\caption{Schlüsseltausch mit öffentlichen Schlüsseln}
 \end{figure}
+
+\clearpage
 % \begin{figure}[H]
 % 	\centering
 
@@ -366,7 +305,6 @@
 % 	\caption{Schlüsseltausch}
 % \end{figure}
 
-\clearpage
 \section{Drei-Wege-Schlüsseltausch}
 \begin{myprocedure}[Kommunikationsprotokoll Three-Pass Protocol]\label{myprocedure:Komm}
 	Das Kommunikationsprotokoll Three-Pass Protocol (auch Schlüsseltausch mit drei Durchgängen genannt) ermöglicht es Alice, einen geheimen Schlüssel $t$ an Bob zu senden, ohne dass sie zuvor einen gemeinsamen geheimen Schlüssel vereinbart haben. Dazu verwenden sowohl Alice als auch Bob jeweils einen eigenen zufälligen Schlüssel ($s_A$ bzw. $s_B$).
