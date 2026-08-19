@@ -209,10 +209,7 @@ pre code {
   color: #ffffff !important;
 }
 
-/* ==========================================================================
-   Pyodide Console & Output Area ( Output Text Fix: High Contrast White/Green )
-   ========================================================================== */
-
+/* Console & Execution Output Area */
 .qpyodide-console-area,
 .qpyodide-output-code-area,
 div[id^="qpyodide-output-code-area"],
@@ -238,7 +235,7 @@ pre.qpyodide-output-code-stdout,
 code.qpyodide-output-code-stdout,
 div.qpyodide-output-code-stdout {
   background-color: #141414 !important;
-  color: #3fb950 !important; /* Bright VS Code terminal green */
+  color: #3fb950 !important;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
   font-size: 0.72rem !important;
   line-height: 1.3 !important;
@@ -254,7 +251,7 @@ pre.qpyodide-output-code-stderr,
 code.qpyodide-output-code-stderr,
 div.qpyodide-output-code-stderr {
   background-color: #141414 !important;
-  color: #f85149 !important; /* Bright VS Code terminal red */
+  color: #f85149 !important;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
   font-size: 0.72rem !important;
   line-height: 1.3 !important;
@@ -266,8 +263,9 @@ div.qpyodide-output-code-stderr {
 }
 
 /* ==========================================================================
-   Ultra-Compact Callout Alert Boxes
+   LaTeX TColorBox Color Schemes for Quarto Callout Envs
    ========================================================================== */
+
 .callout {
   border-radius: 4px !important;
   border-width: 1px !important;
@@ -277,34 +275,87 @@ div.qpyodide-output-code-stderr {
   padding: 0.3rem 0.45rem !important;
 }
 
-.callout-note {
-  background-color: #ddf4ff !important;
-  border-color: #54aef0 !important;
-  color: #0969da !important;
-}
-
-.callout-tip {
-  background-color: #dafbe1 !important;
-  border-color: #4ac26b !important;
-  color: #1a7f37 !important;
-}
-
-.callout-important {
-  background-color: #fff8c5 !important;
-  border-color: #d4a72c !important;
-  color: #9a6700 !important;
-}
-
-.callout-warning {
-  background-color: #ffebe9 !important;
-  border-color: #ff8182 !important;
-  color: #cf222e !important;
-}
-
 .callout .callout-title {
   font-weight: 600 !important;
   font-size: 0.75rem !important;
   margin-bottom: 0.1rem !important;
+}
+
+/* 1. mydefinition (Goldenrod / Soft Goldenrod Yellow) */
+.env-definition, .callout-note.env-definition {
+  background-color: #fffbe6 !important;
+  border-color: #daa520 !important;
+  color: #7a5901 !important;
+}
+.env-definition .callout-title {
+  color: #7a5901 !important;
+}
+
+/* 2. myexample (DarkSeaGreen / Soft Green) */
+.env-example, .callout-note.env-example {
+  background-color: #f1f8f1 !important;
+  border-color: #66a166 !important;
+  color: #2d5a2d !important;
+}
+.env-example .callout-title {
+  color: #2d5a2d !important;
+}
+
+/* 3. myremark (Indigo / Soft Purple) */
+.env-remark, .callout-note.env-remark {
+  background-color: #f6f2fa !important;
+  border-color: #4b0082 !important;
+  color: #380062 !important;
+}
+.env-remark .callout-title {
+  color: #380062 !important;
+}
+
+/* 4. myexercise (RoyalBlue / Soft Blue) */
+.env-exercise, .callout-tip.env-exercise {
+  background-color: #edf4fe !important;
+  border-color: #4169e1 !important;
+  color: #1a365d !important;
+}
+.env-exercise .callout-title {
+  color: #1a365d !important;
+}
+
+/* 5. mychallenge (Gold!50!black / Soft Gold) */
+.env-challenge, .callout-warning.env-challenge {
+  background-color: #fffdf0 !important;
+  border-color: #b8860b !important;
+  color: #744210 !important;
+}
+.env-challenge .callout-title {
+  color: #744210 !important;
+}
+
+/* 6. myattention / mycaution (Red!50!black / Soft Red) */
+.env-attention, .callout-important.env-attention {
+  background-color: #fde8e8 !important;
+  border-color: #c53030 !important;
+  color: #742a2a !important;
+}
+.env-attention .callout-title {
+  color: #742a2a !important;
+}
+
+/* 7. myanswer (ForestGreen!10 / Soft Forest Green) */
+.env-answer, .callout-caution.env-answer {
+  background-color: #edf7ed !important;
+  border-color: #2e7d32 !important;
+  color: #1b4332 !important;
+}
+.env-answer .callout-title {
+  color: #1b4332 !important;
+}
+
+/* 8. myoverview (Yellow / Soft Yellow) */
+.env-overview, .callout-note.env-overview {
+  background-color: #fffde7 !important;
+  border-color: #fbc02d !important;
+  color: #826200 !important;
 }
 
 /* Ultra-Compact Tables */
