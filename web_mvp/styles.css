@@ -413,7 +413,7 @@ div.qpyodide-output-code-stderr {
 }
 
 /* ==========================================================================
-   LaTeX TColorBox Color Schemes for Quarto Callout Envs
+   LaTeX TColorBox Color Schemes for Quarto Callout Envs (Wrapped Targeting)
    ========================================================================== */
 
 .callout {
@@ -435,80 +435,107 @@ div.qpyodide-output-code-stderr {
 }
 
 /* 1. mydefinition (Goldenrod / Amber Tint) */
-.env-definition, .callout-note.env-definition {
+.env-definition .callout, div.env-definition div.callout {
   background-color: #fffbeb !important;
   border-color: #f59e0b !important;
   color: #92400e !important;
 }
-.env-definition .callout-title {
+.env-definition .callout-title, div.env-definition .callout-title {
   color: #78350f !important;
 }
 
 /* 2. myexample (DarkSeaGreen / Emerald Tint) */
-.env-example, .callout-note.env-example {
+.env-example .callout, div.env-example div.callout {
   background-color: #ecfdf5 !important;
   border-color: #10b981 !important;
   color: #065f46 !important;
 }
-.env-example .callout-title {
+.env-example .callout-title, div.env-example .callout-title {
   color: #047857 !important;
 }
 
 /* 3. myremark (Indigo / Purple Tint) */
-.env-remark, .callout-note.env-remark {
+.env-remark .callout, div.env-remark div.callout {
   background-color: #faf5ff !important;
   border-color: #8b5cf6 !important;
   color: #5b21b6 !important;
 }
-.env-remark .callout-title {
+.env-remark .callout-title, div.env-remark .callout-title {
   color: #6b21a8 !important;
 }
 
 /* 4. myexercise (RoyalBlue / Blue Tint) */
-.env-exercise, .callout-tip.env-exercise {
+.env-exercise .callout, div.env-exercise div.callout {
   background-color: #eff6ff !important;
   border-color: #3b82f6 !important;
   color: #1e40af !important;
 }
-.env-exercise .callout-title {
+.env-exercise .callout-title, div.env-exercise .callout-title {
   color: #1e3a8a !important;
 }
 
 /* 5. mychallenge (Gold / Amber Warm Tint) */
-.env-challenge, .callout-warning.env-challenge {
+.env-challenge .callout, div.env-challenge div.callout {
   background-color: #fff7ed !important;
   border-color: #ea580c !important;
   color: #9a3412 !important;
 }
-.env-challenge .callout-title {
+.env-challenge .callout-title, div.env-challenge .callout-title {
   color: #9a3412 !important;
 }
 
 /* 6. myattention / mycaution (Red / Rose Tint) */
-.env-attention, .callout-important.env-attention {
+.env-attention .callout, div.env-attention div.callout {
   background-color: #fff1f2 !important;
   border-color: #f43f5e !important;
   color: #9f1239 !important;
 }
-.env-attention .callout-title {
+.env-attention .callout-title, div.env-attention .callout-title {
   color: #881337 !important;
 }
 
 /* 7. myanswer (ForestGreen / Teal Tint) */
-.env-answer, .callout-caution.env-answer {
+.env-answer .callout, div.env-answer div.callout {
   background-color: #f0fdf4 !important;
   border-color: #14b8a6 !important;
   color: #115e59 !important;
 }
-.env-answer .callout-title {
+.env-answer .callout-title, div.env-answer .callout-title {
   color: #0f766e !important;
 }
 
 /* 8. myoverview (Yellow Tint) */
-.env-overview, .callout-note.env-overview {
+.env-overview .callout, div.env-overview div.callout {
   background-color: #fefce8 !important;
   border-color: #eab308 !important;
   color: #854d0e !important;
+}
+
+/* Fallback Quarto Base Callout Styles */
+.callout-note {
+  background-color: #fffbeb !important;
+  border-color: #f59e0b !important;
+  color: #92400e !important;
+}
+.callout-tip {
+  background-color: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  color: #1e40af !important;
+}
+.callout-warning {
+  background-color: #fff7ed !important;
+  border-color: #ea580c !important;
+  color: #9a3412 !important;
+}
+.callout-important {
+  background-color: #fff1f2 !important;
+  border-color: #f43f5e !important;
+  color: #9f1239 !important;
+}
+.callout-caution {
+  background-color: #f0fdf4 !important;
+  border-color: #14b8a6 !important;
+  color: #115e59 !important;
 }
 
 /* Modern Tech Tables */

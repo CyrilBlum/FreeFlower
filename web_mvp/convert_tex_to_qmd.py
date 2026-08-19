@@ -45,7 +45,7 @@ def format_code_block(code_content, caption_str=""):
     """Determines whether code should be an interactive pyodide block or static python block."""
     code_content = code_content.strip()
     if "import turtle" in code_content or "from turtle import" in code_content or "import pygame" in code_content or "from pygame" in code_content:
-        note = "\n:::{.callout-note .env-remark}\n💡 **Hinweis**: Dieses Skript verwendet grafische Desktop-Bibliotheken (`turtle` / `pygame`). Führen Sie diesen Code in Ihrer lokalen Entwicklungsumgebung (z.B. VS Code) aus.\n:::\n"
+        note = "\n:::{.env-remark}\n:::{.callout-note icon=false}\n💡 **Hinweis**: Dieses Skript verwendet grafische Desktop-Bibliotheken (`turtle` / `pygame`). Führen Sie diesen Code in Ihrer lokalen Entwicklungsumgebung (z.B. VS Code) aus.\n:::\n:::\n"
         return f"\n\n```python\n{caption_str}{code_content}\n```\n{note}\n"
     else:
         return f"\n\n```{{pyodide-python}}\n{caption_str}{code_content}\n```\n\n"
@@ -190,29 +190,29 @@ def convert_tex_content(tex_text):
     # Convert Enumerate List
     text = re.sub(r'\\begin\{enumerate\}(.*?)\\end\{enumerate\}', convert_enumerate, text, flags=re.DOTALL)
 
-    # Convert Custom Environments to Quarto Callouts with exact tcolorbox color scheme classes
-    def convert_env(txt, env_name, callout_spec, default_title):
+    # Convert Custom Environments to Quarto Callouts wrapped in outer div for 100% CSS targeting
+    def convert_env(txt, env_name, callout_type, env_class, default_title):
         pattern = r'\\begin\{' + env_name + r'\}(?:\[([^\]]+)\])?'
         def replacer(m):
             title = m.group(1) if m.group(1) else default_title
             title = clean_tex_escapes(title)
-            return f"\n\n::: {{{callout_spec} icon=false}}\n### {title}\n"
+            return f"\n\n::: {{{env_class}}}\n::: {{{callout_type} icon=false}}\n### {title}\n"
         txt = re.sub(pattern, replacer, txt)
-        txt = txt.replace(r'\end{' + env_name + r'}', '\n:::\n\n')
+        txt = txt.replace(r'\end{' + env_name + r'}', '\n:::\n:::\n\n')
         return txt
 
-    text = convert_env(text, "mydefinition", ".callout-note .env-definition", "Definition")
-    text = convert_env(text, "myexample", ".callout-note .env-example", "Beispiel")
-    text = convert_env(text, "myexercise", ".callout-tip .env-exercise", "Aufgabe")
-    text = convert_env(text, "myremark", ".callout-note .env-remark", "Bemerkung")
-    text = convert_env(text, "myoverview", ".callout-note .env-overview", "Übersicht")
-    text = convert_env(text, "myattention", ".callout-warning .env-attention", "Wichtiger Hinweis")
-    text = convert_env(text, "mychallenge", ".callout-warning .env-challenge", "Challenge")
+    text = convert_env(text, "mydefinition", ".callout-note", ".env-definition", "Definition")
+    text = convert_env(text, "myexample", ".callout-note", ".env-example", "Beispiel")
+    text = convert_env(text, "myexercise", ".callout-tip", ".env-exercise", "Aufgabe")
+    text = convert_env(text, "myremark", ".callout-note", ".env-remark", "Bemerkung")
+    text = convert_env(text, "myoverview", ".callout-note", ".env-overview", "Übersicht")
+    text = convert_env(text, "myattention", ".callout-warning", ".env-attention", "Wichtiger Hinweis")
+    text = convert_env(text, "mychallenge", ".callout-warning", ".env-challenge", "Challenge")
 
     # Convert Solutions \begin{myanswer} ... \end{myanswer} into Collapsible Callouts
     def convert_answer(m):
         ans = m.group(1).strip()
-        return f"\n\n::: {{.callout-caution .env-answer collapse=\"true\" icon=false}}\n### 💡 Musterlösung anzeigen\n{ans}\n:::\n\n"
+        return f"\n\n::: {{.env-answer}}\n::: {{.callout-caution collapse=\"true\" icon=false}}\n### 💡 Musterlösung anzeigen\n{ans}\n:::\n:::\n\n"
 
     text = re.sub(r'\\begin\{myanswer\}(.*?)\\end\{myanswer\}', convert_answer, text, flags=re.DOTALL)
 
