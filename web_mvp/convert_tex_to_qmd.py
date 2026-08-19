@@ -207,7 +207,7 @@ def convert_tex_content(tex_text):
     text = convert_env(text, "myremark", ".callout-note .env-remark", "Bemerkung")
     text = convert_env(text, "myoverview", ".callout-note .env-overview", "Übersicht")
     text = convert_env(text, "myattention", ".callout-warning .env-attention", "Wichtiger Hinweis")
-    text = convert_env(text, "mychallenge", ".callout-warning .env-challenge", "🏆 Trophy Challenge")
+    text = convert_env(text, "mychallenge", ".callout-warning .env-challenge", "Challenge")
 
     # Convert Solutions \begin{myanswer} ... \end{myanswer} into Collapsible Callouts
     def convert_answer(m):
