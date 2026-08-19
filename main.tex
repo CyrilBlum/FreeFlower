@@ -2,7 +2,7 @@
 %% choose document class (book / article / exam / beamer / flashcards)
 
 %% BOOK
-\documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
+% \documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
 % \documentclass[a4paper,11pt,svgnames,oneside]{book}
 
 %% ARTICLE
@@ -13,7 +13,7 @@
 % \documentclass[11pt,addpoints,answers,svgnames]{exam}
 
 %% BEAMER SLIDES (Choose aspect ratio: 169 = 16:9 widescreen, 43 = 4:3 standard, 1610 = 16:10)
-% \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer} %% 16:9 Widescreen (Recommended)
+\documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer} %% 16:9 Widescreen (Recommended)
 % \documentclass[aspectratio=43,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}  %% 4:3 Standard
 % \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens,handout]{beamer}
 
@@ -28,7 +28,7 @@
 %% set toggles (switches) for the document class
 \newtoggle{book} \newtoggle{article} \newtoggle{exam} \newtoggle{beamer} \newtoggle{flashcards} %% default value is 'false'
 
-\def\documentToggle{0} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
+\def\documentToggle{3} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
 
 \ifnumequal{\documentToggle}{0}{\settoggle{book}{true}}{}     %% book (0)
 \ifnumequal{\documentToggle}{1}{\settoggle{article}{true}}{}  %% article (1)
@@ -38,7 +38,7 @@
 
 %% School Customization Settings (open-source default: false = neutral layout)
 %% Set 'schoolcustomization' to 'true' to enable school-specific branding (e.g. FDU).
-\newtoggle{schoolcustomization} \settoggle{schoolcustomization}{false}
+\newtoggle{schoolcustomization} \settoggle{schoolcustomization}{true}
 \def\schoolTheme{FDU} %% Theme subfolder inside Customizations/ (e.g., FDU)
 
 %% Does the document contain at least one citation?  (true / false)
@@ -119,6 +119,7 @@
 		% \input{Grundlagen_Info/08_Gesellschaft/Feedback/Feedback}
 		% \input{Grundlagen_Info/08_Gesellschaft/Vertiefungsthema}
 		% \input{Grundlagen_Info/Various/Semesterplanung}
+		% \input{Grundlagen_Info/Various/Semesterplanung_FDU}
 		% \input{Grundlagen_Info/Various/Benotung}
 
 		% Ergänzungsfach Informatik
@@ -279,6 +280,7 @@
 
 		% Various
 		% \input{Grundlagen_Info/Various/Semesterplanung_Slides.tex}
+		% \input{Grundlagen_Info/Various/Intro_FDU.tex}
 		% \input{Various/MINT_Tag/Presentation_MINT_Tag}
 		% \input{Various/ETH_STACK_Meeting_2025/Presentation_STACK}
 		% \input{Various/Wahlpflichtmodul Statistik/K01_Deskriptive_Statistik.tex}

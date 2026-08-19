@@ -243,6 +243,7 @@ article_topics=(
 
     # Various
     "Semesterplanung:Grundlagen_Info/Various/Semesterplanung"
+    "Semesterplanung_FDU:Grundlagen_Info/Various/Semesterplanung_FDU"
     "Benotung:Grundlagen_Info/Various/Benotung"
     "Interessenwoche_Ablauf:Interessenwochen/Wn_Gf_Web/Beschreibung"
     "Interessenwoche_Auftrag:Interessenwochen/Wn_Gf_Web/Auftrag"
@@ -348,6 +349,8 @@ beamer_topics=(
     "LaTeX:EF/LaTeX/Slides/Slides_0"
 
     # Various
+    "Semesterplanung_Slides:Grundlagen_Info/Various/Semesterplanung_Slides.tex"
+    "Intro_FDU:Grundlagen_Info/Various/Intro_FDU.tex"
     "K01_Deskriptive_Statistik:Various/Wahlpflichtmodul Statistik/K01_Deskriptive_Statistik.tex"
 )
 
