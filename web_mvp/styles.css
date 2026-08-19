@@ -1,0 +1,327 @@
+/* VS Code Dark Modern & Ultra-Compact Theme for FreeFlower Web */
+
+:root {
+  --vscode-bg: #1e1e1e;
+  --vscode-editor-bg: #1e1e1e;
+  --vscode-toolbar-bg: #252526;
+  --vscode-border: #3c3c3c;
+  --vscode-text: #d4d4d4;
+  --vscode-blue: #569cd6;
+  --vscode-purple: #c586c0;
+  --vscode-yellow: #dcdcaa;
+  --vscode-orange: #ce9178;
+  --vscode-green: #6a9955;
+  --vscode-teal: #4ec9b0;
+  --vscode-light-blue: #9cdcfe;
+  --vscode-number: #b5cea8;
+  --vscode-btn-green: #238636;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  color: #1f2328;
+  background-color: #ffffff;
+  line-height: 1.4;
+  font-size: 0.88rem;
+}
+
+/* Remove sidebar completely and maximize content container space */
+.sidebar, #quarto-sidebar {
+  display: none !important;
+}
+
+#quarto-content {
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  padding: 0.4rem 1rem !important;
+}
+
+main.content {
+  padding-top: 0.4rem !important;
+}
+
+/* ==========================================================================
+   Auto-Hiding Sticky Top Navbar
+   ========================================================================== */
+.navbar {
+  background-color: #1e1e1e !important;
+  border-bottom: 1px solid #333333;
+  padding: 0.2rem 0.8rem !important;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #ffffff !important;
+}
+
+.nav-link {
+  color: #cccccc !important;
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 2px 6px !important;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #ffffff !important;
+  background-color: #37373d;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Ultra-Compact Headings & Spacing
+   ========================================================================== */
+h1 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e1e4e8;
+  padding-bottom: 0.2em;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+h2 {
+  font-size: 1.08rem;
+  font-weight: 600;
+  border-bottom: 1px solid #eaeef2;
+  padding-bottom: 0.2em;
+  margin-top: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+h3 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-top: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+p, ul, ol {
+  margin-bottom: 0.35rem;
+}
+
+/* Inline code */
+code:not(pre code) {
+  background-color: #2d2d2d;
+  color: #9cdcfe;
+  padding: 0.08em 0.25em;
+  border-radius: 3px;
+  font-size: 76% !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+}
+
+/* Static code blocks (VS Code Dark Modern) */
+pre.code-with-copy, .sourceCode {
+  background-color: var(--vscode-editor-bg) !important;
+  border: 1px solid var(--vscode-border) !important;
+  border-radius: 4px !important;
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.35rem !important;
+}
+
+pre code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 0.68rem !important;
+  line-height: 1.25 !important;
+  padding: 4px 6px !important;
+  color: #d4d4d4 !important;
+}
+
+/* ==========================================================================
+   Pyodide Interactive Monaco Code Editor - VS CODE DARK THEME & COMPACT SIZE
+   ========================================================================== */
+
+/* Main Pyodide Cell Container */
+.qpyodide-interactive-area {
+  border: 1px solid var(--vscode-border) !important;
+  border-radius: 4px !important;
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.35rem !important;
+  background-color: var(--vscode-editor-bg) !important;
+  overflow: hidden !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+}
+
+/* Monaco Editor Container Overrides */
+.qpyodide-editor, .monaco-editor, .monaco-editor-background, .monaco-editor .margin {
+  background-color: #1e1e1e !important;
+  border: none !important;
+}
+
+.monaco-editor .line-numbers {
+  color: #6e7681 !important;
+  font-size: 11px !important;
+}
+
+.monaco-editor .view-line {
+  font-size: 12px !important;
+  line-height: 18px !important;
+}
+
+/* Compact Pyodide Toolbar */
+.qpyodide-editor-toolbar {
+  background-color: var(--vscode-toolbar-bg) !important;
+  border-top: 1px solid var(--vscode-border) !important;
+  padding: 1px 4px !important;
+  min-height: 22px !important;
+  height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.qpyodide-editor-toolbar-left-buttons, .qpyodide-editor-toolbar-right-buttons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+/* Compact Buttons */
+.qpyodide-button {
+  font-size: 0.65rem !important;
+  padding: 1px 6px !important;
+  height: 18px !important;
+  line-height: 1.1 !important;
+  border-radius: 3px !important;
+}
+
+.qpyodide-button-run {
+  background-color: var(--vscode-btn-green) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  font-weight: 600 !important;
+  font-size: 0.66rem !important;
+}
+
+.qpyodide-button-run:hover {
+  background-color: #2ea043 !important;
+}
+
+.qpyodide-button-reset, .qpyodide-button-copy {
+  background-color: #333333 !important;
+  color: #cccccc !important;
+  border: 1px solid #444444 !important;
+  font-size: 0.62rem !important;
+}
+
+.qpyodide-button-reset:hover, .qpyodide-button-copy:hover {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   Pyodide Console & Output Area ( Output Text Fix: High Contrast White/Green )
+   ========================================================================== */
+
+.qpyodide-console-area,
+.qpyodide-output-code-area,
+div[id^="qpyodide-output-code-area"],
+div[id^="qpyodide-console-area"] {
+  background-color: #141414 !important;
+  color: #e6edf3 !important;
+  border-top: 1px solid var(--vscode-border) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.qpyodide-interactive-area pre,
+.qpyodide-interactive-area code,
+.qpyodide-console-area pre,
+.qpyodide-console-area code,
+.qpyodide-output-code-area pre,
+.qpyodide-output-code-area code {
+  color: #e6edf3 !important;
+}
+
+.qpyodide-output-code-stdout,
+pre.qpyodide-output-code-stdout,
+code.qpyodide-output-code-stdout,
+div.qpyodide-output-code-stdout {
+  background-color: #141414 !important;
+  color: #3fb950 !important; /* Bright VS Code terminal green */
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 0.72rem !important;
+  line-height: 1.3 !important;
+  padding: 6px 10px !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--vscode-border) !important;
+  border-radius: 0 !important;
+  white-space: pre-wrap !important;
+}
+
+.qpyodide-output-code-stderr,
+pre.qpyodide-output-code-stderr,
+code.qpyodide-output-code-stderr,
+div.qpyodide-output-code-stderr {
+  background-color: #141414 !important;
+  color: #f85149 !important; /* Bright VS Code terminal red */
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 0.72rem !important;
+  line-height: 1.3 !important;
+  padding: 6px 10px !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--vscode-border) !important;
+  border-radius: 0 !important;
+  white-space: pre-wrap !important;
+}
+
+/* ==========================================================================
+   Ultra-Compact Callout Alert Boxes
+   ========================================================================== */
+.callout {
+  border-radius: 4px !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.4rem !important;
+  padding: 0.3rem 0.45rem !important;
+}
+
+.callout-note {
+  background-color: #ddf4ff !important;
+  border-color: #54aef0 !important;
+  color: #0969da !important;
+}
+
+.callout-tip {
+  background-color: #dafbe1 !important;
+  border-color: #4ac26b !important;
+  color: #1a7f37 !important;
+}
+
+.callout-important {
+  background-color: #fff8c5 !important;
+  border-color: #d4a72c !important;
+  color: #9a6700 !important;
+}
+
+.callout-warning {
+  background-color: #ffebe9 !important;
+  border-color: #ff8182 !important;
+  color: #cf222e !important;
+}
+
+.callout .callout-title {
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0.1rem !important;
+}
+
+/* Ultra-Compact Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+th, td {
+  border: 1px solid #d0d7de;
+  padding: 2px 5px;
+  font-size: 0.75rem;
+}
+
+th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+}

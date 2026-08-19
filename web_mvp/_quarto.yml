@@ -1,0 +1,69 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "FreeFlower | Programmieren"
+  navbar:
+    background: "#1e1e1e"
+    left:
+      - href: index.qmd
+        text: "Übersicht"
+      - href: 01_getting_started.qmd
+        text: "1. Getting Started"
+      - href: 02_intro.qmd
+        text: "2. Einführung & Schleifen"
+      - href: 03_variables_debugging.qmd
+        text: "3. Variablen & Debugging"
+      - href: 04_functions.qmd
+        text: "4. Funktionen"
+      - href: 05_logical_expressions.qmd
+        text: "5. Verzweigungen"
+      - href: 06_datenstrukturen.qmd
+        text: "6. Datenstrukturen"
+      - href: 07_klassen.qmd
+        text: "7. OOP & Klassen"
+      - href: 08_game.qmd
+        text: "8. Game-Entwicklung"
+    right:
+      - icon: github
+        href: "https://github.com/CyrilBlum/FreeFlower"
+
+execute:
+  eval: false
+
+format:
+  html:
+    page-layout: article
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    code-copy: true
+    code-fold: false
+    include-in-header:
+      text: |
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          let lastScrollTop = 0;
+          let navbar = document.querySelector(".navbar");
+          if (!navbar) return;
+          
+          navbar.style.position = "sticky";
+          navbar.style.top = "0";
+          navbar.style.zIndex = "1000";
+          navbar.style.transition = "transform 0.25s ease-in-out";
+          
+          window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 50) {
+              navbar.style.transform = "translateY(-100%)";
+            } else {
+              navbar.style.transform = "translateY(0)";
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+          }, false);
+        });
+        </script>
+    filters:
+      - coatless-quarto/pyodide

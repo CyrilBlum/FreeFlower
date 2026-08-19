@@ -1,0 +1,28 @@
+---
+title: "1. Getting Started"
+---
+
+## Installation von Python und VS Code
+
+Die aktuellen Installationsanleitungen für Windows und MacOS finden Sie auf unserer GitHub-Pages-Website:
+
+    [https://cyrilblum.github.io/FreeFlower/vscode-python-setup.html](https://cyrilblum.github.io/FreeFlower/vscode-python-setup.html)
+
+Dort sind alle Schritte inklusive Abbildungen laufend aktuell dokumentiert.
+
+## Erstes Python-Programm schreiben und ausführen
+
+Jetzt schreiben wir unser erstes Python-Programm! Dieses besteht aus nur einer einzigen Zeile und lautet:
+
+```{pyodide-python}
+# File: hello_world.py
+print("Hello, World!")
+```
+
+Die kleine Ziffer `1` ist die Zeilennummer (diese wird vom Code-Editor automatisch gesetzt). Wir führen nun das Programm aus ("lassen das Programm laufen"), indem wir (oben rechts) auf den \faPlay-Knopf klicken. Bei uns sieht die Situation aus wie in Abschnitt.
+
+Abschnitt macht nichts weiter als den Text
+
+    `Hello, World!`
+
+im Terminal (Englisch: `terminal`) auszugeben^[[https://de.wikipedia.org/wiki/Hallo-Welt-Programm]](https://de.wikipedia.org/wiki/Hallo-Welt-Programm]).

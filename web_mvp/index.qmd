@@ -1,0 +1,32 @@
+---
+title: "FreeFlower | Programmieren Skript"
+subtitle: "Interaktives Lehrbuch für Grundlagenfach Informatik"
+---
+
+Willkommen zum interaktiven Skript von **FreeFlower**.
+
+Dieses Web-Skript ist eine digitale Version unseres Lehrbuchs. Alle Code-Beispiele und Aufgaben können direkt auf dieser Website im Browser ausgeführt und editiert werden.
+
+---
+
+## Interaktives Feature: Python im Browser
+
+Jeder Code-Block mit einem **Run Code** Button wird direkt über **WebAssembly (Pyodide)** in Ihrem Browser ausgeführt.
+
+```{pyodide-python}
+# Willkommen zu FreeFlower Python!
+name = "Informatik"
+print(f"Hallo {name}! Willkommen im interaktiven Skript.")
+
+for i in range(1, 4):
+    print(f"Schritt {i}: Python läuft direkt in Ihrem Browser! 🚀")
+```
+
+---
+
+## Kapitelübersicht
+
+- **[1. Getting Started](01_getting_started.qmd)**: Erste Schritte, VS Code Setup & `hello_world.py`.
+- **[2. Einführung in Python & Schleifen](02_intro.qmd)**: `print`, Arithmetik, Kommentare und `for`-Schleifen.
+- **[3. Variablen, Datentypen & Debugging](03_variables_debugging.qmd)**: Zuweisung, Strings, Typen und Fehlersuche.
+- **[4. Funktionen](04_functions.qmd)**: Eigene Funktionen definieren, Parameter und Rückgabewerte.

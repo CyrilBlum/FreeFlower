@@ -178,10 +178,36 @@ jobs:
         name: last_failed_file
         path: last_failed_file.txt
         if-no-files-found: ignore
+
+  compile-web:
+    name: Build & Deploy Web Platform (python.in-form-atik.ch)
+    runs-on: self-hosted
+    needs: [prepare-compile]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Ensure latest version
+      shell: bash
+      run: |
+        git fetch --all
+        git reset --hard origin/main
+
+    - name: Build Quarto Web Site
+      shell: bash
+      run: |
+        python3 web_mvp/convert_tex_to_qmd.py
+
+    - name: Deploy to Hetzner Web Directory
+      shell: bash
+      run: |
+        mkdir -p /mnt/HC_Volume_100926434/www/python.in-form-atik.ch/public_html
+        cp -r web_mvp/_site/* /mnt/HC_Volume_100926434/www/python.in-form-atik.ch/public_html/
+
   notify:
     name: Send email if anything fails
     runs-on: ubuntu-latest
-    needs: [test-runner, prepare-compile, compile-book, compile-article, compile-beamer]
+    needs: [test-runner, prepare-compile, compile-book, compile-article, compile-beamer, compile-web]
     if: failure()
     steps:
       - name: Download likely culprit file
@@ -240,7 +266,7 @@ jobs:
   notify-success:
     name: Send email on success
     runs-on: ubuntu-latest
-    needs: [test-runner, prepare-compile, compile-book, compile-article, compile-beamer]
+    needs: [test-runner, prepare-compile, compile-book, compile-article, compile-beamer, compile-web]
     if: success()
     steps:
       - name: Send email

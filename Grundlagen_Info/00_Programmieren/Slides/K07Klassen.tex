@@ -6,7 +6,7 @@
 
 \title[Programmieren]{Programmieren: Klassen}
 
-\subtitle{Klassen}
+\subtitle{Klassen \& Objektorientierte Programmierung}
 
 \author[Blum, Cyril] % (optional)
 {Cyril Blum}
@@ -68,7 +68,7 @@
 		# ...
 		\end{lstlisting}
 	\begin{itemize}
-		\item<6-> Eigenschaften / Attribute: \lstinline|name|, \lstinline|farbe|, \lstinline|alter|, etc.
+		\item<6-> Eigenschaften / Attribute: \lstinline|name|, \lstinline|groesse|, \lstinline|farbe|, etc.
 		\item<7-> Methoden: \lstinline|.bellen()|, \lstinline|.sitzen()|, etc.
 		\item<8-> \textbf{Wird in Games ständig verwendet, um Objekte zu \enquote{spawnen}!}
 	\end{itemize}
@@ -197,20 +197,196 @@ anna.geburtstag_feiern()  # Ausgabe: Anna ist jetzt 17 Jahre alt.
 \setbeamertemplate{logo}{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
 
-\begin{frame}[fragile]{Aufgaben}{Programmier-Skript}
+\begin{frame}[fragile]{Aufgaben: Grundlagen von Klassen}
 	\begin{itemize}
-		\item \readbox{Definition 7.1, Beispiele 7.1-7.2} \\[.3cm]
-$\rightarrow$ Ausführen und zwei weitere Instanzen von \lstinline|Person| erstellen.
-		\item \aufgabebox{Aufgaben 7.1, 7.2} $\rightarrow$ Zuerst auf VS Code, dann Test auf Moodle
-		\item Schnelle: \aufgabebox{Aufgabe 7.3, 7.4} (Skript selber lesen)
+		\item \readbox{Definition 7.1, Beispiele 7.1--7.2} \\[.2cm]
+			  $\rightarrow$ Code im Skript studieren und zwei weitere Instanzen von \lstinline|Person| erstellen.
+		\item \aufgabebox{Aufgabe 7.1} (Klasse \lstinline|Buch| mit \lstinline|titel|, \lstinline|autor|, \lstinline|seitenzahl| und Methode \lstinline|info()|)
+		\item \aufgabebox{Aufgabe 7.2} (Erweiterung der Klasse \lstinline|Bankkonto| um die Methode \lstinline|ueberweisen()|)
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Zusammenfassung: Klassen}
+\begin{frame}[fragile]{Vordefinierte Klassen in Python}
 	\begin{itemize}[<+->]
-		\item Klasse = eine Art von Variable
-		\item \textbf{Variable} = eine Instanz der Klasse
-		\item Z.B. \lstinline|meineliste=[10,6,1]| $\Rightarrow$ \lstinline|list| (Instanz der Klasse \lstinline|list|)
-		\item Klassen können \textbf{Attribute} und \textbf{Methoden} haben: z.B. \lstinline|hund = Hund("Bello", 3)| $\Rightarrow$ \lstinline|hund.name| (Attribut) und \lstinline|hund.bellen()| (Methode)
+		\item Jede Variable in Python gehört zu einer \textbf{vordefinierten Klasse}:
+		      \begin{itemize}
+			      \item \lstinline|int|, \lstinline|float| (Zahlen)
+			      \item \lstinline|str| (Zeichenketten)
+			      \item \lstinline|list|, \lstinline|dict|, \lstinline|set|, \lstinline|tuple| (Datenstrukturen)
+		      \end{itemize}
+		\item \textbf{Automatische Typ-Erkennung} (\enquote{Python-Magie}):
+		      \begin{lstlisting}
+x = 5       # Python erkennt automatisch: Objekt der Klasse int
+x = int(5)  # Aequivalente, explizite Schreibweise
+\end{lstlisting}
+		\item Mit der Funktion \lstinline|dir()| werden alle verfügbaren Methoden und Attribute einer Klasse oder Instanz angezeigt:
+		      \begin{lstlisting}
+print(dir(list))     # Zeigt alle Methoden der Klasse 'list'
+print(dir("hallo"))  # Zeigt Methoden einer String-Instanz
+\end{lstlisting}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Klassenattribute vs. Instanzattribute}
+	\begin{itemize}[<+->]
+		\item \textbf{Instanzattribute} (\lstinline|self.attribut|):
+		      Gelten individuell für ein einzelnes Objekt (z.B. \lstinline|self.name|, \lstinline|self.alter|).
+		\item \textbf{Klassenattribute}:
+		      Werden direkt in der Klasse definiert und sind für \textbf{alle Instanzen gleich}.
+	\end{itemize}
+	\pause
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class Schueler:
+    schule = "Kantonsschule im Lee" # Klassenattribut fuer alle
+
+    def __init__(self, name, klasse):
+        self.name = name            # Instanzattribut
+        self.klasse = klasse        # Instanzattribut
+
+s1 = Schueler("Lisa", "3a")
+s2 = Schueler("Tim", "4b")
+print(s1.schule) # Ausgabe: Kantonsschule im Lee
+
+Schueler.schule = "KLW" # Aenderung wirkt auf alle Instanzen!
+print(s2.schule) # Ausgabe: KLW
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Instanzzähler \& \lstinline|@classmethod|}
+	\begin{itemize}
+		\item Klassenattribute eignen sich ideal zum \textbf{Zählen von Instanzen}.
+		\item Mit \lstinline|@classmethod| definieren wir Methoden, die sich auf die Klasse (\lstinline|cls|) beziehen.
+	\end{itemize}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class Produkt:
+    anzahl_produkte = 0 # Klassenattribut
+
+    def __init__(self, name, preis):
+        self.name = name
+        self.preis = preis
+        Produkt.anzahl_produkte += 1 # Bei jeder neuen Instanz +1
+
+    @classmethod
+    def get_anzahl_produkte(cls):
+        print("Anzahl Produkte:", cls.anzahl_produkte)
+
+p1 = Produkt("Laptop", 1200)
+p2 = Produkt("Maus", 30)
+Produkt.get_anzahl_produkte() # Ausgabe: Anzahl Produkte: 2
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Aufgaben: Klassenattribute}
+	\begin{itemize}
+		\item \readbox{Kapitel 7.2 \& 7.3: Vordefinierte Klassen \& Klassenattribute}
+		\item \aufgabebox{Aufgabe 7.3} (Klasse \lstinline|Auto| mit Instanzattributen \lstinline|marke|, \lstinline|modell|, \lstinline|baujahr|, Klassenattribut \lstinline|anzahl_autos| und Klassenmethode \lstinline|get_statistik()|)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Vererbung (Inheritance)}
+	\begin{block}{Definition Vererbung}
+		Bei der \textbf{Vererbung} erbt eine Kindklasse (Subklasse) Attribute und Methoden von einer Elternklasse (Superklasse). Sie kann eigene Attribute/Methoden hinzufügen oder bestehende Methoden überschreiben.
+	\end{block}
+	\pause
+	\begin{itemize}[<+->]
+		\item Syntax für Vererbung: \lstinline|class Kindklasse(Elternklasse):|
+		\item Mit \lstinline|super().__init__(...)| wird der Konstruktor der Elternklasse aufgerufen.
+		\item Vermeidet Code-Duplizierung und ermöglicht modulare Programmierstrukturen.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Beispiel: Vererbung}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class Fahrzeug:
+    def __init__(self, marke, modell):
+        self.marke = marke
+        self.modell = modell
+    def info(self):
+        return f"{self.marke} {self.modell}"
+
+class ElektroAuto(Fahrzeug): # ElektroAuto erbt von Fahrzeug
+    def __init__(self, marke, modell, batterie_kapazitaet):
+        super().__init__(marke, modell) # Eltern-Konstruktor
+        self.batterie_kapazitaet = batterie_kapazitaet
+
+    def info(self): # Methode der Elternklasse ueberschreiben
+        basis = super().info()
+        return f"{basis}, Kapazitaet: {self.batterie_kapazitaet} kWh"
+
+e_car = ElektroAuto("Tesla", "Model 3", 75)
+print(e_car.info()) # Tesla Model 3, Kapazitaet: 75 kWh
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Aufgaben: Vererbung}
+	\begin{itemize}
+		\item \readbox{Kapitel 7.4.1: Vererbung}
+		\item \aufgabebox{Aufgabe 7.4} (Elternklasse \lstinline|Person|, Kindklasse \lstinline|Schueler| mit zusätzlichem Attribut \lstinline|schulklasse|, überschriebener Methode \lstinline|vorstellen()| und Zuweisungsmethode)
+		\item \aufgabebox{Aufgabe 7.5} (Basisklasse \lstinline|Bankkonto|, Unterklasse \lstinline|Sparkonto| mit \lstinline|zinsen_gutschreiben(zinssatz)|)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Polymorphismus (\enquote{Viele Formen})}
+	\begin{block}{Definition Polymorphismus}
+		Verschiedene Klassen können Methoden mit \textbf{demselben Namen} besitzen, aber jeweils eine eigene, spezifische Implementierung haben (\textit{poly} = viel, \textit{morphos} = Form).
+	\end{block}
+	\pause
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class Tier:
+    def geraeusch(self):
+        return "Ein Tier macht ein Geraeusch"
+
+class Hund(Tier):
+    def geraeusch(self):
+        return "Wuff!"
+
+class Katze(Tier):
+    def geraeusch(self):
+        return "Miau!"
+
+tiere = [Tier(), Hund(), Katze()]
+for t in tiere:
+    print(t.geraeusch()) # Jedes Objekt ruft seine eigene Methode auf!
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Praktisches Beispiel: Bibliothekssystem}
+	\begin{itemize}
+		\item In komplexen Anwendungen arbeiten \textbf{mehrere Klassen zusammen}:
+		      \begin{itemize}
+			      \item \lstinline|Buch|: Repräsentiert ein Buch (Titel, Autor, ISBN, Status)
+			      \item \lstinline|Bibliotheksmitglied|: Repräsentiert einen Ausleihenden
+			      \item \lstinline|Bibliothek|: Verwaltungsklasse für Sammlungen von Büchern und Mitgliedern
+		      \end{itemize}
+	\end{itemize}
+	\pause
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+class Bibliothek:
+    def __init__(self, name):
+        self.name = name
+        self.buecher = []
+        self.mitglieder = []
+
+    def buch_hinzufuegen(self, buch):
+        self.buecher.append(buch)
+        print(f"Buch '{buch.titel}' zur Bibliothek hinzugefuegt.")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Aufgaben: Bibliothekssystem \& Challenge}
+	\begin{itemize}
+		\item \readbox{Kapitel 7.5: Bibliothekssystem}
+		\item \aufgabebox{Aufgabe 7.6} (Klasse \lstinline|Zeitschrift| erbt von \lstinline|Buch| mit zusätzlicher \lstinline|ausgabe| und überschriebener \lstinline|info()|-Methode)
+		\item \aufgabebox{Challenge 7.7} (Vollständiges Lagerverwaltungssystem mit Klassen \lstinline|Produkt|, \lstinline|Elektronikprodukt|, \lstinline|Lebensmittel|, \lstinline|Lager|, \lstinline|Bestellung|)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Zusammenfassung: Klassen \& OOP}
+	\begin{itemize}[<+->]
+		\item \textbf{Klasse}: Bauplan für eigene Datentypen mit Attributen und Methoden.
+		\item \textbf{Instanz / Objekt}: Konkretes Exemplar (\lstinline|self|).
+		\item \textbf{Klassenattribute \& \lstinline|@classmethod|}: Für alle Instanzen einer Klasse gemeinsam.
+		\item \textbf{Vererbung}: Kindklassen erben Eigenschaften von Elternklassen (\lstinline|super()|).
+		\item \textbf{Polymorphismus}: Gleicher Methodenname, unterschiedliches Verhalten.
 	\end{itemize}
 \end{frame}
