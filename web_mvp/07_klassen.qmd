@@ -18,11 +18,13 @@ Ein **Objekt** ist eine konkrete Instanz ($=$ ein tatsächlich existierendes Exe
 
 :::
 
-Die folgenden beiden Analogien verdeutlichen die Beziehung zwischen einer Klasse und ihren Objekten:
+Die folgenden Analogien verdeutlichen die Beziehung zwischen einer Klasse und ihren Objekten:
 
-- Eine Klasse ist wie ein **Kochrezept**. Das Rezept beschreibt, welche *Zutaten* (Attribute) benötigt werden und welche *Schritte* (Methoden) ausgeführt werden, um ein Gericht zuzubereiten. Wenn Sie das Rezept befolgen, entsteht ein *konkretes Gericht* -- das ist das Objekt. Aus demselben Rezept (Klasse) können Sie beliebig viele Gerichte (Objekte) kochen, die gleich aufgebaut, aber individuell gewürzt sind (unterschiedliche Attributwerte).
+- Eine Klasse ist wie ein **Architektur-Bauplan** eines Hauses. Der Bauplan legt fest, welche Eigenschaften ein Haus besitzt (z.B. Wandfarbe, Anzahl Zimmer als Attribute) und welche Aktionen möglich sind (z.B. `tuer_oeffnen()` als Methode). Der Bauplan selbst ist noch kein bewohnbares Haus, sondern lediglich die Vorlage. Erst wenn nach diesem Bauplan gebaut wird, entsteht ein konkretes **Haus (Objekt)**. Nach demselben Bauplan (Klasse) können beliebig viele reale Häuser (Objekte) gebaut werden, die dieselbe Grundstruktur besitzen, sich aber in Wandfarbe oder Zimmeranzahl unterscheiden.
 
-- Eine Klasse kann man sich auch wie eine **Charaktervorlage** in einem Videospiel vorstellen. Die Vorlage *Krieger* oder *Magier* definiert allgemeine *Eigenschaften* (z.B. Lebenspunkte, Stärke, Intelligenz) und *Fähigkeiten* (z.B. angreifen, heilen, zaubern). Wenn Sie im Spiel einen neuen Charakter erstellen, z.B. *Irelia die Kriegerin*, dann ist das ein *Objekt*, welches auf der Vorlage *Krieger* (der Klasse) basiert. Alle Krieger haben ähnliche Fähigkeiten, aber individuelle Werte.
+- Eine Klasse funktioniert auch wie ein **Plätzchenausstecher** (oder eine Backform). Die Metallform (Klasse) definiert die Kontur und Struktur aller Plätzchen. Jedes ausgestochene Plätzchen ist ein konkretes **Objekt** (eine Instanz). Alle Plätzchen teilen die gleiche Grundform, können aber individuell verziert werden (unterschiedliche Attributwerte).
+
+- Eine Klasse kann man sich zusätzlich wie eine **Charaktervorlage** in einem Videospiel vorstellen. Die Vorlage *Krieger* oder *Magier* definiert allgemeine *Eigenschaften* (z.B. Lebenspunkte, Stärke, Intelligenz) und *Fähigkeiten* (z.B. angreifen, heilen, zaubern). Wenn Sie im Spiel einen neuen Charakter erstellen, z.B. *Irelia die Kriegerin*, dann ist das ein *Objekt*, welches auf der Vorlage *Krieger* (der Klasse) basiert. Alle Krieger haben ähnliche Fähigkeiten, aber individuelle Werte.
 
 Objekte werden in Games ständig verwendet, beispielsweise um Spieler, Gegner, Tiere, Wolken oder andere Elemente zu "spawnen", also um diese mit zufälligen Variationen zu erzeugen. Die Grundidee von Klassen ist in Abschnitt dargestellt.
 

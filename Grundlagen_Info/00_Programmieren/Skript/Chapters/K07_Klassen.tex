@@ -13,11 +13,13 @@ Eine \textbf{Klasse} ist eine Vorlage oder Schablone für Objekte. Sie fasst \te
 Ein \textbf{Objekt} ist eine konkrete Instanz ($=$ ein tatsächlich existierendes Exemplar) einer Klasse.
 \end{mydefinition}
 
-Die folgenden beiden Analogien verdeutlichen die Beziehung zwischen einer Klasse und ihren Objekten:
+Die folgenden Analogien verdeutlichen die Beziehung zwischen einer Klasse und ihren Objekten:
 \begin{itemize}
-	\item Eine Klasse ist wie ein \textbf{Kochrezept}. Das Rezept beschreibt, welche \textit{Zutaten} (Attribute) benötigt werden und welche \textit{Schritte} (Methoden) ausgeführt werden, um ein Gericht zuzubereiten. Wenn Sie das Rezept befolgen, entsteht ein \textit{konkretes Gericht} -- das ist das Objekt. Aus demselben Rezept (Klasse) können Sie beliebig viele Gerichte (Objekte) kochen, die gleich aufgebaut, aber individuell gewürzt sind (unterschiedliche Attributwerte).
+	\item Eine Klasse ist wie ein \textbf{Architektur-Bauplan} eines Hauses. Der Bauplan legt fest, welche Eigenschaften ein Haus besitzt (z.B. Wandfarbe, Anzahl Zimmer als Attribute) und welche Aktionen möglich sind (z.B. \lstinline|tuer_oeffnen()| als Methode). Der Bauplan selbst ist noch kein bewohnbares Haus, sondern lediglich die Vorlage. Erst wenn nach diesem Bauplan gebaut wird, entsteht ein konkretes \textbf{Haus (Objekt)}. Nach demselben Bauplan (Klasse) können beliebig viele reale Häuser (Objekte) gebaut werden, die dieselbe Grundstruktur besitzen, sich aber in Wandfarbe oder Zimmeranzahl unterscheiden.
 	
-	\item Eine Klasse kann man sich auch wie eine \textbf{Charaktervorlage} in einem Videospiel vorstellen. Die Vorlage \textit{Krieger} oder \textit{Magier} definiert allgemeine \textit{Eigenschaften} (z.B. Lebenspunkte, Stärke, Intelligenz) und \textit{Fähigkeiten} (z.B. angreifen, heilen, zaubern). Wenn Sie im Spiel einen neuen Charakter erstellen, z.B. \textit{Irelia die Kriegerin}, dann ist das ein \textit{Objekt}, welches auf der Vorlage \textit{Krieger} (der Klasse) basiert. Alle Krieger haben ähnliche Fähigkeiten, aber individuelle Werte.
+	\item Eine Klasse funktioniert auch wie ein \textbf{Plätzchenausstecher} (oder eine Backform). Die Metallform (Klasse) definiert die Kontur und Struktur aller Plätzchen. Jedes ausgestochene Plätzchen ist ein konkretes \textbf{Objekt} (eine Instanz). Alle Plätzchen teilen die gleiche Grundform, können aber individuell verziert werden (unterschiedliche Attributwerte).
+	
+	\item Eine Klasse kann man sich zusätzlich wie eine \textbf{Charaktervorlage} in einem Videospiel vorstellen. Die Vorlage \textit{Krieger} oder \textit{Magier} definiert allgemeine \textit{Eigenschaften} (z.B. Lebenspunkte, Stärke, Intelligenz) und \textit{Fähigkeiten} (z.B. angreifen, heilen, zaubern). Wenn Sie im Spiel einen neuen Charakter erstellen, z.B. \textit{Irelia die Kriegerin}, dann ist das ein \textit{Objekt}, welches auf der Vorlage \textit{Krieger} (der Klasse) basiert. Alle Krieger haben ähnliche Fähigkeiten, aber individuelle Werte.
 \end{itemize}
 
 Objekte werden in Games ständig verwendet, beispielsweise um Spieler, Gegner, Tiere, Wolken oder andere Elemente zu \enquote{spawnen}, also um diese mit zufälligen Variationen zu erzeugen. Die Grundidee von Klassen ist in \cref{fig:klassen-in-python} dargestellt.
