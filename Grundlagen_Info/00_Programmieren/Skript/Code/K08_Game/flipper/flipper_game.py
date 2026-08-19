@@ -96,7 +96,7 @@ while running:
                 objects = []
 
     # --- Tastaturstatus ---
-    if not gameover: 
+    if not gameover:
         keys = pg.key.get_pressed()
 
         # --- Flipper steuern (Taste O) ---
@@ -184,7 +184,7 @@ while running:
             ball.centerx = tube_rect.centerx
             step_bally = -10
             pixel_next_y = pixel_y + int(step_bally)
-            
+
             if pixel_next_x < 0 or pixel_next_x >= tube.get_width() or pixel_next_y < 0 or pixel_next_y >= tube.get_height():
                 # Out of tube bounds, reverse direction
                 step_ballx = -step_ballx
@@ -220,7 +220,7 @@ while running:
                 # Out of tube bounds, reverse direction
                 tube_hit = False
                 tube_timer = 0
-            
+
         print(tube_timer)
 
             #step_ballx = r.choice((-1, 1)) * r.uniform(3, 5)
@@ -250,14 +250,14 @@ while running:
         flipper_left.draw(screen)
         flipper_right.draw(screen)
 
-        # Objekte 
+        # Objekte
         for o in objects:
             if not o.collected:
                 o.draw(screen)
-                
+
 
         obj_stick.draw(screen)
-    
+
 
         # Score anzeigen
         score_text = font.render(f"Score: {score}", True, (0, 0, 0))
@@ -267,7 +267,7 @@ while running:
         pg.draw.rect(screen, (0, 0, 0), floor)
         pg.draw.rect(screen, (0, 0, 0), wall_l)
         pg.draw.rect(screen, (0, 0, 0), wall_r)
-    
+
     else:
         # Game Over Bildschirm
         game_over_text = font.render("GAME OVER\n Press R to restart", True, (255, 0, 0))

@@ -314,12 +314,12 @@ format:
           let lastScrollTop = 0;
           let navbar = document.querySelector(".navbar");
           if (!navbar) return;
-          
+
           navbar.style.position = "sticky";
           navbar.style.top = "0";
           navbar.style.zIndex = "1000";
           navbar.style.transition = "transform 0.25s ease-in-out";
-          
+
           window.addEventListener("scroll", function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop && scrollTop > 50) {

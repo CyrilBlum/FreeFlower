@@ -238,28 +238,44 @@ Wie wir gesehen haben, beinhalten gewisse Klassen bereits Methoden, wie beispiel
 \lstinputlisting[language=Python,caption=\texttt{verfuegbare\_methoden.py},label=listing:verfuegbare_methoden]{Grundlagen_Info/00_Programmieren/Skript/Code/K07_Klassen/verfuegbare_methoden.py}
 \end{myexample}
 
-\section{Klassenmethoden und Attribute}
+\section{Klassenattribute}
 
-Neben den Instanzattributen (die zu jedem Objekt gehören) können Klassen auch Klassenattribute haben, die für alle Instanzen gleich sind.
+Neben den Instanzattributen (die zu jedem einzelnen Objekt gehören) können Klassen auch \textbf{Klassenattribute} besitzen. Ein Klassenattribut existiert nur einmal für die gesamte Klasse und wird von allen Instanzen gemeinsam genutzt.
 
 \begin{myexample}[Klassenattribute] Folgendes Beispiel zeigt, wie Klassenattribute definiert und verwendet werden können, beispielsweise um SchülerInnen mit Attributen wie Name und Klasse zu erstellen:
 \lstinputlisting[language=Python,caption=\texttt{klassenattribute.py},label=listing:klassenattribute]{Grundlagen_Info/00_Programmieren/Skript/Code/K07_Klassen/klassenattribute.py}
 \end{myexample}
 
 \begin{myexample}[Instanzzähler]
-Ein häufiger Anwendungsfall für Klassenattribute ist das Zählen von Instanzen:
+Ein häufiger Anwendungsfall für Klassenattribute ist das Zählen von erzeugten Objekten:
 
 \lstinputlisting[language=Python,caption=\texttt{instanzzaehler.py},label=listing:instanzzaehler]{Grundlagen_Info/00_Programmieren/Skript/Code/K07_Klassen/instanzzaehler.py}
 \end{myexample}
 
 \begin{myexercise}
-	Erstellen Sie eine Klasse \lstinline|Auto| mit den Instanzattributen \lstinline|marke|, \lstinline|modell| und \lstinline|baujahr|. Fügen Sie ein Klassenattribut \lstinline|anzahl_autos| hinzu, das die Gesamtzahl der erstellten Auto-Objekte zählt. Implementieren Sie eine Klassenmethode \lstinline|get_statistik()|, die die Anzahl der Autos zurückgibt.
+	Erstellen Sie eine Klasse \lstinline|Auto| mit den Instanzattributen \lstinline|marke|, \lstinline|modell| und \lstinline|baujahr|. Fügen Sie ein Klassenattribut \lstinline|anzahl_autos| hinzu, das bei jeder Neuerstellung eines Auto-Objekts im Konstruktor um \lstinline|1| erhöht wird.
 
 	\begin{myanswer}
 		\leavevmode
 		\lstinputlisting[language=Python,caption=\texttt{auto.py},label=listing:auto]{Grundlagen_Info/00_Programmieren/Skript/Code/K07_Klassen/auto.py}
 	\end{myanswer}
 \end{myexercise}
+
+\begin{mychallenge}[Alternative Konstruktoren mit @classmethod]
+In Python kann eine Klasse nur einen einzigen \lstinline|__init__|-Konstruktor besitzen. Möchte man Objekte aus unterschiedlichen Datenquellen erstellen (z.B. aus einem Geburtsjahr statt des Alters oder aus einer CSV-Textzeile \lstinline|"Anna;16"|), verwendet man sogenannte \textbf{Klassenmethoden} mit dem Dekorator \lstinline|@classmethod|.
+
+Eine Klassenmethode erhält als ersten Parameter nicht das konkrete Objekt (\lstinline|self|), sondern die Klasse selbst (\lstinline|cls|).
+
+Erweitern Sie eine Klasse \lstinline|Schueler| um zwei alternative Konstruktoren:
+\begin{enumerate}
+    \item \lstinline|@classmethod def aus_geburtsjahr(cls, name, geburtsjahr)|: berechnet das Alter (basierend auf dem aktuellen Jahr 2026) und gibt ein neues \lstinline|cls(name, alter)|-Objekt zurück.
+    \item \lstinline|@classmethod def aus_csv_zeile(cls, csv_zeile)|: trennt den String \lstinline|"Name;Alter"| am Strichpunkt auf und gibt ein neues \lstinline|cls(name, int(alter))|-Objekt zurück.
+\end{enumerate}
+
+\begin{myanswer}
+\lstinputlisting[language=Python,caption=\texttt{schueler\_factory\_challenge.py},label=listing:schueler_factory_challenge]{Grundlagen_Info/00_Programmieren/Skript/Code/K07_Klassen/schueler_factory_challenge.py}
+\end{myanswer}
+\end{mychallenge}
 
 \section{Vererbung und Polymorphismus}
 \subsection{Vererbung}

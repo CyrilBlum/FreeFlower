@@ -1,5 +1,5 @@
 class Auto:
-    anzahl_autos = 0
+    anzahl_autos = 0  # Klassenattribut
 
     def __init__(self, marke, modell, baujahr):
         self.marke = marke
@@ -9,10 +9,6 @@ class Auto:
 
     def info(self):
         print(f"{self.marke} {self.modell} ({self.baujahr})")
-
-    @classmethod
-    def get_statistik(cls):
-        print(f"Anzahl Autos insgesamt: {cls.anzahl_autos}")
 
 
 # Autos erstellen
@@ -24,4 +20,4 @@ auto_3 = Auto("BMW", "X5", 2019)
 auto_1.info()
 auto_2.info()
 auto_3.info()
-Auto.get_statistik()
+print(f"Anzahl Autos insgesamt: {Auto.anzahl_autos}")

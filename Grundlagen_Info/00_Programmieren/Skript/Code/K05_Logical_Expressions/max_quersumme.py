@@ -14,7 +14,7 @@ for _ in range(10):
             ziffer = str(potenz)[i]
             aktuelle_summe += int(ziffer)
             i += 1
-        
+
         if aktuelle_summe > maximale_summe:
             maximale_summe = aktuelle_summe
             beste_a = a

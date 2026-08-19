@@ -32,8 +32,8 @@ while True:
     # Turtle verstecken (damit sie nicht das Haus verdeckt)
     t.hideturtle()
 
-    
+
     t.reset()
 
-# Turtle-Zeichnung stehen lassen    
+# Turtle-Zeichnung stehen lassen
 t.done()

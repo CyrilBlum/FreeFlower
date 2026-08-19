@@ -32,7 +32,7 @@ while running:
         player.y += speed
     player.clamp_ip(screen.get_rect())  # im Fenster halten
 
-    # --- render (zeichnen) --- 
+    # --- render (zeichnen) ---
     screen.fill(background_color)  # Hintergrundfarbe setzen
     pg.draw.rect(screen, (255, 255, 255), player)  # Spieler zeichnen
 

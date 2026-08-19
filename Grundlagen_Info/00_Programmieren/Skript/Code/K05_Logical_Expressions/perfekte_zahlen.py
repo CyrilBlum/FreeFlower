@@ -12,7 +12,7 @@ def finde_perfekte_zahlen(grenze):
 
         if zahl == teiler_summe:
             print(f"Perfekte Zahl gefunden: {zahl}")
-        
+
         zahl += 1
 
 finde_perfekte_zahlen(100000)

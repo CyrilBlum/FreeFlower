@@ -61,11 +61,11 @@ while running:
 
     # Zeichnen
     screen.fill("#202020") # Dunkelgrauer Hintergrund
-    
+
     # Gruppen haben eine eingebaute draw-Funktion
     muenz_gruppe.draw(screen)
     spieler_gruppe.draw(screen)
-    
+
     pygame.display.flip()
     clock.tick(60) # Begrenzung auf 60 Bilder pro Sekunde
 

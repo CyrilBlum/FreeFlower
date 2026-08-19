@@ -25,12 +25,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-# 
+#
     # 2. Bewegung mit Delta Time
     keys = pygame.key.get_pressed()
 
     # Wenn dt z.B. 0.016 ist, rechnen wir: 300 Pixel / Sekunde * 0.016 Sekunden = 4.8 Pixel Bewegung
-    
+
     if keys[pygame.K_LEFT]:
         player_pos.x -= player_speed * dt
     if keys[pygame.K_RIGHT]:

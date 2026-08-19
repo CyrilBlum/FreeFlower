@@ -12,4 +12,4 @@ for _ in range(len(liste_a)):
             break  # Verhindert, dass das gleiche Element in liste_b mehrfach gezählt wird
         index_b += 1
     index_a += 1
-print(count)    
+print(count)

@@ -35,7 +35,7 @@ class StickObj:
         self.sticky_duration = 0
         self.direction_stick_x = 0
         self.direction_stick_y = 0
-    
+
     def draw(self, screen):
         pg.draw.circle(screen, self.color, self.rect.center, self.rect.width // 2)
 
@@ -53,11 +53,11 @@ class StickObj:
                 self.color = (r.randint(100,255), r.randint(100,255), r.randint(100,255))
             step_bally = 0
             step_ballx = 0
-            
+
         elif self.sticky_duration == 1:
             score += 5
             stick_release_sound.play()
-            
+
             ball.centerx = self.rect.centerx + self.direction_stick_x*30
             ball.centery = self.rect.centery + self.direction_stick_y*30
             step_ballx = self.direction_stick_x * 5
@@ -65,9 +65,9 @@ class StickObj:
             self.sticky_duration -= 1
 
         return ball, score, step_ballx, step_bally
-        
 
-    
+
+
 
 class CollectObj:
     """
@@ -79,11 +79,11 @@ class CollectObj:
         self.radius = radius
         self.color = color
         self.collected = False
-    
+
     def draw(self, screen):
         if not self.collected:
             screen.blit(dollar, (self.position[0], self.position[1]))
-            
+
 
 
 class Flipper:
@@ -139,10 +139,10 @@ class Flipper:
         self.width = width
         self.current_speed = 0
         self.color = color
-        self.flipper_type = flipper_type    
+        self.flipper_type = flipper_type
         self.max_angle = start_angle + max_up_angle
         self.bounceback_factor = bounceback_factor
-        
+
 
     def update_angle(self, is_pressed):
         """
@@ -172,7 +172,7 @@ class Flipper:
                 # if not moving, speed is 0
                 else:
                     self.current_speed = 0
-            
+
 
         else:
             # Flipper fällt zurück Richtung 0°
@@ -192,7 +192,7 @@ class Flipper:
                 # if not moving, speed is 0
                 else:
                     self.current_speed = 0
-            
+
 
     def calculate_flipper_end_base(self):
         end_x = self.start_base[0] + self.length * m.cos(m.radians(self.current_angle))

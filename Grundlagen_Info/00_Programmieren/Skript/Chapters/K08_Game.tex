@@ -361,6 +361,60 @@ def reset_ball(direction):  # direction: -1 nach links, +1 nach rechts
 
 
 
+\section{Dateiverarbeitung: Speicher- \& Highscore-Systeme (File I/O)}
+Damit ein Game Spielstände, Einstellungen oder Highscores auch nach dem Beenden des Programms behält, müssen Daten dauerhaft auf dem Datenträger gespeichert werden. In Python erfolgt der Dateizugriff am sichersten mit dem \lstinline|with open(...)|-Konstrukt, welches sicherstellt, dass die Datei nach dem Bearbeiten automatisch geschlossen wird.
+
+\subsection{Einfache Textdateien (.txt)}
+Mit dem Modus \lstinline|"r"| (Read) werden Daten gelesen, mit \lstinline|"w"| (Write) überschrieben und mit \lstinline|"a"| (Append) angefügt.
+
+\begin{mydefinition}[Dateien lesen und schreiben]
+\begin{lstlisting}
+# Highscore in Datei schreiben
+highscore = 250
+with open("highscore.txt", "w", encoding="utf-8") as file:
+    file.write(str(highscore))
+
+# Highscore aus Datei lesen
+with open("highscore.txt", "r", encoding="utf-8") as file:
+    content = file.read().strip()
+    highscore = int(content)
+\end{lstlisting}
+\end{mydefinition}
+
+\begin{myexercise}[Highscore-Speicher in Pygame]\label{myexercise:HighscoreTxt}
+Schreiben Sie zwei Hilfsfunktionen \lstinline|load_highscore()| und \lstinline|save_highscore(score)| für Ihr Game:
+\begin{enumerate}
+    \item \lstinline|load_highscore()| prüft mit \lstinline|os.path.exists("highscore.txt")|, ob die Datei existiert. Falls ja, liest sie die Zahl aus und gibt sie als \lstinline|int| zurück. Falls nicht (oder bei einem Fehler), gibt sie \lstinline|0| zurück.
+    \item \lstinline|save_highscore(score)| schreibt den neuen Punktestand in die Datei \texttt{highscore.txt}.
+\end{enumerate}
+\end{myexercise}
+
+\subsection{Strukturierte Tabellen mit CSV (.csv)}
+Möchte man eine Rangliste (Leaderboard) mit mehreren Spielernamen und Punkteständen speichern, eignet sich das CSV-Format (Comma-Separated Values). Python bietet dafür das eingebaute Modul \lstinline|csv|.
+
+\begin{mydefinition}[CSV-Dateien lesen und schreiben]
+\begin{lstlisting}
+import csv
+
+# Leaderboard speichern
+scores = [["Alice", 240], ["Bob", 180], ["Clara", 310]]
+with open("highscores.csv", "w", newline="", encoding="utf-8") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Player", "Score"])  # Header
+    writer.writerows(scores)
+
+# Leaderboard laden
+with open("highscores.csv", "r", encoding="utf-8") as file:
+    reader = csv.reader(file)
+    next(reader, None)  # Header-Zeile überspringen
+    for row in reader:
+        player_name = row[0]
+        player_score = int(row[1])
+\end{lstlisting}
+\end{mydefinition}
+
+\begin{myexercise}[Leaderboard-Tabelle mit CSV]\label{myexercise:HighscoreCsv}
+Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-Datei \texttt{highscores.csv} einliest, die Einträge nach Punktestand absteigend sortiert und die Top-3-Spieler auf der Konsole oder im Pygame-Fenster ausgibt.
 \end{myexercise}
 
 \section{Game-Auftrag}
@@ -512,10 +566,15 @@ Wobei:
         \lstinputlisting[language=Python,caption=\texttt{game\_intro\_collision.py},label=listing:Kollisionen]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_intro_collision.py}
     \end{myanswer}
 
-    % \begin{myanswer}[myexercise:Highscore]
-    %     \leavevmode %
-    %     \lstinputlisting[language=Python,caption=\texttt{TODO},label=listing:Highscore]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/TODO}
-    % \end{myanswer}
+    \begin{myanswer}[myexercise:HighscoreTxt]
+        \leavevmode %
+        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_txt.py},label=listing:HighscoreTxt]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_txt.py}
+    \end{myanswer}
+
+    \begin{myanswer}[myexercise:HighscoreCsv]
+        \leavevmode %
+        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_csv.py},label=listing:HighscoreCsv]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_csv.py}
+    \end{myanswer}
 
     \begin{myanswer}[myexercise:Ereignisse]
         \leavevmode %
