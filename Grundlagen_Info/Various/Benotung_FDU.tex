@@ -1,0 +1,118 @@
+\IfFileExists{Customizations/FDU/fdu_theme.tex}{
+	\input{Customizations/FDU/fdu_theme.tex}
+}{
+	\definecolor{FDUgreen}{RGB}{178,196,89}
+	\definecolor{FDUblue}{RGB}{10,159,227}
+	\definecolor{FDUteal}{RGB}{39,125,112}
+	\definecolor{FDUink}{RGB}{35,42,47}
+}
+
+% Save the original definition
+\let\oldtextbf\textbf
+
+% Redefine \textbf to include FDU blue color
+\renewcommand{\textbf}[1]{\oldtextbf{\textcolor{FDUblue}{#1}}}
+
+\title{\color{FDUteal}\bfseries Grundlagenfach Informatik \textperiodcentered{} Benotungsrichtlinien}
+\author{Cyril Blum}
+
+\begin{document}
+
+\tikzfading[name=footerfade,top color=transparent!100,bottom color=transparent!0]
+
+% Define reusable FDU full-width footer with text positioned outside (above) the colored line
+\newcommand{\fdufooter}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=south,inner sep=0pt,outer sep=0pt,yshift=0mm,opacity=.50,path fading=footerfade] at (current page.south)
+      {\includegraphics[width=\paperwidth]{Customizations/FDU/assets/Glatt_Linie_3_farbig_lang.pdf}};
+    \node[anchor=south east,inner sep=0pt,xshift=-8mm,yshift=10mm] at (current page.south east)
+      {\includegraphics[height=6mm]{Customizations/FDU/assets/02_System_Stempelversion_Logo_RZ_schwarz.pdf}};
+    \node[anchor=south west,font=\scriptsize\color{FDUink},xshift=8mm,yshift=10mm] at (current page.south west)
+      {Informatik, Benotung};
+    \node[anchor=south east,font=\scriptsize\color{FDUink},xshift=-48mm,yshift=10mm] at (current page.south east)
+      {\thepage};
+  \end{tikzpicture}%
+}
+
+% Configure default fancy pagestyle
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Informatik, Benotung}
+\rhead{Cyril Blum, \today, Dübendorf}
+\cfoot{\fdufooter}
+
+% Redefine 'plain' pagestyle so \maketitle and unnumbered first pages get the FDU footer
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \lhead{Informatik, Benotung}%
+  \rhead{Cyril Blum, \today, Dübendorf}%
+  \cfoot{\fdufooter}%
+}
+
+% Redefine 'empty' pagestyle to ensure every page gets the FDU footer
+\fancypagestyle{empty}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0.4pt}%
+  \lhead{Informatik, Benotung}%
+  \rhead{Cyril Blum, \today, Dübendorf}%
+  \cfoot{\fdufooter}%
+}
+
+\newtcolorbox{textBox}[1][]{
+	parbox=false,
+	colback=FDUteal!8,
+	colframe=FDUteal,
+	colbacktitle=FDUteal,
+	enhanced jigsaw,
+	breakable,
+	attach boxed title to top text left={yshift=-3mm,yshifttext=-3mm},
+	#1,%
+}
+
+\maketitle
+
+\section*{\textcolor{FDUteal}{\emoji{input-numbers} Zusammensetzung der Note}}
+
+Sie werden im Laufe des Semesters so viele schriftliche Prüfungen ablegen, wie Sie Wochenlektionen haben, also beispielsweise drei Prüfungen im ersten Semester. Sämtliche schriftlichen Noten werden dabei zu gleichen Teilen gewichtet.
+
+Bitte beachten Sie, dass ich Ihnen die Noten aller Leistungskontrollen (schriftliche Prüfungsnoten, mündliche Note) bereits auf 1/10 gerundet bekanntgeben werde (z.\,B. 4.9 oder 5.3). Ich werde dann stets mit diesen auf Zehntel gerundeten Noten-Werten arbeiten.
+
+\begin{mycaution}
+	Wer zu einem festgesetzten Probentermin nicht erscheint, schreibt am Semesterende eine \textbf{Semesterprüfung}. Es erfolgt keine spezielle Einladung, da der Termin jeweils zu Beginn des Semesters kommuniziert wird. Es liegt im Ermessen der Lehrperson, ob in begründeten Fällen (z.\,B. amtliches Aufgebot, länger dauernde Krankheit, o.\,Ä.) eine Ausnahme von dieser Regelung gewährt werden kann. Das Datum der Semesterprüfung ist ersichtlich auf Moodle, im Abschnitt \enquote{\textbf{Prüfungen}}.
+\end{mycaution}
+
+\begin{textBox}[title=\emoji{speaking-head} Bonus 1: Wortmeldungen im Unterricht]
+
+	Die mündliche Note ergibt sich aus der (subjektiv wahrgenommenen) Qualität und Quantität (Menge) Ihrer Wortmeldungen im Unterricht. Wie in der Tabelle ersichtlich, kann der Mündlich-Beitrag auch negativ ausfallen. Der Mündlich-Bonus $B_m$ wird wie folgt berechnet:
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c}
+			\textbf{Mündliches Engagement} & \textbf{Noten-Bonus} \\\midrule\midrule
+			Sehr hoch                      & 0.15                 \\\midrule
+			Hoch                           & 0.1                  \\\midrule
+			Durchschnittlich               & 0                    \\\midrule
+			Störend / Uninteressiert       & -0.1                    \\
+		\end{tabular}
+	\end{table}
+	
+\end{textBox}
+
+\begin{textBox}[title=\emoji{speech-balloon} Bonus 2: Rückmeldungen zu den Skripts und Unterlagen, colback=FDUblue!8, colframe=FDUblue, colbacktitle=FDUblue]
+	Aktuell befinden sich viele meiner Skripts im Aufbau, daher können sich an verschiedenen Orten Fehler eingeschlichen haben. Sie haben die Möglichkeit, Ihre \textit{Endnote} um 0.05 Punkte zu erhöhen, indem Sie insgesamt \textbf{5 Punkte} durch Rückmeldungen sammeln. 0.05 Notenpunkte klingt nach wenig, dies führt jedoch in 10\% aller Fälle zu einem Anstieg einer halben Note \textit{im Zeugnis}! Sie können für jede von mir akzeptierte Einreichung Punkte sammeln:
+	\begin{itemize}
+		\item \textbf{1 Punkt} für Schreibfehler, Tippfehler, stilistisch unsaubere Sätze
+		\item \textbf{2 Punkte} für inhaltliche Fehler oder für inhaltliche Vorschläge, wie das Skript verbessert werden kann (z.\,B. Abschnitte, die man verkürzen kann oder Dinge, die man noch hinzufügen sollte)
+	\end{itemize}
+
+	Rückmeldungen zu Moodle-Seiten oder anderen, von mir erstellten Unterlagen zählen ebenfalls! Jede Rückmeldung wird nur einmal beachtet, es gilt also das Prinzip \enquote{der / die Schnellere erhält die Punkte}. Darüber, welche Vorschläge umgesetzt werden und welche Punkte angerechnet werden, entscheidet die Lehrperson. Ich danke Ihnen im Voraus für Ihre Rückmeldungen!
+	
+	\textbf{Wichtig}: Damit Sie Punkte erhalten, müssen Sie immer klar angeben, wo Sie den Fehler gefunden haben. Reichen Sie Ihre Meldungen stets über das Rückmeldungs-Formular auf Moodle ein!
+\end{textBox}
+
+Die finale Semester-Endnote $N_e$ (die Note, welche im Zeugnis stehen wird) ergibt sich also aus der Summe des schriftlichen Schnitts $N_s$, des Mündlich-Bonus $B_m$ sowie des Feedback-Bonus $B_f$, gerundet auf die nächste halbe Note:
+
+\[N_e=\text{\texttt{runden\_auf\_halbe\_note}}\Big(N_s+B_m+B_f\Big).\]
+
+\end{document}

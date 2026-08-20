@@ -245,6 +245,7 @@ article_topics=(
     "Semesterplanung:Grundlagen_Info/Various/Semesterplanung"
     "Semesterplanung_FDU:Grundlagen_Info/Various/Semesterplanung_FDU"
     "Benotung:Grundlagen_Info/Various/Benotung"
+    "Benotung_FDU:Grundlagen_Info/Various/Benotung_FDU"
     "Interessenwoche_Ablauf:Interessenwochen/Wn_Gf_Web/Beschreibung"
     "Interessenwoche_Auftrag:Interessenwochen/Wn_Gf_Web/Auftrag"
     "MA_Thesis_Guidelines:Various/MA Thesis/MA Thesis Guidelines.tex"
