@@ -42,7 +42,7 @@ Die Grundidee der \gls{ASCII}-Kodierung war, ein Byte pro Zeichen zu verwenden. 
 \begin{myexercise}
 	Wie viele unterschiedliche Zeichen kann man mit der ASCII-Kodierung abbilden, wenn man nur 7 von 8 Bits zur Kodierung nutzt?
 	\begin{myanswer}
-		128 Zeichen, da $2^7=128$.
+		128 Zeichen, da $2^7=128_{10}$.
 	\end{myanswer}
 \end{myexercise}
 \begin{myexercise}
@@ -56,7 +56,7 @@ Leider reichen die wenigen Zeichen, welche mit dem \gls{ASCII}-Standard kodiert 
 \begin{myexercise}
 	Wie viele unterschiedliche Zeichen kann man mit vier Bytes maximal abbilden?
 	\begin{myanswer}
-		$2^{32}=$4'294'967'296 mögliche Zeichen. Allerdings kann UTF-8 etwas weniger Zeichen abbilden, da im ersten Byte noch Speicherplatz eingerechnet werden muss zur Angabe, ob das Zeichen mit 1, 2, 3 oder 4 Bytes angegeben wird.
+		$2^{32}=4'294'967'296_{10}$ mögliche Zeichen. Allerdings kann UTF-8 etwas weniger Zeichen abbilden, da im ersten Byte noch Speicherplatz eingerechnet werden muss zur Angabe, ob das Zeichen mit 1, 2, 3 oder 4 Bytes angegeben wird.
 	\end{myanswer}
 \end{myexercise}
 
@@ -261,14 +261,14 @@ Wenn es sich um ein Schwarz-Weiss-Bild handelt ist dies relativ einfach, wie \cr
 \begin{myexercise}
 	Wie viele Bit Speicherplatz benötigt das Bild?
 	\begin{myanswer}
-		25 ($= 5\cdot 5$).
+		$25_{10}$ ($= 5\cdot 5$).
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
 	Angenommen, für jeden Pixel stünden nicht nur Schwarz und Weiss, sondern insgesamt 8 Graustufen zur Verfügung. Wie viel Speicherplatz (in Bits) wäre dann nötig, um das Bild zu speichern?
 	\begin{myanswer}
-		75, da 3 Bits ausreichen, um 8 verschiedene Stufen abzubilden (von 0 bis 7, $7_{10}=111_2$). Daher haben wir 3 Bits * 25 Pixel = 75 Bits.
+		$75_{10}$ Bits, da 3 Bits ausreichen, um 8 verschiedene Stufen abzubilden (von 0 bis 7, $7_{10}=111_2$). Daher haben wir 3 Bits $\cdot$ 25 Pixel = $75_{10}$ Bits.
 	\end{myanswer}
 \end{myexercise}
 
@@ -382,7 +382,7 @@ Gewisse Bildformate sparen durch Indexierung und Kompression Speicherplatz. Fall
 \begin{myexercise}
 	Wie viel Speicherplatz braucht ein $500\cdot 500$ Pixel grosses Bild, wenn nur 64 Farben unterschieden werden sollen?
 	\begin{myanswer}
-		Das Bild hat 250'000 Pixel, und jedes Pixel braucht 6 Bit (da $2^6=64$). Das ergibt insgesamt $250'000\cdot 6 = 1'500'000$ Bits, oder umgerechnet $187'500$ Bytes ($=187.5$ KB).
+		Das Bild hat 250'000 Pixel, und jedes Pixel braucht 6 Bit (da $2^6=64_{10}$). Das ergibt insgesamt $250'000\cdot 6 = 1'500'000$ Bits, oder umgerechnet $187'500$ Bytes ($=187.5$ KB).
 	\end{myanswer}
 \end{myexercise}
 
