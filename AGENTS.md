@@ -94,6 +94,8 @@ You can also use `compile_tex.sh` to run targeted builds or checks across docume
 ./compile_tex.sh "" "beamer"   # Compile beamer class
 ```
 
+It is generally preferrable not to use the `compile_tex.sh` script, unless functionality of the script itself should be tested.
+
 ---
 
 ## 4. Operational Checklist for AI Agents

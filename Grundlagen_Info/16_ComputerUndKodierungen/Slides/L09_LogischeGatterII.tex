@@ -120,8 +120,64 @@ Erkennen Sie zwei bekannte Gatter in diesen Spalten?
 \only<2->{\begin{center}\color{FDUteal}\bfseries Der Halbaddierer berechnet alle 4 Fälle der 1-Bit-Addition exakt korrekt!\end{center}}
 \end{frame}
 
-\begin{frame}{Auftrag}{Kapitel 4: NAND \& Halbaddierer}
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Der Volladdierer}{Mehrstellige Zahlen addieren mit Übertrag}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Warum reicht ein Halbaddierer nicht aus?}
+Beim schriftlichen Addieren mehrerer Stellen entsteht aus der vorherigen Stelle ein **eingehender Übertrag $c_{\text{in}}$**.
+\vspace{3mm}
+\begin{center}
+Ein **Volladdierer (Full Adder)** verarbeitet **3 Eingänge**: $x, y$ und $c_{\text{in}}$.
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Aufbau des Volladdierers}
+Ein Volladdierer besteht aus **zwei Halbaddieren** und einem **OR-Gatter**:
+\vspace{3mm}
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=stealth]
+    \draw[thick, fill=gray!10, rounded corners=3pt] (0,0) rectangle (2.2,1.8);
+    \node at (1.1,0.9) {\small\textbf{HA 1}};
+    
+    \draw[thick, fill=gray!10, rounded corners=3pt] (3.5,0) rectangle (5.7,1.8);
+    \node at (4.6,0.9) {\small\textbf{HA 2}};
+    
+    \draw[thick, fill=gray!15, rounded corners=3pt] (6.8, -1.0) rectangle (8.0, -0.1);
+    \node at (7.4, -0.55) {\tiny OR};
+
+    \draw[thick, ->] (-0.8, 1.35) node[left] {$x$} -- (0, 1.35);
+    \draw[thick, ->] (-0.8, 0.45) node[left] {$y$} -- (0, 0.45);
+    
+    \draw[thick, ->] (2.2, 1.35) -- (3.5, 1.35);
+    \draw[thick, ->] (-0.8, -0.55) node[left] {$c_{\text{in}}$} -- (3.0, -0.55) |- (3.5, 0.45);
+    
+    \draw[thick, ->] (5.7, 1.35) -- (9.0, 1.35) node[right] {\textbf{$s$}};
+    
+    \draw[thick] (2.2, 0.45) -- (2.7, 0.45) |- (6.8, -0.3);
+    \draw[thick] (5.7, 0.45) -- (6.2, 0.45) |- (6.8, -0.8);
+    
+    \draw[thick, ->] (8.0, -0.55) -- (9.0, -0.55) node[right] {\textbf{$c_{\text{out}}$}};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Schriftliche Binäraddition im Addierwerk}
+Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Binärzahlen zu addieren:
+\[
+\begin{array}{ccccccc}
+	& 1 & 0 & 1 & 0 & 1 & 1_2 \\
+	+ & \underset{1}{1} & \underset{1}{1} & \underset{}{1} & \underset{1}{0} & \underset{}{1} & \underset{}{0_2} \\
+	\hline
+	1 & 1 & 0 & 0 & 1 & 0 & 1_2 \\\hline\hline
+\end{array}
+\]
+\begin{center}\color{FDUteal}\bfseries Jede Spalte wird von genau einem Volladdierer-Baustein berechnet!\end{center}
+\end{frame}
+
+\begin{frame}{Auftrag}{Kapitel 4: NAND, Halbaddierer \& Volladdierer}
 \aufgabebox{\textbf{Aufgabe 4.2}: NOT-Gatter allein mit NAND-Gattern realisieren ($x \uparrow x$)}\\[3mm]
 \challengebox{\textbf{Aufgabe 4.3 (Challenge)}: AND-Gatter allein aus NAND-Gattern aufbauen}\\[3mm]
-\aufgabebox{\textbf{Aufgabe 4.4}: Tabellen zur Funktionsweise des Halbaddierers und binären Addition ausfüllen}
+\aufgabebox{\textbf{Aufgabe 4.4}: Tabellen \& Übungen zum Halb- und Volladdierer ausfüllen}
 \end{frame}
+

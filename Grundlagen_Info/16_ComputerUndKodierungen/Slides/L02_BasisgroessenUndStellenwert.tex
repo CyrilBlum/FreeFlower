@@ -182,6 +182,23 @@ Warum sind im $b$-adischen System nur Ziffern $0,\ldots,b-1$ erlaubt?
 \end{itemize}}
 \end{frame}
 
+\begin{frame}\FDUtitle{Warum ist das für die Informatik wichtig?}
+Die Bedingung $a_k \in \lrc{0,1,\ldots,b-1}$ bringt zwei entscheidende Vorteile:
+\vspace{3mm}
+\begin{enumerate}\setlength\itemsep{8pt}
+  \item \textbf{Minimale Darstellung (Speichereffizienz):}\\
+  Die Darstellung verbraucht so wenige Stellen (Bits) wie möglich.
+  \item \textbf{Eindeutigkeit (Kanonische Form):}\\
+  Jede Zahl besitzt exakt \emph{eine} Bitfolge $\rightarrow$ Computer können Werte ohne Mehrdeutigkeit vergleichen und speichern.
+\end{enumerate}
+\vspace{3mm}
+\only<2->{
+\begin{center}
+  \color{FDUteal}\bfseries Das Bündeln von $b$ Einheiten zur nächsten Stelle entspricht physikalisch dem \textbf{Übertrag} (\textit{Carry-Bit}) in Prozessoren!
+\end{center}
+}
+\end{frame}
+
 \begin{frame}{Auftrag}{Kapitel 2: Stellenwertdarstellung}
 \aufgabebox{\textbf{Aufgabe 2.3 \& 2.4}: Binärzahl $11011_2 \rightarrow$ Dezimal und Dezimal $14 \rightarrow$ Binär}\\[3mm]
 \aufgabebox{\textbf{Aufgabe 2.5}: Darstellung der Zahl 29 im Binärsystem mit $\{0,1\}$}\\[3mm]

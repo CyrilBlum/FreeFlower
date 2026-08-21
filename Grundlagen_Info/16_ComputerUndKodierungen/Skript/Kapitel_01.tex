@@ -70,8 +70,8 @@ dann beispielsweise durch $XXI$ (zwei Zehnermünzen und eine Einermünze) in ant
 Ein Geldbetrag kann sowohl im römischen als auch ägyptischen System typischerweise auf mehrere unterschiedliche Arten
 ausbezahlt werden (zum Beispiel, indem nur Einer verwendet werden). Sie kennen diese Situation vom Bezahlen mit
 Bargeld --- so kann der Betrag von hundert Schweizer Franken auf viele verschiedene Arten mit Schweizer Bargeld bezahlt werden
-(z.B. mit zwei Fünfzigernoten, fünf Zwanzigernoten, einer Fünfzigernote $+$ zwei Zwanzigernoten $+$ zwei Fünfliber, etc.). Natürlich ist
-es bei Zahlendarstellungen vorteilhaft, wenn sie \textit{eindeutig} sind. Dies bedeutet, dass es für jede natürliche Zahl eine einzige minimale Münzenmenge gibt, die diese Zahl repräsentiert. Angenommen wir haben einen Betrag $x$ gegeben, welcher durch
+(z.B. mit zwei Fünfzigernoten, fünf Zwanzigernoten. Natürlich ist
+es bei Zahlendarstellungen vorteilhaft, wenn sie \textit{eindeutig} sind. Dies bedeutet, dass es für jede natürliche Zahl eine einzige minimale Münzenmenge gibt, die diese Zahl repräsentiert. Für digitale Systeme ist dies essenziell: Ein Computer benötigt für jeden Wert ein \textbf{eindeutiges Bitmuster} (damit Werte ohne Mehrdeutigkeit verglichen und gespeichert werden können) sowie eine \textbf{minimale Stellenanzahl} (um Speicherplatz zu sparen). Angenommen wir haben einen Betrag $x$ gegeben, welcher durch
 unterschiedliche Ansammlungen von Münzen ausbezahlt werden kann. Dann betrachten wir diejenige Ansammlung von Münzen als
 die \tib{Zahlendarstellung}\index{Zahlendarstellung} von $x$, welche am wenigsten Münzstücke benötigt.
 
@@ -166,7 +166,7 @@ Das Binärsystem findet insbesondere in der Informatik Anwendung, da es sich gut
 	Schreiben Sie die Binärzahl $11011_2$ als Dezimalzahl.
 	\begin{myanswer}
 		\begin{align*}
-			11011_2 = 1\cdot 2^4 + 1\cdot 2^3 + 0\cdot 2^2 + 1\cdot 2^1 + 1\cdot 2^0 = 16 + 8 + 2 + 1 = 27
+			11011_2 = 1\cdot 2^4 + 1\cdot 2^3 + 0\cdot 2^2 + 1\cdot 2^1 + 1\cdot 2^0 = 16 + 8 + 2 + 1 = 27_{10}
 		\end{align*}
 	\end{myanswer}
 \end{myexercise}
@@ -175,7 +175,7 @@ Das Binärsystem findet insbesondere in der Informatik Anwendung, da es sich gut
 	Schreiben Sie die Dezimalzahl $14$ als Binärzahl.
 	\begin{myanswer}
 		\begin{align*}
-			14 = 8 + 4 + 2 = 1\cdot 2^3 + 1\cdot 2^2 + 1\cdot 2^1 + 0\cdot 2^0 = 1110_2
+			14_{10} = 8 + 4 + 2 = 1\cdot 2^3 + 1\cdot 2^2 + 1\cdot 2^1 + 0\cdot 2^0 = 1110_2
 		\end{align*}
 	\end{myanswer}
 \end{myexercise}
@@ -194,7 +194,7 @@ Dort haben wir versucht, Geldbeträge mit möglichst wenigen Münzstücken auszu
 	Münzstücke verwendet diese Darstellung?
 	\begin{myanswer}
 		\begin{align*}
-			29 = 1\cdot 2^4 + 1\cdot 2^3 + 1\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0
+			29_{10} = 1\cdot 2^4 + 1\cdot 2^3 + 1\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 11101_2
 		\end{align*}
 		Diese Darstellung verwendet lediglich 4 Münzstücke.
 	\end{myanswer}
@@ -241,7 +241,7 @@ Für die Wahl $b:=3$ erhalten wir die $3$-adische Zahlendarstellung (Dreiersyste
 	\end{myanswer}
 \end{mychallenge}
 
-\begin{myremark}
+\begin{myremark}[Sinn der Zifferneinschränkung $a_k < b$]\label{myremark:ziffern-einschraenkung}
 	Warum ist es sinnvoll in \cref{mydefinition:badisch} zu fordern, dass eine $b$-adische Darstellung keine Ziffern grösser als $b-1$ verwenden darf?
 	Unsere Argumentation ist ähnlich zu der in \cref{myexample:ersetzen}. Angenommen eine Darstellung
 	\begin{align*}
@@ -253,6 +253,12 @@ Für die Wahl $b:=3$ erhalten wir die $3$-adische Zahlendarstellung (Dreiersyste
 
 	Beispielsweise ist es in der Basis $b = 10$ nicht sinnvoll 23 Hunderter ($23\cdot 10^2$) zu verwenden, da wir stattdessen zwei Tausender und nur drei Hunderter ($2\cdot 10^3 + 3\cdot 10^2$) verwenden könnten.
 	Dabei würden wir insgesamt $18$ Münzstücke einsparen.
+
+	Für die Informatik bringt die Bedingung $a_k \in \lrc{0, 1, \ldots, b-1}$ zwei entscheidende Vorteile:
+	\begin{enumerate}[(1)]
+		\item \textbf{Minimale Darstellung (Speichereffizienz):} Die Darstellung benötigt so wenige Stellen (Bits) wie möglich.
+		\item \textbf{Eindeutigkeit (Kanonische Form):} Jede Zahl besitzt exakt \emph{eine} einzige $b$-adische Repräsentation, sodass Computer zwei Zahlenwerte direkt vergleichen und abspeichern können. Das Bündeln von $b$ Einheiten zur nächsten Stelle entspricht ausserdem physikalisch genau dem \textbf{Übertrag} (\textit{Carry}) in elektronischen Rechenschaltungen (vgl. \cref{sec:halbaddierer}).
+	\end{enumerate}
 \end{myremark}
 
 \begin{myexercise}
@@ -312,23 +318,26 @@ Da wir in \cref{myexample:umrechnung} immer mit der grössten Basisgrösse begon
 davon verwendet haben, nennen wir diese Methode \tib{gierig}\index{gierig / greedy} (englisch: \tib{greedy}).
 
 \subsection{Hexadezimalsystem}
-Wie Sie in \cref{section:stellenwertdarst} gesehen haben, kann jede Zahl im Grunde genommen mit (fast) beliebig vielen Ziffern dargestellt werden. Während das Binärsystem die Ziffern $\lrc{0,1}$ verwendet, verwenden wir im (uns geläufigeren) Dezimalsystem die Ziffern $\lrc{0,1,2,3,4,5,6,7,8,9}$. Wir haben zudem auch beobachtet, dass die höchste Ziffer in einem Zahlensystem mit $b$ Ziffern immer $b-1$ ist: Beispielsweise ist im Binärsystem, das 2 Ziffern hat, die höchste Ziffer eine 1 ($= 2-1$). Im Dezimalsystem, das bekanntlich 10 Ziffern hat, ist die höchste Ziffer eine 9 ($ = 10-1$). Die höchste Ziffer in einem $b$-adischen System ist also immer $b-1$.
 
-Welche Ziffern sollen wir jedoch wählen, sofern $b>10$ gewählt wird? Die dezimale Zahl 10 ist ja keine Ziffer, sondern besteht selber aus zwei Ziffern (genau so, wie es das Dezimalsystem vorschreibt).
+Welche Ziffern sollen wir jedoch wählen, sofern die Basis $b > 10$ gewählt wird? Die dezimale Zahl 10 ist ja keine Ziffer, sondern besteht selber aus zwei Ziffern (genau so, wie es das Dezimalsystem vorschreibt).
 
-Im Grunde genommen sind Ziffern wie \enquote{1}, \enquote{2} usw. nichts weiter als \enquote{Zeichnungen}, die von Menschen angefertigt worden sind, und mit welchen eine gewisse Menge, bzw. Anzahl gemeint ist. Wir könnten also einfach andere, uns bekannte \enquote{Zeichnungen} verwenden, um höhere Mengen zu bezeichnen, also etwa Buchstaben. Genau dies wird im sogenannten \tib{Hexadezimalsystem}\index{Hexadezimalsystem} gemacht ($b=16$). Die möglichen Zeichen im Hexadezimalsystem sind:
+Im Grunde genommen sind Ziffern wie \enquote{1}, \enquote{2} usw. nichts weiter als Zeichen, die von Menschen definiert worden sind, und mit welchen eine gewisse Menge gemeint ist. Wir können einfach Buchstaben verwenden, um höhere Ziffernwerte zu bezeichnen. Genau dies wird im sogenannten \tib{Hexadezimalsystem}\index{Hexadezimalsystem} gemacht ($b=16$). Die 16 Ziffern im Hexadezimalsystem sind:
 \begin{align*}
-	\lrc{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F},
+	\lrc{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, \text{A}, \text{B}, \text{C}, \text{D}, \text{E}, \text{F}},
 \end{align*}
-wobei beispielsweise die Ziffer $B$ die (dezimale) Zahl $11$ (Elf) bezeichnet.
+wobei beispielsweise die Ziffer $\text{A} = 10_{10}$, $\text{B} = 11_{10}$ bis $\text{F} = 15_{10}$ bezeichnet.
 
-Zur Umrechnung von Zahlen vom einen in das andere System verfolgen wir denselben Ansatz wie in \cref{myexample:umrechnung}
+\begin{myremark}[Notwendigkeit und Vorteil im Computer]
+Da $16 = 2^4$ gilt, entspricht \textbf{genau eine Hex-Ziffer} einer Gruppe von \textbf{4 Bits} (einem sogenannten \textit{Nibble}). 
+
+Ein Byte ($= 8$ Bits) lässt sich damit exakt durch \textbf{zwei Hexadezimalziffern} darstellen ($11111111_2 = \text{FF}_{16}$). Das Hexadezimalsystem ist daher eine unentbehrliche Notwendigkeit, um Binärdaten, Speicheradressen und Farbwerte für Menschen kompakt und lesbar zu notieren.
+\end{myremark}
 
 \begin{myexercise}
 	Wie lautet die Zahl $27_{10}$ in der $16$-adischen Darstellung?
 	\begin{myanswer}
 		\begin{align*}
-			27_{10} = 1\cdot 16^1 + 11\cdot 16^0 = 1B_{16}
+			27_{10} = 1\cdot 16^1 + 11\cdot 16^0 = 1\text{B}_{16}
 		\end{align*}
 	\end{myanswer}
 \end{myexercise}
@@ -340,99 +349,9 @@ Zur Umrechnung von Zahlen vom einen in das andere System verfolgen wir denselben
 	\end{myanswer}
 \end{myexercise}
 
-
-\section{Rechnen im Binärsystem}
-
-Rechnen im Binärsystem funktioniert genauso, wie Sie es für das Dezimalsystem gelernt haben. Beispielsweise, wenn Sie die Zahlen $49035_{10}$ und $718293_{10}$ addieren:
-
-\[
-	\begin{array}{ccccccc}
-		  & 0              & 4               & 9              & 0               & 3              & 5_{10}              \\
-		+ & \underset{}{7} & \underset{1}{1} & \underset{}{8} & \underset{1}{2} & \underset{}{9} & \underset{}{3_{10}} \\
-		\hline
-		  & 7              & 6               & 7              & 3               & 2              & 8_{10}              \\\hline\hline
-	\end{array}
-\]
-
-Die kleinen Ziffern in der Rechnung oben stellen den Übertrag\index{Übertrag} (Englisch: \textit{carry over} oder einfach nur \textit{carry}) dar. Ähnlich dazu gehen Sie im Binärsystem vor. Dabei müssen im Wesentlichen nur folgende 5 Regeln beachtet werden:
-
-\begin{itemize}
-	\item 0 + 0 = 0
-	\item 0 + 1 = 1
-	\item 1 + 0 = 1
-	\item 1 + 1 = 0, Übertrag 1
-	\item 1 + 1 + 1 = 1, Übertrag 1
-\end{itemize}
-
-Ein Beispiel sei unten angegeben:
-\[
-	\begin{array}{ccccccc}
-		  & 1               & 0               & 1               & 0               & 1               & 1_2              \\
-		+ & \underset{1}{1} & \underset{1}{1} & \underset{0}{1} & \underset{1}{0} & \underset{0}{1} & \underset{}{0_2} \\
-		\hline
-		1 & 1               & 0               & 0               & 1               & 0               & 1_2              \\\hline\hline
-	\end{array}
-\]
-
-\begin{myexercise}
-	Rechnen Sie folgende beiden Zahlen im Binärsystem zusammen: $10001010_2$, $11101_2$.
-	\begin{myanswer}
-		$10100111_2$
-	\end{myanswer}
-\end{myexercise}
-
-\begin{myexercise}
-	Welches ist die grösste 4-stellige Binärzahl (in Dezimalschreibweise)?
-	\begin{myanswer}
-		\begin{align*}
-			1111_2 = 2^3 + 2^2 + 2^1 + 2^0 = 8 + 4 + 2 + 1 = 15_{10}
-		\end{align*}
-	\end{myanswer}
-\end{myexercise}
-
-\begin{mychallenge}
-	Es sei $n>0$ eine natürliche Zahl. Es sei $z$ die grösste $n$-stellige Binärzahl. Wie sieht $z$ aus? Finden Sie eine möglichst einfache Darstellung von $z$.
-	\begin{myanswer}
-		Die grösste $n$-stellige Binärzahl $z$ ist gegeben durch
-		\begin{align*}
-			z := \underbrace{1\ldots 11_2}_{n\text{-Stellen}} = 1\cdot 2^0 + 1\cdot 2^1 + 1\cdot 2^2 + \ldots + 1\cdot 2^{n-1}.
-		\end{align*}
-		Die Umrechnung in Basis 10 ist aufwendig, da wir die Summe $2^0 + 2^1 + 2^2 + \ldots + 2^{n-1}$ berechnen müssten. Lassen Sie uns die Zahl $z+\textcolor{Red}{1}$ bestimmen:
-		\[
-			\begin{array}{ccccccc}
-				  & 1               & 1               & \ldots & 1               & 1               & 1_2                               \\
-				+ & \underset{1}{0} & \underset{1}{0} & \ldots & \underset{1}{0} & \underset{1}{0} & \underset{}{\textcolor{Red}{1}_2} \\
-				\hline
-				1 & 0               & 0               & \ldots & 0               & 0               & 0_2                               \\\hline\hline
-			\end{array}
-		\]
-		Wir haben die kleinste $n+1$-stellige Binärzahl erhalten. Wir sehen nun, dass $z+1$ gegeben ist durch
-		\begin{align*}
-			z+1 = \underbrace{10\ldots 00_2}_{n+1\text{-Stellen}} = 0\cdot 2^0 + 0\cdot 2^1 + \ldots + 0\cdot 2^{n-1} + 1\cdot 2^n = 2^n.
-		\end{align*}
-		Es fallen also alle Summanden bis auf den Term $ 1\cdot 2^n$ weg. Da $z$ genau $1$ kleiner ist als $z+1$, finden wir $z = 2^n - 1$.
-	\end{myanswer}
-\end{mychallenge}
-
-\begin{myexercise}\label{myexercise:overflow}
-	Rechnen Sie folgende beiden Zahlen im Binärsystem zusammen: $11110001_2$, $00001111_2$.
-	\begin{myanswer}
-		Die mathematisch richtige Antwort wäre eigentlich $100000000_2$. Falls wir die Rechnung jedoch in einer 8-Bit-Umgebung ausführen (wie es die ersten Computer waren), könnte das Resultat auch 0 sein, da die Zahl zu lang würde (\tib{Überlauf}\index{Überlauf}, en. \textit{overflow}).
-	\end{myanswer}
-\end{myexercise}
-
-\begin{mychallenge}\label{challenge:online}
-	\begin{itemize}
-		\item Wie lange benötigen Sie für 6 Umwandlungen? Testen Sie sich \href{https://oinf.ch/interactive/umrechnen-zwischen-zahlensystemen/}{hier}.
-		\item Testen Sie Ihre Zahlensystem-Umwandlungs-Wissen \href{https://oinf.ch/interactive/basiswechsel-10-zu-2/}{hier}!
-		\item Schauen Sie sich das Video der \href{https://www.youtube.com/watch?app=desktop&v=GcDshWmhF4A&embeds_referring_euri=https%3A%2F%2Fwww.yaplakal.com%2Fforum28%2Fst%2F125%2Ftopic930979.html&feature=emb_imp_woyt}{Marble Adding Machine} an.
-		\item Schauen Sie sich an, wie man einen binären Computer auch \href{https://youtu.be/5wKz1e0ULcg?si=AiPXUniyfU15X11m}{mit Wasser} bauen kann.
-	\end{itemize}
-\end{mychallenge}
-
 \begin{mychallenge}
 	\label{challenge:hexAddition}
-	Die schriftliche Addition von Hexadezimalzahlen funktioniert analog zur schriftlichen Addition von Binärzahlen. Sie können die einzelnen Ziffern der Hexadezimalzahlen auch in Dezimalzahlen umwandeln, um die Addition zu erleichtern, nicht aber die kompletten Zahlen. Führen Sie die folgenden beiden Additionen durch:
+	Die schriftliche Addition von Hexadezimalzahlen funktioniert analog zur schriftlichen Addition von Binärzahlen. Führen Sie die folgenden beiden Additionen durch:
 	$$ 0\text{C}_{16} + 1\text{D}_{16} \qquad \text{und} \qquad \text{FF}90_{16} + 039\text{D}_{16}$$
 	\begin{myanswer}
 		\[
@@ -457,4 +376,12 @@ Ein Beispiel sei unten angegeben:
 	\end{myanswer}
 \end{mychallenge}
 
-Nachdem wir nun wissen, wie sich Zahlen im Binärsystem darstellen und berechnen lassen, stellt sich die nächste Frage: Wie kodiert man damit auch Buchstaben, Bilder und andere Informationen? Diesem Thema widmet sich \cref{ch:kodierungen}.
+\begin{mychallenge}\label{challenge:online}
+	\begin{itemize}
+		\item Wie lange benötigen Sie für 6 Umwandlungen? Testen Sie sich \href{https://oinf.ch/interactive/umrechnen-zwischen-zahlensystemen/}{hier}.
+		\item Testen Sie Ihre Zahlensystem-Umwandlungs-Wissen \href{https://oinf.ch/interactive/basiswechsel-10-zu-2/}{hier}!
+	\end{itemize}
+\end{mychallenge}
+
+Nachdem wir nun wissen, wie sich Zahlen in verschiedenen Stellenwertsystemen darstellen lassen, stellt sich die nächste Frage: Wie stellt man in Computern damit Zeichen, Farben, Bilder und andere Informationen dar? Diesem Thema widmet sich \cref{ch:kodierungen}.
+

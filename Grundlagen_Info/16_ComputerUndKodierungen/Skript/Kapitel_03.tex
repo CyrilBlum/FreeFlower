@@ -334,36 +334,75 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
     \end{myanswer}
 \end{myexercise}
 
-\begin{mychallenge}
-    Zeigen Sie, wie sich ein AND-Gatter allein aus NAND-Gattern aufbauen lässt. Nutzen Sie dazu \cref{myexercise:nand-not}.
-    \begin{myanswer}
-        Ein AND-Gatter ist die Negation eines NAND-Gatters: $x \wedge y = \overline{x \uparrow y}$. Da wir aus \cref{myexercise:nand-not} bereits wissen, dass sich ein NOT-Gatter aus einem einzigen NAND-Gatter bauen lässt, genügt es, den Ausgang eines NAND-Gatters (für $x$ und $y$) in ein solches NOT-NAND-Gatter zu leiten. Insgesamt werden also zwei NAND-Gatter benötigt.
-    \end{myanswer}
-\end{mychallenge}
+Das NAND-Gatter entspricht der Negation von AND ($x \uparrow y = \overline{x \land y}$). Aus NAND-Gattern lassen sich alle anderen logischen Gatter aufbauen (funktionale Vollständigkeit).
 
-\section{Kombinierte Schaltungen: der Halbaddierer}\label{sec:halbaddierer}
+\section{Schaltkreise für die Binäraddition: Halbaddierer und Volladdierer}\label{sec:halbaddierer}
 
-Logische Gatter werden zu komplexeren Schaltungen kombiniert. Als konkretes Beispiel betrachten wir die binäre Addition zweier einstelliger Zahlen -- also genau die Operation, die wir bereits in \cref{ch:zahlendarstellungen} von Hand ausgeführt haben. Wenn zwei Bits $x$ und $y$ addiert werden, entsteht eine zweistellige Summe.
+Wie verarbeitet eine digitale Schaltung (wie die \gls{ALU} in einer CPU) arithmetische Operationen? Das Herzstück jedes Prozessors ist die Fähigkeit, zwei Binärzahlen zu addieren. Bevor wir uns ansehen, wie dies mit Logikgattern gelöst wird, betrachten wir das Prinzip der binären Addition.
 
-\begin{center}
-    \begin{tabular}{cc}
-        $x$ & $y$ \\\midrule
-        0 & 0 \\
-        0 & 1 \\
-        1 & 0 \\
-        1 & 1 \\
-    \end{tabular}
-    \quad$\longrightarrow$\quad
-    \begin{tabular}{cc}
-        Übertrag $c$ & Summe $s$ \\\midrule
-        0 & 0 \\
-        0 & 1 \\
-        0 & 1 \\
-        1 & 0 \\
-    \end{tabular}
-\end{center}
+\subsection{Rechnen im Binärsystem}
 
-Die Summe $s$ entspricht $x \oplus y$ (\gls{XOR}: genau dann \texttt{1}, wenn die Bits verschieden sind), der Übertrag $c$ entspricht $x \wedge y$ (AND):
+Das Rechnen im Binärsystem funktioniert genauso, wie Sie es aus dem Dezimalsystem gewohnt sind: Stellenweise von rechts nach links addieren und bei Bedarf einen Übertrag (\textit{carry}) an die nächsthöhere Stelle weiterreichen.
+
+Dabei gelten die folgenden Grundregeln für die Addition von zwei bzw. drei Bits:
+\begin{itemize}
+	\item $0 + 0 = 0$
+	\item $0 + 1 = 1$
+	\item $1 + 0 = 1$
+	\item $1 + 1 = 0$, Übertrag $1$ \quad ($10_2 = 2_{10}$)
+	\item $1 + 1 + 1 = 1$, Übertrag $1$ \quad ($11_2 = 3_{10}$)
+\end{itemize}
+
+Ein Beispiel für die schriftliche Addition zweier Binärzahlen:
+\[
+	\begin{array}{ccccccc}
+		  & 1               & 0               & 1               & 0               & 1               & 1_2              \\
+		+ & \underset{1}{1} & \underset{1}{1} & \underset{0}{1} & \underset{1}{0} & \underset{0}{1} & \underset{}{0_2} \\
+		\hline
+		1 & 1               & 0               & 0               & 1               & 0               & 1_2              \\\hline\hline
+	\end{array}
+\]
+
+\begin{myexercise}
+	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen: $10001010_2 + 11101_2$.
+	\begin{myanswer}
+		\[
+			\begin{array}{ccccccccc}
+				  & 1 & 0 & 0 & 0 & 1 & 0 & 1 & 0_2 \\
+				+ & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 1_2 \\
+				\hline
+				  & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1_2 \\
+				\hline\hline
+			\end{array}
+		\]
+		Dezimal-Kontrolle: $138_{10} + 29_{10} = 167_{10} = 10100111_2$.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}\label{myexercise:overflow}
+	Rechnen Sie folgende beiden Zahlen im Binärsystem zusammen: $11110001_2 + 00001111_2$.
+	\begin{myanswer}
+		Mathematisch korrekt ist $100000000_2$ ($256_{10}$). In einer festen 8-Bit-Umgebung (wie im Register/ALU eines 8-Bit-Prozessors) passt die 9. Stelle nicht mehr in das Register. Die vorderste $1$ geht verloren und das Resultat wird zu $00000000_2$. Man spricht von einem \tib{Überlauf}\index{Überlauf} (\textit{overflow}).
+	\end{myanswer}
+\end{myexercise}
+
+\subsection{Der Halbaddierer}
+
+Wie setzen wir dieses schriftliche Addieren nun in elektronischen Logikgattern um? Betrachten wir zunächst die Addition zweier einzelner Bits $x$ und $y$:
+\begin{align*}
+    0 + 0 &= 00_2 \quad (\text{Summe } 0, \text{ Übertrag } 0) \\
+    0 + 1 &= 01_2 \quad (\text{Summe } 1, \text{ Übertrag } 0) \\
+    1 + 0 &= 01_2 \quad (\text{Summe } 1, \text{ Übertrag } 0) \\
+    1 + 1 &= 10_2 \quad (\text{Summe } 0, \text{ Übertrag } 1)
+\end{align*}
+
+Vergleicht man diese Ausgänge mit den bekannten Gattern, stellt man fest:
+\begin{itemize}
+    \item Die \textbf{Summe} $s$ entspricht exakt dem \textbf{XOR-Gatter}: $s = x \oplus y$.
+    \item Der \textbf{Übertrag} $c$ (\textit{carry}) entspricht exakt dem \textbf{AND-Gatter}: $c = x \land y$.
+\end{itemize}
+
+Eine Schaltung, die zwei Bits $x$ und $y$ addiert und daraus ein Summenbit $s$ und ein Übertragsbit $c$ erzeugt, heisst \tib{Halbaddierer}\index{Halbaddierer}.
 
 \begin{figure}[H]
     \centering
@@ -394,11 +433,74 @@ Die Summe $s$ entspricht $x \oplus y$ (\gls{XOR}: genau dann \texttt{1}, wenn di
             \draw (and1.output) -- (ha-c-right) node[right] {$c$ (Übertrag)};
         \end{scope}
     \end{tikzpicture}
-    \caption{Schaltplan eines Halbaddierers: XOR liefert die Summe, AND den Übertrag.}
+    \caption{Schaltplan eines Halbaddierers: XOR liefert die Summe $s$, AND den Übertrag $c$.}
     \label{fig:halbaddierer}
 \end{figure}
 
-In einer \gls{CPU} werden sehr viele solcher Stufen kaskadiert. Dabei werden die Hardware-Kennwerte aus den vorigen Abschnitten entscheidend: Verzögerungen addieren sich entlang des kritischen Pfads, und jeder zusätzliche Schaltvorgang erhöht den Energieverbrauch.
+\subsection{Der Volladdierer}
+
+Warum reicht ein Halbaddierer nicht aus, um zwei mehrstellige Binärzahlen (wie z.\,B. $1011_2 + 1101_2$) zu addieren? Beim schriftlichen Addieren mehrerer Stellen entsteht aus der vorherigen Stelle ein eingehender Übertrag $c_{\text{in}}$ (\textit{carry-in}), den die Schaltung ebenfalls mitverarbeiten muss!
+
+Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge} ($x$, $y$ sowie den eingehenden Übertrag $c_{\text{in}}$) und erzeugt wieder zwei Ausgänge: das Summenbit $s$ und den neuen Ausgangsübertrag $c_{\text{out}}$.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c||c|c}
+        $x$ & $y$ & $c_{\text{in}}$ & Summe $s$ & Übertrag $c_{\text{out}}$ \\ \midrule\midrule
+        0 & 0 & 0 & 0 & 0 \\ \midrule
+        0 & 0 & 1 & 1 & 0 \\ \midrule
+        0 & 1 & 0 & 1 & 0 \\ \midrule
+        0 & 1 & 1 & 0 & 1 \\ \midrule
+        1 & 0 & 0 & 1 & 0 \\ \midrule
+        1 & 0 & 1 & 0 & 1 \\ \midrule
+        1 & 1 & 0 & 0 & 1 \\ \midrule
+        1 & 1 & 1 & 1 & 1 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des Volladdierers}
+    \label{tab:volladdierer_wahrheitstabelle}
+\end{table}
+
+Ein Volladdierer lässt sich aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen:
+Der erste Halbaddierer addiert $x$ und $y$. Der zweite Halbaddierer addiert das vorläufige Summenbit mit $c_{\text{in}}$. Ein OR-Gatter verknüpft die Überträge beider Halbaddierer zum finalen $c_{\text{out}}$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9, >=stealth]
+        % Block 1: HA1
+        \draw[thick, fill=gray!10, rounded corners=3pt] (0,0) rectangle (2.5,2);
+        \node at (1.25,1) {\textbf{HA 1}};
+        
+        % Block 2: HA2
+        \draw[thick, fill=gray!10, rounded corners=3pt] (4,0) rectangle (6.5,2);
+        \node at (5.25,1) {\textbf{HA 2}};
+        
+        % OR Gate
+        \draw[thick, fill=gray!15, rounded corners=3pt] (7.5, -1.2) rectangle (9, -0.2);
+        \node at (8.25, -0.7) {\small OR};
+
+        % Wires
+        \draw[thick, ->] (-1, 1.5) node[left] {$x$} -- (0, 1.5);
+        \draw[thick, ->] (-1, 0.5) node[left] {$y$} -- (0, 0.5);
+        
+        \draw[thick, ->] (2.5, 1.5) -- node[above] {\small $s_1$} (4, 1.5);
+        \draw[thick, ->] (-1, -0.7) node[left] {$c_{\text{in}}$} -- (3.5, -0.7) |- (4, 0.5);
+        
+        \draw[thick, ->] (6.5, 1.5) -- (10, 1.5) node[right] {\textbf{$s$ (Summe)}};
+        
+        \draw[thick] (2.5, 0.5) -- (3, 0.5) |- (7.5, -0.4);
+        \draw[thick] (6.5, 0.5) -- (7, 0.5) |- (7.5, -1.0);
+        
+        \draw[thick, ->] (9, -0.7) -- (10, -0.7) node[right] {\textbf{$c_{\text{out}}$ (Übertrag)}};
+    \end{tikzpicture}
+    \caption{Aufbau eines Volladdierers aus zwei Halbaddierern (HA 1, HA 2) und einem OR-Gatter.}
+    \label{fig:volladdierer_block}
+\end{figure}
+
+\subsection{Kaskadierung zum mehrstelligen Addierwerk (Ripple-Carry)}
+
+Kaskadiert man $n$ Volladdierer hintereinander, indem man den Übertragsausgang $c_{\text{out}}$ jeder Stelle an den Übertragseingang $c_{\text{in}}$ der nächsthöheren Stelle weiterleitet, entsteht ein mehrstelliges Addierwerk (sogenannter \tib{Ripple-Carry-Addierer}\index{Ripple-Carry-Addierer}).
+
+Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im Binärsystem} aus.
 
 \begin{myexercise}
     Füllen Sie die folgenden Tabellen zur Funktionsweise des Halbaddierers und der binären Addition aus:
@@ -459,8 +561,4 @@ In einer \gls{CPU} werden sehr viele solcher Stufen kaskadiert. Dabei werden die
     \end{myanswer}
 \end{myexercise}
 
-\begin{myremark}[Vom Halbaddierer zum Volladdierer]
-    Ein Halbaddierer berücksichtigt keinen \tib{Übertrag}\index{Übertrag} aus einer vorangegangenen Stelle (vgl. die schriftliche Addition in \cref{ch:zahlendarstellungen}). Verbindet man zwei Halbaddierer geeignet mit einem zusätzlichen OR-Gatter, erhält man einen \tib{Volladdierer}\index{Volladdierer}, der auch einen eingehenden Übertrag $c_{\text{in}}$ verarbeiten kann. Kaskadiert man mehrere Volladdierer, lassen sich beliebig lange Binärzahlen addieren -- genau wie bei der schriftlichen Addition in \cref{ch:zahlendarstellungen}.
-\end{myremark}
-
-Wir haben nun gesehen, wie aus einzelnen Transistoren Gatter, und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. Im nächsten Kapitel betrachten wir, wie aus solchen Bausteinen ein vollständiger Computer aufgebaut wird.
+Wir haben nun gesehen, wie aus einzelnen Transistoren Gatter, und aus Gattern vollwertige Rechenschaltungen wie der Halb- und Volladdierer entstehen. Im nächsten Kapitel betrachten wir, wie aus solchen Bausteinen ein vollständiger Computer aufgebaut wird.

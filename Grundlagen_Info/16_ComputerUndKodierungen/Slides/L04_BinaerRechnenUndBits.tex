@@ -1,0 +1,81 @@
+%!TeX program = lualatex
+\renewcommand{\thelektion}{L04 \textperiodcentered{} Bits, Bytes \& Hexadezimal}
+
+\begin{frame}\lessontitle{Lektion 04}{Bits, Bytes \& Hexadezimalsystem}{Die kleinste Informationseinheit, Byte-Strukturen und Basis 16 \textperiodcentered{} Skript, Kapitel 2}\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Bits \& Bytes}{Wie zählt und speichert man mit Nullen und Einsen?}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Bits \& Bytes}
+\begin{itemize}[<+->]
+	\item \textbf{bit} = \enquote{\textit{\underline{bi}nary digi\underline{t}}}, \enquote{binäre Ziffer} (eine 0 oder eine 1)
+	\item \textbf{byte} = \enquote{Bissen} (von engl.\ \textit{bite} = Bissen, aus 8 bits) \emoji{yum}
+	\item Mit einem Byte lassen sich $2^8=256$ verschiedene Werte darstellen
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Führende Nullen}
+Die binäre Repräsentation der Dezimalzahl 22:
+\[00010110_2 = 22_{10}\]
+\begin{center}
+Bei Binärzahlen werden -- anders als bei Dezimalzahlen -- üblicherweise \textbf{alle} Bits ausgeschrieben.
+\end{center}
+\vspace{3mm}
+\begin{center}
+\textbf{Frage}: Wie stellt man $42_{10}$ mit einem Byte dar?
+\end{center}
+\only<2->{\begin{center}\Large $42_{10} = 00101010_2$\end{center}}
+\end{frame}
+
+\begin{frame}\FDUtitle{Grössenordnungen}
+\begin{table}[H]
+	\footnotesize
+	\centering
+	\begin{tabular}{@{}l|rl@{}}
+		\toprule
+		\textbf{Einheit} & \textbf{Grösse} & Beispiel \\ \midrule
+		KB (Kilobyte) & $10^3$ B & eine Text-Datei \\
+		MB (Megabyte) & $10^6$ B & eine Musik-Datei \\
+		GB (Gigabyte) & $10^9$ B & eine Video-Datei \\
+		TB (Terabyte) & $10^{12}$ B & kleiner Firmen-Server \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Das Hexadezimalsystem}{Warum brauchen wir die Basis 16 in der Informatik?}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Das Hexadezimalsystem ($b=16$)}
+Binärzahlen wie $11111111_2$ sind lang und unübersichtlich. 
+\vspace{2mm}
+Das Hexadezimalsystem nutzt 16 Ziffern:
+$$\lrc{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}$$
+\begin{center}
+$A=10, B=11, C=12, D=13, E=14, F=15$
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Notwendigkeit \& Vorteil von Hexadezimal}
+Da $16 = 2^4$, entspricht \textbf{1 Hex-Ziffer} genau \textbf{4 Bits} (einem Halbbyte/Nibble).
+\vspace{3mm}
+\begin{center}
+\textbf{1 Byte (8 Bits) = exakt 2 Hex-Ziffern!}
+\end{center}
+\begin{align*}
+	11111111_2 &= FF_{16} = 255_{10} \\
+	10101100_2 &= AC_{16} = 172_{10}
+\end{align*}
+\begin{center}
+Viel kompakter, besser lesbar und weniger anfällig für Tippfehler!
+\end{center}
+\end{frame}
+
+\begin{frame}{Auftrag}{Kapitel 2: Bits, Bytes \& Hexadezimal}
+\aufgabebox{\textbf{Aufgabe 2.1 \& 2.2}: $42_{10}$ als Byte ausdrücken \& grösste Zahl mit 1 Byte}\\[3mm]
+\aufgabebox{\textbf{Aufgabe 2.3 \& 2.4}: Hexadezimale Umrechnungen ($27_{10}$, 44, 23, 90, 124, 306)}
+\end{frame}
+
+

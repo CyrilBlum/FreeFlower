@@ -201,6 +201,7 @@
 \end{@empty}
 \newcounter{DummyCounter}
 \newcommand{\myanswerlabel}{-}
+\newcommand{\myanswercapsule}{tcolorboxTemplate}
 \newenvironment{myanswer}[1][]
 {
 \refstepcounter{DummyCounter}
@@ -208,7 +209,7 @@
 \ifblank{#1} {%
 	\renewcommand{\myanswerlabel}{\theexercisename~\theSharedCounter}
 	\renewcommand{\AnswerHeader}{}
-	\newcommand{\myanswercapsule}{tcolorboxTemplate}
+	\renewcommand{\myanswercapsule}{tcolorboxTemplate}
 } {%
 	\renewcommand{\myanswerlabel}{\cref{#1}}
 	\renewcommand{\AnswerHeader}{
@@ -216,7 +217,7 @@
 			\textcolor{ForestGreen}{\faCheck{}~\theanswername~\myanswerlabel~\faCheck{}}
 		\end{center}
 	}
-	\newcommand{\myanswercapsule}{@empty}
+	\renewcommand{\myanswercapsule}{@empty}
 }%
 \begin{Answer}[ref=\theDummyCounter]
 \ifblank{#1} {%

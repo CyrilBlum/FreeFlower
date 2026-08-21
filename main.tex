@@ -2,18 +2,8 @@
 %% choose document class (book / article / exam / beamer / flashcards)
 
 %% BOOK
-% \documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}
-% \documentclass[a4paper,11pt,svgnames,oneside]{book}
-
-%% ARTICLE
-% \documentclass[svgnames,hyphens]{article}
-
-%% EXAM
-% \documentclass[11pt,addpoints,svgnames]{exam}
-% \documentclass[11pt,addpoints,answers,svgnames]{exam}
-
-%% BEAMER SLIDES (Choose aspect ratio: 169 = 16:9 widescreen, 43 = 4:3 standard, 1610 = 16:10)
-\documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer} %% 16:9 Widescreen (Recommended)
+\documentclass[a4paper,11pt,svgnames,table,oneside]{book}
+% \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer} %% 16:9 Widescreen (Recommended)
 % \documentclass[aspectratio=43,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}  %% 4:3 Standard
 % \documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens,handout]{beamer}
 
@@ -28,7 +18,7 @@
 %% set toggles (switches) for the document class
 \newtoggle{book} \newtoggle{article} \newtoggle{exam} \newtoggle{beamer} \newtoggle{flashcards} %% default value is 'false'
 
-\def\documentToggle{3} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
+\def\documentToggle{0} %% <---- choose number (0=book, 1=article, 2=exam, 3=beamer, 4=flashcards)
 
 \ifnumequal{\documentToggle}{0}{\settoggle{book}{true}}{}     %% book (0)
 \ifnumequal{\documentToggle}{1}{\settoggle{article}{true}}{}  %% article (1)
@@ -84,7 +74,7 @@
 	% \input{Grundlagen_Info/11_Hardware/Skript/Skript_NAND2CPU.tex}
 	% \input{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Skript/Skript.tex}
 	% \input{Grundlagen_Info/14_KI_und_Prompting/Skript/Skript.tex}
-	% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Skript/Skript.tex}
+	\input{Grundlagen_Info/16_ComputerUndKodierungen/Skript/Skript.tex}
 
 	%% Ergänzungsfach Informatik
 	% \input{EF/physikalische_simulation/skript_simulation.tex} % Physikalische Simulation
@@ -264,18 +254,18 @@
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/markov_appendix}
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/decision_trees}
 		% \input{Grundlagen_Info/10_KI_und_Algorithmen/Slides/pagerank}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L01_WasIstInformatik}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L02_BasisgroessenUndStellenwert}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L03_UmrechnungUndHex}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L04_BinaerRechnenUndBits}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L05_ASCIIUndUTF8}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L06_BilderUndFarben}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L07_DateiformateUndSpeicher}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L08_LogischeGatterI}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L09_LogischeGatterII}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L10_AufbauComputerI}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L11_AufbauComputerII}
-		% \input{Grundlagen_Info/16_ComputerUndBetriebssysteme/Slides/L12_Betriebssystem}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L01_WasIstInformatik}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L02_BasisgroessenUndStellenwert}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L03_UmrechnungUndHex}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L04_BinaerRechnenUndBits}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L06_BilderUndFarben}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L05_ASCIIUndUTF8}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L07_DateiformateUndSpeicher}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L08_LogischeGatterI}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L09_LogischeGatterII}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L10_AufbauComputerI}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L11_AufbauComputerII}
+		\input{Grundlagen_Info/16_ComputerUndKodierungen/Slides/L12_Betriebssystem}
 
 		% Ergänzungsfach Informatik
 		% \input{EF/Complexity/complexity}
