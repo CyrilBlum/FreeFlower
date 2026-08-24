@@ -44,6 +44,9 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Manual Exercise Sync**: Exercise and task numberings in Beamer slides are **not** updated automatically when corresponding parts in scripts or exercise handouts are changed.
 - **Agent Rule**: Whenever you modify or add exercises in script/book sections, check and manually update the corresponding slide numbers and Beamer presentations in the repository.
 
+### 2.7 Cleanup of Temporary Rendered Artifacts
+- **Always Clean Up Rendered Images**: When using tools like `pdftoppm` to generate temporary `.png` files for visual inspection and verification, always delete all agent-generated `.png` files from the repository directory before finishing the task.
+
 ---
 
 ## 3. Project Structure & Compilation Workflow
@@ -107,3 +110,4 @@ Before submitting changes or marking a task complete:
 3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`).
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.
 5. [ ] **Preserve Formatting & Comments**: Keep inline comments clean and informative.
+6. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.

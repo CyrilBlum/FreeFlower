@@ -86,52 +86,17 @@ Wichtig ist: In echten Schaltungen gibt es Rauschen, Verzögerungen und Fertigun
 
 \section{Vom Transistor zum Gatter}
 
-In modernen Chips übernehmen \tib{Transistoren}\index{Transistor} die Rolle extrem schneller Schalter. Ein logisches \tib{Gatter}\index{Gatter} ist damit keine \enquote{magische Box}, sondern eine konkrete Schaltung aus vielen Transistoren.
+In modernen Mikroprozessoren übernehmen \tib{Transistoren}\index{Transistor} die Rolle extrem schneller, rein elektronischer Schalter. Im Gegensatz zu mechanischen Lichtschaltern besitzen Transistoren keine beweglichen Teile, sondern werden durch eine elektrische Steuerspannung geschaltet:
+\begin{itemize}
+    \item \textbf{Steuersignal = 1 (Spannung liegt an)}: Der Schalter ist \textbf{geschlossen} (Strom fliesst).
+    \item \textbf{Steuersignal = 0 (keine Spannung)}: Der Schalter ist \textbf{offen} (Strompfad ist unterbrochen).
+\end{itemize}
 
-Die folgende Skizze zeigt die Grundidee eines \gls{CMOS}-Inverters (NOT-Gatter):
+Ein logisches \tib{Gatter}\index{Gatter} fasst eine Schaltung aus solchen Schaltern zu einem standardisierten Baustein zusammen: Es nimmt ein oder mehrere digitale Eingangssignale entgegen und liefert ein klares Ausgangssignal ($0$ oder $1$). In den folgenden Abschnitten betrachten wir für jeden Gattertyp sein logisches Verhalten (Wahrheitstabelle), sein genormtes Schaltzeichen und seine anschauliche Umsetzung als elektrische Schaltung.
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[scale=1.0]
-        \begin{scope}[local bounding box=cmosBB]
-            \coordinate (cmos-base) at (0,0);
-            \coordinate (cmos-mid) at ($(cmos-base)+(2.5,2.0)$);
-            \coordinate (cmos-top) at ($(cmos-mid)+(0,1.8)$);
-            \coordinate (cmos-bot) at ($(cmos-mid)+(0,-1.6)$);
-            \coordinate (cmos-out) at ($(cmos-mid)+(0,-0.3)$);
-            \coordinate (cmos-out-right) at ($(cmos-out)+(1.0,0)$);
-
-            \draw (cmos-top) node {Versorgungsspannung};
-            \draw (cmos-bot) node {Masse (0\,V)};
-
-            \draw ($(cmos-mid)+(0,1.2)$) -- ($(cmos-mid)+(0,0.6)$);
-            \draw[rounded corners] ($(cmos-mid)+(-1.15,0.0)$) rectangle ($(cmos-mid)+(1.15,0.6)$);
-            \node at ($(cmos-mid)+(0,0.3)$) {p-Transistor};
-
-            \draw ($(cmos-mid)+(0,0.0)$) -- ($(cmos-mid)+(0,-0.6)$);
-            \draw (cmos-out) -- (cmos-out-right);
-            \node[above] at (cmos-out-right) {$y$};
-
-            \draw[rounded corners] ($(cmos-mid)+(-1.15,-1.2)$) rectangle ($(cmos-mid)+(1.15,-0.6)$);
-            \node at ($(cmos-mid)+(0,-0.9)$) {n-Transistor};
-            \draw ($(cmos-mid)+(0,-1.2)$) -- ($(cmos-mid)+(0,-1.6)$);
-
-            \draw ($(cmos-mid)+(-1.8,0.3)$) -- ($(cmos-mid)+(-0.8,0.3)$);
-            \draw ($(cmos-mid)+(-1.8,-0.9)$) -- ($(cmos-mid)+(-0.8,-0.9)$);
-            \node[left] at ($(cmos-mid)+(-1.8,-0.3)$) {$x$};
-        \end{scope}
-
-        \node[draw,rounded corners,fit=(cmosBB),inner sep=10pt] {};
-        \node[anchor=west, align=left] at (7.2,3.1) {$x=0 \Rightarrow$ oberer Transistor leitend,\ unterer sperrt};
-        \node[anchor=west] at (7.2,2.45) {$\Rightarrow y=1$};
-        \node[anchor=west, align=left] at (7.2,1.55) {$x=1 \Rightarrow$ oberer Transistor sperrt,\ unterer leitend};
-        \node[anchor=west] at (7.2,0.90) {$\Rightarrow y=0$};
-    \end{tikzpicture}
-    \caption{Prinzip eines CMOS-Inverters: Zwei komplementäre Transistoren erzeugen die Negation.}
-    \label{fig:cmos_inverter_prinzip}
-\end{figure}
-
-Dieses Prinzip wird für komplexere Gatter verallgemeinert. Aus vielen solcher Schaltstufen entstehen Rechenwerke, Speicher und am Ende ganze Prozessoren.
+\begin{myremark}[Exkurs: CMOS-Technologie in modernen Halbleiterchips]
+    In echten Mikrochips (wie der CPU in Smartphones oder Computern) verwendet man die sogenannte \gls{CMOS}-Technologie (\textit{Complementary Metal-Oxide-Semiconductor}). Dabei arbeiten zwei gegensätzliche Transistortypen (p- und n-Kanal-Transistoren) paarweise als komplementäre Schalter: Der eine schliesst bei $0$ die Verbindung zur Versorgungsspannung ($V_{\text{DD}} = 1$), der andere bei $1$ die Verbindung zur Masse ($0\,\text{V} = 0$). Durch diese komplementäre Anordnung fliesst im ruhenden Zustand fast kein Strom.
+\end{myremark}
 
 \begin{mydefinition}[Hardware-relevante Kennwerte]
     Reale Gatter werden nicht nur durch ihre Wahrheitstabelle beschrieben, sondern auch durch technische Kennwerte:
@@ -144,12 +109,12 @@ Dieses Prinzip wird für komplexere Gatter verallgemeinert. Aus vielen solcher S
 
 \section{Logische Grundverknüpfungen}
 
-Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funktionen}\index{Boolesche Funktion}: Funktionen, die einen oder mehrere Bits als Eingabe erhalten und genau ein Bit als Ausgabe liefern. Die drei elementaren Verknüpfungen sind \tib{NOT}\index{NOT-Gatter}, \tib{AND}\index{AND-Gatter} und \tib{OR}\index{OR-Gatter}.
+Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funktionen}\index{Boolesche Funktion}: Funktionen, die ein oder mehrere Bits als Eingabe erhalten und genau ein Bit als Ausgabe liefern.
 
-\subsection{NOT -- Negation}
+\subsection{NOT -- Negation (Inverter)}
 
 \begin{mydefinition}[NOT-Gatter]
-    Das \textbf{NOT-Gatter} (auch: Inverter) hat \emph{einen} Eingang $x$ und liefert den negierten Wert $\overline{x}$ als Ausgang:
+    Das \textbf{NOT-Gatter} (Inverter) hat \emph{einen} Eingang $x$ und kehrt dessen Signal um:
     \[
         \overline{0} = 1, \qquad \overline{1} = 0.
     \]
@@ -182,7 +147,148 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:not}
 \end{table}
 
-\subsection{AND -- Konjunktion}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        % Öffner-Schalter x
+        \fill (0.8, 2.2) circle (2pt);
+        \draw[thick, ForestGreen] (0.8, 2.2) -- (1.8, 2.2);
+        \node[above, font=\small] at (1.3, 2.3) {$x$ (Öffner)};
+        \fill (1.8, 2.2) circle (2pt);
+        \draw[thick] (1.8, 2.2) -- (3.5, 2.2) -- (3.5, 1.4);
+        
+        % Lampe y
+        \draw[thick] (3.5, 1.1) circle (0.3);
+        \draw (3.3, 0.9) -- (3.7, 1.3);
+        \draw (3.3, 1.3) -- (3.7, 0.9);
+        \node[right, font=\small] at (3.9, 1.1) {Last ($y = \overline{x}$)};
+        \draw[thick] (3.5, 0.8) -- (3.5, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (1.75, -0.9) {Bei $x=0$ (geschlossen): Strom fliesst ($y=1$).\\[1pt]Bei $x=1$ (geöffnet): Strom unterbrochen ($y=0$).};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für NOT: Ruhekontakt (Öffner).}
+    \label{fig:not_schaltung}
+\end{figure}
+
+\begin{myremark}[Erinnerung: Symbole elektrischer Schaltungen]
+    In den Ersatzschaltbildern werden folgende Symbole verwendet:
+    \begin{itemize}
+        \item \textbf{$U$ (Elektrische Spannung):} Steht für die \emph{Spannungsquelle} (z.\,B. Batterie oder Netzteil), welche den Stromkreis speist.
+        \item \textbf{Last / Lampe ($\otimes$):} Elektrischer Verbraucher. Leuchtet die Lampe, ist das Ausgangssignal $y=1$.
+    \end{itemize}
+\end{myremark}
+
+\begin{myremark}[Schalterarten: Schliesser (Arbeitskontakt) vs. Öffner (Ruhekontakt)]
+    In den Schaltungsdiagrammen kommen zwei grundlegende Schalterarten zum Einsatz:
+    \begin{center}
+        \begin{tikzpicture}[scale=0.9, >=stealth]
+            % --- Arbeitskontakt (Schliesser) ---
+            \begin{scope}[shift={(0,0)}]
+                \node[font=\small\bfseries] at (1.2, 1.8) {Arbeitskontakt (Schliesser)};
+                % Anschlüsse und Festkontakte
+                \draw[thick] (-0.4,0) -- (0,0); \fill (0,0) circle (2.2pt);
+                \draw[thick] (2.4,0) -- (2.8,0); \fill (2.4,0) circle (2.2pt);
+                
+                % Schalterhebel offen
+                \draw[thick] (0,0) -- (2.1, 0.8);
+                \draw[->, thick, NavyBlue] (1.1, 1.1) -- (1.1, 0.5) node[right, font=\tiny] {Drücken ($x=1$)};
+                
+                \node[font=\small, align=center] at (1.2, -0.6) {Unbetätigt ($x=0$): \textbf{Offen}\\[-2pt]{\scriptsize(Luftspalt $\rightarrow$ Strom unterbrochen)}};
+            \end{scope}
+            
+            % --- Ruhekontakt (Öffner) ---
+            \begin{scope}[shift={(5.5,0)}]
+                \node[font=\small\bfseries, ForestGreen] at (1.2, 1.8) {Ruhekontakt (Öffner)};
+                % Anschlüsse und Festkontakte
+                \draw[thick] (-0.4,0) -- (0,0); \fill (0,0) circle (2.2pt);
+                \draw[thick] (2.4,0) -- (2.8,0); \fill (2.4,0) circle (2.2pt);
+                
+                % Schalterhebel aufliegend (geschlossen)
+                \draw[thick, ForestGreen] (0,0) -- (2.4,0);
+                \draw[->, thick, Red] (1.1, 0.2) -- (1.1, 0.8) node[right, font=\tiny] {Drücken ($x=1$)};
+                
+                \node[font=\small, align=center] at (1.2, -0.6) {Unbetätigt ($x=0$): \textbf{Geschlossen}\\[-2pt]{\scriptsize(Kontakt aufliegend $\rightarrow$ Strom fliesst)}};
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item \textbf{Arbeitskontakt (Schliesser):}
+            \begin{itemize}
+                \item \emph{Unbetätigt ($x=0$)}: Schalter ist \textbf{offen} $\rightarrow$ Stromkreis unterbrochen.
+                \item \emph{Betätigt ($x=1$)}: Schalter wird \textbf{geschlossen} $\rightarrow$ Strom fliesst.
+                \item \emph{Beispiele}: Standard-Lichtschalter, Türklingel, Tastatur-Tasten.
+            \end{itemize}
+        \item \textbf{Ruhekontakt (Öffner, \textcolor{ForestGreen}{grün}):}
+            \begin{itemize}
+                \item \emph{Unbetätigt ($x=0$)}: Schalter ist \textbf{geschlossen} $\rightarrow$ Strom fliesst dauerhaft.
+                \item \emph{Betätigt ($x=1$)}: Schalter wird \textbf{geöffnet} $\rightarrow$ Stromkreis unterbrochen.
+                \item \emph{Beispiele}: Not-Aus-Schalter, Alarmanlagen-Fensterkontakte (Ruhestromprinzip).
+            \end{itemize}
+    \end{itemize}
+\end{myremark}
+
+\begin{myremark}[Exkurs: Umsetzung des NOT-Gatters in CMOS-Technologie]
+    In modernen Mikroprozessoren werden logische Gatter nicht mit mechanischen Schaltern, sondern mit zwei gegensätzlich schaltenden Transistoren (CMOS) umgesetzt:
+    \begin{center}
+        \begin{tikzpicture}[scale=0.9, >=stealth]
+            % Versorgung oben (VDD)
+            \draw[thick] (2,3.1) node[above, font=\small] {$V_{DD} \; (+U)$} -- (2,2.4);
+            
+            % PMOS oben (p-Kanal Transistor)
+            \draw[thick, fill=blue!8] (1.3,1.7) rectangle (2.7,2.4);
+            \node[font=\small\bfseries, color=NavyBlue] at (2,2.05) {PMOS};
+            \draw[thick] (1.1,2.05) circle (0.09cm); % Invertierungskreis
+            \draw[thick] (0.5,2.05) -- (1.01,2.05);
+            
+            % Verbindung zwischen PMOS und NMOS
+            \draw[thick] (2,1.7) -- (2,0.7);
+            \draw[thick] (2,1.2) -- (3.3,1.2) node[right, font=\small] {$y = \overline{x}$};
+            \fill (2,1.2) circle (2pt);
+            
+            % NMOS unten (n-Kanal Transistor)
+            \draw[thick, fill=red!8] (1.3,0) rectangle (2.7,0.7);
+            \node[font=\small\bfseries, color=Maroon] at (2,0.35) {NMOS};
+            \draw[thick] (0.5,0.35) -- (1.3,0.35);
+            
+            % Masse unten (GND)
+            \draw[thick] (2,0) -- (2,-0.4);
+            \draw[thick] (1.4,-0.4) -- (2.6,-0.4);
+            \draw[thick] (1.7,-0.52) -- (2.3,-0.52);
+            \draw[thick] (1.9,-0.64) -- (2.1,-0.64);
+            \node[below, font=\small] at (2,-0.7) {GND ($0\,\text{V}$)};
+            
+            % Eingang x
+            \draw[thick] (0.5,2.05) -- (0.5,0.35);
+            \draw[thick] (-0.2,1.2) node[left, font=\small] {$x$} -- (0.5,1.2);
+            \fill (0.5,1.2) circle (2pt);
+        \end{tikzpicture}
+    \end{center}
+    Die beiden Transistoren wirken als komplementäres Schalterpaar:
+    \begin{itemize}
+        \item \textbf{Eingang $x = 0$ ($0\,\text{V}$)}: PMOS (oben) schliesst, NMOS (unten) öffnet $\rightarrow$ Ausgang $y$ wird mit $V_{DD}$ verbunden $\rightarrow \mathbf{y = 1}$.
+        \item \textbf{Eingang $x = 1$ ($+U$)}: PMOS (oben) öffnet, NMOS (unten) schliesst $\rightarrow$ Ausgang $y$ wird mit GND verbunden $\rightarrow \mathbf{y = 0}$.
+    \end{itemize}
+\end{myremark}
+
+\begin{myexercise}
+    Eine Alarmanlage arbeitet nach dem Ruhestrom-Prinzip: Ein Fensterkontakt liefert im ungestörten Zustand $x=1$ (geschlossen). Wird der Draht durchtrennt oder das Fenster geöffnet, fällt das Signal auf $x=0$.
+    \begin{enumerate}[(a)]
+        \item Welches Gatter wird benötigt, damit die Alarmlampe $y$ bei Unterbrechung ($x=0$) aufleuchtet ($y=1$)?
+        \item Geben Sie die zugehörige Wahrheitstabelle an.
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}[(a)]
+            \item Ein \textbf{NOT-Gatter} (Inverter), da $y = \overline{x}$.
+            \item Wahrheitstabelle: $x=1 \Rightarrow y=0$ (kein Alarm); $x=0 \Rightarrow y=1$ (Alarm!).
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
+\subsection{AND -- Konjunktion (UND)}
 
 \begin{mydefinition}[AND-Gatter]
     Das \textbf{AND-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{beide} Eingänge \texttt{1} sind:
@@ -202,7 +308,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
             \coordinate (and-out-right) at ($(and1.output)+(0.7,0)$);
             \draw (and-in1-left) -- (and1.input 1) node[left] {$x$};
             \draw (and-in2-left) -- (and1.input 2) node[left] {$y$};
-            \draw (and1.output) -- (and-out-right) node[right] {$x \wedge y$};
+            \draw (and1.output) -- (and1.output) -- (and-out-right) node[right] {$x \wedge y$};
         \end{scope}
     \end{tikzpicture}
     \caption{Symbol des AND-Gatters.}
@@ -222,11 +328,49 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:and}
 \end{table}
 
-\begin{myexample}[Zwei Freigaben für ein System]
-    Eine Maschine darf nur starten, wenn \emph{gleichzeitig} ein Schlüsselschalter aktiv ist und ein Sicherheitstaster gedrückt wird. Das Verhalten entspricht einem AND-Gatter.
-\end{myexample}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        % Schalter A
+        \fill (0.8, 2.2) circle (2pt);
+        \draw[thick] (0.8, 2.2) -- (1.4, 2.55);
+        \node[above, font=\small] at (1.1, 2.55) {$A$};
+        \fill (1.6, 2.2) circle (2pt);
+        \draw[thick] (1.6, 2.2) -- (2.4, 2.2);
+        
+        % Schalter B
+        \fill (2.4, 2.2) circle (2pt);
+        \draw[thick] (2.4, 2.2) -- (3.0, 2.55);
+        \node[above, font=\small] at (2.7, 2.55) {$B$};
+        \fill (3.2, 2.2) circle (2pt);
+        \draw[thick] (3.2, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
+        
+        % Lampe y
+        \draw[thick] (4.2, 1.1) circle (0.3);
+        \draw (4.0, 0.9) -- (4.4, 1.3);
+        \draw (4.0, 1.3) -- (4.4, 0.9);
+        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \land B$)};
+        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Reihenschaltung: Strom fliesst nur, wenn\\[1pt]\textbf{$A=1$ UND $B=1$}.};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für AND: Reihenschaltung zweier Schalter.}
+    \label{fig:and_schaltung}
+\end{figure}
 
-\subsection{OR -- Disjunktion}
+\begin{myexercise}
+    Eine Stanze in einer Fabrik darf aus Sicherheitsgründen nur auslösen ($y=1$), wenn der Arbeiter \emph{gleichzeitig} mit der linken Hand Taster $A$ und mit der rechten Hand Taster $B$ drückt ($A=1$ und $B=1$).
+    Erklären Sie, warum hier eine Reihenschaltung bzw. ein AND-Gatter zwingend erforderlich ist.
+    \begin{myanswer}
+        Wäre es eine Parallelschaltung (OR), könnte der Arbeiter einen Taster festklemmen und mit einer Hand in die Stanze greifen. Nur bei einer Reihenschaltung (AND) müssen zwingend beide Hände beide Taster bedienen.
+    \end{myanswer}
+\end{myexercise}
+
+\subsection{OR -- Disjunktion (ODER)}
 
 \begin{mydefinition}[OR-Gatter]
     Das \textbf{OR-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{mindestens einer} der Eingänge \texttt{1} ist:
@@ -266,25 +410,70 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:or}
 \end{table}
 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        \draw[thick] (0.8, 2.2) |- (1.1, 2.7);
+        \draw[thick] (0.8, 2.2) |- (1.1, 1.7);
+        \fill (0.8, 2.2) circle (2pt);
+        
+        % Schalter A
+        \fill (1.1, 2.7) circle (2pt);
+        \draw[thick] (1.1, 2.7) -- (1.7, 3.05);
+        \node[above, font=\small] at (1.4, 3.05) {$A$};
+        \fill (1.9, 2.7) circle (2pt);
+        \draw[thick] (1.9, 2.7) -| (2.3, 2.2);
+        
+        % Schalter B
+        \fill (1.1, 1.7) circle (2pt);
+        \draw[thick] (1.1, 1.7) -- (1.7, 2.05);
+        \node[above, font=\small] at (1.4, 2.05) {$B$};
+        \fill (1.9, 1.7) circle (2pt);
+        \draw[thick] (1.9, 1.7) -| (2.3, 2.2);
+        
+        \fill (2.3, 2.2) circle (2pt);
+        \draw[thick] (2.3, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
+        
+        % Lampe y
+        \draw[thick] (4.2, 1.1) circle (0.3);
+        \draw (4.0, 0.9) -- (4.4, 1.3);
+        \draw (4.0, 1.3) -- (4.4, 0.9);
+        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \lor B$)};
+        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Parallelschaltung: Strom fliesst, wenn\\[1pt]\textbf{$A=1$ ODER $B=1$}.};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für OR: Parallelschaltung zweier Schalter.}
+    \label{fig:or_schaltung}
+\end{figure}
+
 \begin{myexercise}\label{myexercise:gatter-anwendung}
     Ein Fahrstuhl darf sich nur dann in Bewegung setzen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten ist \emph{oder} der Notfall-Modus deaktiviert ist. Modellieren Sie diese Bedingung mithilfe von AND-, OR- und NOT-Gattern und geben Sie die zugehörige logische Formel an.
     \begin{myanswer}
-        Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel
-        \begin{align*}
+        Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
+        \[
             t \wedge (\overline{u} \vee \overline{n}).
-        \end{align*}
-        Die Schaltung besteht also aus zwei NOT-Gattern (für $\overline{u}$ und $\overline{n}$), einem OR-Gatter und einem abschliessenden AND-Gatter.
+        \]
+        Die Schaltung besteht aus zwei NOT-Gattern (für $\overline{u}$ und $\overline{n}$), einem OR-Gatter und einem abschliessenden AND-Gatter.
     \end{myanswer}
 \end{myexercise}
 
-\section{Das NAND-Gatter: Ein universelles Gatter}\label{sec:nand}
+\section{Weitere Gatter: NAND, NOR und XOR}
+
+Aus den drei Grundverknüpfungen lassen sich weitere wichtige Gatter ableiten, die in der Praxis eine zentrale Rolle spielen.
+
+\subsection{NAND -- Nicht-UND}
 
 \begin{mydefinition}[NAND-Gatter]
-    Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} liefert die Negation des AND:
+    Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} liefert die Negation des AND-Gatters:
     \[
         x \uparrow y = \overline{x \wedge y}.
     \]
-    Es gibt \texttt{0} aus, wenn \emph{beide} Eingänge \texttt{1} sind; sonst immer \texttt{1}.
+    Es gibt genau dann \texttt{0} aus, wenn \emph{beide} Eingänge \texttt{1} sind; sonst immer \texttt{1}.
 \end{mydefinition}
 
 \begin{figure}[H]
@@ -318,10 +507,53 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:nand}
 \end{table}
 
-Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen. Man sagt, NAND ist \tib{funktional vollständig}\index{funktional vollständig}. In vielen Fertigungsprozessen ist es technologisch günstig, aus wenigen standardisierten Gattertypen sehr grosse Schaltungen aufzubauen.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        \draw[thick] (0.8, 2.2) |- (1.1, 2.7);
+        \draw[thick] (0.8, 2.2) |- (1.1, 1.7);
+        \fill (0.8, 2.2) circle (2pt);
+        
+        % Öffner A
+        \fill (1.1, 2.7) circle (2pt);
+        \draw[thick, ForestGreen] (1.1, 2.7) -- (1.9, 2.7);
+        \node[above, font=\small] at (1.5, 2.8) {$A$};
+        \fill (1.9, 2.7) circle (2pt);
+        \draw[thick] (1.9, 2.7) -| (2.3, 2.2);
+        
+        % Öffner B
+        \fill (1.1, 1.7) circle (2pt);
+        \draw[thick, ForestGreen] (1.1, 1.7) -- (1.9, 1.7);
+        \node[above, font=\small] at (1.5, 1.8) {$B$};
+        \fill (1.9, 1.7) circle (2pt);
+        \draw[thick] (1.9, 1.7) -| (2.3, 2.2);
+        
+        \fill (2.3, 2.2) circle (2pt);
+        \draw[thick] (2.3, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
+        
+        % Lampe y
+        \draw[thick] (4.2, 1.1) circle (0.3);
+        \draw (4.0, 0.9) -- (4.4, 1.3);
+        \draw (4.0, 1.3) -- (4.4, 0.9);
+        \node[right, font=\small] at (4.6, 1.1) {Last ($y = \overline{A \land B}$)};
+        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Parallele Öffner: Strom unterbrochen nur, wenn\\[1pt]\textbf{$A=1$ UND $B=1$}.};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für NAND: Parallelschaltung zweier Ruhekontakte (Öffner).}
+    \label{fig:nand_schaltung}
+\end{figure}
+
+Da es sich bei $A$ und $B$ um \textbf{Ruhekontakte (Öffner)} handelt, ist im unangetasteten Zustand ($0$) jeder Pfad \emph{geschlossen}. Erst beim Betätigen eines Schalters ($1$) wird dieser Pfad \emph{unterbrochen}. Solange mindestens ein Schalter nicht gedrückt wird ($0$), fliesst der Strom über dessen Zweig zur Last ($y=1$). Erst wenn \textbf{beide} Schalter gleichzeitig betätigt werden ($A=1$ UND $B=1$), öffnen sich beide parallelen Zweige und das Signal fällt aus ($y=0$).
+
+Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen (funktionale Vollständigkeit).
 
 \begin{myexercise}\label{myexercise:nand-not}
-    Zeigen Sie, dass sich das NOT-Gatter allein mit NAND-Gattern realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $x \uparrow x$ (also: $x$ NAND $x$) auf und vergleichen Sie diese mit der Wahrheitstabelle des NOT-Gatters.
+    Zeigen Sie, dass sich das NOT-Gatter allein mit NAND-Gattern realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $x \text{ NAND } x$ auf.
     \begin{myanswer}
         \begin{center}
             \begin{tabular}{c||c|c}
@@ -330,11 +562,175 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
                 1 & 1 & 0 \\
             \end{tabular}
         \end{center}
-        Die Spalte $\overline{x \wedge x}$ ist identisch mit der Wahrheitstabelle von NOT($x$). Ein NOT-Gatter kann also durch ein einziges NAND-Gatter realisiert werden, wenn beide Eingänge verbunden sind.
+        Die Spalte $\overline{x \wedge x}$ entspricht genau NOT($x$). Verbindet man beide Eingänge eines NAND-Gatters miteinander, erhält man ein NOT-Gatter.
     \end{myanswer}
 \end{myexercise}
 
-Das NAND-Gatter entspricht der Negation von AND ($x \uparrow y = \overline{x \land y}$). Aus NAND-Gattern lassen sich alle anderen logischen Gatter aufbauen (funktionale Vollständigkeit).
+\subsection{NOR -- Nicht-ODER}
+
+\begin{mydefinition}[NOR-Gatter]
+    Das \textbf{NOR-Gatter} liefert die Negation des OR-Gatters:
+    \[
+        x \downarrow y = \overline{x \vee y}.
+    \]
+    Es gibt genau dann \texttt{1} aus, wenn \emph{beide} Eingänge \texttt{0} sind; sonst immer \texttt{0}.
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=norBB]
+            \coordinate (nor-base) at (0,0);
+            \node[nor gate, draw] (nor1) at (nor-base) {};
+            \coordinate (nor-in1-left) at ($(nor1.input 1)+(-0.7,0)$);
+            \coordinate (nor-in2-left) at ($(nor1.input 2)+(-0.7,0)$);
+            \coordinate (nor-out-right) at ($(nor1.output)+(0.7,0)$);
+            \draw (nor-in1-left) -- (nor1.input 1) node[left] {$x$};
+            \draw (nor-in2-left) -- (nor1.input 2) node[left] {$y$};
+            \draw (nor1.output) -- (nor-out-right) node[right] {$\overline{x \vee y}$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des NOR-Gatters (OR mit Kreis am Ausgang).}
+    \label{fig:nor_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $\overline{x \vee y}$ \\\midrule\midrule
+        0 & 0 & 1 \\\midrule
+        0 & 1 & 0 \\\midrule
+        1 & 0 & 0 \\\midrule
+        1 & 1 & 0 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des NOR-Gatters.}
+    \label{tab:nor}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        % Öffner A
+        \fill (0.8, 2.2) circle (2pt);
+        \draw[thick, ForestGreen] (0.8, 2.2) -- (1.8, 2.2);
+        \node[above, font=\small] at (1.3, 2.3) {$A$};
+        \fill (1.8, 2.2) circle (2pt);
+        \draw[thick] (1.8, 2.2) -- (2.4, 2.2);
+        
+        % Öffner B
+        \fill (2.4, 2.2) circle (2pt);
+        \draw[thick, ForestGreen] (2.4, 2.2) -- (3.4, 2.2);
+        \node[above, font=\small] at (2.9, 2.3) {$B$};
+        \fill (3.4, 2.2) circle (2pt);
+        \draw[thick] (3.4, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
+        
+        % Lampe y
+        \draw[thick] (4.2, 1.1) circle (0.3);
+        \draw (4.0, 0.9) -- (4.4, 1.3);
+        \draw (4.0, 1.3) -- (4.4, 0.9);
+        \node[right, font=\small] at (4.6, 1.1) {Last ($y = \overline{A \lor B}$)};
+        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {In Reihe geschaltete Öffner: Strom fliesst nur, wenn\\[1pt]\textbf{$A=0$ UND $B=0$}.};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für NOR: Reihenschaltung zweier Ruhekontakte (Öffner).}
+    \label{fig:nor_schaltung}
+\end{figure}
+
+\begin{myexercise}
+    Gegeben ist die Verknüpfung $y = \overline{x \vee y}$ (NOR). Bestimmen Sie das Ausgangssignal $y$ für folgende Eingangskombinationen:
+    (1) $x=0, y=0$, (2) $x=1, y=0$, (3) $x=1, y=1$.
+    \begin{myanswer}
+        (1) $0 \downarrow 0 = 1$, (2) $1 \downarrow 0 = 0$, (3) $1 \downarrow 1 = 0$.
+    \end{myanswer}
+\end{myexercise}
+
+\subsection{XOR -- Exklusiv-ODER (Antivalenz)}
+
+\begin{mydefinition}[XOR-Gatter]
+    Das \textbf{XOR-Gatter} (Exklusiv-ODER) liefert genau dann den Ausgang \texttt{1}, wenn sich die beiden Eingänge \emph{voneinander unterscheiden} ($x \neq y$):
+    \[
+        x \oplus y = 1 \iff (x = 1 \text{ und } y = 0) \text{ oder } (x = 0 \text{ und } y = 1).
+    \]
+\end{mydefinition}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[circuit logic US, scale=1.4]
+        \begin{scope}[local bounding box=xorBB]
+            \coordinate (xor-base) at (0,0);
+            \node[xor gate, draw] (xor1) at (xor-base) {};
+            \coordinate (xor-in1-left) at ($(xor1.input 1)+(-0.7,0)$);
+            \coordinate (xor-in2-left) at ($(xor1.input 2)+(-0.7,0)$);
+            \coordinate (xor-out-right) at ($(xor1.output)+(0.7,0)$);
+            \draw (xor-in1-left) -- (xor1.input 1) node[left] {$x$};
+            \draw (xor-in2-left) -- (xor1.input 2) node[left] {$y$};
+            \draw (xor1.output) -- (xor-out-right) node[right] {$x \oplus y$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Symbol des XOR-Gatters.}
+    \label{fig:xor_gatter}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c||c}
+        $x$ & $y$ & $x \oplus y$ \\\midrule\midrule
+        0 & 0 & 0 \\\midrule
+        0 & 1 & 1 \\\midrule
+        1 & 0 & 1 \\\midrule
+        1 & 1 & 0 \\
+    \end{tabular}
+    \caption{Wahrheitstabelle des XOR-Gatters.}
+    \label{tab:xor}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.88, >=stealth]
+        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
+        \node[left, font=\small] at (0,1.1) {$U$};
+        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
+        
+        % Wechselschalter A
+        \fill (0.8, 2.2) circle (2pt);
+        \draw[thick] (0.8, 2.2) -- (1.4, 2.7);
+        \node[above left, font=\small] at (0.8, 2.2) {$A$};
+        \fill (1.4, 2.7) circle (2pt); \fill (1.4, 1.7) circle (2pt);
+        \draw[thick] (1.4, 2.7) -- (2.4, 2.7);
+        \draw[thick] (1.4, 1.7) -- (2.4, 1.7);
+        
+        % Wechselschalter B
+        \fill (2.4, 2.7) circle (2pt); \fill (2.4, 1.7) circle (2pt);
+        \draw[thick] (3.0, 2.2) -- (2.4, 1.7);
+        \node[above right, font=\small] at (3.0, 2.2) {$B$};
+        \fill (3.0, 2.2) circle (2pt);
+        \draw[thick] (3.0, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
+        
+        % Lampe y
+        \draw[thick] (4.2, 1.1) circle (0.3);
+        \draw (4.0, 0.9) -- (4.4, 1.3);
+        \draw (4.0, 1.3) -- (4.4, 0.9);
+        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \oplus B$)};
+        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
+        
+        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Wechselschaltung (Treppenhausschaltung):\\[1pt]Strom fliesst, wenn $A$ und $B$ \textbf{verschieden} sind.};
+    \end{tikzpicture}
+    \caption{Elektrische Schaltung für XOR: Wechselschaltung mit zwei Umschaltern.}
+    \label{fig:xor_schaltung}
+\end{figure}
+
+\begin{myexercise}
+    In einem Flur soll das Licht über zwei Wechselschalter $A$ und $B$ (einer am Anfang, einer am Ende des Flurs) unabhängig voneinander ein- und ausgeschaltet werden können.
+    Zeigen Sie anhand der Wechselschaltung in \cref{fig:xor_schaltung}, warum das Verhalten einer XOR-Verknüpfung entspricht.
+    \begin{myanswer}
+        Befinden sich beide Schalter in der gleichen Stellung ($0,0$ oder $1,1$), existiert kein geschlossener Strompfad. Wird einer der beiden Schalter umgelegt (Zustand ändert auf $0,1$ bzw. $1,0$), schliesst sich der Pfad und das Licht brennt. Umlegen eines beliebigen Schalters kehrt den Zustand der Lampe jeweils um.
+    \end{myanswer}
+\end{myexercise}
 
 \section{Schaltkreise für die Binäraddition: Halbaddierer und Volladdierer}\label{sec:halbaddierer}
 
@@ -437,6 +833,38 @@ Eine Schaltung, die zwei Bits $x$ und $y$ addiert und daraus ein Summenbit $s$ u
     \label{fig:halbaddierer}
 \end{figure}
 
+Zusammenfassend benötigt ein Halbaddierer genau **zwei Gatter**, um zwei 1-Bit-Zahlen $x$ und $y$ zu addieren:
+\begin{itemize}
+    \item \textbf{XOR-Gatter (Exklusiv-ODER)} für das Summenbit $s = x \oplus y$: Es liefert $1$, wenn genau ein Eingang $1$ ist.
+    \item \textbf{AND-Gatter (UND)} für das Übertragsbit $c = x \land y$: Es liefert nur dann $1$, wenn beide Eingänge $1$ sind ($1+1 = 10_2 = 2_{10}$).
+\end{itemize}
+
+\begin{myexercise}
+    Füllen Sie die Wahrheitstabelle des Halbaddierers für alle 4 Kombinationen von $x$ und $y$ aus. Berechnen Sie das Summenbit $s = x \oplus y$, das Übertragsbit $c = x \land y$, die zusammengesetzte 2-stellige Binärzahl $(c s)_2$ sowie deren Dezimalwert:
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|c||c|c|c|c}
+            $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binärzahl $(c s)_2$ & Dezimalwert \\ \midrule\midrule
+            0 & 0 & ? & ? & ? & ? \\ \midrule
+            0 & 1 & ? & ? & ? & ? \\ \midrule
+            1 & 0 & ? & ? & ? & ? \\ \midrule
+            1 & 1 & ? & ? & ? & ? \\
+        \end{tabular}
+    \end{table}
+
+    \begin{myanswer}
+        \begin{center}
+        \begin{tabular}{c|c||c|c|c|c}
+            $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binärzahl $(c s)_2$ & Dezimalwert \\ \midrule\midrule
+            0 & 0 & 0 & 0 & $00_2$ & $0_{10}$ \\ \midrule
+            0 & 1 & 1 & 0 & $01_2$ & $1_{10}$ \\ \midrule
+            1 & 0 & 1 & 0 & $01_2$ & $1_{10}$ \\ \midrule
+            1 & 1 & 0 & 1 & $10_2$ & $2_{10}$ \\
+        \end{tabular}
+        \end{center}
+    \end{myanswer}
+\end{myexercise}
+
 \subsection{Der Volladdierer}
 
 Warum reicht ein Halbaddierer nicht aus, um zwei mehrstellige Binärzahlen (wie z.\,B. $1011_2 + 1101_2$) zu addieren? Beim schriftlichen Addieren mehrerer Stellen entsteht aus der vorherigen Stelle ein eingehender Übertrag $c_{\text{in}}$ (\textit{carry-in}), den die Schaltung ebenfalls mitverarbeiten muss!
@@ -503,61 +931,32 @@ Kaskadiert man $n$ Volladdierer hintereinander, indem man den Übertragsausgang 
 Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im Binärsystem} aus.
 
 \begin{myexercise}
-    Füllen Sie die folgenden Tabellen zur Funktionsweise des Halbaddierers und der binären Addition aus:
-    \begin{enumerate}[(a)]
-        \item \textbf{Wahrheitstabelle des Halbaddierers}: Vervollständigen Sie die Signale für die Eingänge $x$ und $y$, die Summe $s = x \oplus y$, den Übertrag $c = x \land y$ sowie das zusammengesetzte Binär- und Dezimalergebnis:
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{c|c||c|c|c|c}
-                $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binärzahl $(c s)_2$ & Dezimalwert \\ \midrule\midrule
-                0 & 0 & ? & ? & ? & ? \\ \midrule
-                0 & 1 & ? & ? & ? & ? \\ \midrule
-                1 & 0 & ? & ? & ? & ? \\ \midrule
-                1 & 1 & ? & ? & ? & ? \\
-            \end{tabular}
-        \end{table}
-
-        \item \textbf{Binäre Addition mehrerer Stellen}: Berechnen Sie die folgenden Summen Stelle für Stelle (inkl. Übertragsbit $c$) und kontrollieren Sie das Ergebnis im Dezimalsystem:
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{c||c|c|c}
-                & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-                Zahl $A$ (dezimal) & $3_{10}$ & $5_{10}$ & $7_{10}$ \\
-                Zahl $B$ (dezimal) & $2_{10}$ & $3_{10}$ & $1_{10}$ \\ \midrule
-                $A = a_2 a_1 a_0$ & $011_2$ & $101_2$ & $111_2$ \\
-                $B = b_2 b_1 b_0$ & $010_2$ & $011_2$ & $001_2$ \\ \midrule
-                Überträge $c_2 c_1 c_0$ & ? & ? & ? \\
-                Ergebnis $s_3 s_2 s_1 s_0$ & ? & ? & ? \\ \midrule
-                Dezimal-Kontrolle & ? & ? & ? \\
-            \end{tabular}
-        \end{table}
-    \end{enumerate}
+    Berechnen Sie die folgenden Summen Stelle für Stelle (inkl. Übertragsbit $c$) und kontrollieren Sie das Ergebnis im Dezimalsystem:
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c||c|c|c}
+            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
+            Zahl $A$ (dezimal) & $3_{10}$ & $5_{10}$ & $7_{10}$ \\
+            Zahl $B$ (dezimal) & $2_{10}$ & $3_{10}$ & $1_{10}$ \\ \midrule
+            $A = a_2 a_1 a_0$ & $011_2$ & $101_2$ & $111_2$ \\
+            $B = b_2 b_1 b_0$ & $010_2$ & $011_2$ & $001_2$ \\ \midrule
+            Überträge $c_2 c_1 c_0$ & ? & ? & ? \\
+            Ergebnis $s_3 s_2 s_1 s_0$ & ? & ? & ? \\ \midrule
+            Dezimal-Kontrolle & ? & ? & ? \\
+        \end{tabular}
+    \end{table}
 
     \begin{myanswer}
-        \begin{enumerate}[(a)]
-            \item \textbf{Wahrheitstabelle des Halbaddierers}:
-            \begin{center}
-            \begin{tabular}{c|c||c|c|c|c}
-                $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binärzahl $(c s)_2$ & Dezimalwert \\ \midrule\midrule
-                0 & 0 & 0 & 0 & $00_2$ & $0_{10}$ \\ \midrule
-                0 & 1 & 1 & 0 & $01_2$ & $1_{10}$ \\ \midrule
-                1 & 0 & 1 & 0 & $01_2$ & $1_{10}$ \\ \midrule
-                1 & 1 & 0 & 1 & $10_2$ & $2_{10}$ \\
-            \end{tabular}
-            \end{center}
-
-            \item \textbf{Mehrstellige binäre Addition}:
-            \begin{center}
-            \begin{tabular}{c||c|c|c}
-                & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-                $A$ & $011_2$ ($3$) & $101_2$ ($5$) & $111_2$ ($7$) \\
-                $B$ & $010_2$ ($2$) & $011_2$ ($3$) & $001_2$ ($1$) \\ \midrule
-                Überträge $c$ & $010_2$ & $111_2$ & $111_2$ \\
-                Ergebnis $S$ & $0101_2$ ($5_{10}$) & $1000_2$ ($8_{10}$) & $1000_2$ ($8_{10}$) \\ \midrule
-                Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
-            \end{tabular}
-            \end{center}
-        \end{enumerate}
+        \begin{center}
+        \begin{tabular}{c||c|c|c}
+            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
+            $A$ & $011_2$ ($3$) & $101_2$ ($5$) & $111_2$ ($7$) \\
+            $B$ & $010_2$ ($2$) & $011_2$ ($3$) & $001_2$ ($1$) \\ \midrule
+            Überträge $c$ & $010_2$ & $111_2$ & $111_2$ \\
+            Ergebnis $S$ & $0101_2$ ($5_{10}$) & $1000_2$ ($8_{10}$) & $1000_2$ ($8_{10}$) \\ \midrule
+            Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
+        \end{tabular}
+        \end{center}
     \end{myanswer}
 \end{myexercise}
 
