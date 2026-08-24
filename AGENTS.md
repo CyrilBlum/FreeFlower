@@ -47,6 +47,14 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 ### 2.7 Cleanup of Temporary Rendered Artifacts
 - **Always Clean Up Rendered Images**: When using tools like `pdftoppm` to generate temporary `.png` files for visual inspection and verification, always delete all agent-generated `.png` files from the repository directory before finishing the task.
 
+### 2.8 Cleanup of LaTeX Auxiliary Files
+- **Always Clean Up Aux Files**: After every build, delete all LaTeX auxiliary files from the repository directory before finishing the task. This includes (but is not limited to):
+  `aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`
+- You can remove them with a command such as:
+  ```bash
+  rm -f main.{aux,log,out,toc,lof,lot,glo,idx,fls,fdb_latexmk,synctex.gz}
+  ```
+
 ---
 
 ## 3. Project Structure & Compilation Workflow
@@ -111,3 +119,4 @@ Before submitting changes or marking a task complete:
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.
 5. [ ] **Preserve Formatting & Comments**: Keep inline comments clean and informative.
 6. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
+7. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
