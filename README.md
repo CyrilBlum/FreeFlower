@@ -22,7 +22,7 @@ https://cyrilblum.github.io/FreeFlower/
 
 To compile this project, navigate to `main.tex` and chose to run either a `book`, `article`, `exam`, `beamer` or `flashcard` documentclass, using the toggles. Uncomment a line to compile a certain project. 
 
-We recommend running the following **compilation sequences**
+We recommend running `latexmk -pdflua -silent main.tex` or the following **compilation sequences**
 - `book`: `lualatex -> biber -> makeglossaries -> lualatex -> lualatex` 
 - other document classes: `lualatex -> lualatex`
 
