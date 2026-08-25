@@ -59,7 +59,7 @@ Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (
         \foreach \x/\lbl/\col in {0/Browser/Salmon!50, 1/Musik/DarkSeaGreen!50, 2/Editor/Goldenrod!40, 3/Browser/Salmon!50, 4/Musik/DarkSeaGreen!50, 5/Editor/Goldenrod!40, 6/Browser/Salmon!50, 7/Musik/DarkSeaGreen!50, 8/Editor/Goldenrod!40} {
             \node[draw, fill=\col, minimum width=0.9cm, minimum height=0.8cm, text centered] at (\x*1.5 - 2, 0.7) {\lbl};
         }
-        \node at (4.5, -0.5) {Der Prozessor wechselt so schnell zwischen den Programmen, dass es sich für den Benutzer nach Gleichzeitigkeit anfühlt.};
+        \node[align=left] at (4.5, -0.5) {Der Prozessor wechselt so schnell zwischen den Programmen,\\dass es sich für den Benutzer nach Gleichzeitigkeit anfühlt.};
     \end{tikzpicture}
     \caption{Zeitscheiben-Multitasking: Das Betriebssystem teilt die CPU-Zeit in kleine Scheiben auf.}
     \label{fig:multitasking}
@@ -145,9 +145,9 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
     \centering
     \begin{tabular}{l|l|l}
         \textbf{Betriebssystem} & \textbf{Hersteller} & \textbf{Typisches Einsatzgebiet} \\\midrule\midrule
-        Windows 11              & Microsoft           & PC, Laptops \\\midrule
+        Windows 11              & Microsoft           & PC, Laptop \\\midrule
         macOS                   & Apple               & Mac-Computer \\\midrule
-        Linux (Ubuntu, Debian \ldots) & Open Source  & Server, PCs, eingebettete Systeme \\\midrule
+        GNU+Linux (Ubuntu, Debian \ldots) & Open Source  & Server, PC, Laptop, eingebettete Systeme \\\midrule
         Android                 & Google              & Smartphones, Tablets \\\midrule
         iOS                     & Apple               & iPhone, iPad \\
     \end{tabular}
