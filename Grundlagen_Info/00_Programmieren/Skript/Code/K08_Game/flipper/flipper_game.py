@@ -6,15 +6,15 @@ from flipper import *
 
 
 # --- Sounds ---
-bg_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/retro-arcade-game-music.mp3")
-bounce_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/pinball35.mp3")
-tube_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/pinball8.mp3")
+bg_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/retro-arcade-game-music.mp3")
+bounce_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/pinball35.mp3")
+tube_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/pinball8.mp3")
 #bg_sound.play(loops=-1)
-collect_points = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/collectpoints.mp3")
+collect_points = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/collectpoints.mp3")
 
 
 # --- Flipper-Spezialelemente ---
-tube = pg.image.load("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/tube.png").convert_alpha()
+tube = pg.image.load("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/tube.png").convert_alpha()
 tube = pg.transform.smoothscale(tube, (100, tube.get_height() * 100 // tube.get_width()))
 tube_rect = pg.Rect(20, tube.get_height()+20, 30, 40) # Bereich unter dem Rohr
 tube_hit = False

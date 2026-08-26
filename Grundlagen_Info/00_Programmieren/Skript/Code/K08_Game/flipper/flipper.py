@@ -20,12 +20,12 @@ font = pg.font.Font(None, 36)
 pg.mixer.init()
 
 # --- Sounds ---
-flipper_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/pinball13.mp3")
-stick_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/pinball27.mp3")
-stick_release_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/pinball34.mp3")
+flipper_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/pinball13.mp3")
+stick_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/pinball27.mp3")
+stick_release_sound = pg.mixer.Sound("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/pinball34.mp3")
 
 # --- Bilder ---
-dollar = pg.image.load("Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/euro.png").convert_alpha()
+dollar = pg.image.load("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/euro.png").convert_alpha()
 dollar = pg.transform.scale(dollar, (60, 60))
 
 class StickObj:

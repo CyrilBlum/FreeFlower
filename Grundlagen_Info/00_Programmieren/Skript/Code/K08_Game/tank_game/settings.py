@@ -26,36 +26,36 @@ target_points = 5
 
 # Sounds
 bg_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/tank_game.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/tank_game.mp3"
 )
 shoot_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/shoot_bomb.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/shoot_bomb.mp3"
 )
 reload_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/reload.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/reload.mp3"
 )
 moving_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/metal-moving.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/metal-moving.mp3"
 )
 explosion_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/explosion.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/explosion.mp3"
 )
 level_up_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/level_up.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/level_up.mp3"
 )
 heal_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/heal.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/heal.mp3"
 )
 
 
 # Bilder
 explosion_img = pg.image.load(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/explosion.png"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/explosion.png"
 ).convert_alpha()
 explosion_img = pg.transform.scale(explosion_img, (80, 80))
 
 heal_img = pg.image.load(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/firstaid.png"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/firstaid.png"
 ).convert_alpha()
 heal_img = pg.transform.scale(heal_img, (40, 40))
 

@@ -245,44 +245,93 @@ def convert_tex_content(tex_text, ch_num="1"):
     # Convert Enumerate List
     text = re.sub(r'\\begin\{enumerate\}(.*?)\\end\{enumerate\}', convert_enumerate, text, flags=re.DOTALL)
 
-    # Convert Custom Environments to Quarto Callouts wrapped in outer div for 100% CSS targeting
-    def convert_env(txt, env_name, callout_type, env_class, default_title):
-        pattern = r'\\begin\{' + env_name + r'\}(?:\[([^\]]+)\])?(?:\s*\\label\{([^\}]+)\})?'
-        def replacer(m):
-            raw_title = m.group(1) if m.group(1) else ""
-            label = m.group(2) if m.group(2) else ""
-            clean_title = clean_tex_escapes(raw_title)
+    # Convert Custom Environments to Quarto Callouts in unified document-order pass
+    ENV_CONFIGS = {
+        "myexercise": {
+            "callout_type": ".callout-tip",
+            "env_class": ".env-exercise",
+            "prefix": "Aufgabe",
+            "counter_group": "exercise"
+        },
+        "mychallenge": {
+            "callout_type": ".callout-warning",
+            "env_class": ".env-challenge",
+            "prefix": "Aufgabe (Challenge)",
+            "counter_group": "exercise"
+        },
+        "myexample": {
+            "callout_type": ".callout-note",
+            "env_class": ".env-example",
+            "prefix": "Beispiel",
+            "counter_group": "example"
+        },
+        "mydefinition": {
+            "callout_type": ".callout-note",
+            "env_class": ".env-definition",
+            "prefix": "Definition",
+            "counter_group": "definition"
+        },
+        "myremark": {
+            "callout_type": ".callout-note",
+            "env_class": ".env-remark",
+            "prefix": "Bemerkung",
+            "counter_group": "remark"
+        },
+        "myoverview": {
+            "callout_type": ".callout-note",
+            "env_class": ".env-overview",
+            "prefix": "Übersicht",
+            "counter_group": "overview"
+        },
+        "myattention": {
+            "callout_type": ".callout-warning",
+            "env_class": ".env-attention",
+            "prefix": "Wichtiger Hinweis",
+            "counter_group": "attention"
+        }
+    }
 
-            if env_name in ("myexercise", "mychallenge"):
-                exercise_counter[0] += 1
-                num_str = f"{ch_num}.{exercise_counter[0]}"
-                prefix = "Aufgabe" if env_name == "myexercise" else "Challenge"
-                if clean_title:
-                    display_title = f"{prefix} {num_str}: {clean_title}"
-                else:
-                    display_title = f"{prefix} {num_str}"
-                if label:
-                    label_to_info[label] = {
-                        "num_str": num_str,
-                        "display_title": display_title,
-                        "prefix": prefix
-                    }
-            else:
-                display_title = clean_title if clean_title else default_title
+    counters = {
+        "exercise": 0,
+        "example": 0,
+        "definition": 0,
+        "remark": 0,
+        "overview": 0,
+        "attention": 0
+    }
 
-            id_attr = f" #{label}" if label else ""
-            return f"\n\n::: {{{env_class}{id_attr}}}\n::: {{{callout_type} icon=false}}\n### {display_title}\n"
-        txt = re.sub(pattern, replacer, txt)
-        txt = txt.replace(r'\end{' + env_name + r'}', '\n:::\n:::\n\n')
-        return txt
+    env_names_pattern = "|".join(ENV_CONFIGS.keys())
+    env_start_pattern = r'\\begin\{(' + env_names_pattern + r')\}(?:\[([^\]]+)\])?(?:\s*\\label\{([^\}]+)\})?'
 
-    text = convert_env(text, "mydefinition", ".callout-note", ".env-definition", "Definition")
-    text = convert_env(text, "myexample", ".callout-note", ".env-example", "Beispiel")
-    text = convert_env(text, "myexercise", ".callout-tip", ".env-exercise", "Aufgabe")
-    text = convert_env(text, "myremark", ".callout-note", ".env-remark", "Bemerkung")
-    text = convert_env(text, "myoverview", ".callout-note", ".env-overview", "Übersicht")
-    text = convert_env(text, "myattention", ".callout-warning", ".env-attention", "Wichtiger Hinweis")
-    text = convert_env(text, "mychallenge", ".callout-warning", ".env-challenge", "Challenge")
+    def replace_env_start(m):
+        env_name = m.group(1)
+        raw_title = m.group(2) if m.group(2) else ""
+        label = m.group(3) if m.group(3) else ""
+        clean_title = clean_tex_escapes(raw_title)
+
+        config = ENV_CONFIGS[env_name]
+        cgroup = config["counter_group"]
+        counters[cgroup] += 1
+        num_str = f"{ch_num}.{counters[cgroup]}"
+        prefix = config["prefix"]
+
+        if clean_title:
+            display_title = f"{prefix} {num_str}: {clean_title}"
+        else:
+            display_title = f"{prefix} {num_str}"
+
+        if label:
+            label_to_info[label] = {
+                "num_str": num_str,
+                "display_title": display_title,
+                "prefix": prefix
+            }
+
+        id_attr = f" #{label}" if label else ""
+        return f"\n\n::: {{{config['env_class']}{id_attr}}}\n::: {{{config['callout_type']} icon=false}}\n### {display_title}\n"
+
+    text = re.sub(env_start_pattern, replace_env_start, text)
+    text = re.sub(r'\\end\{(' + env_names_pattern + r')\}', '\n:::\n:::\n\n', text)
 
     # Convert Solutions \begin{myanswer}[optional_label] ... \end{myanswer} into Collapsible Callouts
     def convert_answer(m):

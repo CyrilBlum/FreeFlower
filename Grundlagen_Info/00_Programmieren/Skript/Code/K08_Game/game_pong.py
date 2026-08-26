@@ -45,10 +45,10 @@ font = pg.font.Font(None, int(HEIGHT * 0.1))
 
 # Sounds
 bg_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/retro-arcade-game-music.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/retro-arcade-game-music.mp3"
 )
 bounce_sound = pg.mixer.Sound(
-    "Grundlagen_Info/00_Programmieren/Skript/Code/K09_Game/assets/laser.mp3"
+    "Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/assets/laser.mp3"
 )
 score_sound = pg.mixer.Sound(
     "Grundlagen_Info/12_Pygame_CE/Project_Files/Platform/audio/shoot.wav"
