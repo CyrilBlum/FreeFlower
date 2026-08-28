@@ -98,14 +98,8 @@ The main entry point is `main.tex`. Document types are controlled via the `\docu
   lualatex main.tex -> lualatex main.tex
   ```
 
-#### Batch Script
-You can also use `compile_tex.sh` to run targeted builds or checks across document classes:
-```bash
-./compile_tex.sh "" "book"     # Compile book class
-./compile_tex.sh "" "beamer"   # Compile beamer class
-```
-
-It is generally preferrable not to use the `compile_tex.sh` script, unless functionality of the script itself should be tested.
+#### Batch Script (`compile_tex.sh`)
+- **Never use `compile_tex.sh` to compile documents**: AI agents must **never** run `compile_tex.sh` to build or verify documents. Only compile manually using direct `lualatex` / `biber` / `makeglossaries` commands when needed, unless the explicit task is specifically to debug or test `compile_tex.sh` itself.
 
 ---
 
