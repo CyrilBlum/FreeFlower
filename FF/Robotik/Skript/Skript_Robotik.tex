@@ -1,0 +1,64 @@
+\lstset{style=Python,escapeinside={(*@}{@*)}}
+\fboxsep=.6pt
+
+% Define a toggle for exerciseonly mode (false by default)
+\newtoggle{exerciseonly}
+\settoggle{exerciseonly}{false}
+
+% Check for the class option 'exerciseonly'
+\makeatletter
+\@ifclasswith{book}{exerciseonly}{%
+	\settoggle{exerciseonly}{true}%
+}{}
+\makeatother
+
+% load package if document contains at least one citation
+\usepackage[maxbibnames=99,sorting=none,style=numeric,backend=biber]{biblatex}
+% enable option to print bibliography as a numbered subsection
+\defbibheading{bibsubsection}[\bibname]{%
+  \subsection{#1}%
+}
+
+\setcounter{tocdepth}{2} % Show up to subsections in ToC
+
+\addbibresource{refs.bib}
+
+% Access metadata from the git distributed version control system
+\usepackage[grumpy,mark,maxdepth=8]{gitinfo2}
+
+\begin{document}
+%% Project-specific Preambles 
+\settoggle{includelogo}{true}
+
+\newcommand{\thesubject}{Physik und Informatik}
+\newcommand{\thetopic}{Robotik}
+\newcommand{\logosize}{.5\textwidth}
+
+
+\lhead[ \leftmark ]{\thetopic}
+\rhead[\thesubject]{\textcopyleft{} \href{https://github.com/CyrilBlum/FreeFlower}{FreeFlower}, \thetopic, \the\year}
+
+\settoggle{emoji}{false}
+\def\arrayB{"grinning-face","bar-chart","laptop","technologist","robot","woman-student","hundred-points"}
+\maketitlepage{\thetopic}{}
+\tableofcontents
+\clearpage
+
+%% content %%
+\input{FF/Robotik/Skript/Chapters/chapter_00.tex}
+\input{FF/Robotik/Skript/Chapters/chapter_01.tex}
+
+
+\clearpage
+
+
+% \appendix
+
+\backmatter
+\listoftables\clearpage
+\listoffigures\clearpage
+\printbibliography[heading=bibintoc]
+\printindex
+\printglossary[type=\acronymtype]
+
+\end{document}
