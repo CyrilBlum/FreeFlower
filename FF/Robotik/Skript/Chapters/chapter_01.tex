@@ -1,1 +1,225 @@
 \chapter{Analoge Signale und PWM}\label{ch:chapter_01}
+
+
+\section{Analoge Signale}
+Ein \emph{analoges Signal} ist kontinuierlich, es kann also prinzipiell jede Spannung zwischen \qty{0}{\volt} und \qty{5}{\volt} annehmen.
+Ein \emph{digitaler} 10-Bit-Wert kann zu jeder Zeit nur genau einen der $2^{10} = 1024$ diskreten Werte in $\lrc{0, 1, 2, \ldots, 1023}$ annehmen.
+Der \emph{ADC} (Analog-to-Digital Converter) im Arduino macht genau diese Umwandlung:
+\begin{center}
+\textcolor{Red}{analoge Spannung $U \in \ic{0}{5}\,\unit{\volt}$} $\underset{\text{ADC}}{\longrightarrow}$ \textcolor{Blue}{digitaler Wert $d \in \lrc{0, 1, 2, \ldots, 1023}$}
+\end{center}
+
+Bei einem idealen 10-Bit-ADC mit der Referenzspannung $U_\mathrm{ref} = \qty{5}{\volt}$ wird die Eingangsspannung in $1024$ Intervalle der Breite
+\begin{equation}
+\Delta U = \frac{U_\mathrm{ref}}{1024} = \frac{\qty{5}{\volt}}{1024} \approx \qty{4.88}{\milli\volt}
+\end{equation}
+unterteilt. Die Diskretisierung wird durch Abrunden beschrieben; am oberen Ende wird der Wert auf $1023$ begrenzt:
+\begin{equation}
+d = \min\lrc{1023,\floor{\frac{U}{U_\mathrm{ref}}\cdot 1024}}.
+\end{equation}
+Aus dem digitalen Wert lässt sich die ursprüngliche Spannung nicht exakt rekonstruieren. Als Schätzwert kann der Mittelpunkt des zugehörigen Quantisierungsintervalls verwendet werden:
+\begin{equation}\label{eq:adc-to-voltage}
+\widehat{U} = \left(d + \frac{1}{2}\right)\frac{U_\mathrm{ref}}{1024}.
+\end{equation}
+Für einen idealen ADC beträgt der Quantisierungsfehler dieses Schätzwerts höchstens $\frac{1}{2}\Delta U$.
+
+\subsection{Potentiometer mit Arduino Uno verbinden}
+Unter diesem \href{https://www.tinkercad.com/learn/overview/OG8Z4G7L26F9GZ6}{Link}\footnote{Möglicherweise müssen Sie ein Tinkercad-Konto erstellen.} ist ein Schaltplan zu sehen, wie ein Potentiometer mit dem Arduino Uno verbunden werden kann. Das Potentiometer hat drei Anschlüsse: Zwei äussere Anschlüsse, die an \qty{5}{\volt} und \qty{0}{\volt} (\texttt{GND}) angeschlossen werden, und einen mittleren Anschluss, der an den analogen Eingang \texttt{A0} angeschlossen wird. Der Widerstand des Potentiometers kann durch Drehen des Reglers verändert werden, wodurch sich die Spannung am mittleren Anschluss ändert. Den mittleren Anschluss eines Potentiometers bezeichnet man auch als \emph{Schleifer}.
+
+\lstinputlisting[
+	language=C++,
+	morekeywords={setup,loop,pinMode,analogRead,analogWrite,digitalRead,digitalWrite,delay,Serial},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Potentiometer mit analogem Eingang},
+	label={lst:potentiometer-analog}
+]{FF/Robotik/Skript/Code/Potentiometer_analog_input/Potentiometer_analog_input.ino}
+
+
+\begin{myexercise}
+Studieren Sie \href{https://www.tinkercad.com/learn/overview/OG8Z4G7L26F9GZ6}{diesen} Aufbau.
+\begin{aenum}
+    \item Bauen Sie ihn mit einem echten Potentiometer, einem Breadboard und einem Arduino Uno nach.
+    \item Verwenden Sie den Code in \cref{lst:potentiometer-analog}, um die Spannung am mittleren Anschluss des Potentiometers zu messen und auf dem seriellen Monitor anzuzeigen. Drehen Sie den Knopf des Potentiometers und beobachten Sie, wie sich der digitale Wert ändert.
+    \item Schätzen Sie die Spannung $U$ am mittleren Anschluss des Potentiometers für verschiedene digitale Werte $d$ mit ~\cref{eq:adc-to-voltage}.
+    \item Bauen Sie eine äquivalente Schaltung \emph{ohne} ein Breadboard zu verwenden, indem Sie die Anschlüsse des Potentiometers direkt mit den Pins des Arduino Uno verbinden.
+    \item Erklären Sie genau, was die Schaltung in verbindung mit dem Code in \cref{lst:potentiometer-analog} macht.
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer} 
+\end{myexercise}
+
+
+\begin{mysummary}
+    Hier sind die wichtigsten Punkte zur Umwandlung von analogen Signalen in digitale Werte zusammengefasst:
+	\begin{itemize}
+		\item Der ADC wandelt die Eingangsspannung $U \in \ic{0}{U_\mathrm{ref}}$ in einen digitalen Wert $d \in \lrc{0,1,\ldots,2^n-1}$ um.
+		\item Bei einer Auflösung von $n$ Bit entstehen $2^n$ Quantisierungsintervalle der Breite
+		\[
+			\Delta U = \frac{U_\mathrm{ref}}{2^n}.
+		\]
+		\item Die Diskretisierung mit Sättigung beim höchsten digitalen Wert wird beschrieben durch
+		\[
+			d = \min\lrc{2^n-1,\floor{\frac{U}{U_\mathrm{ref}}\cdot 2^n}}.
+		\]
+		\item Die ursprüngliche Spannung kann nur geschätzt werden. Der Mittelpunkt des Quantisierungsintervalls ergibt
+		\[
+			\widehat{U} = \left(d + \frac{1}{2}\right)\Delta U
+			= \left(d + \frac{1}{2}\right)\frac{U_\mathrm{ref}}{2^n}.
+		\]
+		\item Beim Arduino Uno gilt für $n=10$ und $U_\mathrm{ref}=\qty{5}{\volt}$:
+		\[
+			d \in \lrc{0,1,\ldots,1023},
+			\qquad \Delta U \approx \qty{4.88}{\milli\volt}.
+		\]
+	\end{itemize}
+\end{mysummary}
+
+
+\clearpage
+\section{PWM --- Pulsweitenmodulation}
+
+Ein digitaler Pin des Arduino Uno liefert näherungsweise entweder \qty{0}{\volt} oder \qty{5}{\volt}. Wie kann damit eine LED gedimmt werden, obwohl der Pin keine beliebigen Zwischenwerte ausgeben kann? Bei der \emph{Pulsweitenmodulation} (PWM) wird der Pin sehr schnell ein- und ausgeschaltet. Das Auge kann diesen schnellen Wechsel nicht einzeln wahrnehmen und sieht hauptsächlich die mittlere Helligkeit der LED.
+
+Auf den PWM-Pins \texttt{9}, \texttt{10} und \texttt{11} des Arduino Uno beträgt die PWM-Frequenz ungefähr \qty{490}{\hertz}. Mit $T=1/f$ ergibt sich eine Periodendauer von ungefähr \qty{2.0}{\milli\second}. Der \emph{Tastgrad} $D$ gibt an, während welchen Anteils einer Periode das Signal eingeschaltet ist:
+\begin{equation}\label{eq:pwm-duty-cycle}
+	D = \frac{t_\mathrm{ein}}{T}.
+\end{equation}
+Dabei bezeichnet $t_\mathrm{ein}$ die Einschaltzeit innerhalb einer Periode und $T$ die Dauer einer vollständigen Periode. Ein Tastgrad von \qty{0}{\percent} lässt die LED ausgeschaltet, bei \qty{100}{\percent} ist sie dauerhaft eingeschaltet.
+
+\subsection{Tastgrad statt echter Analogspannung}
+Ein kleiner Tastgrad bedeutet, dass die LED innerhalb jeder Periode nur kurz eingeschaltet ist und deshalb eher dunkel erscheint. Bei einem grossen Tastgrad ist sie länger eingeschaltet und erscheint heller. \Cref{fig:pwm-duty-cycle} vergleicht zwei PWM-Signale mit identischer Frequenz, aber unterschiedlichen Tastgraden.
+
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[xscale=.82,yscale=.8,thick]
+		\draw[->] (-.1,0) -- (5,0) node[right] {$t$};
+		\draw (0,1) -- (.5,1) -- (.5,0) -- (2,0) -- (2,1) -- (2.5,1) -- (2.5,0) -- (4,0);
+		\node[left] at (0,.5) {$D=\qty{25}{\percent}$};
+		\begin{scope}[xshift=8cm]
+			\draw[->] (-.1,0) -- (5,0) node[right] {$t$};
+			\draw (0,1) -- (1.5,1) -- (1.5,0) -- (2,0) -- (2,1) -- (3.5,1) -- (3.5,0) -- (4,0);
+			\node[left] at (0,.5) {$D=\qty{75}{\percent}$};
+		\end{scope}
+	\end{tikzpicture}
+	\caption{PWM-Signale mit einem Tastgrad von \qty{25}{\percent} beziehungsweise \qty{75}{\percent}.}
+	\label{fig:pwm-duty-cycle}
+\end{figure}
+
+\textbf{Wichtig:} Die LED erhält weiterhin Pulse mit der vollen Ausgangsspannung. PWM erzeugt keine konstante, kleinere Pinspannung, sondern verändert das Verhältnis von Ein- zu Ausschaltzeit.
+
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[thick,scale=.85]
+		\node[left] at (0,2.6) {PWM-Pin};
+		\draw (0,2.6) -- (.7,2.6);
+		\draw (.7,2.6) -- (.95,2.85) -- (1.3,2.35) -- (1.65,2.85) -- (2,2.35) -- (2.25,2.6);
+		\node[above] at (1.45,2.85) {\qty{220}{\ohm}};
+		\draw (2.25,2.6) -- (2.25,1.9);
+		\draw (1.9,1.9) -- (2.6,1.9);
+		\draw (2.0,1.65) -- (2.5,1.65);
+		\draw (2.25,1.65) -- (2.25,.7);
+		\draw (1.85,.7) -- (2.65,.7);
+		\draw (1.98,.5) -- (2.52,.5);
+		\draw (2.1,.3) -- (2.4,.3);
+		\node[right] at (2.7,1.78) {LED};
+		\node[right] at (2.7,.5) {GND};
+	\end{tikzpicture}
+	\caption{Reihenschaltung aus Vorwiderstand und LED an einem PWM-Pin.}
+	\label{fig:pwm-led-circuit}
+\end{figure}
+
+\subsection{Potentiometer als LED-Dimmer}
+Mit einem Potentiometer lässt sich die Helligkeit einer LED stufenlos einstellen. Der Schleifer (mittlere Anschluss) des Potentiometers wird wie zuvor mit dem analogen Eingang \texttt{A0} verbunden. Eine LED wird über einen Vorwiderstand von \qty{220}{\ohm} an den PWM-fähigen Pin \texttt{9} angeschlossen. Dabei muss die Anode der LED zum Widerstand beziehungsweise zu Pin \texttt{9} und die Kathode zu \texttt{GND} zeigen.
+
+Der ADC liefert Werte zwischen $0$ und $1023$, während \cppinline{analogWrite()} einen PWM-Wert zwischen $0$ und $255$ erwartet. \cref{lst:potentiometer-led-dimmer} bildet deshalb den 10-Bit-Wertebereich auf den 8-Bit-Wertebereich ab.
+
+\begin{myexercise}
+Bauen Sie einen LED-Dimmer mit einem Arduino Uno auf.
+\begin{aenum}
+	\item Verbinden Sie die äusseren Anschlüsse des Potentiometers mit \qty{5}{\volt} und \texttt{GND} sowie den Schleifer mit \texttt{A0}.
+	\item Verbinden Sie Pin \texttt{9} über einen Widerstand von \qty{220}{\ohm} mit der Anode einer LED und deren Kathode mit \texttt{GND}.
+	\item Übertragen Sie den Code aus \cref{lst:potentiometer-led-dimmer} und untersuchen Sie, wie sich die Stellung des Potentiometers auf die LED-Helligkeit auswirkt.
+	\item Erklären Sie, weshalb der ADC $1024$ mögliche Werte, die PWM-Ausgabe jedoch nur $256$ mögliche Werte besitzt. Wie viele benachbarte ADC-Werte werden ungefähr auf denselben PWM-Wert abgebildet?
+	\item Ändern Sie \cref{lst:potentiometer-led-dimmer} so, dass die LED beim Drehen in die entgegengesetzte Richtung heller wird.
+    \item Schreiben Sie \cref{lst:potentiometer-led-dimmer} ohne die Funktion \cppinline{map()} um. Sie können die die \cppinline{map()}-Funktion durch eine einfache mathematische Formel ersetzen.
+\end{aenum}
+\begin{myanswer}
+    keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\lstinputlisting[
+	language=C++,
+	morekeywords={setup,loop,pinMode,analogRead,analogWrite,delay,map},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Potentiometer als LED-Dimmer},
+	label={lst:potentiometer-led-dimmer}
+]{FF/Robotik/Skript/Code/Potentiometer_LED_dimmer/Potentiometer_LED_dimmer.ino}
+
+\clearpage
+\subsection{LED-Kerze}
+
+\begin{myexercise}
+Eine LED-Kerze lässt sich mit drei verschiedenfarbigen LEDs aufbauen. Verwenden Sie eine rote und zwei gelbe LEDs. Die Anoden werden über je einen eigenen Vorwiderstand von \qty{220}{\ohm} mit den PWM-Pins \texttt{9}, \texttt{10} und \texttt{11} verbunden; die Kathoden werden an \texttt{GND} angeschlossen. Das Programm in \cref{lst:candle-pwm} verändert die Helligkeit jeder LED unabhängig und wartet zwischen den Änderungen jeweils eine zufällige Zeitspanne.
+
+\begin{aenum}
+	\item Zeichnen Sie ein Schaltschema der beschriebenen Schaltung. Kennzeichnen Sie die drei PWM-Pins, die Polung der LEDs, die Vorwiderstände und die gemeinsame Verbindung zu \texttt{GND}.
+	\item Bauen Sie die Schaltung auf und prüfen Sie vor dem Einschalten insbesondere die Polung der LEDs und die Vorwiderstände.
+	\item Welche Werte (range) kann \cppinline{random(120) + 135} erzeugen?
+	\item Weshalb beginnt der Wertebereich nicht bei $0$, und weshalb erhält jede LED einen eigenen Zufallswert?
+	\item Übertragen Sie den Code aus \cref{lst:candle-pwm} und untersuchen Sie das Verhalten der LEDs. Variieren Sie anschliessend den Helligkeitsbereich und die Pausenlänge, bis das Flackern möglichst natürlich wirkt.
+	\item Formen Sie aus Transparentpapier einen Lampenschirm (Diffusor), verdunkeln Sie den Raum und beurteilen Sie die Wirkung der LED-Kerze.
+\end{aenum}
+Tipp: Der Aufbau ist auch in \href{https://youtu.be/uX9YMCLgK9A?t=136}{diesem Video} zu sehen.
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\lstinputlisting[
+	language=C++,
+	morekeywords={setup,loop,pinMode,analogRead,analogWrite,digitalRead,digitalWrite,delay,Serial},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Candle mit PWM},
+	label={lst:candle-pwm}
+]{FF/Robotik/Skript/Code/Candle_PWM/Candle_PWM.ino}
+
+\begin{mysummary}
+	Die wichtigsten Punkte zur Pulsweitenmodulation (PWM) sind:
+	\begin{itemize}
+		\item PWM ist eine Technik, um die mittlere Leistung eines digitalen Signals zu steuern, indem das Verhältnis von Ein- zu Ausschaltzeit innerhalb einer Periode verändert wird.
+		\item Der Tastgrad $D$ gibt an, welcher Anteil einer Periode das Signal eingeschaltet ist:
+		\[
+			D = \frac{t_\mathrm{ein}}{T},
+		\]
+		wobei $t_\mathrm{ein}$ die Einschaltzeit und $T$ die Dauer einer Periode ist.
+		\item Ein kleiner Tastgrad führt zu einer geringeren mittleren Leistung und damit zu einer dunkleren LED, während ein grosser Tastgrad zu einer höheren mittleren Leistung und einer helleren LED führt.
+		\item PWM erzeugt keine konstante, kleinere Spannung, sondern verändert das Verhältnis von Ein- zu Ausschaltzeit.
+		\item Mit einem Potentiometer kann die Helligkeit einer LED stufenlos eingestellt werden, indem der analoge Eingang des Potentiometers mit dem ADC des Arduino verbunden wird und der digitale Wert auf den PWM-Wert abgebildet wird.
+	\end{itemize}
+\end{mysummary}

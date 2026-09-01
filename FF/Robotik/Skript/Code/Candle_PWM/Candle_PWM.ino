@@ -10,11 +10,13 @@ void setup() {
 
 void loop() {
   // Set a random brightness level for each LED.
-  // Adding 135 ensures the LEDs stay baseline bright and don't dim completely out.
-  analogWrite(9, random(120) + 135);
-  analogWrite(10, random(120) + 135);
-  analogWrite(11, random(120) + 135);
-  
+  // Adding a baseline ensures the LEDs stay baseline bright and don't dim completely out.
+  baseline = 135; // Minimum brightness level
+  random_range = 120; // Range of random brightness variation
+  analogWrite(9, random(random_range) + baseline);
+  analogWrite(10, random(random_range) + baseline);
+  analogWrite(11, random(random_range) + baseline);
+
   // Pause for a random fraction of a second to create organic flickering
   delay(random(100));
 }

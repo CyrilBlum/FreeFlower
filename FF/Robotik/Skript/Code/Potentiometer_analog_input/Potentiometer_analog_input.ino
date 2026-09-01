@@ -10,6 +10,10 @@ void setup()
 
 void loop()
 {
+  // Read the analog input on pin A0.
+  // The value will be between 0 and 1023.
+  // sensorValue is a 10-bit value d, which is the resolution of 
+  // the ADC (Analog-to-Digital Converter) on the Arduino.
   sensorValue = analogRead(A0);
 
   Serial.println(sensorValue);
