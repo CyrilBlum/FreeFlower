@@ -106,10 +106,9 @@ screen.fill((r, g, b))
 \end{myexercise}
 
 \begin{myexercise}[Geometrische Figuren]
-    Zeichnen Sie geometrische Formen: Rechteck, Kreis, Linie. Nutzen Sie dafür \lstinline|pg.draw.rect|, \lstinline|pg.draw.circle| und \lstinline|pg.draw.line|. Achten Sie darauf, \textbf{nach} dem Zeichnen \lstinline|pg.display.flip()| aufzurufen. Versuchen Sie, mittels folgender Befehle einen Apfel zu zeichnen:
-    Verwenden Sie folgende Befehle:
+    Zeichnen Sie geometrische Formen: Rechteck, Kreis, Linie. Nutzen Sie dafür \lstinline|pg.draw.rect|, \lstinline|pg.draw.circle| und \lstinline|pg.draw.line|. Achten Sie darauf, \textbf{nach} dem Zeichnen \lstinline|pg.display.flip()| aufzurufen. Verwenden Sie folgende Befehle (versuchen Sie beispielsweise, damit einen Apfel mit Stiel zu zeichnen):
     \begin{lstlisting}
-pg.draw.rect(screen, rect_color, pg.Rect(rect_x, rect_y, rect_width, rect_height))
+pg.draw.rect(screen, rect_color, (rect_x, rect_y, rect_width, rect_height))
 pg.draw.circle(screen, circle_color, (circle_x, circle_y), circle_radius)
 pg.draw.line(screen, line_color, (start_x, start_y), (end_x, end_y), line_width)
 \end{lstlisting}
@@ -117,8 +116,8 @@ pg.draw.line(screen, line_color, (start_x, start_y), (end_x, end_y), line_width)
     Dabei bezeichnen die Parameter Folgendes:
     \begin{itemize}
         \item \lstinline|screen|: die Zeichenfläche
-        \item \lstinline|rect_color, circle_color, line_color|: Farbe als RGB-tuple, z.\,B. \lstinline|(255, 0, 0)| für Rot
-        \item \lstinline|pg.Rect(...)|: Rechteck-Objekt mit Position (x,y) und Grösse (width,height)
+        \item \lstinline|rect_color, circle_color, line_color|: Farbe als RGB-Tuple, z.\,B. \lstinline|(255, 0, 0)| für Rot
+        \item \lstinline|(rect_x, rect_y, rect_width, rect_height)|: Position $(x,y)$ und Grösse $(\text{Breite},\text{Höhe})$ als Tuple (alternativ kann auch ein \lstinline|pg.Rect|-Objekt übergeben werden)
         \item \lstinline|(circle_x, circle_y)|: Mittelpunkt des Kreises
         \item \lstinline|circle_radius|: Radius des Kreises
         \item \lstinline|(start_x, start_y), (end_x, end_y)|: Start- und Endpunkt der Linie
@@ -145,6 +144,16 @@ for y in range(0, HEIGHT//2):
 		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
 	\end{myanswer}
 \end{myexercise}
+
+\begin{myremark}[Tuples vs. \texttt{pg.Rect}-Objekte]
+    Zum reinen Zeichnen von statischen Formen (wie in \cref{myexercise:Sonnenuntergang}) genügt die Angabe der Koordinaten und Dimensionen als einfaches Tuple \lstinline|(x, y, width, height)|.
+    
+    Für bewegliche oder interaktive Spielelemente wird stattdessen ein \lstinline|pg.Rect|-Objekt verwendet:
+    \begin{itemize}
+        \item Es speichert Position sowie Grösse und erlaubt das direkte Modifizieren der Koordinaten über Attribute (z.\,B. \lstinline|player.x += speed|).
+        \item Es stellt nützliche Methoden bereit, wie z.\,B. \lstinline|player.clamp_ip(...)| zur Begrenzung auf den Bildschirmrand oder \lstinline|player.colliderect(item)| zur Erkennung von Kollisionen (siehe \cref{myexercise:Kollisionen}).
+    \end{itemize}
+\end{myremark}
 
 \begin{myexercise}[Bewegungen (Tastatur)]\label{myexercise:Bewegungen}
     Erstellen Sie ein Spieler-\lstinline|Rect| (z.\,B. \lstinline|50 x 50|) und bewegen Sie es mit den Pfeiltasten. Nutzen Sie \lstinline|pg.key.get_pressed()| und begrenzen Sie die Bewegung auf das Fenster (\enquote{Screen Bounds}). Verwenden Sie folgende Code-Vorlage:
