@@ -1,1 +1,281 @@
-\chapter{Einführung}\label{ch:chapter_00}
+\chapter{Einführung in Arduino}\label{ch:chapter_00}
+
+\section{Mikrocontroller und Arduino}
+In diesem Kurs arbeiten Sie mit Arduino, einer einfach zugänglichen Mikrocontroller-Plattform. Ein \emph{Mikrocontroller} ist ein kleiner Computer, der elektronische Komponenten steuern und auf seine Umgebung reagieren kann. Damit lassen sich beispielsweise LEDs schalten, Motoren bewegen und Sensoren auslesen.
+
+Arduino wurde ursprünglich am Interaction Design Institute Ivrea in Italien entwickelt. Die Plattform richtet sich deshalb nicht nur an Fachpersonen aus Elektrotechnik und Informatik, sondern ermöglicht auch Einsteigerinnen und Einsteigern einen schnellen Zugang zu interaktiven Projekten. Eine kleine Auswahl möglicher Anwendungen finden Sie über \href{https://youtu.be/5hYFX2mDNAY?is=9WRy6nbNgjXifvhV}{diesen Links} oder über den QR-Code:
+\begin{center}
+    \qrcode[height=2.6cm]{https://youtu.be/5hYFX2mDNAY?is=9WRy6nbNgjXifvhV}
+\end{center}
+
+Eine Arduino-Anwendung besteht aus zwei eng zusammenarbeitenden Teilen:
+\begin{itemize}
+	\item \textbf{Hardware:} Das Input-Output-Board verbindet den Mikrocontroller über seine Pins mit Tastern, Sensoren, LEDs, Displays oder Motoren.
+	\item \textbf{Software:} Ein Programm legt fest, wie das Board Eingaben verarbeitet und seine Ausgänge steuert. Arduino-Programme basieren auf C und C++.
+\end{itemize}
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}[t]{.56\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{FF/Robotik/Skript/Abbildungen/IOBoard.png}
+		\smallskip
+
+		\textbf{Hardware: Input-Output-Board}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{.38\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{FF/Robotik/Skript/Abbildungen/C++.png}
+		\smallskip
+
+		\textbf{Software: C/C++}
+	\end{minipage}
+	\caption{Hardware und Software einer Arduino-Anwendung.}
+	\label{fig:arduino-hardware-software}
+\end{figure}
+
+Die Pins eines Arduino können unterschiedliche Aufgaben übernehmen. Digitale Pins verarbeiten zwei logische Zustände, analoge Eingänge messen eine Spannung innerhalb eines bestimmten Bereichs. Einzelne digitale Pins können zudem ein PWM-Signal ausgeben. Diese Funktionen werden in den folgenden Kapiteln schrittweise eingeführt.
+
+\section{Schaltungen auf dem Breadboard}
+Für Versuchsaufbauten wird meist eine Steckplatine verwendet, auf Englisch \emph{Breadboard}. Bauteile und Kabel können eingesteckt und ohne Löten zu einer Schaltung verbunden werden. \Cref{fig:breadboard-circuit} zeigt einen typischen Aufbau.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.55\textwidth]{FF/Robotik/Skript/Abbildungen/BreadboardSchaltung.png}
+	\caption{Beispiel einer Schaltung auf einem Breadboard.}
+	\label{fig:breadboard-circuit}
+\end{figure}
+
+Bei den in diesem Kurs verwendeten Breadboards sind jeweils fünf übereinanderliegende Kontakte innerhalb eines Anschlussstreifens elektrisch verbunden. Die beiden Gruppen auf jeder Seite des mittleren Grabens sind voneinander getrennt. Die mit $+$ und $-$ gekennzeichneten Versorgungsleisten verlaufen dagegen in Längsrichtung; bei manchen Breadboards sind diese Leisten in der Mitte unterbrochen.
+
+Die Anschlüsse eines Bauteils müssen in unterschiedliche Kontaktgruppen gesteckt werden. Werden beispielsweise beide Beine einer LED in dieselbe Fünfergruppe gesteckt, liegen sie am selben elektrischen Knoten und es kann keine Spannung über der LED entstehen.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}[c]{.70\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{FF/Robotik/Skript/Abbildungen/Breadboard.png}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[c]{.20\textwidth}
+		\centering
+		\includegraphics[width=.75\linewidth]{FF/Robotik/Skript/Abbildungen/LED.png}
+	\end{minipage}
+	\caption{Elektrisch verbundene Kontaktgruppen eines Breadboards und eine LED.}
+	\label{fig:breadboard-connections}
+\end{figure}
+
+Das Arduino-Board kann eine Schaltung mit Gleichspannung versorgen. Der Anschluss \texttt{GND} dient als gemeinsames Bezugspotential. Damit ein Strom fliessen kann, muss ein geschlossener Stromkreis vom Ausgang beziehungsweise Versorgungsanschluss durch die Bauteile zurück zu \texttt{GND} vorhanden sein. Bei einer LED begrenzt ein in Reihe geschalteter Vorwiderstand den Strom.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.78\textwidth]{FF/Robotik/Skript/Abbildungen/Schaltkreis.png}
+	\caption{Geschlossener Stromkreis mit Arduino, Vorwiderstand und LED.}
+	\label{fig:arduino-led-circuit}
+\end{figure}
+
+\section{Aufbau eines Arduino-Programms}
+Ein Arduino-Programm wird als \emph{Sketch} bezeichnet. Jeder Sketch besitzt normalerweise die beiden Funktionen \cppinline{setup()} und \cppinline{loop()}:
+\begin{itemize}
+	\item \cppinline{setup()} wird nach dem Einschalten oder Zurücksetzen des Boards genau einmal ausgeführt. Hier werden beispielsweise Pinmodi, Variablen, Bibliotheken und Kommunikationsschnittstellen initialisiert.
+	\item \cppinline{loop()} wird anschliessend fortlaufend wiederholt. In dieser Endlosschleife liest das Programm Eingaben ein, verarbeitet Daten und steuert Ausgänge.
+\end{itemize}
+
+\begin{lstlisting}[
+	language=C++,
+	morekeywords={setup,loop,pinMode,digitalWrite,delay},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Grundstruktur eines Arduino-Sketches},
+	label={lst:arduino-sketch-structure}
+]
+const int ledPin = 9;
+
+void setup()
+{
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(ledPin, HIGH);
+  delay(1000);
+  digitalWrite(ledPin, LOW);
+  delay(1000);
+}
+\end{lstlisting}
+
+\section{Praktisches Einführungsbeispiel}
+In einem ersten Projekt wird eine Schaltung aus einem Taster und mehreren LEDs aufgebaut. Beim Betätigen des Tasters verändert das Arduino-Board die leuchtenden LEDs. Dadurch lernen Sie das Breadboard, digitale Ein- und Ausgänge sowie das Übertragen eines Sketches kennen.
+
+\subsection{Material}
+\begin{itemize}
+	\item Arduino Uno und USB-Kabel
+	\item Breadboard und Verbindungskabel
+	\item ein Taster
+	\item sechs LEDs: vier rote, eine grüne und eine gelbe LED
+	\item sechs Vorwiderstände zu je \qty{220}{\ohm}
+	\item ein Widerstand mit \qty{10}{\kilo\ohm}, beispielsweise als Pull-down-Widerstand für den Taster
+\end{itemize}
+
+\subsection{LEDs sicher verwenden}
+\begin{myattention}
+Eine LED darf nicht ohne Vorwiderstand an einen Arduino-Pin oder eine Spannungsquelle angeschlossen werden. Ohne Strombegrenzung können sowohl die LED als auch der Ausgang des Mikrocontrollers beschädigt werden.
+\end{myattention}
+
+Der benötigte Widerstand hängt von der Versorgungsspannung, der Durchlassspannung der LED und dem gewünschten Strom ab. Widerstandswerte können mithilfe der aufgedruckten Farbringe bestimmt werden; \cref{fig:resistor-colour-code} zeigt das Prinzip.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.58\textwidth]{FF/Robotik/Skript/Abbildungen/Farbcodes_Wiederstaende.png}
+	\caption{Farbcodierung von Widerständen.}
+	\label{fig:resistor-colour-code}
+\end{figure}
+
+LEDs müssen ausserdem richtig gepolt werden. Die Anode wird mit dem positiveren Potential, die Kathode mit \texttt{GND} verbunden. Bei bedrahteten LEDs ist die Anode meist am längeren Bein erkennbar. Das kürzere Bein und die abgeflachte Seite des Gehäuses kennzeichnen in der Regel die Kathode.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.42\textwidth]{FF/Robotik/Skript/Abbildungen/LED_AnodeKathode.png}
+	\caption{Typische Merkmale zur Unterscheidung von Anode und Kathode.}
+	\label{fig:led-polarity}
+\end{figure}
+
+\begin{myexercise}
+Bauen Sie die in \cref{fig:starter-circuit} dargestellte Schaltung auf und nehmen Sie sie in Betrieb.
+\begin{aenum}
+	\item Kontrollieren Sie vor dem Anschließen des USB-Kabels die Polung aller LEDs und prüfen Sie, ob jede LED einen eigenen Vorwiderstand besitzt.
+	\item Öffnen Sie in der Arduino IDE über \emph{Datei $\rightarrow$ Beispiele $\rightarrow$ 10.StarterKit $\rightarrow$ p02SpaceshipInterface} den Beispiel-Sketch.
+	\item Lesen Sie die Kommentare und beschreiben Sie, wie die LEDs beim Drücken beziehungsweise Loslassen des Tasters reagieren sollten.
+	\item Speichern Sie eine Kopie des Sketches unter einem neuen Namen, damit das Original unverändert bleibt.
+	\item Verbinden Sie das Arduino Uno per USB mit dem Computer, wählen Sie das richtige Board und den richtigen Port aus und übertragen Sie den Sketch.
+	\item Betätigen Sie den Taster. Vergleichen Sie das beobachtete Verhalten mit Ihrer Vorhersage und suchen Sie systematisch nach Fehlern, falls beides nicht übereinstimmt.
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.48\textwidth]{FF/Robotik/Skript/Abbildungen/Schaltkreis_Testaufgabe.png}
+	\caption{Schaltung des praktischen Einführungsbeispiels.}
+	\label{fig:starter-circuit}
+\end{figure}
+
+\subsection{Erweiterungen}
+\begin{myexercise}
+Verändern Sie den Beispiel-Sketch und testen Sie nach jeder Änderung, ob die Schaltung wie erwartet reagiert.
+\begin{aenum}
+	\item Verlängern Sie die Blinkzeiten der LEDs.
+	\item Lassen Sie bei gedrücktem Taster alle drei LEDs gleichzeitig für eine Sekunde ein- und anschliessend für eine Sekunde ausgeschaltet sein.
+	\item Ergänzen Sie zwei weitere LEDs. Bei gedrücktem Taster sollen fünf LEDs nacheinander aufleuchten und danach gleichzeitig ausgeschaltet werden. Der Ablauf soll sich wiederholen.
+	\item Programmieren Sie den Taster als Umschalter: Beim ersten Drücken werden alle LEDs eingeschaltet, beim nächsten Drücken wieder ausgeschaltet. Beachten Sie, dass dafür der vorherige Tasterzustand gespeichert werden muss.
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\section{Projekt: Fussgängerampel}
+Eine Ampel verbindet mehrere digitale Ausgänge mit einer zeitlichen Ablaufsteuerung. Bauen Sie zunächst je eine rote, eine gelbe und eine grüne LED mit eigenem Vorwiderstand auf. Ergänzen Sie anschliessend einen Taster als Anforderungssignal für Fussgängerinnen und Fussgänger.
+
+\begin{myexercise}
+Entwickeln Sie eine Fussgängerampel nach \cref{fig:pedestrian-traffic-light}.
+\begin{aenum}
+	\item Legen Sie die normalen Zustände der Fahrzeug- und Fussgängerampel fest.
+	\item Entwerfen Sie eine sinnvolle Zustandsfolge nach dem Drücken des Tasters. Notieren Sie für jeden Zustand die leuchtenden LEDs und seine Dauer.
+	\item Setzen Sie die Zustandsfolge als Arduino-Sketch um. Jede LED muss über einen eigenen Vorwiderstand angeschlossen sein.
+	\item Testen Sie auch, was geschieht, wenn der Taster während eines bereits laufenden Ampelzyklus erneut gedrückt wird.
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.72\textwidth]{FF/Robotik/Skript/Abbildungen/Fussgaengerampel.png}
+	\caption{Möglicher Aufbau einer Fussgängerampel.}
+	\label{fig:pedestrian-traffic-light}
+\end{figure}
+
+\section{Lichtabhängige Steuerung}
+Ein Fotowiderstand, auch LDR (\emph{Light Dependent Resistor}) genannt, verändert seinen elektrischen Widerstand abhängig von der Beleuchtungsstärke. Typischerweise ist sein Widerstand im Dunkeln gross und bei hellem Licht klein. Da das Arduino-Board einen Widerstand nicht direkt misst, wird der LDR zusammen mit einem festen Widerstand als Spannungsteiler zwischen \qty{5}{\volt} und \texttt{GND} geschaltet. Der Verbindungspunkt beider Widerstände wird mit dem analogen Eingang \texttt{A0} verbunden.
+
+Ist der LDR zwischen \qty{5}{\volt} und \texttt{A0} angeordnet, steigt die an \texttt{A0} gemessene Spannung bei zunehmender Helligkeit. Der ADC wandelt diese Spannung in einen digitalen Wert zwischen $0$ und $1023$ um. Die genaue Zuordnung hängt von den Widerstandswerten und der tatsächlichen Referenzspannung ab.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}[c]{.22\textwidth}
+		\centering
+		\includegraphics[width=.8\linewidth]{FF/Robotik/Skript/Abbildungen/Fotodiode.png}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[c]{.68\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{FF/Robotik/Skript/Abbildungen/Fotowiderstand.png}
+	\end{minipage}
+	\caption{Fotowiderstand und Aufbau eines lichtabhängigen Spannungsteilers.}
+	\label{fig:ldr-voltage-divider}
+\end{figure}
+
+\begin{lstlisting}[
+	language=C++,
+	morekeywords={setup,loop,pinMode,analogRead,digitalWrite,delay,Serial},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Beispiel zum Auslesen eines Fotowiderstands},
+	label={lst:ldr-example-code}
+]
+const int ldrPin = A0;
+const int ledPin = 13;
+const int threshold = 512;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop()
+{
+  int sensorValue = analogRead(ldrPin);
+  Serial.println(sensorValue);
+
+  if (sensorValue > threshold) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(50);
+}
+\end{lstlisting}
+
+\begin{myexercise}
+Erweitern Sie die Fussgängerampel um einen Nachtmodus.
+\begin{aenum}
+	\item Ergänzen Sie den LDR-Spannungsteiler und lesen Sie den Messwert an \texttt{A0} ein.
+	\item Geben Sie die Messwerte bei heller und dunkler Umgebung über den seriellen Monitor aus und wählen Sie daraus einen geeigneten Schwellwert.
+	\item Tagsüber soll die Ampel wie zuvor funktionieren. Nachts soll die gelbe Fahrzeugampel blinken; der Fussgängertaster bleibt in diesem Modus ohne Wirkung.
+	\item Verwenden Sie eine Hysterese mit zwei Schwellwerten. Dadurch vermeiden Sie ein schnelles Umschalten, wenn der Messwert nahe an der Grenze zwischen Tag und Nacht schwankt.
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.30\textwidth]{FF/Robotik/Skript/Abbildungen/Ampel_Nacht.png}
+	\caption{Ampelschaltung im Nachtmodus.}
+	\label{fig:traffic-light-night}
+\end{figure}

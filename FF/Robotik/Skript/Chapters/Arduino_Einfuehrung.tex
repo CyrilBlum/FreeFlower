@@ -1,0 +1,218 @@
+\chapter{Einführung Microcontroller (Arduino)}\label{ch:book_example}
+\section{Einführung}
+Herzlich willkommen im Freifach Robotik der KLW!
+
+
+In diesem Kurs werden Sie mit Arduino arbeiten $-$ einer einfach zu bedienenden Mikrocontroller-Plattform. Ein Mikrocontroller ist ein kleiner Computer, der Geräte steuern und auf seine Umgebung reagieren kann. Mit ihm lassen sich zum Beispiel LEDs zum Leuchten bringen, Motoren bewegen oder Sensoren auslesen. Eine kleine Auswahl an möglichen Projekten finden Sie im unten verlinkten Video.
+
+\begin{minipage}{\textwidth}
+\centering
+ 	\includegraphics[width=0.2\textwidth]{Arduino_Projekte.png}
+\end{minipage}
+	
+
+Arduino eignet sich besonders gut für Einsteiger*innen, da sowohl die Hardware als auch die Programmierung leicht verständlich sind. Dies kommt daher, da Arduino ursprünglich für Design-Studierende in Italien entwickelt wurde (Interaction Design Institute “Ivrea”) - also nicht für Robotik-Freaks. In diesem Kapitel lernen Sie, wie Sie Schaltungen aufbauen, Programme schreiben und somit Ihre eigenen Roboter zum Leben erwecken.
+
+Im wesentlichen besteht Arduino aus zwei Komponenten:
+
+\begin{minipage}{0.6\textwidth}
+\textbf{Hardware (Input-Output-Board)}
+
+	\centering
+    \includegraphics[width=0.8\textwidth]{IOBoard.png}
+ 
+
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\textbf{Software}
+
+	\centering
+ 	\includegraphics[width=0.8\textwidth]{C++.png}
+  
+\end{minipage}
+
+
+Die verschiedenen (physischen) Komponenten wie Sensoren, LEDs, Displays oder Motoren werden mit einem Input-Output-Board verbunden. Dies geschieht über sogenannte Pins (rot markiert im Bild), welche analog oder digital sein können. Den Unterschied zwischen analog und digital werden Sie im Verlauf des Semesters noch kennenlernen. Das Input-Output-Board wiederum wird über eine Software gesteuert. Die Software wird dabei in einer vereinfachten Form der Sprachen C und C++ programmiert. \\
+
+
+\subsection{Aufbau von Schaltungen (Hardware)}
+Zum übersichtlichen Aufbau der Schaltungen wird meist eine Steckplatine verwendet, auf englisch \textbf{breadboard} genannt. Dies ist eine Platte, auf welcher elektrische Schaltungen gebaut werden können. 
+
+\begin{minipage}{\textwidth}
+\centering
+ 	\includegraphics[width=0.4\textwidth]{BreadboardSchaltung.png}
+\end{minipage}
+	
+  
+
+Beim den Steckplatinen, die wir hier an der Schule verwenden, sind stets die fünf untereinander liegenden Steckplätze (also in einer Spalte) elektrisch über einen Leiter miteinander verbunden (gelb markiert). Möchte man z.B., dass Strom durch eine LED fliesst, muss man die beiden Kontakte in je eine 5er-Gruppe stecken (vgl. Bild rechts). Wenn man beide Kontakte der LED in zwei untereinander liegende Steckplätze steckt, fliesst kein Strom durch die LED! Ausserdem sind bei den Steckplatinen auch die gesamten Reihen, welche mit + und - beschriftet sind, durch einen elektrischen Leiter verbunden (rot und blau markiert).
+
+\begin{minipage}{\textwidth}
+\centering
+ 	\includegraphics[width=0.45\textwidth]{Breadboard.png}
+ 	\hspace{0.1\textwidth}
+ 	\includegraphics[width=0.18\textwidth]{LED.png}
+
+\end{minipage}
+
+
+Das Input-Output-Board ist die Spannungsquelle der Schaltung. Es liefert stets Gleichspannung. Der negative Spannungspol ist bei den Pins, die mit GND (engl. \textbf{ground} = Erdung) markiert sind. Der Pluspol ist bei den nummerierten Pin-Plätzen. Um also beispielsweise eine LED anschliessen zu können, muss ein geschlossener Stromkreis erzeugt werden, vom Minuspol zu einem Kontakt der LED, die über einen Vorwiderstand dann mit dem Pluspol verbunden ist (siehe Abb.).
+
+\begin{minipage}{\textwidth}
+\centering
+ 	\includegraphics[width=0.75\textwidth]{Schaltkreis.png}
+
+\end{minipage}
+
+\subsection{Software}
+Ein Programm wird in der Aduino-Sprache \textbf{Sketch} genannt. Jedes Sketch besteht aus zwei Teilen: der \textbf{setup()-Funktion} und der \textbf{loop()-Funktion}.
+
+
+Die setup()-Funktion wird benutzt, um Variablen, Pinmodi, Bibliotheken, usw. zu initialisieren. Die Funktion wird nur ein einziges Mal aufgerufen - jedes Mal, wenn das Board gestartet oder resettet wird.
+
+Die loop()-Funktion ist eine Endlosschleife, die nach jedem Durchlauf erneut aufgerufen wird. Dadurch kann ein Programm Variablen verändern, Daten lesen oder darauf reagieren. Diese Option wird verwendet, um das Arduino-Board aktiv zu steuern.
+
+
+\begin{minipage}{\textwidth}
+\centering
+ 	\includegraphics[width=\textwidth]{Code_Beispiel.png}
+
+\end{minipage}
+
+\subsection{Praktisches Einführungsbeispiel}
+
+
+
+
+
+
+\begin{minipage}{\textwidth}
+\textbf{Material}
+\begin{itemize}
+\item Arduino Uno Board 
+\item USB Kabel 
+\item Steckplatine (Breadboard) 
+\item verschiedene Kabel 
+\item 1x Taster (Button) 
+\item 6x LEDs (4 rot, 1 grün, 1 gelb) 
+\item 6x Widerstand 220 Ohm als Vorwiderstand für die LED
+\item 1x Widerstand 10 kOhm  (braun-schwarz-orange) 
+\end{itemize}
+\end{minipage}
+
+
+\textbf{Wichtige Hinweise zu LEDs:}
+\begin{itemize}
+\item[1.] LEDs müssen stets über einen \textbf{Vorwiderstand} an die Spannungsquelle angeschlossen werden, da sie sonst einer zu grossen Spannung ausgesetzt sind und beschädigt werden. Für die roten LED beträgt er 330 Ohm, für die gelben LED 270 Ohm und für die grünen LED 220 Ohm. Wie gross ein Widerstand ist, erkennt man an seinem Farbmuster. Die folgende Abbildung zeigt, wie das Farbmuster zu verstehen ist (\textit{Quelle: LEIFI-Physik)}.
+
+
+\begin{minipage}{\textwidth}
+\centering
+\includegraphics[width=0.5\textwidth]{Farbcodes_Wiederstaende.png}
+\end{minipage}
+\medskip
+
+\item[2.] Bei LEDs muss die \textbf{richtige Polung} beachtet werden.
+LEDs besitzen eine Anode und eine Kathode. Die Anode wird mit dem Pluspol der Spannungsquelle verbunden, die Kathode mit dem Minuspol. Anode und Kathode lassen sich anhand zweier Merkmale unterscheiden: 
+\medskip
+
+\begin{minipage}{0.45\textwidth}
+
+\subitem \textbf{Bei den Kontakten:} Die Anode hat einen längeren Draht, die Kathode einen kürzeren Draht.\\
+
+\subitem \textbf{Bei der Kappe:} Wo der Anoden-Anschluss in die Kappe geht, ist die Kappe rund. Wo der Kathoden-Anschluss in die Kappe geht, ist diese abgeflacht. 
+\end{minipage}
+\hspace{0.05\textwidth}
+\begin{minipage}{0.45\textwidth}
+\centering
+\includegraphics[width=0.8\textwidth]{LED_AnodeKathode.png}
+\end{minipage}
+
+\end{itemize}
+
+
+\begin{myexercise}
+\begin{minipage}{0.6\textwidth}
+\textbf{Vorgehen}
+\medskip
+\begin{enumerate}
+\item Bauen Sie die rechts abgebildete Schaltung auf. Achten Sie darauf, dass das kürzere Beinchen einer LED immer mit GND (Minuspol) verbunden ist.
+\item  Öffnen Sie wenn Sie fertig sind das Programm \textbf{Arduino}. 
+\item  Klicken Sie auf Datei $\rightarrow$ Beispiele $\rightarrow$ 10.StarterKit $\rightarrow$ p02SpaceshipInterface um den Quelltext zu laden. Der neu erschienene Quelltext beinhaltet Anweisungen an das Arduino 
+Board. Mit diesen Anweisungen können Sie dem Mikrocontroller z.B. angeben, welche LED wie lange eingeschaltet werden soll. 
+\item Speichern Sie die Datei unter einem neuen Namen ab, damit Änderungen, die 
+Sie tätigen, auf diese neue Datei geschrieben werden (Die Original-Datei sollte nicht verändert werden) . 
+\item Verbinden Sie das Arduino Uno (Input-Output-Board) mit Hilfe des USB-Kabels mit Ihrem Laptop.
+\end{enumerate}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\includegraphics[width=0.95\textwidth]{Schaltkreis_Testaufgabe.png}
+\end{minipage}
+\begin{enumerate}
+\item[6.]  Die Anweisungen des Quelltexts müssen an das Arduino Board gesendet werden. Drücken Sie dazu in der oberen Menü-Leiste den Pfeil nach rechts (Hinweis: Manchmal weiss der Computer nicht, an welchem USB-Eingang Sie das Arduino angeschlossen haben. Drücken Sie Ok, wenn er Ihnen einen 
+alternativen USB-Eingang vorschlägt).
+\item[7.] Falls keine Fehlermeldung kommt: Drücken Sie auf den Tastschalter und beobachten Sie, was passiert! \textbf{Kontrollieren Sie, ob Ihr Arduino so reagiert, wie Sie es aus der Beschreibung im Quelltext erwarten würden. }
+\end{enumerate}
+\end{myexercise}
+
+\begin{myexercise}
+\textbf{Weiterführende Aufgaben:}
+
+Sie können den Quellcode nun so verändern (und an das Board schicken), dass 
+\begin{enumerate}
+\item die Blinkzeiten der LEDs verlängert werden.\\
+
+\item bei gedrücktem Taster alle drei LEDs gleichzeitig für eine Sekunde ein- und eine Sekunde ausgehen.
+\end{enumerate}
+\end{myexercise}
+\newpage
+Wenn Ihnen Aufgaben 1 und 2 keine grosse Mühe bereiten, können Sie noch die folgenden Erweiterungen ausprobieren:  
+
+\begin{myexercise}
+\begin{enumerate}
+
+\item[3.] Fügen Sie zwei weitere LEDs hinzu und programmieren Sie das Arduino so, dass bei gedrücktem Taster fünf LEDs nacheinander aufleuchten und dann alle gleichzeitig ausgeschaltet werden. Dann sollte sich der Vorgang wiederholen. (Hinweis: Es müssen sowohl im setup() als auch im loop() Änderungen vorgenommen werden.) \\
+
+
+\item[4.] Programmieren Sie den Taster so um, dass beim ersten Drücken alle LEDs eingeschaltet werden, und dass sie erst wieder ausgeschaltet werden, nachdem man ein zweites Mal den Taster gedrückt hat. \\
+
+\item[5.] \textbf{Aufgabe Fussgängerampel 1}: Schliessen Sie nun je eine rote, grüne und gelbe LED an das Arduino Board an. Vergessen Sie nicht, für jede LED einen Vorwiderstand einzubauen!  Programmieren Sie nun das Arduino Board so, dass Sie die Ampelanlage folgendermassen steuern können:   \\
+
+\includegraphics[width=0.8\textwidth]{Fussgaengerampel.png}\\
+
+\end{enumerate}
+\end{myexercise}
+
+\begin{minipage}{0.6\textwidth}
+Für die nächste Aufgabe müssen Sie zuerst wissen, wie ein Fotowiderstand funktioniert. Ein Fotowiderstand ist lichtempfindliches Bauteil, es wird auch oft mit LDR abgekürzt (Light Dependent Resistor). Wie der Name bereits andeutet, verändert der LDR je nach Helligkeit seinen Widerstand. Dieser Fotowiderstand hat ca. 50 $k\Omega$ in Dunkelheit und 500 $\Omega$ in hellem Licht. Da das I-O-Board Widerstände nicht direkt messen kann, wird der Fotowiderstand zusammen mit einem festen Widerstand (z.B. 10 k$\Omega$) in Serie geschalten (5V - Photowiderstand - Widerstand - GND). Da sich zwei elektrische Bauteile in Serie die Spannung teilen, kann das I-O-Board bestimmen, wie hoch die Spannung über dem festen Widerstand ist. Wenn es hell ist, ist der  Fotowiderstand sehr klein, demnach liegen fast die ganzen 5V über dem festen Widerstand. Im Dunkeln ist der Fotowiderstandes sehr hoch, demnach liegt fast keine Spannung über dem festen Widerstand. Diese gemessene Spannung wird am analogen Eingang A0 des Arduinos in Zahlen von 0 bis 1023 umgewandelt. Hier entspricht der Messwert von 1023 unseren 5V - also eine hohe Helligkeit. Die Zahl 0 entspricht 0 Volt - also völlige Dunkelheit.
+\end{minipage}
+\begin{minipage}{0.39\textwidth}
+\centering
+\includegraphics[width=0.5\textwidth]{Fotodiode.png}\\
+\includegraphics[width=\textwidth]{Fotowiderstand.png}
+
+\end{minipage}
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Fotowiderstand_Beispielcode.png}
+\end{center}
+
+\newpage
+\begin{myexercise}
+\begin{itemize}
+
+\item[6.] \textbf{Aufgabe Fussgängerampel 2}: Die neue Ampel soll tagsüber gleich funktioniern wie die Ampel in Beispiel 5. In der Nacht ändert sich jedoch die Funktion - die Fussgängerampel soll nun orange blinken, das Drücken auf den Knopf hat in der Nacht keine Funktion mehr.
+
+\end{itemize}
+
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{Ampel_Nacht}
+
+\end{center}
+\end{myexercise}
+
+
+
+
+

@@ -1,7 +1,7 @@
 \chapter{Analoge Signale und PWM}\label{ch:chapter_01}
 
 
-\section{Analoge Signale}
+\section{Analoge Signale und Potentiometer}
 Ein \emph{analoges Signal} ist kontinuierlich, es kann also prinzipiell jede Spannung zwischen \qty{0}{\volt} und \qty{5}{\volt} annehmen.
 Ein \emph{digitaler} 10-Bit-Wert kann zu jeder Zeit nur genau einen der $2^{10} = 1024$ diskreten Werte in $\lrc{0, 1, 2, \ldots, 1023}$ annehmen.
 Der \emph{ADC} (Analog-to-Digital Converter) im Arduino macht genau diese Umwandlung:
@@ -26,6 +26,7 @@ Für einen idealen ADC beträgt der Quantisierungsfehler dieses Schätzwerts hö
 \subsection{Potentiometer mit Arduino Uno verbinden}
 Unter diesem \href{https://www.tinkercad.com/learn/overview/OG8Z4G7L26F9GZ6}{Link}\footnote{Möglicherweise müssen Sie ein Tinkercad-Konto erstellen.} ist ein Schaltplan zu sehen, wie ein Potentiometer mit dem Arduino Uno verbunden werden kann. Das Potentiometer hat drei Anschlüsse: Zwei äussere Anschlüsse, die an \qty{5}{\volt} und \qty{0}{\volt} (\texttt{GND}) angeschlossen werden, und einen mittleren Anschluss, der an den analogen Eingang \texttt{A0} angeschlossen wird. Der Widerstand des Potentiometers kann durch Drehen des Reglers verändert werden, wodurch sich die Spannung am mittleren Anschluss ändert. Den mittleren Anschluss eines Potentiometers bezeichnet man auch als \emph{Schleifer}.
 
+\clearpage
 \lstinputlisting[
 	language=C++,
 	morekeywords={setup,loop,pinMode,analogRead,analogWrite,digitalRead,digitalWrite,delay,Serial},
@@ -48,13 +49,21 @@ Studieren Sie \href{https://www.tinkercad.com/learn/overview/OG8Z4G7L26F9GZ6}{di
 \begin{aenum}
     \item Bauen Sie ihn mit einem echten Potentiometer, einem Breadboard und einem Arduino Uno nach.
     \item Verwenden Sie den Code in \cref{lst:potentiometer-analog}, um die Spannung am mittleren Anschluss des Potentiometers zu messen und auf dem seriellen Monitor anzuzeigen. Drehen Sie den Knopf des Potentiometers und beobachten Sie, wie sich der digitale Wert ändert.
-    \item Schätzen Sie die Spannung $U$ am mittleren Anschluss des Potentiometers für verschiedene digitale Werte $d$ mit ~\cref{eq:adc-to-voltage}.
+    \item Schätzen Sie die Spannung $U$ am mittleren Anschluss des Potentiometers für verschiedene digitale Werte $d$ mit \cref{eq:adc-to-voltage}.
     \item Bauen Sie eine äquivalente Schaltung \emph{ohne} ein Breadboard zu verwenden, indem Sie die Anschlüsse des Potentiometers direkt mit den Pins des Arduino Uno verbinden.
     \item Erklären Sie genau, was die Schaltung in verbindung mit dem Code in \cref{lst:potentiometer-analog} macht.
 \end{aenum}
 \begin{myanswer}
 keine Musterlösung
 \end{myanswer} 
+\end{myexercise}
+
+\subsection{LED mit einem Potentiometer dimmen (ohne Arduino)}
+
+Mit einem Potentiometer lässt sich die Helligkeit einer LED stufenlos einstellen.
+
+\begin{myexercise}[LED-Dimmer mit Potentiometer \emph{ohne} Arduino]\label{ex:led-dimmer-einfach}
+	Verwenden Sie ein Potentiometer, um die Helligkeit einer LED zu steuern. Verbinden Sie die äusseren Anschlüsse des Potentiometers mit \qty{5}{\volt} und \texttt{GND} sowie den Schleifer mit der Anode der LED. Die Kathode der LED wird über einen Vorwiderstand von \qty{220}{\ohm} mit \texttt{GND} verbunden.
 \end{myexercise}
 
 
@@ -137,12 +146,16 @@ Ein kleiner Tastgrad bedeutet, dass die LED innerhalb jeder Periode nur kurz ein
 	\label{fig:pwm-led-circuit}
 \end{figure}
 
-\subsection{Potentiometer als LED-Dimmer}
-Mit einem Potentiometer lässt sich die Helligkeit einer LED stufenlos einstellen. Der Schleifer (mittlere Anschluss) des Potentiometers wird wie zuvor mit dem analogen Eingang \texttt{A0} verbunden. Eine LED wird über einen Vorwiderstand von \qty{220}{\ohm} an den PWM-fähigen Pin \texttt{9} angeschlossen. Dabei muss die Anode der LED zum Widerstand beziehungsweise zu Pin \texttt{9} und die Kathode zu \texttt{GND} zeigen.
+\subsection{Potentiometer als LED-Dimmer (mit Arduino)}
+
+Wie wir in \cref{ex:led-dimmer-einfach} gesehen haben, funktioniert das Dimmen einer LED mit einem Potentiometer auch ohne Arduino. Mit einem Arduino Uno lässt sich die Helligkeit der LED jedoch über den digitalen PWM-Pin steuern. Der digitale Wert des Potentiometers wird dazu auf den PWM-Wert abgebildet. Dies erlaubt uns mehr Kontrolle über die LED, da wir die Hellkeit per Code steuern können.
+
+\par
+Der Schleifer (mittlere Anschluss) des Potentiometers wird wie zuvor mit dem analogen Eingang \texttt{A0} verbunden. Eine LED wird über einen Vorwiderstand von \qty{220}{\ohm} an den PWM-fähigen Pin \texttt{9} angeschlossen. Dabei muss die Anode der LED zum Widerstand beziehungsweise zu Pin \texttt{9} und die Kathode zu \texttt{GND} zeigen.
 
 Der ADC liefert Werte zwischen $0$ und $1023$, während \cppinline{analogWrite()} einen PWM-Wert zwischen $0$ und $255$ erwartet. \cref{lst:potentiometer-led-dimmer} bildet deshalb den 10-Bit-Wertebereich auf den 8-Bit-Wertebereich ab.
 
-\begin{myexercise}
+\begin{myexercise}[LED-Dimmer mit Potentiometer \emph{mit} Arduino]\label{ex:led-dimmer}
 Bauen Sie einen LED-Dimmer mit einem Arduino Uno auf.
 \begin{aenum}
 	\item Verbinden Sie die äusseren Anschlüsse des Potentiometers mit \qty{5}{\volt} und \texttt{GND} sowie den Schleifer mit \texttt{A0}.
@@ -209,6 +222,7 @@ keine Musterlösung
 	label={lst:candle-pwm}
 ]{FF/Robotik/Skript/Code/Candle_PWM/Candle_PWM.ino}
 
+\clearpage
 \begin{mysummary}
 	Die wichtigsten Punkte zur Pulsweitenmodulation (PWM) sind:
 	\begin{itemize}

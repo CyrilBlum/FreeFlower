@@ -11,8 +11,8 @@ void setup() {
 void loop() {
   // Set a random brightness level for each LED.
   // Adding a baseline ensures the LEDs stay baseline bright and don't dim completely out.
-  baseline = 135; // Minimum brightness level
-  random_range = 120; // Range of random brightness variation
+  int baseline = 135; // Minimum brightness level
+  int random_range = 120; // Range of random brightness variation
   analogWrite(9, random(random_range) + baseline);
   analogWrite(10, random(random_range) + baseline);
   analogWrite(11, random(random_range) + baseline);
