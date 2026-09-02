@@ -1,0 +1,152 @@
+\chapter{Post-Quanten-Kryptographie}\label{chap:post-quanten-kryptographie}
+
+Die in den vorangegangenen Kapiteln behandelten asymmetrischen Kryptosysteme (\gls{DHM}, \gls{RSA} sowie moderne elliptische Kurven) bilden heute das Rückgrat der weltweiten Informationssicherheit. Sie sichern Online-Banking, verschlüsselte Messenger-Dienste und digitale Signaturen ab.
+
+Alle diese Verfahren basieren jedoch auf genau zwei mathematischen Problemen:
+\begin{enumerate}
+	\item Der \textbf{Primfaktorzerlegung} grosser Zahlen (bei \gls{RSA}).
+	\item Dem \textbf{diskreten Logarithmusproblem} (bei \gls{DHM} und elliptischen Kurven).
+\end{enumerate}
+
+Auf herkömmlichen (klassischen) Computern gelten beide Probleme für ausreichend lange Schlüssel als unlösbar in vertretbarer Zeit. Mit der Entwicklung von \textbf{Quantencomputern} steht die moderne Kryptographie jedoch vor einem fundamentalen Paradigmenwechsel.
+
+\section{Die Bedrohung durch Quantencomputer}
+
+Quantencomputer funktionieren nicht nach den Gesetzen der klassischen Physik (Bits mit den Zuständen 0 oder 1), sondern nutzen quantenmechanische Phänomene wie \emph{Superposition} (Überlagerung) und \emph{Verschränkung}. Dadurch können bestimmte Rechenprobleme mit einer völlig neuartigen Parallelität gelöst werden.
+
+\begin{myidea}[Der Shor-Algorithmus (1994)]
+	Der Mathematiker Peter Shor bewies 1994, dass ein fehlerkorrigierter Quantencomputer sowohl die Primfaktorzerlegung als auch das diskrete Logarithmusproblem in \textbf{polynomieller Zeit} (also extrem schnell und effizient) lösen kann.
+\end{myidea}
+
+\noindent
+\textbf{Konsequenzen für bestehende Verfahren:}
+\begin{itemize}
+	\item \textbf{Asymmetrische Verfahren (RSA, DHM, ECC):} Sobald ein ausreichend leistungsfähiger Quantencomputer gebaut wird, können alle heute verwendeten asymmetrischen Schlüssel in Minuten geknackt werden. Diese Verfahren sind gegenüber Quantencomputern \textbf{vollständig unsicher}.
+	\item \textbf{Symmetrische Verfahren (AES) und Hashfunktionen (SHA-256):} Diese Verfahren beruhen nicht auf Zahlenproblemen wie RSA, sondern auf komplexen Bit-Verschachtelungen. Sie werden durch Quantencomputer (mittels des \emph{Grover-Algorithmus}) nur unwesentlich geschwächt: Die effektive Schlüssellänge wird halbiert. Ein AES-Schlüssel mit 256 Bit bietet somit immer noch die Sicherheit eines 128-Bit-Schlüssels, was auch für Quantencomputer praktisch unknackbar bleibt.
+\end{itemize}
+
+\begin{myremark}[„Harvest Now, Decrypt Later“]\label{rem:harvest-now}
+	Auch wenn heute noch keine Quantencomputer mit ausreichender Leistung existieren, ist die Bedrohung bereits jetzt akut: Geheimdienste und Angreifer schneiden schon heute massenhaft verschlüsselte Datenströme aus dem Internet mit (\emph{Harvest Now}), um sie in einigen Jahren oder Jahrzehnten mit künftigen Quantencomputern nachträglich zu entschlüsseln (\emph{Decrypt Later}). Für Daten, die über Jahrzehnte geheim bleiben müssen (z.\,B.\ Patientendaten oder Staatsgeheimnisse), ist der Übergang zu quantensicheren Verfahren daher bereits heute notwendig.
+\end{myremark}
+
+\section{Was ist Post-Quanten-Kryptographie?}
+
+Unter \textbf{\gls{PQC}} versteht man kryptographische Verfahren, die:
+\begin{enumerate}
+	\item auf \textbf{herkömmlichen Computern} (Smartphones, Laptops, Webservern) ohne Quantenhardware ausgeführt werden können,
+	\item auf neuen mathematischen Problemen basieren, für die \textbf{weder für klassische Rechner noch für Quantencomputer} effiziente Angriffs-Algorithmen bekannt sind.
+\end{enumerate}
+
+Die führende Familie moderner Post-Quanten-Verfahren ist die \textbf{gitterbasierte Kryptographie} (\emph{Lattice-based Cryptography}), insbesondere das Verfahren \textbf{\gls{LWE}} (\emph{Lernen mit Fehlern}).
+
+\section{Gitterbasierte Kryptographie: Learning with Errors (LWE)}
+
+Um die Grundidee hinter modernen Post-Quanten-Verfahren zu verstehen, betrachten wir ein einfaches Prinzip aus der Schulmathematik: lineare Gleichungssysteme.
+
+\paragraph*{Einfacher Fall ohne Rauschen (klassisch lösbar):}
+Gegeben sei ein Gleichungssystem mit einem geheimen Wert $s$:
+\begin{align*}
+	3 \cdot s & \equiv 12 \pmod{17} \\
+	5 \cdot s & \equiv 3 \pmod{17}
+\end{align*}
+Mit dem Gauss-Verfahren oder durch einfaches Teilen lässt sich das Geheimnis $s = 4$ sofort und mühelos berechnen.
+
+\paragraph*{Schwerer Fall mit Rauschen (LWE-Prinzip):}
+Nun fügen wir jedem Ergebnis einen kleinen, zufälligen Fehler (ein Rauschen $e \in \{-1, 0, 1\}$) hinzu:
+\begin{align*}
+	3 \cdot s + e_1 & = 3 \cdot 4 + (+1) = 13 \pmod{17} \\
+	5 \cdot s + e_2 & = 5 \cdot 4 + (-1) = 2 \pmod{17}
+\end{align*}
+Ein Angreifer sieht nun nur noch die Zahlenpaare $(3, 13)$ und $(5, 2)$. Da der genaue Wert der Fehler $e_1, e_2$ unbekannt ist, lassen sich die Gleichungen nicht mehr exakt auflösen. Bei vielen Variablen und Gleichungen wird die Bestimmung von $s$ selbst für Super- und Quantencomputer praktisch unlösbar.
+
+\begin{myprocedure}[Didaktisches LWE-Verschlüsselungsverfahren]\label{myprocedure:LWE}
+	Zur Veranschaulichung betrachten wir die Verschlüsselung eines einzelnen Bits $m \in \{0, 1\}$ mit dem Modul $q = 17$:
+	\begin{description}
+		\item[Schlüsselerzeugung (Alice):]
+		      \begin{itemize}
+			      \item Alice wählt ein geheimes $s$ (privater Schlüssel), z.\,B.\ $s = 4$.
+			      \item Sie wählt zufällige Faktoren $a_1, a_2$ und kleine Fehler $e_1, e_2 \in \{-1, 0, 1\}$ und berechnet:
+			            \[
+				            b_1 = (a_1 \cdot s + e_1) \pmod{17}, \quad b_2 = (a_2 \cdot s + e_2) \pmod{17}
+			            \]
+			      \item \textbf{Öffentlicher Schlüssel:} die Paare $(a_1, b_1)$ und $(a_2, b_2)$.
+		      \end{itemize}
+		\item[Verschlüsselung (Bob):]
+		      \begin{itemize}
+			      \item Bob kodiert das Bit $m$: Eine $0$ wird als $0$ kodiert, eine $1$ als $\lfloor q/2 \rfloor = 8$ (maximaler Abstand zu 0).
+			      \item Bob addiert die beiden Gleichungen des öffentlichen Schlüssels und addiert seine Nachricht $m_{\text{kodiert}}$ auf der rechten Seite:
+			            \[
+				            u = (a_1 + a_2) \pmod{17}, \quad v = (b_1 + b_2 + m_{\text{kodiert}}) \pmod{17}
+			            \]
+			      \item Bob sendet den Kryptotext $(u, v)$ an Alice.
+		      \end{itemize}
+		\item[Entschlüsselung (Alice):]
+		      \begin{itemize}
+			      \item Alice nutzt ihren privaten Schlüssel $s$, um den Term $u \cdot s$ von $v$ abzuziehen:
+			            \[
+				            d = (v - u \cdot s) \pmod{17}
+			            \]
+			      \item Da $v - u \cdot s = (e_1 + e_2) + m_{\text{kodiert}}$ ist, heben sich die Terme mit $s$ auf. Es bleibt nur das kleine Rauschen plus die Nachricht übrig!
+			      \item Alice rundet: Liegt $d$ nahe bei $0$, war das Bit $m = 0$. Liegt $d$ nahe bei $8$, war das Bit $m = 1$.
+		      \end{itemize}
+	\end{description}
+\end{myprocedure}
+
+\begin{myexample}[Verschlüsselung des Bits $m = 1$ mit LWE]
+	Wir verwenden die Parameter aus dem obigen Verfahren mit dem Modul $q = 17$:
+	\begin{itemize}
+		\item Privater Schlüssel von Alice: $s = 4$.
+		\item Öffentlicher Schlüssel: $(a_1, b_1) = (3, 13)$ und $(a_2, b_2) = (5, 2)$.
+	\end{itemize}
+	Bob möchte das Bit $m = 1$ (kodiert als $8$) an Alice senden:
+	\begin{enumerate}
+		\item \textbf{Verschlüsselung:}
+		      \begin{align*}
+			      u & = (a_1 + a_2) \pmod{17} = (3 + 5) \pmod{17} = \mathbf{8} \\
+			      v & = (b_1 + b_2 + 8) \pmod{17} = (13 + 2 + 8) \pmod{17} = 23 \pmod{17} = \mathbf{6}
+		      \end{align*}
+		      Bob sendet den Kryptotext $(u, v) = (8, 6)$ an Alice.
+		\item \textbf{Entschlüsselung:} Alice berechnet mit ihrem privaten Schlüssel $s = 4$:
+		      \begin{align*}
+			      d & = (v - u \cdot s) \pmod{17} \\
+			        & = (6 - 8 \cdot 4) \pmod{17} \\
+			        & = (6 - 32) \pmod{17} \\
+			        & = (6 - 15) \pmod{17} = -9 \equiv \mathbf{8} \pmod{17}
+		      \end{align*}
+		      Das Ergebnis ist genau $8$. Alice erkennt fehlerfrei die Nachricht $m = 1$.
+	\end{enumerate}
+\end{myexample}
+
+\begin{myexercise}
+	Bob möchte nun mit demselben öffentlichen Schlüssel von Alice ($(a_1, b_1) = (3, 13)$, $(a_2, b_2) = (5, 2)$ und Modul $q = 17$) das Bit $m = 0$ (kodiert als $0$) übertragen.
+	\begin{enumerate}
+		\item Berechnen Sie den Kryptotext $(u, v)$, den Bob an Alice sendet.
+		\item Führen Sie die Entschlüsselung mit Alices privatem Schlüssel $s = 4$ durch und zeigen Sie, wie Alice das Bit $m = 0$ rekonstruiert.
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item \textbf{Verschlüsselung ($m = 0$):}
+			      \begin{align*}
+				      u & = (a_1 + a_2) \pmod{17} = (3 + 5) \pmod{17} = \mathbf{8} \\
+				      v & = (b_1 + b_2 + 0) \pmod{17} = (13 + 2 + 0) \pmod{17} = \mathbf{15}
+			      \end{align*}
+			      Der Kryptotext lautet $(u, v) = (8, 15)$.
+			\item \textbf{Entschlüsselung durch Alice ($s = 4$):}
+			      \begin{align*}
+				      d & = (v - u \cdot s) \pmod{17} \\
+				        & = (15 - 8 \cdot 4) \pmod{17} \\
+				        & = (15 - 32) \pmod{17} \\
+				        & = (15 - 15) \pmod{17} = \mathbf{0}
+			      \end{align*}
+			      Da das Ergebnis $0$ ist (Abstand $0$ zur kodierten $0$), liest Alice erfolgreich das Bit $m = 0$ aus.
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mysummary}
+	\begin{itemize}
+		\item \textbf{Quantenbedrohung:} Quantencomputer können mit dem Shor-Algorithmus Primfaktorzerlegungen (RSA) und diskrete Logarithmen (DHM, ECC) effizient in polynomieller Zeit knacken.
+		\item \textbf{Post-Quanten-Kryptographie (\acrshort{PQC}):} Neue Verfahren, die auf klassischen Computern laufen, aber auch gegen Angriffe mit Quantencomputern mathematisch resistent sind.
+		\item \textbf{Gitterbasierte Verfahren (LWE):} Basieren auf der Schwierigkeit, verrauschte lineare Gleichungssysteme zu lösen. Der berechtigte Empfänger kann das Rauschen mit dem privaten Schlüssel eliminieren.
+	\end{itemize}
+\end{mysummary}

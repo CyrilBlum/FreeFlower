@@ -428,6 +428,8 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 		      dass die Zahlen $a$ und $b$ bei der Division durch $m$ \textbf{denselben Rest} ergeben (gelesen als: \emph{$a$ ist kongruent zu $b$ modulo $m$}).
 		      
 		      \textbf{Beispiel:} $9 \equiv 2 \pmod 7$, denn $9 = 1 \cdot 7 + \mathbf{2}$ und $2 = 0 \cdot 7 + \mathbf{2}$. In Rechenschritten darf eine Zahl daher jederzeit durch ihren kleineren Rest modulo $m$ ersetzt werden.
+		      
+		      \emph{Hinweis:} Je nach mathematischem Teilgebiet begegnet man dem Symbol $\equiv$ auch in verwandten Bedeutungen, etwa für die logische Äquivalenz ($A \equiv B$) oder die identische Gleichheit in der Algebra (z.\,B.\ $\sin^2(x) + \cos^2(x) \equiv 1$). In der Kryptologie steht es im Kontext von Modulo-Rechnungen stets für die modulare Kongruenz.
 	\end{itemize}
 \end{myremark}
 
@@ -488,6 +490,31 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	\]
 	Selbst bei einem Exponenten mit hunderten Stellen sind auf diese Weise nur wenige tausend Rechenoperationen mit handlichen Zahlen nötig.
 \end{myexample}
+
+\begin{myremark}[Warum der naive Rechenweg scheitert]\label{rem:modular-exp-naive}
+	Warum berechnet ein Computer nicht einfach zuerst das Produkt $g^a$ und führt anschliessend eine Division mit Rest modulo $p$ durch?
+	
+	Betrachten wir als scheinbar einfaches Beispiel die Berechnung von $2^{100} \pmod{13}$:
+	\begin{enumerate}
+		\item \textbf{Vollständige Potenz berechnen:}
+		      \[
+			      2^{100} = 1\,267\,650\,600\,228\,229\,401\,496\,703\,205\,376
+		      \]
+		      Diese Zahl besitzt bereits 31 Dezimalstellen.
+		\item \textbf{Division mit Rest durchführen:}
+		      \begin{align*}
+			        & 1\,267\,650\,600\,228\,229\,401\,496\,703\,205\,376 \div 13 \\
+			      = & \; 97\,511\,584\,632\,940\,723\,192\,054\,092\,721 \quad\text{Rest: } \mathbf{3}
+		      \end{align*}
+		      Somit ist $2^{100} \equiv 3 \pmod{13}$.
+	\end{enumerate}
+	Bei kryptographisch relevanten Schlüssellängen (z.\,B.\ 2048 Bit) ist der Exponent $a$ eine Zahl mit über 600 Ziffern ($a \approx 10^{616}$). Die Zahl $2^a$ hätte dann astronomische $3 \cdot 10^{615}$ Dezimalstellen:
+	\begin{itemize}
+		\item \textbf{Speicherüberlauf:} Um eine einzige solche Zahl im Arbeitsspeicher abzuspeichern, bräuchte man mehr Speicherzellen, als es Atome im beobachtbaren Universum gibt ($\approx 10^{80}$).
+		\item \textbf{Rechenzeit:} $10^{616}$ Multiplikationen nacheinander auszuführen, würde selbst auf den schnellsten Supercomputern Jahrmilliarden dauern.
+	\end{itemize}
+	Die modulare Exponentiation umgeht beide Probleme elegant, da die Zwischenergebnisse durch die fortlaufende Reduktion $\pmod p$ nie grösser als $p^2$ werden und durch wiederholtes Quadrieren lediglich rund 3000 Einzelschritte benötigt werden.
+\end{myremark}
 
 \begin{myexercise}
 	Berechnen Sie $2^{11} \pmod{13}$ mithilfe des wiederholten Quadrierens (Zerlegung des Exponenten und Reduktion bei jedem Zwischenschritt).

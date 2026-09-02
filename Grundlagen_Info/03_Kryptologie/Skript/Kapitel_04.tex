@@ -86,6 +86,10 @@ Das \acrfull{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für
 \end{enumerate}
 \end{myprocedure}
 
+\begin{myremark}[Effiziente modulare Exponentiation bei RSA]\label{rem:rsa-mod-exp}
+	Die Berechnungen $c = m^e \mod n$ und $m = c^d \mod n$ erfordern für praxisnahe Schlüssellängen (z.\,B.\ 2048 Bit) das Potenzieren mit riesigen Zahlen. Wie bereits beim \gls{DHM}-Verfahren (siehe \cref{rem:modular-exp-naive}) kommt auch bei RSA die \textbf{modulare Exponentiation} (wiederholtes Quadrieren) zum Einsatz. Dadurch können die Berechnungen in Millisekunden durchgeführt werden, ohne dass astronomisch grosse Zwischenzahlen gespeichert werden müssen.
+\end{myremark}
+
 \begin{myexample}
 Um \gls{RSA} besser zu verstehen, rechnen wir ein einfaches Beispiel mit kleinen Zahlen durch:
 \begin{enumerate}
@@ -303,12 +307,12 @@ Eine digitale Signatur beweist mathematisch zwei zentrale Eigenschaften:
 	\item \textbf{Authentizität:} Die Signatur konnte nur mit dem privaten Schlüssel erzeugt werden, der zum angegebenen öffentlichen Schlüssel gehört.
 \end{itemize}
 
-\paragraph{Das Problem: Wessen Signatur ist es wirklich?}
+\paragraph*{Das Problem: Wessen Signatur ist es wirklich?}
 Hier stösst die reine Mathematik an eine praktische Grenze: \emph{Woher weiss der Empfänger (Bob), dass ein bestimmter öffentlicher Schlüssel tatsächlich Alice gehört?}
 
 Ein Angreifer (Eve) könnte ein eigenes Schlüsselpaar erzeugen und den öffentlichen Schlüssel unter dem Namen von Alice oder als angebliche Webseite einer Bank veröffentlichen. Signiert Eve anschliessend eine gefälschte Nachricht mit ihrem eigenen privaten Schlüssel, so bestätigt die mathematische Überprüfung mit Eves öffentlichem Schlüssel formal die Gültigkeit der Signatur. Bob wiegt sich in falscher Sicherheit, da er die Signatur nicht der echten Identität zuordnen kann (Man-in-the-Middle-Angriff).
 
-\paragraph{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
+\paragraph*{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
 Um das Vertrauensproblem in der Praxis zu lösen (beispielsweise beim sicheren Surfen über HTTPS/\gls{TLS} oder bei der elektronischen Signatur), wird eine sogenannte \textbf{Public-Key-Infrastruktur} (\gls{PKI}) eingesetzt:
 \begin{itemize}
 	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, CAs):} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Schlüsselausgabe die reale Identität der antragstellenden Person oder Institution.
