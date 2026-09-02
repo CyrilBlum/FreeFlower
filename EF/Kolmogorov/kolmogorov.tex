@@ -242,35 +242,40 @@ Für ein binäres Wort $w$ betrachten wir alle Maschinencodes der \texttt{C'++}-
 \end{myremark}
 
 \section{Invarianz der Programmiersprache}\label{sec:Sprachinvarianz}
-Man könnte denken, dass die Wahl einer festen Programmiersprache wiederum ein willkürliches Element einbringt. Dem ist aber nicht so! Wir klären diesen Sachverhalt in \cref{mytheorem:Sprachinvarianz}.
+Die Länge eines Programms hängt natürlich von der verwendeten Programmiersprache ab. Trotzdem ist die Wahl der Sprache für die Kolmogorov-Komplexität nicht entscheidend. Der Grund dafür lässt sich mit einem Übersetzer erklären.
 
-\begin{mydefinition}[Optimale universelle Beschreibungssprache]
-	Eine berechenbare Beschreibungssprache $U$ heisst \textit{universell}, wenn sie jedes Programm jeder berechenbaren Beschreibungssprache $S$ mithilfe eines festen Interpreters für $S$ ausführen kann. Sie heisst \textit{optimal}, wenn das Hinzufügen dieses Interpreters die Beschreibungslänge nur um eine von $S$, nicht aber vom beschriebenen Wort abhängige Konstante vergrössert. Wir nehmen an, dass die durch \texttt{C'++} und \texttt{g'++} festgelegte Beschreibungssprache optimal universell ist.
-\end{mydefinition}
+Nehmen wir an, ein Programm $p$ ist in einer Sprache $S$ geschrieben. Unsere Sprache $U$ kann dieses Programm ausführen, wenn wir ihr zusätzlich einen Übersetzer für $S$ mitgeben. Diesen festen Übersetzer bezeichnen wir mit $i_S$. Das zusammengesetzte Programm sieht also so aus:
+\begin{align*}
+	\underbrace{i_S}_{\text{Übersetzer für }S}\quad
+	\underbrace{p}_{\text{eigentliches Programm}}.
+\end{align*}
+Der Übersetzer $i_S$ muss nur wissen, wie die Sprache $S$ funktioniert. Er ist daher für alle $S$-Programme derselbe. Insbesondere wird er nicht länger, wenn das Programm $p$ oder dessen Ausgabe länger wird.
+
+Eine Sprache $U$, die auf diese Weise Programme aus allen anderen Programmiersprachen ausführen kann, nennen wir \textit{universell}. Wir nehmen an, dass unsere Sprache \texttt{C'++} eine solche Sprache ist.
 
 \begin{mytheorem}[Invarianzsatz]\label{mytheorem:Sprachinvarianz}
-	Es sei $U$ eine optimale universelle Beschreibungssprache und $S$ eine beliebige berechenbare Beschreibungssprache. Mit $C_U(w)$ beziehungsweise $C_S(w)$ bezeichnen wir die Länge einer kürzesten Beschreibung von $w$ in der jeweiligen Sprache. Dann existiert eine nur von $S$ abhängige Konstante $c_S$, sodass
+	Es sei $U$ unsere universelle Sprache und $S$ eine andere Programmiersprache. Mit $C_U(w)$ beziehungsweise $C_S(w)$ bezeichnen wir die Kolmogorov-Komplexität von $w$, gemessen mit der jeweiligen Sprache. Dann gibt es eine feste Zahl $c_S$, sodass
 	\begin{align*}
 		C_U(w)\leq C_S(w)+c_S
 	\end{align*}
 	für alle binären Wörter $w$ gilt.
 	\begin{myproof}
-		Da $U$ universell ist, besitzt sie für die feste Sprache $S$ einen Interpreter mit einer festen binären Kennung $i_S$. Für jedes $S$-Programm $p$ gilt
+		Sei $p$ ein kürzestes $S$-Programm für $w$. Es hat die Länge $C_S(w)$. Fügen wir den festen Übersetzer $i_S$ hinzu, erhalten wir ein $U$-Programm für dasselbe Wort $w$. Dieses Programm hat die Länge
 		\begin{align*}
-			U(i_Sp)=S(p).
+			\abs{i_S}+C_S(w).
 		\end{align*}
-		Ist $p$ eine kürzeste $S$-Beschreibung von $w$, so ist $i_Sp$ eine $U$-Beschreibung von $w$. Daher gilt
+		Setzen wir $c_S:=\abs{i_S}$, folgt
 		\begin{align*}
-			C_U(w)\leq \abs{i_S}+\abs{p}=C_S(w)+c_S
+			C_U(w)\leq C_S(w)+c_S.
 		\end{align*}
-		mit der von $w$ unabhängigen Konstante $c_S:=\abs{i_S}$.
+		Der zusätzliche Platz $c_S$ ist für alle Wörter $w$ gleich, weil der Übersetzer stets derselbe ist.
 	\end{myproof}
 \end{mytheorem}
-Sind $U$ und $V$ beide optimale universelle Beschreibungssprachen, wenden wir den Satz in beide Richtungen an und erhalten
+Sind $U$ und $V$ beide solche universellen Sprachen, können sie sich gegenseitig übersetzen. Ihre Kolmogorov-Komplexitäten unterscheiden sich deshalb höchstens um eine feste Konstante:
 \begin{align*}
 	\abs{C_U(w)-C_V(w)}\leq c_{U,V}
 \end{align*}
-für eine von $w$ unabhängige Konstante $c_{U,V}$. In diesem präzisen Sinne spielt die Wahl der optimalen universellen Beschreibungssprache keine wesentliche Rolle.
+Dabei hängt $c_{U,V}$ von den beiden Sprachen, aber nicht von $w$ ab. In diesem Sinne spielt die Wahl der Programmiersprache keine wesentliche Rolle.
 
 \section{Triviale obere Schranke für die Kolmogorov-Komplexität}
 Ein beliebiges binäres Wort $w$ kann sicherlich immer beschrieben werden, indem man jedes Bit des Wortes einzeln angibt, $w$ also Bit für Bit diktiert. Diese Beobachtung lässt vermuten, dass die Kolmogorov-Komplexität eines jeden binären Wortes $w$ zumindest nicht (wesentlich) grösser ist als die Anzahl Bits von $w$ (Länge von $w$). Diese Vermutung ist korrekt, wie \cref{mytheorem:upperbound} zeigt.
@@ -292,6 +297,39 @@ Ein beliebiges binäres Wort $w$ kann sicherlich immer beschrieben werden, indem
 	\end{myproof}
 \end{mytheorem}
 Die Kolmogorov-Komplexität eines Wortes $w$ ist also sicherlich (bis auf eine Konstante) nicht grösser als die Länge von $w$.
+
+\begin{myexample}[Denselben binären Block mehrfach verwenden]\label{myexample:bounded-repetitions}
+	Betrachten wir ein festes Programmschema, in dem dasselbe binäre Wort $w$ an $k$ verschiedenen Stellen verwendet wird, wobei beispielsweise $1\leq k\leq 5$ gilt. Die Zahl $5$ ist dabei willkürlich gewählt und besitzt keine besondere Bedeutung. Entscheidend ist lediglich, dass die Anzahl der Vorkommen durch eine im Voraus festgelegte Konstante beschränkt ist. Anstelle von $5$ könnten wir jede andere feste obere Schranke $m$ wählen und $1\leq k\leq m$ voraussetzen.
+
+	Die Vorkommen müssen weder im Quelltext nebeneinanderstehen noch muss die Ausgabe die Form $w^k$ besitzen. Beispielsweise darf das Programm die einzelnen Vorkommen von $w$ in verschiedenen Funktionen oder an verschiedenen Stellen der Ausgabe verwenden.
+
+	In einem konkreten \texttt{C'++}-Programm werden alle diese Vorkommen durch \cppinline{***w+++} gekennzeichnet. Der Compiler \texttt{g'++} speichert nicht jedes Vorkommen separat. Er legt $w$ genau einmal als binären Rohdatenblock ab und ersetzt jedes der höchstens fünf Vorkommen durch einen Verweis auf diesen gemeinsamen Block. Der für $w$ benötigte Speicherplatz beträgt daher genau $\abs{w}$ Bits und nicht $k\abs{w}$ Bits.
+
+	Ein einfaches Beispiel ist das folgende Programmschema:
+	\begin{lstlisting}[language=C++,escapechar=!]
+#include <iostream>
+
+void use_w() {
+    std::cout << "***w+++";
+    std::cout << "1";
+    std::cout << "***w+++";
+}
+	\end{lstlisting}
+	Dieses Programm erzeugt $x_w=w1w$. Die Ausgabe ist also im Allgemeinen nicht von der Form $w^k$, obwohl der Block $w$ an zwei verschiedenen Stellen des Programms verwendet wird.
+	Nehmen wir nun an, dass ausser dem eingesetzten Block $w$ kein Teil des Programms von $w$ abhängt. Bezeichnen wir seine Ausgabe mit $x_w$, so existiert eine Konstante $c$ mit
+	\begin{align*}
+		C(x_w)\leq \abs{w}+c.
+	\end{align*}
+	Die Konstante $c$ umfasst den festen Programmcode und die höchstens fünf Verweise auf den gemeinsamen Datenblock. Weil deren Anzahl beschränkt ist, hängt $c$ nicht von $w$ ab. Für eine beliebige feste Schranke $m$ erhalten wir entsprechend eine Konstante $c_m$ mit
+	\begin{align*}
+		C(x_w)\leq \abs{w}+c_m.
+	\end{align*}
+	Die Konstante $c_m$ darf von der vorab gewählten Schranke $m$, aber nicht von $w$ abhängen. Auch wenn zwischen endlich vielen vorgegebenen Programmschemata gewählt werden darf, bleibt die Aussage richtig: Man wählt $c_m$ als den grössten konstanten Zusatzaufwand dieser Schemata.
+
+	Die Voraussetzung einer festen oberen Schranke und eines festen Programmschemas ist wesentlich. Darf $k$ beliebig gross werden, kann der von $k$ abhängige Aufwand nicht ohne Weiteres in eine einzige, von $k$ unabhängige Konstante aufgenommen werden. Wird $k$ beispielsweise binär gespeichert und eine Schleife zur wiederholten Verwendung von $w$ eingesetzt, entsteht zusätzlich ein von der Beschreibungslänge von $k$ abhängiger Term, typischerweise von der Grössenordnung $O(\lr{\log k})$. Falls weitere Programmteile oder die Positionen der Vorkommen durch zusätzliche, beliebig lange Daten festgelegt werden, müssen auch diese Daten in der Beschreibung gespeichert und zur Schranke addiert werden.
+
+	Dasselbe Prinzip lässt sich mit einer Mehrband-Turingmaschine realisieren: Sie speichert $w$ einmal auf einem Arbeitsband und greift bei jeder benötigten Verwendung erneut auf dieses Band zu. Eine feste Mehrband-Turingmaschine kann in unserer optimalen universellen Beschreibungssprache durch einen festen Simulator beschrieben werden. Dessen Länge geht lediglich als additive Konstante in $c$ ein.
+\end{myexample}
 
 \section{Sehr regelmässige Wörter}
 \cref{mytheorem:upperbound} gibt lediglich eine obere Schranke für die Kolmogorov-Komplexität von binären Wörtern an. Wörter $w$, die eine hohe Regelmässigkeit aufweisen, müssen nicht Bit für Bit angegeben werden, sondern lassen sich (unter Ausnutzung ihrer Regelmässigkeit) deutlich kürzer beschreiben als mit $\abs{w} + c$ vielen Bits.
