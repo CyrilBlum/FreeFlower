@@ -203,6 +203,21 @@ d = pow(e, -1, phi_n)
 	\end{myanswer}
 \end{mychallenge}
 
+\subsection*{Sicherheit des \texorpdfstring{\acrshort{RSA}}{RSA}-Verfahrens}
+Die Sicherheit der reinen \gls{RSA}-Verschlüsselung beruht auf der mathematischen Schwierigkeit der \textbf{Primfaktorzerlegung} (Faktorisierungsproblem). Ein Angreifer (Eve) hat Zugriff auf den öffentlichen Schlüssel $(e, n)$ sowie den abgefangenen Kryptotext $c$. Um daraus den privaten Entschlüsselungsexponenten $d$ zu berechnen, müsste Eve den Wert der Eulerschen Phi-Funktion $\varphi(n) = (p-1)(q-1)$ kennen. Dazu müsste sie die Zahl $n$ in ihre ursprünglichen Primfaktoren $p$ und $q$ zerlegen ($n = p \cdot q$).
+
+Während die Multiplikation zweier grosser Primzahlen für moderne Computer im Bruchteil einer Millisekunde durchführbar ist, existiert bis heute kein bekanntes effizientes Verfahren, um ein Produkt aus zwei sehr grossen Primzahlen wieder zu faktorisieren. Werden ausreichend lange Primzahlen gewählt (in der Praxis mindestens 2048 bis 4096 Bit, d.\,h.\ Zahlen mit über 600 Dezimalstellen), würde ein Kryptoanalyst selbst mit den leistungsfähigsten Supercomputern Millionen von Jahren für die Faktorisierung benötigen.
+
+\paragraph*{Sicherheitsproblem: Fehlende Authentizität des Absenders}
+Obwohl das RSA-Verfahren die \textbf{Vertraulichkeit} der Nachricht schützt (nur der Empfänger Bob kann mit seinem privaten Schlüssel $d$ entschlüsseln), bietet reine Verschlüsselung \textbf{keine Authentizität}: Da Bobs öffentlicher Schlüssel $(e, n)$ öffentlich bekannt ist, kann \emph{jede} beliebige Person (also auch ein Angreifer wie Eve) eine Nachricht verschlüsseln und an Bob schicken, während sie behauptet, Alice zu sein. Bob hat keine Möglichkeit, anhand der verschlüsselten Nachricht nachzuweisen, wer sie tatsächlich verfasst hat.
+
+\paragraph*{Lösung: Digitale Signaturen durch Rollenumkehr der Schlüssel}
+Um diese Sicherheitslücke zu schliessen, nutzt man die mathematische Symmetrie des \gls{RSA}-Verfahrens: Die Rollen des privaten und des öffentlichen Schlüssels lassen sich vertauschen. Da
+\[
+	(m^d)^e \equiv m \pmod n
+\]
+gilt, kann eine Person eine Nachricht mit ihrem \emph{privaten} Schlüssel signieren. Anschliessend kann jede andere Person mit dem zugehörigen \emph{öffentlichen} Schlüssel überprüfen, ob die Nachricht tatsächlich vom Schlüsselinhaber stammt und unverändert geblieben ist. Dies bildet das Fundament für \textbf{digitale Signaturen}.
+
 \subsection{Digitale Signaturen mit \texorpdfstring{\acrshort{RSA}}{RSA}}
 Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur Erstellung digitaler Signaturen verwendet werden. Digitale Signaturen dienen dazu, die Authentizität und Integrität einer Nachricht zu gewährleisten. Hierbei wird die Nachricht mit dem privaten Schlüssel des Absenders signiert, sodass der Empfänger die Signatur mit dem öffentlichen Schlüssel des Absenders überprüfen kann.
 
@@ -280,3 +295,24 @@ Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur
 		Da \( H'(m) = H(m) \), ist die Signatur gültig.
 	\end{myanswer}
 \end{myexercise}
+
+\subsection*{Sicherheit digitaler Signaturen: Das Vertrauensproblem in der Praxis}
+Eine digitale Signatur beweist mathematisch zwei zentrale Eigenschaften:
+\begin{itemize}
+	\item \textbf{Integrität:} Die Nachricht wurde auf dem Übertragungsweg nicht manipuliert (jede Veränderung führt zu einem anderen Hashwert und macht die Signatur ungültig).
+	\item \textbf{Authentizität:} Die Signatur konnte nur mit dem privaten Schlüssel erzeugt werden, der zum angegebenen öffentlichen Schlüssel gehört.
+\end{itemize}
+
+\paragraph{Das Problem: Wessen Signatur ist es wirklich?}
+Hier stösst die reine Mathematik an eine praktische Grenze: \emph{Woher weiss der Empfänger (Bob), dass ein bestimmter öffentlicher Schlüssel tatsächlich Alice gehört?}
+
+Ein Angreifer (Eve) könnte ein eigenes Schlüsselpaar erzeugen und den öffentlichen Schlüssel unter dem Namen von Alice oder als angebliche Webseite einer Bank veröffentlichen. Signiert Eve anschliessend eine gefälschte Nachricht mit ihrem eigenen privaten Schlüssel, so bestätigt die mathematische Überprüfung mit Eves öffentlichem Schlüssel formal die Gültigkeit der Signatur. Bob wiegt sich in falscher Sicherheit, da er die Signatur nicht der echten Identität zuordnen kann (Man-in-the-Middle-Angriff).
+
+\paragraph{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
+Um das Vertrauensproblem in der Praxis zu lösen (beispielsweise beim sicheren Surfen über HTTPS/\gls{TLS} oder bei der elektronischen Signatur), wird eine sogenannte \textbf{Public-Key-Infrastruktur} (\gls{PKI}) eingesetzt:
+\begin{itemize}
+	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, CAs):} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Schlüsselausgabe die reale Identität der antragstellenden Person oder Institution.
+	\item \textbf{Digitale Zertifikate:} Die CA stellt ein standardisiertes Dokument (Zertifikat) aus, welches den öffentlichen Schlüssel an die Identität (z.\,B.\ den Domainnamen \texttt{www.beispiel.ch}) bindet. Dieses Zertifikat wird von der CA mit deren eigenem privaten Schlüssel signiert.
+	\item \textbf{Vertrauensanker (Root CAs):} Betriebssysteme und Browser besitzen eine vorinstallierte Liste vertrauenswürdiger Stammzertifikate. Wird eine Verbindung aufgebaut, prüft die Software automatisch die Signaturkette (\emph{Certificate Chain}) bis zu einem vertrauenswürdigen Stammzertifikat.
+\end{itemize}
+Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden Vertrauensinfrastruktur ermöglicht verlässliche Sicherheit in modernen Kommunikationsnetzen.

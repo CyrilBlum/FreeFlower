@@ -36,9 +36,9 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Prioritize Native LaTeX / TikZ**: Generate diagrams, flowcharts, and technical drawings natively in LaTeX using TikZ (see `Preambles/pre_3_tikz.tex`).
 - **Use Vector Formats**: When a graphic cannot be rendered natively in TikZ, use vector formats strictly (`.pdf` or `.svg`).
 
-### 2.5 Zero-Warning & Zero-Error Compilation Standard
-- All modified TeX documents must compile **without errors, fatal warnings, or unresolved reference/citation issues**.
-- Ensure all packages, custom macros, and font settings resolve cleanly under LuaLaTeX.
+### 2.5 Compilation Policy & Quality Standard
+- **No Automatic Compilation**: AI agents do **not** need to compile edited `.tex` files unless the user explicitly requests it.
+- **Zero-Error Standard (when compilation is requested)**: If the user explicitly asks for compilation, all modified TeX documents must compile without errors, fatal warnings, or unresolved reference/citation issues under LuaLaTeX.
 
 ### 2.6 Synchronizing Exercises: Slides vs. Handouts/Scripts
 - **Manual Exercise Sync**: Exercise and task numberings in Beamer slides are **not** updated automatically when corresponding parts in scripts or exercise handouts are changed.
@@ -107,7 +107,7 @@ The main entry point is `main.tex`. Document types are controlled via the `\docu
 
 Before submitting changes or marking a task complete:
 
-1. [ ] **Verify Compilation**: Ensure the edited `.tex` file compiles clean using LuaLaTeX without syntax errors or broken package dependencies.
+1. [ ] **Verify Compilation (Only if explicitly requested)**: If the user requested compilation, ensure the edited `.tex` file compiles clean using LuaLaTeX without syntax errors or broken package dependencies.
 2. [ ] **Check Vector/TikZ Graphics**: Ensure new figures use TikZ or `.pdf`/`.svg` vector formats.
 3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`).
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.

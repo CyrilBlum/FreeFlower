@@ -414,8 +414,25 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 
 \clearpage
 \section{Diffie-Hellman-Merkle-Schlüsseltausch}
+
+\begin{myremark}[Neue mathematische Operatoren]\label{rem:operatoren}
+	In den nachfolgenden Protokollen und kryptographischen Verfahren werden zwei Notationen verwendet, die sich vom gewohnten Gleichheitszeichen ($=$) unterscheiden:
+	\begin{itemize}
+		\item \textbf{Definitions- und Zuweisungszeichen ($:=$):}\\
+		      Das Symbol $:=$ bedeutet: \emph{wird definiert als} bzw. \emph{wird berechnet und zugewiesen}. Während ein einfaches Gleichheitszeichen ($=$) oft eine Gleichheit zwischen zwei bereits bekannten Ausdrücken feststellt (z.\,B.\ $2 + 2 = 4$), signalisiert $:=$ die erstmalige Festlegung oder Berechnung einer Variablen (z.\,B.\ $x := g^a \bmod p$, d.\,h.\ der Wert von $x$ wird neu durch diese Rechnung definiert).
+		\item \textbf{Kongruenzzeichen ($\equiv$):}\\
+		      In der Modulo-Arithmetik bedeutet die Schreibweise
+		      \[
+			      a \equiv b \pmod m
+		      \]
+		      dass die Zahlen $a$ und $b$ bei der Division durch $m$ \textbf{denselben Rest} ergeben (gelesen als: \emph{$a$ ist kongruent zu $b$ modulo $m$}).
+		      
+		      \textbf{Beispiel:} $9 \equiv 2 \pmod 7$, denn $9 = 1 \cdot 7 + \mathbf{2}$ und $2 = 0 \cdot 7 + \mathbf{2}$. In Rechenschritten darf eine Zahl daher jederzeit durch ihren kleineren Rest modulo $m$ ersetzt werden.
+	\end{itemize}
+\end{myremark}
+
 \begin{myprocedure}[Protokoll \gls{DHM}]\label{myprocedure:Diffie}
-	Das Kommunikationsprotokoll \gls{DHM} ermöglicht es Alice und Bob, gemeinsam über einen öffentlichen Kanal einen geheimen Schlüssel zu vereinbaren, ohne dass sie zuvor einen gemeinsamen geheimen Schlüssel ausgemacht haben. Im Gegensatz zum Drei-Wege-Schlüsseltausch basiert das \gls{DHM}-Protokoll auf der Schwierigkeit, das diskrete Logarithmusproblem zu lösen, ein mathematisches Problem, zu dem es (bisher) keinen effizienten Lösungsalgorithmus gibt.
+	Das Kommunikationsprotokoll \gls{DHM} ermöglicht es Alice und Bob, gemeinsam über einen öffentlichen Kanal einen geheimen Schlüssel zu vereinbaren, ohne dass sie zuvor einen gemeinsamen geheimen Schlüssel ausgemacht haben. Im Gegensatz zum Drei-Wege-Schlüsseltausch basiert das \gls{DHM}-Protokoll auf der Schwierigkeit, das diskrete Logarithmusproblem zu lösen (siehe \cref{rem:dislog}), ein mathematisches Problem, zu dem es (bisher) keinen effizienten Lösungsalgorithmus gibt.
 	\begin{description}
 		\item[Ausgangssituation:] Alice und Bob haben sich zuvor öffentlich auf eine grosse Primzahl $p$ und eine positive natürliche Zahl $g$ geeinigt. Dabei ist $g$ kleiner als $p$.
 		\item[Ziel:] Alice und Bob möchten gemeinsam mit einer öffentlichen Kommunikation einen Schlüssel $s_{AB}$ vereinbaren. Diesen Schlüssel darf keine Drittperson in Erfahrung bringen.
@@ -446,6 +463,69 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	\end{align*}
 	gilt und somit Alice und Bob dieselbe Zahl berechnet haben. Diese Zahl $s_{AB}$ ist der gemeinsame Schlüssel.
 \end{myprocedure}
+
+\begin{myexample}[Modulare Exponentiation durch wiederholtes Quadrieren]
+	Warum ist die Berechnung von $g^a \pmod p$ selbst für grosse Zahlen so schnell durchführbar?
+	
+	Würde man $g^a$ zuerst als riesige Zahl ausmultiplizieren und erst ganz am Schluss $\pmod p$ rechnen, würde der Speicherplatz jedes Computers sofort gesprengt. Stattdessen nutzt man zwei Prinzipien:
+	\begin{enumerate}
+		\item \textbf{Wiederholtes Quadrieren (\emph{Square-and-Multiply}):} Man zerlegt den Exponenten in eine Summe von Zweierpotenzen.
+		\item \textbf{Zwischenergebnisse sofort reduzieren:} Nach jeder Multiplikation wird sofort modulo $p$ gerechnet. Dadurch bleibt jedes Zwischenergebnis immer kleiner als $p$.
+	\end{enumerate}
+
+	\textbf{Beispiel:} Berechnen Sie $3^{13} \pmod 7$.
+	
+	Wir zerlegen den Exponenten $13$ in Zweierpotenzen: $13 = \mathbf{8} + \mathbf{4} + \mathbf{1}$. Nun berechnen wir schrittweise die benötigten Potenzen durch wiederholtes Quadrieren, wobei wir das Ergebnis der vorherigen Zeile direkt wiederverwenden:
+	\begin{align*}
+		3^1 & = 3                                                                       &  & \equiv \textcolor{red}{3} \pmod 7         \\
+		3^2 & = 3^2 = 9                                                                 &  & \equiv \textcolor{blue}{2} \pmod 7        \\
+		3^4 & = (\textcolor{blue}{3^2})^2 \equiv \textcolor{blue}{2}^2 = 4              &  & \equiv \textcolor{ForestGreen}{4} \pmod 7 \\
+		3^8 & = (\textcolor{ForestGreen}{3^4})^2 \equiv \textcolor{ForestGreen}{4}^2 = 16 &  & \equiv \textcolor{purple}{2} \pmod 7
+	\end{align*}
+	Nun multiplizieren wir nur die passenden Potenzen zusammen, setzen die farbigen Zwischenergebnisse ein und reduzieren erneut:
+	\[
+		3^{13} = 3^8 \cdot 3^4 \cdot 3^1 \equiv \textcolor{purple}{2} \cdot \textcolor{ForestGreen}{4} \cdot \textcolor{red}{3} = 24 \equiv 3 \pmod 7.
+	\]
+	Selbst bei einem Exponenten mit hunderten Stellen sind auf diese Weise nur wenige tausend Rechenoperationen mit handlichen Zahlen nötig.
+\end{myexample}
+
+\begin{myexercise}
+	Berechnen Sie $2^{11} \pmod{13}$ mithilfe des wiederholten Quadrierens (Zerlegung des Exponenten und Reduktion bei jedem Zwischenschritt).
+	\begin{myanswer}
+		\begin{enumerate}
+			\item Exponent in Zweierpotenzen zerlegen: $11 = \mathbf{8} + \mathbf{2} + \mathbf{1}$.
+			\item Potenzen durch wiederholtes Quadrieren berechnen:
+			      \begin{align*}
+				      2^1 & = 2                                                                       &  & \equiv \textcolor{red}{2} \pmod{13}         \\
+				      2^2 & = 2^2 = 4                                                                 &  & \equiv \textcolor{blue}{4} \pmod{13}        \\
+				      2^4 & = (\textcolor{blue}{2^2})^2 \equiv \textcolor{blue}{4}^2 = 16              &  & \equiv \textcolor{ForestGreen}{3} \pmod{13} \\
+				      2^8 & = (\textcolor{ForestGreen}{2^4})^2 \equiv \textcolor{ForestGreen}{3}^2 = 9   &  & \equiv \textcolor{purple}{9} \pmod{13}
+			      \end{align*}
+			\item Zusammenmultiplizieren und reduzieren:
+			      \[
+				      2^{11} = 2^8 \cdot 2^2 \cdot 2^1 \equiv \textcolor{purple}{9} \cdot \textcolor{blue}{4} \cdot \textcolor{red}{2} = 72 \equiv 7 \pmod{13}
+			      \]
+			      (denn $72 = 5 \cdot 13 + 7$).
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}
+
+\begin{myremark}[Diskretes Logarithmusproblem]\label{rem:dislog}
+	Beim \gls{DHM}-Verfahren wird die Eigenschaft ausgenutzt, dass Potenzieren modulo einer Primzahl eine sogenannte \textbf{Einwegfunktion} darstellt:
+	\begin{itemize}
+		\item \textbf{Einfache Richtung:} Bei gegebenen Werten $g$, $a$ und $p$ lässt sich das Ergebnis
+		      \[
+			      x \equiv g^a \pmod p
+		      \]
+		      auch für sehr grosse Zahlen effizient und schnell berechnen (mittels modularer Exponentiation).
+		\item \textbf{Schwere Richtung (Diskreter Logarithmus):} Kennt ein Angreifer lediglich die Basis $g$, die Primzahl $p$ und das Ergebnis $x$, so ist es extrem rechenaufwendig, den Exponenten $a$ zu bestimmen, für den
+		      \[
+			      g^a \equiv x \pmod p
+		      \]
+		      gilt. Man bezeichnet $a$ als den \emph{diskreten Logarithmus} von $x$ zur Basis $g$ modulo $p$.
+	\end{itemize}
+	Für ausreichend grosse Primzahlen $p$ (in der Praxis mindestens 2048 Bit) existiert bis heute kein effizienter Algorithmus, um dieses Problem in vertretbarer Zeit zu lösen.
+\end{myremark}
 
 
 \begin{myexercise}
