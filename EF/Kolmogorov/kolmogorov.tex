@@ -211,11 +211,18 @@ void A() {
 
 Das Problem ist, dass wir typischerweise die Symbole der Tastatur durch Folgen von Nullen und Einsen darstellen müssen (zum Beispiel mittels der ASCII-Kodierung). Wenn wir das gesamte Programm \texttt{A} auf diese Weise kodieren, benötigt jedes als Textzeichen notierte Bit von $w := 00110111$ mehrere Bits im Maschinencode. Diesen konstanten Faktor möchten wir vermeiden. Dazu entwerfen wir eine leicht modifizierte Version des \texttt{g++}-Compilers und der Programmiersprache \texttt{C++}. Wir nennen den modifizierten Compiler \texttt{g'++} und die angepasste Sprache \texttt{C'++}.
 \par
-Die Sprache \texttt{C'++} unterscheidet sich von Standard-\texttt{C++} darin, dass in einem \texttt{C'++}-Programm binäre Blöcke durch die Escape-Sequenzen \cppinline{***} und \cppinline{+++} markiert werden dürfen. Zwischen diesen Begrenzungszeichen steht ein binäres Wort $w$. Kommen die Escape-Sequenzen in einem Programm mehrfach vor, so muss zwischen ihnen stets dasselbe Wort $w$ stehen; andernfalls meldet \texttt{g'++} einen semantischen Fehler.
+Die Sprache \texttt{C'++} unterscheidet sich von Standard-\texttt{C++} darin, dass in einem \texttt{C'++}-Programm binäre Blöcke durch die Escape-Sequenzen \cppinline{***} und \cppinline{+++} markiert werden dürfen. Zwischen diesen Begrenzungszeichen steht stets ein binäres Wort $w$. Der Inhalt des Blocks besitzt für sich allein noch keine numerische Bedeutung. Die Schreibweise rund um den Block legt fest, wie das Programm seine Bits verwendet:
+\begin{itemize}
+	\item \texttt{\detokenize{"***w+++"}} verwendet den Block als binäres Wort. Insbesondere gibt \texttt{\detokenize{std::cout << "***w+++";}} die Bits von $w$ unverändert aus.
+	\item \cppinline{0b***w+++} interpretiert den Block als Binärdarstellung einer natürlichen Zahl, also als den Wert $val_2(w)$. Beispielsweise hat \cppinline{0b***1010+++} den Zahlenwert $10$, während \texttt{\detokenize{"***1010+++"}} das vierstellige Wort $1010$ bezeichnet.
+\end{itemize}
+Die zweite Schreibweise erweitert die aus Standard-\texttt{C++} bekannte Notation \cppinline{0b1010} für Binärzahlen. Ausdrücke wie \cppinline{0b***w+++} gehören jedoch eigens zur Sprache \texttt{C'++} und sind kein Standard-\texttt{C++}. Das Präfix \cppinline{0b} gehört zum gewöhnlichen, eindeutig kodierten Programmteil und nicht zum binären Rohdatenblock.
+\par
+Ein Block darf nur in einer dieser beiden Formen auftreten. Kommen Escape-Sequenzen in einem Programm mehrfach vor, so muss zwischen ihnen stets dasselbe Wort $w$ stehen; andernfalls meldet \texttt{g'++} einen semantischen Fehler. Derselbe Block darf an einer Stelle als Wort und an einer anderen Stelle als Zahl verwendet werden.
 \par
 Der Compiler \texttt{g'++} speichert diesen gemeinsamen Block $w$ genau einmal und unverändert als binären Rohdatenblock im erzeugten Maschinencode. Alle Vorkommen von \cppinline{***w+++} werden durch Verweise auf diesen einen Block ersetzt. Der Rohdatenblock wird am Ende des Maschinencodes abgelegt; der gewöhnliche Programmteil ist eindeutig kodiert, sodass der gesamte verbleibende Teil des Maschinencodes als $w$ erkannt wird. Die Begrenzungszeichen selbst werden nicht in den Maschinencode übernommen. Somit trägt $w$ unabhängig von der Anzahl seiner Vorkommen im Quelltext genau $\abs{w}$ Bits zur Länge des Maschinencodes bei. Die Verweise und der übrige Programmcode werden bei der Länge des Maschinencodes selbstverständlich mitgezählt.
 \par
-In den folgenden Programmschemata stehen Ausdrücke wie \cppinline{***n+++} beziehungsweise \cppinline{***n**2+++} dafür, dass für jedes feste $n$ konkret die Binärdarstellung von $n$ beziehungsweise von $n^2$ zwischen den Begrenzungszeichen steht. Die Ausdrücke \cppinline{n} und \cppinline{n**2} selbst sind also keine Bestandteile des kompilierten Programms.
+In den folgenden Programmschemata stehen Ausdrücke wie \cppinline{0b***n+++} beziehungsweise \cppinline{0b***n**2+++} dafür, dass für jedes feste $n$ konkret die Binärdarstellung von $n$ beziehungsweise von $n^2$ zwischen den Begrenzungszeichen steht. Natürliche Zahlen werden dabei gemäss \cref{mydefinition:binunddec} ohne führende Nullen dargestellt; die Zahl $0$ wird durch den Block $0$ dargestellt. Die Ausdrücke \cppinline{n} und \cppinline{n**2} selbst sind also keine Bestandteile des kompilierten Programms. Für $n=10$ wird aus dem Schema \cppinline{0b***n+++} beispielsweise der konkrete Ausdruck \cppinline{0b***1010+++}.
 
 \begin{myexample}
 	Das Programm
@@ -341,7 +348,7 @@ Es sei $w_n := 1^n$ für eine beliebige natürliche Zahl $n > 0$. Das Wort $w_n$
 #include <string>
 
 void Cn() {
-    std::string wort(***!\colorbox{YellowGreen}{n}!+++, '1');
+    std::string wort(0b***!\colorbox{YellowGreen}{n}!+++, '1');
     std::cout << wort;
 }
 \end{lstlisting}
@@ -360,7 +367,7 @@ Es sei $v_n := 1^{(n^2)}$ für eine beliebige natürliche Zahl $n > 0$. Das Wort
 
 void Dn() {
     std::string wort;
-    Natural M = ***!\colorbox{YellowGreen}{n}!+++;
+    Natural M = 0b***!\colorbox{YellowGreen}{n}!+++;
     M = M * M;
     wort.reserve(M);
 
@@ -395,9 +402,9 @@ tut hier nichts zur Sache! Uns interessiert einzig die binäre Länge der \textb
 
 void Fn() {
     std::string wort;
-    wort.reserve(***n**2+++);
+    wort.reserve(0b***n**2+++);
 
-    for (int i = 0; i < ***n**2+++; ++i) {
+    for (int i = 0; i < 0b***n**2+++; ++i) {
         wort += '1';
     }
 
@@ -406,7 +413,7 @@ void Fn() {
     \end{lstlisting}
 	Warum beweist dieses Programm sicherlich eine schlechtere obere Schranke für die Kolmogorov-Komplexität von $v_n$ als \cref{myexample:vn}?
 	\begin{myanswer}
-		Die beiden Vorkommen von \cppinline{***n**2+++} bezeichnen denselben binären Block. Der Compiler \texttt{g'++} speichert die Binärdarstellung von $n^2$ deshalb nur einmal. Damit liefert \texttt{Fn} die obere Schranke
+		Die beiden Vorkommen von \cppinline{0b***n**2+++} bezeichnen dieselbe Binärdarstellung von $n^2$. Der Compiler \texttt{g'++} speichert den Block zwischen den Escape-Sequenzen deshalb nur einmal. Damit liefert \texttt{Fn} die obere Schranke
 		\begin{align*}
 			C(v_n)\leq c + \ceil{\log_2\lr{n^2 + 1}} \leq c' + \log_2\lr{n^2} = c' + \log_2\lr{\abs{v_n}}
 		\end{align*}
@@ -485,7 +492,7 @@ Ein $0$-inkompressibles Wort nennen wir kurz inkompressibel. Diese Begriffe bezi
 			void seeking_alpha_n() {
 				x = leeres Wort;
 				Cx = Q(x);
-				while (Cx < ***n+++) {
+				while (Cx < 0b***n+++) {
 					x = Nachfolger von x in der kanonischen Ordnung über {0, 1}^*;
 					Cx = Q(x);
 				}

@@ -101,13 +101,13 @@
 
 	\question[2] Wir betrachten die Wörter $w_n = 0^n1^{n^2}$ für alle $n\in\N$. Welche der folgenden drei Programmschemata sind gültige \texttt{C'++}-Programme, und welche davon liefern asymptotisch die beste obere Schranke für die Kolmogorov-Komplexität von $w_n$? Begründe deine Antwort.
 
-	\textbf{Bemerkung:} Die Ausdrücke \verb|n| und \verb|n**2| zwischen den Escape-Sequenzen stehen für die konkreten Binärdarstellungen von $n$ beziehungsweise $n^2$. Beachte bei der Beurteilung von \cref{listing:Cn}, dass ein gültiges \texttt{C'++}-Programm zwar denselben binären Block mehrfach, aber nicht zwei verschiedene binäre Blöcke enthalten darf.
+	\textbf{Bemerkung:} Die Ausdrücke \verb|n| und \verb|n**2| zwischen den Escape-Sequenzen stehen für die konkreten Binärdarstellungen von $n$ beziehungsweise $n^2$. Das Präfix \verb|0b| legt fest, dass der nachfolgende Block als Binärdarstellung einer natürlichen Zahl interpretiert wird. Beachte bei der Beurteilung von \cref{listing:Cn}, dass ein gültiges \texttt{C'++}-Programm zwar denselben binären Block mehrfach, aber nicht zwei verschiedene binäre Blöcke enthalten darf.
 \begin{lstlisting}[language=C++,caption=$A_n$]
     #include <iostream>
     #include <string>
     
     void An() {
-        int x = ***n+++;
+        int x = 0b***n+++;
         int y = 0;
         for (int i = 1; i <= x; ++i) {
             std::cout << 0;
@@ -124,11 +124,11 @@
     #include <string>
     
     void Bn() {
-        for (int i = 1; i <= ***n+++; ++i) {
+        for (int i = 1; i <= 0b***n+++; ++i) {
             std::cout << 0;
         }
-        for (int i = 1; i <= ***n+++; ++i) {
-            for (int j = 1; j <= ***n+++; ++j) {
+        for (int i = 1; i <= 0b***n+++; ++i) {
+            for (int j = 1; j <= 0b***n+++; ++j) {
                 std::cout << 1;
             }
         }
@@ -140,16 +140,16 @@
     #include <string>
     
     void Cn() {
-        for (int i = 1; i <= ***n+++; ++i) {
+        for (int i = 1; i <= 0b***n+++; ++i) {
             std::cout << 0;
         }
-        for (int i = 1; i <= ***n**2+++; ++i) { // n**2 entspricht n*n in C++ 
+        for (int i = 1; i <= 0b***n**2+++; ++i) { // n**2 steht im Schema für n*n
             std::cout << 1;
         }
     }
 \end{lstlisting}
 	\begin{solution}
-		Die Programme $A_n$ und $B_n$ sind gültig und generieren jeweils $w_n$. In $B_n$ bezeichnen alle drei Vorkommen von \cppinline{***n+++} denselben binären Block; \texttt{g'++} speichert ihn nur einmal. Deshalb liefern beide Programme eine asymptotisch gleich gute obere Schranke:
+		Die Programme $A_n$ und $B_n$ sind gültig und generieren jeweils $w_n$. In $B_n$ bezeichnen alle drei Vorkommen von \cppinline{0b***n+++} denselben binären Block und interpretieren ihn als die Zahl $n$; \texttt{g'++} speichert den Block nur einmal. Deshalb liefern beide Programme eine asymptotisch gleich gute obere Schranke:
 		\begin{align*}
 			C(w_n) &\leq \ceil{\log_2(n+1)} + c_A,\\
 			C(w_n) &\leq \ceil{\log_2(n+1)} + c_B.
@@ -174,7 +174,7 @@
     #include <cmath> // für die pow Funktion
     
     void Wn() {
-		Natural k = ***n+++;
+		Natural k = 0b***n+++;
 		k = 2 * pow(k, 4);
 		k = pow(2, pow(2, k));
         for (int i = 1; i <= k; ++i) {

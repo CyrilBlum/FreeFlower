@@ -161,7 +161,7 @@ Fehler:
     #include <cmath> // für die pow Funktion
     
     void Wn() {
-		Natural k = ***n+++;
+		Natural k = 0b***n+++;
 		k = pow(k, 3);
 		k = pow(2, k);
         for (int i = 1; i <= k; ++i) {
@@ -230,7 +230,7 @@ für beliebiges natürliches $n>0$.
     #include <cmath> // für die pow Funktion
     
     void yi() {
-		Natural k = ***i+++;
+		Natural k = 0b***i+++;
 		k = pow(2, k + 2);
 		std::cout << 1;
         for (int j = 1; j <= k; ++j) {
