@@ -1,152 +1,270 @@
-\chapter{Post-Quanten-Kryptographie}\label{chap:post-quanten-kryptographie}
+\chapter{Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}\label{chap:zertifikate-pki}
 
-Die in den vorangegangenen Kapiteln behandelten asymmetrischen Kryptosysteme (\gls{DHM}, \gls{RSA} sowie moderne elliptische Kurven) bilden heute das Rückgrat der weltweiten Informationssicherheit. Sie sichern Online-Banking, verschlüsselte Messenger-Dienste und digitale Signaturen ab.
+Im vorangegangenen Kapitel haben wir gesehen, wie digitale Signaturen mit asymmetrischen Kryptosystemen (wie \gls{RSA}) erstellt und überprüft werden können. Eine mathematisch korrekte Signatur garantiert jedoch nur die Integrität der Nachricht und dass sie mit dem zum öffentlichen Schlüssel passenden privaten Schlüssel erzeugt wurde. Sie beantwortet noch nicht die fundamentale Vertrauensfrage der Praxis: \emph{Gehört der öffentliche Schlüssel tatsächlich der Person oder Institution, für die sie sich ausgibt?}
 
-Alle diese Verfahren basieren jedoch auf genau zwei mathematischen Problemen:
-\begin{enumerate}
-	\item Der \textbf{Primfaktorzerlegung} grosser Zahlen (bei \gls{RSA}).
-	\item Dem \textbf{diskreten Logarithmusproblem} (bei \gls{DHM} und elliptischen Kurven).
-\end{enumerate}
-
-Auf herkömmlichen (klassischen) Computern gelten beide Probleme für ausreichend lange Schlüssel als unlösbar in vertretbarer Zeit. Mit der Entwicklung von \textbf{Quantencomputern} steht die moderne Kryptographie jedoch vor einem fundamentalen Paradigmenwechsel.
-
-\section{Die Bedrohung durch Quantencomputer}
-
-Quantencomputer funktionieren nicht nach den Gesetzen der klassischen Physik (Bits mit den Zuständen 0 oder 1), sondern nutzen quantenmechanische Phänomene wie \emph{Superposition} (Überlagerung) und \emph{Verschränkung}. Dadurch können bestimmte Rechenprobleme mit einer völlig neuartigen Parallelität gelöst werden.
-
-\begin{myidea}[Der Shor-Algorithmus (1994)]
-	Der Mathematiker Peter Shor bewies 1994, dass ein fehlerkorrigierter Quantencomputer sowohl die Primfaktorzerlegung als auch das diskrete Logarithmusproblem in \textbf{polynomieller Zeit} (also extrem schnell und effizient) lösen kann.
-\end{myidea}
-
-\noindent
-\textbf{Konsequenzen für bestehende Verfahren:}
+\section{Das Vertrauensproblem in der Praxis}
+Eine digitale Signatur beweist mathematisch zwei zentrale Eigenschaften:
 \begin{itemize}
-	\item \textbf{Asymmetrische Verfahren (RSA, DHM, ECC):} Sobald ein ausreichend leistungsfähiger Quantencomputer gebaut wird, können alle heute verwendeten asymmetrischen Schlüssel in Minuten geknackt werden. Diese Verfahren sind gegenüber Quantencomputern \textbf{vollständig unsicher}.
-	\item \textbf{Symmetrische Verfahren (AES) und Hashfunktionen (SHA-256):} Diese Verfahren beruhen nicht auf Zahlenproblemen wie RSA, sondern auf komplexen Bit-Verschachtelungen. Sie werden durch Quantencomputer (mittels des \emph{Grover-Algorithmus}) nur unwesentlich geschwächt: Die effektive Schlüssellänge wird halbiert. Ein AES-Schlüssel mit 256 Bit bietet somit immer noch die Sicherheit eines 128-Bit-Schlüssels, was auch für Quantencomputer praktisch unknackbar bleibt.
+	\item \textbf{Integrität:} Die Nachricht wurde auf dem Übertragungsweg nicht manipuliert (jede Veränderung führt zu einem anderen Hashwert und macht die Signatur ungültig).
+	\item \textbf{Authentizität:} Die Signatur konnte nur mit dem privaten Schlüssel erzeugt werden, der zum angegebenen öffentlichen Schlüssel gehört.
 \end{itemize}
 
-\begin{myremark}[„Harvest Now, Decrypt Later“]\label{rem:harvest-now}
-	Auch wenn heute noch keine Quantencomputer mit ausreichender Leistung existieren, ist die Bedrohung bereits jetzt akut: Geheimdienste und Angreifer schneiden schon heute massenhaft verschlüsselte Datenströme aus dem Internet mit (\emph{Harvest Now}), um sie in einigen Jahren oder Jahrzehnten mit künftigen Quantencomputern nachträglich zu entschlüsseln (\emph{Decrypt Later}). Für Daten, die über Jahrzehnte geheim bleiben müssen (z.\,B.\ Patientendaten oder Staatsgeheimnisse), ist der Übergang zu quantensicheren Verfahren daher bereits heute notwendig.
-\end{myremark}
+\paragraph*{Das Problem: Wessen Signatur ist es wirklich?}
+Hier stösst die reine Mathematik an eine praktische Grenze: \emph{Woher weiss der Empfänger (Bob), dass ein bestimmter öffentlicher Schlüssel tatsächlich Alice gehört?}
 
-\section{Was ist Post-Quanten-Kryptographie?}
+Ein Angreifer (Eve) könnte ein eigenes Schlüsselpaar erzeugen und den öffentlichen Schlüssel unter dem Namen von Alice oder als angebliche Webseite einer Bank veröffentlichen. Signiert Eve anschliessend eine gefälschte Nachricht mit ihrem eigenen privaten Schlüssel, so bestätigt die mathematische Überprüfung mit Eves öffentlichem Schlüssel formal die Gültigkeit der Signatur. Bob wiegt sich in falscher Sicherheit, da er die Signatur nicht der echten Identität zuordnen kann (Man-in-the-Middle-Angriff).
 
-Unter \textbf{\gls{PQC}} versteht man kryptographische Verfahren, die:
-\begin{enumerate}
-	\item auf \textbf{herkömmlichen Computern} (Smartphones, Laptops, Webservern) ohne Quantenhardware ausgeführt werden können,
-	\item auf neuen mathematischen Problemen basieren, für die \textbf{weder für klassische Rechner noch für Quantencomputer} effiziente Angriffs-Algorithmen bekannt sind.
-\end{enumerate}
+\paragraph*{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
+Um das Vertrauensproblem in der Praxis zu lösen (beispielsweise beim sicheren Surfen via \gls{HTTPS} und \gls{TLS} oder bei der elektronischen Signatur), wird eine sogenannte \textbf{Public-Key-Infrastruktur} (\gls{PKI}) eingesetzt:
+\begin{itemize}
+	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, \glspl{CA}):} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Schlüsselausgabe die reale Identität der antragstellenden Person oder Institution.
+	\item \textbf{Digitale Zertifikate:} Die \gls{CA} stellt ein standardisiertes Dokument (Zertifikat) aus, welches den öffentlichen Schlüssel an die Identität (z.\,B.\ den Domainnamen \texttt{www.beispiel.ch}) bindet. Dieses Zertifikat wird von der \gls{CA} mit deren eigenem privaten Schlüssel signiert.
+	\item \textbf{Vertrauensanker (Root-\glspl{CA}):} Betriebssysteme und Browser besitzen eine vorinstallierte Liste vertrauenswürdiger Stammzertifikate. Wird eine Verbindung aufgebaut, prüft die Software automatisch die Signaturkette (\emph{Certificate Chain}) bis zu einem vertrauenswürdigen Stammzertifikat.
+\end{itemize}
+Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden Vertrauensinfrastruktur ermöglicht verlässliche Sicherheit in modernen Kommunikationsnetzen (siehe \cref{fig:pki-ablauf}).
 
-Die führende Familie moderner Post-Quanten-Verfahren ist die \textbf{gitterbasierte Kryptographie} (\emph{Lattice-based Cryptography}), insbesondere das Verfahren \textbf{\gls{LWE}} (\emph{Lernen mit Fehlern}).
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		scale=0.78, every node/.style={transform shape},
+		actor/.style={rectangle, rounded corners, draw=black, fill=gray!15, minimum width=3.4cm, minimum height=1.1cm, font=\bfseries, align=center, inner sep=4pt},
+		stepbox/.style={rectangle, rounded corners, draw=#1, fill=#1!8, line width=0.8pt, font=\small, align=center, inner sep=6pt},
+		msgarrow/.style={->, >=stealth, line width=1pt, #1},
+		badge/.style={circle, fill=#1, text=white, font=\bfseries\footnotesize, inner sep=2pt}
+	]
+		% Spaltenkoordinaten
+		\def\colA{0}     % Alice
+		\def\colCA{5.5}  % CA
+		\def\colB{11}    % Bob
 
-\section{Gitterbasierte Kryptographie: Learning with Errors (LWE)}
+		% --- AKTEURE (Kopfzeile) ---
+		\node[actor] (alice) at (\colA, 0) {Alice\\{\footnotesize (Absenderin)}\\[2pt]{\scriptsize öff.: $(e_A, n_A)$,\; priv.: $d_A$}};
+		\node[actor, fill=DarkOrchid!15, draw=DarkOrchid] (ca) at (\colCA, 0) {\textcolor{DarkOrchid}{\faCertificate{}} CA\\{\footnotesize (Zertifizierungsstelle)}\\[2pt]{\scriptsize öff.: $(e_{\text{CA}}, n_{\text{CA}})$,\; priv.: $d_{\text{CA}}$}};
+		\node[actor] (bob) at (\colB, 0) {Bob\\{\footnotesize (Empfänger)}\\[2pt]{\scriptsize vorinstalliert: $(e_{\text{CA}}, n_{\text{CA}})$}};
 
-Um die Grundidee hinter modernen Post-Quanten-Verfahren zu verstehen, betrachten wir ein einfaches Prinzip aus der Schulmathematik: lineare Gleichungssysteme.
+		% Vertikale Hilfslinien
+		\draw[dashed, gray!40] (alice.south) -- (\colA, -13.8);
+		\draw[dashed, gray!40] (ca.south) -- (\colCA, -5.8);
+		\draw[dashed, gray!40] (bob.south) -- (\colB, -13.8);
 
-\paragraph*{Einfacher Fall ohne Rauschen (klassisch lösbar):}
-Gegeben sei ein Gleichungssystem mit einem geheimen Wert $s$:
-\begin{align*}
-	3 \cdot s & \equiv 12 \pmod{17} \\
-	5 \cdot s & \equiv 3 \pmod{17}
-\end{align*}
-Mit dem Gauss-Verfahren oder durch einfaches Teilen lässt sich das Geheimnis $s = 4$ sofort und mühelos berechnen.
+		% --- PHASE 1: ZERTIFIZIERUNG (VORAB) ---
+		\node[font=\footnotesize\bfseries\color{DarkOrchid!80!black}, fill=white, inner sep=2pt] at (\colCA, -1.1) {Phase 1: Zertifikatserstellung (einmalig vorab)};
 
-\paragraph*{Schwerer Fall mit Rauschen (LWE-Prinzip):}
-Nun fügen wir jedem Ergebnis einen kleinen, zufälligen Fehler (ein Rauschen $e \in \{-1, 0, 1\}$) hinzu:
-\begin{align*}
-	3 \cdot s + e_1 & = 3 \cdot 4 + (+1) = 13 \pmod{17} \\
-	5 \cdot s + e_2 & = 5 \cdot 4 + (-1) = 2 \pmod{17}
-\end{align*}
-Ein Angreifer sieht nun nur noch die Zahlenpaare $(3, 13)$ und $(5, 2)$. Da der genaue Wert der Fehler $e_1, e_2$ unbekannt ist, lassen sich die Gleichungen nicht mehr exakt auflösen. Bei vielen Variablen und Gleichungen wird die Bestimmung von $s$ selbst für Super- und Quantencomputer praktisch unlösbar.
+		% Pfeil 1: Alice -> CA (Schlüsselregistrierung)
+		\node[badge=RoyalBlue] (b1) at (\colA+0.6, -2.0) {1};
+		\draw[msgarrow=RoyalBlue] (b1.east) -- (\colCA-0.3, -2.0)
+			node[midway, above=2pt, font=\footnotesize] {Antrag mit Daten $z = (\text{\enquote{Alice}}, e_A, n_A)$};
 
-\begin{myprocedure}[Didaktisches LWE-Verschlüsselungsverfahren]\label{myprocedure:LWE}
-	Zur Veranschaulichung betrachten wir die Verschlüsselung eines einzelnen Bits $m \in \{0, 1\}$ mit dem Modul $q = 17$:
-	\begin{description}
-		\item[Schlüsselerzeugung (Alice):]
-		      \begin{itemize}
-			      \item Alice wählt ein geheimes $s$ (privater Schlüssel), z.\,B.\ $s = 4$.
-			      \item Sie wählt zufällige Faktoren $a_1, a_2$ und kleine Fehler $e_1, e_2 \in \{-1, 0, 1\}$ und berechnet:
-			            \[
-				            b_1 = (a_1 \cdot s + e_1) \pmod{17}, \quad b_2 = (a_2 \cdot s + e_2) \pmod{17}
-			            \]
-			      \item \textbf{Öffentlicher Schlüssel:} die Paare $(a_1, b_1)$ und $(a_2, b_2)$.
-		      \end{itemize}
-		\item[Verschlüsselung (Bob):]
-		      \begin{itemize}
-			      \item Bob kodiert das Bit $m$: Eine $0$ wird als $0$ kodiert, eine $1$ als $\lfloor q/2 \rfloor = 8$ (maximaler Abstand zu 0).
-			      \item Bob addiert die beiden Gleichungen des öffentlichen Schlüssels und addiert seine Nachricht $m_{\text{kodiert}}$ auf der rechten Seite:
-			            \[
-				            u = (a_1 + a_2) \pmod{17}, \quad v = (b_1 + b_2 + m_{\text{kodiert}}) \pmod{17}
-			            \]
-			      \item Bob sendet den Kryptotext $(u, v)$ an Alice.
-		      \end{itemize}
-		\item[Entschlüsselung (Alice):]
-		      \begin{itemize}
-			      \item Alice nutzt ihren privaten Schlüssel $s$, um den Term $u \cdot s$ von $v$ abzuziehen:
-			            \[
-				            d = (v - u \cdot s) \pmod{17}
-			            \]
-			      \item Da $v - u \cdot s = (e_1 + e_2) + m_{\text{kodiert}}$ ist, heben sich die Terme mit $s$ auf. Es bleibt nur das kleine Rauschen plus die Nachricht übrig!
-			      \item Alice rundet: Liegt $d$ nahe bei $0$, war das Bit $m = 0$. Liegt $d$ nahe bei $8$, war das Bit $m = 1$.
-		      \end{itemize}
-	\end{description}
-\end{myprocedure}
+		% CA signiert
+		\node[stepbox=DarkOrchid] (ca_sign) at (\colCA, -3.4) {
+			\textbf{CA prüft Identität \& signiert $z$:}\\
+			$\text{Cert}_A := z^{d_{\text{CA}}} \bmod n_{\text{CA}}$
+		};
 
-\begin{myexample}[Verschlüsselung des Bits $m = 1$ mit LWE]
-	Wir verwenden die Parameter aus dem obigen Verfahren mit dem Modul $q = 17$:
+		% Pfeil 2: CA -> Alice (Zertifikatsausgabe)
+		\node[badge=DarkOrchid] (b2) at (\colCA-0.6, -4.8) {2};
+		\draw[msgarrow=DarkOrchid] (b2.west) -- (\colA+0.3, -4.8)
+			node[midway, above=2pt, font=\footnotesize] {Ausgabe: Zertifikat $(z, \text{Cert}_A)$};
+
+		% --- PHASE 2: VERSAND DER SIGNIERTEN NACHRICHT ---
+		\node[font=\footnotesize\bfseries\color{RoyalBlue!80!black}, fill=white, inner sep=2pt] at (5.5, -6.0) {Phase 2: Signieren \& Übertragen};
+
+		% Alice signiert
+		\node[stepbox=RoyalBlue] (alice_sign) at (\colA, -7.3) {
+			\textbf{Alice signiert Vertrag $m$:}\\
+			$s := m^{d_A} \bmod n_A$
+		};
+
+		% Pfeil 3: Alice -> Bob
+		\node[badge=black] (b3) at (\colA+1.8, -9.0) {3};
+		\draw[msgarrow=black] (b3.east) -- (\colB-1.8, -9.0)
+			node[midway, above=3pt, font=\footnotesize, align=center] {Vertrag $m$ \quad+\quad Signatur $s$ \quad+\quad Zertifikat $(z, \text{Cert}_A)$};
+
+		% --- PHASE 3: ZWEISTUFIGE VERIFIKATION BEI BOB ---
+		\node[font=\footnotesize\bfseries\color{ForestGreen!80!black}, fill=white, inner sep=2pt] at (\colB, -10.3) {Phase 3: Verifikation bei Bob};
+
+		% Bob Verifikation
+		\node[stepbox=ForestGreen] (bob_verify) at (\colB, -12.1) {
+			\textbf{Schritt A: Zertifikat mit $(e_{\text{CA}}, n_{\text{CA}})$ prüfen}\\
+			$z' := (\text{Cert}_A)^{e_{\text{CA}}} \bmod n_{\text{CA}}$\\
+			$\rightarrow \text{Gilt } z' = z\text{?} \implies (e_A, n_A)\text{ ist echt!}$\\[4pt]
+			\textbf{Schritt B: Signatur mit $(e_A, n_A)$ prüfen}\\
+			$m' := s^{e_A} \bmod n_A$\\
+			$\rightarrow \text{Gilt } m' = m\text{?} \implies \text{Vertrag ist echt!} \textcolor{ForestGreen}{\mathbf{\checkmark}}$
+		};
+
+
+	\end{tikzpicture}
+	\caption{Zweistufige Vertrauenskette digitaler Zertifikate (\acrshort{PKI})}
+	\label{fig:pki-ablauf}
+\end{figure}
+
+\begin{myexercise}[Ablauf einer zertifizierten digitalen Signatur in der Praxis]
+	Alice möchte einen wichtigen Vertrag digital an Bob senden. Um sicherzustellen, dass Bob der Signatur vertrauen kann, nutzt Alice ein digitales Zertifikat einer vertrauenswürdigen Zertifizierungsstelle (\gls{PKI}/\gls{CA}).
+	
+	Folgende Schlüssel existieren:
 	\begin{itemize}
-		\item Privater Schlüssel von Alice: $s = 4$.
-		\item Öffentlicher Schlüssel: $(a_1, b_1) = (3, 13)$ und $(a_2, b_2) = (5, 2)$.
+		\item \textbf{Zertifizierungsstelle (\gls{CA}):} Öffentlicher Schlüssel $(e_{\text{CA}}, n_{\text{CA}})$ (auf Bobs Computer vorinstalliert), privater Schlüssel $d_{\text{CA}}$.
+		\item \textbf{Alice:} Öffentlicher Schlüssel $(e_A, n_A)$, privater Schlüssel $d_A$.
+		\item \textbf{Angreiferin (Eve):} Öffentlicher Schlüssel $(e_E, n_E)$, privater Schlüssel $d_E$.
 	\end{itemize}
-	Bob möchte das Bit $m = 1$ (kodiert als $8$) an Alice senden:
+	
 	\begin{enumerate}
-		\item \textbf{Verschlüsselung:}
-		      \begin{align*}
-			      u & = (a_1 + a_2) \pmod{17} = (3 + 5) \pmod{17} = \mathbf{8} \\
-			      v & = (b_1 + b_2 + 8) \pmod{17} = (13 + 2 + 8) \pmod{17} = 23 \pmod{17} = \mathbf{6}
-		      \end{align*}
-		      Bob sendet den Kryptotext $(u, v) = (8, 6)$ an Alice.
-		\item \textbf{Entschlüsselung:} Alice berechnet mit ihrem privaten Schlüssel $s = 4$:
-		      \begin{align*}
-			      d & = (v - u \cdot s) \pmod{17} \\
-			        & = (6 - 8 \cdot 4) \pmod{17} \\
-			        & = (6 - 32) \pmod{17} \\
-			        & = (6 - 15) \pmod{17} = -9 \equiv \mathbf{8} \pmod{17}
-		      \end{align*}
-		      Das Ergebnis ist genau $8$. Alice erkennt fehlerfrei die Nachricht $m = 1$.
-	\end{enumerate}
-\end{myexample}
-
-\begin{myexercise}
-	Bob möchte nun mit demselben öffentlichen Schlüssel von Alice ($(a_1, b_1) = (3, 13)$, $(a_2, b_2) = (5, 2)$ und Modul $q = 17$) das Bit $m = 0$ (kodiert als $0$) übertragen.
-	\begin{enumerate}
-		\item Berechnen Sie den Kryptotext $(u, v)$, den Bob an Alice sendet.
-		\item Führen Sie die Entschlüsselung mit Alices privatem Schlüssel $s = 4$ durch und zeigen Sie, wie Alice das Bit $m = 0$ rekonstruiert.
+		\item \textbf{Zertifikatserstellung:} Welche Formel berechnet die \gls{CA}, um aus den Antragsdaten $z = (\text{\enquote{Alice}}, e_A, n_A)$ das signierte Zertifikat $\text{Cert}_A$ zu erzeugen?
+		\item \textbf{Nachrichtenversand:} Welche Formel berechnet Alice zur Erzeugung der Signatur $s$ für den Vertrag $m$? Welche Daten überträgt sie an Bob?
+		\item \textbf{Zweistufige Überprüfung durch Bob:} Welche beiden konkreten Rechnungen führt Bobs Computer aus, um nacheinander die Echtheit des Zertifikats und die Echtheit der Nachricht nachzuweisen?
+		\item \textbf{Angriffsszenario:} Eve fängt die Nachricht ab, verändert den Vertrag und signiert ihn mit ihrem eigenen privaten Schlüssel $d_E$. Warum scheitert dieser Angriff bei Bob?
 	\end{enumerate}
 	\begin{myanswer}
 		\begin{enumerate}
-			\item \textbf{Verschlüsselung ($m = 0$):}
-			      \begin{align*}
-				      u & = (a_1 + a_2) \pmod{17} = (3 + 5) \pmod{17} = \mathbf{8} \\
-				      v & = (b_1 + b_2 + 0) \pmod{17} = (13 + 2 + 0) \pmod{17} = \mathbf{15}
-			      \end{align*}
-			      Der Kryptotext lautet $(u, v) = (8, 15)$.
-			\item \textbf{Entschlüsselung durch Alice ($s = 4$):}
-			      \begin{align*}
-				      d & = (v - u \cdot s) \pmod{17} \\
-				        & = (15 - 8 \cdot 4) \pmod{17} \\
-				        & = (15 - 32) \pmod{17} \\
-				        & = (15 - 15) \pmod{17} = \mathbf{0}
-			      \end{align*}
-			      Da das Ergebnis $0$ ist (Abstand $0$ zur kodierten $0$), liest Alice erfolgreich das Bit $m = 0$ aus.
+			\item Die \gls{CA} signiert die Antragsdaten $z$ mit ihrem privaten Schlüssel $d_{\text{CA}}$:\\
+			      $\text{Cert}_A = z^{d_{\text{CA}}} \bmod n_{\text{CA}}$.
+			\item Alice signiert den Vertrag $m$ mit ihrem privaten Schlüssel $d_A$:\\
+			      $s = m^{d_A} \bmod n_A$.\\
+			      Sie sendet an Bob: den Vertrag $m$, ihre Signatur $s$ und das Zertifikat $(z, \text{Cert}_A)$.
+			\item Bobs Computer führt zwei modulare Berechnungen durch:
+			      \begin{enumerate}
+				      \item \textbf{Zertifikatsprüfung:} Er prüft die \gls{CA}-Signatur mit dem vorinstallierten öffentlichen \gls{CA}-Schlüssel:\\
+				            $z' = (\text{Cert}_A)^{e_{\text{CA}}} \bmod n_{\text{CA}}$.\\
+				            Gilt $z' = z$, gehört der enthaltene Schlüssel $(e_A, n_A)$ garantiert Alice.
+				      \item \textbf{Signaturprüfung:} Er prüft die Signatur mit dem verifizierten Schlüssel $(e_A, n_A)$:\\
+				            $m' = s^{e_A} \bmod n_A$.\\
+				            Gilt $m' = m$, ist der Vertrag unverfälscht und stammt von Alice.
+
+			      \end{enumerate}
+			\item Eve besitzt kein von der \gls{CA} signiertes Zertifikat auf ihren Namen. Sendet sie ihr eigenes Schlüsselpaar $(e_E, n_E)$ mit, schlägt die Zertifikatsprüfung mit $(e_{\text{CA}}, n_{\text{CA}})$ fehl. Verwendet sie Alices Zertifikat mit $(e_A, n_A)$, schlägt die Signaturprüfung mit $s = m^{d_E} \bmod n_E$ fehl, da $s^{e_A} \not\equiv m \pmod{n_A}$.
 		\end{enumerate}
 	\end{myanswer}
 \end{myexercise}
 
-\begin{mysummary}
+\section{Die Zertifikatkette in der Praxis: Vertrauenskaskade}
+In der Praxis signiert eine oberste Zertifizierungsstelle (\textbf{Root-\gls{CA}}) fast nie direkt einzelne Webserver-Zertifikate. Das weltweite Vertrauensmodell basiert stattdessen auf einer mehrstufigen \textbf{Zertifikatkette} (\emph{Certificate Chain}, siehe \cref{fig:certificate-chain}):
+
+\begin{enumerate}
+	\item \textbf{Root-\gls{CA} (Stammzertifizierungsstelle):} Unbedingter Vertrauensanker (\emph{Trust Anchor}). Ihr selbstsigniertes Zertifikat ist fest im \textbf{Trust Store} des Betriebssystems oder Browsers vorinstalliert. Ihr privater Schlüssel wird streng isoliert offline aufbewahrt (\emph{Air-Gapped} in Hardware-Sicherheitsmodulen, \glspl{HSM}) und nur selten für Zwischenzertifikate aktiviert.
+	\item \textbf{Intermediate-\gls{CA} (Zwischenzertifizierungsstelle):} Wird von der Root-\gls{CA} signiert und führt das operative Tagesgeschäft der Zertifikatsausstellung durch.
+	\item \textbf{Server- / Blatt-Zertifikat (\emph{Leaf Certificate}):} Das eigentliche Zertifikat der Domain (z.\,B.\ \texttt{www.sbb.ch}), signiert von der Intermediate-\gls{CA}.
+\end{enumerate}
+
+\paragraph*{Sicherheitsvorteil der Kaskade}
+Müsste die Root-\gls{CA} jedes Serverzertifikat signieren, wäre ihr privater Schlüssel permanent auf internetverbundenen Servern exponiert. Bei einem Schlüsselverlust einer Intermediate-\gls{CA} widerruft die Root-\gls{CA} lediglich dieses eine Zwischenzertifikat (via Zertifikatssperrlisten \glspl{CRL} oder Statusabfrage \gls{OCSP}). Das in Milliarden Endgeräten verankerte Root-Zertifikat bleibt unangetastet.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		scale=0.82, every node/.style={transform shape},
+		box/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!10, line width=1pt, align=center, inner sep=5pt, font=\small},
+		chainarrow/.style={->, >=stealth, line width=1.1pt, #1}
+	]
+		% Hierarchie-Knoten
+		\node[box=DarkOrchid, minimum width=9.5cm] (root) at (0, 3.6) {
+			\textbf{\textcolor{DarkOrchid}{\faKey{} Root-CA: \texttt{Amazon Root CA 1} / \texttt{SwissSign Gold CA - G2}}}\\
+			{\scriptsize \faShield*{} Vorinstalliert im Trust Store $\cdot$ Privater Schlüssel offline (Air-Gapped)}
+		};
+
+		\node[box=RoyalBlue, minimum width=9.5cm] (inter) at (0, 1.8) {
+			\textbf{\textcolor{RoyalBlue}{\faCertificate{} Intermediate-CA: \texttt{Amazon RSA 2048 M04} / \texttt{Swiss Government PKI}}}\\
+			{\scriptsize Signiert von der Root-CA $\cdot$ Operative Zertifikatsausgabe}
+		};
+
+		\node[box=ForestGreen, minimum width=9.5cm] (leaf) at (0, 0.0) {
+			\textbf{\textcolor{ForestGreen}{\faServer{} Server-Zertifikat: \texttt{www.sbb.ch} / \texttt{www.admin.ch}}}\\
+			{\scriptsize Signiert von der Intermediate-CA $\cdot$ Öffentlicher Schlüssel der Website}
+		};
+
+		\node[box=gray, minimum width=9.5cm, fill=gray!8] (client) at (0, -1.8) {
+			\textbf{\faLaptop{} Webbrowser / Betriebssystem (Client)}\\
+			{\scriptsize Prüft Signaturkette von unten nach oben bis zum vorinstallierten Root-Zertifikat}
+		};
+
+		% Pfeile (Signaturfluss von oben nach unten)
+		\draw[chainarrow=DarkOrchid] (root.south) -- (inter.north)
+			node[midway, right=6pt, font=\footnotesize] {signiert Zwischenzertifikat};
+		\draw[chainarrow=RoyalBlue] (inter.south) -- (leaf.north)
+			node[midway, right=6pt, font=\footnotesize] {signiert Server-Zertifikat};
+		\draw[chainarrow=ForestGreen] (leaf.south) -- (client.north)
+			node[midway, right=6pt, font=\footnotesize] {überträgt Zertifikatkette bei \gls{HTTPS}};
+
+		% Prüfpfeil rückwärts links
+		\draw[->, >=stealth, dashed, line width=1.1pt, BrickRed] (client.west) to[out=168, in=192] node[midway, left=4pt, font=\scriptsize\bfseries, align=center, rotate=90] {Kryptographische Verifikation} (root.west);
+
+	\end{tikzpicture}
+	\caption{Hierarchische Zertifikatkette (Vertrauenskaskade)}
+	\label{fig:certificate-chain}
+\end{figure}
+
+\paragraph*{Schweizer Vertrauensdienste (\texorpdfstring{\acrshort{ZertES}}{ZertES})}
+In der Schweiz regelt das \textbf{Bundesgesetz über die elektronische Signatur (\gls{ZertES})} die rechtliche Gleichstellung qualifizierter elektronischer Signaturen mit der eigenhändigen Unterschrift (Art.~14 Abs.~$2^{\text{bis}}$ OR). Anerkannte Schweizer Vertrauensdienste sind unter anderem \textbf{SwissSign} (Schweizerische Post / SwissID), \textbf{Swisscom Trust Services} und \textbf{SWITCHpki} (für Schweizer Hochschulen und Schulen).
+
+\paragraph*{Zertifikatsprüfung im Webbrowser}
+Beim Aufruf einer \gls{HTTPS}-Website (z.\,B.\ \url{https://www.sbb.ch}) übermittelt der Server die gesamte Kette (Server- und Zwischenzertifikat). Der Browser prüft jede Signatur rückwärts bis zur Root-\gls{CA} im lokalen Trust Store.
+
+\begin{itemize}
+	\item \textbf{Safari (macOS):} Menü \textbf{Safari $\rightarrow$ Details zur Verbindungssicherheit\dots} (siehe \cref{fig:safari-certificate-sbb}).
+	\item \textbf{Chrome / Edge:} Klick auf das \textbf{Schieberegler-Symbol} (\emph{Tune-Icon}) links der \gls{URL} $\rightarrow$ \emph{Verbindung ist sicher} $\rightarrow$ \emph{Zertifikat ist gültig} (oder via Entwicklertools \texttt{F12} $\rightarrow$ \emph{Security}).
+	\item \textbf{Firefox:} Klick auf das \textbf{Schloss-Symbol} links der \gls{URL} $\rightarrow$ \emph{Sichere Verbindung} $\rightarrow$ \emph{Weitere Informationen} $\rightarrow$ \emph{Zertifikat anzeigen}.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.88\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/certificate_hierarchy_sbb}
+	\caption{Zertifikatsinspektion in Apple Safari (\texttt{www.sbb.ch}):
+		\textbf{(1)} Menüaufruf;
+		\textbf{(2)} Dreistufige Hierarchie (\texttt{Amazon Root CA 1} $\rightarrow$ \texttt{Amazon RSA 2048 M04} $\rightarrow$ \texttt{www.sbb.ch});
+		\textbf{(3)} Gültigkeitsdetails der Intermediate-\gls{CA};
+		\textbf{(4)} Status der \gls{TLS}-Verschlüsselung.}
+	\label{fig:safari-certificate-sbb}
+\end{figure}
+
+\begin{myremark}[Wer betreibt Root-CAs? Von Tech-Giganten bis zu Staaten]
+	Dass beim Aufruf von \texttt{sbb.ch} ein Technologiekonzern wie \emph{Amazon} als Root-\gls{CA} auftaucht, wirft eine naheliegende Frage auf: Warum sind Stammzertifizierungsstellen nicht ausschliesslich staatliche Behörden?
+	
+	Die Web-\gls{PKI} ist historisch dezentral gewachsen. Wer als Root-\gls{CA} anerkannt wird, entscheiden primär die Betreiber der Betriebssysteme und Browser (Apple, Google, Microsoft, Mozilla) im Rahmen des internationalen \emph{CA/Browser Forums}. Jede Root-\gls{CA} muss jährlich strenge, unabhängige Sicherheitsaudits (z.\,B.\ \emph{WebTrust}) nachweisen.
+	
+	In der Praxis unterscheidet man vier Hauptarten von Zertifizierungsstellen:
 	\begin{itemize}
-		\item \textbf{Quantenbedrohung:} Quantencomputer können mit dem Shor-Algorithmus Primfaktorzerlegungen (RSA) und diskrete Logarithmen (DHM, ECC) effizient in polynomieller Zeit knacken.
-		\item \textbf{Post-Quanten-Kryptographie (\acrshort{PQC}):} Neue Verfahren, die auf klassischen Computern laufen, aber auch gegen Angriffe mit Quantencomputern mathematisch resistent sind.
-		\item \textbf{Gitterbasierte Verfahren (LWE):} Basieren auf der Schwierigkeit, verrauschte lineare Gleichungssysteme zu lösen. Der berechtigte Empfänger kann das Rauschen mit dem privaten Schlüssel eliminieren.
+		\item \textbf{Cloud- \& Tech-Konzerne (z.\,B.\ Amazon Trust Services, Google Trust Services):} Betreiben eigene \glspl{PKI}, um Millionen von Servern und Kunden ihrer Cloud-Plattformen (wie \gls{AWS}) automatisiert und kostengünstig abzusichern.
+		\item \textbf{Kommerzielle Vertrauensdienste (z.\,B.\ DigiCert, SwissSign):} Unabhängige Sicherheitsunternehmen, deren Kerngeschäft in der Ausstellung und Identitätsprüfung für Dritte liegt.
+		\item \textbf{Gemeinnützige Initiativen (z.\,B.\ \emph{Let's Encrypt}):} Stellen kostenlose, automatisierte Zertifikate für jedermann bereit und sichern heute über die Hälfte des weltweiten Webverkehrs ab.
+		\item \textbf{Staatliche \glspl{PKI} (z.\,B.\ \emph{Swiss Government PKI}):} Dienen hoheitlichen Behördennetzen, eGovernment, Identitätskarten und qualifizierten elektronischen Signaturen gemäss \gls{ZertES}.
 	\end{itemize}
-\end{mysummary}
+	
+	\smallskip\noindent\textbf{Warum nutzt die SBB Amazon und nicht die Bundes-\gls{PKI}?}
+	Die SBB betreibt ihre Web-Infrastruktur auf \gls{AWS} (mit automatisierter Zertifikatsverwaltung). Zudem ist die bundeseigene \emph{Swiss Government PKI} eine interne Behörden-\gls{PKI} und nicht in weltweiten Standard-Browsern vorinstalliert; ihr Einsatz auf öffentlichen Webseiten würde bei Fahrgästen Zertifikatswarnungen auslösen.
+\end{myremark}
+
+\begin{myexercise}[Zertifikats-Detektiv im Webbrowser]
+	Öffnen Sie einen Webbrowser Ihrer Wahl (Safari, Chrome, Edge oder Firefox) und rufen Sie eine Schweizer Website auf, z.\,B.\ das Portal der Schweizerischen Bundesbahnen (\url{https://www.sbb.ch}), der Schweizer Bundesverwaltung (\url{https://www.admin.ch}) oder Ihrer Kantonsschule.
+	
+	\begin{enumerate}
+		\item Öffnen Sie über das jeweilige Browsermenü die Zertifikatsinformationen.
+		\item Welche Zertifikate bilden die Hierarchiekette von der obersten Root-\gls{CA} über Zwischenzertifikate bis zum Blatt-Zertifikat der Webseite?
+		\item Notieren Sie für das Blatt-Zertifikat:
+		      \begin{itemize}
+			      \item Den gemeinsamen Namen (\emph{Common Name}, \gls{CN}) bzw.\ die Domain.
+			      \item Die Gültigkeitsdauer (von / bis).
+			      \item Den verwendeten Algorithmus und die Schlüssellänge für den öffentlichen Schlüssel (z.\,B.\ \gls{RSA} 2048 Bit oder \gls{ECC} P-256).
+			      \item Den verwendeten Hash-Algorithmus der Signatur (z.\,B.\ \gls{SHA}-256).
+		      \end{itemize}
+		\item \textbf{Denkaufgabe:} Warum haben moderne Server-Zertifikate typischerweise nur noch eine kurze Gültigkeitsdauer von maximal 398 Tagen (bzw.\ oft nur 90 Tagen wie bei \emph{Let's Encrypt}), während Root-Zertifikate oft für 20 bis 30 Jahre ausgestellt werden?
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\setcounter{enumi}{1}
+			\item Beispielhafte Kette für \texttt{www.sbb.ch} (gemäss \cref{fig:safari-certificate-sbb}):
+			      \begin{itemize}
+				      \item \textbf{Root-\gls{CA}:} \texttt{Amazon Root CA 1}
+				      \item \textbf{Intermediate-\gls{CA}:} \texttt{Amazon RSA 2048 M04}
+				      \item \textbf{Server-Zertifikat:} \texttt{www.sbb.ch}
+			      \end{itemize}
+			\item Typische Werte:
+			      \begin{itemize}
+				      \item \textbf{\gls{CN}:} \texttt{www.sbb.ch} (Inhaberin: Schweizerische Bundesbahnen SBB)
+				      \item \textbf{Gültigkeit:} Typischerweise 1 Jahr (bzw.\ bis zum angegebenen Ablaufdatum).
+				      \item \textbf{Öffentlicher Schlüssel:} \gls{RSA} (2048 Bit) bzw.\ \gls{ECC} (256 Bit).
+				      \item \textbf{Signatur-Hash:} \gls{SHA}-256 mit \gls{RSA}-Verschlüsselung (\texttt{sha256WithRSA}).
+			      \end{itemize}
+			\item Kurze Laufzeiten bei Serverzertifikaten begrenzen das Zeitfenster für den Missbrauch, falls ein privater Serverschlüssel unbemerkt gestohlen wird. Zudem zwingen kurze Laufzeiten Administratoren zu automatisierten Erneuerungsprozessen und ermöglichen einen schnellen Wechsel zu sichereren kryptographischen Standards. Root-Zertifikate hingegen müssen jahrzehntelang gültig sein, da ihre Erneuerung ein manuelles Update von Milliarden Betriebssystemen und Firmware-Chips weltweit erfordert.
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}

@@ -415,19 +415,32 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 \clearpage
 \section{Diffie-Hellman-Merkle-Schlüsseltausch}
 
-\begin{myremark}[Neue mathematische Operatoren]\label{rem:operatoren}
-	In den nachfolgenden Protokollen und kryptographischen Verfahren werden zwei Notationen verwendet, die sich vom gewohnten Gleichheitszeichen ($=$) unterscheiden:
+\begin{myremark}[Neue mathematische Notationen und Operatoren]\label{rem:operatoren}
+	In den nachfolgenden Protokollen und kryptographischen Verfahren werden mathematische Notationen verwendet, die sich vom gewohnten Gleichheitszeichen ($=$) unterscheiden:
 	\begin{itemize}
 		\item \textbf{Definitions- und Zuweisungszeichen ($:=$):}\\
 		      Das Symbol $:=$ bedeutet: \emph{wird definiert als} bzw. \emph{wird berechnet und zugewiesen}. Während ein einfaches Gleichheitszeichen ($=$) oft eine Gleichheit zwischen zwei bereits bekannten Ausdrücken feststellt (z.\,B.\ $2 + 2 = 4$), signalisiert $:=$ die erstmalige Festlegung oder Berechnung einer Variablen (z.\,B.\ $x := g^a \bmod p$, d.\,h.\ der Wert von $x$ wird neu durch diese Rechnung definiert).
-		\item \textbf{Kongruenzzeichen ($\equiv$):}\\
-		      In der Modulo-Arithmetik bedeutet die Schreibweise
-		      \[
-			      a \equiv b \pmod m
-		      \]
-		      dass die Zahlen $a$ und $b$ bei der Division durch $m$ \textbf{denselben Rest} ergeben (gelesen als: \emph{$a$ ist kongruent zu $b$ modulo $m$}).
-		      
-		      \textbf{Beispiel:} $9 \equiv 2 \pmod 7$, denn $9 = 1 \cdot 7 + \mathbf{2}$ und $2 = 0 \cdot 7 + \mathbf{2}$. In Rechenschritten darf eine Zahl daher jederzeit durch ihren kleineren Rest modulo $m$ ersetzt werden.
+		\item \textbf{Kongruenzzeichen ($\equiv$) im Kontext von Modulo-Operationen ($\bmod$):}\\
+		      Man unterscheidet zwei Schreibweisen für Modulo-Berechnungen:
+		      \begin{enumerate}
+			      \item \textbf{Als Rechenoperation (Informatik / Programmierung):}
+			            \[
+				            c = a \bmod m
+			            \]
+			            Hier ist $\bmod$ ein \textbf{Operator} (wie $+$ oder $\div$, in Python als \texttt{\%} geschrieben). Er berechnet den eindeutigen Divisionsrest im Bereich $\{0, 1, \dots, m-1\}$.\\
+			            \textbf{Beispiel:} $17 \bmod 5 = 2$.
+			      \item \textbf{Als Äquivalenzrelation (Mathematik / Zahlentheorie):}
+			            \[
+				            a \equiv b \pmod m
+			            \]
+			            Hier ist $\pmod m$ keine Operation auf $b$, sondern beschreibt den \textbf{Bezugsrahmen} der Gleichheit. Die Aussage wird gelesen als: \emph{$a$ ist kongruent zu $b$ modulo $m$}. Sie bedeutet, dass $a$ und $b$ bei der Division durch $m$ \textbf{denselben Rest} ergeben (bzw.\ dass $m$ die Differenz $a - b$ teilt).\\
+			            \textbf{Beispiele:}
+			            \begin{itemize}
+				            \item $17 \equiv 2 \pmod 5$ (denn beide Zahlen ergeben bei der Division durch $5$ den Rest $\mathbf{2}$).
+				            \item $17 \equiv 22 \pmod 5$ (ebenfalls wahr, da $17$ und $22$ denselben Rest haben, obwohl $22$ noch nicht auf den kleinsten Rest reduziert ist).
+			            \end{itemize}
+		      \end{enumerate}
+		      In Rechenschritten darf eine Zahl daher jederzeit durch eine kongruente Zahl (insbesondere ihren kleinsten Rest modulo $m$) ersetzt werden.
 		      
 		      \emph{Hinweis:} Je nach mathematischem Teilgebiet begegnet man dem Symbol $\equiv$ auch in verwandten Bedeutungen, etwa für die logische Äquivalenz ($A \equiv B$) oder die identische Gleichheit in der Algebra (z.\,B.\ $\sin^2(x) + \cos^2(x) \equiv 1$). In der Kryptologie steht es im Kontext von Modulo-Rechnungen stets für die modulare Kongruenz.
 	\end{itemize}

@@ -86,8 +86,8 @@ Das \acrfull{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für
 \end{enumerate}
 \end{myprocedure}
 
-\begin{myremark}[Effiziente modulare Exponentiation bei RSA]\label{rem:rsa-mod-exp}
-	Die Berechnungen $c = m^e \mod n$ und $m = c^d \mod n$ erfordern für praxisnahe Schlüssellängen (z.\,B.\ 2048 Bit) das Potenzieren mit riesigen Zahlen. Wie bereits beim \gls{DHM}-Verfahren (siehe \cref{rem:modular-exp-naive}) kommt auch bei RSA die \textbf{modulare Exponentiation} (wiederholtes Quadrieren) zum Einsatz. Dadurch können die Berechnungen in Millisekunden durchgeführt werden, ohne dass astronomisch grosse Zwischenzahlen gespeichert werden müssen.
+\begin{myremark}[Effiziente modulare Exponentiation bei \gls{RSA}]\label{rem:rsa-mod-exp}
+	Die Berechnungen $c = m^e \mod n$ und $m = c^d \mod n$ erfordern für praxisnahe Schlüssellängen (z.\,B.\ 2048 Bit) das Potenzieren mit riesigen Zahlen. Wie bereits beim \gls{DHM}-Verfahren (siehe \cref{rem:modular-exp-naive}) kommt auch bei \gls{RSA} die \textbf{modulare Exponentiation} (wiederholtes Quadrieren) zum Einsatz. Dadurch können die Berechnungen in Millisekunden durchgeführt werden, ohne dass astronomisch grosse Zwischenzahlen gespeichert werden müssen.
 \end{myremark}
 
 \begin{myexample}
@@ -133,6 +133,25 @@ Der erste Buchstabe des Kryptotext wird also verschlüsselt als \( c = 27\).
 Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 \end{myexample}
 
+\begin{myexcursion}[Warum funktioniert die \texorpdfstring{\acrshort{RSA}}{RSA}-Entschlüsselung? (Mathematischer Beweis)]\label{exc:rsa-beweis}
+	Warum stellt die Entschlüsselung $(m^e \bmod n)^d \bmod n$ garantiert die ursprüngliche Nachricht $m$ wieder her?
+	
+	Der Beweis lässt sich schrittweise nachvollziehen:
+	\begin{align*}
+		\text{Entschlüsselter Text} 
+		  & = c^d \bmod n                                          && (\text{Definition}) \\[0.4em]
+		  & = (m^e \bmod n)^d \bmod n                              && (\text{Kryptotext } c = m^e \bmod n) \\[0.4em]
+		  & \equiv (m^e)^d \pmod n                                 && (\text{Zwischenreduktion}) \\[0.4em]
+		  & \equiv m^{e \cdot d} \pmod n                           && ((a^b)^c = a^{b \cdot c}) \\[0.4em]
+		  & \equiv m^{k \cdot \varphi(n) + 1} \pmod n              && (e \cdot d = k \cdot \varphi(n) + 1) \\[0.4em]
+		  & \equiv \left(m^{\varphi(n)}\right)^k \cdot m^1 \pmod n && (a^{x+y} = a^x \cdot a^y) \\[0.4em]
+		  & \equiv (1)^k \cdot m \pmod n                           && (\text{Satz von Euler: } m^{\varphi(n)} \equiv 1) \\[0.4em]
+		  & \equiv 1 \cdot m \pmod n                               && (1^k = 1) \\[0.4em]
+		  & = \mathbf{m}                                           && (\text{Klartext wiederhergestellt!})
+	\end{align*}
+	
+	\textbf{Zusammenfassung der Kernidee:} Durch die Wahl von $e \cdot d = k \cdot \varphi(n) + 1$ durchläuft der Exponent genau $k$ volle Umläufe modulo $n$, die nach dem Satz von Euler jeweils neutral zu $1$ werden ($1^k = 1$). Es bleibt exakt der Faktor $m^1 = m$ übrig.
+\end{myexcursion}
 
 \begin{myexercise}\label{myexercise:rsa}
 	Alice möchte eine Nachricht an Bob mit \gls{RSA} verschlüsseln. Bob wählt die Hilfs-Primzahlen \( p = 5 \) und \( q = 7 \). Generieren Sie den öffentlichen Schlüssel ($e, n$) und den privaten Schlüssel ($d, n$) von Bob, indem Sie folgende Schritte ausführen:
@@ -179,7 +198,7 @@ Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 \end{mychallenge}
 
 \begin{mychallenge}
-Verwenden Sie Ihre RSA-Schlüssel aus \ref{mychallenge:rsa-pair}, um eine echte Nachricht als Zahl auszutauschen (ein Wort). Um ein Wort in Zahlen umzuwandeln (Buchstabe für Buchstabe) können Sie folgendes Python-Skript verwenden:
+Verwenden Sie Ihre \gls{RSA}-Schlüssel aus \ref{mychallenge:rsa-pair}, um eine echte Nachricht als Zahl auszutauschen (ein Wort). Um ein Wort in Zahlen umzuwandeln (Buchstabe für Buchstabe) können Sie folgendes Python-Skript verwenden:
 \begin{lstlisting}
 def text_to_numbers(text):
 	numbers = []
@@ -213,110 +232,222 @@ Die Sicherheit der reinen \gls{RSA}-Verschlüsselung beruht auf der mathematisch
 Während die Multiplikation zweier grosser Primzahlen für moderne Computer im Bruchteil einer Millisekunde durchführbar ist, existiert bis heute kein bekanntes effizientes Verfahren, um ein Produkt aus zwei sehr grossen Primzahlen wieder zu faktorisieren. Werden ausreichend lange Primzahlen gewählt (in der Praxis mindestens 2048 bis 4096 Bit, d.\,h.\ Zahlen mit über 600 Dezimalstellen), würde ein Kryptoanalyst selbst mit den leistungsfähigsten Supercomputern Millionen von Jahren für die Faktorisierung benötigen.
 
 \paragraph*{Sicherheitsproblem: Fehlende Authentizität des Absenders}
-Obwohl das RSA-Verfahren die \textbf{Vertraulichkeit} der Nachricht schützt (nur der Empfänger Bob kann mit seinem privaten Schlüssel $d$ entschlüsseln), bietet reine Verschlüsselung \textbf{keine Authentizität}: Da Bobs öffentlicher Schlüssel $(e, n)$ öffentlich bekannt ist, kann \emph{jede} beliebige Person (also auch ein Angreifer wie Eve) eine Nachricht verschlüsseln und an Bob schicken, während sie behauptet, Alice zu sein. Bob hat keine Möglichkeit, anhand der verschlüsselten Nachricht nachzuweisen, wer sie tatsächlich verfasst hat.
+Obwohl das \gls{RSA}-Verfahren die \textbf{Vertraulichkeit} der Nachricht schützt (nur der Empfänger Bob kann mit seinem privaten Schlüssel $d$ entschlüsseln), bietet reine Verschlüsselung \textbf{keine Authentizität}: Da Bobs öffentlicher Schlüssel $(e, n)$ öffentlich bekannt ist, kann \emph{jede} beliebige Person (also auch ein Angreifer wie Eve) eine Nachricht verschlüsseln und an Bob schicken, während sie behauptet, Alice zu sein. Bob hat keine Möglichkeit, anhand der verschlüsselten Nachricht nachzuweisen, wer sie tatsächlich verfasst hat.
 
 \paragraph*{Lösung: Digitale Signaturen durch Rollenumkehr der Schlüssel}
-Um diese Sicherheitslücke zu schliessen, nutzt man die mathematische Symmetrie des \gls{RSA}-Verfahrens: Die Rollen des privaten und des öffentlichen Schlüssels lassen sich vertauschen. Da
+Um diese Sicherheitslücke zu schliessen, nutzt man die mathematische Symmetrie des \gls{RSA}-Verfahrens: Die Rollen des privaten und des öffentlichen Schlüssels lassen sich vertauschen. Da die Multiplikation im Exponenten kommutativ ist ($d \cdot e = e \cdot d$), gilt nach dem Beweis aus \cref{exc:rsa-beweis} genauso die umgekehrte Reihenfolge:
 \[
-	(m^d)^e \equiv m \pmod n
+	(m^d)^e = m^{d \cdot e} = m^{e \cdot d} \equiv m \pmod n.
 \]
-gilt, kann eine Person eine Nachricht mit ihrem \emph{privaten} Schlüssel signieren. Anschliessend kann jede andere Person mit dem zugehörigen \emph{öffentlichen} Schlüssel überprüfen, ob die Nachricht tatsächlich vom Schlüsselinhaber stammt und unverändert geblieben ist. Dies bildet das Fundament für \textbf{digitale Signaturen}.
+Eine Person kann eine Nachricht also mit ihrem \emph{privaten} Schlüssel $d$ signieren ($s = m^d \bmod n$). Anschliessend kann jede andere Person mit dem zugehörigen \emph{öffentlichen} Schlüssel $e$ überprüfen ($s^e \equiv m \pmod n$), ob die Nachricht tatsächlich vom Schlüsselinhaber stammt und unverändert geblieben ist. Dies bildet das Fundament für \textbf{digitale Signaturen}.
 
 \subsection{Digitale Signaturen mit \texorpdfstring{\acrshort{RSA}}{RSA}}
-Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur Erstellung digitaler Signaturen verwendet werden. Digitale Signaturen dienen dazu, die Authentizität und Integrität einer Nachricht zu gewährleisten. Hierbei wird die Nachricht mit dem privaten Schlüssel des Absenders signiert, sodass der Empfänger die Signatur mit dem öffentlichen Schlüssel des Absenders überprüfen kann.
+Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur Erstellung digitaler Signaturen verwendet werden. Digitale Signaturen dienen dazu, die Authentizität und Integrität einer Nachricht zu gewährleisten. Hierbei wird die Nachricht mit dem privaten Schlüssel des Absenders signiert, sodass der Empfänger die Signatur mit dem öffentlichen Schlüssel des Absenders überprüfen kann. In diesem Abschnitt wird das Verfahren zur Erstellung und Überprüfung digitaler Signaturen mit \gls{RSA} erläutert. Dabei wird in einem ersten Schritt angenommen, dass die Nachricht $m$ unverschlüsselt übertragen wird -- das Ziel dabei ist, dass der Empfänger die Nachricht eindeutig der Absenderin zuordnen und gleichzeitig überprüfen kann, dass diese nicht verändert wurde.
 
 \begin{myprocedure}[Digitale Signaturen mit \gls{RSA}]
 	Die Erstellung und Überprüfung digitaler Signaturen mit dem \gls{RSA}-Verfahren erfolgt in folgenden Schritten:
-\begin{enumerate}
-	\item \textbf{Signaturerstellung:}
-	      \begin{itemize}
-		      \item Der Absender erstellt eine \textbf{Nachricht} \( \mathbf{m} \).
-		      \item Er berechnet den \textbf{Hashwert} \( H(m) \) der Nachricht \( m \) mithilfe einer kryptographischen Hashfunktion (z.B. SHA-256).
-		      \item Der Absender signiert den Hashwert mit seinem \textbf{privaten Schlüssel} \( \mathbf{(d, n)} \):
-		            \[
-			            s = H(m)^d \mod n
-		            \]
-		      \item Das Ergebnis \( s \) ist die digitale Signatur.
-	      \end{itemize}
-	\item \textbf{Signaturüberprüfung:}
-	      \begin{itemize}
-		      \item Der Empfänger erhält die Nachricht \( m \) und die Signatur \( s \).
-		      \item Er berechnet den Hashwert \( H(m) \) der empfangenen Nachricht \( m \).
-		      \item Der Empfänger überprüft die Signatur mit dem \textbf{öffentlichen Schlüssel} \( \mathbf{(e, n)} \) des Absenders:
-		            \[
-			            H'(m) = s^e \mod n
-		            \]
-		      \item Wenn \( H'(m) = H(m) \), ist die Signatur gültig, andernfalls ist sie ungültig.
-	      \end{itemize}
-\end{enumerate}
+	\begin{enumerate}
+		\item \textbf{Signaturerstellung (durch die Absenderin):}
+		      \begin{itemize}
+			      \item Alice besitzt die Nachricht (als Zahl) $m$ mit $m < n$.
+			      \item Sie berechnet die Signatur $s$ mit ihrem \textbf{privaten Schlüssel} $(d, n)$:
+			            \[
+				            s = m^d \bmod n
+			            \]
+			      \item Das Ergebnis $s$ ist die digitale Signatur. Alice sendet die Nachricht $m$ und die Signatur $s$ als Paar $(m, s)$ an Bob.
+		      \end{itemize}
+		\item \textbf{Signaturüberprüfung (durch den Empfänger):}
+		      \begin{itemize}
+			      \item Bob erhält die Nachricht $m$ und die Signatur $s$.
+			      \item Er entschlüsselt die Signatur mit Alices \textbf{öffentlichem Schlüssel} $(e, n)$:
+			            \[
+				            m' = s^e \bmod n
+			            \]
+			      \item Wenn $m' = m$, ist die Signatur gültig (die Nachricht stammt garantiert von Alice und wurde nicht verändert). Andernfalls ist sie ungültig.
+		      \end{itemize}
+	\end{enumerate}
 \end{myprocedure}
 
 \begin{myexample}
-	Angenommen, Alice möchte eine Nachricht \( m = 42 \) signieren. Sie verwendet ihren privaten Schlüssel \( (d, n) = (9677, 12317) \) und den öffentlichen Schlüssel \( (e, n) = (5, 12317) \).
+	Angenommen, Alice möchte eine Nachricht $m = 42$ signieren. Sie will die (unverschlüsselte) Nachricht 42 also verschicken – dabei soll eindeutig überprüfbar sein, dass Alice die Absenderin ist. Sie verwendet ihren privaten Schlüssel $(d, n) = (9677, 12317)$ und den öffentlichen Schlüssel $(e, n) = (5, 12317)$.
 
 	\textbf{Signaturerstellung:}
-	\begin{align*}
-		s & = H(m)^d \mod n \\
-		  & = 42^{9677} \mod 12317 \\
-		  & = 161
-	\end{align*}
-
-	Die digitale Signatur ist also \( s = 161 \).
+	\[
+		s = m^d \bmod n = 42^{9677} \bmod 12317 = 161
+	\]
+	Die digitale Signatur ist also $s = 161$.
 
 	\textbf{Signaturüberprüfung:}
-	\begin{align*}
-		H'(m) & = s^e \mod n \\
-		      & = 161^5 \mod 12317 \\
-		      & = 42
-	\end{align*}
-
-	Da \( H'(m) = H(m) \), ist die Signatur gültig.
+	\[
+		m' = s^e \bmod n = 161^5 \bmod 12317 = 42
+	\]
+	Da $m' = m = 42$, ist die Signatur gültig.
 \end{myexample}
 
 \begin{myexercise}
-	Alice möchte die Nachricht \( m = 15 \) signieren. Ihr privater Schlüssel ist \( (d, n) = (7, 33) \) und ihr öffentlicher Schlüssel ist \( (e, n) = (3, 33) \).
+	Alice möchte die Nachricht $m = 15$ signieren. Ihr privater Schlüssel ist $(d, n) = (7, 33)$ und ihr öffentlicher Schlüssel ist $(e, n) = (3, 33)$.
 
-	Erstellen Sie die digitale Signatur \( s \) für die Nachricht \( m \).
+	Erstellen Sie die digitale Signatur $s$ für die Nachricht $m$.
 
 	Überprüfen Sie danach die Signatur mit dem öffentlichen Schlüssel.
 	\begin{myanswer}
 		\textbf{Signaturerstellung:}
-		\begin{align*}
-			s & = H(m)^d \mod n \\
-			  & = 15^{7} \mod 33 \\
-			  & = 27
-		\end{align*}
-
-		Die digitale Signatur ist also \( s = 27 \).
+		\[
+			s = m^d \bmod n = 15^7 \bmod 33 = 27
+		\]
+		Die digitale Signatur ist also $s = 27$.
 
 		\textbf{Signaturüberprüfung:}
-		\begin{align*}
-			H'(m) & = s^e \mod n \\
-			      & = 27^3 \mod 33 \\
-			      & = 15
-		\end{align*}
-
-		Da \( H'(m) = H(m) \), ist die Signatur gültig.
+		\[
+			m' = s^e \bmod n = 27^3 \bmod 33 = 15
+		\]
+		Da $m' = m = 15$, ist die Signatur gültig.
 	\end{myanswer}
 \end{myexercise}
 
-\subsection*{Sicherheit digitaler Signaturen: Das Vertrauensproblem in der Praxis}
-Eine digitale Signatur beweist mathematisch zwei zentrale Eigenschaften:
+\begin{myremark}[Praxis-Exkurs: Digitale Fingerabdrücke mit Hashfunktionen]
+	In der Praxis ist eine Nachricht $m$ (z.\,B.\ ein \gls{PDF}-Dokument, ein Foto oder ein Software-Update) oft viele Megabytes gross. Da \gls{RSA}-Berechnungen mit riesigen Zahlen extrem rechenintensiv sind und die Nachricht $m$ kleiner als der \gls{RSA}-Modul $n$ sein muss, signiert man in realen Systemen nicht die gesamte Datei direkt, sondern ihren \textbf{kryptographischen Hashwert}:
+	\begin{itemize}
+		\item \textbf{Was ist eine Hashfunktion?} Eine mathematische Einwegfunktion (z.\,B.\ \gls{SHA}-256), die aus einer beliebig langen Eingabedatei $m$ einen kurzen Prüfwert $H(m)$ fester Länge (den sogenannten \textbf{Hashwert} bzw.\ \enquote{digitalen Fingerabdruck}, z.\,B.\ 256 Bit) berechnet. 
+		\item \textbf{Zentrale Eigenschaft (Lawineneffekt):} Bereits die Änderung eines einzigen Zeichens im Dokument führt zu einem vollkommen anderen Hashwert. Zudem ist es praktisch unmöglich, zwei verschiedene Dokumente mit demselben Hashwert zu finden (\emph{Kollisionsresistenz}).
+		\item \textbf{Ablauf in der Praxis:} Alice berechnet $h = H(m)$ und signiert nur diesen kurzen Fingerabdruck: $s = h^d \bmod n$. Bob berechnet seinerseits $H(m)$ aus der erhaltenen Datei und vergleicht es mit $h' = s^e \bmod n$.
+	\end{itemize}
+\end{myremark}
+
+\subsection*{Klartext-Signatur vs.\ Signatur mit Verschlüsselung}
+In der Kryptographie ist es entscheidend, zwischen den verschiedenen \textbf{Schutzzielen} zu unterscheiden:
 \begin{itemize}
-	\item \textbf{Integrität:} Die Nachricht wurde auf dem Übertragungsweg nicht manipuliert (jede Veränderung führt zu einem anderen Hashwert und macht die Signatur ungültig).
-	\item \textbf{Authentizität:} Die Signatur konnte nur mit dem privaten Schlüssel erzeugt werden, der zum angegebenen öffentlichen Schlüssel gehört.
+	\item \textbf{Verschlüsselung} schützt die \textbf{Vertraulichkeit} (\emph{Wer darf die Nachricht lesen?}).
+	\item \textbf{Digitale Signaturen} schützen die \textbf{Authentizität} (\emph{Wer ist der Urheber?}) und die \textbf{Integrität} (\emph{Wurde die Nachricht manipuliert?}).
 \end{itemize}
 
-\paragraph*{Das Problem: Wessen Signatur ist es wirklich?}
-Hier stösst die reine Mathematik an eine praktische Grenze: \emph{Woher weiss der Empfänger (Bob), dass ein bestimmter öffentlicher Schlüssel tatsächlich Alice gehört?}
-
-Ein Angreifer (Eve) könnte ein eigenes Schlüsselpaar erzeugen und den öffentlichen Schlüssel unter dem Namen von Alice oder als angebliche Webseite einer Bank veröffentlichen. Signiert Eve anschliessend eine gefälschte Nachricht mit ihrem eigenen privaten Schlüssel, so bestätigt die mathematische Überprüfung mit Eves öffentlichem Schlüssel formal die Gültigkeit der Signatur. Bob wiegt sich in falscher Sicherheit, da er die Signatur nicht der echten Identität zuordnen kann (Man-in-the-Middle-Angriff).
-
-\paragraph*{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
-Um das Vertrauensproblem in der Praxis zu lösen (beispielsweise beim sicheren Surfen über HTTPS/\gls{TLS} oder bei der elektronischen Signatur), wird eine sogenannte \textbf{Public-Key-Infrastruktur} (\gls{PKI}) eingesetzt:
+\paragraph*{Fall 1: Reine digitale Signatur (Klartextübertragung)}
+Bei einer reinen Signatur wird die Nachricht $m$ \textbf{im Klartext} zusammen mit der Signatur $s$ übertragen.
 \begin{itemize}
-	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, CAs):} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Schlüsselausgabe die reale Identität der antragstellenden Person oder Institution.
-	\item \textbf{Digitale Zertifikate:} Die CA stellt ein standardisiertes Dokument (Zertifikat) aus, welches den öffentlichen Schlüssel an die Identität (z.\,B.\ den Domainnamen \texttt{www.beispiel.ch}) bindet. Dieses Zertifikat wird von der CA mit deren eigenem privaten Schlüssel signiert.
-	\item \textbf{Vertrauensanker (Root CAs):} Betriebssysteme und Browser besitzen eine vorinstallierte Liste vertrauenswürdiger Stammzertifikate. Wird eine Verbindung aufgebaut, prüft die Software automatisch die Signaturkette (\emph{Certificate Chain}) bis zu einem vertrauenswürdigen Stammzertifikat.
+	\item \textbf{Warum Klartext?} Eine Signatur soll beweisen, von wem das Dokument stammt und dass nichts verändert wurde -- sie dient \emph{nicht} der Geheimhaltung. Zur Überprüfung ($m' = s^e \bmod n$) muss dem Empfänger der Klartext $m$ zwingend vorliegen, um den Vergleich $m' \stackrel{?}{=} m$ durchführen zu können.
+	\item \textbf{Typische Einsatzgebiete:}
+	      \begin{itemize}
+		      \item \textbf{Software- und Betriebssystem-Updates:} Das Update soll von allen heruntergeladen werden können, die Signatur garantiert jedoch, dass es unverändert vom echten Hersteller stammt.
+		      \item \textbf{Gesetze, Behördendokumente \& Verträge:} Der Inhalt ist öffentlich bestimmt, die Signatur garantiert die Rechtsgültigkeit (z.\,B.\ digital signierte \glspl{PDF}).
+		      \item \textbf{Git-Commits:} Quellcode ist einsehbar, aber Commits werden kryptographisch signiert.
+		      \item \textbf{Digitale Zertifikate (\gls{PKI}):} Zertifikate müssen für jedermann lesbar sein.
+	      \end{itemize}
 \end{itemize}
-Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden Vertrauensinfrastruktur ermöglicht verlässliche Sicherheit in modernen Kommunikationsnetzen.
+
+\paragraph*{Fall 2: Kombinierte Signatur \& Verschlüsselung (\emph{Sign-then-Encrypt})}
+Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, kombiniert man beide Verfahren (siehe \cref{fig:sign-then-encrypt-detail}):
+\begin{enumerate}
+	\item Alice signiert den Klartext $m$ mit ihrem privaten Schlüssel $d_A$: $s = m^{d_A} \bmod n_A$.
+	\item Alice verschlüsselt das Paket $(m, s)$ mit Bobs öffentlichem Schlüssel $e_B$: $c = \text{Enc}_{e_B}(m, s)$.
+	\item Über den Kanal wird ausschliesslich das Chiffrat $c$ übertragen (für Dritte unlesbar).
+	\item Bob entschlüsselt $c$ mit seinem privaten Schlüssel $d_B \rightarrow (m, s)$.
+	\item Bob prüft die Signatur $s$ mit Alices öffentlichem Schlüssel $e_A \rightarrow s^{e_A} \bmod n_A \stackrel{?}{=} m$.
+\end{enumerate}
+\begin{itemize}
+	\item \textbf{Typische Einsatzgebiete:}
+	      \begin{itemize}
+		      \item \textbf{Vertrauliche E-Mails:} Verschlüsselte und signierte Nachrichten via \gls{SMIME} oder \gls{PGP}/\gls{GPG}.
+		      \item \textbf{Ende-zu-Ende-verschlüsselte Messenger:} Signal, WhatsApp oder Threema.
+		      \item \textbf{Geschäftsgeheimnisse \& Patientendaten:} Vertrauliche Verträge und medizinische Akten.
+	      \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		scale=0.80, every node/.style={transform shape},
+		actor/.style={rectangle, rounded corners, draw=black, fill=gray!15, minimum width=3.4cm, minimum height=1.1cm, font=\bfseries, align=center, inner sep=4pt},
+		stepbox/.style={rectangle, rounded corners, draw=#1, fill=#1!8, line width=0.8pt, font=\small, align=center, inner sep=6pt},
+		msgarrow/.style={->, >=stealth, line width=1pt, #1},
+		badge/.style={circle, fill=#1, text=white, font=\bfseries\footnotesize, inner sep=2pt}
+	]
+		% Spaltenkoordinaten
+		\def\colA{0}   % Alice
+		\def\colB{9.5} % Bob
+
+		% --- AKTEURE (Kopfzeile) ---
+		\node[actor] (alice) at (\colA, 0) {Alice\\{\footnotesize (Absenderin)}\\[2pt]{\scriptsize priv.: $d_A$, Bobs öff.: $(e_B, n_B)$}};
+		\node[actor] (bob) at (\colB, 0) {Bob\\{\footnotesize (Empfänger)}\\[2pt]{\scriptsize priv.: $d_B$, Alices öff.: $(e_A, n_A)$}};
+
+		% Vertikale Hilfslinien
+		\draw[dashed, gray!40] (alice.south) -- (\colA, -10.2);
+		\draw[dashed, gray!40] (bob.south) -- (\colB, -10.2);
+
+		% --- SCHRITT 1 & 2 BEI ALICE ---
+		\node[font=\footnotesize\bfseries\color{RoyalBlue!80!black}, fill=white, inner sep=2pt] at (\colA, -1.1) {Phase 1: Signieren \& Verschlüsseln};
+
+		\node[stepbox=RoyalBlue] (alice_proc) at (\colA, -2.7) {
+			\textbf{1. Signatur erzeugen (mit $d_A$):}\\
+			$s := m^{d_A} \bmod n_A$\\[0.4em]
+			\textbf{2. Verschlüsseln (mit $e_B$):}\\
+			$c_m := m^{e_B} \bmod n_B$\\
+			$c_s := s^{e_B} \bmod n_B$
+		};
+
+		% --- NACHRICHTENÜBERTRAGUNG ---
+		\node[badge=DarkOrchid] (b_msg) at (\colA+0.6, -5.1) {\faLock};
+		\draw[msgarrow=DarkOrchid] (b_msg.east) -- (\colB-0.6, -5.1)
+			node[midway, above=3pt, font=\footnotesize\bfseries] {Chiffrate $(c_m, c_s)$}
+			node[midway, below=3pt, font=\scriptsize\color{gray!70!black}] {(vertraulich \& verschlüsselt: Eve kann weder $m$ noch $s$ lesen)};
+
+		% --- SCHRITT 3 & 4 BEI BOB ---
+		\node[font=\footnotesize\bfseries\color{ForestGreen!80!black}, fill=white, inner sep=2pt] at (\colB, -6.8) {Phase 2: Entschlüsseln \& Verifizieren};
+
+		\node[stepbox=ForestGreen] (bob_proc) at (\colB, -8.6) {
+			\textbf{3. Entschlüsseln (mit $d_B$):}\\
+			$m := (c_m)^{d_B} \bmod n_B$\\
+			$s := (c_s)^{d_B} \bmod n_B$\\[0.4em]
+			\textbf{4. Signatur prüfen (mit $e_A$):}\\
+			$m' := s^{e_A} \bmod n_A$\\
+			$\rightarrow \text{Gilt } m' = m\text{?} \implies \text{Echt, unverfälscht \& geheim!} \textcolor{ForestGreen}{\mathbf{\checkmark}}$
+		};
+	\end{tikzpicture}
+	\caption{Detaillierter Ablauf von \emph{Sign-then-Encrypt}: Kombinierte digitale Signatur mit Verschlüsselung}
+	\label{fig:sign-then-encrypt-detail}
+\end{figure}
+
+\begin{myexercise}[Kombinierte Signatur und Verschlüsselung in der Praxis]
+	Alice möchte die geheime Botschaft $m = 4$ an Bob senden. Die Übertragung soll sowohl \textbf{vertraulich} (geheim) als auch \textbf{authentisch} (nachweisbar von Alice) sein. Dazu nutzen beide das \gls{RSA}-Verfahren für \emph{Sign-then-Encrypt}.
+
+	Folgende Schlüsselpaare sind bekannt:
+	\begin{itemize}
+		\item \textbf{Alice:} Öffentlicher Schlüssel $(e_A, n_A) = (3, 33)$, privater Schlüssel $d_A = 7$.
+		\item \textbf{Bob:} Öffentlicher Schlüssel $(e_B, n_B) = (3, 55)$, privater Schlüssel $d_B = 27$.
+	\end{itemize}
+
+	\begin{enumerate}
+		\item \textbf{Signaturerstellung:} Berechnen Sie die digitale Signatur $s$ von Alice für die Nachricht $m = 4$.
+		\item \textbf{Verschlüsselung:} Berechnen Sie die beiden Chiffrate $c_m$ (verschlüsselte Nachricht) und $c_s$ (verschlüsselte Signatur), die Alice an Bob sendet.
+		\item \textbf{Entschlüsselung durch Bob:} Berechnen Sie, wie Bob aus den empfangenen Chiffraten $(c_m, c_s)$ den Klartext $m$ und die Signatur $s$ wiederherstellt.
+		\item \textbf{Signaturprüfung durch Bob:} Wie verifiziert Bob anhand von $s$ und Alices öffentlichem Schlüssel, dass die Nachricht tatsächlich von Alice stammt?
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item \textbf{Signaturerstellung (mit $d_A = 7$ und $n_A = 33$):}
+			      \[
+				      s = m^{d_A} \bmod n_A = 4^7 \bmod 33.
+			      \]
+			      Wegen $4^3 = 64 \equiv 31 \equiv -2 \pmod{33}$ gilt:
+			      \[
+				      4^7 = (4^3)^2 \cdot 4 \equiv (-2)^2 \cdot 4 = 4 \cdot 4 = 16 \pmod{33} \implies s = 16.
+			      \]
+			\item \textbf{Verschlüsselung für Bob (mit $e_B = 3$ und $n_B = 55$):}
+			      \begin{align*}
+				      c_m & = m^{e_B} \bmod n_B = 4^3 \bmod 55 = 64 \bmod 55 = 9, \\
+				      c_s & = s^{e_B} \bmod n_B = 16^3 \bmod 55 = 4096 \bmod 55 = 26.
+			      \end{align*}
+			      Alice überträgt das Chiffratpaar $(c_m, c_s) = (9, 26)$.
+			\item \textbf{Entschlüsselung durch Bob (mit $d_B = 27$ und $n_B = 55$):}
+			      \begin{align*}
+				      m & = (c_m)^{d_B} \bmod n_B = 9^{27} \bmod 55 = 4, \\
+				      s & = (c_s)^{d_B} \bmod n_B = 26^{27} \bmod 55 = 16.
+			      \end{align*}
+			      (Zwischenschritt: $9^3 = 234 \equiv 14 \pmod{55}$, $9^9 = 14^3 \equiv -6 \pmod{55}$, $9^{27} \equiv (-6)^3 = -216 \equiv 4 \pmod{55}$).
+			\item \textbf{Signaturprüfung durch Bob (mit $e_A = 3$ und $n_A = 33$):}
+			      \[
+				      m' = s^{e_A} \bmod n_A = 16^3 \bmod 33 = 4096 \bmod 33 = 4.
+			      \]
+			      Da $m' = m = 4$, ist die Signatur gültig: Die Nachricht ist geheim übertragen worden, stammt garantiert von Alice und wurde nicht manipuliert.
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}

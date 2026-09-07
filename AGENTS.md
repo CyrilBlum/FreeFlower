@@ -55,6 +55,13 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
   rm -f main.{aux,log,out,toc,lof,lot,glo,idx,fls,fdb_latexmk,synctex.gz}
   ```
 
+### 2.9 Chapters Under Construction (Do Not Compile by Default)
+- **Drafts / Work-in-Progress**: Chapters and sections marked as "under construction" are incomplete drafts and **must not be compiled normally** into the main document.
+- **Always Commented Out**: In the respective topic's sub-main file (e.g., `Skript.tex`), their `\input{...}` statement must remain commented out at all times.
+- **Currently designated WIP chapters**:
+  - `% \input{Grundlagen_Info/03_Kryptologie/Skript/Kapitel_06.tex} % Kapitel 6: Post-Quanten-Kryptographie` (in `Grundlagen_Info/03_Kryptologie/Skript/Skript.tex`)
+- **Agent Rule**: Never uncomment these WIP chapters when compiling, building, or refactoring unless the user explicitly requests to work on or test that specific draft chapter.
+
 ---
 
 ## 3. Project Structure & Compilation Workflow
@@ -112,5 +119,6 @@ Before submitting changes or marking a task complete:
 3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`).
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.
 5. [ ] **Preserve Formatting & Comments**: Keep inline comments clean and informative.
-6. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
-7. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
+6. [ ] **Keep WIP Chapters Commented Out**: Ensure chapters marked as 'under construction' (e.g. `Kapitel_06.tex` in `Skript.tex`) remain commented out.
+7. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
+8. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
