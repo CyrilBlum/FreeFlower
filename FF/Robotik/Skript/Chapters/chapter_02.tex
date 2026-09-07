@@ -1,23 +1,27 @@
-\chapter{Motoren mit Arduino steuern}\label{ch:chapter_02}
+\chapter{Steuerung von Motoren mit Arduino}\label{ch:chapter_02}
 
-Motoren benötigen deutlich mehr Strom, als ein Arduino-Pin sicher liefern kann. Servomotoren und Gleichstrommotoren werden deshalb über eine geeignete externe Spannungsversorgung betrieben. Deren Masse muss mit \texttt{GND} des Arduino verbunden werden, damit das Steuersignal ein gemeinsames Bezugspotential besitzt.
-
-\begin{myattention}
-Schliessen Sie einen Motor nie direkt an einen Arduino-Pin an. Prüfen Sie vor dem Einschalten die zulässige Betriebsspannung und die Stromaufnahme. Halten Sie den Roboter bei ersten Tests so fest, dass sich die Räder frei drehen können.
-\end{myattention}
+Man unterscheidet unter anderem zwischen Servomotoren und Gleichstrommotoren. In beiden Fällen benötigen die in diesem Kapitel verwendeten Motoren eine externe Spannungsversorgung. Ansonsten kann zu viel Strom durch das Arduino-Board fliessen und dieses beschädigen. Die Masse der externen Spannungsversorgung muss mit \texttt{GND} des Arduino verbunden werden, damit ein gemeinsames Bezugspotential vorhanden ist.
 
 \section{Servomotoren}
-Ein Servomotor besteht aus einem Elektromotor, einem Getriebe, einem Positionssensor und einer Regelelektronik. Anders als ein gewöhnlicher Gleichstrommotor dreht sich ein Positionsservo nicht kontinuierlich, sondern fährt einen vorgegebenen Winkel an. Viele kleine Servomotoren besitzen einen Bewegungsbereich von ungefähr \qty{0}{\degree} bis \qty{180}{\degree}.
+Ein Servomotor besteht aus einem Elektromotor, der zusätzlich mit einem Sensor zur Positionsbestimmung und einer Regelelektronik ausgestattet ist. Der Begriff Servomotor stammt von seinem früheren Einsatzgebiet als Hilfsantrieb; das lateinische Wort \emph{servus} bedeutet Diener.
 
-Ein Servomotor besitzt drei Anschlüsse: Versorgungsspannung (\texttt{VCC}, meist rot), Masse (\texttt{GND}, meist braun oder schwarz) und Steuersignal (meist orange oder gelb).
+Gewöhnliche Elektromotoren dienen dem Antrieb und drehen sich deshalb kontinuierlich schneller oder langsamer. Im Gegensatz dazu kann ein Positionsservo bestimmte Winkel anfahren. Er dient beispielsweise dazu, ein Steuerruder in verschiedene Positionen zu bringen oder einen Arm auf und ab zu bewegen. Viele Servomotoren sind vom 180-Grad-Typ und können sich ungefähr im Bereich von \qty{0}{\degree} bis \qty{180}{\degree} bewegen.
+
+Ein Servomotor besitzt drei Kabel:
+\begin{itemize}
+	\item Versorgung (\texttt{VCC}) -- rot,
+	\item Masse (\texttt{GND}) -- schwarz oder braun,
+	\item Signalleitung -- gelb oder orange.
+\end{itemize}
 
 \begin{figure}[ht]
 	\centering
-	\begin{minipage}[c]{.38\textwidth}
+	\begin{minipage}[c]{.43\textwidth}
 		\centering
-		\includegraphics[width=.82\linewidth]{FF/Robotik/Skript/Abbildungen/tower_pro_micro_servo.png}
-	\end{minipage}\hfill
-	\begin{minipage}[c]{.57\textwidth}
+		\includegraphics[width=.72\linewidth]{FF/Robotik/Skript/Abbildungen/tower_pro_micro_servo.png}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[c]{.53\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{FF/Robotik/Skript/Abbildungen/sg90_servomotor_daten.png}
 	\end{minipage}
@@ -25,109 +29,161 @@ Ein Servomotor besitzt drei Anschlüsse: Versorgungsspannung (\texttt{VCC}, meis
 	\label{fig:servo-connections}
 \end{figure}
 
-Zur Ansteuerung wird die Bibliothek \texttt{Servo.h} verwendet. Sie kann bei Bedarf über die Bibliotheksverwaltung der Arduino IDE installiert werden. \Cref{fig:servo-external-supply} zeigt den Servo an einer externen Spannungsversorgung. Das Steuersignal ist mit Pin~\texttt{9} verbunden; Arduino und Batterie besitzen eine gemeinsame Masse.
+Die Steuerung basiert auf einem pulsweitenmodulierten Signal. In \cref{ch:chapter_01} haben Sie die Pulsweitenmodulation bereits zur Steuerung der LED-Helligkeit kennengelernt. Weiter unten wird erläutert, wie sich das Signal eines Servomotors davon unterscheidet.
+
+Um einen Servomotor zu steuern, verwenden Sie die Bibliothek \texttt{Servo.h}. Sie kann in der Arduino IDE über \emph{Werkzeuge $\rightarrow$ Bibliotheken verwalten} installiert werden.
+
+Das Anschliessen eines Servomotors ist einfach. Verwenden Sie hier eine externe Spannungsversorgung von \qty{6}{\volt} und bauen Sie die in \cref{fig:servo-external-supply} gezeigte Schaltung auf. Achten Sie insbesondere auf die gemeinsame Masse von Arduino und Batterie.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.72\textwidth]{FF/Robotik/Skript/Abbildungen/servomotor_batterie.png}
-	\caption{Servomotor mit externer Spannungsversorgung und gemeinsamer Masse.}
+	\includegraphics[width=.70\textwidth]{FF/Robotik/Skript/Abbildungen/servomotor_batterie.png}
+	\caption{Servomotor mit externer Spannungsversorgung.}
 	\label{fig:servo-external-supply}
 \end{figure}
 
+\begin{myexercise}
+In der Arduino IDE finden Sie den Beispielcode \emph{Sweep} unter \emph{Datei $\rightarrow$ Beispiele $\rightarrow$ Servo $\rightarrow$ Sweep}; siehe auch \cref{lst:servo-sweep}.
+\begin{aenum}
+	\item Schauen Sie sich den Code an. Das Servo-Objekt heisst \cppinline{myservo}. Erklären Sie, wie es im Setup-Teil mit dem Pin verknüpft wird, der den Servo steuert.
+	\item Untersuchen Sie die beiden \cppinline{for}-Schleifen und erklären Sie, wie sie den Servomotor hin- und herschwenken.
+	\item Kompilieren und übertragen Sie den Code.
+	\item Was beobachten Sie, wenn Sie den Wert von \cppinline{delay()} am Ende der beiden Schleifen verändern?
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
 \lstinputlisting[
-	language=C++, morekeywords={setup,loop,Servo,attach,write,delay},
-	columns=fullflexible, keepspaces=true, breaklines=false,
-	showspaces=false, showstringspaces=false, showtabs=false, tabsize=2,
-	numbers=none, basicstyle=\ttfamily\footnotesize,
-	caption={Servomotor zwischen \qty{0}{\degree} und \qty{180}{\degree} schwenken},
+	language=C++,
+	morekeywords={setup,loop,Servo,attach,write,delay},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=false,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Beispielcode \emph{Sweep}},
 	label={lst:servo-sweep}
 ]{FF/Robotik/Skript/Code/Servo_Sweep/Servo_Sweep.ino}
 
-\begin{myexercise}
-Bauen Sie die Schaltung aus \cref{fig:servo-external-supply} auf und untersuchen Sie \cref{lst:servo-sweep}.
-\begin{aenum}
-	\item Erklären Sie, wie das Servo-Objekt \cppinline{myServo} mit Pin~\texttt{9} verknüpft wird.
-	\item Bestimmen Sie, welche Winkelwerte die beiden \cppinline{for}-Schleifen erzeugen.
-	\item Übertragen Sie den Sketch und beobachten Sie die Bewegung.
-	\item Verändern Sie \cppinline{delay()} in beiden Schleifen und erklären Sie die Auswirkung.
-\end{aenum}
-\begin{myanswer}keine Musterlösung\end{myanswer}
-\end{myexercise}
-
-\subsection{Servomotor mit einem Potentiometer steuern}
-Ein Potentiometer kann als Sollwertgeber dienen. Der Messwert von $0$ bis $1023$ wird mit \cppinline{map()} auf einen Winkel von \qty{0}{\degree} bis \qty{180}{\degree} abgebildet und mit \cppinline{write()} an den Servo übergeben.
+\subsection{Einen Servomotor mit einem Potentiometer steuern}
+In der vorherigen Lektion haben Sie gelernt, wie ein Potentiometer verwendet wird. Kombinieren Sie jetzt einen Servomotor mit einem Potentiometer, um die Motorposition manuell einstellen zu können. Erweitern Sie dazu Ihre Schaltung wie in \cref{fig:servo-potentiometer-circuit}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.74\textwidth]{FF/Robotik/Skript/Abbildungen/servomotor_potentiometer_batterie.png}
-	\caption{Servomotor mit externer Spannungsversorgung und Potentiometer an \texttt{A0}.}
+	\includegraphics[width=.70\textwidth]{FF/Robotik/Skript/Abbildungen/servomotor_potentiometer_batterie.png}
+	\caption{Servomotor mit Potentiometer und externer Spannungsversorgung.}
 	\label{fig:servo-potentiometer-circuit}
 \end{figure}
 
 \begin{myexercise}
-Erweitern Sie den Sketch aus \cref{lst:servo-sweep}.
 \begin{aenum}
-	\item Bauen Sie \cref{fig:servo-potentiometer-circuit} auf und lesen Sie das Potentiometer an \texttt{A0} aus.
-	\item Bilden Sie den Messwert mit \cppinline{map()} auf \qty{0}{\degree} bis \qty{180}{\degree} ab und übergeben Sie ihn mit \cppinline{write()}.
-	\item Vergleichen Sie Ihre Lösung mit \emph{Datei $\rightarrow$ Beispiele $\rightarrow$ Servo $\rightarrow$ Knob}.
+	\item Modifizieren Sie den Code aus \cref{lst:servo-sweep} so, dass auch der Wert des Potentiometers ausgelesen wird.
+	\item Wie muss der Code weiter verändert werden, damit mit dem Potentiometer ein bestimmter Winkel ausgewählt werden kann?
 \end{aenum}
-\begin{myanswer}keine Musterlösung\end{myanswer}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
 \end{myexercise}
-
-\subsection{Steuersignal eines Servomotors}
-Bei einer typischen Wiederholfrequenz von \qty{50}{\hertz} beträgt die Periodendauer \qty{20}{\milli\second}. Die Impulsbreite bestimmt die Sollposition. Je nach Modell umfasst der nutzbare Bereich beispielsweise \qtyrange{1}{2}{\milli\second} oder \qtyrange{0.5}{2.5}{\milli\second}. Anders als bei der PWM aus \cref{ch:chapter_01} ist hier die absolute Impulsdauer entscheidend.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.58\textwidth]{FF/Robotik/Skript/Abbildungen/servo_pwm_maximalwinkel.jpg}
-	\caption{Mit dem Oszilloskop gemessenes Steuersignal eines Servomotors.}
-	\label{fig:servo-oscilloscope-signal}
-\end{figure}
 
 \begin{myexercise}
-Messen Sie bei beiden Endstellungen Periodendauer und Impulsbreite. Bestimmen Sie die Wiederholfrequenz und die Impulsbreiten für ungefähr \qty{0}{\degree} und \qty{180}{\degree}.
-\begin{myanswer}keine Musterlösung\end{myanswer}
+In der Arduino IDE finden Sie auch den zweiten Beispielcode \emph{Knob} unter \emph{Datei $\rightarrow$ Beispiele $\rightarrow$ Servo $\rightarrow$ Knob}. Schauen Sie sich den Code an, vergleichen Sie ihn mit Ihrem modifizierten Code und übertragen Sie ihn auf den Arduino.
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
 \end{myexercise}
 
-Mit \cppinline{myServo.attach(9, minPulse, maxPulse)} lassen sich die Impulsbreiten der Endpositionen in Mikrosekunden anpassen. Verändern Sie diese nur in kleinen Schritten von \qtyrange{10}{20}{\micro\second} und nie über einen mechanischen Anschlag hinaus.
+\subsection{Die Pulsweitenmodulation}
+Was sollten Sie unternehmen, wenn Ihr Servomotor nicht die vollständige Drehung von \qty{0}{\degree} bis \qty{180}{\degree} ausführt?
+
+Die Winkelsteuerung eines Servomotors basiert auf einem pulsweitenmodulierten Signal. Das Spannungssignal wechselt dabei zwischen \qty{0}{\volt} und \qty{5}{\volt}. Die Breite des Pulses, während dessen das Signal auf High liegt, bestimmt den Winkel, auf den der Servoarm gestellt werden soll. Die minimale Position von ungefähr \qty{0}{\degree} und die maximale Position von ungefähr \qty{180}{\degree} entsprechen jeweils einer bestimmten Pulsbreite.
+
+Diese Pulsbreiten können je nach Typ und Marke des Servos leicht variieren: Bei einigen Modellen liegen sie beispielsweise zwischen \qty{1}{\milli\second} und \qty{2}{\milli\second}, bei anderen zwischen \qty{0.5}{\milli\second} und \qty{2.5}{\milli\second}. Mit einer Frequenz von \qty{50}{\hertz}, also in zeitlichen Abständen von
+\begin{equation}
+	T = \frac{1}{f} = \frac{1}{\qty{50}{\hertz}} = \qty{0.02}{\second} = \qty{20}{\milli\second},
+\end{equation}
+wird dem Servo diese Information wiederholt übermittelt. Anders als bei der Leistungssteuerung aus \cref{ch:chapter_01} ist beim Servo die absolute Impulsbreite entscheidend, nicht nur der Tastgrad.
+
+\begin{myexercise}
+Sie können die Breite der verschiedenen Pulse Ihres Servomotors mit einem Oszilloskop beobachten.
+\begin{aenum}
+	\item Verbinden Sie die Masseklemme des Oszilloskops mit \texttt{GND} und die Messspitze mit der Signalleitung des Servomotors.
+	\item Drehen Sie das Potentiometer so, dass es auf beiden Seiten seinen Grenzwert erreicht. Was beobachten Sie?
+	\item Wie gross ist die Pulsbreite für ungefähr \qty{0}{\degree} beziehungsweise \qty{180}{\degree}?
+	\item Messen Sie die Periodendauer und bestimmen Sie daraus die Wiederholfrequenz.
+\end{aenum}
+
+\begin{center}
+	\includegraphics[width=.45\textwidth]{FF/Robotik/Skript/Abbildungen/servo_pwm_maximalwinkel.jpg}
+\end{center}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+Falls der Servomotor nicht die vollständige Drehung erreicht, können Sie die minimalen und maximalen Impulsbreiten manuell einstellen. Die Funktion \cppinline{attach()} kann dazu mit zwei optionalen Parametern verwendet werden:
+\begin{center}
+	\cppinline{myservo.attach(9, minPulse, maxPulse)}
+\end{center}
+Der zweite Parameter ist die Pulsbreite in Mikrosekunden, die dem minimalen Winkel entspricht. Der dritte Parameter ist die Pulsbreite in Mikrosekunden, die dem maximalen Winkel entspricht. Die Werte dürfen nur in kleinen Schritten von \qtyrange{10}{20}{\micro\second} angepasst werden, damit der Servo nicht gegen seinen mechanischen Anschlag fährt und beschädigt wird.
 
 \section{Gleichstrommotoren}
-Gleichstrommotoren eignen sich als Rad- oder Propellerantrieb. Da ein Arduino die Motorströme nicht direkt liefern kann, übernimmt beim Roboter ein Adafruit Motor Shield die Ansteuerung. Für \cref{lst:dc-motor-test} werden die Bibliotheken \texttt{Adafruit Motor Shield V2 Library} und \texttt{Adafruit PWM Servo Driver Library} benötigt.
+Gleichstrommotoren, oft kurz DC-Motoren genannt, sind Elektromotoren, die beispielsweise für Rad- oder Propellerantriebe verwendet werden. Sie drehen sich kontinuierlich und je nach Ansteuerung schneller oder langsamer.
+
+DC-Motoren können nicht direkt von einem Arduino-Board angesteuert werden. Dafür wird ein Motor Shield benötigt, das auf das Arduino-Board gesteckt wird. Für das Shield von Adafruit, das bei unserem Roboter eingesetzt wird, müssen die zugehörigen Bibliotheken installiert werden.
+
+\begin{myexercise}
+\begin{aenum}
+	\item Laden Sie von Moodle die Datei \enquote{LibrariesFuerFreifach2026.zip} herunter.
+	\item Entpacken Sie die Datei in Ihren Ordner \texttt{Arduino/libraries}.
+	\item Laden Sie das Programm \texttt{DCMotor\_testen} von Moodle herunter und vergleichen Sie es mit \cref{lst:dc-motor-test}.
+	\item Überlegen Sie vor dem Kompilieren, wie sich der Roboter bewegen wird. Übertragen Sie den Code anschliessend, während Sie den Roboter \textbf{festhalten}, sodass sich die Räder frei drehen können.
+	\item Wie muss der Code verändert werden, damit der Roboter die Bewegungsschritte wiederholt?
+\end{aenum}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
+
+\begin{myattention}
+Verwenden Sie für den Parameter von \cppinline{setSpeed()} maximal den Wert $100$.
+\end{myattention}
 
 \lstinputlisting[
-	language=C++, morekeywords={setup,loop,begin,getMotor,run,setSpeed,Adafruit_MotorShield,Adafruit_DCMotor,FORWARD,RELEASE},
-	columns=fullflexible, keepspaces=true, breaklines=true,
-	showspaces=false, showstringspaces=false, showtabs=false, tabsize=2,
-	numbers=none, basicstyle=\ttfamily\footnotesize,
-	caption={Zwei Gleichstrommotoren mit dem Adafruit Motor Shield ansteuern},
+	language=C++,
+	morekeywords={setup,loop,begin,getMotor,run,setSpeed,Adafruit_MotorShield,Adafruit_DCMotor,FORWARD,RELEASE},
+	columns=fullflexible,
+	keepspaces=true,
+	breaklines=true,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2,
+	numbers=none,
+	basicstyle=\ttfamily\footnotesize,
+	caption={Testprogramm für die Gleichstrommotoren},
 	label={lst:dc-motor-test}
 ]{FF/Robotik/Skript/Code/DC_Motor_Test/DC_Motor_Test.ino}
 
-\begin{myattention}
-Verwenden Sie für \cppinline{setSpeed()} in diesem Aufbau höchstens den Wert $100$.
-\end{myattention}
-
 \begin{myexercise}
-Beschreiben Sie vor dem Übertragen die erwartete Bewegung. Testen Sie den Sketch mit frei drehenden Rädern, vergleichen Sie das Ergebnis mit Ihrer Vorhersage und ändern Sie ihn so, dass die Bewegungsfolge wiederholt wird.
-\begin{myanswer}keine Musterlösung\end{myanswer}
-\end{myexercise}
+\begin{center}
+	\includegraphics[width=.40\textwidth]{FF/Robotik/Skript/Abbildungen/arduino_roboter.jpg}
+\end{center}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.46\textwidth]{FF/Robotik/Skript/Abbildungen/arduino_roboter.jpg}
-	\caption{Roboter mit Arduino, Motor Shield und Gleichstrommotoren.}
-	\label{fig:arduino-robot}
-\end{figure}
-
-\begin{myexercise}
-Programmieren Sie den Roboter so, dass er eine Linkskurve fährt, anhält, am Ort dreht, um zwei Gegenstände eine Acht und ein Quadrat mit ungefähr \qty{1}{\metre} Kantenlänge fährt. Untersuchen Sie den Einfluss von Geschwindigkeit, Batteriespannung und Untergrund.
-\begin{myanswer}keine Musterlösung\end{myanswer}
-\end{myexercise}
-
-\begin{mysummary}\phantom{1}
+Der Roboter soll jetzt die folgenden einzelnen Bewegungen und Kombinationen davon durchführen:
 \begin{itemize}
-	\item Motoren benötigen eine geeignete externe Versorgung und eine gemeinsame Masse mit dem Arduino.
-	\item Ein Positionsservo fährt mithilfe periodischer Steuerimpulse einen Winkel an.
-	\item Ein Motor Shield steuert Drehrichtung und Geschwindigkeit von Gleichstrommotoren.
+	\item eine Linkskurve fahren,
+	\item anhalten,
+	\item am Ort drehen,
+	\item um zwei Gegenstände eine Acht fahren,
+	\item ein Quadrat mit einer Kantenlänge von \qty{1}{\metre} abfahren.
 \end{itemize}
-\end{mysummary}
+\begin{myanswer}
+keine Musterlösung
+\end{myanswer}
+\end{myexercise}
