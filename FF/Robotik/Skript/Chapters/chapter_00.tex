@@ -82,7 +82,7 @@ Ein Arduino-Programm wird als \emph{Sketch} bezeichnet. Jeder Sketch besitzt nor
 	\item \cppinline{loop()} wird anschliessend fortlaufend wiederholt. In dieser Endlosschleife liest das Programm Eingaben ein, verarbeitet Daten und steuert Ausgänge.
 \end{itemize}
 
-\begin{lstlisting}[
+\lstinputlisting[
 	language=C++,
 	morekeywords={setup,loop,pinMode,digitalWrite,delay},
 	columns=fullflexible,
@@ -92,22 +92,7 @@ Ein Arduino-Programm wird als \emph{Sketch} bezeichnet. Jeder Sketch besitzt nor
 	basicstyle=\ttfamily\footnotesize,
 	caption={Grundstruktur eines Arduino-Sketches},
 	label={lst:arduino-sketch-structure}
-]
-const int ledPin = 9;
-
-void setup()
-{
-  pinMode(ledPin, OUTPUT);
-}
-
-void loop()
-{
-  digitalWrite(ledPin, HIGH);
-  delay(1000);
-  digitalWrite(ledPin, LOW);
-  delay(1000);
-}
-\end{lstlisting}
+]{FF/Robotik/Skript/Code/Arduino_Sketch_Grundstruktur/Arduino_Sketch_Grundstruktur.ino}
 
 \section{Praktisches Einführungsbeispiel}
 In einem ersten Projekt wird eine Schaltung aus einem Taster und mehreren LEDs aufgebaut. Beim Betätigen des Tasters verändert das Arduino-Board die leuchtenden LEDs. Dadurch lernen Sie das Breadboard, digitale Ein- und Ausgänge sowie das Übertragen eines Sketches kennen.
@@ -224,7 +209,7 @@ Ist der LDR zwischen \qty{5}{\volt} und \texttt{A0} angeordnet, steigt die an \t
 	\label{fig:ldr-voltage-divider}
 \end{figure}
 
-\begin{lstlisting}[
+\lstinputlisting[
 	language=C++,
 	morekeywords={setup,loop,pinMode,analogRead,digitalWrite,delay,Serial},
 	columns=fullflexible,
@@ -234,31 +219,7 @@ Ist der LDR zwischen \qty{5}{\volt} und \texttt{A0} angeordnet, steigt die an \t
 	basicstyle=\ttfamily\footnotesize,
 	caption={Beispiel zum Auslesen eines Fotowiderstands},
 	label={lst:ldr-example-code}
-]
-const int ldrPin = A0;
-const int ledPin = 13;
-const int threshold = 512;
-
-void setup()
-{
-  Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
-}
-
-void loop()
-{
-  int sensorValue = analogRead(ldrPin);
-  Serial.println(sensorValue);
-
-  if (sensorValue > threshold) {
-    digitalWrite(ledPin, HIGH);
-  } else {
-    digitalWrite(ledPin, LOW);
-  }
-
-  delay(50);
-}
-\end{lstlisting}
+]{FF/Robotik/Skript/Code/Fotowiderstand/Fotowiderstand.ino}
 
 \begin{myexercise}
 Erweitern Sie die Fussgängerampel um einen Nachtmodus.
