@@ -472,27 +472,50 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 			      s_{BA} := x^b\mod p.
 		      \end{align*}
 	\end{enumerate}
-	Mithilfe der Rechengesetze der Modulo-Operation kann bewiesen werden, dass tatsächlich
+	Mithilfe der Rechengesetze der Modulo-Operation kann bewiesen werden (siehe \cref{exc:dhm-beweis}), dass tatsächlich
 	\begin{align*}
 		s_{AB} = s_{BA}
 	\end{align*}
 	gilt und somit Alice und Bob dieselbe Zahl berechnet haben. Diese Zahl $s_{AB}$ ist der gemeinsame Schlüssel.
 \end{myprocedure}
 
+\begin{myexcursion}[Potenzierungsregel und Beweis der Korrektheit von \texorpdfstring{\gls{DHM}}{DHM}]\label{exc:dhm-beweis}\label{exc:potenzierungsregel}
+	Warum berechnen Alice und Bob am Ende des \gls{DHM}-Protokolls garantiert dieselbe Zahl ($s_{AB} = s_{BA}$)?
+	
+	\textbf{1. Potenzierungsregel der modularen Arithmetik:}
+	Jede ganze Zahl $u$ lässt sich als $u = \textcolor{RoyalBlue}{q \cdot p} + \textcolor{red}{r}$ darstellen (mit Rest $\textcolor{red}{r} = u \bmod p$). Für die $k$-te Potenz gilt:
+	\[
+		u^k = (\textcolor{RoyalBlue}{q \cdot p} + \textcolor{red}{r})^k = \underbrace{(\textcolor{RoyalBlue}{q \cdot p} + \textcolor{red}{r}) \dotsm (\textcolor{RoyalBlue}{q \cdot p} + \textcolor{red}{r})}_{k \text{ Faktoren}} = \textcolor{RoyalBlue}{\text{(Vielfaches von } p\text{)}} + \textcolor{red}{r^k}.
+	\]
+	Beim Ausmultiplizieren aller Klammern enthält jeder Summand mindestens einen Faktor $\textcolor{RoyalBlue}{p}$, mit Ausnahme des allerletzten Summanden $\textcolor{red}{r^k}$. Modulo $p$ ergeben alle Vielfachen von $p$ den Rest $0$ und fallen weg. Es bleibt somit:
+	\[
+		(u \bmod p)^k \bmod p = u^k \bmod p.
+	\]
+	Wir dürfen also eine Basis $u$ \textbf{vor} dem Potenzieren durch ihren Divisionsrest $u \bmod p$ ersetzen.
+
+	\textbf{2. Eigentlicher Beweis ($s_{AB} = s_{BA}$):}
+	Mit dieser Regel und der Kommutativität der Multiplikation im Exponenten ($b \cdot a = a \cdot b$) folgt:
+	\begin{align*}
+		s_{AB} & = y^a \bmod p = (g^b \bmod p)^a \bmod p = g^{b \cdot a} \bmod p \\
+		       & = g^{a \cdot b} \bmod p = (g^a \bmod p)^b \bmod p = x^b \bmod p = s_{BA}.
+	\end{align*}
+	Alice und Bob erhalten somit ohne Kenntnis des geheimen Schlüssels des anderen denselben gemeinsamen Schlüssel $s_{AB}$.
+\end{myexcursion}
+
 \newpage
 \begin{myexample}[Modulare Exponentiation durch wiederholtes Quadrieren]
-	Warum ist die Berechnung von $g^a \pmod p$ selbst für grosse Zahlen so schnell durchführbar?
+	Warum ist die Berechnung von $g^a \mod p$ selbst für grosse Zahlen so schnell durchführbar?
 	
-	Würde man $g^a$ zuerst als riesige Zahl ausmultiplizieren und erst ganz am Schluss $\pmod p$ rechnen, würde der Speicherplatz jedes Computers sofort gesprengt. Stattdessen nutzt man zwei Prinzipien:
+	Würde man $g^a$ zuerst als riesige Zahl ausmultiplizieren und erst ganz am Schluss $\mod p$ rechnen, würde der Speicherplatz jedes Computers sofort gesprengt (s. \cref{rem:modular-exp-naive}). Stattdessen nutzen wir die Potenzierungsregel (\cref{exc:potenzierungsregel}):
 	\begin{enumerate}
-		\item \textbf{Wiederholtes Quadrieren (\emph{Square-and-Multiply}):} Man zerlegt den Exponenten in eine Summe von Zweierpotenzen.
-		\item \textbf{Zwischenergebnisse sofort reduzieren:} Nach jeder Multiplikation wird sofort modulo $p$ gerechnet. Dadurch bleibt jedes Zwischenergebnis immer kleiner als $p$.
+		\item \textbf{Wiederholtes Quadrieren (\emph{Square-and-Multiply}):} Man zerlegt den Exponenten $a$ in eine Summe von Zweierpotenzen.
+		\item \textbf{Zwischenergebnisse sofort reduzieren:} Nach der Potenzierungsregel mit $k=2$ gilt $((g^m \bmod p))^2 \bmod p = (g^m)^2 \bmod p = g^{2m} \bmod p$. Man darf also das Zwischenergebnis bei jedem Schritt sofort modulo $p$ reduzieren!
 	\end{enumerate}
 
 	Wir zerlegen den Exponenten $13$ in Zweierpotenzen: $13 = \mathbf{\textcolor{purple}{8}} + \mathbf{\textcolor{ForestGreen}{4}} + \mathbf{\textcolor{red}{1}}$.
 	
 	\smallskip\noindent
-	\textbf{Schritt 1: Schrittweises Quadrieren (mit sofortiger Modulo-Reduktion)}
+	\textbf{Schritt 1: Schrittweises Quadrieren (mit sofortiger Modulo-Reduktion)}\marginnote{\footnotesize\raggedright\textbf{Erinnerung ($k=2$):}\\ $(u \bmod p)^2 \equiv u^2 \pmod p$\\[2pt]\emph{Basis vor dem Quadrieren durch den Rest ersetzen!}}
 	\begin{align*}
 		\setlength{\fboxsep}{1.5pt}\fcolorbox{red!70!black}{red!10}{$3^1$}                 & = 3                                                                                                                                                                          &  & \equiv \tikzmarknode{res1}{\mathbf{\textcolor{red}{3}}} \pmod 7         \\[14pt]
 		\setlength{\fboxsep}{1.5pt}\fcolorbox{blue!70!black}{blue!10}{$3^2$}               & = 9                                                                                                                                                                          &  & \equiv \tikzmarknode{res2}{\mathbf{\textcolor{blue}{2}}} \pmod 7        \\[18pt]
@@ -519,6 +542,47 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	Selbst bei einem Exponenten mit hunderten Stellen sind auf diese Weise nur wenige tausend Rechenoperationen mit handlichen Zahlen nötig.
 \end{myexample}
 
+\begin{myexercise}
+	Wenden Sie die Potenzierungsregel (\cref{exc:potenzierungsregel}) und das Verfahren des wiederholten Quadrierens an:
+	\begin{aenum}
+		\item Berechnen Sie $15^{100} \pmod 7$ und $8^5 \pmod 7$ im Kopf, indem Sie die Basis zuerst modulo $7$ reduzieren.
+		\item Berechnen Sie $2^{11} \pmod{13}$ mithilfe des wiederholten Quadrierens (Zerlegung des Exponenten in Zweierpotenzen und Reduktion bei jedem Zwischenschritt).
+	\end{aenum}
+	\begin{myanswer}
+		\begin{aenum}
+			\item \begin{itemize}
+			          \item Da $\mathbf{\textcolor{RoyalBlue}{15}} \equiv \mathbf{\textcolor{red}{1}} \pmod 7$, gilt nach der Potenzierungsregel: $\mathbf{\textcolor{RoyalBlue}{15}}^{100} \equiv (\mathbf{\textcolor{RoyalBlue}{15}} \bmod 7)^{100} \equiv \mathbf{\textcolor{red}{1}}^{100} = \mathbf{1} \pmod 7$.
+			          \item Da $\mathbf{\textcolor{RoyalBlue}{8}} \equiv \mathbf{\textcolor{red}{1}} \pmod 7$, gilt: $\mathbf{\textcolor{RoyalBlue}{8}}^5 \equiv (\mathbf{\textcolor{RoyalBlue}{8}} \bmod 7)^5 \equiv \mathbf{\textcolor{red}{1}}^5 = \mathbf{1} \pmod 7$.
+			      \end{itemize}
+			\item \begin{enumerate}
+			          \item Exponent in Zweierpotenzen zerlegen: $11 = \mathbf{\textcolor{purple}{8}} + \mathbf{\textcolor{blue}{2}} + \mathbf{\textcolor{red}{1}}$.
+			          \item Potenzen durch wiederholtes Quadrieren berechnen:
+			                \begin{align*}
+				                \setlength{\fboxsep}{1.5pt}\fcolorbox{red!70!black}{red!10}{$2^1$}                 & = 2                                                                                                                                                                          &  & \equiv \tikzmarknode{ares1}{\mathbf{\textcolor{red}{2}}} \pmod{13}         \\[14pt]
+				                \setlength{\fboxsep}{1.5pt}\fcolorbox{blue!70!black}{blue!10}{$2^2$}               & = 4                                                                                                                                                                          &  & \equiv \tikzmarknode{ares2}{\mathbf{\textcolor{blue}{4}}} \pmod{13}        \\[18pt]
+				                \setlength{\fboxsep}{1.5pt}\fcolorbox{ForestGreen!70!black}{ForestGreen!10}{$2^4$} & = (\setlength{\fboxsep}{1.5pt}\fcolorbox{blue!70!black}{blue!10}{$2^2$})^2 \equiv (\tikzmarknode{asub2}{\mathbf{\textcolor{blue}{4}}})^2 = 16                                &  & \equiv \tikzmarknode{ares4}{\mathbf{\textcolor{ForestGreen}{3}}} \pmod{13} \\[18pt]
+				                \setlength{\fboxsep}{1.5pt}\fcolorbox{purple!70!black}{purple!10}{$2^8$}           & = (\setlength{\fboxsep}{1.5pt}\fcolorbox{ForestGreen!70!black}{ForestGreen!10}{$2^4$})^2 \equiv (\tikzmarknode{asub4}{\mathbf{\textcolor{ForestGreen}{3}}})^2 = 9         &  & \equiv \tikzmarknode{ares8}{\mathbf{\textcolor{purple}{9}}} \pmod{13}
+			                \end{align*}
+			          \item Passende Potenzen multiplizieren ($11 = \mathbf{\textcolor{purple}{8}} + \mathbf{\textcolor{blue}{2}} + \mathbf{\textcolor{red}{1}}$):
+			                \[
+				                2^{11} = \setlength{\fboxsep}{1.5pt}\fcolorbox{purple!70!black}{purple!10}{$2^8$} \cdot \setlength{\fboxsep}{1.5pt}\fcolorbox{blue!70!black}{blue!10}{$2^2$} \cdot \setlength{\fboxsep}{1.5pt}\fcolorbox{red!70!black}{red!10}{$2^1$} \equiv \tikzmarknode{afin8}{\mathbf{\textcolor{purple}{9}}} \cdot \tikzmarknode{afin2}{\mathbf{\textcolor{blue}{4}}} \cdot \tikzmarknode{afin1}{\mathbf{\textcolor{red}{2}}} = 72 \equiv 7 \pmod{13}.
+			                \]
+			                \begin{tikzpicture}[remember picture, overlay]
+				                % Zwischenübertragungen (Einsetzen in die nächste Potenz)
+				                \draw[->, >=stealth, line width=0.85pt, blue!85!black] (ares2.south west) to[out=195, in=50] node[midway, above=-1pt, font=\tiny\bfseries, text=blue!85!black] {einsetzen} (asub2.north east);
+				                \draw[->, >=stealth, line width=0.85pt, ForestGreen!85!black] (ares4.south west) to[out=195, in=50] node[midway, above=-1pt, font=\tiny\bfseries, text=ForestGreen!85!black] {einsetzen} (asub4.north east);
+
+				                % Pfeile von den Zwischenergebnissen rechts aussen herum unten in die Multiplikation hinein
+				                \draw[->, >=stealth, line width=0.8pt, rounded corners=5pt, red!85!black] ([xshift=48pt]ares1.east) -- ++(36pt,0) |- ([yshift=-10pt]afin1.south) -- (afin1.south);
+				                \draw[->, >=stealth, line width=0.8pt, rounded corners=5pt, blue!85!black] ([xshift=48pt]ares2.east) -- ++(48pt,0) |- ([yshift=-16pt]afin2.south) -- (afin2.south);
+				                \draw[->, >=stealth, line width=0.8pt, rounded corners=5pt, purple!85!black] ([xshift=48pt]ares8.east) -- ++(60pt,0) |- ([yshift=-22pt]afin8.south) -- (afin8.south);
+			                \end{tikzpicture}
+			                \vspace{18pt}
+			      \end{enumerate}
+		\end{aenum}
+	\end{myanswer}
+\end{myexercise}
+
 \begin{myremark}[Warum der naive Rechenweg scheitert]\label{rem:modular-exp-naive}
 	Warum berechnet ein Computer nicht einfach zuerst das Produkt $g^a$ und führt anschliessend eine Division mit Rest modulo $p$ durch?
 	
@@ -544,27 +608,6 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	Die modulare Exponentiation umgeht beide Probleme elegant, da die Zwischenergebnisse durch die fortlaufende Reduktion $\pmod p$ nie grösser als $p^2$ werden und durch wiederholtes Quadrieren lediglich rund 3000 Einzelschritte benötigt werden.
 \end{myremark}
 
-\begin{myexercise}
-	Berechnen Sie $2^{11} \pmod{13}$ mithilfe des wiederholten Quadrierens (Zerlegung des Exponenten und Reduktion bei jedem Zwischenschritt).
-	\begin{myanswer}
-		\begin{enumerate}
-			\item Exponent in Zweierpotenzen zerlegen: $11 = \mathbf{8} + \mathbf{2} + \mathbf{1}$.
-			\item Potenzen durch wiederholtes Quadrieren berechnen:
-			      \begin{align*}
-				      2^1 & = 2                                                                       &  & \equiv \textcolor{red}{2} \pmod{13}         \\
-				      2^2 & = 2^2 = 4                                                                 &  & \equiv \textcolor{blue}{4} \pmod{13}        \\
-				      2^4 & = (\textcolor{blue}{2^2})^2 \equiv \textcolor{blue}{4}^2 = 16              &  & \equiv \textcolor{ForestGreen}{3} \pmod{13} \\
-				      2^8 & = (\textcolor{ForestGreen}{2^4})^2 \equiv \textcolor{ForestGreen}{3}^2 = 9   &  & \equiv \textcolor{purple}{9} \pmod{13}
-			      \end{align*}
-			\item Zusammenmultiplizieren und reduzieren:
-			      \[
-				      2^{11} = 2^8 \cdot 2^2 \cdot 2^1 \equiv \textcolor{purple}{9} \cdot \textcolor{blue}{4} \cdot \textcolor{red}{2} = 72 \equiv 7 \pmod{13}
-			      \]
-			      (denn $72 = 5 \cdot 13 + 7$).
-		\end{enumerate}
-	\end{myanswer}
-\end{myexercise}
-
 \begin{myremark}[Diskretes Logarithmusproblem]\label{rem:dislog}
 	Beim \gls{DHM}-Verfahren wird die Eigenschaft ausgenutzt, dass Potenzieren modulo einer Primzahl eine sogenannte \textbf{Einwegfunktion} darstellt:
 	\begin{itemize}
@@ -581,7 +624,6 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	\end{itemize}
 	Für ausreichend grosse Primzahlen $p$ (in der Praxis mindestens 2048 Bit) existiert bis heute kein effizienter Algorithmus, um dieses Problem in vertretbarer Zeit zu lösen.
 \end{myremark}
-
 
 \begin{myexercise}
 	Führen Sie das \gls{DHM}-Protokoll mit einer weiteren Person aus der Klasse durch. Verwenden Sie

@@ -60,11 +60,11 @@ Das \acrfull{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für
 \begin{enumerate}
 	\item \textbf{Schlüsselerzeugung:}
 	      \begin{itemize}
-		      \item Wählen Sie zwei (möglichst grosse) Primzahlen \( p \) und \( q \).
-		      \item Berechnen Sie das \gls{RSA}-Modul \( n = p \cdot q \).
-		      \item Berechnen Sie die Eulersche Funktion \( \varphi(n) = (p-1)(q-1) \).
-		      \item Wählen Sie den \emph{Verschlüsselungsexponenten} \( e \), so dass dieser teilerfremd zu \( \varphi(n) \) und kleiner als $\varphi(n)$ ist. Dies bedeutet, dass der \gls{GGT} von $e$ und $\varphi(n)$ 1 ist ($\operatorname{ggT}(e, \varphi(n)) = 1$).
-		      \item Berechnen Sie den \emph{Entschlüsselungsexponenten} \( d \), so dass \( (e \cdot d) \mod \varphi(n) = 1  \) (privater Schlüssel). Dies bedeutet, dass, wenn man $d$ mit $e$ multipliziert und dieses Produkt Modulo $\varphi(n)$ rechnet, man die Zahl 1 erhält.
+		      \item Wählen Sie \textbf{zwei (möglichst grosse) Primzahlen} \( p \) und \( q \).
+		      \item Berechnen Sie das \textbf{\gls{RSA}-Modul} \( n = p \cdot q \).
+		      \item Berechnen Sie die \textbf{Eulersche Funktion} \( \varphi(n) = (p-1)(q-1) \). Die Eulersche Funktion \( \varphi(n) \) gibt die Anzahl der positiven ganzen Zahlen kleiner als \( n \) an, die teilerfremd zu \( n \) sind. Für eine Primzahl $p$ gilt \( \varphi(p) = p-1 \), daher \( \varphi(n) = \varphi(p \cdot q) = (p-1)(q-1) \).
+		      \item Wählen Sie den \textbf{\emph{Verschlüsselungsexponenten} \( e \)}, so dass dieser teilerfremd zu \( \varphi(n) \) und kleiner als $\varphi(n)$ ist. Dies bedeutet, dass der \gls{GGT} von $e$ und $\varphi(n)$ 1 ist ($\operatorname{ggT}(e, \varphi(n)) = 1$).
+		      \item Berechnen Sie den \textbf{\emph{Entschlüsselungsexponenten} \( d \)}, so dass \( (e \cdot d) \equiv 1 \pmod{\varphi(n)} \) (privater Schlüssel). Dies bedeutet: Bei der Division des Produkts $e \cdot d$ durch $\varphi(n)$ bleibt der Rest $1$, sodass $e \cdot d = 1 + k \cdot \varphi(n)$ für eine ganze Zahl $k$ gilt.
 		      \item Die Zahlen $p$, $q$ und $\varphi(n)$ werden nun nicht mehr benötigt und können gelöscht werden.
 	      \end{itemize}
 	\item \textbf{Verschlüsselung:}
@@ -133,24 +133,52 @@ Der erste Buchstabe des Kryptotext wird also verschlüsselt als \( c = 27\).
 Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 \end{myexample}
 
-\begin{myexcursion}[Warum funktioniert die \texorpdfstring{\acrshort{RSA}}{RSA}-Entschlüsselung? (Mathematischer Beweis)]\label{exc:rsa-beweis}
-	Warum stellt die Entschlüsselung $(m^e \bmod n)^d \bmod n$ garantiert die ursprüngliche Nachricht $m$ wieder her?
-	
-	Der Beweis lässt sich schrittweise nachvollziehen:
+\begin{myexcursion}[Mathematischer Hintergrund: Der Satz von Euler und der \texorpdfstring{\acrshort{RSA}}{RSA}-Korrektheitsbeweis]\label{exc:rsa-beweis}\label{exc:euler}
+	Warum stellt die Entschlüsselung $(m^e \bmod n)^d \bmod n$ garantiert die ursprüngliche Nachricht $m$ wieder her? Das mathematische Fundament hierfür liefert ein berühmter Satz des Schweizer Mathematikers Leonhard Euler (1707--1783).
+
+	\textbf{1. Die Eulersche $\varphi$-Funktion:}
+	Die Funktion $\varphi(n)$ zählt, wie viele positive ganze Zahlen kleiner als $n$ teilerfremd zu $n$ sind ($\operatorname{ggT}(a, n) = 1$):
+	\begin{itemize}
+		\item Für eine Primzahl $p$ sind alle Zahlen von $1$ bis $p-1$ teilerfremd zu $p$:
+		      \[
+			      \varphi(p) = p - 1.
+		      \]
+		\item Für das \gls{RSA}-Modul $n = p \cdot q$ (Produkt zweier verschiedener Primzahlen) gilt:
+		      \[
+			      \varphi(n) = \varphi(p \cdot q) = (p - 1)(q - 1).
+		      \]
+	\end{itemize}
+
+	\textbf{2. Der Satz von Euler:}
+	Ist eine Basis $a$ teilerfremd zu $n$ ($\operatorname{ggT}(a, n) = 1$), so besagt der \textbf{Satz von Euler}:
+	\[
+		a^{\varphi(n)} \equiv 1 \pmod n.
+	\]
+	\textbf{Beispiel:} Wählen wir $n = 10 = 2 \cdot 5$, so ist $\varphi(10) = (2-1)(5-1) = 4$ (die $4$ teilerfremden Zahlen sind $\{1, 3, 7, 9\}$). Für die Basis $a = 3$ gilt tatsächlich:
+	\[
+		3^{\varphi(10)} = 3^4 = 81 \equiv 1 \pmod{10}.
+	\]
+
+	\textbf{3. Schrittweiser Beweis der \gls{RSA}-Entschlüsselung:}
+	Bei der Schlüsselerzeugung wird $d$ so gewählt, dass $e \cdot d \equiv 1 \pmod{\varphi(n)}$ gilt. Das bedeutet: Bei der Division von $e \cdot d$ durch $\varphi(n)$ bleibt der Rest $1$, also existiert eine ganze Zahl $k$ mit
+	\[
+		e \cdot d = 1 + k \cdot \varphi(n) = k \cdot \varphi(n) + 1.
+	\]
+	Daraus folgt für die Entschlüsselung eines Kryptotexts $c = m^e \bmod n$:
 	\begin{align*}
 		\text{Entschlüsselter Text} 
-		  & = c^d \bmod n                                          && (\text{Definition}) \\[0.4em]
-		  & = (m^e \bmod n)^d \bmod n                              && (\text{Kryptotext } c = m^e \bmod n) \\[0.4em]
-		  & \equiv (m^e)^d \pmod n                                 && (\text{Zwischenreduktion}) \\[0.4em]
-		  & \equiv m^{e \cdot d} \pmod n                           && ((a^b)^c = a^{b \cdot c}) \\[0.4em]
-		  & \equiv m^{k \cdot \varphi(n) + 1} \pmod n              && (e \cdot d = k \cdot \varphi(n) + 1) \\[0.4em]
-		  & \equiv \left(m^{\varphi(n)}\right)^k \cdot m^1 \pmod n && (a^{x+y} = a^x \cdot a^y) \\[0.4em]
+		  & = c^d \bmod n                                          && (\text{Definition der Entschlüsselung}) \\[0.4em]
+		  & = (m^e \bmod n)^d \bmod n                              && (\text{Kryptotext } c = m^e \bmod n \text{ einsetzen}) \\[0.4em]
+		  & \equiv (m^e)^d \pmod n                                 && (\text{Potenzierungsregel, s.~\cref{exc:potenzierungsregel}}) \\[0.4em]
+		  & \equiv m^{e \cdot d} \pmod n                           && (\text{Potenzgesetz: } (a^b)^c = a^{b \cdot c}) \\[0.4em]
+		  & \equiv m^{k \cdot \varphi(n) + 1} \pmod n              && (\text{Schlüsselbedingung: } e \cdot d = 1 + k \cdot \varphi(n)) \\[0.4em]
+		  & \equiv \left(m^{\varphi(n)}\right)^k \cdot m^1 \pmod n && (\text{Potenzgesetz: } a^{x+y} = a^x \cdot a^y) \\[0.4em]
 		  & \equiv (1)^k \cdot m \pmod n                           && (\text{Satz von Euler: } m^{\varphi(n)} \equiv 1) \\[0.4em]
 		  & \equiv 1 \cdot m \pmod n                               && (1^k = 1) \\[0.4em]
 		  & = \mathbf{m}                                           && (\text{Klartext wiederhergestellt!})
 	\end{align*}
 	
-	\textbf{Zusammenfassung der Kernidee:} Durch die Wahl von $e \cdot d = k \cdot \varphi(n) + 1$ durchläuft der Exponent genau $k$ volle Umläufe modulo $n$, die nach dem Satz von Euler jeweils neutral zu $1$ werden ($1^k = 1$). Es bleibt exakt der Faktor $m^1 = m$ übrig.
+	\textbf{Zusammenfassung der Kernidee:} Durch die Wahl von $e \cdot d = 1 + k \cdot \varphi(n)$ durchläuft der Exponent genau $k$ volle Umläufe der Länge $\varphi(n)$ modulo $n$, die nach dem Satz von Euler jeweils neutral zu $1$ werden ($1^k = 1$). Es bleibt exakt der Faktor $m^1 = m$ übrig.
 \end{myexcursion}
 
 \begin{myexercise}\label{myexercise:rsa}
@@ -269,7 +297,7 @@ Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur
 \end{myprocedure}
 
 \begin{myexample}
-	Angenommen, Alice möchte eine Nachricht $m = 42$ signieren. Sie will die (unverschlüsselte) Nachricht 42 also verschicken – dabei soll eindeutig überprüfbar sein, dass Alice die Absenderin ist. Sie verwendet ihren privaten Schlüssel $(d, n) = (9677, 12317)$ und den öffentlichen Schlüssel $(e, n) = (5, 12317)$.
+	Angenommen, Alice möchte eine Nachricht $m = 42$ signieren. Sie will die (unverschlüsselte) Nachricht 42 also verschicken -- dabei soll eindeutig überprüfbar sein, dass Alice die Absenderin ist. Sie verwendet ihren privaten Schlüssel $(d, n) = (9677, 12317)$ und den öffentlichen Schlüssel $(e, n) = (5, 12317)$.
 
 	\textbf{Signaturerstellung:}
 	\[
