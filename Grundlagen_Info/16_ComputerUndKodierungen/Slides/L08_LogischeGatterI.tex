@@ -1,6 +1,7 @@
 %!TeX program = lualatex
 \renewcommand{\thelektion}{L08 \textperiodcentered{} Logische Gatter I}
 \usetikzlibrary{circuits.logic.US}
+\graphicspath{{./Grundlagen_Info/16_ComputerUndKodierungen/Slides/assets}}
 
 \begin{frame}\lessontitle{Lektion 08}{Logische Gatter I}{Vom Stromkreis zum Gatter: NOT, AND, OR \textperiodcentered{} Skript, Kapitel 4}\end{frame}
 
@@ -11,11 +12,72 @@ Ein Chip ist ein Netzwerk aus leitenden Verbindungen und Schaltern.
 
 \textbf{Zentrale Idee}: Elektrische Zustände werden als logische Zustände interpretiert.
 \end{center}
-\[
-    \text{niedrige Spannung} \longleftrightarrow 0,
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0]
+        \begin{scope}[shift={(0,0)}, local bounding box=openBB]
+            \coordinate (open-base) at (0,0);
+            \coordinate (open-bat-bot) at ($(open-base)+(0.6,0.8)$);
+            \coordinate (open-bat-top) at ($(open-base)+(0.6,2.2)$);
+            \coordinate (open-sw-left) at ($(open-base)+(2.0,2.2)$);
+            \coordinate (open-sw-right) at ($(open-base)+(2.9,2.2)$);
+            \coordinate (open-lamp) at ($(open-base)+(3.8,2.2)$);
+            \coordinate (open-ret) at ($(open-base)+(3.8,0.8)$);
+
+            \draw (open-bat-bot) -- (open-bat-top);
+            \draw ($(open-base)+(0.45,1.15)$) -- ($(open-base)+(0.75,1.15)$);
+            \draw ($(open-base)+(0.50,1.60)$) -- ($(open-base)+(0.70,1.60)$);
+            \node[left] at ($(open-base)+(0.35,1.35)$) {$U$};
+
+            \draw (open-bat-top) -- (open-sw-left);
+            \draw (open-sw-left) -- ($(open-sw-left)+(0.6,0.3)$);
+            \draw (open-sw-right) -- (open-lamp);
+            \draw (open-lamp) circle (0.35);
+            \draw ($(open-base)+(3.55,1.95)$) -- ($(open-base)+(4.05,2.45)$);
+            \draw (open-bat-bot) -- (open-ret) -- ($(open-lamp)+(0,-0.35)$);
+
+            \node at ($(open-base)+(2.35,2.65)$) {\tiny kein Kontakt};
+            \node at ($(open-base)+(3.8,1.3)$) {Last aus};
+            \node at ($(open-base)+(2.5,2.95)$) {Schalter offen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(openBB),inner sep=8pt] {};
+
+        \begin{scope}[shift={(6.2,0)}, local bounding box=closedBB]
+            \coordinate (closed-base) at (0,0);
+            \coordinate (closed-bat-bot) at ($(closed-base)+(0.6,0.8)$);
+            \coordinate (closed-bat-top) at ($(closed-base)+(0.6,2.2)$);
+            \coordinate (closed-sw-left) at ($(closed-base)+(2.0,2.2)$);
+            \coordinate (closed-sw-right) at ($(closed-base)+(2.6,2.2)$);
+            \coordinate (closed-lamp) at ($(closed-base)+(3.8,2.2)$);
+            \coordinate (closed-ret) at ($(closed-base)+(3.8,0.8)$);
+
+            \draw (closed-bat-bot) -- (closed-bat-top);
+            \draw ($(closed-base)+(0.45,1.15)$) -- ($(closed-base)+(0.75,1.15)$);
+            \draw ($(closed-base)+(0.50,1.60)$) -- ($(closed-base)+(0.70,1.60)$);
+            \node[left] at ($(closed-base)+(0.35,1.35)$) {$U$};
+
+            \draw (closed-bat-top) -- (closed-sw-left);
+            \fill (closed-sw-left) circle (0.04);
+            \fill (closed-sw-right) circle (0.04);
+            \draw[line width=0.5pt] (closed-sw-left) -- (closed-sw-right);
+            \draw (closed-sw-right) -- (closed-lamp);
+            \draw (closed-lamp) circle (0.35);
+            \fill (closed-lamp) circle (0.12);
+            \draw (closed-bat-bot) -- (closed-ret) -- ($(closed-lamp)+(0,-0.35)$);
+
+            \node at ($(closed-base)+(2.3,2.65)$) {\tiny Kontakt};
+            \node at ($(closed-base)+(3.8,1.3)$) {Last aktiv};
+            \node at ($(closed-base)+(2.5,2.95)$) {Schalter geschlossen};
+        \end{scope}
+        \node[draw,rounded corners,fit=(closedBB),inner sep=8pt] {};
+    \end{tikzpicture}
+    \[
+    \text{niedrige Spannung} \longleftrightarrow 0
     \qquad
-    \text{hohe Spannung} \longleftrightarrow 1.
+    \qquad
+    \text{hohe Spannung} \longleftrightarrow 1
 \]
+\end{figure}
 \end{frame}
 
 \begin{frame}\FDUtitle{Warum ausgerechnet zwei Zustände?}
@@ -117,16 +179,27 @@ Funktionen, die Bits als Eingabe erhalten und \textbf{genau ein} Bit ausgeben.
 \begin{center}Ausgang 1, wenn \textbf{mindestens ein} Eingang 1 ist.\end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Gatter kombinieren}
+\begin{frame}{Auftrag}{Kapitel 4: Logische Grundverknüpfungen}
+\aufgabebox{\textbf{Aufgabe 4.3}: Fahrstuhl-Bedingung mit AND-, OR- und NOT-Gattern modellieren.}
 \begin{center}
 Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten \emph{oder} der Notfall-Modus deaktiviert ist.
 \vspace{4mm}
 
-Modellieren Sie diese Bedingung mit AND-, OR- und NOT-Gattern.
+Modellieren Sie diese Bedingung mit AND-, OR- und NOT-Gattern grafisch und geben Sie die zugehörige logische Formel an.
 \end{center}
-\only<2->{\begin{center}\large $t \wedge (\overline{u} \vee \overline{n})$\end{center}}
 \end{frame}
 
-\begin{frame}{Auftrag}{Kapitel 4: Logische Grundverknüpfungen}
-\aufgabebox{\textbf{Aufgabe 4.1}: Modellieren Sie die Fahrstuhl-Bedingung mithilfe von AND-, OR- und NOT-Gattern und geben Sie die logische Formel an.}
+\begin{frame}\FDUtitle{Lösung: Aufgabe 4.3}
+\begin{center}
+Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten \emph{oder} der Notfall-Modus deaktiviert ist.
+\end{center}
+\begin{center}
+Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
+\large $t \wedge (\overline{u} \vee \overline{n})$\end{center}
+    \centering
+    \includegraphics[
+        width=\textwidth,
+        height=0.3\textheight,
+        keepaspectratio
+    ]{Grundlagen_Info/16_ComputerUndKodierungen/Slides/assets/L09_Loesung4_3.png}
 \end{frame}
