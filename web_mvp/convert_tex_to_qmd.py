@@ -207,9 +207,35 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = re.sub(r'\\texorpdfstring\{[^\}]*\\lstinline[\|!]([^\|!]+)[\|!][^\}]*\}\{([^\}]+)\}', r'`\1`', text)
 
     # Convert sections and subsections
-    text = re.sub(r'\\section\{([^\}]+)\}(?:\\label\{[^\}]+\})?', r'\n\n## \1\n\n', text)
-    text = re.sub(r'\\subsection\{([^\}]+)\}(?:\\label\{[^\}]+\})?', r'\n\n### \1\n\n', text)
-    text = re.sub(r'\\subsubsection\{([^\}]+)\}(?:\\label\{[^\}]+\})?', r'\n\n#### \1\n\n', text)
+    def convert_section(m):
+        raw_title = m.group(1).strip()
+        label = m.group(2).strip() if m.group(2) else ""
+        clean_title = clean_tex_escapes(raw_title)
+        extra_spans = ""
+        if label:
+            extra_spans += f'<span id="{label}"></span>\n'
+        if "Längere Lösungen" in clean_title or "Laengere Loesungen" in clean_title:
+            extra_spans += '<span id="laengere-loesungen"></span>\n'
+            return f"\n\n## {clean_title} {{#längere-lösungen}}\n{extra_spans}\n\n"
+        return f"\n\n## {clean_title}\n{extra_spans}\n\n"
+
+    def convert_subsection(m):
+        raw_title = m.group(1).strip()
+        label = m.group(2).strip() if m.group(2) else ""
+        clean_title = clean_tex_escapes(raw_title)
+        extra_spans = f'<span id="{label}"></span>\n' if label else ""
+        return f"\n\n### {clean_title}\n{extra_spans}\n\n"
+
+    def convert_subsubsection(m):
+        raw_title = m.group(1).strip()
+        label = m.group(2).strip() if m.group(2) else ""
+        clean_title = clean_tex_escapes(raw_title)
+        extra_spans = f'<span id="{label}"></span>\n' if label else ""
+        return f"\n\n#### {clean_title}\n{extra_spans}\n\n"
+
+    text = re.sub(r'\\section\{([^\}]+)\}(?:\s*\\label\{([^\}]+)\})?', convert_section, text)
+    text = re.sub(r'\\subsection\{([^\}]+)\}(?:\s*\\label\{([^\}]+)\})?', convert_subsection, text)
+    text = re.sub(r'\\subsubsection\{([^\}]+)\}(?:\s*\\label\{([^\}]+)\})?', convert_subsubsection, text)
 
     # Convert \lstinputlisting to pyodide / static blocks
     text = re.sub(r'\\lstinputlisting(?:\[[^\]]*\])?\{([^\}]+)\}', resolve_lstinputlisting, text)
@@ -357,8 +383,20 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = process_nested_command(text, "href", lambda args: f"[{args[1]}]({args[0]})" if len(args) >= 2 else "")
     text = process_nested_command(text, "footnote", lambda args: f"^[{args[0]}]" if args else "")
 
-    # Convert Align Math
-    text = re.sub(r'\\begin\{align\*\}(.*?)\\end\{align\*\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
+    # Convert display math environments to $$ ... $$
+    text = re.sub(r'\\\[(.*?)\\\]', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{equation\*?\}(.*?)\\end\{equation\*?\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{gather\*?\}(.*?)\\end\{gather\*?\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
+
+    # Clean TeX math helpers for web math rendering
+    text = re.sub(r'\\colorbox\{[^\}]*\}\{\\ensuremath\{([^\}]+)\}\}', r'\1', text)
+    text = re.sub(r'\\colorbox\{[^\}]*\}\{([^\}]+)\}', r'\1', text)
+    text = re.sub(r'\\floor\{([^\}]+)\}', r'\\lfloor \1 \\rfloor', text)
+
+    # Clean todolist environments
+    text = re.sub(r'\\begin\{todolist\}', '', text)
+    text = re.sub(r'\\end\{todolist\}', '', text)
 
     # Remove TikZ marks and formatting leftovers
     text = re.sub(r'\\tikzmark(?:node)?\{[^\}]+\}', '', text)
@@ -374,12 +412,14 @@ def convert_tex_content(tex_text, ch_num="1"):
     def convert_cref(m):
         ref_id = m.group(1).strip()
         if "sol" in ref_id:
-            return "[Längere Lösungen](#laengere-loesungen)"
+            return "[Längere Lösungen](#längere-lösungen)"
         elif "fig:" in ref_id:
             return "Abbildung"
         elif ref_id in label_to_info:
             info = label_to_info[ref_id]
             return f"[{info['display_title']}](#{ref_id})"
+        elif ref_id.startswith("sec:"):
+            return f"[Abschnitt](#{ref_id})"
         else:
             return "Abschnitt"
 
