@@ -200,7 +200,7 @@ Beachte, dass der Algorithmus \texttt{B} eine kurze Beschreibung von $w$ relativ
 
 Die Idee von Kolmogorov besteht darin, dass wir uns nicht auf eine willkürlich gewählte Komprimierung einigen müssen. Stattdessen erlaubt er beliebige Programme (in einer fest gewählten Programmiersprache) zur Beschreibung von Texten. Wenn ein Text durch ein kurzes Programm beschrieben werden kann, so besitzt er eine geringe Kolmogorov-Komplexität. Erlaubt ein Text hingegen keine kurze Beschreibung als Programm, so besitzt er eine hohe Kolmogorov-Komplexität.
 
-\section{Binäre Datenblöcke und Definition der Kolmogorov-Komplexität}
+\section{Definition der Kolmogorov-Komplexität}
 Zunächst möchten wir klären, wie ein binäres Wort in einem Programm gespeichert werden kann, ohne dass jedes seiner Bits als gewöhnliches Textzeichen kodiert werden muss. Betrachten wir dazu nochmals das folgende Standard-\texttt{C++}-Programm aus \cref{myexample:generateA}:
 \begin{lstlisting}[language=C++,escapechar=!] 
 #include <iostream>
@@ -248,6 +248,43 @@ Für ein binäres Wort $w$ betrachten wir alle Maschinencodes der \texttt{C'++}-
 	Ist $C(w)$ ein geeignetes Mass für den Informationsgehalt des binären Wortes $w$? Ja, denn die Kolmogorov-Komplexität berücksichtigt jede berechenbare verlustfreie Komprimierungsmethode. Es sei $x$ ein binäres Wort und $f$ eine solche Komprimierungsmethode, die zu $x$ eine komprimierte Darstellung $x':=f(x)$ erzeugt. Dann existiert ein Dekompressionsalgorithmus $d$ mit $d(f(x))=d(x')=x$. Wir können ein Programm schreiben, das lediglich das kurze Wort $x'$ als Parameter enthält, $x$ mithilfe von $d$ rekonstruiert und anschliessend ausgibt. Der feste Algorithmus $d$ muss zwar ebenfalls im Programm kodiert sein, seine Beschreibungslänge ist jedoch unabhängig von $x$ und $x'$ und kann daher als Konstante betrachtet werden.
 \end{myremark}
 
+\begin{myexercise}[Alle Bitmuster in einem Wort]\label{myexercise:definition_kolmogorov}
+	Für $n\geq 1$ entsteht das Wort $w_n$, indem wir alle binären Wörter der Länge $n$ in aufsteigender Reihenfolge ihres Zahlenwerts aneinanderhängen. Führende Nullen werden dabei beibehalten. Beispielsweise ist $w_2=00\,01\,10\,11=00011011$.
+	\begin{enumerate}
+		\item Bestimme $w_3$ und leite eine Formel für die Länge von $w_n$ her.
+		\item Entwirf einen Algorithmus, der $w_n$ generiert, ohne die einzelnen Teilwörter im Programm zu speichern. Pseudocode genügt. Welche Angabe muss für jedes $n$ im Programm hinterlegt werden, damit es ohne Eingabe genau $w_n$ ausgibt?
+		\item Stelle dir vor, dein Algorithmus wird in \texttt{C'++} umgesetzt. Verwende für die von $n$ abhängige Angabe einen binären Rohdatenblock. Begründe damit eine obere Schranke für $C(w_n)$ der Form $\abs{bin(n)}+c$. Wofür steht $c$, und weshalb ist es unabhängig von $n$? Vergleiche für $n=1024$ die Wortlänge mit dieser Schranke.
+		\item In $w_n$ kommt jedes Bitmuster der Länge $n$ vor. Bedeutet dies, dass $w_n$ einen grossen Informationsgehalt im Sinne der Kolmogorov-Komplexität haben muss? Begründe anhand deiner Ergebnisse.
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item Es ist $w_3=000\,001\,010\,011\,100\,101\,110\,111$. Es gibt $2^n$ binäre Wörter der Länge $n$, also gilt $\abs{w_n}=n\cdot 2^n$.
+			\item Eine mögliche Lösung lautet:
+\begin{lstlisting}[language=Python]
+n = ...  # Im Programm gespeicherter Wert, keine Eingabe
+bits = [0] * n
+while True:
+    for bit in bits:
+        print(bit, end="")
+    i = n - 1
+    while i >= 0 and bits[i] == 1:
+        bits[i] = 0
+        i -= 1
+    if i < 0:
+        break
+    bits[i] = 1
+\end{lstlisting}
+			Die Liste beginnt mit $n$ Nullen und wird nach jeder Ausgabe wie ein binärer Zähler um eins erhöht. Nach der Ausgabe von $n$ Einsen endet das Programm. Nur der Wert $n$ muss hinterlegt werden; alle Teilwörter werden daraus berechnet.
+			\item In \texttt{C'++} kann $n$ durch das Schema \cppinline{0b***n+++} hinterlegt werden. Der Rohdatenblock benötigt $\abs{bin(n)}$ Bits. Die Konstante $c$ ist die Länge des übrigen kompilierten Programms einschliesslich des Verweises auf den Block. Dieser Programmteil enthält immer denselben Zähl- und Ausgabealgorithmus und hängt daher nicht von $n$ ab. Somit gilt
+			\begin{align*}
+				C(w_n)\leq\abs{bin(n)}+c.
+			\end{align*}
+			Für $n=1024$ hat das Wort $1024\cdot 2^{1024}$ Bits, während $bin(1024)=10000000000$ nur $11$ Bits hat. Also ist $C(w_{1024})\leq 11+c$. Der während der Ausführung benötigte Speicher für die Liste gehört nicht zur Programmlänge.
+			\item Nein. Obwohl alle Bitmuster vorkommen, ist ihre Anordnung durch eine kurze Regel festgelegt. Das gesamte Wort lässt sich aus $n$ und einem festen Algorithmus rekonstruieren. Die Vielfalt der enthaltenen Teilwörter allein erzwingt daher keine hohe Kolmogorov-Komplexität.
+		\end{enumerate}
+	\end{myanswer}
+\end{myexercise}
+
 \section{Invarianz der Programmiersprache}\label{sec:Sprachinvarianz}
 Die Länge eines Programms hängt natürlich von der verwendeten Programmiersprache ab. Trotzdem ist die Wahl der Sprache für die Kolmogorov-Komplexität nicht entscheidend. Der Grund dafür lässt sich mit einem Übersetzer erklären.
 
@@ -278,11 +315,20 @@ Eine Sprache $U$, die auf diese Weise Programme aus allen anderen Programmierspr
 		Der zusätzliche Platz $c_S$ ist für alle Wörter $w$ gleich, weil der Übersetzer stets derselbe ist.
 	\end{myproof}
 \end{mytheorem}
-Sind $U$ und $V$ beide solche universellen Sprachen, können sie sich gegenseitig übersetzen. Ihre Kolmogorov-Komplexitäten unterscheiden sich deshalb höchstens um eine feste Konstante:
+Sind $U$ und $S$ beide solche universellen Sprachen, können sie sich gegenseitig übersetzen. Für die Übersetzung von $S$ nach $U$ benötigen wir wie oben den zusätzlichen Platz $c_S$. Für die umgekehrte Richtung, also von $U$ nach $S$, bezeichnen wir den zusätzlichen Platz mit $c_U$. Damit gilt für alle binären Wörter $w$:
 \begin{align*}
-	\abs{C_U(w)-C_V(w)}\leq c_{U,V}
+	C_U(w)&\leq C_S(w)+c_S,\\
+	C_S(w)&\leq C_U(w)+c_U.
 \end{align*}
-Dabei hängt $c_{U,V}$ von den beiden Sprachen, aber nicht von $w$ ab. In diesem Sinne spielt die Wahl der Programmiersprache keine wesentliche Rolle.
+Die beiden Übersetzer können unterschiedlich lang sein; deshalb müssen $c_S$ und $c_U$ nicht gleich gross sein. Wählen wir das Maximum
+\begin{align*}
+	c_{U,S}:=\max\{c_S,c_U\},
+\end{align*}
+so deckt diese Konstante den zusätzlichen Platz in beiden Richtungen ab. Ihre Kolmogorov-Komplexitäten unterscheiden sich deshalb höchstens um diese feste Konstante:
+\begin{align*}
+	\abs{C_U(w)-C_S(w)}\leq c_{U,S}.
+\end{align*}
+Dabei hängt $c_{U,S}$ von den beiden Sprachen und den gewählten Übersetzern, aber nicht von $w$ ab. In diesem Sinne spielt die Wahl der Programmiersprache keine wesentliche Rolle.
 
 \section{Triviale obere Schranke für die Kolmogorov-Komplexität}
 Ein beliebiges binäres Wort $w$ kann sicherlich immer beschrieben werden, indem man jedes Bit des Wortes einzeln angibt, $w$ also Bit für Bit diktiert. Diese Beobachtung lässt vermuten, dass die Kolmogorov-Komplexität eines jeden binären Wortes $w$ zumindest nicht (wesentlich) grösser ist als die Anzahl Bits von $w$ (Länge von $w$). Diese Vermutung ist korrekt, wie \cref{mytheorem:upperbound} zeigt.
@@ -305,7 +351,7 @@ Ein beliebiges binäres Wort $w$ kann sicherlich immer beschrieben werden, indem
 \end{mytheorem}
 Die Kolmogorov-Komplexität eines Wortes $w$ ist also sicherlich (bis auf eine Konstante) nicht grösser als die Länge von $w$.
 
-\begin{myexample}[Denselben binären Block mehrfach verwenden]\label{myexample:bounded-repetitions}
+\begin{myremark}[Denselben binären Block mehrfach verwenden]\label{myremark:bounded-repetitions}
 	Betrachten wir ein festes Programmschema, in dem dasselbe binäre Wort $w$ an $k$ verschiedenen Stellen verwendet wird, wobei beispielsweise $1\leq k\leq 5$ gilt. Die Zahl $5$ ist dabei willkürlich gewählt und besitzt keine besondere Bedeutung. Entscheidend ist lediglich, dass die Anzahl der Vorkommen durch eine im Voraus festgelegte Konstante beschränkt ist. Anstelle von $5$ könnten wir jede andere feste obere Schranke $m$ wählen und $1\leq k\leq m$ voraussetzen.
 
 	Die Vorkommen müssen weder im Quelltext nebeneinanderstehen noch muss die Ausgabe die Form $w^k$ besitzen. Beispielsweise darf das Programm die einzelnen Vorkommen von $w$ in verschiedenen Funktionen oder an verschiedenen Stellen der Ausgabe verwenden.
@@ -333,11 +379,12 @@ void use_w() {
 	\end{align*}
 	Die Konstante $c_m$ darf von der vorab gewählten Schranke $m$, aber nicht von $w$ abhängen. Auch wenn zwischen endlich vielen vorgegebenen Programmschemata gewählt werden darf, bleibt die Aussage richtig: Man wählt $c_m$ als den grössten konstanten Zusatzaufwand dieser Schemata.
 
-	Die Voraussetzung einer festen oberen Schranke und eines festen Programmschemas ist wesentlich. Darf $k$ beliebig gross werden, kann der von $k$ abhängige Aufwand nicht ohne Weiteres in eine einzige, von $k$ unabhängige Konstante aufgenommen werden. Wird $k$ beispielsweise binär gespeichert und eine Schleife zur wiederholten Verwendung von $w$ eingesetzt, entsteht zusätzlich ein von der Beschreibungslänge von $k$ abhängiger Term, typischerweise von der Grössenordnung $O(\lr{\log k})$. Falls weitere Programmteile oder die Positionen der Vorkommen durch zusätzliche, beliebig lange Daten festgelegt werden, müssen auch diese Daten in der Beschreibung gespeichert und zur Schranke addiert werden.
+	Die Voraussetzung einer festen oberen Schranke und eines festen Programmschemas ist wesentlich. Darf $k$ beliebig gross werden, kann der von $k$ abhängige Aufwand nicht ohne Weiteres in eine einzige, von $k$ unabhängige Konstante aufgenommen werden. Wird $k$ beispielsweise binär gespeichert und eine Schleife zur wiederholten Verwendung von $w$ eingesetzt, entsteht zusätzlich ein von der Beschreibungslänge von $k$ abhängiger Term, typischerweise von der Grössenordnung $O\lr{\log (k)}$. Falls weitere Programmteile oder die Positionen der Vorkommen durch zusätzliche, beliebig lange Daten festgelegt werden, müssen auch diese Daten in der Beschreibung gespeichert und zur Schranke addiert werden.
 
 	Dasselbe Prinzip lässt sich mit einer Mehrband-Turingmaschine realisieren: Sie speichert $w$ einmal auf einem Arbeitsband und greift bei jeder benötigten Verwendung erneut auf dieses Band zu. Eine feste Mehrband-Turingmaschine kann in unserer optimalen universellen Beschreibungssprache durch einen festen Simulator beschrieben werden. Dessen Länge geht lediglich als additive Konstante in $c$ ein.
-\end{myexample}
+\end{myremark}
 
+\clearpage
 \section{Sehr regelmässige Wörter}
 \cref{mytheorem:upperbound} gibt lediglich eine obere Schranke für die Kolmogorov-Komplexität von binären Wörtern an. Wörter $w$, die eine hohe Regelmässigkeit aufweisen, müssen nicht Bit für Bit angegeben werden, sondern lassen sich (unter Ausnutzung ihrer Regelmässigkeit) deutlich kürzer beschreiben als mit $\abs{w} + c$ vielen Bits.
 
@@ -411,9 +458,9 @@ void Fn() {
     std::cout << wort;
 }
     \end{lstlisting}
-	Warum beweist dieses Programm sicherlich eine schlechtere obere Schranke für die Kolmogorov-Komplexität von $v_n$ als \cref{myexample:vn}?
+	Warum beweist dieses Programm sicherlich eine schlechtere obere Schranke für die Kolmogorov-Komplexität von $v_n$ als \cref{myexample:vn}? Tipp: Beachte dazu insbesondere \cref{myremark:bounded-repetitions}.
 	\begin{myanswer}
-		Die beiden Vorkommen von \cppinline{0b***n**2+++} bezeichnen dieselbe Binärdarstellung von $n^2$. Der Compiler \texttt{g'++} speichert den Block zwischen den Escape-Sequenzen deshalb nur einmal. Damit liefert \texttt{Fn} die obere Schranke
+		Die beiden Vorkommen von \cppinline{0b***n**2+++} bezeichnen dieselbe Binärdarstellung von $n^2$. Der Compiler \texttt{g'++} speichert den Block zwischen den Escape-Sequenzen deshalb nur einmal (siehe \cref{myremark:bounded-repetitions}). Damit liefert \texttt{Fn} die obere Schranke
 		\begin{align*}
 			C(v_n)\leq c + \ceil{\log_2\lr{n^2 + 1}} \leq c' + \log_2\lr{n^2} = c' + \log_2\lr{\abs{v_n}}
 		\end{align*}
