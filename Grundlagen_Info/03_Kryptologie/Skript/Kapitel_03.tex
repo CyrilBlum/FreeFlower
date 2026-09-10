@@ -658,7 +658,19 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	\end{myanswer}
 \end{myexercise}
 
-\subsection*{Sicherheit des \gls{DHM}-Protokolls}
+\subsection{Sicherheit des \gls{DHM}-Protokolls}
 Das \gls{DHM}-Protokoll ist sicher, weil es (bisher) keinen effizienten Algorithmus gibt, um das diskrete Logarithmusproblem zu lösen. Ein Kryptoanalyst (Eve) kann zwar die öffentlichen Werte $p, g, x$ und $y$ in Erfahrung bringen, aber um daraus den gemeinsamen Schlüssel $s_{AB}$ zu berechnen, müsste sie entweder die geheime Zahl $a$ von Alice oder die geheime Zahl $b$ von Bob bestimmen. Dies entspricht dem Lösen des diskreten Logarithmusproblems, was (bisher) als schwierig gilt.
 
-Allerdings ist das DHM-Protokoll nicht gegen einen Man-in-the-Middle-Angriff geschützt. Ein Angreifer (Eve) könnte sich zwischen Alice und Bob schalten und so tun, als ob sie Alice wäre, wenn sie mit Bob kommuniziert, und umgekehrt. Dadurch könnte Eve sowohl mit Alice als auch mit Bob jeweils einen eigenen gemeinsamen Schlüssel vereinbaren und so die Kommunikation zwischen den beiden belauschen. Diese Schwäche kann durch die Verwendung von digitalen Signaturen behoben werden, welche die Authentizität der Kommunikationspartner sicherstellen. Ein Beispiel eines solchen Signaturverfahrens ist das \gls{RSA}-Kryptosystem (siehe \cref{subsec:rsa}).
+\paragraph*{Komplexität des Knackens: Zahlenwert vs.\ Bitlänge}
+Warum ist das vollständige Durchprobieren aller Exponenten (Brute-Force) für grosse Zahlen praktisch unmöglich? In der theoretischen Informatik wird die Laufzeit eines Algorithmus stets relativ zur \textbf{Länge der Eingabe in Bits $n$} angegeben -- nicht relativ zum Zahlenwert $N$:
+\begin{itemize}
+	\item Eine Zahl $N$ benötigt im Binärsystem lediglich $n \approx \log_2 N$ Bits Speicherplatz. Umgekehrt gilt $N \approx 2^n$.
+	\item Ein naives Durchprobieren aller Zahlen bis $N$ benötigt zwar $\mathcal{O}(N)$ Versuche (linear im Zahlenwert), bezogen auf die tatsächliche Eingabelänge $n$ des Schlüssels ist der Aufwand jedoch \textbf{exponentiell}:
+	      \[
+		      \mathcal{O}(N) = \mathcal{O}(2^n).
+	      \]
+\end{itemize}
+Ein anschaulicher Vergleich ist ein Zahlenschloss: Bei einem 4-stelligen PIN existieren $10^4 = 10\,000$ Kombinationen, bei 6 Stellen bereits $10^6 = 1\,000\,000$. Jede zusätzliche Ziffer verlängert die Eingabe nur um $1$ Zeichen, verzehnfacht aber den Suchaufwand. Analog verdoppelt jedes zusätzliche Bit eines Schlüssels den Suchraum ($2^n$). Während die modulare Exponentiation zum Erzeugen des Schlüssels in polynomieller Laufzeit $\mathcal{O}(n^3)$ berechnet werden kann, erfordert das Knacken per Brute-Force exponentiellen Aufwand $\mathcal{O}(2^n)$ und ist ab $n \ge 2048$ Bit selbst mit Supercomputern nicht in Jahrmillionen durchführbar.
+
+\paragraph*{Man-in-the-Middle-Angriff}
+Allerdings ist das \gls{DHM}-Protokoll in seiner Grundform nicht gegen einen Man-in-the-Middle-Angriff geschützt. Ein Angreifer (Eve) könnte sich zwischen Alice und Bob schalten und so tun, als ob sie Alice wäre, wenn sie mit Bob kommuniziert, und umgekehrt. Dadurch könnte Eve sowohl mit Alice als auch mit Bob jeweils einen eigenen gemeinsamen Schlüssel vereinbaren und so die Kommunikation zwischen den beiden belauschen. Diese Schwäche kann durch die Verwendung von digitalen Signaturen behoben werden, welche die Authentizität der Kommunikationspartner sicherstellen. Ein Beispiel eines solchen Signaturverfahrens ist das \gls{RSA}-Kryptosystem (siehe \cref{subsec:rsa}).

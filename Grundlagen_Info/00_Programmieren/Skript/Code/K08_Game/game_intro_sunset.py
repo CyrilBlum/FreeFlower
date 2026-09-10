@@ -10,9 +10,9 @@ icon = pg.image.load("Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/icon
 pg.display.set_icon(icon)
 clock = pg.time.Clock()  # Clock für Zeitsteuerung erstellen
 
-sun_center_x = WIDTH // 2 # x-Koorinate Kreismittelpunkt Sonne
+SUN_CENTER_X = WIDTH // 2 # x-Koorinate Kreismittelpunkt Sonne
 sun_center_y = HEIGHT // 3 # y-Koorinate Kreismittelpunkt Sonne
-sun_radius = 60 # Radius der Sonne
+SUN_RADIUS = 60 # Radius der Sonne
 
 running = True  # Hauptschleife
 while running:
@@ -29,10 +29,10 @@ while running:
 
     # Sonne sinkt langsam (maximal bis zum Meer)
     # nicht mehr sichtbare Sonne soll nicht mehr berechnet werden
-    if sun_center_y < (HEIGHT // 2 + sun_radius):
+    if sun_center_y < (HEIGHT // 2 + SUN_RADIUS):
         sun_center_y += 0.5  # y-Position der Sonne verändern
         # Sonne
-        pg.draw.circle(screen, (255, 200, 0), (sun_center_x, sun_center_y), sun_radius)
+        pg.draw.circle(screen, (255, 200, 0), (SUN_CENTER_X, sun_center_y), SUN_RADIUS)
 
     # Meer
     pg.draw.rect(screen, (20, 80, 160), (0, HEIGHT // 2, WIDTH, HEIGHT // 2))
@@ -44,3 +44,6 @@ while running:
     clock.tick(60)  # 60 FPS
 
 pg.quit()
+
+
+# TODO AUFGABEN: 8.6-8.8

@@ -15,10 +15,10 @@ Buchstaben können auf unterschiedliche Weise kodiert sein -- bei \gls{ASCII} we
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c}
-        Buchstabe & Kodierung          \\\midrule\midrule
-        A         & \texttt{010000001} \\\midrule
-        B         & \texttt{010000010} \\\midrule
-        C         & \texttt{010000011} \\\midrule
+        Buchstabe & Kodierung        \\\midrule\midrule
+        A         & \texttt{1000001} \\\midrule
+        B         & \texttt{1000010} \\\midrule
+        C         & \texttt{1000011} \\\midrule
         $\cdots$  & $\cdots$
     \end{tabular}
 \end{table}
@@ -29,10 +29,10 @@ Ein erster, einfacher Ansatz bestünde darin, jedem Code noch ein weiteres Bit a
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c}
-        Buchstabe & Kodierung                                \\\midrule\midrule
-        A         & \texttt{010000001\underline{\textbf{0}}} \\\midrule
-        B         & \texttt{010000010\underline{\textbf{0}}} \\\midrule
-        C         & \texttt{010000011\underline{\textbf{1}}} \\\midrule
+        Buchstabe & Kodierung                              \\\midrule\midrule
+        A         & \texttt{1000001\underline{\textbf{0}}} \\\midrule
+        B         & \texttt{1000010\underline{\textbf{0}}} \\\midrule
+        C         & \texttt{1000011\underline{\textbf{1}}} \\\midrule
         $\cdots$  & $\cdots$
     \end{tabular}
 \end{table}
