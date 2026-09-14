@@ -241,30 +241,55 @@ for pos in mouse_positions:
 \end{myexercise}
 
 \begin{myexercise}[Medien: Bild und Sound]\label{myexercise:Medien}
-    Laden Sie ein Bild (\lstinline|.png /.jpg|) und zeichnen Sie es mit \lstinline|screen.blit(...)|. Skalieren/rotieren Sie es optional. Laden Sie einen Sound (\lstinline|.wav/ .ogg / .mp3|) mit \lstinline|pg.mixer.Sound| und spielen Sie ihn bei einer Kollision ab.
+    Laden Sie ein Bild (\lstinline|.png| / \lstinline|.jpg|) und zeichnen Sie es mit \lstinline|screen.blit(...)|. Skalieren oder rotieren Sie es optional. Laden Sie einen Sound (\lstinline|.wav| / \lstinline|.ogg| / \lstinline|.mp3|) mit \lstinline|pg.mixer.Sound| und spielen Sie ihn bei einer Kollision ab.
 
     Für Bilder:
     \begin{lstlisting}
 # Vor der Game-Schleife:
-img = pg.image.load("assets/player.jpeg") # Bild laden
-img = pg.transform.scale(img, (64, 64)) # optional: skalieren
+img = pg.image.load("assets/player.jpeg")  # Bild laden
+img = pg.transform.scale(img, (64, 64))   # optional: skalieren
+img_rect = pg.Rect(100, 100, 64, 64)      # Rechteck (Position/Groesse) fuer das Bild erstellen
 
 # In der Game-Schleife, im Render-Abschnitt:
-screen.blit(img, player) # Bild an Spieler-Position zeichnen
+screen.blit(img, img_rect)  # Bild an der Position von img_rect zeichnen
 \end{lstlisting}
+
+    Die Funktion \lstinline|screen.blit(img, img_rect)| kopiert die Pixel des Bildes (\lstinline|img|) an die durch das Rechteck \lstinline|img_rect| (oder ein Koordinaten-Tuple wie \lstinline|(x, y)|) definierte Position.
+
+    \textbf{Tipp:} Sie können hier auch Ihren Code aus den vorherigen Aufgaben (\cref{myexercise:Bewegungen}) wiederverwenden: Falls Sie dort bereits ein \lstinline|player|-Rechteck für Bewegung und Kollision angelegt haben, können Sie \lstinline|screen.blit(img, player)| übergeben, um das bisherige schwarze Rechteck direkt durch das Bild zu ersetzen (oder \lstinline|player = img.get_rect(...)| setzen).
 
     Für Sounds:
     \begin{lstlisting}
 # Vor der Game-Schleife:
-pg.mixer.init() # Mixer initialisieren (ist nötig für Sound)
-motor = pg.mixer.Sound("assets/motor.wav") # Sound laden
+pg.mixer.init()  # Mixer initialisieren (noetig fuer Sound)
+motor = pg.mixer.Sound("assets/motor.wav")  # Sound laden
 
 # In der Game-Schleife, bei Kollision:
-if player.colliderect(item):
-    motor.play() # Sound abspielen
+if player.colliderect(item):  # bzw. if img_rect.colliderect(item):
+    motor.play()  # Sound abspielen
 \end{lstlisting}
 
-    Hinweis: Legen Sie die Medien in einem Ordner (z.\,B. \lstinline|assets/|) ab und achten Sie auf relative Pfade. Die Dateien \texttt{player.jpeg} und \texttt{motor.wav} finden Sie auf Moodle.
+    \begin{myattention}[Relative Pfade in VS Code]
+        Ein \textbf{relativer Pfad} geht immer vom aktuellen Arbeitsverzeichnis (\textit{working directory}) aus -- im Gegensatz zu einem \textbf{absoluten Pfad} (z.\,B. \texttt{C:\textbackslash Users\textbackslash Name\textbackslash ...} oder \texttt{/Users/name/...}), der fest auf eine bestimmte Festplatte und einen bestimmten Benutzer bezogen ist und auf anderen Computern nicht funktioniert.
+
+        In VS Code ist das Arbeitsverzeichnis üblicherweise der Hauptordner, den Sie über \enquote{File} $\rightarrow$ \enquote{Open Folder\dots} geöffnet haben. Angenommen, Ihre Ordnerstruktur in VS Code sieht wie folgt aus:
+        \begin{center}
+        \begin{minipage}{0.45\textwidth}
+\begin{lstlisting}[numbers=none]
+MeinGame/
+|-- game.py
+`-- assets/
+    |-- player.jpeg
+    `-- motor.wav
+\end{lstlisting}
+        \end{minipage}
+        \end{center}
+        Wenn in VS Code der Ordner \texttt{MeinGame} geöffnet ist und \texttt{game.py} ausgeführt wird, lautet der relative Pfad zu den Mediendateien \lstinline|"assets/player.jpeg"| bzw. \lstinline|"assets/motor.wav"|. Befinden sich die Dateien direkt im selben Ordner wie \texttt{game.py}, lautet der Pfad einfach \lstinline|"player.jpeg"|.
+
+        \textbf{Wichtig:} Achten Sie darauf, in VS Code immer den eigentlichen Projektordner zu öffnen, damit Python die relativen Pfade korrekt auflösen kann.
+    \end{myattention}
+
+    Hinweis: Die Dateien \texttt{player.jpeg} und \texttt{motor.wav} finden Sie auf Moodle.
 
     Optional: Skalieren Sie das Bild auf eine bestimmte Höhe, wobei das Seitenverhältnis beibehalten wird, indem Sie das Seitenverhältnis mit den Befehlen \lstinline|img.get_width()| und \lstinline|img.get_height()| berechnen.
 
@@ -369,6 +394,43 @@ def reset_ball(direction):  # direction: -1 nach links, +1 nach rechts
     \end{itemize}
 \end{myexercise}
 
+\subsection{Objektorientierte Spielobjekte mit Pygame-Sprites}
+In komplexeren Spielen möchten wir häufig viele gleichartige Spielobjekte gleichzeitig verwalten -- beispielsweise Dutzende Münzen, Sterne, Hindernisse oder Laser-Schüsse. Bisher mussten wir Positionen, Bewegungen und Kollisionen für jedes Objekt einzeln mit separaten Variablen, Schleifen und Listen steuern.
+
+Pygame stellt dafür mit \lstinline|pg.sprite.Sprite| und \lstinline|pg.sprite.Group| ein elegantes, objektorientiertes System bereit, das direkt an das Klassen-Konzept aus \cref{ch:K07_Klassen} anknüpft:
+\begin{itemize}
+    \item \textbf{Sprite (\lstinline|pg.sprite.Sprite|):} Eine Klasse für ein einzelnes sichtbares Spielelement. Jedes Sprite besitzt zwingend zwei Attribute:
+    \begin{itemize}
+        \item \lstinline|self.image|: Die Bildfläche (\lstinline|pg.Surface|) des Objekts.
+        \item \lstinline|self.rect|: Das \lstinline|pg.Rect|-Objekt, welches Position und Hitbox definiert.
+    \end{itemize}
+    Zusätzlich wird meist eine Methode \lstinline|update(self)| implementiert, um Position und Verhalten pro Frame zu aktualisieren.
+    \item \textbf{Sprite-Gruppe (\lstinline|pg.sprite.Group|):} Verwaltet mehrere Sprites gesammelt.
+    \begin{itemize}
+        \item \lstinline|gruppe.update()| ruft automatisch die \lstinline|update()|-Methode aller enthaltenen Sprites auf.
+        \item \lstinline|gruppe.draw(screen)| zeichnet alle Sprites der Gruppe mit einem einzigen Befehl an deren jeweiliger \lstinline|rect|-Position.
+    \end{itemize}
+    \item \textbf{Effiziente Kollisionserkennung:} Funktionen wie \lstinline|pg.sprite.spritecollide(spieler, gruppe, dokill)| prüfen Kollisionen zwischen einem einzelnen Sprite und einer ganzen Gruppe in einer einzigen Code-Zeile. Ist \lstinline|dokill=True|, werden alle kollidierenden Sprites sofort automatisch aus der Gruppe gelöscht.
+\end{itemize}
+
+\begin{myexample}[Sprites und Sprite-Gruppen]
+Folgender Code zeigt das Einsammeln mehrerer Münzen-Sprites mit automatischer Kollisionserkennung (\lstinline|spritecollide|). Kopieren Sie den Code in eine Datei \texttt{game\_sprites.py} und führen Sie ihn aus:
+\lstinputlisting[language=Python]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_sprites.py}
+\end{myexample}
+
+\begin{myexercise}[Sammelobjekte mit Sprites verwalten]\label{myexercise:Sprites}
+    Bauen Sie ein eigenes Sammelspiel oder erweitern Sie Ihr bestehendes Spiel mit Pygame-Sprites:
+    \begin{enumerate}
+        \item Erstellen Sie eine eigene Sprite-Klasse \lstinline|Muenze(pg.sprite.Sprite)| (oder \lstinline|Stern| / \lstinline|Hindernis|). Definieren Sie im Konstruktor \lstinline|__init__()| die Attribute \lstinline|self.image| (z.\,B. ein gelber Kreis oder ein geladenes Bild) und \lstinline|self.rect| an einer zufälligen Position im Fenster.
+        \item Erstellen Sie eine Sprite-Gruppe \lstinline|muenzen_gruppe = pg.sprite.Group()| und fügen Sie in einer Schleife 15 bis 20 Münzen mit \lstinline|muenzen_gruppe.add(...)| hinzu.
+        \item Erstellen Sie eine Spieler-Klasse \lstinline|Spieler(pg.sprite.Sprite)|, deren \lstinline|update()|-Methode die Tastatureingaben (\lstinline|pg.key.get_pressed()|) verarbeitet.
+        \item Aktualisieren Sie in der Game-Schleife alle Sprites mit \lstinline|update()|, prüfen Sie das Einsammeln mit \lstinline|pg.sprite.spritecollide(spieler, muenzen_gruppe, True)| und zeichnen Sie alle Elemente mit \lstinline|draw(screen)|.
+    \end{enumerate}
+    \begin{myanswer}
+        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+    \end{myanswer}
+\end{myexercise}
+
 
 
 \section{Dateiverarbeitung: Speicher- \& Highscore-Systeme (File I/O)}
@@ -430,7 +492,7 @@ Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-
 \section{Game-Auftrag}
 
 \subsection{Thema}
-Im Folgenden wählen Sie in Zweier- bis Dreier-Gruppen ein Game-Thema aus und entwickeln ein kleines 2D-Game mit \texttt{pygame-ce}. Mögliche Themen sind:
+Im Folgenden wählen Sie in Zweier-Gruppen (bei ungrader Anzahl Personen eine Dreiergruppe möglich) ein Game-Thema aus und entwickeln ein 2D-Game mit \texttt{pygame-ce}. Mögliche Themen sind:
 \begin{itemize}
     \item \textbf{Sammelspiel:} Bewegen Sie eine Spielfigur (z.\,B. Auto, Raumschiff) und sammeln Sie Items ein (z.\,B. Treibstoff, Sterne). Jedes eingesammelte Item gibt Punkte.
     \item \textbf{Endlos-Runner:} Steuern Sie eine Spielfigur (z.\,B. Läufer, Auto) und weichen Sie Hindernissen aus (z.\,B. Mauern, andere Autos). Jedes überstandene Hindernis gibt Punkte.
@@ -438,7 +500,7 @@ Im Folgenden wählen Sie in Zweier- bis Dreier-Gruppen ein Game-Thema aus und en
     \item \textbf{Shooter (z.B. Space Invaders):} Steuern Sie ein Raumschiff und schiessen Sie auf herannahende Gegner. Jeder abgeschossene Gegner gibt Punkte.
 \end{itemize}
 
-Weitere Themen können in Absprache mit der Lehrperson gewählt werden. Wichtig ist, dass das Spiel die geforderten Python-Konzepte sinnvoll einsetzt (siehe Anforderungen) und die Komplexität angemessen ist (nicht zu einfach, aber auch nicht zu komplex).
+Weitere Themen können in Absprache mit der Lehrperson gewählt werden. Wichtig ist, dass das Spiel die geforderten Python-Konzepte sinnvoll einsetzt (siehe Anforderungen) und die Komplexität angemessen ist (nicht zu einfach, aber auch nicht zu komplex). Das Spiel sollte mehr als nur 10 Sekunden lang Spass machen und nicht zu einfach zu spielen sein. Es sollte eine Herausforderung darstellen, die Spieler motiviert, immer wieder zu spielen und ihre Punktzahl zu verbessern.
 
 \subsection{Anforderungen}
 
@@ -484,53 +546,9 @@ Ihr Game muss \textbf{Kommentare} enthalten, die den Code erklären und die Stru
     \end{todolist}
 \end{todolist}
 
-% \subsection{Abgabe der Games}
-% Im Rahmen dieses Projekts geben Sie drei Berichte ab, die den Fortschritt und die Reflexion Ihres Spiels dokumentieren. Jeder Bericht sollte klar strukturiert und gut lesbar sein. Verwenden Sie Überschriften, Absätze und Aufzählungen, um den Text zu gliedern. Achten Sie auf eine korrekte Rechtschreibung und Grammatik. Die Berichte sollten je als eine einzige PDF-Datei eingereicht werden.
-% \begin{enumerate}
-%     \item \textbf{Projekt-Entwurf (nach 2 Wochen):} Konzept und Design des Spiels, Herausforderungen, Planung (ca. 1.5--2 Seiten). In diesem Bericht sollte Folgendes enthalten sein:
-%           \begin{todolist}
-%               \item \textbf{Thema}: Kurzbeschreibung des Spiels (Genre, Setting, Ziel), ca. 4--5 Sätze
-%               \item \textbf{Spielmechanik}: Beschreibung der Hauptspielmechanik (Steuerung, Punktesystem, Level), ca. 5--6 Sätze
-%               \item \textbf{Medien}: Liste der benötigten Medien (Bilder, Sounds) und deren Quellen (selbst erstellt, frei verfügbar)
-%               \item \textbf{Komplexität}: Einschätzung der Komplexität des Spiels (Anzahl der Funktionen, Klassen, Datenstrukturen)
-%               \item \textbf{Zeitplan}: Grober Zeitplan für die Umsetzung (Was wird in den nächsten Wochen gemacht?)
-%               \item \textbf{Gruppen-Aufteilung}: Wer macht was in der Gruppe?
-%               \item \textbf{Herausforderungen}: Welche Herausforderungen erwarten Sie bei der Umsetzung?
-%           \end{todolist}
-%     \item \textbf{Zwischenbericht (nach 4 Wochen):} Fortschritt und Herausforderungen (ca. 1 Seite). In diesem Bericht sollte Folgendes enthalten sein:
-%           \begin{todolist}
-%               \item \textbf{Fortschritt}: Beschreibung des aktuellen Stands des Spiels (Was ist bereits umgesetzt? Was fehlt noch?)
-%               \item \textbf{Herausforderungen}: Welche Herausforderungen sind aufgetreten und wie wurden sie gelöst?
-%               \item \textbf{Zeitplan}: Aktualisierung des Zeitplans für die verbleibende Zeit (Was ist bereits umgesetzt? Was fehlt noch? Welche Probleme sind aufgetreten?)
-%               \item \textbf{Gruppen-Aufteilung}: Hat sich die Aufgabenverteilung in der Gruppe geändert? Wie wird die kommende Arbeit aufgeteilt?
-%           \end{todolist}
-%     \item \textbf{Endbericht (nach 6 Wochen)}: Fertigstellung und Reflexion des Spiels (ca. 2--3 Seiten). In diesem Abschlussbericht sollte Folgendes enthalten sein:
-%           \begin{todolist}
-%               \item \textbf{Spielbeschreibung}: Kurzbeschreibung des fertigen Spiels (Genre, Setting, Ziel), ca. 4--5 Sätze
-%               \item \textbf{Spielmechanik}: Beschreibung der Hauptspielmechanik (Steuerung, Punktesystem, Level), ca. 5--6 Sätze
-%               \item \textbf{Reflexion}: Was lief gut? Was lief schlecht? Was würden Sie beim nächsten Mal anders machen?
-%               \item \textbf{Lernziele}: Welche neuen Konzepte/Techniken haben Sie gelernt und angewendet?
-%               \item \textbf{Gruppenarbeit}: Wie hat die Zusammenarbeit in der Gruppe funktioniert? \textbf{Weisen Sie klar aus, wer für welche Teile des Codes verantwortlich ist.} Jede Zeile Code muss mindestens einer Person zugeordnet sein!
-%               \item \textbf{Herausforderungen}: Welche Herausforderungen sind aufgetreten und wie wurden sie gelöst?
-%               \item \textbf{Medien}: Liste der verwendeten Medien (Bilder, Sounds) und deren Quellen
-%               \item \textbf{Bonus}: Welche Bonuspunkte wurden erreicht?
-%               \item \textbf{Screenshots}: Fügen Sie 2--3 Screenshots des Spiels bei, die verschiedene Spielsituationen zeigen.
-%               \item \textbf{Screen Recording}: Nehmen Sie ein kurzes Video (ca. 1--2 Minuten) auf, das das Gameplay zeigt. Laden Sie das Video auf eine Plattform (z.B. YouTube, Vimeo) hoch und fügen Sie den Link im Bericht ein.
-%               \item \textbf{Quellcode}: Fügen Sie den Link zum GitHub-Repository bei, in dem der Quellcode des Spiels gespeichert ist.
-%           \end{todolist}
-% \end{enumerate}
-
-% Die endgültige Abgabe des Games erfolgt via GitHub. Erstellen Sie ein öffentliches Repository mit dem Quellcode, den Medien und einer \texttt{README.md}-Datei, die das Spiel beschreibt und Anweisungen zur Ausführung enthält. Reichen Sie den Link zum Repository via Moodle ein. Für Anleitungen zur Erstellung eines GitHub-Repositories und zum Hochladen von Code, s. Anhang \ref{ch:GitHub}.
-
 \section{Bewertung}
 \subsection{Projektbewertung}
-Die Bewertung Ihres Projekts erfolgt anhand der auf Moodle aufgelisteten Kriterien. Die maximale Punktzahl beträgt 100 Punkte.
-% \begin{itemize}
-%     \item \textbf{Funktionalität (25\%):} Das Spiel läuft fehlerfrei und erfüllt die grundlegenden Anforderungen (Steuerung, Kollisionen, Punktesystem).
-%     \item \textbf{Code-Qualität (25\%):} Der Quellcode ist gut strukturiert, lesbar und verwendet die geforderten Python-Konzepte (Variablen, Funktionen, Klassen, Datenstrukturen etc.).
-%     \item \textbf{Kreativität (20\%):} Das Spiel zeigt Originalität und Kreativität in Design und Umsetzung (Thema, Spielmechanik, Medien).
-%     \item \textbf{Dokumentation (30\%):} Die Berichte sind klar, gut strukturiert und reflektieren den Entwicklungsprozess.
-% \end{itemize}
+Die Bewertung Ihres Projekts erfolgt anhand der auf Moodle aufgelisteten Kriterien.
 
 \subsection{Gruppen-Besprechung des Spiels}
 
@@ -594,5 +612,10 @@ Wobei:
     \begin{myanswer}[myexercise:Medien]
         \leavevmode %
         \lstinputlisting[language=Python,caption=\texttt{game\_intro\_media.py},label=listing:Medien]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_intro_media.py}
+    \end{myanswer}
+
+    \begin{myanswer}[myexercise:Sprites]
+        \leavevmode %
+        \lstinputlisting[language=Python,caption=\texttt{game\_sprites.py},label=listing:Sprites]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_sprites.py}
     \end{myanswer}
 }
