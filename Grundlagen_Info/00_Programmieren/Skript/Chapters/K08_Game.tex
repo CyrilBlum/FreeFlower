@@ -201,6 +201,9 @@ pg.draw.rect(screen, (255, 0, 0), item) # Item zeichnen
 \begin{myexercise}[Highscore anzeigen]\label{myexercise:Highscore}
     Erstellen Sie eine Variable \lstinline|score|, die bei jeder Kollision um 1 erhöht wird. Zeichnen Sie den aktuellen Punktestand mit \lstinline|font.render(...)| oben links im Fenster. Verwenden Sie folgenden Code, um Text zu zeichnen:
     \begin{lstlisting}
+# Am Anfang des Programms:
+pg.init()  # pygame initialisieren
+
 # Vor der Game-Schleife:
 font = pg.font.Font(None, 36)  # Schriftart und -grösse
 # ...
@@ -214,27 +217,41 @@ screen.blit(score_text, (10, 10))  # Text oben links zeichnen
 \end{myexercise}
 
 \begin{myexercise}[Ereignisse (Keyboard / Maus)]\label{myexercise:Ereignisse}
-    Reagieren Sie auf \lstinline|KEYDOWN|- und \lstinline|MOUSEBUTTONDOWN|-Events. Beispiel: Bei Mausklick wird an der Klickposition ein kleiner Kreis gezeichnet (oder eine Partikelspur gestartet). Bei \lstinline|ESC| beendet sich das Game. Da die Kreise jedes Frame neu gezeichnet werden müssen, speichern Sie die Positionen in einer Liste.
+    Reagieren Sie auf Tastatur- und Maus-Events: Bei einem Mausklick liefert das Attribut \lstinline|event.pos| die genauen Klick-Koordinaten \lstinline|(x, y)|. Speichern Sie diese in einer Liste \lstinline|mouse_positions|, um an jeder Klickposition dauerhaft einen Kreis zu zeichnen. Bei Drücken der \keys{ESC}-Taste soll sich das Spiel beenden.
 
-    Um Ereignisse wie etwa einen Maus-Klick zu verarbeiten, verwenden Sie folgenden Code:
+    Verwenden Sie folgenden Code:
     \begin{lstlisting}
 # Vor der Game-Schleife:
-mouse_positions = []  # Liste für Maus-Klick-Positionen
+mouse_positions = []  # Liste fuer Maus-Klick-Positionen
 
 # In der Game-Schleife, im Event-Abschnitt:
 for event in pg.event.get():
-	if event.type == pg.QUIT:
-		running = False
-	elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-		running = False
-	elif event.type == pg.MOUSEBUTTONDOWN:
-		x, y = event.pos
-        mouse_positions.append((x, y))  # Position speichern
+    if event.type == pg.QUIT:
+        running = False
+    elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+        running = False
+    elif event.type == pg.MOUSEBUTTONDOWN:
+        x, y = event.pos
+        mouse_positions.append((x, y))  # Klick-Position speichern
 
 # In der Game-Schleife, im Render-Abschnitt:
 for pos in mouse_positions:
     pg.draw.circle(screen, (255, 100, 100), pos, 10)
 \end{lstlisting}
+
+    \begin{myattention}[Nur eine einzige Event-Schleife!]
+        \lstinline|pg.event.get()| leert bei jedem Aufruf die Ereignis-Warteschlange. Verwenden Sie daher in der gesamten Game-Schleife \textbf{nur genau eine} \lstinline|for event in pg.event.get():|-Schleife. Fügen Sie neue Ereignisse (Tastatur, Maus, Schliessen) immer als weitere \lstinline|elif|-Zweige in diese bestehende Schleife ein, anstatt den Block zu duplizieren.
+    \end{myattention}
+
+    \begin{myremark}[Nutzung von Maus-Koordinaten]
+        Die Klickposition \lstinline|event.pos| liefert ein Koordinaten-Tuple \lstinline|(x, y)|. Dieses kann vielseitig eingesetzt werden:
+        \begin{itemize}
+            \item \textbf{Objekt platzieren/bewegen:} \lstinline|player.center = event.pos|
+            \item \textbf{Button anklicken:} \lstinline|button_rect.collidepoint(event.pos)|
+            \item \textbf{Mauszeiger kontinuierlich folgen:} \lstinline|player.center = pg.mouse.get_pos()| (ohne Klick)
+        \end{itemize}
+    \end{myremark}
+
 	\begin{myanswer}
 		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
 	\end{myanswer}

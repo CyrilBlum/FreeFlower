@@ -20,7 +20,7 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
-        elif event.type == pg.KEYDOWN or event.type == pg.K_ESCAPE:
+        elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
         elif event.type == pg.MOUSEBUTTONDOWN:
             x, y = event.pos
