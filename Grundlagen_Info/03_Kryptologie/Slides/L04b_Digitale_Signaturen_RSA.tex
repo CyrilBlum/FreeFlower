@@ -1,52 +1,116 @@
 \begin{frame}{Digitale Signaturen mit RSA}
 	Neben der Verschlüsselung können asymmetrische Verfahren auch für \textbf{digitale Signaturen} genutzt werden.
-	
+	\pause
 	\begin{mydefinition}[Ziele digitaler Signaturen]
+		\pause
 		\begin{itemize}[<+->]
-			\item \textbf{Authentizität}: Garantiert die Identität des Absenders (nur der Besitzer des privaten Schlüssels konnte die Signatur erzeugen).
-			\item \textbf{Integrität}: Garantiert, dass die Nachricht auf dem Übertragungsweg nicht verändert wurde.
+			\item \textbf{Authentizität}: Garantiert die Identität der absendenden Person (nur der Besitzer des passenden privaten Schlüssels konnte die Signatur erzeugen).
+			\item \textbf{Integrität}: Garantiert, dass die Nachricht auf dem Übertragungsweg nicht verändert oder manipuliert wurde.
+			\item \textbf{Verbindlichkeit (Nicht-Abstreitbarkeit)}: Die Urheberschaft kann im Nachhinein nicht geleugnet werden.
 		\end{itemize}
 	\end{mydefinition}
 \end{frame}
 
 \begin{frame}{Funktionsweise von RSA-Signaturen}
-	Beim Signieren wird die Rolle der Schlüssel vertauscht:
-	
-	\begin{myprocedure}[Digitale Signatur mit RSA]
-		{\small
+	Beim Signieren wird die Rolle der Schlüssel im Vergleich zur Verschlüsselung vertauscht:
+	\pause
+	\begin{myprocedure}[Digitale Signatur mit RSA (Grundprinzip)]
+		{\footnotesize
+		\pause
 		\begin{enumerate}[<+->]
-			\item \textbf{Signaturerstellung (Absender)}:
-			      Alice berechnet den Hashwert $H(m)$ und signiert ihn mit ihrem \textbf{privaten Schlüssel} $(d, n)$:
-			      \[ s = H(m)^d \bmod n \]
-			      Sie sendet Nachricht $m$ und Signatur $s$ an Bob.
-			\item \textbf{Signaturüberprüfung (Empfänger)}:
-			      Bob prüft die Signatur mit Alices \textbf{öffentlichem Schlüssel} $(e, n)$:
-			      \[ H'(m) = s^e \bmod n \]
-			      Ist $H'(m) = H(m)$, ist die Signatur gültig!
+			\item \textbf{Signaturerstellung (Absenderin Alice)}:
+			      Alice signiert den Klartext $m$ mit ihrem \textbf{privaten Schlüssel} $d_A$:
+			      \[ s = m^{d_A} \bmod n_A \]
+			      Sie sendet die Nachricht $m$ zusammen mit der Signatur $s$ an Bob.
+			\item \textbf{Signaturüberprüfung (Empfänger Bob)}:
+			      Bob prüft die Signatur mit Alices \textbf{öffentlichem Schlüssel} $(e_A, n_A)$:
+			      \[ m' = s^{e_A} \bmod n_A \]
+			      Gilt $m' = m$, ist die Signatur mathematisch gültig, unverfälscht und stammt garantiert von Alice!
 		\end{enumerate}
 		}
 	\end{myprocedure}
 \end{frame}
 
 \begin{frame}{Beispiel: RSA Digitale Signatur}
-	\begin{exampleblock}{Rechenbeispiel}
+	\begin{exampleblock}{Rechenbeispiel (aus dem Skript)}
 		{\small
-		Alice nutzt ihren privaten Schlüssel $(d, n) = (7, 33)$ und öffentlichen Schlüssel $(e, n) = (3, 33)$. Die Nachricht sei $m = 15$.
+		Alice besitzt den privaten Schlüssel $(d, n) = (9677, 12317)$ und den öffentlichen Schlüssel $(e, n) = (5, 12317)$. Sie möchte die Nachricht $m = 42$ signieren.
 		
 		\begin{itemize}[<+->]
-			\item \textbf{Signaturerstellung}:
-			      $s = m^d \bmod n = 15^7 \bmod 33 = 27$
-			\item \textbf{Signaturüberprüfung}:
-			      $H'(m) = s^e \bmod n = 27^3 \bmod 33 = 15$
-			\item Da $H'(m) = 15 = m$, ist die Signatur authentisch und unverfälscht!
+			\item \textbf{Signaturerstellung (Alice)}:
+			      \[ s = m^d \bmod n = 42^{9677} \bmod 12317 = 161 \]
+			      Alice übermittelt das Paar $(m, s) = (42, 161)$ an Bob.
+			\item \textbf{Signaturüberprüfung durch Bob}:
+			      \[ m' = s^e \bmod n = 161^5 \bmod 12317 = 42 \]
+			      Da $m' = m = 42$, ist die Signatur authentisch und unverfälscht!
+			\item \textbf{Erkennung von Manipulation}:
+			      Verändert Angreiferin Eve die Nachricht zu $m = 43$ (mit altem $s=161$), so ergibt die Prüfung $161^5 \bmod 12317 = 42 \neq 43$. Bob erkennt die Fälschung sofort!
 		\end{itemize}
 		}
 	\end{exampleblock}
 \end{frame}
 
-\begin{frame}{Auftrag: Digitale Signaturen}
-	\begin{itemize}
-		\item \aufgabebox{Lösen Sie Aufgabe 4.4 im Skript (Signatur erstellen und überprüfen)}
-		\item Zeit: 10 Minuten
+\begin{frame}{Auftrag: Digitale Signatur}
+	\aufgabebox{4.2 im Skript (RSA Digitale Signatur)}
+\end{frame}
+
+\begin{frame}{Praxis-Problem \& Lösung: Kryptographische Hashfunktionen}
+	\begin{itemize}[<+->]
+		\item \textbf{Problem beim direkten Signieren von $m$}:
+		      \begin{enumerate}
+			      \item RSA kann nur Zahlen $m < n$ verarbeiten. Reale Dokumente (PDFs, Verträge, E-Mails) sind viele Megabytes gross.
+			      \item Modulare Potenzierung mit grossen Exponenten ist rechenintensiv und langsam.
+		      \end{enumerate}
+		\item \textbf{Lösung: Hashwert signieren}:
+		      \begin{itemize}
+			      \item Eine \textbf{kryptographische Hashfunktion} (z.\,B.\ \textbf{SHA-256}) komprimiert ein beliebig grosses Dokument auf einen kurzen, eindeutigen Fingerabdruck fester Länge (z.\,B.\ 256 Bit).
+			      \item \textbf{Eigenschaften}: Einwegfunktion (nicht umkehrbar), kollisionsresistent, Lawineneffekt.
+		      \end{itemize}
+		\item \textbf{Ablauf in der Praxis}:
+		      \begin{align*}
+		          \text{Alice signiert:} &\quad s := H(m)^{d_A} \bmod n_A \\
+		          \text{Bob prüft:} &\quad s^{e_A} \bmod n_A \stackrel{?}{=} H(m)
+		      \end{align*}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Vertraulichkeit vs. Authentizität: Sign-then-Encrypt}
+	\begin{columns}[T]
+		\begin{column}{0.48\textwidth}
+			\begin{block}{Nur Signatur}
+				{\small
+				\begin{itemize}
+					\item Alice sendet Klartext $m$ + Signatur $s$.
+					\item \textbf{Authentizität:} Bob weiss, dass $m$ von Alice stammt.
+					\item \textbf{Integrität:} $m$ wurde nicht verändert.
+					\item \textbf{Keine Vertraulichkeit:} Jede Person auf dem Kanal kann $m$ lesen.
+				\end{itemize}
+				}
+			\end{block}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\begin{block}{Sign-then-Encrypt}
+				{\small
+				\begin{itemize}
+					\item 1. Alice signiert $m$ mit $d_A \rightarrow s$.
+					\item 2. Alice verschlüsselt $(m, s)$ mit Bobs Schlüssel $e_B \rightarrow (c_m, c_s)$.
+					\item 3. Bob entschlüsselt mit $d_B$.
+					\item 4. Bob verifiziert Signatur mit $e_A$.
+					\item $\rightarrow$ \textbf{Vertraulich \& Authentisch!}
+				\end{itemize}
+				}
+			\end{block}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Ablauf: Sign-then-Encrypt}
+	\begin{figure}[H]
+		\centering
+		\resizebox{!}{0.75\textheight}{\input{Grundlagen_Info/03_Kryptologie/Figures/tikz_sign_then_encrypt}}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Auftrag: Sign-then-Encrypt}
+	\aufgabebox{Aufgabe 4.3 im Skript (Sign-then-Encrypt)}
 \end{frame}

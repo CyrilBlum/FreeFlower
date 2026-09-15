@@ -1,0 +1,103 @@
+\begin{frame}{Das Vertrauensproblem in der Praxis}
+	Eine mathematisch korrekte RSA-Signatur beweist \textbf{Integrität} und den Besitz des privaten Schlüssels.
+	
+	\begin{alertblock}{Die fundamentale Vertrauensfrage}
+		\emph{Woher weiss der Empfänger (Bob), dass ein bestimmter öffentlicher Schlüssel tatsächlich Alice (oder der Bank) gehört?}
+	\end{alertblock}
+	
+	\begin{itemize}[<+->]
+		\item \textbf{Man-in-the-Middle-Angriff}:
+		      Eve generiert ein eigenes Schlüsselpaar $(e_E, d_E)$ und gibt vor, Alice zu sein.
+		\item Signiert Eve eine gefälschte Nachricht mit $d_E$, so bestätigt Bobs Prüfung mit $e_E$ formal die Gültigkeit der Signatur.
+		\item \textbf{Ergebnis}: Bob wiegt sich in falscher Sicherheit, da er den Schlüssel nicht der realen Identität zuordnen kann!
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Lösung: Digitale Zertifikate \& PKI}
+	Um die Identität von Schlüsselinhabern zweifelsfrei zu bestätigen, nutzen wir eine \textbf{Public-Key-Infrastruktur} (\acrshort{PKI}):
+	
+	\begin{mydefinition}[Komponenten einer PKI]
+		{\small
+		\begin{itemize}[<+->]
+			\item \textbf{Zertifizierungsstelle (\emph{Certificate Authority}, \acrshort{CA})}:
+			      Eine vertrauenswürdige Institution, die vor der Schlüsselausgabe die reale Identität prüft.
+			\item \textbf{Digitales Zertifikat}:
+			      Ein elektronisches Dokument, das die Identität an den öffentlichen Schlüssel bindet und von der \acrshort{CA} digital signiert ist:
+			      \[ \text{Cert}_A := z^{d_{\text{CA}}} \bmod n_{\text{CA}} \qquad \text{mit } z = (\text{\enquote{Alice}}, e_A, n_A) \]
+			\item \textbf{Vertrauensanker (Root-\acrshort{CA})}:
+			      Betriebssysteme und Browser besitzen einen vorinstallierten Speicher vertrauenswürdiger Stammzertifikate (\emph{Trust Store}).
+		\end{itemize}
+		}
+	\end{mydefinition}
+\end{frame}
+
+\begin{frame}{Zweistufige Verifikation mit PKI}
+	\begin{figure}[H]
+		\centering
+		\resizebox{!}{0.75\textheight}{\input{Grundlagen_Info/03_Kryptologie/Figures/tikz_pki_workflow}}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Auftrag: Zertifizierte digitale Signaturen}
+	 \aufgabebox{Lösen Sie Aufgabe 5.1 im Skript (Zertifikat)}
+\end{frame}
+
+\begin{frame}{Die Vertrauenskaskade: Zertifikatskette}
+	In der Praxis signiert eine Root-\acrshort{CA} fast nie direkt einzelne Server-Zertifikate, sondern nutzt Zwischenzertifikate:
+	
+	\begin{figure}[H]
+		\centering
+		\resizebox{0.82\linewidth}{!}{\input{Grundlagen_Info/03_Kryptologie/Figures/tikz_certificate_chain}}
+	\end{figure}
+	
+	\begin{itemize}
+		\item \textbf{Sicherheitsvorteil}: Der private Root-Schlüssel bleibt streng isoliert \emph{offline} (Air-Gapped). Bei einem Zwischenfall muss nur das Intermediate-Zertifikat widerrufen werden.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Zertifikatsinspektion im Webbrowser (SBB)}
+	\begin{columns}[T]
+		\begin{column}{0.55\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/certificate_hierarchy_sbb}
+		\end{column}
+		\begin{column}{0.45\textwidth}
+			{\small
+			\textbf{Zertifikatsaufbau bei \url{https://www.sbb.ch}:}
+			\begin{enumerate}
+				\item \textbf{Root-\acrshort{CA}}: \texttt{Amazon Root CA 1} (im Betriebssystem vorinstalliert).
+				\item \textbf{Intermediate-\acrshort{CA}}: \texttt{Amazon RSA 2048 M04}.
+				\item \textbf{Blatt-Zertifikat}: \texttt{www.sbb.ch} (Inhaberin: Schweizerische Bundesbahnen).
+			\end{enumerate}
+			\medskip
+			\textbf{Verschlüsselung}: TLS mit AES / RSA / ECC.
+			}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Elektronische Signaturen in der Schweiz (ZertES)}
+	\begin{block}{Bundesgesetz über die elektronische Signatur (\acrshort{ZertES})}
+		{\small
+		In der Schweiz regelt das \textbf{ZertES} die rechtliche Gültigkeit von elektronischen Signaturen:
+		\begin{itemize}[<+->]
+			\item \textbf{Qualifizierte elektronische Signatur (QES)}:
+			      Ist der eigenhändigen handschriftlichen Unterschrift rechtlich vollständig gleichgestellt (Art.~14 Abs.~$2^{\text{bis}}$ OR).
+			\item \textbf{Anerkannte Vertrauensdienste in der Schweiz}:
+			      \begin{itemize}
+				      \item \textbf{SwissSign}: Schweizerische Post / SwissID (z.\,B.\ für Verträge und eGovernment).
+				      \item \textbf{Swisscom Trust Services}: Signaturdienste für Banken und Unternehmen.
+				      \item \textbf{SWITCHpki}: Zertifikate für Schweizer Universitäten und Schulen.
+				      \item \textbf{Swiss Government PKI}: Interne PKI für die Bundesverwaltung.
+			      \end{itemize}
+		\end{itemize}
+		}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Auftrag: Zertifikats-Detektiv im Browser}
+	\begin{itemize}
+		\item \aufgabebox{Aufgabe 5.2 im Skript (Zertifikats-Detekti)}
+		\item \textbf{Challenge}: Öffnen Sie Safari, Chrome, Edge oder Firefox und inspizieren Sie die Zertifikate von \url{https://www.sbb.ch}, \url{https://www.admin.ch} oder Ihrer Schule.
+	\end{itemize}
+\end{frame}

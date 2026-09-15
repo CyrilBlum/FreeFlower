@@ -306,6 +306,8 @@ beamer_topics=(
     "Kryptologie_L04:Grundlagen_Info/03_Kryptologie/Slides/Kryptologie_L04"
     "L04a_Asymmetrische_Kryptosysteme_RSA:Grundlagen_Info/03_Kryptologie/Slides/L04a_Asymmetrische_Kryptosysteme_RSA"
     "L04b_Digitale_Signaturen_RSA:Grundlagen_Info/03_Kryptologie/Slides/L04b_Digitale_Signaturen_RSA"
+    "Kryptologie_L05:Grundlagen_Info/03_Kryptologie/Slides/Kryptologie_L05"
+    "L05_Digitale_Zertifikate_PKI:Grundlagen_Info/03_Kryptologie/Slides/L05_Digitale_Zertifikate_PKI"
     "Appendix:Grundlagen_Info/03_Kryptologie/Slides/Appendix"
     "Kompression_L01_Intro:Grundlagen_Info/04_Kompression/Slides/Kompression_L01_Intro"
     "Kompression_L02_MaxBal:Grundlagen_Info/04_Kompression/Slides/Kompression_L02_MaxBal"

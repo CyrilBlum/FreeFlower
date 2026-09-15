@@ -1,0 +1,48 @@
+\begin{tikzpicture}[
+	scale=0.80, every node/.style={transform shape},
+	actor/.style={rectangle, rounded corners, draw=black, fill=gray!15, minimum width=3.4cm, minimum height=1.1cm, font=\bfseries, align=center, inner sep=4pt},
+	stepbox/.style={rectangle, rounded corners, draw=#1, fill=#1!8, line width=0.8pt, font=\small, align=center, inner sep=6pt},
+	msgarrow/.style={->, >=stealth, line width=1pt, #1},
+	badge/.style={circle, fill=#1, text=white, font=\bfseries\footnotesize, inner sep=2pt}
+]
+	% Spaltenkoordinaten
+	\def\colA{0}   % Alice
+	\def\colB{9.5} % Bob
+
+	% --- AKTEURE (Kopfzeile) ---
+	\node[actor] (alice) at (\colA, 0) {Alice\\{\footnotesize (Absenderin)}\\[2pt]{\scriptsize priv.: $d_A$, Bobs öff.: $(e_B, n_B)$}};
+	\node[actor] (bob) at (\colB, 0) {Bob\\{\footnotesize (Empfänger)}\\[2pt]{\scriptsize priv.: $d_B$, Alices öff.: $(e_A, n_A)$}};
+
+	% Vertikale Hilfslinien
+	\draw[dashed, gray!40] (alice.south) -- (\colA, -10.2);
+	\draw[dashed, gray!40] (bob.south) -- (\colB, -10.2);
+
+	% --- SCHRITT 1 & 2 BEI ALICE ---
+	\node[font=\footnotesize\bfseries\color{RoyalBlue!80!black}, fill=white, inner sep=2pt] at (\colA, -1.1) {Phase 1: Signieren \& Verschlüsseln};
+
+	\node[stepbox=RoyalBlue] (alice_proc) at (\colA, -2.7) {
+		\textbf{1. Signatur erzeugen (mit $d_A$):}\\
+		$s := m^{d_A} \bmod n_A$\\[0.4em]
+		\textbf{2. Verschlüsseln (mit $e_B$):}\\
+		$c_m := m^{e_B} \bmod n_B$\\
+		$c_s := s^{e_B} \bmod n_B$
+	};
+
+	% --- NACHRICHTENÜBERTRAGUNG ---
+	\node[badge=DarkOrchid] (b_msg) at (\colA+0.6, -5.1) {\faLock};
+	\draw[msgarrow=DarkOrchid] (b_msg.east) -- (\colB-0.6, -5.1)
+		node[midway, above=3pt, font=\footnotesize\bfseries] {Chiffrate $(c_m, c_s)$}
+		node[midway, below=3pt, font=\scriptsize\color{gray!70!black}] {(vertraulich \& verschlüsselt: Eve kann weder $m$ noch $s$ lesen)};
+
+	% --- SCHRITT 3 & 4 BEI BOB ---
+	\node[font=\footnotesize\bfseries\color{ForestGreen!80!black}, fill=white, inner sep=2pt] at (\colB, -6.8) {Phase 2: Entschlüsseln \& Verifizieren};
+
+	\node[stepbox=ForestGreen] (bob_proc) at (\colB, -8.6) {
+		\textbf{3. Entschlüsseln (mit $d_B$):}\\
+		$m := (c_m)^{d_B} \bmod n_B$\\
+		$s := (c_s)^{d_B} \bmod n_B$\\[0.4em]
+		\textbf{4. Signatur prüfen (mit $e_A$):}\\
+		$m' := s^{e_A} \bmod n_A$\\
+		$\rightarrow \text{Gilt } m' = m\text{?} \implies \text{Echt, unverfälscht \& geheim!} \textcolor{ForestGreen}{\mathbf{\checkmark}}$
+	};
+\end{tikzpicture}
