@@ -137,6 +137,38 @@ Ein \textbf{Volladdierer (Full Adder)} verarbeitet \textbf{3 Eingänge}: $x, y$ 
 \end{center}
 \end{frame}
 
+\begin{frame}\FDUtitle{Wahrheitstabelle \& Formeln des Volladdierers}
+\begin{columns}[c]
+\column{0.45\textwidth}
+\centering
+\scalebox{0.8}{
+\begin{tabular}{ccccc}
+    $x$ & $y$ & $c_{\text{in}}$ & $s$ & $c_{\text{out}}$ \\ \midrule\midrule
+    0 & 0 & 0 & 0 & 0 \\ \midrule
+    0 & 0 & 1 & 1 & 0 \\ \midrule
+    0 & 1 & 0 & 1 & 0 \\ \midrule
+    0 & 1 & 1 & 0 & 1 \\ \midrule
+    1 & 0 & 0 & 1 & 0 \\ \midrule
+    1 & 0 & 1 & 0 & 1 \\ \midrule
+    1 & 1 & 0 & 0 & 1 \\ \midrule
+    1 & 1 & 1 & 1 & 1 \\
+\end{tabular}}
+\column{0.55\textwidth}
+\textbf{Logische Formeln:}
+\vspace{2mm}
+\begin{itemize}
+    \item \textbf{Summe $s$:}
+    \[
+        s = (x \oplus y) \oplus c_{\text{in}}
+    \]
+    \item \textbf{Übertrag $c_{\text{out}}$:}
+    \[
+        c_{\text{out}} = (x \wedge y) \vee ((x \oplus y) \wedge c_{\text{in}})
+    \]
+\end{itemize}
+\end{columns}
+\end{frame}
+
 \begin{frame}\FDUtitle{Aufbau des Volladdierers}
 Ein Volladdierer besteht aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter}:
 \vspace{3mm}
@@ -155,9 +187,9 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Schriftliche Binäraddition}
-\aufgabebox{Berechnen Sie $011_2+010_2$ schriftlich. Beginnen Sie rechts und notieren Sie die Überträge wie bei der Dezimaladdition. Kontrollieren Sie das Ergebnis im Dezimalsystem.}
+\aufgabebox{Berechnen Sie die Addition $011_2+010_2$ schriftlich von Hand. Notieren Sie alle Überträge in der Übertragszeile und kontrollieren Sie das Ergebnis im Dezimalsystem.}
 \vspace{3mm}
-\textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$: Schreiben Sie $0$ und übertragen Sie $1$ in die nächste Spalte.
+\textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$ ($0$ schreiben und Übertrag $1$ in die nächste Spalte).
 \end{frame}
 
 \begin{frame}\FDUtitle{Lösung: Schriftliche Binäraddition}
@@ -169,10 +201,32 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
         & 1 & 0 & 1
     \end{array}
 \]
-Von rechts: $1+0=1$; dann $1+1=10_2$, also $0$ schreiben und $1$ übertragen; links $0+0+1=1$. Ergebnis: $101_2=5_{10}$. Kontrolle: $3+2=5$.
+\vspace{2mm}
+\begin{itemize}
+    \item \textbf{Rechts:} $1+0=1$, Übertrag $0$.
+    \item \textbf{Mitte:} $1+1=10_2$, also $0$ schreiben und Übertrag $1$.
+    \item \textbf{Links:} $0+0+1=1$, Übertrag $0$.
+\end{itemize}
+\vspace{1mm}
+\textbf{Ergebnis:} $011_2+010_2=101_2=5_{10}$. Kontrolle: $3+2=5$.
+\end{frame}
 
-\medskip
-Jeder Volladdierer übernimmt eine Spalte dieser schriftlichen Rechnung.
+\begin{frame}\FDUtitle{Übung: Signalverfolgung im Addierwerk}
+\aufgabebox{Bestimmen Sie für die Addition $011_2+010_2$ alle Überträge $c_1, c_2, c_3$ und Summenbits $s_0, s_1, s_2$ im Ripple-Carry-Addierer.}
+\vspace{1mm}
+\begin{center}
+\scalebox{0.75}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}}
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Lösung: Signalverfolgung im Addierwerk}
+\begin{center}
+\scalebox{0.75}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}}
+\end{center}
+\vspace{-2mm}
+\begin{center}
+$\mathbf{011_2 + 010_2 = 0101_2 = 5_{10}}$ \quad ($3 + 2 = 5$ \checkmark)
+\end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Challenge: Eine Kette von Überträgen}

@@ -578,8 +578,41 @@ Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge}
     \label{tab:volladdierer_wahrheitstabelle}
 \end{table}
 
-Ein Volladdierer lässt sich aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen:
-Der erste Halbaddierer addiert $x$ und $y$. Der zweite Halbaddierer addiert das vorläufige Summenbit mit $c_{\text{in}}$. Ein OR-Gatter verknüpft die Überträge beider Halbaddierer zum finalen $c_{\text{out}}$.
+\begin{myexercise}\label{myexercise:volladdierer-formel}
+    \textbf{Logische Formeln des Volladdierers.}
+    Betrachten Sie die Wahrheitstabelle des Volladdierers (\cref{tab:volladdierer_wahrheitstabelle}) mit den Eingängen $x, y, c_{\text{in}}$ und den Ausgängen $s$ (Summe) und $c_{\text{out}}$ (Übertrag).
+    \begin{enumerate}[(a)]
+        \item Finden Sie eine allgemeine logische Formel für das Summenbit $s$ unter Verwendung von XOR-Verknüpfungen ($\oplus$).
+        \item Finden Sie eine logische Formel für den Ausgangsübertrag $c_{\text{out}}$. Betrachten Sie die möglichen Fälle, in denen ein Übertrag entsteht.
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}[(a)]
+            \item \textbf{Summenbit $s$:}
+            Das Summenbit ist genau dann $1$, wenn eine ungerade Anzahl der drei Eingänge $1$ ist (genau eine oder alle drei Einsen). Dies entspricht der zweifachen XOR-Verknüpfung:
+            \[
+                s = (x \oplus y) \oplus c_{\text{in}}
+            \]
+            \item \textbf{Übertrag $c_{\text{out}}$:}
+            Ein Übertrag entsteht, wenn mindestens zwei der drei Eingänge $1$ sind. Dafür existieren drei mögliche Fälle:
+            \begin{itemize}
+                \item $x$ und $y$ sind beide $1$.
+                \item $x$ und $c_{\text{in}}$ sind beide $1$.
+                \item $y$ und $c_{\text{in}}$ sind beide $1$.
+            \end{itemize}
+            Dies lässt sich zu einer logischen Formel zusammenfassen:
+            \[
+                c_{\text{out}} = (x \land y) \lor (x \land c_{\text{in}}) \lor (y \land c_{\text{in}})
+            \]
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
+Aus diesen beiden Formeln wird direkt ersichtlich, wie sich ein Volladdierer modular aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen lässt:
+\begin{itemize}
+    \item Der erste Halbaddierer (HA 1) verknüpft $x$ und $y$ zu $s_1 = x \oplus y$ sowie $c_1 = x \land y$.
+    \item Der zweite Halbaddierer (HA 2) addiert das vorläufige Summenbit $s_1$ mit $c_{\text{in}}$ zu $s = s_1 \oplus c_{\text{in}}$ sowie $c_2 = s_1 \land c_{\text{in}}$.
+    \item Ein OR-Gatter verknüpft schliesslich die beiden Überträge zum finalen $c_{\text{out}} = c_1 \lor c_2$.
+\end{itemize}
 
 \begin{figure}[H]
     \centering
@@ -612,21 +645,46 @@ Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im B
     Die Signallaufzeit wächst daher linear mit der Anzahl der Bits ($O(n)$). In modernen Hochleistungsprozessoren kommen für breitere Zahlen (z.\,B. 32 oder 64 Bit) vorausschauende Addierwerke zum Einsatz (wie der \textit{Carry-Lookahead-Addierer}), welche alle Überträge parallel ermitteln.
 \end{myremark}
 
-\begin{myexercise}\label{myexercise:volladdierer-kette}
-    \textbf{Schriftliche Binäraddition.}
-    Berechnen Sie $011_2+010_2$ schriftlich. Beginnen Sie rechts und notieren Sie die Überträge wie bei der Dezimaladdition. Kontrollieren Sie das Ergebnis im Dezimalsystem.
 
-    \textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$: Schreiben Sie $0$ und übertragen Sie $1$ in die nächste Spalte.
+\begin{myexercise}\label{myexercise:volladdierer-kette}
+    \textbf{Signalverfolgung im Ripple-Carry-Addierwerk.}
+    Die schriftliche Addition ($011_2 + 010_2$) aus der vorherigen Aufgabe wird nun elektronisch im 3-Bit-Addierwerk berechnet ($a = 011_2$, $b = 010_2$, $c_0 = 0$):
+    \begin{center}
+        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}
+    \end{center}
+    Ermitteln Sie die Signale Schritt für Schritt von rechts nach links (Bit 0 bis Bit 2):
+    \begin{enumerate}[(a)]
+        \item Bestimmen Sie für jede Stufe den Ausgangsübertrag ($c_1, c_2, c_3$) sowie das Summenbit ($s_0, s_1, s_2$). Den Ausgangsübertrag können Sie berechnen mit 
+        \[
+            c_{i+1} = (a_i \wedge b_i) \vee (a_i \wedge c_i) \vee (b_i \wedge c_i), \quad i = 0, 1, 2.
+        \]
+        Das Summenbit können Sie berechnen mit
+        \[
+            s_i = a_i \oplus b_i \oplus c_i, \quad i = 0, 1, 2.
+        \]
+        Für das letzte Summenbit $s_3$ gilt $s_3 = c_3$.
+        \item Geben Sie das Gesamtergebnis $(s_3\,s_2\,s_1\,s_0)_2$ im Binär- und Dezimalsystem an und vergleichen Sie es mit Ihrer schriftlichen Rechnung aus \cref{myexercise:binaeraddition-einfach}.
+    \end{enumerate}
     \begin{myanswer}
-\[
-    \begin{array}{rccc}
-        & 0 & 1 & 1 \\
-        + & 0 & 1 & 0 \\
-        \text{Übertrag} & 1 & & \\\hline
-        & 1 & 0 & 1
-    \end{array}
-\]
-Von rechts: $1+0=1$; dann $1+1=10_2$, also $0$ schreiben und $1$ übertragen; links $0+0+1=1$. Ergebnis: $101_2=5_{10}$. Kontrolle: $3+2=5$.
+        \begin{center}
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}
+        \end{center}
+        \begin{enumerate}[(a)]
+            \item \textbf{Bit 0 (FA 0):} $a_0=1, b_0=0, c_0=0 \Rightarrow s_0 = 1 \oplus 0 \oplus 0 = \mathbf{1}$, Übertrag $c_1 = \mathbf{0}$.
+            \item \textbf{Bit 1 (FA 1):} $a_1=1, b_1=1, c_1=0 \Rightarrow s_1 = 1 \oplus 1 \oplus 0 = \mathbf{0}$, Übertrag $c_2 = \mathbf{1}$.
+            \item \textbf{Bit 2 (FA 2):} $a_2=0, b_2=0, c_2=1 \Rightarrow s_2 = 0 \oplus 0 \oplus 1 = \mathbf{1}$, Übertrag $s_3 = c_3 = \mathbf{0}$.
+            \item \textbf{Ergebnis:} $(s_3\,s_2\,s_1\,s_0)_2 = \mathbf{0101_2} = \mathbf{5_{10}}$.
+        \end{enumerate}
+        Dies entspricht exakt der schriftlichen Addition:
+        \[
+            \begin{array}{rccc}
+                & 0 & 1 & 1 \\
+                + & 0 & 1 & 0 \\
+                \text{Übertrag} & 1 & & \\\hline
+                & 1 & 0 & 1
+            \end{array}
+        \]
+        Kontrolle im Dezimalsystem: $3_{10} + 2_{10} = 5_{10}$.
     \end{myanswer}
 \end{myexercise}
 
