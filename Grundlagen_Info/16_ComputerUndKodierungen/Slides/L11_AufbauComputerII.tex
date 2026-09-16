@@ -56,6 +56,36 @@ Ein Foto (24 MB) wird von einer SSD mit 2 GB/s Lesegeschwindigkeit geladen. Wie 
 \only<2->{\begin{center}\Large $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 12\,\mathrm{ms}$\end{center}}
 \end{frame}
 
+\begin{frame}\FDUtitle{Aufgabe 5.3: Ein Game von Steam herunterladen}
+Ein Game hat eine Downloadgrösse von \textbf{120~GB}. Die Download-Geschwindigkeit sei unbegrenzt; nur das Schreiben der Daten benötigt Zeit.
+\begin{center}
+\begin{tabular}{lc}
+    Speicher & Angenommene Schreibgeschwindigkeit \\ \midrule
+    RAM & $40\,\mathrm{GB/s}$ \\
+    SSD & $2\,\mathrm{GB/s}$ \\
+    HDD & $150\,\mathrm{MB/s}$ \\
+\end{tabular}
+\end{center}
+{\small Modell: konstante Raten, jeweils mindestens 120~GB frei, auch im RAM; kein Entpacken und Installieren. $1\,\mathrm{GB}=1000\,\mathrm{MB}$.}
+\begin{enumerate}[(a)]
+    \item Wie lange dauert das Speichern jeweils? $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$
+    \item Warum eignet sich RAM nicht als dauerhafte Ablage?
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\FDUtitle{Lösung: Speicherzeit für das Steam-Game}
+\begin{center}
+\begin{tabular}{lcc}
+    Speicher & Rechnung & Zeit \\ \midrule
+    RAM & $120\,\mathrm{GB}\,/\,(40\,\mathrm{GB/s})$ & $3\,\mathrm{s}$ \\
+    SSD & $120\,\mathrm{GB}\,/\,(2\,\mathrm{GB/s})$ & $60\,\mathrm{s}=1\,\mathrm{min}$ \\
+    HDD & $120\,000\,\mathrm{MB}\,/\,(150\,\mathrm{MB/s})$ & $800\,\mathrm{s}=13\,\mathrm{min}\,20\,\mathrm{s}$ \\
+\end{tabular}
+\end{center}
+RAM verliert die Daten beim Ausschalten. SSD und HDD speichern sie dauerhaft.\\[3mm]
+Die Zeiten gelten nur für das Schreiben im vereinfachten Modell, nicht für den gesamten Download und die Installation.
+\end{frame}
+
 {\setbeamertemplate{footline}{\darkfootline}
 \begin{frame}\sectionframe[FDUgreen]{Fetch -- Decode -- Execute}{Wie die CPU Befehle abarbeitet}
 \end{frame}}
@@ -69,10 +99,40 @@ Ein Foto (24 MB) wird von einer SSD mit 2 GB/s Lesegeschwindigkeit geladen. Wie 
 
 \begin{frame}\FDUtitle{Was passiert in jeder Phase?}
 \begin{itemize}[<+->]\setlength\itemsep{6pt}
-  \item \tib{Fetch}: Steuerwerk liest den nächsten Befehl aus dem RAM (Adresse = Programmzähler)
-  \item \tib{Decode}: Befehl wird zerlegt -- \emph{was} tun, \emph{mit welchen} Operanden?
-  \item \tib{Execute}: ALU (o.\,ä.) führt die Anweisung aus, Ergebnis wird gespeichert, Programmzähler rückt weiter
+  \item \tib{Fetch} (Holen): Steuerwerk liest den nächsten Befehl aus dem RAM (Adresse = Programmzähler)
+  \item \tib{Decode} (Dekodieren): Befehl wird zerlegt -- \emph{was} tun, \emph{mit welchen} Daten?
+  \item \tib{Execute} (Ausführen): ALU führt Befehl aus, Ergebnis wird gespeichert, Programmzähler rückt weiter
 \end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Beispiel: Ein FDE-Durchlauf für \texttt{ADD R1, R2}}
+\textbf{Ausgangslage:} $\text{R1} = 3$, $\text{R2} = 5$, Adresse im RAM: \texttt{100}
+\vspace{3mm}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+    \item \textbf{1. Fetch:} Steuerwerk holt Befehl von Speicheradresse \texttt{100} in das Befehlsregister; Programmzähler springt auf \texttt{101}.
+    \item \textbf{2. Decode:} Steuerwerk entschlüsselt Opcode: \enquote{Addition der Inhalte von $\text{R1}$ und $\text{R2}$, Zielspeicher $\text{R1}$}.
+    \item \textbf{3. Execute:} ALU berechnet $3 + 5 = 8$ und speichert $8$ in $\text{R1}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Der CPU-Takt und die Einheit Hertz (Hz)}
+\begin{itemize}\setlength\itemsep{4pt}
+    \item Ein Taktgeber (\emph{Quarzoszillator}) gibt den Schritt für alle Transistoren vor.
+    \item \textbf{1 Hertz (Hz)} $= 1\text{ Taktzyklus pro Sekunde}\quad (1\,\mathrm{s}^{-1})$.
+\end{itemize}
+\vspace{2mm}
+\begin{center}
+\begin{tabular}{lll}
+    Einheit & Bedeutung & Takte / Sekunde \\ \midrule
+    $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\
+    $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\
+    $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
+\end{tabular}
+\end{center}
+\vspace{1mm}
+\begin{center}
+$3{,}6\,\mathrm{GHz} \;\Rightarrow\; \mathbf{3{,}6\text{ Milliarden Taktzyklen pro Sekunde}}!$
+\end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Taktfrequenz}
@@ -88,7 +148,9 @@ Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $
 \begin{frame}{Auftrag}{Kapitel 5: Speicher \& FDE-Zyklus}
 \aufgabebox{\textbf{Aufgabe 5.2}: Dauer berechnen: Foto ($24\,\mathrm{MB}$) von SSD ($2\,\mathrm{GB/s}$) laden}
 \vspace{3mm}
-\aufgabebox{\textbf{Aufgabe 5.3}: Befehle/s und Ausführungsdauer bei $3{,}6\,\mathrm{GHz}$ berechnen}
+\aufgabebox{\textbf{Aufgabe 5.3}: Speicherzeit für ein Steam-Game (120~GB) in RAM, auf SSD und auf HDD vergleichen}
 \vspace{3mm}
-\challengebox{\textbf{Aufgabe 5.4}: Teilschritte des Befehls \texttt{ADD R1, R2} den Phasen Fetch, Decode, Execute zuordnen}
+\aufgabebox{\textbf{Aufgabe 5.4}: Befehle/s und Ausführungsdauer bei $3{,}6\,\mathrm{GHz}$ berechnen}
+\vspace{3mm}
+\challengebox{\textbf{Aufgabe 5.5}: Teilschritte des Befehls \texttt{ADD R1, R2} den Phasen Fetch, Decode, Execute zuordnen}
 \end{frame}

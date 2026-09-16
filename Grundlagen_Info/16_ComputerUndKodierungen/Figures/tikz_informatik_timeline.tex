@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=1.1cm,y=1cm]
+       \begin{scope}[local bounding box=timelineBB]
+        \coordinate (timeline-start) at (0,0);
+        \coordinate (timeline-end) at (13.8,0);
+        \draw[thick,->] (timeline-start) -- (timeline-end) node[right] {Zeit};
+
+        \foreach \x/\year/\txt/\ticky/\labely in {
+            0.9/1837/Babbages analytische Maschine/-0.75/-1.55,
+            2.6/1843/Lovelaces Notizen zu Algorithmen/0.75/1.55,
+            4.8/1936/Turing beschreibt ein allgemeines Rechenmodell/-0.75/-1.55,
+            6.2/1941/Zuses Z3 als programmierbarer Rechner/0.75/1.55,
+            7.7/1946/ENIAC: grosser elektronischer Rechner/-0.75/-1.55,
+            9.0/1947/Erfindung des Transistors/0.75/1.55,
+            10.8/1969/ARPANET verbindet erste Rechner/-0.75/-1.55,
+            12.6/1989/Tim Berners-Lee entwickelt das World Wide Web/0.75/1.55
+        } {
+            \coordinate (pt) at (\x,0);
+            \draw[thick] (pt) -- ++(0,\ticky);
+            \node[font=\scriptsize, align=center, text width=2.5cm] at ($(pt)+(0,\labely)$) {\year\\\txt};
+        }
+    \end{scope}
+\end{tikzpicture}

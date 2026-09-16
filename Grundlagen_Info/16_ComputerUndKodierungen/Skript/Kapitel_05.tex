@@ -78,22 +78,21 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
     Der \enquote{Tastaturcode}, den der Treiber erzeugt, ist letztlich nichts anderes als eine Bitfolge -- ähnlich wie die ASCII-Kodierung aus \cref{ch:kodierungen}, die jedem Zeichen ein Byte zuordnet. Auch die Darstellung des Buchstabens \texttt{A} auf dem Bildschirm läuft letztlich über eine Kodierung von Pixeln und Farben, wie in \cref{ch:kodierungen} besprochen.
 \end{myattention}
 
-\begin{myexercise}
-    Ordnen Sie die folgenden Komponenten und Aktionen der richtigen Schicht im Software-Stack zu:
-    \begin{itemize}
-        \item NTFS-Dateisystem
-        \item Google Chrome (Browser)
-        \item Ein C-Programm ruft \texttt{open("datei.txt")} auf
-        \item Der Grafikkartentreiber
-        \item Die CPU führt einen Maschinenbefehl aus
-    \end{itemize}
+\begin{myexercise}\label{myexercise:software-stack-zuordnung}
+    Ordnen Sie die fünf Elemente (A--E) der jeweils richtigen Schicht im Software-Stack zu:
+    \begin{center}
+        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_software_stack_aufgabe.tex}
+    \end{center}
     \begin{myanswer}
+        \begin{center}
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_software_stack_loesung.tex}
+        \end{center}
         \begin{itemize}
-            \item NTFS-Dateisystem $\to$ Betriebssystem (Teil des OS-Kernels)
-            \item Google Chrome $\to$ Anwendung
-            \item \texttt{open("datei.txt")} $\to$ Systemaufruf / API
-            \item Grafikkartentreiber $\to$ Treiber
-            \item CPU führt Maschinenbefehl aus $\to$ Hardware
+            \item \textbf{A (NTFS-Dateisystem)} $\to$ Betriebssystem (Kernel)
+            \item \textbf{B (Google Chrome)} $\to$ Anwendungen
+            \item \textbf{C (CPU führt Maschinenbefehl aus)} $\to$ Hardware
+            \item \textbf{D (Grafikkartentreiber)} $\to$ Gerätetreiber
+            \item \textbf{E (Aufruf \texttt{open("datei.txt")})} $\to$ Systemaufrufe / API
         \end{itemize}
     \end{myanswer}
 \end{myexercise}

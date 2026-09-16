@@ -84,27 +84,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        % Öffner-Schalter x
-        \fill (0.8, 2.2) circle (2pt);
-        \draw[thick, ForestGreen] (0.8, 2.2) -- (1.8, 2.2);
-        \node[above, font=\small] at (1.3, 2.3) {$x$ (Öffner)};
-        \fill (1.8, 2.2) circle (2pt);
-        \draw[thick] (1.8, 2.2) -- (3.5, 2.2) -- (3.5, 1.4);
-        
-        % Lampe y
-        \draw[thick] (3.5, 1.1) circle (0.3);
-        \draw (3.3, 0.9) -- (3.7, 1.3);
-        \draw (3.3, 1.3) -- (3.7, 0.9);
-        \node[right, font=\small] at (3.9, 1.1) {Last ($y = \overline{x}$)};
-        \draw[thick] (3.5, 0.8) -- (3.5, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (1.75, -0.9) {Bei $x=0$ (geschlossen): Strom fliesst ($y=1$).\\[1pt]Bei $x=1$ (geöffnet): Strom unterbrochen ($y=0$).};
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_not_schaltung.tex}
     \caption{Elektrische Schaltung für NOT: Ruhekontakt (Öffner).}
     \label{fig:not_schaltung}
 \end{figure}
@@ -120,35 +100,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 \begin{myremark}[Schalterarten: Schliesser (Arbeitskontakt) vs. Öffner (Ruhekontakt)]
     In den Schaltungsdiagrammen kommen zwei grundlegende Schalterarten zum Einsatz:
     \begin{center}
-        \begin{tikzpicture}[scale=0.9, >=stealth]
-            % --- Arbeitskontakt (Schliesser) ---
-            \begin{scope}[shift={(0,0)}]
-                \node[font=\small\bfseries] at (1.2, 1.8) {Arbeitskontakt (Schliesser)};
-                % Anschlüsse und Festkontakte
-                \draw[thick] (-0.4,0) -- (0,0); \fill (0,0) circle (2.2pt);
-                \draw[thick] (2.4,0) -- (2.8,0); \fill (2.4,0) circle (2.2pt);
-                
-                % Schalterhebel offen
-                \draw[thick] (0,0) -- (2.1, 0.8);
-                \draw[->, thick, NavyBlue] (1.1, 1.1) -- (1.1, 0.5) node[right, font=\tiny] {Drücken ($x=1$)};
-                
-                \node[font=\small, align=center] at (1.2, -0.6) {Unbetätigt ($x=0$): \textbf{Offen}\\[-2pt]{\scriptsize(Luftspalt $\rightarrow$ Strom unterbrochen)}};
-            \end{scope}
-            
-            % --- Ruhekontakt (Öffner) ---
-            \begin{scope}[shift={(5.5,0)}]
-                \node[font=\small\bfseries, ForestGreen] at (1.2, 1.8) {Ruhekontakt (Öffner)};
-                % Anschlüsse und Festkontakte
-                \draw[thick] (-0.4,0) -- (0,0); \fill (0,0) circle (2.2pt);
-                \draw[thick] (2.4,0) -- (2.8,0); \fill (2.4,0) circle (2.2pt);
-                
-                % Schalterhebel aufliegend (geschlossen)
-                \draw[thick, ForestGreen] (0,0) -- (2.4,0);
-                \draw[->, thick, Red] (1.1, 0.2) -- (1.1, 0.8) node[right, font=\tiny] {Drücken ($x=1$)};
-                
-                \node[font=\small, align=center] at (1.2, -0.6) {Unbetätigt ($x=0$): \textbf{Geschlossen}\\[-2pt]{\scriptsize(Kontakt aufliegend $\rightarrow$ Strom fliesst)}};
-            \end{scope}
-        \end{tikzpicture}
+        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_schalterarten.tex}
     \end{center}
     \begin{itemize}
         \item \textbf{Arbeitskontakt (Schliesser):}
@@ -169,38 +121,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 \begin{myremark}[Exkurs: Umsetzung des NOT-Gatters in CMOS-Technologie]
     In modernen Mikroprozessoren werden logische Gatter nicht mit mechanischen Schaltern, sondern mit zwei gegensätzlich schaltenden Transistoren (CMOS) umgesetzt:
     \begin{center}
-        \begin{tikzpicture}[scale=0.9, >=stealth]
-            % Versorgung oben (VDD)
-            \draw[thick] (2,3.1) node[above, font=\small] {$V_{DD} \; (+U)$} -- (2,2.4);
-            
-            % PMOS oben (p-Kanal Transistor)
-            \draw[thick, fill=blue!8] (1.3,1.7) rectangle (2.7,2.4);
-            \node[font=\small\bfseries, color=NavyBlue] at (2,2.05) {PMOS};
-            \draw[thick] (1.1,2.05) circle (0.09cm); % Invertierungskreis
-            \draw[thick] (0.5,2.05) -- (1.01,2.05);
-            
-            % Verbindung zwischen PMOS und NMOS
-            \draw[thick] (2,1.7) -- (2,0.7);
-            \draw[thick] (2,1.2) -- (3.3,1.2) node[right, font=\small] {$y = \overline{x}$};
-            \fill (2,1.2) circle (2pt);
-            
-            % NMOS unten (n-Kanal Transistor)
-            \draw[thick, fill=red!8] (1.3,0) rectangle (2.7,0.7);
-            \node[font=\small\bfseries, color=Maroon] at (2,0.35) {NMOS};
-            \draw[thick] (0.5,0.35) -- (1.3,0.35);
-            
-            % Masse unten (GND)
-            \draw[thick] (2,0) -- (2,-0.4);
-            \draw[thick] (1.4,-0.4) -- (2.6,-0.4);
-            \draw[thick] (1.7,-0.52) -- (2.3,-0.52);
-            \draw[thick] (1.9,-0.64) -- (2.1,-0.64);
-            \node[below, font=\small] at (2,-0.7) {GND ($0\,\text{V}$)};
-            
-            % Eingang x
-            \draw[thick] (0.5,2.05) -- (0.5,0.35);
-            \draw[thick] (-0.2,1.2) node[left, font=\small] {$x$} -- (0.5,1.2);
-            \fill (0.5,1.2) circle (2pt);
-        \end{tikzpicture}
+        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_not_cmos.tex}
     \end{center}
     Die beiden Transistoren wirken als komplementäres Schalterpaar:
     \begin{itemize}
@@ -254,34 +175,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        % Schalter A
-        \fill (0.8, 2.2) circle (2pt);
-        \draw[thick] (0.8, 2.2) -- (1.4, 2.55);
-        \node[above, font=\small] at (1.1, 2.55) {$A$};
-        \fill (1.6, 2.2) circle (2pt);
-        \draw[thick] (1.6, 2.2) -- (2.4, 2.2);
-        
-        % Schalter B
-        \fill (2.4, 2.2) circle (2pt);
-        \draw[thick] (2.4, 2.2) -- (3.0, 2.55);
-        \node[above, font=\small] at (2.7, 2.55) {$B$};
-        \fill (3.2, 2.2) circle (2pt);
-        \draw[thick] (3.2, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
-        
-        % Lampe y
-        \draw[thick] (4.2, 1.1) circle (0.3);
-        \draw (4.0, 0.9) -- (4.4, 1.3);
-        \draw (4.0, 1.3) -- (4.4, 0.9);
-        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \land B$)};
-        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Reihenschaltung: Strom fliesst nur, wenn\\[1pt]\textbf{$A=1$ UND $B=1$}.};
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_and_schaltung.tex}
     \caption{Elektrische Schaltung für AND: Reihenschaltung zweier Schalter.}
     \label{fig:and_schaltung}
 \end{figure}
@@ -325,53 +219,25 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        \draw[thick] (0.8, 2.2) |- (1.1, 2.7);
-        \draw[thick] (0.8, 2.2) |- (1.1, 1.7);
-        \fill (0.8, 2.2) circle (2pt);
-        
-        % Schalter A
-        \fill (1.1, 2.7) circle (2pt);
-        \draw[thick] (1.1, 2.7) -- (1.7, 3.05);
-        \node[above, font=\small] at (1.4, 3.05) {$A$};
-        \fill (1.9, 2.7) circle (2pt);
-        \draw[thick] (1.9, 2.7) -| (2.3, 2.2);
-        
-        % Schalter B
-        \fill (1.1, 1.7) circle (2pt);
-        \draw[thick] (1.1, 1.7) -- (1.7, 2.05);
-        \node[above, font=\small] at (1.4, 2.05) {$B$};
-        \fill (1.9, 1.7) circle (2pt);
-        \draw[thick] (1.9, 1.7) -| (2.3, 2.2);
-        
-        \fill (2.3, 2.2) circle (2pt);
-        \draw[thick] (2.3, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
-        
-        % Lampe y
-        \draw[thick] (4.2, 1.1) circle (0.3);
-        \draw (4.0, 0.9) -- (4.4, 1.3);
-        \draw (4.0, 1.3) -- (4.4, 0.9);
-        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \lor B$)};
-        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Parallelschaltung: Strom fliesst, wenn\\[1pt]\textbf{$A=1$ ODER $B=1$}.};
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_or_schaltung.tex}
     \caption{Elektrische Schaltung für OR: Parallelschaltung zweier Schalter.}
     \label{fig:or_schaltung}
 \end{figure}
 
 \begin{myexercise}\label{myexercise:gatter-anwendung}
-    Ein Fahrstuhl darf sich nur dann in Bewegung setzen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten ist \emph{oder} der Notfall-Modus deaktiviert ist. Modellieren Sie diese Bedingung mithilfe von AND-, OR- und NOT-Gattern und geben Sie die zugehörige logische Formel an.
+    Ein Fahrstuhl darf sich nur dann in Bewegung setzen, wenn die Tür geschlossen \emph{und} entweder das zulässige Gewicht nicht überschritten ist \emph{oder} der Notfall-Modus aktiviert ist. Modellieren Sie diese Bedingung mithilfe von AND-, OR- und NOT-Gattern und geben Sie die zugehörige logische Formel an.
     \begin{myanswer}
-        Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
+        Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Zulässiges Gewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
         \[
-            t \wedge (\overline{u} \vee \overline{n}).
+            t \wedge (\overline{u} \vee n).
         \]
-        Die Schaltung besteht aus zwei NOT-Gattern (für $\overline{u}$ und $\overline{n}$), einem OR-Gatter und einem abschliessenden AND-Gatter.
+
+        Die Schaltung besteht aus einem NOT-Gatter (für $\overline{u}$), einem OR-Gatter und einem abschliessenden AND-Gatter.
+        \begin{center}
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_fahrstuhl.tex}
+
+            $y = t \wedge (\overline{u} \vee n)$: Fahrstuhl darf sich bewegen.
+        \end{center}
     \end{myanswer}
 \end{myexercise}
 
@@ -379,7 +245,9 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 
 Aus den drei Grundverknüpfungen lassen sich weitere wichtige Gatter ableiten, die in der Praxis eine zentrale Rolle spielen.
 
-\subsection{NAND -- Nicht-UND}
+\subsection{NAND -- Nicht-UND (optional)}
+
+Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Challenges.
 
 \begin{mydefinition}[NAND-Gatter]
     Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} liefert die Negation des AND-Gatters:
@@ -409,56 +277,23 @@ Aus den drei Grundverknüpfungen lassen sich weitere wichtige Gatter ableiten, d
     \label{tab:nand}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        \draw[thick] (0.8, 2.2) |- (1.1, 2.7);
-        \draw[thick] (0.8, 2.2) |- (1.1, 1.7);
-        \fill (0.8, 2.2) circle (2pt);
-        
-        % Öffner A
-        \fill (1.1, 2.7) circle (2pt);
-        \draw[thick, ForestGreen] (1.1, 2.7) -- (1.9, 2.7);
-        \node[above, font=\small] at (1.5, 2.8) {$A$};
-        \fill (1.9, 2.7) circle (2pt);
-        \draw[thick] (1.9, 2.7) -| (2.3, 2.2);
-        
-        % Öffner B
-        \fill (1.1, 1.7) circle (2pt);
-        \draw[thick, ForestGreen] (1.1, 1.7) -- (1.9, 1.7);
-        \node[above, font=\small] at (1.5, 1.8) {$B$};
-        \fill (1.9, 1.7) circle (2pt);
-        \draw[thick] (1.9, 1.7) -| (2.3, 2.2);
-        
-        \fill (2.3, 2.2) circle (2pt);
-        \draw[thick] (2.3, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
-        
-        % Lampe y
-        \draw[thick] (4.2, 1.1) circle (0.3);
-        \draw (4.0, 0.9) -- (4.4, 1.3);
-        \draw (4.0, 1.3) -- (4.4, 0.9);
-        \node[right, font=\small] at (4.6, 1.1) {Last ($y = \overline{A \land B}$)};
-        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Parallele Öffner: Strom unterbrochen nur, wenn\\[1pt]\textbf{$A=1$ UND $B=1$}.};
-    \end{tikzpicture}
-    \caption{Elektrische Schaltung für NAND: Parallelschaltung zweier Ruhekontakte (Öffner).}
-    \label{fig:nand_schaltung}
-\end{figure}
-
-Da es sich bei $A$ und $B$ um \textbf{Ruhekontakte (Öffner)} handelt, ist im unangetasteten Zustand ($0$) jeder Pfad \emph{geschlossen}. Erst beim Betätigen eines Schalters ($1$) wird dieser Pfad \emph{unterbrochen}. Solange mindestens ein Schalter nicht gedrückt wird ($0$), fliesst der Strom über dessen Zweig zur Last ($y=1$). Erst wenn \textbf{beide} Schalter gleichzeitig betätigt werden ($A=1$ UND $B=1$), öffnen sich beide parallelen Zweige und das Signal fällt aus ($y=0$).
-
 Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen (funktionale Vollständigkeit).
 
-\begin{myexercise}\label{myexercise:nand-not}
-    Zeigen Sie, dass sich das NOT-Gatter allein mit einem NAND-Gatter realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $\overline{x \wedge x}$ auf.
+\begin{mychallenge}\label{myexercise:nand-not}
+    Zeigen Sie, dass sich das NOT-Gatter allein mit einem NAND-Gatter realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $\overline{x \wedge x}$ auf, indem Sie folgende Tabelle Schritt für Schritt von links nach rechts ausfüllen.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{c|c|c}
+            $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule\midrule
+            0 & & \\\midrule
+            1 & & \\
+        \end{tabular}
+        \caption{Wahrheitstabelle für $\overline{x \wedge x}$.}
+        \label{tab:nand-not}
+    \end{table}
     \begin{myanswer}
         \begin{center}
-            \begin{tabular}{ccc}
+            \begin{tabular}{c|c|c}
                 $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule\midrule
                 0 & 0 & 1 \\\midrule
                 1 & 1 & 0 \\
@@ -466,9 +301,9 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
         \end{center}
         Die Spalte $\overline{x \wedge x}$ entspricht genau NOT($x$) ($=\overline{x}$). Verbindet man beide Eingänge eines NAND-Gatters miteinander, erhält man ein NOT-Gatter.
     \end{myanswer}
-\end{myexercise}
+\end{mychallenge}
 
-\begin{myexercise}\label{myexercise:nand-and}
+\begin{mychallenge}\label{myexercise:nand-and}
     Konstruieren Sie ein \textbf{AND-Gatter} ($x \wedge y$) ausschliesslich aus NAND-Gattern.
     \begin{enumerate}[(a)]
         \item Wie viele NAND-Gatter benötigen Sie und wie müssen diese miteinander verschaltet werden?
@@ -484,77 +319,35 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
             Durch die doppelte Negation wird das NAND-Signal wieder zum ursprünglichen AND-Signal.
         \end{enumerate}
     \end{myanswer}
-\end{myexercise}
+\end{mychallenge}
 
-\begin{myexercise}\label{myexercise:nand-or}
-    Konstruieren Sie ein \textbf{OR-Gatter} ($x \vee y$) ausschliesslich aus NAND-Gattern.
+\begin{mychallenge}\label{mychallenge:nand-universal}
+    \textbf{Zusatzaufgabe: OR, NOR und XOR ausschliesslich aus NAND-Gattern}\\
+    Dass NAND funktional vollständig ist, bedeutet, dass sich auch alle weiteren Gatter allein daraus aufbauen lassen:
     \begin{enumerate}[(a)]
-        \item Nutzen Sie die De-Morgan'sche Regel $x \vee y = \overline{\overline{x} \wedge \overline{y}}$. Wie lässt sich dieser Ausdruck mit NAND-Gattern umsetzen?
-        \item Wie viele NAND-Gatter werden dafür insgesamt benötigt?
-        \item Weisen Sie die Korrektheit anhand einer Wahrheitstabelle mit den Zwischenspalten $\overline{x}$, $\overline{y}$ und $\overline{\overline{x} \wedge \overline{y}}$ nach.
-    \end{enumerate}
-    \begin{myanswer}
-        \begin{enumerate}[(a)]
-            \item Die beiden Eingangssignale $x$ und $y$ werden zunächst jeweils durch ein eigenes NAND-Gatter (als Inverter) negiert, sodass $\overline{x}$ und $\overline{y}$ entstehen. Anschliessend werden diese beiden negierten Signale auf die Eingänge eines dritten NAND-Gatters geführt.
-            \item Es werden \textbf{3 NAND-Gatter} benötigt.
-            \item Wahrheitstabelle:
-            \begin{center}
-                \begin{tabular}{ccccc}
-                    $x$ & $y$ & $\overline{x}$ & $\overline{y}$ & $\overline{\overline{x} \wedge \overline{y}}$ ($= x \vee y$) \\\midrule\midrule
-                    0 & 0 & 1 & 1 & 0 \\\midrule
-                    0 & 1 & 1 & 0 & 1 \\\midrule
-                    1 & 0 & 0 & 1 & 1 \\\midrule
-                    1 & 1 & 0 & 0 & 1 \\
-                \end{tabular}
-            \end{center}
-            Die letzte Spalte entspricht exakt der Wahrheitstabelle des OR-Gatters.
-        \end{enumerate}
-    \end{myanswer}
-\end{myexercise}
-
-\begin{myexercise}\label{myexercise:nand-nor}
-    Konstruieren Sie ein \textbf{NOR-Gatter} ($\overline{x \vee y}$) ausschliesslich aus NAND-Gattern.
-    \begin{enumerate}[(a)]
-        \item Wie lässt sich das NOR-Gatter aus der in \cref{myexercise:nand-or} hergeleiteten OR-Schaltung gewinnen?
-        \item Wie viele NAND-Gatter sind dafür insgesamt erforderlich?
-    \end{enumerate}
-    \begin{myanswer}
-        \begin{enumerate}[(a)]
-            \item Ein NOR-Gatter ist ein negiertes OR-Gatter: $\overline{x \vee y} = \text{NOT}(x \vee y)$. Man nimmt die OR-Schaltung aus \cref{myexercise:nand-or} (3 NAND-Gatter) und hängt an deren Ausgang ein viertes NAND-Gatter als Inverter (NOT) an.
-            \item Es werden \textbf{4 NAND-Gatter} benötigt:
-            \[
-                \overline{x \vee y} = \overline{\overline{\overline{x} \wedge \overline{y}} \wedge \overline{\overline{x} \wedge \overline{y}}}.
-            \]
-        \end{enumerate}
-    \end{myanswer}
-\end{myexercise}
-
-\begin{mychallenge}\label{mychallenge:nand-xor}
-    \textbf{Knobelaufgabe: XOR aus NAND-Gattern}\\
-    Konstruieren Sie ein \textbf{XOR-Gatter} ($x \oplus y$) ausschliesslich aus NAND-Gattern.
-    \begin{enumerate}[(a)]
-        \item Zeigen Sie, dass sich ein XOR-Gatter mit genau \textbf{4 NAND-Gattern} realisieren lässt. Betrachten Sie dazu die folgende Schaltungsstruktur mit 4 Gattern und bestimmen Sie die Signale $u, v, w, z$:
+        \item \textbf{OR-Gatter ($x \vee y$):} Nutzen Sie das De-Morgan'sche Gesetz $x \vee y = \overline{\overline{x} \wedge \overline{y}}$. Wie lässt sich ein OR-Gatter aus 3 NAND-Gattern konstruieren?
+        \item \textbf{NOR-Gatter ($\overline{x \vee y}$):} Wie lässt sich das NOR-Gatter mit einem 4. NAND-Gatter aus der OR-Schaltung gewinnen?
+        \item \textbf{XOR-Gatter ($x \oplus y$):} Zeigen Sie, dass sich ein XOR-Gatter mit genau \textbf{4 NAND-Gattern} realisieren lässt, indem Sie die Zwischensignale der folgenden Schaltung analysieren:
         \begin{itemize}
             \item Gatter 1 (Eingang): $u = \overline{x \wedge y}$
-            \item Gatter 2 (oben): $v = \overline{x \wedge u}$
-            \item Gatter 3 (unten): $w = \overline{y \wedge u}$
+            \item Gatter 2 (oben): $v = \overline{x \wedge u} = \overline{x \wedge \overline{x \wedge y}}$
+            \item Gatter 3 (unten): $w = \overline{y \wedge u} = \overline{y \wedge \overline{x \wedge y}}$
             \item Gatter 4 (Ausgang): $z = \overline{v \wedge w}$
         \end{itemize}
-        \item Erstellen Sie die vollständige Wahrheitstabelle für $x, y, u, v, w, z$ und vergleichen Sie $z$ mit der Definition von $x \oplus y$.
+        Erstellen Sie die Wahrheitstabelle für $x, y, u, v, w, z$ und kontrollieren Sie, dass $z = x \oplus y$ gilt.
     \end{enumerate}
     \begin{myanswer}
         \begin{enumerate}[(a)]
-            \item Logische Funktionsweise der 4 NAND-Gatter:
+            \item \textbf{OR-Gatter:} Man invertiert $x$ und $y$ mit je einem NAND-Inverter zu $\overline{x}$ und $\overline{y}$. Ein drittes NAND-Gatter verknüpft beide: $\overline{\overline{x} \wedge \overline{y}} = x \vee y$ (\textbf{3 NAND-Gatter}).
+            \item \textbf{NOR-Gatter:} Man hängt an den Ausgang der OR-Schaltung ein viertes NAND-Gatter als Inverter: $\overline{x \vee y} = \text{NOT}(x \vee y)$ (\textbf{4 NAND-Gatter}).
+            \item \textbf{XOR-Gatter:}
             \begin{itemize}
-                \item Gatter 1 erzeugt $u = \overline{x \wedge y}$.
-                \item Gatter 2 verknüpft $x$ und $u$: $v = \overline{x \wedge \overline{x \wedge y}} = \overline{x} \vee (x \wedge y) = \overline{x} \vee y$.
-                \item Gatter 3 verknüpft $y$ und $u$: $w = \overline{y \wedge \overline{x \wedge y}} = \overline{y} \vee (x \wedge y) = x \vee \overline{y}$.
-                \item Gatter 4 verknüpft $v$ und $w$:
-                \[
-                    z = \overline{v \wedge w} = \overline{v} \vee \overline{w} = (x \wedge \overline{y}) \vee (\overline{x} \wedge y) = x \oplus y.
-                \]
+                \item Gatter 1 liefert $u = \overline{x \wedge y}$.
+                \item Gatter 2 liefert $v = \overline{x \wedge u} = \overline{x} \vee y$.
+                \item Gatter 3 liefert $w = \overline{y \wedge u} = x \vee \overline{y}$.
+                \item Gatter 4 liefert $z = \overline{v \wedge w} = \overline{v} \vee \overline{w} = (x \wedge \overline{y}) \vee (\overline{x} \wedge y) = x \oplus y$.
             \end{itemize}
-            \item Wahrheitstabelle:
+            Wahrheitstabelle:
             \begin{center}
                 \begin{tabular}{cccccc}
                     $x$ & $y$ & $u = \overline{x \wedge y}$ & $v = \overline{x \wedge u}$ & $w = \overline{y \wedge u}$ & $z = \overline{v \wedge w}$ ($= x \oplus y$) \\\midrule\midrule
@@ -564,12 +357,25 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
                     1 & 1 & 0 & 1 & 1 & 0 \\
                 \end{tabular}
             \end{center}
-            Das Ausgangssignal $z$ ist genau dann $1$, wenn sich $x$ und $y$ voneinander unterscheiden ($x \neq y$). Es entspricht exakt der Definition des XOR-Gatters.
+            Das Ausgangssignal $z$ entspricht exakt der XOR-Definition.
         \end{enumerate}
     \end{myanswer}
 \end{mychallenge}
 
-\subsection{NOR -- Nicht-ODER}
+\begin{myremark}[Exkurs: Theorie vs. Praxis -- Werden Chips wirklich nur aus NAND gebaut?]
+    \begin{itemize}
+        \item \textbf{Theorie \& Didaktik:} Das NAND-Gatter ist \emph{funktional vollständig} -- jeder beliebige Computer lässt sich theoretisch rein aus NAND-Gattern bauen (bekannter didaktischer Ansatz wie in \textit{Nand2Tetris}). Historisch wurde z.\,B. der \textit{Apollo Guidance Computer} (1966) fast ausschliesslich aus einheitlichen NOR-Gattern gefertigt, um Herstellungskosten und Ausfallraten zu senken.
+        \item \textbf{Praxis in modernen CMOS-Prozessoren:} Heutige Mikrochips werden \textbf{nicht} aus einzelnen NAND-Gattern zusammengeschaltet. Stattdessen nutzen Chiphersteller sogenannte \textit{Standard-Zellbibliotheken}, in denen jeder Gattertyp direkt auf Transistorebene optimiert ist:
+        \begin{itemize}
+            \item Ein natives CMOS-XOR-Gatter benötigt nur \textbf{6 bis 8 Transistoren}.
+            \item Aus 4 NAND-Gattern aufgebaut bräuchte dasselbe XOR-Gatter $4 \times 4 = \mathbf{16}$ \textbf{Transistoren} und hätte eine spürbar längere Signallaufzeit.
+        \end{itemize}
+    \end{itemize}
+\end{myremark}
+
+\subsection{NOR -- Nicht-ODER (optional)}
+
+Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Challenges.
 
 \begin{mydefinition}[NOR-Gatter]
     Das \textbf{NOR-Gatter} liefert die Negation des OR-Gatters:
@@ -599,49 +405,13 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
     \label{tab:nor}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        % Öffner A
-        \fill (0.8, 2.2) circle (2pt);
-        \draw[thick, ForestGreen] (0.8, 2.2) -- (1.6, 2.2);
-        \node[above, font=\small] at (1.2, 2.3) {$A$};
-        \fill (1.6, 2.2) circle (2pt);
-        
-        \draw[thick] (1.6, 2.2) -- (2.0, 2.2);
-        
-        % Öffner B
-        \fill (2.0, 2.2) circle (2pt);
-        \draw[thick, ForestGreen] (2.0, 2.2) -- (2.8, 2.2);
-        \node[above, font=\small] at (2.4, 2.3) {$B$};
-        \fill (2.8, 2.2) circle (2pt);
-        
-        \draw[thick] (2.8, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
-        
-        % Lampe y
-        \draw[thick] (4.2, 1.1) circle (0.3);
-        \draw (4.0, 0.9) -- (4.4, 1.3);
-        \draw (4.0, 1.3) -- (4.4, 0.9);
-        \node[right, font=\small] at (4.6, 1.1) {Last ($y = \overline{A \lor B}$)};
-        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Reihenschaltung zweier Öffner: Strom fliesst nur, wenn\\[1pt]\textbf{$A=0$ UND $B=0$}.};
-    \end{tikzpicture}
-    \caption{Elektrische Schaltung für NOR: Reihenschaltung zweier Ruhekontakte (Öffner).}
-    \label{fig:nor_schaltung}
-\end{figure}
-
-\begin{myexercise}
+\begin{mychallenge}
     Gegeben ist die Verknüpfung $\overline{x \vee y}$ (NOR). Bestimmen Sie das Ausgangssignal für folgende Eingangskombinationen:
     (1) $x=0, y=0$, (2) $x=1, y=0$, (3) $x=1, y=1$.
     \begin{myanswer}
         (1) $\overline{0 \vee 0} = 1$, (2) $\overline{1 \vee 0} = 0$, (3) $\overline{1 \vee 1} = 0$.
     \end{myanswer}
-\end{myexercise}
+\end{mychallenge}
 
 \subsection{XOR -- Exklusiv-ODER (Antivalenz)}
 
@@ -672,46 +442,10 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
     \label{tab:xor}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[scale=0.88, >=stealth]
-        \draw[thick] (0,0) -- (0,2.2) -- (0.8,2.2);
-        \node[left, font=\small] at (0,1.1) {$U$};
-        \fill (0,0) circle (2pt); \fill (0,2.2) circle (2pt);
-        
-        % Wechselschalter A
-        \fill (0.8, 2.2) circle (2pt);
-        \draw[thick] (0.8, 2.2) -- (1.4, 2.7);
-        \node[above left, font=\small] at (0.8, 2.2) {$A$};
-        \fill (1.4, 2.7) circle (2pt); \fill (1.4, 1.7) circle (2pt);
-        \draw[thick] (1.4, 2.7) -- (2.4, 2.7);
-        \draw[thick] (1.4, 1.7) -- (2.4, 1.7);
-        
-        % Wechselschalter B
-        \fill (2.4, 2.7) circle (2pt); \fill (2.4, 1.7) circle (2pt);
-        \draw[thick] (3.0, 2.2) -- (2.4, 1.7);
-        \node[above right, font=\small] at (3.0, 2.2) {$B$};
-        \fill (3.0, 2.2) circle (2pt);
-        \draw[thick] (3.0, 2.2) -- (4.2, 2.2) -- (4.2, 1.4);
-        
-        % Lampe y
-        \draw[thick] (4.2, 1.1) circle (0.3);
-        \draw (4.0, 0.9) -- (4.4, 1.3);
-        \draw (4.0, 1.3) -- (4.4, 0.9);
-        \node[right, font=\small] at (4.6, 1.1) {Last ($y = A \oplus B$)};
-        \draw[thick] (4.2, 0.8) -- (4.2, 0) -- (0,0);
-        
-        \node[align=center, font=\small, text width=6.8cm, anchor=north] at (2.1, -0.9) {Wechselschaltung (Treppenhausschaltung):\\[1pt]Strom fliesst, wenn $A$ und $B$ \textbf{verschieden} sind.};
-    \end{tikzpicture}
-    \caption{Elektrische Schaltung für XOR: Wechselschaltung mit zwei Umschaltern.}
-    \label{fig:xor_schaltung}
-\end{figure}
-
 \begin{myexercise}
-    In einem Flur soll das Licht über zwei Wechselschalter $A$ und $B$ (einer am Anfang, einer am Ende des Flurs) unabhängig voneinander ein- und ausgeschaltet werden können.
-    Zeigen Sie anhand der Wechselschaltung in \cref{fig:xor_schaltung}, warum das Verhalten einer XOR-Verknüpfung entspricht.
+    Eine Lampe wird durch die logische Bedingung $y=A\oplus B$ gesteuert. Erstellen Sie die Wahrheitstabelle und zeigen Sie daran, dass das Ändern eines beliebigen Eingangsbits den Zustand der Lampe umkehrt.
     \begin{myanswer}
-        Befinden sich beide Schalter in der gleichen Stellung ($0,0$ oder $1,1$), existiert kein geschlossener Strompfad. Wird einer der beiden Schalter umgelegt (Zustand ändert auf $0,1$ bzw. $1,0$), schliesst sich der Pfad und das Licht brennt. Umlegen eines beliebigen Schalters kehrt den Zustand der Lampe jeweils um.
+        Für $(A,B)=(0,0),(0,1),(1,0),(1,1)$ ergeben sich die Ausgänge $y=0,1,1,0$. Bei gleichen Eingangsbits ist die Lampe aus, bei verschiedenen an. Wird genau ein Eingangsbit geändert, werden gleiche Bits verschieden bzw. verschiedene Bits gleich. Die Lampe wechselt deshalb immer ihren Zustand.
     \end{myanswer}
 \end{myexercise}
 
@@ -858,6 +592,8 @@ Der erste Halbaddierer addiert $x$ und $y$. Der zweite Halbaddierer addiert das 
 
 Kaskadiert man $n$ Volladdierer hintereinander, indem man den Übertragsausgang $c_{\text{out}}$ jeder Stelle an den Übertragseingang $c_{\text{in}}$ der nächsthöheren Stelle weiterleitet, entsteht ein mehrstelliges Addierwerk (sogenannter \tib{Ripple-Carry-Addierer}\index{Ripple-Carry-Addierer}).
 
+Bei drei Volladdierern heissen die weitergereichten Überträge $c_1$, $c_2$ und $c_3$. Der letzte Übertrag bildet die zusätzliche linke Ergebnisstelle: $s_3=c_3$.
+
 Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im Binärsystem} aus: Jede Bitstelle (jede Spalte der schriftlichen Rechnung) wird von einem eigenen Volladdierer berechnet. Der Übertrag \enquote{plätschert} (\textit{ripples}) dabei von der niederwertigsten Stelle (Bit 0, ganz rechts) bis zur höchstwertigen Stelle (links) durch die Kette:
 
 \begin{figure}[H]
@@ -876,49 +612,40 @@ Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im B
     Die Signallaufzeit wächst daher linear mit der Anzahl der Bits ($O(n)$). In modernen Hochleistungsprozessoren kommen für breitere Zahlen (z.\,B. 32 oder 64 Bit) vorausschauende Addierwerke zum Einsatz (wie der \textit{Carry-Lookahead-Addierer}), welche alle Überträge parallel ermitteln.
 \end{myremark}
 
-\begin{myexercise}
-    Gegeben ist die Addition der beiden 3-Bit-Zahlen $\textcolor{NavyBlue}{A = 011_2}$ ($3_{10}$) und $\textcolor{BrickRed}{B = 010_2}$ ($2_{10}$) mit dem eingehenden Übertrag $\textcolor{BurntOrange}{c_0 = 0}$.
-    Bestimmen Sie für jeden der drei Volladdierer (FA 0, FA 1, FA 2) die Summenbits $\textcolor{ForestGreen}{s_0, s_1, s_2}$ sowie die weitergereichten Überträge $\textcolor{BurntOrange}{c_1, c_2, s_3}$:
+\begin{myexercise}\label{myexercise:volladdierer-kette}
+    \textbf{Schriftliche Binäraddition.}
+    Berechnen Sie $011_2+010_2$ schriftlich. Beginnen Sie rechts und notieren Sie die Überträge wie bei der Dezimaladdition. Kontrollieren Sie das Ergebnis im Dezimalsystem.
 
-    \begin{center}
-        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}
-    \end{center}
-
-    Führen Sie anschliessend die schriftliche Rechnung auch für die Aufgaben 2 und 3 durch und kontrollieren Sie im Dezimalsystem:
-    \begin{center}
-        \begin{tabular}{cccc}
-            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-            Zahl $\textcolor{NavyBlue}{A}$ (dezimal) & $3_{10}$ & $5_{10}$ & $7_{10}$ \\
-            Zahl $\textcolor{BrickRed}{B}$ (dezimal) & $2_{10}$ & $3_{10}$ & $1_{10}$ \\ \midrule
-            $\textcolor{NavyBlue}{A = a_2 a_1 a_0}$ & $\textcolor{NavyBlue}{011_2}$ & $\textcolor{NavyBlue}{101_2}$ & $\textcolor{NavyBlue}{111_2}$ \\
-            $\textcolor{BrickRed}{B = b_2 b_1 b_0}$ & $\textcolor{BrickRed}{010_2}$ & $\textcolor{BrickRed}{011_2}$ & $\textcolor{BrickRed}{001_2}$ \\ \midrule
-            $\textcolor{BurntOrange}{\text{Überträge } c_2 c_1 c_0}$ & ? & ? & ? \\
-            $\textcolor{ForestGreen}{\text{Ergebnis } s_3 s_2 s_1 s_0}$ & ? & ? & ? \\ \midrule
-            Dezimal-Kontrolle & ? & ? & ? \\
-        \end{tabular}
-    \end{center}
-
+    \textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$: Schreiben Sie $0$ und übertragen Sie $1$ in die nächste Spalte.
     \begin{myanswer}
-        \textbf{Schrittweise Berechnung für Aufgabe 1 ($\textcolor{NavyBlue}{011_2} + \textcolor{BrickRed}{010_2}$, $\textcolor{BurntOrange}{c_0 = 0}$):}
-        \begin{itemize}
-            \item \textbf{FA 0 (Bit 0):} $\textcolor{NavyBlue}{a_0 = 1}, \textcolor{BrickRed}{b_0 = 0}, \textcolor{BurntOrange}{c_0 = 0} \implies \textcolor{ForestGreen}{s_0 = \mathbf{1}}, \textcolor{BurntOrange}{c_1 = \mathbf{0}}$
-            \item \textbf{FA 1 (Bit 1):} $\textcolor{NavyBlue}{a_1 = 1}, \textcolor{BrickRed}{b_1 = 1}, \textcolor{BurntOrange}{c_1 = 0} \implies \textcolor{ForestGreen}{s_1 = \mathbf{0}}, \textcolor{BurntOrange}{c_2 = \mathbf{1}}$
-            \item \textbf{FA 2 (Bit 2):} $\textcolor{NavyBlue}{a_2 = 0}, \textcolor{BrickRed}{b_2 = 0}, \textcolor{BurntOrange}{c_2 = 1} \implies \textcolor{ForestGreen}{s_2 = \mathbf{1}}, \textcolor{ForestGreen}{s_3} (\textcolor{BurntOrange}{c_{\text{out}}}) = \mathbf{0}$
-            \item \textbf{Gesamtergebnis:} $(\textcolor{ForestGreen}{s_3 s_2 s_1 s_0})_2 = \textcolor{ForestGreen}{\mathbf{0101_2}} = \mathbf{5_{10}}$
-        \end{itemize}
-        \vspace{2mm}
-        \textbf{Übersicht aller drei Aufgaben:}
-        \begin{center}
-        \begin{tabular}{cccc}
-            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-            $\textcolor{NavyBlue}{A}$ & $\textcolor{NavyBlue}{011_2 \ (3)}$ & $\textcolor{NavyBlue}{101_2 \ (5)}$ & $\textcolor{NavyBlue}{111_2 \ (7)}$ \\
-            $\textcolor{BrickRed}{B}$ & $\textcolor{BrickRed}{010_2 \ (2)}$ & $\textcolor{BrickRed}{011_2 \ (3)}$ & $\textcolor{BrickRed}{001_2 \ (1)}$ \\ \midrule
-            $\textcolor{BurntOrange}{\text{Überträge } c}$ & $\textcolor{BurntOrange}{010_2}$ & $\textcolor{BurntOrange}{111_2}$ & $\textcolor{BurntOrange}{111_2}$ \\
-            $\textcolor{ForestGreen}{\text{Ergebnis } S}$ & $\textcolor{ForestGreen}{0101_2 \ (5_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ \\ \midrule
-            Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
-        \end{tabular}
-        \end{center}
+\[
+    \begin{array}{rccc}
+        & 0 & 1 & 1 \\
+        + & 0 & 1 & 0 \\
+        \text{Übertrag} & 1 & & \\\hline
+        & 1 & 0 & 1
+    \end{array}
+\]
+Von rechts: $1+0=1$; dann $1+1=10_2$, also $0$ schreiben und $1$ übertragen; links $0+0+1=1$. Ergebnis: $101_2=5_{10}$. Kontrolle: $3+2=5$.
     \end{myanswer}
 \end{myexercise}
+
+\begin{mychallenge}\label{mychallenge:volladdierer-uebertragskette}
+    \textbf{Eine Kette von Überträgen.}
+    Berechnen Sie $111_2+001_2$ schriftlich und notieren Sie alle Überträge. Erklären Sie, weshalb links eine zusätzliche Stelle entsteht. Kontrollieren Sie das Ergebnis im Dezimalsystem.
+    \begin{myanswer}
+\[
+    \begin{array}{rcccc}
+        & & 1 & 1 & 1 \\
+        + & & 0 & 0 & 1 \\
+        \text{Übertrag} & 1 & 1 & 1 & \\\hline
+        & 1 & 0 & 0 & 0
+    \end{array}
+\]
+Rechts entsteht durch $1+1=10_2$ ein Übertrag. In den nächsten beiden Spalten ergibt $1+0+1=10_2$ jeweils wieder einen Übertrag. Der letzte Übertrag bildet eine neue linke Stelle. Ergebnis: $1000_2=8_{10}$. Kontrolle: $7+1=8$.
+    \end{myanswer}
+\end{mychallenge}
+
+Jeder Volladdierer übernimmt eine Spalte dieser schriftlichen Rechnung.
 
 Wir haben nun gesehen, wie aus einzelnen Transistoren Gatter, und aus Gattern vollwertige Rechenschaltungen wie der Halb- und Volladdierer entstehen. Im nächsten Kapitel betrachten wir, wie aus solchen Bausteinen ein vollständiger Computer aufgebaut wird.

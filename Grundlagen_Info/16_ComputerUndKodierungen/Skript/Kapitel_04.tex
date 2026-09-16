@@ -85,13 +85,45 @@ Typische Grössen heutiger Rechner: 8--64~GB RAM (vgl. \cref{table:daten-groesse
 \end{description}
 
 \begin{myexample}[Unterschied RAM -- SSD]
-    Der RAM eines modernen Computers kann Daten mit Übertragungsraten von 30--50~GB/s lesen. Eine SSD schafft 1--7~GB/s, eine herkömmliche HDD nur ca.\ 100--200~MB/s. Je schneller der Speicher, desto kleiner und teurer pro Gigabyte.
+    Der RAM eines modernen Computers kann Daten mit Übertragungsraten von 30--50~GB/s lesen. Eine SSD schafft 1--7~GB/s, eine herkömmliche HDD nur ca.\ 100--200~MB/s.
+
+    \textbf{Faustregel: Je schneller der Speicher, desto teurer ist er in der Regel pro Gigabyte.} Deshalb kombiniert ein Computer verschiedene Speicherarten: schnellen RAM für aktuell benötigte Daten und günstigeren Massenspeicher für die dauerhafte Ablage grosser Datenmengen.
 \end{myexample}
 
 \begin{myexercise}
     Ein Foto mit einer Grösse von 24~MB soll von einer SSD (Lesegeschwindigkeit: 2~GB/s) geladen werden. Wie lange dauert dies ungefähr?
     \begin{myanswer}
         $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 0{,}012\,\mathrm{s} = 12\,\mathrm{ms}$.
+    \end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}\label{myexercise:steam-speicherzeit}
+    \textbf{Ein neues Game von Steam herunterladen.}
+    Sie möchten ein Game mit einer Downloadgrösse von 120~GB herunterladen. Stellen Sie sich vor, die Download-Geschwindigkeit sei unbegrenzt: Nur die Schreibgeschwindigkeit des Zielspeichers begrenzt, wie schnell die Daten gespeichert werden können.
+
+    Verwenden Sie für dieses vereinfachte Rechenmodell die folgenden konstanten \emph{Schreibgeschwindigkeiten}. Auf jedem Speicher stehen mindestens 120~GB frei, auch beim hier angenommenen RAM. Entpacken und Installation werden nicht berücksichtigt. Rechnen Sie mit $1\,\mathrm{GB}=1000\,\mathrm{MB}$.
+    \begin{center}
+        \begin{tabular}{lc}
+            Speicher & Angenommene Schreibgeschwindigkeit \\ \midrule
+            RAM & $40\,\mathrm{GB/s}$ \\
+            SSD & $2\,\mathrm{GB/s}$ \\
+            HDD & $150\,\mathrm{MB/s}$ \\
+        \end{tabular}
+    \end{center}
+    \begin{enumerate}[(a)]
+        \item Wie lange dauert das reine Speichern der 120~GB jeweils in RAM, auf SSD und auf HDD? Geben Sie die Zeiten in Sekunden und, wo sinnvoll, in Minuten an. Nutzen Sie $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$.
+        \item Der RAM ist am schnellsten. Warum ist er trotzdem keine geeignete dauerhafte Ablage für das heruntergeladene Game?
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}[(a)]
+            \item Die Datenmenge beträgt $120\,\mathrm{GB}=120\,000\,\mathrm{MB}$.
+            \begin{itemize}
+                \item \textbf{RAM:} $\frac{120\,\mathrm{GB}}{40\,\mathrm{GB/s}}=3\,\mathrm{s}$.
+                \item \textbf{SSD:} $\frac{120\,\mathrm{GB}}{2\,\mathrm{GB/s}}=60\,\mathrm{s}=1\,\mathrm{min}$.
+                \item \textbf{HDD:} $\frac{120\,000\,\mathrm{MB}}{150\,\mathrm{MB/s}}=800\,\mathrm{s}=13\,\mathrm{min}\,20\,\mathrm{s}$.
+            \end{itemize}
+            \item RAM ist flüchtig: Beim Ausschalten gehen die Daten verloren. SSD und HDD behalten sie auch ohne Strom. Die berechneten Zeiten betreffen nur das Schreiben der Daten im vereinfachten Modell; sie sind keine Vorhersage der gesamten Download- und Installationsdauer. Nicht zuletzt verfügen die meisten Computer über deutlich weniger RAM als 120~GB, sodass das Game gar nicht in den RAM passen würde.
+        \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
@@ -107,10 +139,39 @@ Die CPU führt Anweisungen in einem einfachen, immer wiederholten Schema aus, de
 \end{figure}
 
 \begin{enumerate}
-    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch}: Das Steuerwerk liest den nächsten Befehl aus dem RAM an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
-    \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode}: Der Befehl wird in seine Bestandteile zerlegt: \emph{Was ist zu tun?} (z.\,B. Addieren) und \emph{Mit welchen Operanden?} (z.\,B. Register A und B).
-    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute}: Die ALU oder eine andere Komponente führt die Anweisung aus (z.\,B. $A + B$), das Ergebnis wird in ein Register oder zurück in den Speicher geschrieben, und der Programmzähler rückt weiter.
+    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch} (Holen): Das Steuerwerk liest den nächsten Befehl aus dem RAM an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
+    \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode} (Dekodieren): Der Befehl wird in seine Bestandteile zerlegt: \emph{Was ist zu tun?} (Operationscode, z.\,B. Addieren) und \emph{Mit welchen Daten?} (Operanden, z.\,B. Register R1 und R2).
+    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute} (Ausführen): Die ALU oder eine andere Komponente führt die Anweisung aus (z.\,B. Addition), das Ergebnis wird in ein Register oder in den RAM geschrieben, und der Programmzähler rückt weiter.
 \end{enumerate}
+
+\begin{myexample}[Konkreter Ablauf eines FDE-Zyklus]
+    Angenommen, im Register \texttt{R1} steht der Wert $3$, im Register \texttt{R2} der Wert $5$, und an Speicheradresse \texttt{100} liegt der Maschinenbefehl \texttt{ADD R1, R2}:
+    \begin{itemize}
+        \item \textbf{Fetch:} Der Programmzähler steht auf Adresse \texttt{100}. Das Steuerwerk liest das Binärmuster dieses Befehls aus dem RAM in das Befehlsregister der CPU. Gleichzeitig wird der Programmzähler auf die nächste Adresse (\texttt{101}) vorbereitet.
+        \item \textbf{Decode:} Das Steuerwerk entschlüsselt das Bitmuster. Es erkennt: \enquote{Operation: Addition; Operand 1: Register \texttt{R1}; Operand 2: Register \texttt{R2}; Ziel: Register \texttt{R1}}.
+        \item \textbf{Execute:} Die ALU schaltet die Werte der beiden Register an ihre Eingänge, berechnet $3 + 5 = 8$ und speichert das Ergebnis $8$ zurück in das Register \texttt{R1}. Der Zyklus ist abgeschlossen.
+    \end{itemize}
+\end{myexample}
+
+\subsection{Taktfrequenz und die Einheit Hertz (Hz)}
+
+Damit alle Komponenten einer CPU synchron zusammenarbeiten, gibt ein elektronischer Taktgeber einen gleichmässigen Rhythmus vor -- wie der Schrittmacher eines Orchesters.
+
+Die Geschwindigkeit dieses Takts heisst \tib{Taktfrequenz}\index{Taktfrequenz} und wird in der physikalischen Einheit \tib{Hertz (Hz)}\index{Hertz (Hz)} gemessen:
+\[
+    1\,\mathrm{Hz} = 1\text{ Takt bzw. Schwingung pro Sekunde}\quad (1\,\mathrm{s}^{-1}).
+\]
+Heutige Prozessoren arbeiten im Gigahertz-Bereich:
+\begin{center}
+    \begin{tabular}{lll}
+        Einheit & Bedeutung & Takte pro Sekunde \\\midrule\midrule
+        $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\\midrule
+        $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\\midrule
+        $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
+    \end{tabular}
+\end{center}
+Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}6$ Milliarden Taktzyklen pro Sekunde. Je nach Prozessorarchitektur benötigt ein Befehl einen oder mehrere Taktzyklen, oder moderne CPUs führen durch parallele Einheiten (Pipelining, Mehrkernprozessoren) sogar mehrere Befehle pro Taktzyklus aus.
+
 
 \begin{myexercise}
     Ein Prozessor hat eine Taktfrequenz von $3{,}6\,\mathrm{GHz}$ und führt im Durchschnitt 2 Befehle pro Taktzyklus aus.

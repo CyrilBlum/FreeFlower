@@ -1,14 +1,49 @@
 \begin{tikzpicture}[
-    layer/.style={draw, minimum width=8cm, minimum height=0.9cm, text centered, rounded corners=3pt, font=\small},
+    layer/.style={
+        draw=#1!80!black,
+        fill=#1!20,
+        thick,
+        minimum width=10cm,
+        minimum height=0.85cm,
+        inner ysep=4pt,
+        align=center,
+        rounded corners=3pt,
+        font=\small
+    },
+    >=stealth
 ]
-    \node[layer, fill=Salmon!40]        (app)  at (0, 3.0) {\textbf{Anwendungen}};
-    \node[layer, fill=Goldenrod!35]     (api)  at (0, 1.9) {\textbf{Systemaufrufe / API}};
-    \node[layer, fill=DarkSeaGreen!45]  (os)   at (0, 0.8) {\textbf{Betriebssystem}};
-    \node[layer, fill=RoyalBlue!20]     (drv)  at (0,-0.3) {\textbf{Treiber}};
-    \node[layer, fill=Gray!30]          (hw)   at (0,-1.4) {\textbf{Hardware}};
+    % Layers with generous vertical pitch (1.25cm)
+    \node[layer=Salmon] (app) at (0, 5.0) {
+        \textbf{\faLaptop\hspace{2mm}Anwendungen}\\[-1pt]
+        \scriptsize\textcolor{black!70}{Browser, Textverarbeitung, Tabellenkalkulation, Games, Apps}
+    };
 
-    \draw[<->, thick] (app) -- (api);
-    \draw[<->, thick] (api) -- (os);
-    \draw[<->, thick] (os)  -- (drv);
-    \draw[<->, thick] (drv) -- (hw);
+    \node[layer=Goldenrod] (api) at (0, 3.5) {
+        \textbf{\faPlug\hspace{2mm}Systemaufrufe / API}\\[-1pt]
+        \scriptsize\textcolor{black!70}{Standardisierte Programmierschnittstelle (\texttt{open()}, \texttt{read()}, \texttt{write()}, \ldots)}
+    };
+
+    \node[layer=DarkSeaGreen] (os) at (0, 2) {
+        \textbf{\faCogs\hspace{2mm}Betriebssystem (Kernel)}\\[-1pt]
+        \scriptsize\textcolor{black!70}{Prozessverwaltung, Speicherverwaltung, Dateisystem, Sicherheit}
+    };
+
+    \node[layer=CornflowerBlue] (drv) at (0, .5) {
+        \textbf{\faMicrochip\hspace{2mm}Gerätetreiber}\\[-1pt]
+        \scriptsize\textcolor{black!70}{Hardware-spezifische Übersetzung für Grafikkarte, Drucker, SSD, Tastatur}
+    };
+
+    \node[layer=Gray] (hw) at (0, -1) {
+        \textbf{\faServer\hspace{2mm}Hardware}\\[-1pt]
+        \scriptsize\textcolor{black!70}{CPU, RAM, Massenspeicher, Hauptplatine, Peripheriegeräte}
+    };
+
+    % Side arrow indicating abstraction
+    \draw[thick, ->, draw=black!60] (-5.5, -1.4) -- (-5.5, 5.4)
+        node[midway, above=1pt, sloped, font=\scriptsize\bfseries, text=black!75] {Höhere Abstraktion};
+
+    % Connecting arrows with ample space
+    \foreach \from/\to in {app/api, api/os, os/drv, drv/hw} {
+        \draw[<->, thick, draw=black!50] (\from) -- (\to);
+    }
 \end{tikzpicture}

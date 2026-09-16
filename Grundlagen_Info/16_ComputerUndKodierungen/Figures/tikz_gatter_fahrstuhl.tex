@@ -1,0 +1,16 @@
+\begin{tikzpicture}[circuit logic US, thick]
+    \node[not gate, draw] (not-u) at (1,0.6) {};
+    \node[or gate, draw] (or1) at (3,0) {};
+    \node[and gate, draw] (and1) at (5,0.9) {};
+
+    \draw (0,0.6) node[left] {$u$} -- (not-u.input);
+    \draw (not-u.output) -- (2,0.6) node[midway, above] {$\overline{u}$}
+        |- (or1.input 1);
+    \draw (0,-0.6) node[left] {$n$} -- (2,-0.6)
+        |- (or1.input 2);
+
+    % Das Türsignal umgeht die Negation und wird erst am AND-Gatter verknüpft.
+    \draw (0,1.8) node[left] {$t$} -- (4.2,1.8) |- (and1.input 1);
+    \draw (or1.output) -- (4.2,0) |- (and1.input 2);
+    \draw (and1.output) -- (6,0.9) node[right] {$y$};
+\end{tikzpicture}

@@ -21,7 +21,7 @@
     \draw[thick, ->, BurntOrange] (9.2, 0) node[right, font=\small, BurntOrange] {$c_0 = 0$} -- (fa0.east);
     \draw[thick, ->, BurntOrange] (fa0.west) -- (fa1.east) node[midway, above, font=\small, BurntOrange] {$c_1 = \textbf{?}$};
     \draw[thick, ->, BurntOrange] (fa1.west) -- (fa2.east) node[midway, above, font=\small, BurntOrange] {$c_2 = \textbf{?}$};
-    \draw[thick, ->, ForestGreen] (fa2.west) -- ++(-1.2, 0) node[left, font=\small, ForestGreen] {$s_3 = \textbf{?}$};
+    \draw[thick, ->, BurntOrange] (fa2.west) -- ++(-1.2, 0) node[left, font=\small, BurntOrange] {$c_3 = \textbf{?}$};
 
     % Sum outputs in ForestGreen (to bottom)
     \draw[thick, ->, ForestGreen] (fa2.south) -- ++(0, -0.7) node[below, font=\small, ForestGreen] {$s_2 = \textbf{?}$};
@@ -29,5 +29,5 @@
     \draw[thick, ->, ForestGreen] (fa0.south) -- ++(0, -0.7) node[below, font=\small, ForestGreen] {$s_0 = \textbf{?}$};
 
     % Result line (spaced well below sum outputs)
-    \node[font=\small, align=center] at (3.6, -2.7) {Gesamtergebnis: $(\textcolor{ForestGreen}{s_3 \, s_2 \, s_1 \, s_0})_2 = \textcolor{ForestGreen}{\textbf{?}_2} = \textcolor{ForestGreen}{\textbf{?}_{10}}$};
+    \node[font=\small, align=center] at (3.6, -2.7) {$s_3=c_3$;\quad Gesamtergebnis: $(\textcolor{ForestGreen}{s_3 \, s_2 \, s_1 \, s_0})_2 = \textcolor{ForestGreen}{\textbf{?}_2} = \textcolor{ForestGreen}{\textbf{?}_{10}}$};
 \end{tikzpicture}

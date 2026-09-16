@@ -2,18 +2,18 @@
 \renewcommand{\thelektion}{L09 \textperiodcentered{} Logische Gatter II}
 \usetikzlibrary{circuits.logic.US}
 
-\begin{frame}\lessontitle{Lektion 09}{Logische Gatter II}{NAND, funktionale Vollständigkeit, XOR und Addierer \textperiodcentered{} Skript, Kapitel 4}\end{frame}
+\begin{frame}\lessontitle{Lektion 09}{Logische Gatter II}{XOR und Addierer; optional: NAND und funktionale Vollständigkeit \textperiodcentered{} Skript, Kapitel 4}\end{frame}
 
 \begin{frame}\FDUtitle{Rückblick}
 \begin{center}
 Letztes Mal: NOT, AND, OR -- die drei elementaren Booleschen Verknüpfungen.
 \vspace{4mm}
 
-Heute: ein einziges Gatter, aus dem sich \textbf{alle} anderen bauen lassen.
+Heute: XOR und Addierer. Optional vertiefen wir NAND als Gatter, aus dem sich \textbf{alle} anderen bauen lassen.
 \end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Das NAND-Gatter}
+\begin{frame}\FDUtitle{Optional: Das NAND-Gatter}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
 \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_nand.tex}
@@ -32,12 +32,12 @@ Heute: ein einziges Gatter, aus dem sich \textbf{alle} anderen bauen lassen.
 \begin{center}$\overline{x \wedge y}$ -- die Negation von AND (NOT-AND).\end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Funktional vollständig}
+\begin{frame}\FDUtitle{Optional: Funktional vollständig}
 \begin{center}
 Aus Kombinationen von NAND-Gattern lassen sich \textbf{alle} anderen logischen Funktionen nachbauen.
 \vspace{4mm}
 
-\textbf{Übung}: Stellen Sie die Wahrheitstabelle von $\overline{x \wedge x}$ auf. Was fällt auf?
+\textbf{Challenge (optional)}: Stellen Sie die Wahrheitstabelle von $\overline{x \wedge x}$ auf. Was fällt auf?
 \end{center}
 \only<2->{
 \begin{center}
@@ -51,10 +51,12 @@ Aus Kombinationen von NAND-Gattern lassen sich \textbf{alle} anderen logischen F
 }
 \end{frame}
 
-\begin{frame}\FDUtitle{Warum ist das praktisch relevant?}
-\begin{center}
-In vielen Fertigungsprozessen ist es technologisch günstig, sehr grosse Schaltungen aus nur \textbf{einem} standardisierten Gattertyp aufzubauen -- NAND ist ein solcher \enquote{Universalbaustein}.
-\end{center}
+\begin{frame}\FDUtitle{Optional: Warum ist NAND relevant?}
+\begin{itemize}
+    \item \textbf{Theorie \& Didaktik:} NAND ist ein \enquote{Universalbaustein} (funktionale Vollständigkeit) -- jeder beliebige Computer lässt sich im Prinzip rein aus NAND-Gattern aufbauen.
+    \item \textbf{Historisch:} Der \textit{Apollo Guidance Computer} (1966) bestand fast ausschliesslich aus einheitlichen NOR-Gattern zur Fehlerminimierung.
+    \item \textbf{Moderne Chips:} Nutzen optimierte Standard-Zellbibliotheken mit massgeschneiderten Transistorlayouts pro Gattertyp (für maximale Geschwindigkeit und minimale Fläche).
+\end{itemize}
 \end{frame}
 
 \begin{frame}\FDUtitle{Das XOR-Gatter}
@@ -152,28 +154,39 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
 \begin{center}\color{FDUteal}\bfseries Jede Spalte der Addition wird von genau einem Volladdierer-Baustein berechnet!\end{center}
 \end{frame}
 
-\begin{frame}{Übung}{Ripple-Carry-Addierer}
-\aufgabebox{\textbf{Aufgabe}: Bestimmen Sie die Überträge $\textcolor{BurntOrange}{c_1, c_2, s_3}$ und Summenbits $\textcolor{ForestGreen}{s_0, s_1, s_2}$ für $\textcolor{NavyBlue}{011_2} + \textcolor{BrickRed}{010_2}$ ($3_{10} + 2_{10}$):}
-\vspace{2mm}
-\begin{center}
-\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}
-\end{center}
+\begin{frame}\FDUtitle{Übung: Schriftliche Binäraddition}
+\aufgabebox{Berechnen Sie $011_2+010_2$ schriftlich. Beginnen Sie rechts und notieren Sie die Überträge wie bei der Dezimaladdition. Kontrollieren Sie das Ergebnis im Dezimalsystem.}
+\vspace{3mm}
+\textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$: Schreiben Sie $0$ und übertragen Sie $1$ in die nächste Spalte.
 \end{frame}
 
-\begin{frame}\FDUtitle{Lösung: Ripple-Carry-Addierer}
-\begin{center}
-\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}
-\end{center}
-\vspace{2mm}
-\begin{center}
-\small
-\begin{tabular}{cccc}
-    & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\\midrule
-    $\textcolor{NavyBlue}{A}$ & $\textcolor{NavyBlue}{011_2 \ (3)}$ & $\textcolor{NavyBlue}{101_2 \ (5)}$ & $\textcolor{NavyBlue}{111_2 \ (7)}$ \\
-    $\textcolor{BrickRed}{B}$ & $\textcolor{BrickRed}{010_2 \ (2)}$ & $\textcolor{BrickRed}{011_2 \ (3)}$ & $\textcolor{BrickRed}{001_2 \ (1)}$ \\\midrule
-    $\textcolor{BurntOrange}{\text{Überträge } c}$ & $\textcolor{BurntOrange}{010_2}$ & $\textcolor{BurntOrange}{111_2}$ & $\textcolor{BurntOrange}{111_2}$ \\
-    $\textcolor{ForestGreen}{\text{Ergebnis } S}$ & $\textcolor{ForestGreen}{0101_2 \ (5_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ \\\midrule
-    Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
-\end{tabular}
-\end{center}
+\begin{frame}\FDUtitle{Lösung: Schriftliche Binäraddition}
+\[
+    \begin{array}{rccc}
+        & 0 & 1 & 1 \\
+        + & 0 & 1 & 0 \\
+        \text{Übertrag} & 1 & & \\\hline
+        & 1 & 0 & 1
+    \end{array}
+\]
+Von rechts: $1+0=1$; dann $1+1=10_2$, also $0$ schreiben und $1$ übertragen; links $0+0+1=1$. Ergebnis: $101_2=5_{10}$. Kontrolle: $3+2=5$.
+
+\medskip
+Jeder Volladdierer übernimmt eine Spalte dieser schriftlichen Rechnung.
+\end{frame}
+
+\begin{frame}\FDUtitle{Challenge: Eine Kette von Überträgen}
+\challengebox{Berechnen Sie $111_2+001_2$ schriftlich und notieren Sie alle Überträge. Erklären Sie, weshalb links eine zusätzliche Stelle entsteht. Kontrollieren Sie das Ergebnis im Dezimalsystem.}
+\end{frame}
+
+\begin{frame}\FDUtitle{Lösung: Eine Kette von Überträgen}
+\[
+    \begin{array}{rcccc}
+        & & 1 & 1 & 1 \\
+        + & & 0 & 0 & 1 \\
+        \text{Übertrag} & 1 & 1 & 1 & \\\hline
+        & 1 & 0 & 0 & 0
+    \end{array}
+\]
+Rechts entsteht durch $1+1=10_2$ ein Übertrag. In den nächsten beiden Spalten ergibt $1+0+1=10_2$ jeweils wieder einen Übertrag. Der letzte Übertrag bildet eine neue linke Stelle. Ergebnis: $1000_2=8_{10}$. Kontrolle: $7+1=8$.
 \end{frame}

@@ -1,12 +1,24 @@
 \begin{tikzpicture}[
-    block/.style={draw, rounded corners, minimum width=3.4cm, minimum height=1.0cm, text centered, text width=3.4cm, fill=RoyalBlue!15},
-    arrow/.style={->, thick}
+    block/.style={
+        draw=RoyalBlue!65!black, thick, rounded corners=3pt,
+        text width=2.8cm, minimum height=1.4cm, inner sep=5pt,
+        align=center, font=\small, fill=RoyalBlue!8
+    },
+    arrow/.style={-{Stealth[length=2.5mm]}, thick, draw=RoyalBlue!65!black}
 ]
-    \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
-    \node[block] (decode)  at (4.8, 0)  {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
-    \node[block] (execute) at (2.4,-1.9) {\textbf{3.\ Execute} \newline \small Befehl ausführen};
+    \node[block] (fetch) at (0,0)
+        {\textbf{1.\ Fetch}\\[4pt]Befehl aus dem\\RAM holen};
+    \node[block] (decode) at (4,0)
+        {\textbf{2.\ Decode}\\[4pt]Befehl dekodieren\\und interpretieren};
+    \node[block] (execute) at (8,0)
+        {\textbf{3.\ Execute}\\[4pt]Befehl\\ausführen};
 
-    \draw[arrow] (fetch)   -- (decode);
-    \draw[arrow] (decode)  -- (execute);
-    \draw[arrow] (execute.west) -- ++(-2.2,0) |- (fetch.south);
+    \draw[arrow] (fetch.east) -- (decode.west);
+    \draw[arrow] (decode.east) -- (execute.west);
+
+    % Rückweg unterhalb aller Blöcke; die Pfeilspitze trifft senkrecht auf Fetch.
+    \draw[arrow, rounded corners=6pt]
+        (execute.south) -- (8,-1.65)
+        -- node[midway, below=4pt, font=\small] {Nächsten Befehl holen}
+        (0,-1.65) -- (fetch.south);
 \end{tikzpicture}

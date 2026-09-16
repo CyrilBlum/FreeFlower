@@ -21,7 +21,7 @@
     \draw[thick, ->, BurntOrange] (9.2, 0) node[right, font=\small, BurntOrange] {$c_0 = 0$} -- (fa0.east);
     \draw[thick, ->, BurntOrange] (fa0.west) -- (fa1.east) node[midway, above, font=\small, color=BurntOrange] {$c_1 = \mathbf{0}$};
     \draw[thick, ->, BurntOrange] (fa1.west) -- (fa2.east) node[midway, above, font=\small, color=BurntOrange] {$c_2 = \mathbf{1}$};
-    \draw[thick, ->, ForestGreen] (fa2.west) -- ++(-1.2, 0) node[left, font=\small, color=ForestGreen] {$s_3 = \mathbf{0}$};
+    \draw[thick, ->, BurntOrange] (fa2.west) -- ++(-1.2, 0) node[left, font=\small, color=BurntOrange] {$c_3 = \mathbf{0}$};
 
     % Sum outputs in ForestGreen (to bottom)
     \draw[thick, ->, ForestGreen] (fa2.south) -- ++(0, -0.7) node[below, font=\small, color=ForestGreen] {$s_2 = \mathbf{1}$};
@@ -29,5 +29,5 @@
     \draw[thick, ->, ForestGreen] (fa0.south) -- ++(0, -0.7) node[below, font=\small, color=ForestGreen] {$s_0 = \mathbf{1}$};
 
     % Result line
-    \node[font=\small\bfseries, align=center, color=ForestGreen] at (3.6, -2.7) {Gesamtergebnis: $(\textcolor{ForestGreen}{s_3 \, s_2 \, s_1 \, s_0})_2 = \mathbf{0101_2} = \mathbf{5_{10}}$ \quad ($3 + 2 = 5$ \checkmark)};
+    \node[font=\small\bfseries, align=center, color=ForestGreen] at (3.6, -2.7) {$s_3=c_3$;\quad Gesamtergebnis: $(\textcolor{ForestGreen}{s_3 \, s_2 \, s_1 \, s_0})_2 = \mathbf{0101_2} = \mathbf{5_{10}}$ \quad ($3 + 2 = 5$ \checkmark)};
 \end{tikzpicture}

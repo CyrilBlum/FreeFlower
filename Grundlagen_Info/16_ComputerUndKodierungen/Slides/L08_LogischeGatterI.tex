@@ -112,7 +112,7 @@ Funktionen, die Bits als Eingabe erhalten und \textbf{genau ein} Bit ausgeben.
 \begin{frame}{Auftrag}{Kapitel 4: Logische Grundverknüpfungen}
 \aufgabebox{\textbf{Aufgabe 4.3}: Fahrstuhl-Bedingung mit AND-, OR- und NOT-Gattern modellieren.}
 \begin{center}
-Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten \emph{oder} der Notfall-Modus deaktiviert ist.
+Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das zulässige Gewicht nicht überschritten \emph{oder} der Notfall-Modus aktiviert ist.
 \vspace{4mm}
 
 Modellieren Sie diese Bedingung mit AND-, OR- und NOT-Gattern grafisch und geben Sie die zugehörige logische Formel an.
@@ -121,15 +121,11 @@ Modellieren Sie diese Bedingung mit AND-, OR- und NOT-Gattern grafisch und geben
 
 \begin{frame}\FDUtitle{Lösung: Aufgabe 4.3}
 \begin{center}
-Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das Übergewicht nicht überschritten \emph{oder} der Notfall-Modus deaktiviert ist.
+Ein Fahrstuhl darf sich nur bewegen, wenn die Tür geschlossen \emph{und} entweder das zulässige Gewicht nicht überschritten \emph{oder} der Notfall-Modus aktiviert ist.
 \end{center}
 \begin{center}
-Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Übergewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
-\large $t \wedge (\overline{u} \vee \overline{n})$\end{center}
+Mit $t=$ \enquote{Tür geschlossen}, $u=$ \enquote{Zulässiges Gewicht überschritten}, $n=$ \enquote{Notfall-Modus aktiv} lautet die Formel:
+\large $t \wedge (\overline{u} \vee n)$\end{center}
     \centering
-    \includegraphics[
-        width=\textwidth,
-        height=0.3\textheight,
-        keepaspectratio
-    ]{Grundlagen_Info/16_ComputerUndKodierungen/Slides/assets/L09_Loesung4_3.png}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_fahrstuhl.tex}
 \end{frame}
