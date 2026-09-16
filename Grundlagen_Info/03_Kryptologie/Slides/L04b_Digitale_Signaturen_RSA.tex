@@ -11,43 +11,39 @@
 	\end{mydefinition}
 \end{frame}
 
-\begin{frame}{Funktionsweise von RSA-Signaturen}
-	Beim Signieren wird die Rolle der Schlüssel im Vergleich zur Verschlüsselung vertauscht:
-	\pause
-	\begin{myprocedure}[Digitale Signatur mit RSA (Grundprinzip)]
-		{\footnotesize
-		\pause
-		\begin{enumerate}[<+->]
-			\item \textbf{Signaturerstellung (Absenderin Alice)}:
-			      Alice signiert den Klartext $m$ mit ihrem \textbf{privaten Schlüssel} $d_A$:
-			      \[ s = m^{d_A} \bmod n_A \]
-			      Sie sendet die Nachricht $m$ zusammen mit der Signatur $s$ an Bob.
-			\item \textbf{Signaturüberprüfung (Empfänger Bob)}:
-			      Bob prüft die Signatur mit Alices \textbf{öffentlichem Schlüssel} $(e_A, n_A)$:
-			      \[ m' = s^{e_A} \bmod n_A \]
-			      Gilt $m' = m$, ist die Signatur mathematisch gültig, unverfälscht und stammt garantiert von Alice!
-		\end{enumerate}
-		}
-	\end{myprocedure}
-\end{frame}
-
-\begin{frame}{Beispiel: RSA Digitale Signatur}
-	\begin{exampleblock}{Rechenbeispiel (aus dem Skript)}
-		{\small
-		Alice besitzt den privaten Schlüssel $(d, n) = (9677, 12317)$ und den öffentlichen Schlüssel $(e, n) = (5, 12317)$. Sie möchte die Nachricht $m = 42$ signieren.
-		
-		\begin{itemize}[<+->]
-			\item \textbf{Signaturerstellung (Alice)}:
-			      \[ s = m^d \bmod n = 42^{9677} \bmod 12317 = 161 \]
-			      Alice übermittelt das Paar $(m, s) = (42, 161)$ an Bob.
-			\item \textbf{Signaturüberprüfung durch Bob}:
-			      \[ m' = s^e \bmod n = 161^5 \bmod 12317 = 42 \]
-			      Da $m' = m = 42$, ist die Signatur authentisch und unverfälscht!
-			\item \textbf{Erkennung von Manipulation}:
-			      Verändert Angreiferin Eve die Nachricht zu $m = 43$ (mit altem $s=161$), so ergibt die Prüfung $161^5 \bmod 12317 = 42 \neq 43$. Bob erkennt die Fälschung sofort!
-		\end{itemize}
-		}
-	\end{exampleblock}
+\begin{frame}{RSA Digitale Signatur: Theorie \& Beispiel}
+	\begin{columns}[T]
+		\begin{column}{0.50\textwidth}
+			\begin{block}{Theorie: RSA-Signatur}
+				{\scriptsize
+				Rolle der Schlüssel vertauscht:\\[0.3em]
+				\textbf{1. Signatur erstellen (Alice)}:
+				\[ s = m^{d_A} \bmod n_A \]
+				$\rightarrow$ Alice sendet $(m, s)$ an Bob.\\[0.3em]
+				\textbf{2. Signatur prüfen (Bob)}:
+				\[ m' = s^{e_A} \bmod n_A \]
+				\begin{itemize}
+					\item $m' = m \implies$ Authentisch \& echt! \textcolor{ForestGreen}{\checkmark}
+					\item $m' \neq m \implies$ Manipulation erkannt! \textcolor{BrickRed}{\textbf{\faTimes}}
+				\end{itemize}
+				}
+			\end{block}
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\begin{exampleblock}{Zahlenbeispiel (Skript)}
+				{\scriptsize
+				\textbf{Alice}: $(d, n) = (9677, 12317)$, $(e, n) = (5, 12317)$.\\[0.3em]
+				\textbf{1. Signaturerstellung} ($m = 42$):
+				\[ s = 42^{9677} \bmod 12317 = \mathbf{161} \]
+				\textbf{2. Signaturprüfung durch Bob}:
+				\[ m' = 161^5 \bmod 12317 = \mathbf{42} = m \quad \textcolor{ForestGreen}{\mathbf{\checkmark}} \]
+				\textbf{Erkennung von Manipulation}:\\
+				Eve ändert Nachricht zu $m = 43$ ($s = 161$):\\
+				$161^5 \bmod 12317 = 42 \neq 43 \implies \text{Abgelehnt!}$
+				}
+			\end{exampleblock}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Auftrag: Digitale Signatur}

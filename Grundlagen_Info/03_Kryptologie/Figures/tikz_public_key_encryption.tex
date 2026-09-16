@@ -1,0 +1,29 @@
+\begin{tikzpicture}[
+	node distance = 0.9cm and 2.0cm,
+	data/.style={rectangle, rounded corners, text width=2.8cm, minimum height=0.95cm, text centered, draw=ForestGreen, fill=ForestGreen!20, font=\small},
+	keybox/.style={rectangle, rounded corners, text width=2.8cm, minimum height=0.95cm, text centered, draw=RoyalBlue, fill=RoyalBlue!20, font=\small},
+	lbl/.style={font=\footnotesize\color{black!80}}
+]
+	% Nodes
+	\node (plaintext) [data] {\emoji{woman-technologist} Alice};
+	\node (ciphertext) [data, right=of plaintext] {Verschlüsselter\\Text};
+	\node (publickey) [keybox, above=of ciphertext] {\emoji{key} Öffentlicher Schlüssel\\von Bob};
+
+	\node (decryptedtext) [data, below=of ciphertext] {Verschlüsselter\\Text};
+	\node (privatekey) [keybox, below=of decryptedtext] {\emoji{lock} Privater Schlüssel\\von Bob};
+	\node (bob) [data, left=of decryptedtext] {\emoji{man-technologist} Bob};
+
+	% Arrows
+	\draw [->, thick] (plaintext) -- (ciphertext);
+	\draw [->, thick] (ciphertext) -- (decryptedtext);
+	\draw [->, thick] (publickey) -- (ciphertext);
+	\draw [->, thick] (privatekey) -- (decryptedtext);
+	\draw [->, thick] (decryptedtext) -- (bob);
+
+	% Labels
+	\node at ($(plaintext.east)!0.5!(ciphertext.west)$) [above, lbl] {Klartext};
+	\node at ($(publickey.south)!0.5!(ciphertext.north)$) [left, lbl] {Verschlüsselung};
+	\node at ($(ciphertext.south)!0.5!(decryptedtext.north)$) [left, lbl] {Übertragung};
+	\node at ($(privatekey.north)!0.5!(decryptedtext.south)$) [left, lbl] {Entschlüsselung};
+	\node at ($(decryptedtext.west)!0.5!(bob.east)$) [above, lbl] {Klartext};
+\end{tikzpicture}

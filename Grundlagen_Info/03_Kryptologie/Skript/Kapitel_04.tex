@@ -11,33 +11,7 @@ Durch den Aufbau asymmetrischer Verschlüsselungsverfahren entfällt die Problem
 
 \begin{figure}[H]
 	\centering
-	\begin{tikzpicture}[node distance = 1cm and 2cm, data/.style={rectangle, rounded corners, text width=3cm, minimum width=3cm, minimum height=1cm, text centered, draw=ForestGreen, fill=ForestGreen!30},
-			startstop/.style={rectangle, rounded corners, minimum height=1cm, minimum width=3cm, text width=2.5cm, text centered, draw=RoyalBlue, fill=RoyalBlue!30}]
-
-		\footnotesize
-		% Nodes
-		\node (plaintext) [data] {\emoji{woman-technologist} Alice};
-		\node (ciphertext) [data, right=of plaintext] {Verschlüsselter\\Text};
-		\node (publickey) [startstop, above=of ciphertext] {\emoji{key} Öffentlicher Schlüssel\\von Bob};
-
-		\node (decryptedtext) [data, below=of ciphertext] {Verschlüsselter\\Text};
-		\node (privatekey) [startstop, below=of decryptedtext] {\emoji{lock} Privater Schlüssel\\ von Bob};
-		\node (bob) [data, left=of decryptedtext] {\emoji{man-technologist} Bob};
-
-
-		% Arrows
-		\draw [->] (plaintext) -- (ciphertext);
-		\draw [->] (ciphertext) -- (decryptedtext);
-		\draw [->] (publickey) -- (ciphertext);
-		\draw [->] (privatekey) -- (decryptedtext);
-		\draw [->] (decryptedtext) -- (bob);
-
-		\node at ($(plaintext.east)!0.5!(ciphertext.west)$) [above] {Klartext};
-		\node at ($(publickey.south)!0.5!(ciphertext.north)$) [left] {Verschlüsselung};
-		\node at ($(ciphertext.south)!0.5!(decryptedtext.north)$) [left] {Übertragung};
-		\node at ($(privatekey.north)!0.5!(decryptedtext.south)$) [left] {Entschlüsselung};
-		\node at ($(decryptedtext.west)!0.5!(bob.east)$) [above] {Klartext};
-	\end{tikzpicture}
+	\resizebox{0.45\linewidth}{!}{\input{Grundlagen_Info/03_Kryptologie/Figures/tikz_public_key_encryption}}
 	\caption{Prinzip der Public-Key-Verschlüsselung}
 	\label{fig:public-key-encryption}
 \end{figure}
