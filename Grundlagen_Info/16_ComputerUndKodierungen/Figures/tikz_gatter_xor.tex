@@ -1,0 +1,6 @@
+\begin{tikzpicture}[circuit logic US, scale=1.3]
+    \node[xor gate, draw] (xor1) {};
+    \draw (xor1.input 1) ++(-0.7,0) -- (xor1.input 1) node[left] {$x$};
+    \draw (xor1.input 2) ++(-0.7,0) -- (xor1.input 2) node[left] {$y$};
+    \draw (xor1.output) -- ++(0.7,0) node[right] {$x \oplus y$};
+\end{tikzpicture}

@@ -16,25 +16,20 @@ Heute: ein einziges Gatter, aus dem sich \textbf{alle} anderen bauen lassen.
 \begin{frame}\FDUtitle{Das NAND-Gatter}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
-\begin{tikzpicture}[circuit logic US, scale=1.3]
-  \node[nand gate, draw] (nand1) {};
-  \draw (nand1.input 1) ++(-0.7,0) -- (nand1.input 1) node[left] {$x$};
-  \draw (nand1.input 2) ++(-0.7,0) -- (nand1.input 2) node[left] {$y$};
-  \draw (nand1.output) -- ++(0.7,0) node[right] {$\overline{x \wedge y}$};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_nand.tex}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{tabular}{c|c||c}
-    $x$ & $y$ & $\overline{x \wedge y}$ \\\midrule\midrule
-    0 & 0 & 1 \\\midrule
-    0 & 1 & 1 \\\midrule
-    1 & 0 & 1 \\\midrule
+\begin{tabular}{ccc}
+    $x$ & $y$ & $\overline{x \wedge y}$ \\\midrule
+    0 & 0 & 1 \\
+    0 & 1 & 1 \\
+    1 & 0 & 1 \\
     1 & 1 & 0 \\
 \end{tabular}
 \end{column}
 \end{columns}
 \vspace{3mm}
-\begin{center}$x \uparrow y = \overline{x \wedge y}$ -- die Negation von AND.\end{center}
+\begin{center}$\overline{x \wedge y}$ -- die Negation von AND (NOT-AND).\end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Funktional vollständig}
@@ -42,17 +37,17 @@ Heute: ein einziges Gatter, aus dem sich \textbf{alle} anderen bauen lassen.
 Aus Kombinationen von NAND-Gattern lassen sich \textbf{alle} anderen logischen Funktionen nachbauen.
 \vspace{4mm}
 
-\textbf{Übung}: Stellen Sie die Wahrheitstabelle von $x \uparrow x$ auf. Was fällt auf?
+\textbf{Übung}: Stellen Sie die Wahrheitstabelle von $\overline{x \wedge x}$ auf. Was fällt auf?
 \end{center}
 \only<2->{
 \begin{center}
-\begin{tabular}{c||c|c}
-    $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule\midrule
-    0 & 0 & 1 \\\midrule
+\begin{tabular}{ccc}
+    $x$ & $x \wedge x$ & $\overline{x \wedge x}$ \\\midrule
+    0 & 0 & 1 \\
     1 & 1 & 0 \\
 \end{tabular}
 \end{center}
-\begin{center}\color{FDUteal}\bfseries $x \uparrow x = \overline{x}$ -- ein NOT-Gatter aus einem einzigen NAND!\end{center}
+\begin{center}\color{FDUteal}\bfseries $\overline{x \wedge x} = \overline{x}$ -- ein NOT-Gatter aus einem einzigen NAND!\end{center}
 }
 \end{frame}
 
@@ -65,19 +60,14 @@ In vielen Fertigungsprozessen ist es technologisch günstig, sehr grosse Schaltu
 \begin{frame}\FDUtitle{Das XOR-Gatter}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
-\begin{tikzpicture}[circuit logic US, scale=1.3]
-  \node[xor gate, draw] (xor1) {};
-  \draw (xor1.input 1) ++(-0.7,0) -- (xor1.input 1) node[left] {$x$};
-  \draw (xor1.input 2) ++(-0.7,0) -- (xor1.input 2) node[left] {$y$};
-  \draw (xor1.output) -- ++(0.7,0) node[right] {$x \oplus y$};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_xor.tex}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{tabular}{c|c||c}
-    $x$ & $y$ & $x \oplus y$ \\\midrule\midrule
-    0 & 0 & 0 \\\midrule
-    0 & 1 & 1 \\\midrule
-    1 & 0 & 1 \\\midrule
+\begin{tabular}{ccc}
+    $x$ & $y$ & $x \oplus y$ \\\midrule
+    0 & 0 & 0 \\
+    0 & 1 & 1 \\
+    1 & 0 & 1 \\
     1 & 1 & 0 \\
 \end{tabular}
 \end{column}
@@ -114,33 +104,7 @@ Erkennen Sie zwei bekannte Gatter in diesen Spalten?
 
 \begin{frame}\FDUtitle{Schaltplan des Halbaddierers}
 \begin{center}
-\begin{tikzpicture}[circuit logic US, scale=1.2]
-        \begin{scope}[local bounding box=haBB]
-            \coordinate (ha-base) at (2,0.5);
-            \coordinate (ha-and-pos) at ($(ha-base)+(0,-1.4)$);
-            \node[xor gate, draw] (xor1) at (ha-base) {};
-            \node[and gate, draw] (and1) at (ha-and-pos) {};
-
-            \coordinate (ha-x-left) at ($(xor1.input 1)+(-1.2,0)$);
-            \coordinate (ha-x-split) at ($(xor1.input 1)+(-0.5,0)$);
-            \coordinate (ha-x-and) at ($(and1.input 1)+(-0.5,0)$);
-            \draw (ha-x-left) -- (ha-x-split) -- (xor1.input 1);
-            \draw (ha-x-split) -- ++(0,-0.5) -- (ha-x-and) -- (and1.input 1);
-            \node[left] at (ha-x-left) {$x$};
-
-            \coordinate (ha-y-left) at ($(xor1.input 2)+(-1.2,0)$);
-            \coordinate (ha-y-split) at ($(xor1.input 2)+(-0.3,0)$);
-            \coordinate (ha-y-and) at ($(and1.input 2)+(-0.3,0)$);
-            \draw (ha-y-left) -- (ha-y-split) -- (xor1.input 2);
-            \draw (ha-y-split) -- ++(0,-0.5) -- (ha-y-and) -- (and1.input 2);
-            \node[left] at (ha-y-left) {$y$};
-
-            \coordinate (ha-s-right) at ($(xor1.output)+(0.8,0)$);
-            \coordinate (ha-c-right) at ($(and1.output)+(0.8,0)$);
-            \draw (xor1.output) -- (ha-s-right) node[right] {$s$ (Summe)};
-            \draw (and1.output) -- (ha-c-right) node[right] {$c$ (Übertrag)};
-        \end{scope}
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_halbaddierer.tex}
 \end{center}
 \begin{center}XOR liefert die Summe, AND den Übertrag.\end{center}
 \end{frame}
@@ -148,11 +112,11 @@ Erkennen Sie zwei bekannte Gatter in diesen Spalten?
 \begin{frame}\FDUtitle{Übung: Halbaddierer-Wahrheitstabelle}
 \begin{center}
 \small
-\begin{tabular}{c|c||c|c|c|c}
-    $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binär $(cs)_2$ & Dezimal \\\midrule\midrule
-    0 & 0 & \only<2->{0} & \only<2->{0} & \only<2->{$00_2$} & \only<2->{0} \\\midrule
-    0 & 1 & \only<2->{1} & \only<2->{0} & \only<2->{$01_2$} & \only<2->{1} \\\midrule
-    1 & 0 & \only<2->{1} & \only<2->{0} & \only<2->{$01_2$} & \only<2->{1} \\\midrule
+\begin{tabular}{cccccc}
+    $x$ & $y$ & Summe $s$ ($x \oplus y$) & Übertrag $c$ ($x \land y$) & Binär $(cs)_2$ & Dezimal \\\midrule
+    0 & 0 & \only<2->{0} & \only<2->{0} & \only<2->{$00_2$} & \only<2->{0} \\
+    0 & 1 & \only<2->{1} & \only<2->{0} & \only<2->{$01_2$} & \only<2->{1} \\
+    1 & 0 & \only<2->{1} & \only<2->{0} & \only<2->{$01_2$} & \only<2->{1} \\
     1 & 1 & \only<2->{0} & \only<2->{1} & \only<2->{$10_2$} & \only<2->{2} \\
 \end{tabular}
 \end{center}
@@ -175,76 +139,41 @@ Ein \textbf{Volladdierer (Full Adder)} verarbeitet \textbf{3 Eingänge}: $x, y$ 
 Ein Volladdierer besteht aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter}:
 \vspace{3mm}
 \begin{center}
-\begin{tikzpicture}[scale=0.85, >=stealth]
-    \draw[thick, fill=gray!10, rounded corners=3pt] (0,0) rectangle (2.2,1.8);
-    \node at (1.1,0.9) {\small\textbf{HA 1}};
-    
-    \draw[thick, fill=gray!10, rounded corners=3pt] (3.5,0) rectangle (5.7,1.8);
-    \node at (4.6,0.9) {\small\textbf{HA 2}};
-    
-    \draw[thick, fill=gray!15, rounded corners=3pt] (6.8, -1.0) rectangle (8.0, -0.1);
-    \node at (7.4, -0.55) {\tiny OR};
-
-    \draw[thick, ->] (-0.8, 1.35) node[left] {$x$} -- (0, 1.35);
-    \draw[thick, ->] (-0.8, 0.45) node[left] {$y$} -- (0, 0.45);
-    
-    \draw[thick, ->] (2.2, 1.35) -- (3.5, 1.35);
-    \draw[thick, ->] (-0.8, -0.55) node[left] {$c_{\text{in}}$} -- (3.0, -0.55) |- (3.5, 0.45);
-    
-    \draw[thick, ->] (5.7, 1.35) -- (9.0, 1.35) node[right] {\textbf{$s$}};
-    
-    \draw[thick] (2.2, 0.45) -- (2.7, 0.45) |- (6.8, -0.3);
-    \draw[thick] (5.7, 0.45) -- (6.2, 0.45) |- (6.8, -0.8);
-    
-    \draw[thick, ->] (8.0, -0.55) -- (9.0, -0.55) node[right] {\textbf{$c_{\text{out}}$}};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_volladdierer.tex}
 \end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Schriftliche Binäraddition im Addierwerk}
-Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Binärzahlen zu addieren:
-\[
-\begin{array}{ccccccc}
-	& 1 & 0 & 1 & 0 & 1 & 1_2 \\
-	+ & \underset{1}{1} & \underset{1}{1} & \underset{}{1} & \underset{1}{0} & \underset{}{1} & \underset{}{0_2} \\
-	\hline
-	1 & 1 & 0 & 0 & 1 & 0 & 1_2 \\\hline\hline
-\end{array}
-\]
-\begin{center}\color{FDUteal}\bfseries Jede Spalte wird von genau einem Volladdierer-Baustein berechnet!\end{center}
+Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Binärzahlen stellenweise zu addieren:
+\vspace{2mm}
+\begin{center}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_addierer.tex}
+\end{center}
+\begin{center}\color{FDUteal}\bfseries Jede Spalte der Addition wird von genau einem Volladdierer-Baustein berechnet!\end{center}
 \end{frame}
 
-\begin{frame}{Auftrag}{Kapitel 4: NAND, Halbaddierer \& Volladdierer}
-%\aufgabebox{\textbf{Aufgabe 4.2}: NOT-Gatter allein mit NAND-Gattern realisieren ($x \uparrow x$)}
-%\vspace{3mm}
-%\challengebox{\textbf{Aufgabe 4.3}: AND-Gatter allein aus NAND-Gattern aufbauen}
-%\vspace{3mm}
-\aufgabebox{\textbf{Aufgabe 4.10}: Tabellen \& Übungen zum Halb- und Volladdierer ausfüllen}
-  Berechnen Sie die folgenden Summen Stelle für Stelle (inkl. Übertragsbit $c$) und kontrollieren Sie das Ergebnis im Dezimalsystem:
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{c||c|c|c}
-            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-            Zahl $A$ (dezimal) & $3_{10}$ & $5_{10}$ & $7_{10}$ \\
-            Zahl $B$ (dezimal) & $2_{10}$ & $3_{10}$ & $1_{10}$ \\ \midrule
-            $A = a_2 a_1 a_0$ & $011_2$ & $101_2$ & $111_2$ \\
-            $B = b_2 b_1 b_0$ & $010_2$ & $011_2$ & $001_2$ \\ \midrule
-            Überträge $c_2 c_1 c_0$ & ? & ? & ? \\
-            Ergebnis $s_3 s_2 s_1 s_0$ & ? & ? & ? \\ \midrule
-            Dezimal-Kontrolle & ? & ? & ? \\
-        \end{tabular}
-    \end{table}
+\begin{frame}{Übung}{Ripple-Carry-Addierer}
+\aufgabebox{\textbf{Aufgabe}: Bestimmen Sie die Überträge $\textcolor{BurntOrange}{c_1, c_2, s_3}$ und Summenbits $\textcolor{ForestGreen}{s_0, s_1, s_2}$ für $\textcolor{NavyBlue}{011_2} + \textcolor{BrickRed}{010_2}$ ($3_{10} + 2_{10}$):}
+\vspace{2mm}
+\begin{center}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}
+\end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Lösung: Aufgabe 4.10}
-    \begin{center}
-        \begin{tabular}{c||c|c|c}
-            & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\ \midrule\midrule
-            $A$ & $011_2$ ($3$) & $101_2$ ($5$) & $111_2$ ($7$) \\
-            $B$ & $010_2$ ($2$) & $011_2$ ($3$) & $001_2$ ($1$) \\ \midrule
-            Überträge $c$ & $010_2$ & $111_2$ & $111_2$ \\
-            Ergebnis $S$ & $0101_2$ ($5_{10}$) & $1000_2$ ($8_{10}$) & $1000_2$ ($8_{10}$) \\ \midrule
-            Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
-        \end{tabular}
-        \end{center}
+\begin{frame}\FDUtitle{Lösung: Ripple-Carry-Addierer}
+\begin{center}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}
+\end{center}
+\vspace{2mm}
+\begin{center}
+\small
+\begin{tabular}{cccc}
+    & \textbf{Aufgabe 1} & \textbf{Aufgabe 2} & \textbf{Aufgabe 3} \\\midrule
+    $\textcolor{NavyBlue}{A}$ & $\textcolor{NavyBlue}{011_2 \ (3)}$ & $\textcolor{NavyBlue}{101_2 \ (5)}$ & $\textcolor{NavyBlue}{111_2 \ (7)}$ \\
+    $\textcolor{BrickRed}{B}$ & $\textcolor{BrickRed}{010_2 \ (2)}$ & $\textcolor{BrickRed}{011_2 \ (3)}$ & $\textcolor{BrickRed}{001_2 \ (1)}$ \\\midrule
+    $\textcolor{BurntOrange}{\text{Überträge } c}$ & $\textcolor{BurntOrange}{010_2}$ & $\textcolor{BurntOrange}{111_2}$ & $\textcolor{BurntOrange}{111_2}$ \\
+    $\textcolor{ForestGreen}{\text{Ergebnis } S}$ & $\textcolor{ForestGreen}{0101_2 \ (5_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ & $\textcolor{ForestGreen}{1000_2 \ (8_{10})}$ \\\midrule
+    Kontrolle & $3 + 2 = 5$ \checkmark & $5 + 3 = 8$ \checkmark & $7 + 1 = 8$ \checkmark \\
+\end{tabular}
+\end{center}
 \end{frame}

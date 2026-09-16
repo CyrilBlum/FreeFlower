@@ -1,0 +1,6 @@
+\begin{tikzpicture}[circuit logic US, scale=1.3]
+    \node[nand gate, draw] (nand1) {};
+    \draw (nand1.input 1) ++(-0.7,0) -- (nand1.input 1) node[left] {$x$};
+    \draw (nand1.input 2) ++(-0.7,0) -- (nand1.input 2) node[left] {$y$};
+    \draw (nand1.output) -- ++(0.7,0) node[right] {$\overline{x \wedge y}$};
+\end{tikzpicture}

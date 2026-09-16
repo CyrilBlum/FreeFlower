@@ -1,0 +1,27 @@
+\begin{tikzpicture}[circuit logic US, scale=1.2]
+    \begin{scope}[local bounding box=haBB]
+        \coordinate (ha-base) at (2,0.5);
+        \coordinate (ha-and-pos) at ($(ha-base)+(0,-1.4)$);
+        \node[xor gate, draw] (xor1) at (ha-base) {};
+        \node[and gate, draw] (and1) at (ha-and-pos) {};
+
+        \coordinate (ha-x-left) at ($(xor1.input 1)+(-1.2,0)$);
+        \coordinate (ha-x-split) at ($(xor1.input 1)+(-0.5,0)$);
+        \coordinate (ha-x-and) at ($(and1.input 1)+(-0.5,0)$);
+        \draw (ha-x-left) -- (ha-x-split) -- (xor1.input 1);
+        \draw (ha-x-split) -- ++(0,-0.5) -- (ha-x-and) -- (and1.input 1);
+        \node[left] at (ha-x-left) {$x$};
+
+        \coordinate (ha-y-left) at ($(xor1.input 2)+(-1.2,0)$);
+        \coordinate (ha-y-split) at ($(xor1.input 2)+(-0.3,0)$);
+        \coordinate (ha-y-and) at ($(and1.input 2)+(-0.3,0)$);
+        \draw (ha-y-left) -- (ha-y-split) -- (xor1.input 2);
+        \draw (ha-y-split) -- ++(0,-0.5) -- (ha-y-and) -- (and1.input 2);
+        \node[left] at (ha-y-left) {$y$};
+
+        \coordinate (ha-s-right) at ($(xor1.output)+(0.8,0)$);
+        \coordinate (ha-c-right) at ($(and1.output)+(0.8,0)$);
+        \draw (xor1.output) -- (ha-s-right) node[right] {$s$ (Summe)};
+        \draw (and1.output) -- (ha-c-right) node[right] {$c$ (Übertrag)};
+    \end{scope}
+\end{tikzpicture}

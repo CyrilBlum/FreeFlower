@@ -14,63 +14,7 @@ Ein Chip ist ein Netzwerk aus leitenden Verbindungen und Schaltern.
 \end{center}
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=1.0]
-        \begin{scope}[shift={(0,0)}, local bounding box=openBB]
-            \coordinate (open-base) at (0,0);
-            \coordinate (open-bat-bot) at ($(open-base)+(0.6,0.8)$);
-            \coordinate (open-bat-top) at ($(open-base)+(0.6,2.2)$);
-            \coordinate (open-sw-left) at ($(open-base)+(2.0,2.2)$);
-            \coordinate (open-sw-right) at ($(open-base)+(2.9,2.2)$);
-            \coordinate (open-lamp) at ($(open-base)+(3.8,2.2)$);
-            \coordinate (open-ret) at ($(open-base)+(3.8,0.8)$);
-
-            \draw (open-bat-bot) -- (open-bat-top);
-            \draw ($(open-base)+(0.45,1.15)$) -- ($(open-base)+(0.75,1.15)$);
-            \draw ($(open-base)+(0.50,1.60)$) -- ($(open-base)+(0.70,1.60)$);
-            \node[left] at ($(open-base)+(0.35,1.35)$) {$U$};
-
-            \draw (open-bat-top) -- (open-sw-left);
-            \draw (open-sw-left) -- ($(open-sw-left)+(0.6,0.3)$);
-            \draw (open-sw-right) -- (open-lamp);
-            \draw (open-lamp) circle (0.35);
-            \draw ($(open-base)+(3.55,1.95)$) -- ($(open-base)+(4.05,2.45)$);
-            \draw (open-bat-bot) -- (open-ret) -- ($(open-lamp)+(0,-0.35)$);
-
-            \node at ($(open-base)+(2.35,2.65)$) {\tiny kein Kontakt};
-            \node at ($(open-base)+(3.8,1.3)$) {Last aus};
-            \node at ($(open-base)+(2.5,2.95)$) {Schalter offen};
-        \end{scope}
-        \node[draw,rounded corners,fit=(openBB),inner sep=8pt] {};
-
-        \begin{scope}[shift={(6.2,0)}, local bounding box=closedBB]
-            \coordinate (closed-base) at (0,0);
-            \coordinate (closed-bat-bot) at ($(closed-base)+(0.6,0.8)$);
-            \coordinate (closed-bat-top) at ($(closed-base)+(0.6,2.2)$);
-            \coordinate (closed-sw-left) at ($(closed-base)+(2.0,2.2)$);
-            \coordinate (closed-sw-right) at ($(closed-base)+(2.6,2.2)$);
-            \coordinate (closed-lamp) at ($(closed-base)+(3.8,2.2)$);
-            \coordinate (closed-ret) at ($(closed-base)+(3.8,0.8)$);
-
-            \draw (closed-bat-bot) -- (closed-bat-top);
-            \draw ($(closed-base)+(0.45,1.15)$) -- ($(closed-base)+(0.75,1.15)$);
-            \draw ($(closed-base)+(0.50,1.60)$) -- ($(closed-base)+(0.70,1.60)$);
-            \node[left] at ($(closed-base)+(0.35,1.35)$) {$U$};
-
-            \draw (closed-bat-top) -- (closed-sw-left);
-            \fill (closed-sw-left) circle (0.04);
-            \fill (closed-sw-right) circle (0.04);
-            \draw[line width=0.5pt] (closed-sw-left) -- (closed-sw-right);
-            \draw (closed-sw-right) -- (closed-lamp);
-            \draw (closed-lamp) circle (0.35);
-            \fill (closed-lamp) circle (0.12);
-            \draw (closed-bat-bot) -- (closed-ret) -- ($(closed-lamp)+(0,-0.35)$);
-
-            \node at ($(closed-base)+(2.3,2.65)$) {\tiny Kontakt};
-            \node at ($(closed-base)+(3.8,1.3)$) {Last aktiv};
-            \node at ($(closed-base)+(2.5,2.95)$) {Schalter geschlossen};
-        \end{scope}
-        \node[draw,rounded corners,fit=(closedBB),inner sep=8pt] {};
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_stromkreis_schalter.tex}
     \[
     \text{niedrige Spannung} \longleftrightarrow 0
     \qquad
@@ -113,16 +57,12 @@ Funktionen, die Bits als Eingabe erhalten und \textbf{genau ein} Bit ausgeben.
 \begin{frame}\FDUtitle{NOT -- Negation}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
-\begin{tikzpicture}[circuit logic US, scale=1.3]
-  \node[not gate, draw] (not1) {};
-  \draw (not1.input) ++(-0.7,0) -- (not1.input) node[left] {$x$};
-  \draw (not1.output) -- ++(0.7,0) node[right] {$\overline{x}$};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_not.tex}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{tabular}{c||c}
-    $x$ & $\overline{x}$ \\\midrule\midrule
-    0 & 1 \\\midrule
+\begin{tabular}{cc}
+    $x$ & $\overline{x}$ \\\midrule
+    0 & 1 \\
     1 & 0 \\
 \end{tabular}
 \end{column}
@@ -134,19 +74,14 @@ Funktionen, die Bits als Eingabe erhalten und \textbf{genau ein} Bit ausgeben.
 \begin{frame}\FDUtitle{AND -- Konjunktion}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
-\begin{tikzpicture}[circuit logic US, scale=1.3]
-  \node[and gate, draw] (and1) {};
-  \draw (and1.input 1) ++(-0.7,0) -- (and1.input 1) node[left] {$x$};
-  \draw (and1.input 2) ++(-0.7,0) -- (and1.input 2) node[left] {$y$};
-  \draw (and1.output) -- ++(0.7,0) node[right] {$x \wedge y$};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_and.tex}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{tabular}{c|c||c}
-    $x$ & $y$ & $x \wedge y$ \\\midrule\midrule
-    0 & 0 & 0 \\\midrule
-    0 & 1 & 0 \\\midrule
-    1 & 0 & 0 \\\midrule
+\begin{tabular}{ccc}
+    $x$ & $y$ & $x \wedge y$ \\\midrule
+    0 & 0 & 0 \\
+    0 & 1 & 0 \\
+    1 & 0 & 0 \\
     1 & 1 & 1 \\
 \end{tabular}
 \end{column}
@@ -158,19 +93,14 @@ Funktionen, die Bits als Eingabe erhalten und \textbf{genau ein} Bit ausgeben.
 \begin{frame}\FDUtitle{OR -- Disjunktion}
 \begin{columns}[c,onlytextwidth]
 \begin{column}{.46\textwidth}
-\begin{tikzpicture}[circuit logic US, scale=1.3]
-  \node[or gate, draw] (or1) {};
-  \draw (or1.input 1) ++(-0.7,0) -- (or1.input 1) node[left] {$x$};
-  \draw (or1.input 2) ++(-0.7,0) -- (or1.input 2) node[left] {$y$};
-  \draw (or1.output) -- ++(0.7,0) node[right] {$x \vee y$};
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_gatter_or.tex}
 \end{column}
 \begin{column}{.46\textwidth}
-\begin{tabular}{c|c||c}
-    $x$ & $y$ & $x \vee y$ \\\midrule\midrule
-    0 & 0 & 0 \\\midrule
-    0 & 1 & 1 \\\midrule
-    1 & 0 & 1 \\\midrule
+\begin{tabular}{ccc}
+    $x$ & $y$ & $x \vee y$ \\\midrule
+    0 & 0 & 0 \\
+    0 & 1 & 1 \\
+    1 & 0 & 1 \\
     1 & 1 & 1 \\
 \end{tabular}
 \end{column}

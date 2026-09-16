@@ -1,0 +1,7 @@
+\begin{tikzpicture}[node distance=1.5cm]
+    \node[draw, fill=RoyalBlue!15, minimum width=2.5cm, minimum height=1cm, rounded corners] (ein) {Eingabe};
+    \node[draw, fill=Goldenrod!30, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ein] (ver) {Verarbeitung};
+    \node[draw, fill=DarkSeaGreen!40, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ver] (aus) {Ausgabe};
+    \draw[->, thick] (ein) -- (ver);
+    \draw[->, thick] (ver) -- (aus);
+\end{tikzpicture}

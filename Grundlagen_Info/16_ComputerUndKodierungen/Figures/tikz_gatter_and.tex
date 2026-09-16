@@ -1,0 +1,6 @@
+\begin{tikzpicture}[circuit logic US, scale=1.3]
+    \node[and gate, draw] (and1) {};
+    \draw (and1.input 1) ++(-0.7,0) -- (and1.input 1) node[left] {$x$};
+    \draw (and1.input 2) ++(-0.7,0) -- (and1.input 2) node[left] {$y$};
+    \draw (and1.output) -- ++(0.7,0) node[right] {$x \wedge y$};
+\end{tikzpicture}

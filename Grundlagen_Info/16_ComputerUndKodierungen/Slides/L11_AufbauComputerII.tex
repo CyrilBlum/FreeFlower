@@ -62,17 +62,7 @@ Ein Foto (24 MB) wird von einer SSD mit 2 GB/s Lesegeschwindigkeit geladen. Wie 
 
 \begin{frame}\FDUtitle{Der Fetch-Decode-Execute-Zyklus}
 \begin{center}
-\begin{tikzpicture}[
-    block/.style={draw, rounded corners, minimum width=3.2cm, minimum height=1.0cm, text centered, text width=3.2cm, fill=FDUblue!15},
-    arrow/.style={->, thick}
-]
-    \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
-    \node[block] (decode)  at (4.6, 0)  {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
-    \node[block] (execute) at (2.3,-1.9) {\textbf{3.\ Execute} \newline \small Befehl ausführen};
-    \draw[arrow] (fetch)   -- (decode);
-    \draw[arrow] (decode)  -- (execute);
-    \draw[arrow] (execute.west) -- ++(-2.1,0) |- (fetch.south);
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
 \end{center}
 \begin{center}Die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.\end{center}
 \end{frame}

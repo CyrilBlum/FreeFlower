@@ -5,13 +5,7 @@
 Ein \tib{Computer}\index{Computer} (auch Rechner) ist eine Maschine, die nach einem gespeicherten Programm Daten verarbeitet. Er kann eingegebene Informationen in Ausgaben umwandeln -- sei es das Berechnen einer Summe, das Anzeigen eines Bildes oder das Abspielen von Musik. In \cref{ch:logische_gatter} haben wir gesehen, wie aus einzelnen Transistoren Gatter und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. In diesem Kapitel setzen wir diese Bausteine zu einem vollständigen Computer zusammen. Grundlegend gilt dabei:
 
 \begin{center}
-    \begin{tikzpicture}[node distance=1.5cm]
-        \node[draw, fill=RoyalBlue!15, minimum width=2.5cm, minimum height=1cm, rounded corners] (ein) {Eingabe};
-        \node[draw, fill=Goldenrod!30, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ein] (ver) {Verarbeitung};
-        \node[draw, fill=DarkSeaGreen!40, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ver] (aus) {Ausgabe};
-        \draw[->, thick] (ein) -- (ver);
-        \draw[->, thick] (ver) -- (aus);
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_eva_prinzip.tex}
 \end{center}
 
 \section{Die Von-Neumann-Architektur}
@@ -20,7 +14,7 @@ Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers 
 
 \begin{figure}[H]
     \centering
-    \input{Grundlagen_Info/16_ComputerUndKodierungen/von_neumann_diagram.tex}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_von_neumann.tex}
     \caption{Vereinfachtes Schaubild der Von-Neumann-Architektur.}
     \label{fig:von_neumann}
 \end{figure}
@@ -66,7 +60,7 @@ Der \tib{RAM}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle 
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c}
+    \begin{tabular}{cc}
         \textbf{Adresse} & \textbf{Inhalt (1 Byte)} \\\midrule\midrule
         \texttt{0x00} & \texttt{10110100} \\\midrule
         \texttt{0x01} & \texttt{00001111} \\\midrule
@@ -107,18 +101,7 @@ Die CPU führt Anweisungen in einem einfachen, immer wiederholten Schema aus, de
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[
-        block/.style={draw, rounded corners, minimum width=3.5cm, minimum height=1.1cm, text centered, text width=3.5cm, fill=RoyalBlue!15},
-        arrow/.style={->, thick}
-    ]
-        \node[block] (fetch)   at (0, 0)    {\textbf{1.\ Fetch} \newline \small Befehl aus RAM holen};
-        \node[block] (decode)  at (5, 0)    {\textbf{2.\ Decode} \newline \small Befehl entschlüsseln};
-        \node[block] (execute) at (2.5,-2)  {\textbf{3.\ Execute} \newline \small Befehl ausführen};
-
-        \draw[arrow] (fetch)   -- (decode);
-        \draw[arrow] (decode)  -- (execute);
-        \draw[arrow] (execute.west) -- ++(-2.4,0) |- (fetch.south);
-    \end{tikzpicture}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
     \caption{Der Fetch-Decode-Execute-Zyklus: die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.}
     \label{fig:fde}
 \end{figure}

@@ -11,13 +11,7 @@ Wir kennen jetzt Gatter und den Halbaddierer.
 Wie setzt man daraus einen \textbf{vollständigen Computer} zusammen?
 \end{center}
 \begin{center}
-\begin{tikzpicture}[node distance=1.5cm]
-    \node[draw, fill=FDUblue!15, minimum width=2.5cm, minimum height=1cm, rounded corners] (ein) {Eingabe};
-    \node[draw, fill=FDUgreen!35, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ein] (ver) {Verarbeitung};
-    \node[draw, fill=FDUteal!25, minimum width=2.5cm, minimum height=1cm, rounded corners, right=of ver] (aus) {Ausgabe};
-    \draw[->, thick] (ein) -- (ver);
-    \draw[->, thick] (ver) -- (aus);
-\end{tikzpicture}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_eva_prinzip.tex}
 \end{center}
 \end{frame}
 
@@ -36,7 +30,7 @@ Das Programm ist selbst nur ein Stück Daten -- also eine Bitfolge, die jederzei
 
 \begin{frame}\FDUtitle{Die Hauptkomponenten}
 \begin{center}
-\input{Grundlagen_Info/16_ComputerUndKodierungen/von_neumann_diagram.tex}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_von_neumann.tex}
 \end{center}
 \end{frame}
 

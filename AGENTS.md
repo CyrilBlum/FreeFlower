@@ -62,6 +62,10 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
   - `% \input{Grundlagen_Info/03_Kryptologie/Skript/Kapitel_06.tex} % Kapitel 6: Post-Quanten-Kryptographie` (in `Grundlagen_Info/03_Kryptologie/Skript/Skript.tex`)
 - **Agent Rule**: Never uncomment these WIP chapters when compiling, building, or refactoring unless the user explicitly requests to work on or test that specific draft chapter.
 
+### 2.10 Faster Compilation During Iterative Checks
+- **Temporary Disabling**: In `Skript.tex` or `main.tex`, you may temporarily comment out other chapters, title pages, and appendices to accelerate compilation when iteratively testing or visually inspecting figures (e.g. with `pdftoppm`).
+- **Mandatory Restoration**: All temporarily commented out chapters, title pages, and appendices must be fully restored (uncommented) to their original state before finishing the task.
+
 ---
 
 ## 3. Project Structure & Compilation Workflow

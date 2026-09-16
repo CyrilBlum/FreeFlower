@@ -1,0 +1,34 @@
+\begin{tikzpicture}[circuit logic US, scale=0.88, >=stealth]
+    % Block 1: HA1
+    \draw[thick, fill=gray!10, rounded corners=3pt] (0,0) rectangle (1.6,1.8);
+    \node at (0.8,0.9) {\small\textbf{HA 1}};
+    
+    % Block 2: HA2
+    \draw[thick, fill=gray!10, rounded corners=3pt] (3.2,0) rectangle (4.8,1.8);
+    \node at (4.0,0.9) {\small\textbf{HA 2}};
+    
+    % OR Gate
+    \node[or gate, draw, thick, fill=gray!15] (or1) at (6.4, -0.95) {};
+
+    % Inputs to HA 1
+    \draw[thick, ->] (-0.8, 1.35) node[left] {$x$} -- (0, 1.35);
+    \draw[thick, ->] (-0.8, 0.45) node[left] {$y$} -- (0, 0.45);
+    
+    % Sum line from HA 1 to HA 2
+    \draw[thick, ->] (1.6, 1.35) -- node[above] {\small $s_1$} (3.2, 1.35);
+    
+    % Carry-in line to HA 2
+    \draw[thick, ->] (-0.8, -0.55) node[left] {$c_{\text{in}}$} -- (2.6, -0.55) |- (3.2, 0.45);
+    
+    % Final Sum line
+    \draw[thick, ->] (4.8, 1.35) -- (8.2, 1.35) node[right] {\textbf{$s$ (Summe)}};
+    
+    % Carry 1 line (from HA 1 to OR gate input 2)
+    \draw[thick] (1.6, 0.45) -- (2.0, 0.45) |- (or1.input 2);
+    
+    % Carry 2 line (from HA 2 to OR gate input 1)
+    \draw[thick] (4.8, 0.45) -- (5.4, 0.45) |- (or1.input 1);
+    
+    % Final Carry-out line
+    \draw[thick, ->] (or1.output) -- (8.2, -0.95) node[right] {\textbf{$c_{\text{out}}$ (Übertrag)}};
+\end{tikzpicture}

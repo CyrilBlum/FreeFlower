@@ -1,0 +1,5 @@
+\begin{tikzpicture}[circuit logic US, scale=1.3]
+    \node[not gate, draw] (not1) {};
+    \draw (not1.input) ++(-0.7,0) -- (not1.input) node[left] {$x$};
+    \draw (not1.output) -- ++(0.7,0) node[right] {$\overline{x}$};
+\end{tikzpicture}
