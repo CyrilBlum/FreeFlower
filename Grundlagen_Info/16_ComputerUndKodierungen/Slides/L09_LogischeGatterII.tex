@@ -52,7 +52,7 @@ Aus Kombinationen von NAND-Gattern lassen sich \textbf{alle} anderen logischen F
 \end{frame}
 
 \begin{frame}\FDUtitle{Optional: Warum ist NAND relevant?}
-\begin{itemize}
+\begin{itemize}[<+->]
     \item \textbf{Theorie \& Didaktik:} NAND ist ein \enquote{Universalbaustein} (funktionale Vollständigkeit) -- jeder beliebige Computer lässt sich im Prinzip rein aus NAND-Gattern aufbauen.
     \item \textbf{Historisch:} Der \textit{Apollo Guidance Computer} (1966) bestand fast ausschliesslich aus einheitlichen NOR-Gattern zur Fehlerminimierung.
     \item \textbf{Moderne Chips:} Nutzen optimierte Standard-Zellbibliotheken mit massgeschneiderten Transistorlayouts pro Gattertyp (für maximale Geschwindigkeit und minimale Fläche).
@@ -156,7 +156,7 @@ Ein \textbf{Volladdierer (Full Adder)} verarbeitet \textbf{3 Eingänge}: $x, y$ 
 \column{0.55\textwidth}
 \textbf{Logische Formeln:}
 \vspace{2mm}
-\begin{itemize}
+\begin{itemize}[<+->]
     \item \textbf{Summe $s$:}
     \[
         s = (x \oplus y) \oplus c_{\text{in}}
@@ -187,7 +187,7 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Schriftliche Binäraddition}
-\aufgabebox{Berechnen Sie die Addition $011_2+010_2$ schriftlich von Hand. Notieren Sie alle Überträge in der Übertragszeile und kontrollieren Sie das Ergebnis im Dezimalsystem.}
+\aufgabebox{Berechnen Sie $011_2+010_2$ schriftlich mit allen Überträgen und Dezimalkontrolle.}
 \vspace{3mm}
 \textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$ ($0$ schreiben und Übertrag $1$ in die nächste Spalte).
 \end{frame}
@@ -202,7 +202,7 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
     \end{array}
 \]
 \vspace{2mm}
-\begin{itemize}
+\begin{itemize}[<+->]
     \item \textbf{Rechts:} $1+0=1$, Übertrag $0$.
     \item \textbf{Mitte:} $1+1=10_2$, also $0$ schreiben und Übertrag $1$.
     \item \textbf{Links:} $0+0+1=1$, Übertrag $0$.
@@ -212,7 +212,7 @@ Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganz
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Signalverfolgung im Addierwerk}
-\aufgabebox{Bestimmen Sie für die Addition $011_2+010_2$ alle Überträge $c_1, c_2, c_3$ und Summenbits $s_0, s_1, s_2$ im Ripple-Carry-Addierer.}
+\aufgabebox{Bestimmen Sie alle Überträge $c_1, c_2, c_3$ und Summenbits $s_0, s_1, s_2$ im Addierwerk ($011_2+010_2$).}
 \vspace{1mm}
 \begin{center}
 \scalebox{0.75}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}}
@@ -230,7 +230,7 @@ $\mathbf{011_2 + 010_2 = 0101_2 = 5_{10}}$ \quad ($3 + 2 = 5$ \checkmark)
 \end{frame}
 
 \begin{frame}\FDUtitle{Challenge: Eine Kette von Überträgen}
-\challengebox{Berechnen Sie $111_2+001_2$ schriftlich und notieren Sie alle Überträge. Erklären Sie, weshalb links eine zusätzliche Stelle entsteht. Kontrollieren Sie das Ergebnis im Dezimalsystem.}
+\challengebox{Berechnen Sie $111_2+001_2$ schriftlich und erklären Sie die zusätzliche linke Stelle.}
 \end{frame}
 
 \begin{frame}\FDUtitle{Lösung: Eine Kette von Überträgen}

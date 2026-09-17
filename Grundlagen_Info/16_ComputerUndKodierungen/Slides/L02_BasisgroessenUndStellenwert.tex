@@ -9,7 +9,7 @@ Letztes Mal: die \tib{unäre} Zahlendarstellung.
 \begin{center}
 ||||||||||||||||||||||||||||||||||||||
 \end{center}
-\begin{itemize}\setlength\itemsep{5pt}
+\begin{itemize}[<+->]\setlength\itemsep{5pt}
   \item Ein einziges Symbol, Länge wächst linear
   \item Heute: Kulturen der Antike verwendeten bereits \tib{mehrere} Symbole mit unterschiedlichem Wert
 \end{itemize}
@@ -39,7 +39,7 @@ Welche Zahl steckt dahinter?
 
 \begin{frame}\FDUtitle{Die Münzen-Analogie}
 Eine Sammlung von Münzen heisst \tib{Zahlendarstellung} einer Zahl $m$, wenn:
-\begin{itemize}\setlength\itemsep{6pt}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
   \item \tib{Korrektheit}: die Summe der Münzenwerte gleich $m$ ist,
   \item \tib{Minimalität}: keine Sammlung mit weniger Münzen existiert, deren Summe $m$ ist.
 \end{itemize}
@@ -56,7 +56,7 @@ Wir haben folgende Münzen: \coin{1}\coin{2}\coin{3}\coin{5}\coin{10}
 Wie stellt man die Zahl 4 dar?
 \end{center}
 \only<2->{
-\begin{itemize}
+\begin{itemize}[<+->]
 \item \coin{1}\coin{3}
 \item \coin{2}\coin{2}
 \end{itemize}}
@@ -76,7 +76,7 @@ Wie stellt man die Zahl 4 dar?
 \end{frame}}
 
 \begin{frame}\FDUtitle{Warum unterschiedliche Zahlensysteme?}
-\begin{itemize}\setlength\itemsep{6pt}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
   \item Zahlensysteme sind \enquote{willkürlich} und historisch entstanden
   \item Computer arbeiten mit binären Zahlen $\lrc{0,1}$
   \begin{itemize}
@@ -87,7 +87,7 @@ Wie stellt man die Zahl 4 dar?
 \end{frame}
 
 \begin{frame}\FDUtitle{Stellenwertdarstellung: Beobachtungen}
-\begin{itemize}\setlength\itemsep{8pt}
+\begin{itemize}[<+->]\setlength\itemsep{8pt}
     \item Alphabet des \enquote{normalen} Zahlensystems:
     $$\lrc{0,1,2,3,4,5,6,7,8,9}$$
     \begin{itemize}
@@ -172,7 +172,7 @@ Beispiel ($b=3$): $\quad 211_3 = 2\cdot 3^2 + 1\cdot 3^1 + 1\cdot 3^0 = 22$
 Warum sind im $b$-adischen System nur Ziffern $0,\ldots,b-1$ erlaubt?
 \end{center}
 \only<2->{
-\begin{itemize}\setlength\itemsep{6pt}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
 \item Beispiel: 13 Objekte im Dezimalsystem mit möglichst wenigen \enquote{Münzen} darstellen.
 \item 10 Einer lassen sich stets durch 1 Zehner ersetzen $\rightarrow$ 9 Münzen gespart.
 \begin{itemize}
@@ -186,7 +186,7 @@ Warum sind im $b$-adischen System nur Ziffern $0,\ldots,b-1$ erlaubt?
 \begin{frame}\FDUtitle{Warum ist das für die Informatik wichtig?}
 Die Bedingung $a_k \in \lrc{0,1,\ldots,b-1}$ bringt zwei entscheidende Vorteile:
 \vspace{3mm}
-\begin{enumerate}\setlength\itemsep{8pt}
+\begin{enumerate}[<+->]\setlength\itemsep{8pt}
   \item \textbf{Minimale Darstellung (Speichereffizienz):}\\
   Die Darstellung verbraucht so wenige Stellen (Bits) wie möglich.
   \item \textbf{Eindeutigkeit (Kanonische Form):}\\

@@ -9,11 +9,11 @@ Stellen Sie sich RAM als eine lange Tabelle vor: jede Zeile ist eine Speicherzel
 \end{center}
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c}
-        \textbf{Adresse} & \textbf{Inhalt (1 Byte)} \\\midrule\midrule
-        \texttt{0x00} & \texttt{10110100} \\\midrule
-        \texttt{0x01} & \texttt{00001111} \\\midrule
-        \texttt{0x02} & \texttt{11001010} \\\midrule
+    \begin{tabular}{cc}
+        \textbf{Adresse} & \textbf{Inhalt (1 Byte)} \\\midrule
+        \texttt{0x00} & \texttt{10110100} \\
+        \texttt{0x01} & \texttt{00001111} \\
+        \texttt{0x02} & \texttt{11001010} \\
         $\vdots$ & $\vdots$ \\
     \end{tabular}
 \end{table}
@@ -23,7 +23,7 @@ Die Adressen sind hexadezimal (Lektion 3) -- daher das Präfix \texttt{0x}.
 \end{frame}
 
 \begin{frame}\FDUtitle{RAM vs.\ Cache}
-\begin{itemize}\setlength\itemsep{7pt}
+\begin{itemize}[<+->]\setlength\itemsep{7pt}
   \item RAM ist \tib{flüchtig}: Inhalt geht beim Ausschalten verloren
   \item Typische Grösse: 8--64 GB
   \item Der \tib{Cache}: noch schneller, aber viel kleiner -- speichert häufig genutzte Daten zwischen
@@ -67,7 +67,7 @@ Ein Game hat eine Downloadgrösse von \textbf{120~GB}. Die Download-Geschwindigk
 \end{tabular}
 \end{center}
 {\small Modell: konstante Raten, jeweils mindestens 120~GB frei, auch im RAM; kein Entpacken und Installieren. $1\,\mathrm{GB}=1000\,\mathrm{MB}$.}
-\begin{enumerate}[(a)]
+\begin{enumerate}[<+->][(a)]
     \item Wie lange dauert das Speichern jeweils? $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$
     \item Warum eignet sich RAM nicht als dauerhafte Ablage?
 \end{enumerate}
@@ -116,7 +116,7 @@ Die Zeiten gelten nur für das Schreiben im vereinfachten Modell, nicht für den
 \end{frame}
 
 \begin{frame}\FDUtitle{Der CPU-Takt und die Einheit Hertz (Hz)}
-\begin{itemize}\setlength\itemsep{4pt}
+\begin{itemize}[<+->]\setlength\itemsep{4pt}
     \item Ein Taktgeber (\emph{Quarzoszillator}) gibt den Schritt für alle Transistoren vor.
     \item \textbf{1 Hertz (Hz)} $= 1\text{ Taktzyklus pro Sekunde}\quad (1\,\mathrm{s}^{-1})$.
 \end{itemize}
@@ -148,9 +148,9 @@ Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $
 \begin{frame}{Auftrag}{Kapitel 5: Speicher \& FDE-Zyklus}
 \aufgabebox{\textbf{Aufgabe 5.2}: Dauer berechnen: Foto ($24\,\mathrm{MB}$) von SSD ($2\,\mathrm{GB/s}$) laden}
 \vspace{3mm}
-\aufgabebox{\textbf{Aufgabe 5.3}: Speicherzeit für ein Steam-Game (120~GB) in RAM, auf SSD und auf HDD vergleichen}
+\aufgabebox{\textbf{Aufgabe 5.3}: Speicherzeit für ein Steam-Game (120~GB) in RAM, auf SSD und HDD}
 \vspace{3mm}
 \aufgabebox{\textbf{Aufgabe 5.4}: Befehle/s und Ausführungsdauer bei $3{,}6\,\mathrm{GHz}$ berechnen}
 \vspace{3mm}
-\challengebox{\textbf{Aufgabe 5.5}: Teilschritte des Befehls \texttt{ADD R1, R2} den Phasen Fetch, Decode, Execute zuordnen}
+\challengebox{\textbf{Aufgabe 5.5}: Teilschritte von \texttt{ADD R1, R2} zu Fetch, Decode, Execute zuordnen}
 \end{frame}
