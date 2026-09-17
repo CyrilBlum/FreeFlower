@@ -493,7 +493,7 @@ Ein Beispiel für die schriftliche Addition zweier Binärzahlen:
 \end{myexercise}
 
 \begin{myexercise}\label{myexercise:overflow}
-	Rechnen Sie folgende beiden Zahlen im Binärsystem zusammen: $11110001_2 + 00001111_2$.
+	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen: $11110001_2 + 00001111_2$.
 	\begin{myanswer}
 		Mathematisch korrekt ist $100000000_2$ ($256_{10}$). In einer festen 8-Bit-Umgebung (wie im Register/ALU eines 8-Bit-Prozessors) passt die 9. Stelle nicht mehr in das Register. Die vorderste $1$ geht verloren und das Resultat wird zu $00000000_2$. Man spricht von einem \tib{Überlauf}\index{Überlauf} (\textit{overflow}).
 	\end{myanswer}
@@ -645,6 +645,21 @@ Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im B
     Die Signallaufzeit wächst daher linear mit der Anzahl der Bits ($O(n)$). In modernen Hochleistungsprozessoren kommen für breitere Zahlen (z.\,B. 32 oder 64 Bit) vorausschauende Addierwerke zum Einsatz (wie der \textit{Carry-Lookahead-Addierer}), welche alle Überträge parallel ermitteln.
 \end{myremark}
 
+
+\begin{myexercise}\label{myexercise:binaeraddition-einfach}
+	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen: $011_2 + 010_2$.
+	\begin{myanswer}
+		\[
+			\begin{array}{rccc}
+				& 0 & 1 & 1 \\
+				+ & 0 & 1 & 0 \\
+				\text{Übertrag} & 1 & & \\\hline
+				& 1 & 0 & 1
+			\end{array}
+		\]
+		Dezimal-Kontrolle: $3_{10} + 2_{10} = 5_{10} = 101_2$.
+	\end{myanswer}
+\end{myexercise}
 
 \begin{myexercise}\label{myexercise:volladdierer-kette}
     \textbf{Signalverfolgung im Ripple-Carry-Addierwerk.}
