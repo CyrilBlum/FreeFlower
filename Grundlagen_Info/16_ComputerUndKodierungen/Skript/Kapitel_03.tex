@@ -563,15 +563,15 @@ Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge}
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{ccccc}
-        $x$ & $y$ & $c_{\text{in}}$ & Summe $s$ & Übertrag $c_{\text{out}}$ \\ \midrule\midrule
+    \begin{tabular}{ccc||cc}
+        $x$ & $y$ & $c_{\text{in}}$ & Übertrag $c_{\text{out}}$ & Summe $s$ \\ \midrule\midrule
         0 & 0 & 0 & 0 & 0 \\ \midrule
-        0 & 0 & 1 & 1 & 0 \\ \midrule
-        0 & 1 & 0 & 1 & 0 \\ \midrule
-        0 & 1 & 1 & 0 & 1 \\ \midrule
-        1 & 0 & 0 & 1 & 0 \\ \midrule
-        1 & 0 & 1 & 0 & 1 \\ \midrule
-        1 & 1 & 0 & 0 & 1 \\ \midrule
+        0 & 0 & 1 & 0 & 1 \\ \midrule
+        0 & 1 & 0 & 0 & 1 \\ \midrule
+        0 & 1 & 1 & 1 & 0 \\ \midrule
+        1 & 0 & 0 & 0 & 1 \\ \midrule
+        1 & 0 & 1 & 1 & 0 \\ \midrule
+        1 & 1 & 0 & 1 & 0 \\ \midrule
         1 & 1 & 1 & 1 & 1 \\
     \end{tabular}
     \caption{Wahrheitstabelle des Volladdierers}
@@ -580,7 +580,7 @@ Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge}
 
 \begin{myexercise}\label{myexercise:volladdierer-formel}
     \textbf{Logische Formeln des Volladdierers.}
-    Betrachten Sie die Wahrheitstabelle des Volladdierers (\cref{tab:volladdierer_wahrheitstabelle}) mit den Eingängen $x, y, c_{\text{in}}$ und den Ausgängen $s$ (Summe) und $c_{\text{out}}$ (Übertrag).
+    Betrachten Sie die Wahrheitstabelle des Volladdierers (\cref{tab:volladdierer_wahrheitstabelle}) mit den Eingängen $x, y, c_{\text{in}}$ und den Ausgängen $c_{\text{out}}$ (Übertrag) und $s$ (Summe).
     \begin{enumerate}[(a)]
         \item Finden Sie eine allgemeine logische Formel für das Summenbit $s$ unter Verwendung von XOR-Verknüpfungen ($\oplus$).
         \item Finden Sie eine logische Formel für den Ausgangsübertrag $c_{\text{out}}$. Betrachten Sie die möglichen Fälle, in denen ein Übertrag entsteht.

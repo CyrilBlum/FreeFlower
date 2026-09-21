@@ -196,6 +196,9 @@ if player.colliderect(item):
 
 pg.draw.rect(screen, (255, 0, 0), item) # Item zeichnen
 \end{lstlisting}
+	\begin{myanswer}
+		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}[Highscore anzeigen]\label{myexercise:Highscore}
@@ -211,6 +214,7 @@ font = pg.font.Font(None, 36)  # Schriftart und -grösse
 score_text = font.render(f"Score: {score}", True, (0, 0, 0))
 screen.blit(score_text, (10, 10))  # Text oben links zeichnen
 \end{lstlisting}
+Vergessen Sie nicht, die Variable \lstinline|score| zu initialisieren, z.\,B. \lstinline|score = 0| vor der Game-Schleife. Ausserdem müssen Sie bei jeder Kollision den Wert von \lstinline|score| erhöhen, z.\,B. \lstinline|score += 1|.
 	\begin{myanswer}
 		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
 	\end{myanswer}
@@ -374,15 +378,63 @@ if ball.top <= 0 or ball.bottom >= HEIGHT:
 
         \item \textbf{Trefferwinkel variieren:} Je weiter oben/unten am Paddle getroffen wird, desto mehr vertikale Geschwindigkeit.
               \begin{lstlisting}
-offset = (ball.centery - left_paddle.centery) / (paddle_h / 2)  # -1..+1
+offset = (ball.centery - left_paddle.centery) / (PADDLE_H / 2)  # -1..+1
 ball_speed_y = ball_speed * offset
 \end{lstlisting}
+
+              \begin{center}
+              \begin{tikzpicture}[>=latex, font=\small]
+                  % y-Achse (Pygame: nach unten positiv)
+                  \draw[->, thick, gray!80] (-4.8, 2.6) -- (-4.8, -2.3)node[below=2pt] {\footnotesize $+y$ (Bildschirm)};
+                  
+                  % Paddle
+                  \draw[fill=Gold!25, draw=Gold!80!black, very thick, rounded corners=2pt] (-0.3, -2.0) rectangle (0.3, 2.0);
+                  \node[rotate=90, font=\footnotesize\bfseries, text=Gold!60!black] at (0, 0) {PADDLE};
+
+                  % Mittellinie und Hilfslinien
+                  \draw[dashed, black!40] (-3.3, 0) -- (0.3, 0);
+                  \draw[dotted, black!30] (-3.3, -2.0) -- (-0.3, -2.0);
+                  \draw[dotted, black!30] (-3.3, 2.0) -- (-0.3, 2.0);
+
+                  % Beschriftungen links
+                  \node[left, font=\footnotesize] at (-0.4, 0) {\lstinline|paddle.centery|};
+                  \node[left, font=\footnotesize] at (-0.4, -2.0) {\lstinline|paddle.top|};
+                  \node[left, font=\footnotesize] at (-0.4, 2.0) {\lstinline|paddle.bottom|};
+
+                  % Bemassung PADDLE_H / 2
+                  \draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, black!60] (-3.4, -2.0) -- (-3.4, 0)
+                      node[midway, left=3pt, font=\scriptsize] {$\frac{\text{\lstinline|PADDLE_H|}}{2}$};
+                  \draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, black!60] (-3.4, 0) -- (-3.4, 2.0)
+                      node[midway, left=3pt, font=\scriptsize] {$\frac{\text{\lstinline|PADDLE_H|}}{2}$};
+
+                  % Fall 1: Oben (-1.0) - RoyalBlue
+                  \filldraw[fill=RoyalBlue!20, draw=RoyalBlue, thick] (0.6, -2.0) circle (0.22);
+                  \draw[->, thick, dashed, RoyalBlue!60] (2.2, -1.1) -- (0.85, -1.9);
+                  \draw[->, very thick, RoyalBlue] (0.85, -2.1) -- (2.6, -2.8) node[right, align=left, font=\footnotesize] {%
+                      $\mathbf{\text{offset} = -1.0}$\\
+                      $\implies \text{\lstinline|ball_speed_y|} > 0$ (nach unten)};
+
+                  % Fall 2: Mitte (0.0) - ForestGreen
+                  \filldraw[fill=ForestGreen!20, draw=ForestGreen, thick] (0.6, 0) circle (0.22);
+                  \draw[->, thick, dashed, ForestGreen!60] (2.2, 0) -- (0.85, 0);
+                  \draw[->, very thick, ForestGreen] (0.85, 0) -- (2.6, 0) node[right, align=left, font=\footnotesize] {%
+                      $\mathbf{\text{offset} = \phantom{-}0.0}$\\
+                      $\implies \text{\lstinline|ball_speed_y|} = 0$ (geradeaus)};
+
+                  % Fall 3: Unten (+1.0) - DarkOrange
+                  \filldraw[fill=DarkOrange!20, draw=DarkOrange, thick] (0.6, 2.0) circle (0.22);
+                  \draw[->, thick, dashed, DarkOrange!60] (2.2, 1.1) -- (0.85, 1.9);
+                  \draw[->, very thick, DarkOrange] (0.85, 2.1) -- (2.6, 2.8) node[right, align=left, font=\footnotesize] {%
+                      $\mathbf{\text{offset} = +1.0}$\\
+                      $\implies \text{\lstinline|ball_speed_y|} < 0$ (nach oben)};
+              \end{tikzpicture}
+              \end{center}
 
         \item \textbf{Ball nach Punkt neu zentrieren (als Funktion):}
               \begin{lstlisting}
 def reset_ball(direction):  # direction: -1 nach links, +1 nach rechts
+    global ball, ball_speed_x, ball_speed_y # Zugriff auf globale Variablen
     ball.center = (WIDTH // 2, HEIGHT // 2)
-    global ball_speed_x, ball_speed_y # Zugriff auf globale Variablen
     ball_speed_x = direction * ball_speed
     ball_speed_y = random.choice((-1, 1)) * ball_speed
 \end{lstlisting}
@@ -611,14 +663,9 @@ Wobei:
         \lstinputlisting[language=Python,caption=\texttt{game\_intro\_collision.py},label=listing:Kollisionen]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_intro_collision.py}
     \end{myanswer}
 
-    \begin{myanswer}[myexercise:HighscoreTxt]
+    \begin{myanswer}[myexercise:Highscore]
         \leavevmode %
-        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_txt.py},label=listing:HighscoreTxt]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_txt.py}
-    \end{myanswer}
-
-    \begin{myanswer}[myexercise:HighscoreCsv]
-        \leavevmode %
-        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_csv.py},label=listing:HighscoreCsv]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_csv.py}
+        \lstinputlisting[language=Python,caption=\texttt{game\_intro\_highscore.py},label=listing:Highscore]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_intro_highscore.py}
     \end{myanswer}
 
     \begin{myanswer}[myexercise:Ereignisse]
@@ -634,5 +681,15 @@ Wobei:
     \begin{myanswer}[myexercise:Sprites]
         \leavevmode %
         \lstinputlisting[language=Python,caption=\texttt{game\_sprites.py},label=listing:Sprites]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_sprites.py}
+    \end{myanswer}
+
+    \begin{myanswer}[myexercise:HighscoreTxt]
+        \leavevmode %
+        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_txt.py},label=listing:HighscoreTxt]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_txt.py}
+    \end{myanswer}
+
+    \begin{myanswer}[myexercise:HighscoreCsv]
+        \leavevmode %
+        \lstinputlisting[language=Python,caption=\texttt{game\_highscore\_csv.py},label=listing:HighscoreCsv]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_highscore_csv.py}
     \end{myanswer}
 }

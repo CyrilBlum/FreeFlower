@@ -21,11 +21,11 @@ background_color = (50, 80, 120)
 
 # Schläger
 paddle_w = WIDTH * 0.02
-paddle_h = HEIGHT // 5
+PADDLE_H = HEIGHT // 5
 paddle_speed = WIDTH * 0.01 / (FPS / 60)
-left_paddle = pg.Rect(30, HEIGHT // 2 - paddle_h // 2, paddle_w, paddle_h)
+left_paddle = pg.Rect(30, HEIGHT // 2 - PADDLE_H // 2, paddle_w, PADDLE_H)
 right_paddle = pg.Rect(
-    WIDTH - 30 - paddle_w, HEIGHT // 2 - paddle_h // 2, paddle_w, paddle_h
+    WIDTH - 30 - paddle_w, HEIGHT // 2 - PADDLE_H // 2, paddle_w, PADDLE_H
 )
 
 # Ball (als Rechteck)
@@ -63,8 +63,8 @@ clock = pg.time.Clock()
 
 def reset_ball(direction: int):
     """Ball zentrieren und in die angegebene Richtung starten (-1 links, +1 rechts)."""
+    global ball, ball_speed_x, ball_speed_y
     ball.center = (WIDTH // 2, HEIGHT // 2)
-    global ball_speed_x, ball_speed_y
     ball_speed_x = direction * ball_speed
     ball_speed_y = random.choice((-1, 1)) * ball_speed
 
@@ -121,14 +121,14 @@ while running:
     if ball.colliderect(left_paddle):
         ball_speed_x *= -1
         # Variation je nach Trefferposition hinzufügen
-        offset = (ball.centery - left_paddle.centery) / (paddle_h / 2)
+        offset = (ball.centery - left_paddle.centery) / (PADDLE_H / 2)
         # Auf [-ball_speed, ball_speed] begrenzen und als Skalar beibehalten
         ball_speed_y = max(-ball_speed, min(ball_speed, ball_speed * offset))
         bounce_sound.play()
 
     if ball.colliderect(right_paddle):
         ball_speed_x *= -1
-        offset = (ball.centery - right_paddle.centery) / (paddle_h / 2)
+        offset = (ball.centery - right_paddle.centery) / (PADDLE_H / 2)
         ball_speed_y = max(-ball_speed, min(ball_speed, ball_speed * offset))
         bounce_sound.play()
 
