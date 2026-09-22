@@ -1,6 +1,9 @@
 \lstset{style=Python,escapeinside={(*@}{@*)}}
 \fboxsep=.6pt
 
+% Aufrechte griechische Symbole für physikalische Einheiten.
+\usepackage{upgreek}
+
 % Define a toggle for exerciseonly mode (false by default)
 \newtoggle{exerciseonly}
 \settoggle{exerciseonly}{true}
@@ -48,12 +51,18 @@
 \input{FF/Robotik/Skript/Chapters/chapter_00.tex}
 \input{FF/Robotik/Skript/Chapters/chapter_01.tex}
 \input{FF/Robotik/Skript/Chapters/chapter_02.tex}
+% C++-Listings und Einheitendarstellung auf das Sensorenkapitel begrenzen.
+\begingroup
+\lstset{language=C++,columns=fullflexible,basicstyle=\ttfamily\footnotesize}
+\input{FF/Robotik/Skript/Chapters/chapter_03.tex}
+\endgroup
 
 
 \clearpage
 
 
-% \appendix
+\appendix
+\input{FF/Robotik/Skript/Chapters/appendix.tex}
 
 \backmatter
 \listoftables\clearpage
