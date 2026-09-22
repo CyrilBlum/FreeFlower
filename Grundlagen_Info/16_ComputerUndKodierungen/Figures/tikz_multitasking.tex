@@ -1,36 +1,76 @@
 \begin{tikzpicture}[font=\small, >=stealth]
-    % Process blocks (width 1.82cm, pitch 1.90cm)
-    \foreach \idx/\lbl/\icon/\col/\border in {
-        0/{Browser}/{\faGlobe}/{CornflowerBlue!25}/{CornflowerBlue!80!black},
-        1/{Musik}/{\faMusic}/{SeaGreen!25}/{SeaGreen!80!black},
-        2/{Editor}/{\faCode}/{DarkOrange!25}/{DarkOrange!80!black},
-        3/{Browser}/{\faGlobe}/{CornflowerBlue!25}/{CornflowerBlue!80!black},
-        4/{Musik}/{\faMusic}/{SeaGreen!25}/{SeaGreen!80!black},
-        5/{Editor}/{\faCode}/{DarkOrange!25}/{DarkOrange!80!black}%
+    % --- Cycle 1 (Full width, with labels, opacity = 1.0) ---
+    \foreach \idx/\lbl/\icon/\col/\border/\xstart in {
+        0/{Browser}/{\faGlobe}/{CornflowerBlue!25}/{CornflowerBlue!80!black}/0.04,
+        1/{Musik}/{\faMusic}/{SeaGreen!25}/{SeaGreen!80!black}/1.72,
+        2/{Editor}/{\faCode}/{DarkOrange!25}/{DarkOrange!80!black}/3.40%
     } {
-        \filldraw[fill=\col, draw=\border, thick, rounded corners=3pt] (\idx*1.90 + 0.04, 0.22) rectangle ++(1.82, 0.88);
-        \node[font=\footnotesize\bfseries, align=center, text=black!90] at (\idx*1.90 + 0.95, 0.66) {\icon\hspace{1.2mm}\lbl};
+        \filldraw[fill=\col, draw=\border, thick, rounded corners=3pt] (\xstart, 0.22) rectangle ++(1.60, 0.88);
+        \node[font=\footnotesize\bfseries, align=center, text=black!90] at (\xstart + 0.80, 0.66) {\icon\hspace{1.2mm}\lbl};
     }
 
-    % Time axis
-    \draw[thick, ->] (-0.3, 0) -- (11.9, 0) node[right, font=\footnotesize\bfseries] {Zeit $t$};
+    % --- Red dashed vertical line between Cycle 1 & Cycle 2 ---
+    \draw[Crimson, thick, dashed] (5.08, -0.42) -- (5.08, 1.40);
 
-    % Ticks and time labels
-    \foreach \t/\ms in {0/{0}, 1.90/{20}, 3.80/{40}, 5.70/{60}, 7.60/{80}, 9.50/{100}, 11.40/{120}} {
+    % --- Cycle 2 (Narrower, icon only, opacity = 0.55) ---
+    \foreach \icon/\col/\border/\xstart in {
+        {\faGlobe}/{CornflowerBlue!25}/{CornflowerBlue!80!black}/5.16,
+        {\faMusic}/{SeaGreen!25}/{SeaGreen!80!black}/6.14,
+        {\faCode}/{DarkOrange!25}/{DarkOrange!80!black}/7.12%
+    } {
+        \begin{scope}[opacity=0.55]
+            \filldraw[fill=\col, draw=\border, thick, rounded corners=3pt] (\xstart, 0.22) rectangle ++(0.90, 0.88);
+            \node[font=\small\bfseries, align=center, text=black!90] at (\xstart + 0.45, 0.66) {\icon};
+        \end{scope}
+    }
+
+    % --- Red dashed vertical line between Cycle 2 & Cycle 3 ---
+    \draw[Crimson, thick, dashed] (8.10, -0.42) -- (8.10, 1.40);
+
+    % --- Cycle 3 (Narrower, icon only, opacity = 0.25) ---
+    \foreach \icon/\col/\border/\xstart in {
+        {\faGlobe}/{CornflowerBlue!25}/{CornflowerBlue!80!black}/8.18,
+        {\faMusic}/{SeaGreen!25}/{SeaGreen!80!black}/9.16,
+        {\faCode}/{DarkOrange!25}/{DarkOrange!80!black}/10.14%
+    } {
+        \begin{scope}[opacity=0.25]
+            \filldraw[fill=\col, draw=\border, thick, rounded corners=3pt] (\xstart, 0.22) rectangle ++(0.90, 0.88);
+            \node[font=\small\bfseries, align=center, text=black!90] at (\xstart + 0.45, 0.66) {\icon};
+        \end{scope}
+    }
+
+    % --- Cycle Headings above ---
+    \node[font=\scriptsize\bfseries, text=black!65] at (6.59, 1.25) {2. Zyklus};
+    \node[font=\scriptsize\bfseries, text=black!40] at (9.61, 1.25) {3. Zyklus \ldots};
+
+    % --- Time axis ---
+    \draw[thick, ->] (-0.3, 0) -- (11.6, 0) node[right, font=\footnotesize\bfseries] {Zeit $t$};
+
+    % --- Ticks and time labels ---
+    \foreach \t/\ms in {0.04/{0}, 1.72/{20}, 3.40/{40}, 5.08/{60}} {
         \draw[thick] (\t, 0.08) -- (\t, -0.08);
         \node[below, font=\scriptsize, text=black!75] at (\t, -0.1) {\ms\,ms};
     }
+    % Minor ticks for cycle 2 & 3
+    \foreach \t in {6.14, 7.12, 9.16, 10.14} {
+        \draw[thin, black!50] (\t, 0.05) -- (\t, -0.05);
+    }
+    % Major ticks for cycle 2 & 3 ends
+    \draw[thick] (8.10, 0.08) -- (8.10, -0.08);
+    \node[below, font=\scriptsize, text=black!75] at (8.10, -0.1) {120\,ms};
+    \draw[thick] (11.12, 0.08) -- (11.12, -0.08);
+    \node[below, font=\scriptsize, text=black!75] at (11.12, -0.1) {180\,ms};
 
-    % Brace for single time slice (above first block)
-    \draw[decorate, decoration={brace, amplitude=4pt, raise=2pt}, thick, draw=black!75] 
-        (0.04, 1.10) -- (1.86, 1.10) 
-        node[midway, above=6pt, font=\scriptsize\bfseries, text=black!85] {Zeitscheibe ($20\,\mathrm{ms}$)};
+    % --- Brace for single time slice (above first block) ---
+    \draw[decorate, decoration={brace, amplitude=4pt, raise=1pt}, thick, draw=black!75] 
+        (0.04, 1.14) -- (1.64, 1.14) 
+        node[midway, above=5pt, font=\scriptsize\bfseries, text=black!85] {Zeitscheibe ($20\,\mathrm{ms}$)};
 
-    % Brace for full cycle (below timeline)
+    % --- Brace for full cycle 1 (below timeline) ---
     \draw[decorate, decoration={brace, mirror, amplitude=4pt, raise=2pt}, thick, draw=black!75] 
-        (0, -0.42) -- (5.70, -0.42) 
-        node[midway, below=6pt, font=\scriptsize\bfseries, text=black!85] {1 Zyklus durch alle Prozesse ($60\,\mathrm{ms}$)};
+        (0.04, -0.42) -- (5.08, -0.42) 
+        node[midway, below=5pt, font=\scriptsize\bfseries, text=black!85] {1. Zyklus durch alle Prozesse ($60\,\mathrm{ms}$)};
 
-    % Label for CPU execution
+    % --- Label for CPU execution ---
     \node[left, font=\scriptsize\bfseries, text=black!75, align=right] at (-0.3, 0.66) {CPU-Kern\\[-2pt]\scriptsize(Abarbeitung)};
 \end{tikzpicture}
