@@ -1,7 +1,7 @@
 %!TeX program = lualatex
 \renewcommand{\thelektion}{L11 \textperiodcentered{} Aufbau eines Computers II}
 
-\begin{frame}\lessontitle{Lektion 11}{Aufbau eines Computers II}{RAM, Massenspeicher \& der Fetch-Decode-Execute-Zyklus \textperiodcentered{} Skript, Kapitel 5}\end{frame}
+\begin{frame}\lessontitle{Lektion 11}{Aufbau eines Computers II}{Arbeitsspeicher (\glsentryshort{RAM}), Massenspeicher \& Schnittstellen \textperiodcentered{} Skript, Kapitel 5}\end{frame}
 
 \begin{frame}\FDUtitle{Der Arbeitsspeicher (RAM)}
 \begin{center}
@@ -87,7 +87,7 @@ $\hookrightarrow$ Mechanische Trägheit (\textbf{Latenz: $\approx 10\,\mathrm{ms
 \includegraphics[width=0.9\linewidth,height=2.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd_inside.jpg}
 \vskip2pt
 \tiny Flash-Speicherchips \& Controller (keine Mechanik).\\
-$\hookrightarrow$ Rein elektronisch (\textbf{Latenz: $\approx 0.05\,\mathrm{ms}$, $\approx 200\times$ schneller})
+$\hookrightarrow$ Rein elektronisch (\textbf{Latenz: $\approx 0{,}05\,\mathrm{ms}$, $\approx 200\times$ schneller})
 \end{column}
 \end{columns}
 \end{frame}
@@ -114,7 +114,7 @@ Ein hochauflösendes Foto ($24\,\mathrm{MB}$) soll geladen werden:
 \end{enumerate}
 \end{frame}
 
-\begin{frame}\FDUtitle{Aufgabe 5.3: Ein Game von Steam herunterladen}
+\begin{frame}\FDUtitle{Aufgabe: Ein Game von Steam herunterladen}
 Ein Game hat eine Downloadgrösse von \textbf{120~GB}. Die Download-Geschwindigkeit sei unbegrenzt; nur das Schreiben der Daten benötigt Zeit.
 \begin{center}
 \begin{tabular}{lc}
@@ -144,71 +144,52 @@ RAM verliert die Daten beim Ausschalten. SSD und HDD speichern sie dauerhaft.\\[
 Die Zeiten gelten nur für das Schreiben im vereinfachten Modell, nicht für den gesamten Download und die Installation.
 \end{frame}
 
-{\setbeamertemplate{footline}{\darkfootline}
-\begin{frame}\sectionframe[FDUgreen]{Fetch -- Decode -- Execute}{Wie die CPU Befehle abarbeitet}
-\end{frame}}
-
-\begin{frame}\FDUtitle{Der Fetch-Decode-Execute-Zyklus}
-\begin{center}
-\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
-\end{center}
-\begin{center}Die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.\end{center}
-\end{frame}
-
-\begin{frame}\FDUtitle{Was passiert in jeder Phase?}
-\begin{itemize}[<+->]\setlength\itemsep{6pt}
-  \item \tib{Fetch} (Holen): Steuerwerk liest den nächsten Befehl aus dem RAM (Adresse = Programmzähler)
-  \item \tib{Decode} (Dekodieren): Befehl wird zerlegt -- \emph{was} tun, \emph{mit welchen} Daten?
-  \item \tib{Execute} (Ausführen): ALU führt Befehl aus, Ergebnis wird gespeichert, Programmzähler rückt weiter
+\begin{frame}\FDUtitle{Busschnittstellen: \gls{PCIe} \& Lanes}
+\begin{itemize}\setlength\itemsep{4pt}
+  \item \textbf{\gls{PCIe}} (\emph{Peripheral Component Interconnect Express}): modularer Hochgeschwindigkeits-Standard auf dem Mainboard.
+  \item Parallele Datenbahnen, sogenannte \textbf{Lanes} ($\times 1, \times 4, \times 8, \times 16$).
+  \item Die Bandbreite verdoppelt sich mit jeder Generation:
 \end{itemize}
-\end{frame}
-
-\begin{frame}\FDUtitle{Beispiel: Ein FDE-Durchlauf für \texttt{ADD R1, R2}}
-\textbf{Ausgangslage:} $\text{R1} = 3$, $\text{R2} = 5$, Adresse im RAM: \texttt{100}
-\vspace{3mm}
-\begin{itemize}[<+->]\setlength\itemsep{6pt}
-    \item \textbf{1. Fetch:} Steuerwerk holt Befehl von Speicheradresse \texttt{100} in das Befehlsregister; Programmzähler springt auf \texttt{101}.
-    \item \textbf{2. Decode:} Steuerwerk entschlüsselt Opcode: \enquote{Addition der Inhalte von $\text{R1}$ und $\text{R2}$, Zielspeicher $\text{R1}$}.
-    \item \textbf{3. Execute:} ALU berechnet $3 + 5 = 8$ und speichert $8$ in $\text{R1}$.
-\end{itemize}
-\end{frame}
-
-\begin{frame}\FDUtitle{Der CPU-Takt und die Einheit Hertz (Hz)}
-\begin{itemize}[<+->]\setlength\itemsep{4pt}
-    \item Ein Taktgeber (\emph{Quarzoszillator}) gibt den Schritt für alle Transistoren vor.
-    \item \textbf{1 Hertz (Hz)} $= 1\text{ Taktzyklus pro Sekunde}\quad (1\,\mathrm{s}^{-1})$.
-\end{itemize}
-\vspace{2mm}
-\begin{center}
-\begin{tabular}{lll}
-    Einheit & Bedeutung & Takte / Sekunde \\ \midrule
-    $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\
-    $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\
-    $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
+\begin{center}\small
+\begin{tabular}{lrrr}
+    \textbf{Generation} & \textbf{Lane ($\times 1$)} & \textbf{$\times 4$ (z.\,B.\ M.2-SSD)} & \textbf{$\times 16$ (z.\,B.\ GPU)} \\\midrule
+    PCIe 3.0 & ca.\ $1\,\mathrm{GB/s}$ & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ \\
+    PCIe 4.0 & ca.\ $2\,\mathrm{GB/s}$ & ca.\ $8\,\mathrm{GB/s}$ & ca.\ $32\,\mathrm{GB/s}$ \\
+    PCIe 5.0 & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ & ca.\ $64\,\mathrm{GB/s}$ \\
 \end{tabular}
 \end{center}
 \vspace{1mm}
-\begin{center}
-$3{,}6\,\mathrm{GHz} \;\Rightarrow\; \mathbf{3{,}6\text{ Milliarden Taktzyklen pro Sekunde}}!$
-\end{center}
+\footnotesize Zum Vergleich: Ein klassisches \textbf{SATA}-Kabel schafft maximal ca.\ $0{,}55\,\mathrm{GB/s}$ ($550\,\mathrm{MB/s}$).
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Taktfrequenz}
-\begin{center}
-Ein Prozessor hat $3{,}6\,\mathrm{GHz}$ Taktfrequenz und führt im Schnitt 2 Befehle pro Taktzyklus aus.
-\vspace{3mm}
-
-Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $7{,}2\times 10^9$ Befehlen?
-\end{center}
-\only<2->{\begin{center}\Large $7{,}2\times 10^9$ Befehle/s $\quad\rightarrow\quad 1\,\mathrm{s}$\end{center}}
+\begin{frame}\FDUtitle{Gängige Schnittstellen \& Übertragungsarten}
+\centering\footnotesize
+\begin{tabular}{@{}l c l l@{}}
+    \textbf{Schnittstelle} & \textbf{Anschluss} & \textbf{Bandbreite} & \textbf{Typischer Einsatzzweck} \\\midrule
+    \textbf{\glsentryshort{USB}-A} & \raisebox{-0.35\height}{\includegraphics[height=0.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_a.jpg}} & $0{,}06\text{--}0{,}6\,\mathrm{GB/s}$ & Tastatur, Maus, Drucker, USB-Stick \\\midrule
+    \textbf{\glsentryshort{USB}-C} & \raisebox{-0.35\height}{\includegraphics[height=0.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_c.jpg}} & $1{,}25\text{--}5\,\mathrm{GB/s}$ & Universell: Laptop, Phone, mobile SSD \\\midrule
+    \textbf{Thunderbolt} & \raisebox{-0.35\height}{\includegraphics[height=0.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/thunderbolt.jpg}} & $5\text{--}15\,\mathrm{GB/s}$ & Externe GPU, Dockingstation, 8K-Display \\\midrule
+    \textbf{\glsentryshort{SATA}} & \raisebox{-0.35\height}{\includegraphics[height=0.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/sata_close.jpg}} & ca.\ $0{,}55\,\mathrm{GB/s}$ & Interne HDD \& SATA-SSD (Flachband) \\\midrule
+    \textbf{\glsentryshort{PCIe}} & \raisebox{-0.35\height}{\includegraphics[height=0.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/pcie.jpg}} & $2\text{--}64\,\mathrm{GB/s}$ & Mainboard-Slots (Grafikkarte, M.2-NVMe) \\
+\end{tabular}
 \end{frame}
 
-\begin{frame}{Auftrag}{Kapitel 5: Speicher \& FDE-Zyklus}
-\aufgabebox{\textbf{Aufgabe 5.2}}
+\begin{frame}\FDUtitle{Übung: Welche Komponente braucht welche Schnittstelle?}
+Ordnen Sie den Datenbedarf der passenden Schnittstelle zu:
+\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{3pt}
+  \item \textbf{Gaming-Grafikkarte ($\approx 30\,\mathrm{GB/s}$):} $\mathbf{\text{PCIe 4.0 }\times 16}$ ($32\,\mathrm{GB/s}$ für 3D-Rendering)
+  \item \textbf{Interne M.2-NVMe-SSD ($\approx 7\,\mathrm{GB/s}$):} $\mathbf{\text{PCIe 4.0 }\times 4}$ ($8\,\mathrm{GB/s}$, volle Flash-Power)
+  \item \textbf{Externe GPU am Laptop ($\approx 5\,\mathrm{GB/s}$):} $\mathbf{\text{Thunderbolt 3/4}}$ ($5\,\mathrm{GB/s} = 40\,\mathrm{Gbit/s}$)
+  \item \textbf{Mobile Video-SSD ($\approx 1{,}5\,\mathrm{GB/s}$):} $\mathbf{\text{USB-C}}$ (USB 3.2 Gen 2, $1{,}25\text{--}2{,}5\,\mathrm{GB/s}$)
+  \item \textbf{Interne 3.5"-Archiv-HDD ($\approx 0{,}15\,\mathrm{GB/s}$):} $\mathbf{\text{SATA-Kabel}}$ ($0{,}55\,\mathrm{GB/s}$ bremst nicht)
+  \item \textbf{Maus \& Tastatur ($\approx 0{,}001\,\mathrm{GB/s}$):} $\mathbf{\text{USB-A}}$ (Standard für einfache Steuersignale)
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Auftrag}{Kapitel 5: Speicher, Grössenordnungen \& Schnittstellen}
+\aufgabebox{\textbf{Aufgabe 5.5 (Mini-Übung SI-Präfixe)}}
 \vspace{3mm}
-\aufgabebox{\textbf{Aufgabe 5.3}}
+\aufgabebox{\textbf{Aufgabe 5.6 \& 5.7 (Foto-Laden \& Steam-Download)}}
 \vspace{3mm}
-\aufgabebox{\textbf{Aufgabe 5.4}}
-\vspace{3mm}
-\challengebox{\textbf{Aufgabe 5.5}}
+\aufgabebox{\textbf{Aufgabe 5.8 (Schnittstellen-Zuordnung)}}
 \end{frame}

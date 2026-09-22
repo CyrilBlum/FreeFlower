@@ -2,15 +2,97 @@
 
 \section{Überblick: Was ist ein Computer?}
 
-Ein \tib{Computer}\index{Computer} (auch Rechner) ist eine Maschine, die nach einem gespeicherten Programm Daten verarbeitet. Er kann eingegebene Informationen in Ausgaben umwandeln -- sei es das Berechnen einer Summe, das Anzeigen eines Bildes oder das Abspielen von Musik. In \cref{ch:logische_gatter} haben wir gesehen, wie aus einzelnen Transistoren Gatter und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. In diesem Kapitel setzen wir diese Bausteine zu einem vollständigen Computer zusammen. Grundlegend gilt dabei:
+Ein \tib{Computer}\index{Computer} (auch Rechner) ist eine Maschine, die nach einem gespeicherten Programm Daten verarbeitet. Er kann eingegebene Informationen in Ausgaben umwandeln -- sei es das Berechnen einer Summe, das Anzeigen eines Bildes oder das Abspielen von Musik. In \cref{ch:logische_gatter} haben wir gesehen, wie aus einzelnen Transistoren Gatter und aus Gattern einfache Rechenschaltungen wie der Halbaddierer entstehen. 
+
+Eine solche Addierschaltung allein ist jedoch noch kein Computer: Sie berechnet das Ergebnis starr und unmittelbar, sobald an ihren Eingängen Spannungen anliegen. Ein echter Computer zeichnet sich dadurch aus, dass er eine \textbf{Abfolge von Befehlen (ein Programm)} Schritt für Schritt selbstständig ausführen und steuern kann. Grundlegend gilt dabei das \tib{\gls{EVA}-Prinzip}\index{EVA-Prinzip}:
 
 \begin{center}
     \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_eva_prinzip.tex}
 \end{center}
 
-\section{Die Von-Neumann-Architektur}
+\section{Die Funktionsweise: Der Fetch-Decode-Execute-Zyklus}\label{sec:fde}
 
-Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers John von Neumann aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}. Ihr entscheidendes Merkmal: \emph{Programm und Daten} werden im \emph{gleichen} Speicher abgelegt -- das Programm, das ein Computer ausführt, ist selbst ein Stück Daten (also eine Bitfolge, vgl. \cref{ch:kodierungen}), das jederzeit verändert oder ausgetauscht werden kann.
+Wie bringt man einer elektronischen Schaltung bei, ein ganzes Programm abzuarbeiten? Im Gegensatz zu einer reinen Schaltung, die dauerhaft nur eine einzige Aufgabe erfüllt (wie ein Volladdierer), arbeitet der Prozessor eines Computers in einem kontinuierlichen, rhythmischen Kreislauf -- dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus} (auch \emph{Befehlszyklus} genannt):
+
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
+    \caption{Der Fetch-Decode-Execute-Zyklus: Die \gls{CPU} wiederholt diesen dreistufigen Ablauf milliardenfach pro Sekunde.}
+    \label{fig:fde}
+\end{figure}
+
+Der Zyklus gliedert sich in drei grundlegende Phasen:
+\begin{enumerate}
+    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch} (Holen): Ein interner Zähler der \gls{CPU}, der sogenannte \tib{Programmzähler}\index{Programmzähler} (engl.\ \emph{program counter}), enthält die Adresse des nächsten auszuführenden Befehls. Das \tib{Steuerwerk}\index{Steuerwerk} liest das Bitmuster dieses Befehls aus dem Speicher in ein internes Register der \gls{CPU} und bereitet den Programmzähler auf die Folgeadresse vor.
+    \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode} (Dekodieren): Das Steuerwerk entschlüsselt die geladene Bitfolge. Es trennt den \tib{Operationscode}\index{Operationscode} (Opcode: \emph{Was soll getan werden?}, z.\,B.\ Addieren, Vergleichen oder Speichern) von den \tib{Operanden}\index{Operand} (\emph{Mit welchen Daten?}, z.\,B.\ mit den Werten in Register \texttt{R1} und \texttt{R2}).
+    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute} (Ausführen): Die \gls{CPU} führt die Operation physisch aus. Bei Berechnungen schaltet das Steuerwerk die Daten an die \tib{\gls{ALU}}\index{ALU} (Rechenwerk, vgl.\ \cref{ch:logische_gatter}), die das Resultat berechnet. Das Ergebnis wird in ein Register oder in den Speicher zurückgeschrieben. Danach beginnt der Zyklus für den nächsten Befehl von vorn.
+\end{enumerate}
+
+\begin{myexample}[Konkreter Ablauf eines Befehlszyklus]
+    Angenommen, im Prozessor-Register \texttt{R1} steht der Wert $3$, im Register \texttt{R2} der Wert $5$, und an Speicheradresse \texttt{100} liegt der Maschinenbefehl \texttt{ADD R1, R2}:
+    \begin{itemize}
+        \item \textbf{1. Fetch:} Der Programmzähler steht auf Adresse \texttt{100}. Das Steuerwerk holt das Bitmuster dieses Befehls aus dem Speicher in das Befehlsregister der \gls{CPU}. Gleichzeitig wird der Programmzähler auf die nächste Adresse (\texttt{101}) weitergeschaltet.
+        \item \textbf{2. Decode:} Das Steuerwerk entschlüsselt das Bitmuster und erkennt: \enquote{Operation: Addition; Summand 1: Register \texttt{R1}; Summand 2: Register \texttt{R2}; Ziel: Register \texttt{R1}}.
+        \item \textbf{3. Execute:} Die \gls{ALU} schaltet die Werte der Register an ihre Eingänge, berechnet $3 + 5 = 8$ und speichert das Ergebnis $8$ zurück in das Register \texttt{R1}. Der Zyklus ist abgeschlossen.
+    \end{itemize}
+\end{myexample}
+
+\subsection{Taktfrequenz und die Einheit Hertz (Hz)}
+
+Damit alle Milliarden Transistoren und Funktionseinheiten einer \gls{CPU} synchron und fehlerfrei zusammenarbeiten, gibt ein hochpräziser elektronischer Taktgeber (\emph{Quarzoszillator}) einen gleichmässigen Rhythmus vor -- wie der Schrittmacher eines Orchesters.
+
+Die Geschwindigkeit dieses Takts heisst \tib{Taktfrequenz}\index{Taktfrequenz} und wird in der physikalischen Einheit \tib{Hertz (Hz)}\index{Hertz (Hz)} gemessen:
+\[
+    1\,\mathrm{Hz} = 1\text{ Takt bzw. Schwingung pro Sekunde}\quad (1\,\mathrm{s}^{-1}).
+\]
+Heutige Prozessoren arbeiten im Gigahertz-Bereich:
+\begin{center}
+    \begin{tabular}{lll}
+        Einheit & Bedeutung & Takte pro Sekunde \\\midrule\midrule
+        $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\\midrule
+        $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\\midrule
+        $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
+    \end{tabular}
+\end{center}
+Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}6$ Milliarden Taktzyklen pro Sekunde. Je nach Prozessorarchitektur benötigt ein Befehl einen oder mehrere Taktzyklen; moderne Prozessoren nutzen parallele Rechenpfade (Pipelines, Mehrkernprozessoren), um im Schnitt sogar mehrere Befehle pro Taktzyklus fertigzustellen.
+
+\begin{myexercise}\label{myexercise:taktfrequenz}
+    Ein Prozessor hat eine Taktfrequenz von $3{,}6\,\mathrm{GHz}$ und führt im Durchschnitt 2 Befehle pro Taktzyklus aus.
+    \begin{enumerate}[(a)]
+        \item Wie viele Befehle führt der Prozessor pro Sekunde aus?
+        \item Ein Programm besteht aus $7{,}2 \times 10^9$ Befehlen. Wie lange dauert die reine Ausführung?
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}[(a)]
+            \item $3{,}6 \times 10^9 \,\mathrm{Hz} \times 2 = \mathbf{7{,}2 \times 10^9\text{ Befehle pro Sekunde}}$.
+            \item $\dfrac{7{,}2 \times 10^9}{7{,}2 \times 10^9\,\mathrm{s}^{-1}} = \mathbf{1\,\mathrm{s}}$.
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}\label{mychallenge:fde_phasen}
+    Der Addierbefehl \texttt{ADD R1, R2} weist die \gls{CPU} an, den Inhalt der Register \texttt{R1} und \texttt{R2} zu addieren. Ordnen Sie die folgenden Teilschritte den drei Phasen Fetch, Decode und Execute zu:
+    \begin{itemize}
+        \item Der Programmzähler wird um eine Stelle weitergeschaltet.
+        \item Die \gls{ALU} berechnet die Summe der beiden Register.
+        \item Das Steuerwerk erkennt, dass es sich um einen Additionsbefehl mit zwei Registeroperanden handelt.
+        \item Der Befehl \texttt{ADD R1, R2} wird als Bitfolge aus dem Speicher gelesen.
+    \end{itemize}
+    \begin{myanswer}
+        \begin{itemize}
+            \item Befehl aus Speicher lesen $\to$ \textbf{Fetch}
+            \item Programmzähler weiterschalten $\to$ \textbf{Fetch}
+            \item Befehl als Additionsbefehl mit zwei Registeroperanden erkennen $\to$ \textbf{Decode}
+            \item \gls{ALU} berechnet Summe $\to$ \textbf{Execute}
+        \end{itemize}
+    \end{myanswer}
+\end{mychallenge}
+
+\section{Die Von-Neumann-Architektur}\label{sec:von_neumann}
+
+Nachdem wir die dynamische Funktionsweise des Befehlszyklus kennen, stellt sich die Frage: \emph{Wie muss ein Computer physisch aufgebaut sein, um diesen Ablauf zu ermöglichen?}
+
+Fast alle heutigen Rechner basieren auf dem Entwurf des Mathematikers John von Neumann aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}. Ihr entscheidendes Merkmal: \emph{Programm und Daten} werden im \emph{gleichen} Speicher abgelegt -- das Programm, das ein Computer ausführt, ist selbst ein Stück Daten (also eine Bitfolge, vgl.\ \cref{ch:kodierungen}), das jederzeit im Speicher verändert oder ausgetauscht werden kann.
 
 \begin{figure}[H]
     \centering
@@ -22,11 +104,13 @@ Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers 
 Die Hauptkomponenten sind:
 
 \begin{description}
-    \item[\tib{\gls{CPU}}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms aus. Enthält Steuerwerk, \gls{ALU} und Register.
-    \item[\tib{Arbeitsspeicher (\gls{RAM})}\index{RAM}] Speichert aktuell laufende Programme und Daten. Der Inhalt geht beim Ausschalten verloren (\emph{flüchtig}).
-    \item[\tib{Massenspeicher}\index{Massenspeicher}] Dauerhafte Ablage von Programmen und Dateien (\gls{HDD}, \gls{SSD}). Der Inhalt bleibt auch ohne Strom erhalten (\emph{nicht flüchtig}).
+    \item[\tib{\gls{CPU}}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms im Fetch-Decode-Execute-Zyklus aus. Enthält Steuerwerk, \gls{ALU} und Register.
+    \item[\tib{Arbeitsspeicher (\gls{RAM})}\index{RAM}] Speichert aktuell laufende Programme und Daten für den schnellen Zugriff der \gls{CPU}. Der Inhalt geht beim Ausschalten verloren (\emph{flüchtig}).
+    \item[\tib{Massenspeicher}\index{Massenspeicher}] Dauerhafte Ablage von Betriebssystem, Programmen und Dateien (\gls{HDD}, \gls{SSD}). Der Inhalt bleibt auch ohne Strom erhalten (\emph{nicht flüchtig}).
     \item[\tib{Ein-/Ausgabe}\index{Ein-/Ausgabe}] Verbindet den Computer mit der Aussenwelt: Tastatur, Maus, Bildschirm, Netzwerk, \gls{USB} usw.
-    \item[\tib{Systembus}\index{Systembus}] Kommunikationskanal, über den alle Komponenten Daten und Steuersignale austauschen.
+    \item[\tib{Systembus}\index{Systembus}] Kommunikationskanal aus parallelen Leitungen, über den alle Komponenten Daten und Steuersignale austauschen.
+    \item[\tib{Chipsatz / Controller}\index{Chipsatz}] Zentraler Verkehrsleiter auf der Hauptplatine, der Datenströme zwischen Peripherie, Massenspeicher und \gls{CPU} bündelt und koordiniert.
+    \item[\tib{Netzteil (\gls{PSU})}\index{Netzteil}] Wandelt Netzspannung ($230\,\mathrm{V}$ Wechselstrom) in stabile Gleichspannungen ($12\,\mathrm{V}$, $5\,\mathrm{V}$, $3{,}3\,\mathrm{V}$) für alle Komponenten um.
 \end{description}
 
 \subsection{Das mentale Modell: Die Büro-Analogie}
@@ -45,16 +129,24 @@ Um sich das Zusammenspiel und die spezifischen Rollen der Komponenten einzupräg
         \textbf{\gls{RAM} (Arbeitsspeicher)} & \textbf{Schreibtischplatte} & Schneller Zugriff; am Feierabend geleert (\emph{flüchtig}) \\
         \textbf{Massenspeicher (\gls{SSD}/\gls{HDD})} & \textbf{Aktenschrank / Archiv} & Grosse, dauerhafte Dateiablage (\emph{nicht flüchtig}) \\
         \textbf{Systembus} & \textbf{Laufwege / Förderband} & Verbindet alle Bereiche für schnellen Datentransfer \\
+        \textbf{Chipsatz (Controller)} & \textbf{Empfang / Pförtner / Verkehrsleiter} & Bündelt und verteilt Daten langsamerer Peripheriegeräte \\
         \textbf{Ein-/Ausgabe (I/O)} & \textbf{Posteingang \& Fenster/Aushang} & Schnittstelle zur Aussenwelt (Tastatur, Monitor) \\
+        \textbf{Netzteil (\gls{PSU})} & \textbf{Steckdose / Stromversorgung} & Liefert die für alle Bauteile nötige elektrische Energie \\
     \end{tabular}%
     }
     \caption{Die Büro-Analogie zur Veranschaulichung der Computerkomponenten.}
     \label{tab:computer_analogie}
 \end{table}
 
+\begin{myremark}[Wozu braucht es einen Chipsatz?]
+    Eine moderne \gls{CPU} ist auf maximale Rechengeschwindigkeit mit Nanosekunden-Taktung optimiert. Sie kann nicht für jedes langsamere Zusatzgerät (Tastatur, Maus, Festplatte, Soundkarte, USB-Ports) hunderte eigene Anschlusspins und Steuerleitungen bereitstellen. 
+    
+    Der \tib{Chipsatz}\index{Chipsatz} (auch \emph{Platform Controller Hub} oder \emph{Southbridge}) fungiert daher als intelligenter \textbf{Verkehrsleiter}: Er bündelt die vielen langsameren Signale von \gls{USB}, \gls{SATA}, Audio und Netzwerk und leitet sie über eine einzige, extrem schnelle Hauptleitung (z.\,B.\ \gls{PCIe} oder DMI) an die \gls{CPU} weiter. Dadurch wird der Hauptprozessor von Routine-Verwaltungsaufgaben entlastet.
+\end{myremark}
+
 \subsection{Vom Schema zur realen Hardware}
 
-Auf der Hauptplatine (\tib{Mainboard}\index{Mainboard} bzw.\ \textit{Motherboard}) eines Computers sind diese theoretischen Komponenten als physische Bausteine angeordnet. Die Leiterbahnen auf der Platine bilden den Systembus, über den Daten zwischen Sockel, Speicherbänken und Anschlüssen fliessen (\cref{fig:mainboard_schema}).
+Auf der Hauptplatine (\tib{Mainboard}\index{Mainboard} bzw.\ \textit{Motherboard}) eines Computers sind diese theoretischen Komponenten als physische Bausteine angeordnet. Die Leiterbahnen auf der Platine bilden den Systembus, über den Daten zwischen Sockel, Speicherbänken und Anschlüssen fliessen (\cref{fig:mainboard_schema}). \Cref{fig:pc_inside_annotated} zeigt die reale Umsetzung im Inneren eines Desktop-Computers.
 
 \begin{figure}[H]
     \centering
@@ -65,85 +157,81 @@ Auf der Hauptplatine (\tib{Mainboard}\index{Mainboard} bzw.\ \textit{Motherboard
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/cpu.jpg}
-        \caption{\gls{CPU} (AMD Ryzen Prozessor mit Heatspreader). \href{https://commons.wikimedia.org/wiki/File:AMD_Ryzen_5_2600_(39851733273).jpg}{\color{RoyalBlue}\scriptsize[Quelle: Fritzchens Fritz, CC0]}}
-        \label{fig:foto_cpu}
-    \end{subfigure}\hfill
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ram.jpg}
-        \caption{\gls{RAM} (DDR4-Arbeitsspeicher-Riegel). \href{https://commons.wikimedia.org/wiki/File:RAM_Module_(SDRAM-DDR4).jpg}{\color{RoyalBlue}\scriptsize[Quelle: ElooKoN, CC BY-SA 4.0]}}
-        \label{fig:foto_ram}
-    \end{subfigure}
-    
-    \vspace{0.8em}
-    
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd.jpg}
-        \caption{Massenspeicher (M.2 \gls{NVMe} \gls{SSD}). \href{https://commons.wikimedia.org/wiki/File:Samsung_980_PRO_PCIe_4.0_NVMe_SSD_1TB-top_PNr\%C2\%B00915.jpg}{\color{RoyalBlue}\scriptsize[Quelle: D-Kuru, CC BY-SA 4.0]}}
-        \label{fig:foto_ssd}
-    \end{subfigure}\hfill
-    \begin{subfigure}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/mainboard.jpg}
-        \caption{Mainboard (ATX-Hauptplatine). \href{https://commons.wikimedia.org/wiki/File:Gigabyte_GA-H87M-D3H_motherboard_\%C2\%B5ATX_with_Intel_Socket_1150.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Gigabyte, FAL/CC BY-SA]}}
-        \label{fig:foto_mainboard}
-    \end{subfigure}
-    \caption{Reale Hardware-Komponenten eines modernen Computers.}
-    \label{fig:echte_hardware}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_pc_inside.tex}
+    \caption{Reales Innenleben eines Computers mit geöffnetem Gehäuse und annotierten Hauptkomponenten. \href{https://commons.wikimedia.org/wiki/File:Custom_Computer_with_Open_Case_1_2018-05-06.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Fastily, CC BY-SA 4.0]}}
+    \label{fig:pc_inside_annotated}
 \end{figure}
 
-\begin{myexercise}
+\begin{myexercise}\label{myexercise:komponenten_zuordnung}
     Ordnen Sie jeder Computerkomponente die passende Aufgabe zu. Verbinden Sie dazu die Begriffe (1--5) mit den Beschreibungen (A--E).
-    \begin{center}
-        \begin{tabular}{ll}
-            \textbf{Komponente} & \textbf{Beschreibung} \\\midrule
-            1. \gls{CPU} & A. Verbindet den Computer mit Tastatur, Bildschirm und Netzwerk \\
-            2. Arbeitsspeicher (\gls{RAM}) & B. Führt die Anweisungen eines Programms aus \\
-            3. Massenspeicher & C. Speichert aktuell benötigte Programme und Daten vorübergehend \\
-            4. Ein-/Ausgabe & D. Überträgt Daten und Steuersignale zwischen den Komponenten \\
-            5. Systembus & E. Speichert Programme und Dateien dauerhaft \\
-        \end{tabular}
-    \end{center}
+    \vspace{2mm}
+
+    \noindent
+    \begin{tabularx}{\linewidth}{@{}l X@{}}
+        \textbf{Komponente} & \textbf{Beschreibung} \\\midrule
+        1. \glsentryshort{CPU} (Prozessor) & A. Verbindet den Computer mit Tastatur, Bildschirm und Netzwerk \\
+        2. Arbeitsspeicher (\glsentryshort{RAM}) & B. Führt die Anweisungen eines Programms aus \\
+        3. Massenspeicher & C. Speichert aktuell benötigte Programme und Daten vorübergehend \\
+        4. Ein-/Ausgabe & D. Überträgt Daten und Steuersignale zwischen den Komponenten \\
+        5. Systembus & E. Speichert Programme und Dateien dauerhaft \\
+    \end{tabularx}
     \begin{myanswer}
         1--B, 2--C, 3--E, 4--A, 5--D.
     \end{myanswer}
 \end{myexercise}
 
 \begin{myremark}[Von Neumann vs.\ heute]
-    Heutige Prozessoren weichen in Details von Neumann ab (z.\,B. mehrere Kerne, Caches, getrennte Busse für Daten und Instruktionen), folgen aber dem grundlegenden Prinzip des gespeicherten Programms.
+    Heutige Prozessoren weichen in Details von Neumann ab (z.\,B.\ mehrere Kerne, Caches, getrennte Busse für Daten und Instruktionen), folgen aber dem grundlegenden Prinzip des gespeicherten Programms.
 \end{myremark}
 
-
-
-
-\begin{myexercise}
+\begin{myexercise}\label{myexercise:speicherschutz}
     Warum ist es problematisch, wenn Programm und Daten im \emph{gleichen} Speicher liegen? Überlegen Sie, was passieren könnte, wenn ein fehlerhaftes Programm versehentlich in den Speicherbereich schreibt, in dem sein eigener Programmcode liegt.
     \begin{myanswer}
         Ein Programm könnte theoretisch seinen eigenen (oder einen fremden) Programmcode überschreiben, was zu unvorhersehbarem Verhalten oder einem Absturz führt. Aus diesem Grund übernimmt das Betriebssystem (siehe \cref{ch:betriebssystem}) die Aufgabe, den Speicherbereich verschiedener Programme voneinander zu isolieren (\tib{Speicherschutz}).
     \end{myanswer}
 \end{myexercise}
 
-\section{Die \gls{CPU} im Detail}
+\section{Die \glsentryshort{CPU} im Detail}\label{sec:cpu_detail}
 
-\subsection{\gls{ALU} -- Arithmetisch-logische Einheit}
+Die \tib{\gls{CPU}}\index{CPU} (der Hauptprozessor) ist das eigentliche Rechenherz des Computers. Sie besteht aus mehreren Milliarden nanoskopisch kleiner Transistoren auf einem winzigen Silizium-Chip (\emph{Die}), der durch einen Metallüberzug (\emph{Heatspreader}) geschützt und gekühlt wird (\cref{fig:foto_cpu}).
 
-Die \tib{\gls{ALU}}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der \gls{CPU}. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl. \cref{sec:halbaddierer}).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth,height=4cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/cpu.jpg}
+    \caption{Moderner Prozessor (AMD Ryzen \gls{CPU}) mit Metall-Heatspreader. \href{https://commons.wikimedia.org/wiki/File:AMD_Ryzen_5_2600_(39851733273).jpg}{\color{RoyalBlue}\scriptsize[Quelle: Fritzchens Fritz, CC0]}}
+    \label{fig:foto_cpu}
+\end{figure}
+
+Im Inneren gliedert sich die \gls{CPU} in drei eng verzahnte Funktionseinheiten, die im Befehlszyklus (\cref{sec:fde}) zusammenarbeiten:
+
+\subsection{\glsentryshort{ALU} -- Arithmetisch-logische Einheit}
+
+Die \tib{\gls{ALU}}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der \gls{CPU}. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl.\ \cref{sec:halbaddierer}).
 
 \subsection{Steuerwerk}
 
-Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert den Ablauf aller Operationen. Es liest Befehle aus dem Speicher, interpretiert sie und gibt der \gls{ALU} und den übrigen Komponenten die entsprechenden Steuersignale.
+Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert den Ablauf aller Operationen im Fetch-Decode-Execute-Zyklus. Es liest Befehle aus dem Speicher, interpretiert sie und gibt der \gls{ALU} und den übrigen Komponenten die entsprechenden Steuersignale.
 
 \subsection{Register}
 
-\tib{Register}\index{Register} sind sehr schnelle, aber winzige Zwischenspeicher direkt in der \gls{CPU}. Sie halten die Werte, mit denen die \gls{ALU} gerade rechnet (z.\,B. die zwei Summanden und das Resultat einer Addition). Typische Grösse: 64~Bit pro Register -- also 8 Byte (vgl. \cref{mydefinition:bit-byte}).
+\tib{Register}\index{Register} sind sehr schnelle, aber winzige Zwischenspeicher direkt in der \gls{CPU}. Sie halten die Werte, mit denen die \gls{ALU} im Execute-Schritt gerade rechnet (z.\,B.\ die zwei Summanden und das Resultat einer Addition). Typische Grösse: 64~Bit pro Register -- also 8 Byte (vgl.\ \cref{mydefinition:bit-byte}).
 
-\section{Arbeitsspeicher (\gls{RAM})}
+\begin{myremark}[\glsentryshort{CPU} vs.\ \glsentryshort{GPU}: Spezialisten für unterschiedliche Aufgaben]
+    Während eine \tib{\gls{CPU}}\index{CPU} aus wenigen (z.\,B.\ 4 bis 16), extrem schnellen und hochkomplexen Kernen für die sequenzielle Abarbeitung beliebiger Programmlogik besteht, besitzt ein Grafikprozessor (\tib{\gls{GPU}}\index{GPU}, \emph{Graphics Processing Unit}) tausende kleinere, parallel arbeitende Recheneinheiten. Eine \gls{GPU} ist darauf spezialisiert, dieselbe mathematische Operation (z.\,B.\ Matrix-Multiplikation) gleichzeitig auf riesigen Datenmengen auszuführen -- unverzichtbar für 3D-Computergrafik, Physiksimulationen und moderne \gls{KI}-Modelle.
+\end{myremark}
 
-Der \tib{\gls{RAM}}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Man kann sich den \gls{RAM} als eine lange Tabelle vorstellen, in der jede Zeile einer \tib{Speicherzelle}\index{Speicherzelle} entspricht und eine eindeutige \tib{Adresse}\index{Adresse} hat:
+\section{Arbeitsspeicher (\glsentryshort{RAM})}\label{sec:ram}
+
+Der \tib{\gls{RAM}}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Er wird als längliches Speichermodul direkt in die Speicherbänke des Mainboards gesteckt (\cref{fig:foto_ram}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth,height=3.2cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ram.jpg}
+    \caption{DDR4-Arbeitsspeicher-Modul (\gls{DIMM}) mit sichtbaren Speicherbausteinen und vergoldeter Kontaktleiste. \href{https://commons.wikimedia.org/wiki/File:RAM_Module_(SDRAM-DDR4).jpg}{\color{RoyalBlue}\scriptsize[Quelle: ElooKoN, CC BY-SA 4.0]}}
+    \label{fig:foto_ram}
+\end{figure}
+
+Man kann sich den \gls{RAM} als eine lange Tabelle vorstellen, in der jede Zeile einer \tib{Speicherzelle}\index{Speicherzelle} entspricht und eine eindeutige \tib{Adresse}\index{Adresse} hat:
 
 \begin{table}[H]
     \centering
@@ -154,21 +242,35 @@ Der \tib{\gls{RAM}}\index{RAM} (englisch: \emph{Random Access Memory}) speichert
         \texttt{0x02} & \texttt{11001010} \\\midrule
         $\vdots$ & $\vdots$ \\
     \end{tabular}
-    \caption{Schematische Darstellung des \gls{RAM}: jede Adresse zeigt auf eine Speicherzelle von einem Byte. Die Notation \texttt{0x} kennzeichnet hexadezimale Adressen.}
+    \caption{Schematische Darstellung des \gls{RAM}: Jede Adresse zeigt auf eine Speicherzelle von einem Byte. Die Notation \texttt{0x} kennzeichnet hexadezimale Adressen.}
     \label{tab:ram}
 \end{table}
 
 \begin{myattention}
-    Die Adressen in \cref{tab:ram} sind in \tib{hexadezimaler Schreibweise}\index{Hexadezimalsystem} angegeben (vgl. \cref{section:stellenwertdarst}) -- daher das Präfix \texttt{0x}. Hexadezimalzahlen eignen sich hier besonders gut, da zwei Hex-Ziffern genau einem Byte entsprechen (vgl. \cref{ex:byte-max}).
+    Die Adressen in \cref{tab:ram} sind in \tib{hexadezimaler Schreibweise}\index{Hexadezimalsystem} angegeben (vgl.\ \cref{section:stellenwertdarst}) -- daher das Präfix \texttt{0x}. Hexadezimalzahlen eignen sich hier besonders gut, da zwei Hex-Ziffern genau einem Byte entsprechen (vgl.\ \cref{ex:byte-max}).
 \end{myattention}
 
-Typische Grössen heutiger Rechner: 8--64~GB \gls{RAM} (vgl. \cref{table:daten-groessenordnungen}). Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der \gls{CPU}, der häufig benötigte Daten zwischenspeichert, um den langsameren \gls{RAM} zu entlasten.
+Typische Grössen heutiger Rechner liegen bei 8--64~GB \gls{RAM}. Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der \gls{CPU}, der häufig benötigte Daten zwischenspeichert, um den langsameren \gls{RAM} zu entlasten.
 
-\subsection{Exkurs: \glsentryshort{SI}-Präfixe und Grössenordnungen in der Informatik}
+\begin{myexcursion}[Bauformen und Speicherarten: \glsentryshort{DIMM}, \glsentryshort{DRAM} vs.\ \glsentryshort{SRAM} und \glsentryshort{DDR}-Generationen]\label{exc:ram-typen}
+    In der Praxis unterscheidet man beim Arbeitsspeicher zwischen verschiedenen Technologien und Bauformen:
+    \begin{itemize}
+        \item \textbf{Bauform (\gls{DIMM} vs.\ \gls{SODIMM}):} \gls{RAM} für Desktop-Computer wird üblicherweise als \tib{\gls{DIMM}}\index{DIMM} (englisch \emph{Dual In-line Memory Module}) auf das Mainboard gesteckt. Die Kontakte auf Vorder- und Rückseite der Steckkarte sind elektrisch getrennt ausgeführt, was eine hohe Busbreite ermöglicht. Für kompakte Geräte wie Notebooks gibt es die platzsparende Bauform \tib{\gls{SODIMM}}\index{SO-DIMM} (\emph{Small Outline DIMM}).
+        \item \textbf{\gls{DRAM} vs.\ \gls{SRAM}:} 
+        \begin{itemize}
+            \item \tib{\gls{DRAM}}\index{DRAM} (\emph{Dynamic \gls{RAM}}): Eine Speicherzelle besteht aus nur einem Transistor und einem winzigen Kondensator. Da der Kondensator seine Ladung innerhalb von Millisekunden verliert, muss die Information periodisch aufgefrischt werden (\emph{Refresh-Zyklus}). Durch die sehr kompakte Bauweise bietet \gls{DRAM} eine hohe Speicherdichte zu geringen Kosten und bildet den eigentlichen Hauptarbeitsspeicher.
+            \item \tib{\gls{SRAM}}\index{SRAM} (\emph{Static \gls{RAM}}): Speichert Bits in elektronischen Flip-Flop-Schaltungen (4--6 Transistoren pro Zelle). Er benötigt keine periodische Auffrischung und erreicht extrem kurze Zugriffszeiten (unter $1\,\mathrm{ns}$). Wegen des hohen Flächenbedarfs und der höheren Kosten wird \gls{SRAM} vor allem für schnelle \gls{CPU}-\tib{Caches} eingesetzt.
+        \end{itemize}
+        \item \textbf{\gls{DDR}-Generationen (\gls{DDR}4, \gls{DDR}5):} Moderne Arbeitsspeicher nutzen das \tib{\gls{DDR}}\index{DDR-SDRAM}-Verfahren (\emph{Double Data Rate}), bei dem pro Taktzyklus sowohl bei der steigenden als auch bei der fallenden Taktflanke Daten übertragen werden (doppelte Übertragungsrate). Neuere Generationen (\gls{DDR}4 mit ca.\ 20--25\,GB/s pro Kanal, \gls{DDR}5 mit 40--50+\,GB/s) bieten höhere Taktraten, mehr Bandbreite und geringere Betriebsspannungen. Mechanische Einkerbungen an den Modulen verhindern das falsche Einsetzen.
+        \item \textbf{\gls{VRAM} (Video \gls{RAM}):} Grafikkarten verfügen über speziell optimierten, extrem schnellen Grafikspeicher (\tib{\gls{VRAM}}\index{VRAM}, meist GDDR6 oder HBM), um Bilddaten und 3D-Modelle ohne Verzögerung parallel für die \gls{GPU} bereitzustellen.
+    \end{itemize}
+\end{myexcursion}
+
+\section{Exkurs: \glsentryshort{SI}-Präfixe und Grössenordnungen in der Informatik}\label{sec:si_praefixe}
 
 Das \tib{\gls{SI}}\index{Internationales Einheitensystem (SI)} (\emph{Système international d'unités}, französisch für internationales Einheitensystem) ist das weltweit am weitesten verbreitete und standardisierte Einheitensystem für physikalische Grössen (wie die Sekunde für Zeitdauern oder das Hertz für Schwingungsfrequenzen). Um sehr grosse oder extrem kleine Zahlenwerte kompakt und lesbar darzustellen, definiert das \gls{SI} genormte Vorsätze (Präfixe) auf Basis von Zehnerpotenzen.
 
-In der Informatik begegnen uns sowohl extrem kleine Einheiten (z.\,B.\ Nanosekunden bei \gls{CPU}-Takten und \gls{RAM}-Latenzen) als auch gewaltige Datenmengen (Gigabytes und Terabytes). Zur Orientierung und Umrechnung fasst \cref{table:daten-groessenordnungen} die standardisierten \gls{SI}-Vorsätze zusammen:
+In der Informatik begegnen uns sowohl extrem kleine Einheiten (z.\,B.\ Nanosekunden bei \gls{CPU}-Takten und \gls{RAM}-Latenzen) als auch gewaltige Datenmengen (Gigabytes und Terabytes). Zur Orientierung und Umrechnung für alle folgenden Vergleiche fasst \cref{table:daten-groessenordnungen} die standardisierten \gls{SI}-Vorsätze zusammen:
 
 \begin{table}[H]
     \centering
@@ -217,13 +319,13 @@ In der Informatik begegnen uns sowohl extrem kleine Einheiten (z.\,B.\ Nanosekun
     \end{myanswer}
 \end{myexercise}
 
-\section{Massenspeicher}
+\section{Massenspeicher}\label{sec:massenspeicher}
 
 Während der Arbeitsspeicher (\gls{RAM}) Daten nur flüchtig speichert, dient der \tib{Massenspeicher} zur dauerhaften Sicherung von Betriebssystem, Programmen und Dateien. In modernen Computern kommen heute vor allem zwei Technologien zum Einsatz:
 
 \begin{description}
-    \item[\tib{\gls{HDD}}\index{HDD} (Hard Disk Drive)] Magnetische Metallscheiben (\textit{Platter}) rotieren mit mehreren tausend Umdrehungen pro Minute. Ein beweglicher Lese-/Schreibarm schwebt auf einem winzigen Luftpolster über den Scheiben und liest oder magnetisiert Bereiche auf der Oberfläche.
-    \item[\tib{\gls{SSD}}\index{SSD} (Solid State Drive)] Reine Halbleitertechnik ohne bewegliche mechanische Bauteile. Die Daten werden in Form elektrischer Ladung in nicht-flüchtigen Flash-Speicherzellen (NAND-Flash) abgelegt und von einem integrierten Speichercontroller gesteuert.
+    \item[\tib{\gls{HDD}}\index{HDD} (Hard Disk Drive)] Magnetische Metallscheiben (\textit{Platter}) rotieren mit mehreren tausend Umdrehungen pro Minute. Ein beweglicher Lese-/Schreibarm schwebt auf einem winzigen Luftpolster über den Scheiben und liest oder magnetisiert Bereiche auf der Oberfläche (\cref{fig:foto_hdd_inside}).
+    \item[\tib{\gls{SSD}}\index{SSD} (Solid State Drive)] Reine Halbleitertechnik ohne bewegliche mechanische Bauteile (\cref{fig:foto_ssd_inside,fig:foto_ssd_m2}). Die Daten werden in Form elektrischer Ladung in nicht-flüchtigen Flash-Speicherzellen (NAND-Flash) abgelegt und von einem integrierten Speichercontroller gesteuert.
 \end{description}
 
 \begin{figure}[H]
@@ -237,10 +339,19 @@ Während der Arbeitsspeicher (\gls{RAM}) Daten nur flüchtig speichert, dient de
     \begin{subfigure}{0.48\textwidth}
         \centering
         \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd_inside.jpg}
-        \caption{Geöffnete \gls{SSD}: Platine mit Speichercontroller und Flash-Chips (keine Mechanik). \href{https://commons.wikimedia.org/wiki/File:OCZ_Agility_3_PCB.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Phiarc, CC BY-SA 4.0]}}
+        \caption{Geöffnete \gls{SATA}-\gls{SSD}: Platine mit Controller und Flash-Chips (keine Mechanik). \href{https://commons.wikimedia.org/wiki/File:OCZ_Agility_3_PCB.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Phiarc, CC BY-SA 4.0]}}
         \label{fig:foto_ssd_inside}
     \end{subfigure}
-    \caption{Vergleich des internen Aufbaus von Festplatte (\gls{HDD}) und Solid State Drive (\gls{SSD}).}
+    
+    \vspace{0.8em}
+    
+    \begin{subfigure}{0.65\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.2cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd.jpg}
+        \caption{Moderne M.2 \gls{NVMe} \gls{SSD} (wird direkt auf das Mainboard geschraubt). \href{https://commons.wikimedia.org/wiki/File:Samsung_980_PRO_PCIe_4.0_NVMe_SSD_1TB-top_PNr\%C2\%B00915.jpg}{\color{RoyalBlue}\scriptsize[Quelle: D-Kuru, CC BY-SA 4.0]}}
+        \label{fig:foto_ssd_m2}
+    \end{subfigure}
+    \caption{Vergleich von Festplatte (\gls{HDD}) und Solid State Drives (\gls{SSD}) in verschiedenen Bauformen.}
     \label{fig:hdd_ssd_aufbau}
 \end{figure}
 
@@ -248,7 +359,7 @@ Während der Arbeitsspeicher (\gls{RAM}) Daten nur flüchtig speichert, dient de
 
 Der fundamentale Unterschied im Aufbau führt zu drastischen Leistungsunterschieden bei zwei zentralen Messgrössen:
 \begin{enumerate}
-    \item \textbf{Zugriffszeit (Latenz):} Die Zeitverzögerung, bis der Speicher den ersten angeforderten Datenblock liefert. Bei einer \gls{HDD} muss der Arm physisch zur passenden Spur fahren (\emph{Seek-Time}) und warten, bis die rotierende Scheibe den richtigen Sektor unter den Kopf dreht ($5\text{--}15\,\mathrm{ms}$). Eine \gls{SSD} adressiert Flash-Zellen rein elektronisch ($0.02\text{--}0.1\,\mathrm{ms}$), was Zugriffe um den Faktor \textbf{ca.\ 200 beschleunigt}.
+    \item \textbf{Zugriffszeit (Latenz):} Die Zeitverzögerung, bis der Speicher den ersten angeforderten Datenblock liefert. Bei einer \gls{HDD} muss der Arm physisch zur passenden Spur fahren (\emph{Seek-Time}) und warten, bis die rotierende Scheibe den richtigen Sektor unter den Kopf dreht ($5\text{--}15\,\mathrm{ms}$). Eine \gls{SSD} adressiert Flash-Zellen rein elektronisch ($0{,}02\text{--}0{,}1\,\mathrm{ms}$), was Zugriffe um den Faktor \textbf{ca.\ 200 beschleunigt}.
     \item \textbf{Datendurchsatz (Übertragungsrate):} Die kontinuierliche Datenmenge pro Sekunde beim Lesen oder Schreiben grösserer zusammenhängender Dateien.
 \end{enumerate}
 
@@ -338,82 +449,87 @@ Der fundamentale Unterschied im Aufbau führt zu drastischen Leistungsunterschie
     \end{myanswer}
 \end{myexercise}
 
-\section{Der Fetch-Decode-Execute-Zyklus}\label{sec:fde}
+\subsection{\glsentryshort{PCIe} und Schnittstellen: Modularer Datentransfer}
 
-Die \gls{CPU} führt Anweisungen in einem einfachen, immer wiederholten Schema aus, dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus}:
+Warum erreichen moderne \glspl{SSD} Übertragungsraten von mehreren Gigabytes pro Sekunde, während ältere Festplatten und herkömmliche \gls{SATA}-\glspl{SSD} bei maximal ca.\ $550\,\mathrm{MB/s}$ limitiert sind? Der entscheidende Flaschenhals ist die Busschnittstelle:
 
-\begin{figure}[H]
+Herkömmliche Festplatten und ältere \glspl{SSD} nutzen den \tib{\gls{SATA}}\index{SATA}-Bus, der ursprünglich für langsamere mechanische Laufwerke konzipiert wurde. Moderne Hochleistungskomponenten und schnelle Massenspeicher nutzen stattdessen \tib{\gls{PCIe}}\index{PCIe} (\emph{Peripheral Component Interconnect Express}).
+
+\gls{PCIe} ist ein modularer, serieller Punkt-zu-Punkt-Verbindungsstandard. Die Datenübertragung wird auf mehrere parallele Datenbahnen verteilt, sogenannte \tib{Lanes}\index{PCIe-Lane} (gekennzeichnet als $\times 1$, $\times 4$, $\times 8$ oder $\times 16$). Die Bandbreite verdoppelt sich mit jeder neuen \gls{PCIe}-Generation und skaliert linear mit der Anzahl der Lanes:
+
+\begin{table}[H]
     \centering
-    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
-    \caption{Der Fetch-Decode-Execute-Zyklus: die \gls{CPU} wiederholt diesen Ablauf Milliarden Mal pro Sekunde.}
-    \label{fig:fde}
-\end{figure}
+    \begin{tabularx}{\linewidth}{@{}l *{3}{>{\centering\arraybackslash}X}@{}}
+        \textbf{\glsentryshort{PCIe}-Generation} & \textbf{Lane ($\times 1$)} & \textbf{$\times 4$ (M.2-\glsentryshort{SSD})} & \textbf{$\times 16$ (Grafikkarte)} \\\midrule
+        PCIe 3.0 & ca.\ $1\,\mathrm{GB/s}$ & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ \\
+        PCIe 4.0 & ca.\ $2\,\mathrm{GB/s}$ & ca.\ $8\,\mathrm{GB/s}$ & ca.\ $32\,\mathrm{GB/s}$ \\
+        PCIe 5.0 & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ & ca.\ $64\,\mathrm{GB/s}$ \\
+    \end{tabularx}
+    \caption{Theoretische Bandbreiten von \glsentryshort{PCIe} je nach Generation und Lane-Anzahl.}
+    \label{tab:pcie_bandbreiten}
+\end{table}
 
-\begin{enumerate}
-    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch} (Holen): Das Steuerwerk liest den nächsten Befehl aus dem \gls{RAM} an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
-    \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode} (Dekodieren): Der Befehl wird in seine Bestandteile zerlegt: \emph{Was ist zu tun?} (Operationscode, z.\,B. Addieren) und \emph{Mit welchen Daten?} (Operanden, z.\,B. Register R1 und R2).
-    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute} (Ausführen): Die \gls{ALU} oder eine andere Komponente führt die Anweisung aus (z.\,B. Addition), das Ergebnis wird in ein Register oder in den \gls{RAM} geschrieben, und der Programmzähler rückt weiter.
-\end{enumerate}
+Neben den internen \gls{PCIe}-Lanes existieren weitere weit verbreitete Schnittstellen und Kabelstandards für externe Peripherie und interne Massenspeicher (\cref{tab:schnittstellen_vergleich}):
 
-\begin{myexample}[Konkreter Ablauf eines \gls{FDE}-Zyklus]
-    Angenommen, im Register \texttt{R1} steht der Wert $3$, im Register \texttt{R2} der Wert $5$, und an Speicheradresse \texttt{100} liegt der Maschinenbefehl \texttt{ADD R1, R2}:
-    \begin{itemize}
-        \item \textbf{Fetch:} Der Programmzähler steht auf Adresse \texttt{100}. Das Steuerwerk liest das Binärmuster dieses Befehls aus dem \gls{RAM} in das Befehlsregister der \gls{CPU}. Gleichzeitig wird der Programmzähler auf die nächste Adresse (\texttt{101}) vorbereitet.
-        \item \textbf{Decode:} Das Steuerwerk entschlüsselt das Bitmuster. Es erkennt: \enquote{Operation: Addition; Operand 1: Register \texttt{R1}; Operand 2: Register \texttt{R2}; Ziel: Register \texttt{R1}}.
-        \item \textbf{Execute:} Die \gls{ALU} schaltet die Werte der beiden Register an ihre Eingänge, berechnet $3 + 5 = 8$ und speichert das Ergebnis $8$ zurück in das Register \texttt{R1}. Der Zyklus ist abgeschlossen.
-    \end{itemize}
-\end{myexample}
+\begin{table}[H]
+    \centering
+    \begin{tabularx}{\linewidth}{@{}l c l X@{}}
+        \textbf{Schnittstelle} & \textbf{Anschluss} & \textbf{Bandbreite} & \textbf{Typischer Einsatzzweck} \\\midrule
+        \textbf{\glsentryshort{USB}-A} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_a.jpg}} & $0{,}06\text{--}0{,}6\,\mathrm{GB/s}$ & Universeller Standard-Stecker für Maus, Tastatur, Drucker und USB-Sticks. \\\midrule
+        \textbf{\glsentryshort{USB}-C} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_c.jpg}} & $1{,}25\text{--}5\,\mathrm{GB/s}$ & Verdrehsicherer Universalanschluss für Smartphones, Laptops, Monitore und mobile \glspl{SSD}. \\\midrule
+        \textbf{Thunderbolt} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/thunderbolt.jpg}} & $5\text{--}15\,\mathrm{GB/s}$ & Hochgeschwindigkeits-Port (oft mit \glsentryshort{USB}-C-Form) für externe Grafikkarten (eGPU) und Docks. \\\midrule
+        \textbf{\glsentryshort{SATA}} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/sata_close.jpg}} & ca.\ $0{,}55\text{--}0{,}6\,\mathrm{GB/s}$ & Internes Flachbandkabel für herkömmliche $3{,}5$-Zoll-\glspl{HDD} und $2{,}5$-Zoll-\glspl{SSD}. \\\midrule
+        \textbf{\glsentryshort{PCIe}} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/pcie.jpg}} & $2\text{--}64\,\mathrm{GB/s}$ & Steckplätze direkt auf dem Mainboard für Grafikkarten, M.2-\glspl{SSD} und Zusatzkarten. \\
+    \end{tabularx}
+    \caption{Gängige Computer-Schnittstellen und Verbindungskabel im Vergleich. \href{https://commons.wikimedia.org}{\color{RoyalBlue}\scriptsize[Quellen: Wikimedia Commons, CC BY-SA / CC0]}}
+    \label{tab:schnittstellen_vergleich}
+\end{table}
 
-\subsection{Taktfrequenz und die Einheit Hertz (Hz)}
+\begin{myexercise}\label{myexercise:pcie-lanes}
+    \textbf{Zuordnung: Welche Hardware-Komponente benötigt welche Schnittstelle?}
+    
+    Verschiedene Geräte und Speichermedien haben völlig unterschiedliche Datenanforderungen. Ordnen Sie den Einsatzzwecken und Geräten (1--6) die jeweils am besten passende Schnittstelle (A--F) zu:
+    \vspace{2mm}
 
-Damit alle Komponenten einer \gls{CPU} synchron zusammenarbeiten, gibt ein elektronischer Taktgeber einen gleichmässigen Rhythmus vor -- wie der Schrittmacher eines Orchesters.
+    \noindent
+    \begin{tabularx}{\linewidth}{@{}X l@{}}
+        \textbf{Gerät \& Datenbedarf} & \textbf{Schnittstelle / Übertragungsart} \\\midrule
+        1. High-End-Gaming-Grafikkarte ($\approx 30\,\mathrm{GB/s}$) & A. \glsentryshort{PCIe} 4.0 $\times 4$ ($\approx 8\,\mathrm{GB/s}$) \\
+        2. Extrem schnelle interne System-\glsentryshort{SSD} (M.2, $\approx 7\,\mathrm{GB/s}$) & B. \glsentryshort{SATA}-Kabel ($\approx 0{,}55\,\mathrm{GB/s}$) \\
+        3. Externe Desktop-Grafikkarte (eGPU) am Laptop ($\approx 5\,\mathrm{GB/s}$) & C. \glsentryshort{PCIe} 4.0 $\times 16$ ($\approx 32\,\mathrm{GB/s}$) \\
+        4. Schnelle externe mobile Video-\glsentryshort{SSD} ($\approx 1{,}5\,\mathrm{GB/s}$) & D. Thunderbolt 3/4 ($\approx 5\,\mathrm{GB/s}$) \\
+        5. Grosse interne $3{,}5$-Zoll-Archiv-Festplatte (\glsentryshort{HDD}, $\approx 0{,}15\,\mathrm{GB/s}$) & E. \glsentryshort{USB}-C (USB 3.2 Gen 2, $\approx 1{,}25\,\mathrm{GB/s}$) \\
+        6. Computermaus und Tastatur ($\approx 0{,}001\,\mathrm{GB/s}$) & F. \glsentryshort{USB}-A (USB 2.0/3.0, $\approx 0{,}06\text{--}0{,}5\,\mathrm{GB/s}$) \\
+    \end{tabularx}
+    \vspace{2mm}
 
-Die Geschwindigkeit dieses Takts heisst \tib{Taktfrequenz}\index{Taktfrequenz} und wird in der physikalischen Einheit \tib{Hertz (Hz)}\index{Hertz (Hz)} gemessen:
-\[
-    1\,\mathrm{Hz} = 1\text{ Takt bzw. Schwingung pro Sekunde}\quad (1\,\mathrm{s}^{-1}).
-\]
-Heutige Prozessoren arbeiten im Gigahertz-Bereich:
-\begin{center}
-    \begin{tabular}{lll}
-        Einheit & Bedeutung & Takte pro Sekunde \\\midrule\midrule
-        $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\\midrule
-        $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\\midrule
-        $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
-    \end{tabular}
-\end{center}
-Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}6$ Milliarden Taktzyklen pro Sekunde. Je nach Prozessorarchitektur benötigt ein Befehl einen oder mehrere Taktzyklen, oder moderne \glspl{CPU} führen durch parallele Einheiten (Pipelining, Mehrkernprozessoren) sogar mehrere Befehle pro Taktzyklus aus.
-
-
-\begin{myexercise}
-    Ein Prozessor hat eine Taktfrequenz von $3{,}6\,\mathrm{GHz}$ und führt im Durchschnitt 2 Befehle pro Taktzyklus aus.
-    \begin{enumerate}
-        \item Wie viele Befehle führt der Prozessor pro Sekunde aus?
-        \item Ein Programm besteht aus $7{,}2 \times 10^9$ Befehlen. Wie lange dauert die Ausführung?
+    \begin{enumerate}[(a)]
+        \item Begründen Sie Ihre Zuordnung kurz anhand der jeweils benötigten Datenbandbreite.
+        \item \textbf{Der \glsentryshort{SATA}-Flaschenhals:} Eine moderne M.2-\glsentryshort{NVMe}-\glsentryshort{SSD} kann $7\,\mathrm{GB/s}$ lesen. Warum würde dieselbe \glsentryshort{SSD} an einem älteren \glsentryshort{SATA}-Anschluss nur noch maximal ca.\ $0{,}55\,\mathrm{GB/s}$ erreichen?
+        \item \textbf{Abwärtskompatibilität:} Was passiert, wenn eine \glsentryshort{PCIe}-4.0-$\times 4$-\glsentryshort{SSD} (bis zu $8\,\mathrm{GB/s}$) auf ein Mainboard mit älterem \glsentryshort{PCIe}-3.0-$\times 4$-Steckplatz (max.\ $4\,\mathrm{GB/s}$) gesteckt wird?
+        \item \textbf{\glsentryshort{USB}-A vs.\ \glsentryshort{USB}-C:} Nennen Sie neben der deutlich höheren Datenrate zwei wesentliche praktische Vorteile des \glsentryshort{USB}-C-Standards gegenüber dem klassischen \glsentryshort{USB}-A-Stecker.
     \end{enumerate}
     \begin{myanswer}
-        \begin{enumerate}
-            \item $3{,}6 \times 10^9 \,\mathrm{Hz} \times 2 = 7{,}2 \times 10^9$ Befehle pro Sekunde.
-            \item $\dfrac{7{,}2 \times 10^9}{7{,}2 \times 10^9\,\mathrm{s}^{-1}} = 1\,\mathrm{s}$.
+        \begin{enumerate}[(a)]
+            \item Zuordnung:
+            \begin{itemize}
+                \item \textbf{1 $\to$ C:} High-End-Grafikkarten benötigen für rechenintensive 3D-Geometrie und Texturen die volle Bandbreite von 16 \gls{PCIe}-Lanes ($32\,\mathrm{GB/s}$).
+                \item \textbf{2 $\to$ A:} Eine interne M.2-\gls{NVMe}-\gls{SSD} schöpft über 4 \gls{PCIe}-Lanes ihre volle Übertragungsrate von ca.\ $7\text{--}8\,\mathrm{GB/s}$ aus.
+                \item \textbf{3 $\to$ D:} Externe Grafikkarten oder Multi-Monitor-Docks an Laptops erfordern die extrem hohe Bandbreite von Thunderbolt ($5\,\mathrm{GB/s} = 40\,\mathrm{Gbit/s}$).
+                \item \textbf{4 $\to$ E:} Für schnelle mobile \glspl{SSD} bietet \gls{USB}-C mit $1{,}25\text{--}2{,}5\,\mathrm{GB/s}$ eine ideale externe Anbindung.
+                \item \textbf{5 $\to$ B:} Eine mechanische Festplatte liefert maximal ca.\ $150\,\mathrm{MB/s}$ ($0{,}15\,\mathrm{GB/s}$); das klassische \gls{SATA}-Kabel mit $0{,}55\,\mathrm{GB/s}$ bremst sie keineswegs aus.
+                \item \textbf{6 $\to$ F:} Maus und Tastatur übertragen lediglich minimale Steuersignale (wenige Kilobytes/s); der bewährte \gls{USB}-A-Anschluss ist hierfür Standard.
+            \end{itemize}
+            \item Der \gls{SATA}-III-Bus ist hardwareseitig auf eine maximale Bandbreite von $6\,\mathrm{Gbit/s} \approx 550\text{--}600\,\mathrm{MB/s}$ beschränkt. Eine schnellere \gls{SSD} wird durch diesen Übertragungskanal auf die Maximalgeschwindigkeit des \gls{SATA}-Busses gedrosselt.
+            \item \gls{PCIe} ist vollständig abwärtskompatibel. Die \gls{SSD} funktioniert einwandfrei, erreicht jedoch höchstens die Bandbreite des älteren \gls{PCIe}-3.0-Slots ($4 \text{ Lanes} \times 1\,\mathrm{GB/s} = \mathbf{4\,\mathrm{GB/s}}$).
+            \item Vorteile von \gls{USB}-C:
+            \begin{enumerate}[1.]
+                \item \emph{Verdrehsicherheit:} Der Stecker ist punktsymmetrisch und passt in beiden Orientierungen auf Anhieb in die Buchse.
+                \item \emph{Hohe Stromversorgung (USB Power Delivery):} Bis zu 240~Watt Ladeleistung ermöglichen das Laden von Notebooks über dasselbe Datenkabel.
+                \item \emph{Vielseitigkeit (Alternate Mode):} Überträgt gleichzeitig DisplayPort-Videosignale, Audiosignale und Daten über einen einzigen Anschluss.
+            \end{enumerate}
         \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
-\begin{mychallenge}
-    Der Addierbefehl \texttt{ADD R1, R2} weist die \gls{CPU} an, den Inhalt der Register \texttt{R1} und \texttt{R2} zu addieren. Ordnen Sie die folgenden Teilschritte den drei Phasen Fetch, Decode und Execute zu:
-    \begin{itemize}
-        \item Der Programmzähler wird um eine Stelle weitergeschaltet.
-        \item Die \gls{ALU} berechnet die Summe der beiden Register.
-        \item Das Steuerwerk erkennt, dass es sich um einen Additionsbefehl mit zwei Registeroperanden handelt.
-        \item Der Befehl \texttt{ADD R1, R2} wird als Bitfolge aus dem \gls{RAM} gelesen.
-    \end{itemize}
-    \begin{myanswer}
-        \begin{itemize}
-            \item Befehl aus \gls{RAM} lesen $\to$ Fetch
-            \item Programmzähler weiterschalten $\to$ Fetch
-            \item Befehl als Additionsbefehl mit zwei Registeroperanden erkennen $\to$ Decode
-            \item \gls{ALU} berechnet Summe $\to$ Execute
-        \end{itemize}
-    \end{myanswer}
-\end{mychallenge}
-
-Wir haben nun gesehen, wie \gls{CPU}, Arbeitsspeicher, Massenspeicher und Ein-/Ausgabe zusammenspielen, um Programme auszuführen. Im nächsten Kapitel betrachten wir, wie das Betriebssystem diese Hardware-Ressourcen verwaltet und den Anwendungen zugänglich macht.
+Wir haben nun gesehen, wie die \gls{CPU} Befehle im Taktzyklus ausführt und wie Arbeitsspeicher, Massenspeicher und Schnittstellen zusammenarbeiten. Im nächsten Kapitel (\cref{ch:betriebssystem}) betrachten wir, wie das Betriebssystem diese Hardware-Ressourcen verwaltet und für Anwendungen zugänglich macht.

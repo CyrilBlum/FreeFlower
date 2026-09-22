@@ -1,18 +1,92 @@
 %!TeX program = lualatex
 \renewcommand{\thelektion}{L10 \textperiodcentered{} Aufbau eines Computers I}
 
-\begin{frame}\lessontitle{Lektion 10}{Aufbau eines Computers I}{Von-Neumann-Architektur \& die CPU im Detail \textperiodcentered{} Skript, Kapitel 5}\end{frame}
+\begin{frame}[plain]
+\begin{columns}[c,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+        {\color{FDUgreen!80!black}\large\bfseries Lektion 10\par}\vspace{2mm}
+        {\fontsize{18}{22}\selectfont\bfseries Aufbau eines Computers I\par}\vspace{3mm}
+        {\small\color{DarkSlateGray} Befehlszyklus (\glsentryshort{FDE}), Von-Neumann-Architektur, \glsentryshort{CPU} \& Mainboard\par}\vspace{5mm}
+        {\tiny\color{gray} Skript, Kapitel 5\\\href{https://commons.wikimedia.org/wiki/File:Custom_Computer_with_Open_Case_1_2018-05-06.jpg}{\color{RoyalBlue}Bild: Fastily, CC BY-SA 4.0}\par}
+    \end{column}
+    \begin{column}{0.60\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{%
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_pc_inside.tex}%
+        }
+    \end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}\FDUtitle{Vom Gatter zum Computer}
 \begin{center}
-Wir kennen jetzt Gatter und den Halbaddierer.
-\vspace{4mm}
+Wir kennen jetzt Logikgatter und den Halbaddierer.
+\vspace{3mm}
 
-Wie setzt man daraus einen \textbf{vollständigen Computer} zusammen?
+Eine reine Rechenschaltung rechnet sofort -- aber wie führt eine Maschine ein \textbf{ganzes Programm} Schritt für Schritt aus?
 \end{center}
 \begin{center}
 \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_eva_prinzip.tex}
 \end{center}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Fetch -- Decode -- Execute}{Wie die CPU Befehle abarbeitet}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Der Fetch-Decode-Execute-Zyklus}
+\begin{center}
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
+\end{center}
+\begin{center}Die \gls{CPU} wiederholt diesen Ablauf Milliarden Mal pro Sekunde.\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Was passiert in jeder Phase?}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+  \item \tib{Fetch} (Holen): Steuerwerk liest den nächsten Befehl aus dem Speicher (Adresse = Programmzähler)
+  \item \tib{Decode} (Dekodieren): Befehl wird zerlegt -- \emph{was} tun (Opcode), \emph{mit welchen} Daten (Operanden)?
+  \item \tib{Execute} (Ausführen): \gls{ALU} führt Befehl aus, Ergebnis wird gespeichert, Programmzähler rückt weiter
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Beispiel: Ein FDE-Durchlauf für \texttt{ADD R1, R2}}
+\textbf{Ausgangslage:} $\text{R1} = 3$, $\text{R2} = 5$, Adresse im Speicher: \texttt{100}
+\vspace{3mm}
+\begin{itemize}[<+->]\setlength\itemsep{6pt}
+    \item \textbf{1. Fetch:} Steuerwerk holt Befehl von Speicheradresse \texttt{100} in das Befehlsregister; Programmzähler springt auf \texttt{101}.
+    \item \textbf{2. Decode:} Steuerwerk entschlüsselt Opcode: \enquote{Addition der Inhalte von $\text{R1}$ und $\text{R2}$, Zielspeicher $\text{R1}$}.
+    \item \textbf{3. Execute:} \gls{ALU} berechnet $3 + 5 = 8$ und speichert $8$ in $\text{R1}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}\FDUtitle{Der CPU-Takt und die Einheit Hertz (Hz)}
+\begin{itemize}[<+->]\setlength\itemsep{4pt}
+    \item Ein Taktgeber (\emph{Quarzoszillator}) gibt den Schritt für alle Transistoren vor.
+    \item \textbf{1 Hertz (Hz)} $= 1\text{ Taktzyklus pro Sekunde}\quad (1\,\mathrm{s}^{-1})$.
+\end{itemize}
+\vspace{2mm}
+\begin{center}
+\begin{tabular}{lll}
+    Einheit & Bedeutung & Takte / Sekunde \\ \midrule
+    $1\,\mathrm{kHz}$ (Kilohertz) & Tausend Takte & $10^3 = 1\,000\,\mathrm{Hz}$ \\
+    $1\,\mathrm{MHz}$ (Megahertz) & Million Takte & $10^6 = 1\,000\,000\,\mathrm{Hz}$ \\
+    $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
+\end{tabular}
+\end{center}
+\vspace{1mm}
+\begin{center}
+$3{,}6\,\mathrm{GHz} \;\Rightarrow\; \mathbf{3{,}6\text{ Milliarden Taktzyklen pro Sekunde}}!$
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Übung: Taktfrequenz}
+\begin{center}
+Ein Prozessor hat $3{,}6\,\mathrm{GHz}$ Taktfrequenz und führt im Schnitt 2 Befehle pro Taktzyklus aus.
+\vspace{3mm}
+
+Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $7{,}2\times 10^9$ Befehlen?
+\end{center}
+\only<2->{\begin{center}\Large $7{,}2\times 10^9$ Befehle/s $\quad\rightarrow\quad 1\,\mathrm{s}$\end{center}}
 \end{frame}
 
 {\setbeamertemplate{footline}{\darkfootline}
@@ -36,7 +110,7 @@ Das Programm ist selbst nur ein Stück Daten -- also eine Bitfolge, die jederzei
 
 \begin{frame}\FDUtitle{Die Büro-Analogie (mentales Modell)}
 \begin{center}
-\scalebox{0.82}{
+\scalebox{0.75}{
 \begin{tabular}{lll}
     \textbf{Komponente} & \textbf{Rolle im Büro} & \textbf{Eigenschaft} \\\midrule
     \textbf{CPU} & \textbf{Arbeitende Person} & Rechnet und führt Befehle aus \\
@@ -46,7 +120,9 @@ Das Programm ist selbst nur ein Stück Daten -- also eine Bitfolge, die jederzei
     \textbf{RAM} & \textbf{Schreibtischplatte} & Schnell; am Feierabend leer (\emph{flüchtig}) \\
     \textbf{Massenspeicher} & \textbf{Aktenschrank / Archiv} & Dauerhaft (\emph{nicht flüchtig}), langsamer \\
     \textbf{Systembus} & \textbf{Laufwege / Förderband} & Verbindet alle Bauteile \\
+    \textbf{Chipsatz} & \textbf{Empfang / Verkehrsleiter} & Bündelt \& koordiniert langsamere Peripherie \\
     \textbf{Ein-/Ausgabe} & \textbf{Posteingang \& Fenster} & Schnittstelle zur Aussenwelt \\
+    \textbf{Netzteil (PSU)} & \textbf{Steckdose / Stromanschluss} & Liefert die nötige elektrische Energie \\
 \end{tabular}}
 \end{center}
 \end{frame}
@@ -113,7 +189,7 @@ Was könnte passieren, wenn ein fehlerhaftes Programm versehentlich seinen eigen
 \vspace{2mm}
 \normalsize
 \begin{itemize}[<+->]\setlength\itemsep{5pt}
-  \item Steuert den Ablauf aller Operationen
+  \item Steuert den Ablauf aller Operationen im FDE-Zyklus
   \item Liest Befehle, interpretiert sie
   \item Gibt Steuersignale an ALU \& Co.
 \end{itemize}
@@ -131,6 +207,8 @@ Was könnte passieren, wenn ein fehlerhaftes Programm versehentlich seinen eigen
 \end{columns}
 \end{frame}
 
-\begin{frame}{Auftrag}{Kapitel 5: Von-Neumann-Architektur \& CPU}
-\aufgabebox{\textbf{Aufgabe 5.1}}
+\begin{frame}{Auftrag}{Kapitel 5: FDE-Zyklus, Von-Neumann-Architektur \& CPU}
+\aufgabebox{\textbf{Aufgabe 5.1 \& 5.2 (FDE \& Takt)}}
+\vspace{3mm}
+\aufgabebox{\textbf{Aufgabe 5.3 \& 5.4 (Von-Neumann \& Speicherschutz)}}
 \end{frame}

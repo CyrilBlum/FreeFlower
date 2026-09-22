@@ -54,6 +54,15 @@
     \draw[fill=gray!40, draw=black!80, line width=1.1pt, rounded corners=3pt] (1.6, -1.8) rectangle (3.2, -0.6);
     \node[font=\tiny\sffamily\bfseries, text=black, align=center] at (2.4, -1.2) {Chipsatz\\(Controller)};
 
+    % --- 24-Pin ATX Stromanschluss (Netzteil / PSU) (Mitte-Rechts) ---
+    \draw[fill=white, draw=black!85, line width=1.1pt, rounded corners=2pt] (3.8, -1.8) rectangle (6.0, -0.6);
+    \node[anchor=north, font=\tiny\bfseries\sffamily, text=DarkSlateGray!90] at (4.9, -0.65) {24-Pin ATX Strom};
+    \foreach \px in {4.0, 4.35, 4.7, 5.05, 5.4, 5.75} {
+        \draw[fill=black!70] (\px-0.08, -1.45) rectangle (\px+0.08, -1.3);
+        \draw[fill=black!70] (\px-0.08, -1.7) rectangle (\px+0.08, -1.55);
+    }
+    \node[font=\tiny\sffamily, text=black!70] at (4.9, -1.05) {\glsentryshort{PSU} (Netzteil)};
+
     % --- Massenspeicher (M.2 NVMe SSD) (Rechts unten) ---
     \draw[fill=Orchid!15, draw=Orchid!80!black, line width=1.2pt, rounded corners=3pt] (0.6, -3.9) rectangle (5.8, -2.4);
     \node[anchor=north, font=\bfseries\sffamily\footnotesize, text=Orchid!90!black] at (3.2, -2.45) {Massenspeicher (M.2 NVMe SSD)};

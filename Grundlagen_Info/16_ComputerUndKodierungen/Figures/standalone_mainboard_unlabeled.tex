@@ -53,6 +53,14 @@
     \draw[fill=gray!40, draw=black!80, line width=1.1pt, rounded corners=3pt] (1.8, -1.8) rectangle (3.6, -0.6);
     \node[badge] at (2.7, -1.2) {4};
 
+    % --- 8. 24-Pin ATX Stromanschluss (Netzteil / PSU) (Mitte-Rechts) ---
+    \draw[fill=white, draw=black!85, line width=1.1pt, rounded corners=2pt] (4.0, -1.8) rectangle (6.2, -0.6);
+    \foreach \px in {4.2, 4.55, 4.9, 5.25, 5.6, 5.95} {
+        \draw[fill=black!70] (\px-0.08, -1.45) rectangle (\px+0.08, -1.3);
+        \draw[fill=black!70] (\px-0.08, -1.7) rectangle (\px+0.08, -1.55);
+    }
+    \node[badge] at (5.1, -1.0) {8};
+
     % --- 5. Massenspeicher (M.2 NVMe SSD Slot) (Rechts unten) ---
     \draw[fill=Orchid!12, draw=Orchid!80!black, line width=1.2pt, rounded corners=4pt] (0.6, -4.1) rectangle (6.2, -2.4);
     \draw[fill=Orchid!30, draw=Orchid!90!black, line width=0.8pt, rounded corners=2pt] (0.9, -3.95) rectangle (5.9, -3.25);
