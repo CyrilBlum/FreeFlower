@@ -324,7 +324,12 @@ In der Kryptographie ist es entscheidend, zwischen den verschiedenen \textbf{Sch
 \end{itemize}
 
 \paragraph*{Fall 1: Reine digitale Signatur (Klartextübertragung)}
-Bei einer reinen Signatur wird die Nachricht $m$ \textbf{im Klartext} zusammen mit der Signatur $s$ übertragen.
+Bei einer reinen Signatur wird die Nachricht $m$ \textbf{im Klartext} zusammen mit der Signatur $s$ übertragen (siehe \cref{fig:digital-signature-detail}):
+\begin{enumerate}
+	\item Alice signiert den Klartext $m$ mit ihrem privaten Schlüssel $d_A$: $s = m^{d_A} \bmod n_A$.
+	\item Über den Kanal wird das unverschlüsselte Paket $(m, s)$ (Klartext $m$ und Signatur $s$) übertragen.
+	\item Bob prüft die Signatur $s$ mit Alices öffentlichem Schlüssel $e_A \rightarrow s^{e_A} \bmod n_A \stackrel{?}{=} m$.
+\end{enumerate}
 \begin{itemize}
 	\item \textbf{Warum Klartext?} Eine Signatur soll beweisen, von wem das Dokument stammt und dass nichts verändert wurde -- sie dient \emph{nicht} der Geheimhaltung. Zur Überprüfung ($m' = s^e \bmod n$) muss dem Empfänger der Klartext $m$ zwingend vorliegen, um den Vergleich $m' \stackrel{?}{=} m$ durchführen zu können.
 	\item \textbf{Typische Einsatzgebiete:}
@@ -335,6 +340,13 @@ Bei einer reinen Signatur wird die Nachricht $m$ \textbf{im Klartext} zusammen m
 		      \item \textbf{Digitale Zertifikate (\gls{PKI}):} Zertifikate müssen für jedermann lesbar sein.
 	      \end{itemize}
 \end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\input{Grundlagen_Info/03_Kryptologie/Figures/tikz_digital_signature}
+	\caption{Detaillierter Ablauf einer reinen digitalen Signatur (Klartextübertragung mit Authentizitätsnachweis)}
+	\label{fig:digital-signature-detail}
+\end{figure}
 
 \paragraph*{Fall 2: Kombinierte Signatur \& Verschlüsselung (\emph{Sign-then-Encrypt})}
 Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, kombiniert man beide Verfahren (siehe \cref{fig:sign-then-encrypt-detail}):

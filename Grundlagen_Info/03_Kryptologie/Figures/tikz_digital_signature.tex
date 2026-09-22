@@ -1,0 +1,42 @@
+\begin{tikzpicture}[
+	scale=0.80, every node/.style={transform shape},
+	actor/.style={rectangle, rounded corners, draw=black, fill=gray!15, minimum width=3.4cm, minimum height=1.1cm, font=\bfseries, align=center, inner sep=4pt},
+	stepbox/.style={rectangle, rounded corners, draw=#1, fill=#1!8, line width=0.8pt, font=\small, align=center, inner sep=6pt},
+	msgarrow/.style={->, >=stealth, line width=1pt, #1},
+	badge/.style={circle, fill=#1, text=white, font=\bfseries\footnotesize, inner sep=2pt}
+]
+	% Spaltenkoordinaten
+	\def\colA{0}   % Alice
+	\def\colB{9.5} % Bob
+
+	% --- AKTEURE (Kopfzeile) ---
+	\node[actor] (alice) at (\colA, 0) {Alice\\{\footnotesize (Absenderin)}\\[2pt]{\scriptsize priv.: $d_A$, öff.: $(e_A, n_A)$}};
+	\node[actor] (bob) at (\colB, 0) {Bob\\{\footnotesize (Empfänger)}\\[2pt]{\scriptsize Alices öff.: $(e_A, n_A)$}};
+
+	% Vertikale Hilfslinien
+	\draw[dashed, gray!40] (alice.south) -- (\colA, -7.2);
+	\draw[dashed, gray!40] (bob.south) -- (\colB, -7.2);
+
+	% --- SCHRITT 1 BEI ALICE ---
+	\node[font=\footnotesize\bfseries\color{RoyalBlue!80!black}, fill=white, inner sep=2pt] at (\colA, -1.1) {Phase 1: Signatur erstellen};
+
+	\node[stepbox=RoyalBlue] (alice_proc) at (\colA, -2.3) {
+		\textbf{Signatur erzeugen (mit $d_A$):}\\
+		$s := m^{d_A} \bmod n_A$
+	};
+
+	% --- NACHRICHTENÜBERTRAGUNG ---
+	\node[badge=DarkOrchid] (b_msg) at (\colA+0.6, -3.9) {\faFileSignature};
+	\draw[msgarrow=DarkOrchid] (b_msg.east) -- (\colB-0.6, -3.9)
+		node[midway, above=3pt, font=\footnotesize\bfseries] {Klartext $m$ + Signatur $s$}
+		node[midway, below=3pt, font=\scriptsize\color{gray!70!black}] {(öffentlich \& unverschlüsselt: Eve kann $m$ lesen, aber nicht unbemerkt verändern)};
+
+	% --- SCHRITT 2 BEI BOB ---
+	\node[font=\footnotesize\bfseries\color{ForestGreen!80!black}, fill=white, inner sep=2pt] at (\colB, -5.3) {Phase 2: Signatur prüfen};
+
+	\node[stepbox=ForestGreen] (bob_proc) at (\colB, -6.5) {
+		\textbf{Signatur prüfen (mit $e_A$):}\\
+		$m' := s^{e_A} \bmod n_A$\\[0.2em]
+		$\rightarrow \text{Gilt } m' = m\text{?} \implies \text{Authentisch \& unverfälscht!} \textcolor{ForestGreen}{\mathbf{\checkmark}}$
+	};
+\end{tikzpicture}
