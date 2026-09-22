@@ -92,7 +92,26 @@ Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}
 
 Nachdem wir die dynamische Funktionsweise des Befehlszyklus kennen, stellt sich die Frage: \emph{Wie muss ein Computer physisch aufgebaut sein, um diesen Ablauf zu ermöglichen?}
 
-Fast alle heutigen Rechner basieren auf dem Entwurf des Mathematikers John von Neumann aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}. Ihr entscheidendes Merkmal: \emph{Programm und Daten} werden im \emph{gleichen} Speicher abgelegt -- das Programm, das ein Computer ausführt, ist selbst ein Stück Daten (also eine Bitfolge, vgl.\ \cref{ch:kodierungen}), das jederzeit im Speicher verändert oder ausgetauscht werden kann.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[c]{0.26\textwidth}
+        \centering
+        \includegraphics[width=\linewidth,height=4.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/john_von_neumann.jpg}
+        \caption*{\scriptsize\textbf{John von Neumann}\\(1903--1957)}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.70\textwidth}
+        Fast alle heutigen Rechner basieren auf dem Entwurf des ungarisch-amerikanischen Mathematikers und Universalgelehrten \textbf{John von Neumann}\index{Neumann, John von} aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}.
+        
+        Von Neumann zählte zu den prägendsten Wissenschaftlern des 20.\,Jahrhunderts (Pionier in Quantenmechanik, Spieltheorie und Informatik). Im bahnbrechenden EDVAC-Bericht (\enquote{First Draft of a Report on the EDVAC}) formulierte er das bis heute universelle Grundprinzip moderner Computer:
+        \vspace{2mm}
+        \begin{center}
+            \color{ForestGreen!90!black}\bfseries\sffamily
+            Programmcode und Nutzdaten liegen gemeinsam im selben Speicher.
+        \end{center}
+        \vspace{1mm}
+        Das Programm ist somit kein starr verdrahteter Schaltkreis mehr, sondern eine Bitfolge im Speicher, die jederzeit geladen, ausgetauscht und modifiziert werden kann.
+    \end{minipage}
+\end{figure}
 
 \begin{figure}[H]
     \centering

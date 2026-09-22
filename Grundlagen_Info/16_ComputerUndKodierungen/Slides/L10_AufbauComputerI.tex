@@ -79,19 +79,17 @@ $3{,}6\,\mathrm{GHz} \;\Rightarrow\; \mathbf{3{,}6\text{ Milliarden Taktzyklen p
 \end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Taktfrequenz}
-\begin{center}
-Ein Prozessor hat $3{,}6\,\mathrm{GHz}$ Taktfrequenz und führt im Schnitt 2 Befehle pro Taktzyklus aus.
+\begin{frame}\FDUtitle{Übung: Taktfrequenz \& FDE-Phasen}
+\aufgabebox{\textbf{Aufgabe 5.1 (Taktfrequenz \& Ausführungsdauer)}}
 \vspace{3mm}
-
-Wie viele Befehle führt er pro Sekunde aus? Wie lange dauert ein Programm mit $7{,}2\times 10^9$ Befehlen?
-\end{center}
-\only<2->{\begin{center}\Large $7{,}2\times 10^9$ Befehle/s $\quad\rightarrow\quad 1\,\mathrm{s}$\end{center}}
+\aufgabebox{\textbf{Aufgabe 5.2 (FDE-Phasen Challenge)}}
 \end{frame}
 
 {\setbeamertemplate{footline}{\darkfootline}
 \begin{frame}\sectionframe[FDUblue]{Die Von-Neumann-Architektur}{1945, John von Neumann}
 \end{frame}}
+
+\begin{frame}\personcard{John von Neumann}{1903\,--\,1957, Ungarn\,/\,USA}{Grundlagen_Info/16_ComputerUndKodierungen/Figures/john_von_neumann.jpg}{Einer der bedeutendsten Mathematiker \& Universalgelehrten des 20.\,Jahrhunderts (Pionier in Quantenmechanik, Spieltheorie \& Informatik). Formulierte 1945 das Konzept des \textbf{speicherprogrammierten Rechners}.}{\enquote{If people do not believe that mathematics is simple, it is only because they do not realize how complicated life is.}\\[1mm]$\rightarrow$ Grundprinzip: \textbf{Programm und Daten} liegen im selben Speicher.}\end{frame}
 
 \begin{frame}\FDUtitle{Das entscheidende Merkmal}
 \begin{center}
@@ -172,6 +170,34 @@ Was könnte passieren, wenn ein fehlerhaftes Programm versehentlich seinen eigen
 {\setbeamertemplate{footline}{\darkfootline}
 \begin{frame}\sectionframe[FDUgreen]{Die CPU im Detail}{ALU, Steuerwerk, Register}
 \end{frame}}
+
+\begin{frame}\FDUtitle{Fokus: Der Prozessor (CPU)}
+\begin{columns}[c,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{%
+            \begingroup
+            \def\mainboardHighlight{cpu}%
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}%
+            \endgroup
+        }
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \large\bfseries\color{ForestGreen!90!black}Die CPU auf dem Mainboard\par\vspace{3mm}
+        \normalsize\normalfont
+        \begin{itemize}\setlength\itemsep{6pt}
+            \item Sitzt im zentralen \textbf{CPU-Sockel}.
+            \item Führt den \textbf{FDE-Zyklus} ununterbrochen aus.
+            \item Besteht intern aus:
+            \begin{itemize}\setlength\itemsep{3pt}
+                \item \textbf{ALU} (Rechenwerk)
+                \item \textbf{Register} (Ultraschneller Zwischenspeicher)
+                \item \textbf{Steuerwerk} (Befehlsdekodierung \& Taktung)
+            \end{itemize}
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}\FDUtitle{ALU -- Arithmetisch-logische Einheit}
 \begin{itemize}[<+->]\setlength\itemsep{7pt}

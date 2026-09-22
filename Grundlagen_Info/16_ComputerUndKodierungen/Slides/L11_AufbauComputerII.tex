@@ -1,7 +1,32 @@
 %!TeX program = lualatex
 \renewcommand{\thelektion}{L11 \textperiodcentered{} Aufbau eines Computers II}
 
-\begin{frame}\lessontitle{Lektion 11}{Aufbau eines Computers II}{Arbeitsspeicher (\glsentryshort{RAM}), Massenspeicher \& Schnittstellen \textperiodcentered{} Skript, Kapitel 5}\end{frame}
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUteal]{Der Arbeitsspeicher (RAM)}{Schneller Kurzzeitspeicher für aktive Programme}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Fokus: Der Arbeitsspeicher (RAM)}
+\begin{columns}[c,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{%
+            \begingroup
+            \def\mainboardHighlight{ram}%
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}%
+            \endgroup
+        }
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \large\bfseries\color{Teal!90!black}RAM-Bänke (DIMM-Slots)\par\vspace{3mm}
+        \normalsize\normalfont
+        \begin{itemize}\setlength\itemsep{6pt}
+            \item Sitzen direkt neben der CPU für minimale Signallaufzeiten.
+            \item Über den schnellen \textbf{Speicherbus} angebunden.
+            \item \textbf{Flüchtiger} Arbeitsspeicher (\emph{volatile memory}): Inhalt geht beim Ausschalten verloren.
+        \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
 
 \begin{frame}\FDUtitle{Der Arbeitsspeicher (RAM)}
 \begin{center}
@@ -58,15 +83,35 @@ Die Adressen sind hexadezimal (Lektion 3) -- daher das Präfix \texttt{0x}.
 \end{columns}
 \end{frame}
 
-\begin{frame}\FDUtitle{Mini-Übung: \gls{SI}-Präfixe umwandeln}
-Wandeln Sie in handliche Einheiten mit \gls{SI}-Präfixen um:
-\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{4pt}
-  \item RAM-Lesezugriff: $0{,}000\,000\,015\,\mathrm{s} = 15 \times 10^{-9}\,\mathrm{s} = \mathbf{15\,\mathrm{ns}}$
-  \item NVMe-SSD-Latenz: $0{,}000\,04\,\mathrm{s} = 40 \times 10^{-6}\,\mathrm{s} = \mathbf{40\,\mu\mathrm{s}}$
-  \item Prozessor-Taktfrequenz: $3\,600\,000\,000\,\mathrm{Hz} = 3{,}6 \times 10^9\,\mathrm{Hz} = \mathbf{3{,}6\,\mathrm{GHz}}$
-  \item System-Update: $4\,800\,000\,000\,\mathrm{Byte} = 4{,}8 \times 10^9\,\mathrm{Byte} = \mathbf{4{,}8\,\mathrm{GB}}$
-  \item Schul-Backup-Server: $12\,000\,000\,000\,000\,\mathrm{Byte} = 12 \times 10^{12}\,\mathrm{Byte} = \mathbf{12\,\mathrm{TB}}$
-\end{enumerate}
+\begin{frame}\FDUtitle{Übung: \gls{SI}-Präfixe}
+\aufgabebox{\textbf{Aufgabe 5.5 (Mini-Übung: \gls{SI}-Präfixe umwandeln)}}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Massenspeicher}{SSD, HDD \& Latenzen im Vergleich}
+\end{frame}}
+
+\begin{frame}\FDUtitle{Fokus: Der Massenspeicher (SSD)}
+\begin{columns}[c,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{%
+            \begingroup
+            \def\mainboardHighlight{storage}%
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}%
+            \endgroup
+        }
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \large\bfseries\color{Orchid!90!black}M.2 NVMe SSD \& SATA\par\vspace{3mm}
+        \normalsize\normalfont
+        \begin{itemize}\setlength\itemsep{6pt}
+            \item \textbf{Nicht-flüchtiger} Speicher für Betriebssystem, Programme \& Dateien.
+            \item Moderne \textbf{M.2-SSDs} werden direkt auf das Board gesteckt \& verschraubt.
+            \item Hohe Kapazität bei extrem schnellen PCIe-Übertragungsraten.
+        \end{itemize}
+    \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}\FDUtitle{Massenspeicher: HDD vs.\ SSD (Aufbau)}
@@ -99,49 +144,37 @@ $\hookrightarrow$ Rein elektronisch (\textbf{Latenz: $\approx 0{,}05\,\mathrm{ms
 }
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Foto laden (SSD vs.\ HDD \& RAM)}
-Ein hochauflösendes Foto ($24\,\mathrm{MB}$) soll geladen werden:
-\begin{itemize}\setlength\itemsep{2pt}
-  \item \textbf{SSD:} $2\,\mathrm{GB/s}$ ($2000\,\mathrm{MB/s}$), Latenz $0{,}05\,\mathrm{ms}$ \quad \textbf{HDD:} $150\,\mathrm{MB/s}$, Latenz $10\,\mathrm{ms}$
-\end{itemize}
-\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{3pt}
-  \item \textbf{Übertragungsdauer:} SSD: $\frac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = \mathbf{12\,\mathrm{ms}}$ \quad vs. \quad HDD: $\frac{24\,\mathrm{MB}}{150\,\mathrm{MB/s}} = \mathbf{160\,\mathrm{ms}}$ ($>13\times$ langsamer)
-  \item \textbf{Mit Latenz:} SSD: $0{,}05 + 12 = \mathbf{12{,}05\,\mathrm{ms}}$ \quad vs. \quad HDD: $10 + 160 = \mathbf{170\,\mathrm{ms}}$
-  \item \textbf{1'000 Mini-Bilder} ($1000 \times 24\,\mathrm{kB} = 24\,\mathrm{MB}$):\\
-  SSD: $1000 \times 0{,}05 + 12 = \mathbf{62\,\mathrm{ms}}$ \quad vs. \quad HDD: $1000 \times 10 + 160 = \mathbf{10{,}16\,\mathrm{s}}$!
-  \item \textbf{Zielort:} Daten fliessen in den \textbf{RAM} (CPU rechnet nur dort mit $\mathrm{ns}$-Latenz).
-  \item \textbf{Stromausfall:} RAM ist \textbf{flüchtig} $\to$ ungespeicherte Änderungen sind weg.
-\end{enumerate}
+\begin{frame}\FDUtitle{Übungen: Massenspeicher im Vergleich}
+\aufgabebox{\textbf{Aufgabe 5.6 (Foto laden: SSD vs.\ HDD \& RAM)}}
+\vspace{3mm}
+\aufgabebox{\textbf{Aufgabe 5.7 (Ein Game von Steam herunterladen, 120\,GB)}}
 \end{frame}
 
-\begin{frame}\FDUtitle{Aufgabe: Ein Game von Steam herunterladen}
-Ein Game hat eine Downloadgrösse von \textbf{120~GB}. Die Download-Geschwindigkeit sei unbegrenzt; nur das Schreiben der Daten benötigt Zeit.
-\begin{center}
-\begin{tabular}{lc}
-    Speicher & Angenommene Schreibgeschwindigkeit \\ \midrule
-    RAM & $40\,\mathrm{GB/s}$ \\
-    SSD & $2\,\mathrm{GB/s}$ \\
-    HDD & $150\,\mathrm{MB/s}$ \\
-\end{tabular}
-\end{center}
-{\small Modell: konstante Raten, jeweils mindestens 120~GB frei, auch im RAM; kein Entpacken und Installieren. $1\,\mathrm{GB}=1000\,\mathrm{MB}$.}
-\begin{enumerate}[<+->][(a)]
-    \item Wie lange dauert das Speichern jeweils? $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$
-    \item Warum eignet sich RAM nicht als dauerhafte Ablage?
-\end{enumerate}
-\end{frame}
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Busschnittstellen \& Anschlüsse}{PCIe, Lanes \& Verbindungen nach aussen}
+\end{frame}}
 
-\begin{frame}\FDUtitle{Lösung: Speicherzeit für das Steam-Game}
-\begin{center}
-\begin{tabular}{lcc}
-    Speicher & Rechnung & Zeit \\ \midrule
-    RAM & $120\,\mathrm{GB}\,/\,(40\,\mathrm{GB/s})$ & $3\,\mathrm{s}$ \\
-    SSD & $120\,\mathrm{GB}\,/\,(2\,\mathrm{GB/s})$ & $60\,\mathrm{s}=1\,\mathrm{min}$ \\
-    HDD & $120\,000\,\mathrm{MB}\,/\,(150\,\mathrm{MB/s})$ & $800\,\mathrm{s}=13\,\mathrm{min}\,20\,\mathrm{s}$ \\
-\end{tabular}
-\end{center}
-RAM verliert die Daten beim Ausschalten. SSD und HDD speichern sie dauerhaft.\\[3mm]
-Die Zeiten gelten nur für das Schreiben im vereinfachten Modell, nicht für den gesamten Download und die Installation.
+\begin{frame}\FDUtitle{Fokus: PCIe-Slots \& Schnittstellen}
+\begin{columns}[c,onlytextwidth]
+    \begin{column}{0.56\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{%
+            \begingroup
+            \def\mainboardHighlight{pcie}%
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}%
+            \endgroup
+        }
+    \end{column}
+    \begin{column}{0.42\textwidth}
+        \large\bfseries\color{DarkSlateGray!90!black}Erweiterungssteckplätze\par\vspace{3mm}
+        \normalsize\normalfont
+        \begin{itemize}\setlength\itemsep{6pt}
+            \item \textbf{PCIe-Slots}: Für Grafikkarten ($\times 16$), Sound- und Erweiterungskarten.
+            \item \textbf{Chipsatz}: Bündelt Signale langsamerer Anschlüsse.
+            \item \textbf{I/O-Panel}: Schnittstelle für externe Peripherie (USB, Monitor, LAN).
+        \end{itemize}
+    \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}\FDUtitle{Busschnittstellen: \gls{PCIe} \& Lanes}
@@ -174,16 +207,8 @@ Die Zeiten gelten nur für das Schreiben im vereinfachten Modell, nicht für den
 \end{tabular}
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Welche Komponente braucht welche Schnittstelle?}
-Ordnen Sie den Datenbedarf der passenden Schnittstelle zu:
-\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{3pt}
-  \item \textbf{Gaming-Grafikkarte ($\approx 30\,\mathrm{GB/s}$):} $\mathbf{\text{PCIe 4.0 }\times 16}$ ($32\,\mathrm{GB/s}$ für 3D-Rendering)
-  \item \textbf{Interne M.2-NVMe-SSD ($\approx 7\,\mathrm{GB/s}$):} $\mathbf{\text{PCIe 4.0 }\times 4}$ ($8\,\mathrm{GB/s}$, volle Flash-Power)
-  \item \textbf{Externe GPU am Laptop ($\approx 5\,\mathrm{GB/s}$):} $\mathbf{\text{Thunderbolt 3/4}}$ ($5\,\mathrm{GB/s} = 40\,\mathrm{Gbit/s}$)
-  \item \textbf{Mobile Video-SSD ($\approx 1{,}5\,\mathrm{GB/s}$):} $\mathbf{\text{USB-C}}$ (USB 3.2 Gen 2, $1{,}25\text{--}2{,}5\,\mathrm{GB/s}$)
-  \item \textbf{Interne 3.5"-Archiv-HDD ($\approx 0{,}15\,\mathrm{GB/s}$):} $\mathbf{\text{SATA-Kabel}}$ ($0{,}55\,\mathrm{GB/s}$ bremst nicht)
-  \item \textbf{Maus \& Tastatur ($\approx 0{,}001\,\mathrm{GB/s}$):} $\mathbf{\text{USB-A}}$ (Standard für einfache Steuersignale)
-\end{enumerate}
+\begin{frame}\FDUtitle{Übung: Schnittstellen \& Komponenten}
+\aufgabebox{\textbf{Aufgabe 5.8 (Welche Komponente braucht welche Schnittstelle?)}}
 \end{frame}
 
 \begin{frame}{Auftrag}{Kapitel 5: Speicher, Grössenordnungen \& Schnittstellen}
