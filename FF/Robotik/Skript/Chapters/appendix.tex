@@ -1,0 +1,65 @@
+\chapter{Programm-Listings}\label{ch:robotik-programme}
+
+% Die Originaldateien einlesen, damit Skript und Programme übereinstimmen.
+% Die Listing-Einstellungen gelten nur innerhalb dieses Anhangs.
+\begingroup
+\lstset{
+    language=C++,
+    columns=fullflexible,
+    keepspaces=true,
+    breaklines=true,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    numbers=none,
+    basicstyle=\ttfamily\footnotesize
+}
+
+\section{Distanzmessung mit Ultraschall}
+
+\lstinputlisting[
+    caption={\texttt{Intro\_Ultraschall.ino}},
+    label={lst:ultraschall-intro}
+]{FF/Robotik/Skript/Code/Intro_Ultraschall/Intro_Ultraschall.ino}
+
+\lstinputlisting[
+    caption={\texttt{ultraSonicTest1}},
+    label={lst:ultraschall-roboter}
+]{FF/Robotik/Skript/Code/ultraSonicTest_1/ultraSonicTest_1.ino}
+
+\lstinputlisting[
+    caption={\texttt{hinundher\_template.ino}},
+    label={lst:hinundher-template}
+]{FF/Robotik/Skript/Code/hinundher_template/hinundher_template.ino}
+
+\section{Darstellung der Messwerte in Polarkoordinaten}
+
+\lstinputlisting[
+    language=Python,
+    caption={\texttt{polarkoord-sketch}},
+    label={lst:polarkoord-sketch}
+]{FF/Robotik/Skript/Code/polarkoord_sketch.py}
+
+\section{Distanzmessung mit Infrarot}
+
+\lstinputlisting[
+    caption={\texttt{infraRedTest}},
+    label={lst:infrarot-test}
+]{FF/Robotik/Skript/Code/infraRedTest/infraRedTest.ino}
+
+\section{Berührungssensoren}
+
+\lstinputlisting[
+    caption={\texttt{TouchSensorTest.ino}},
+    label={lst:touchsensor-test}
+]{FF/Robotik/Skript/Code/TouchSensorTest/TouchSensorTest.ino}
+
+\section{Lichtsensoren}
+
+\lstinputlisting[
+    caption={\texttt{LightSensorTest.ino}},
+    label={lst:lichtsensor-test}
+]{FF/Robotik/Skript/Code/LightSensorTest/LightSensorTest.ino}
+
+\endgroup
