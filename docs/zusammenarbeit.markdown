@@ -17,3 +17,4 @@ Repository-Link: [github.com/CyrilBlum/FreeFlower](https://github.com/CyrilBlum/
 - Bitte vermeiden Sie Screenshots und priorisieren Sie nativen LaTeX-Inhalt, zum Beispiel TikZ-Grafiken. Für Grafiken, die nicht in LaTeX erstellt werden können, verwenden Sie bitte Vektorgrafiken (z.B. SVG oder PDF) anstelle von Rastergrafiken (z.B. PNG oder JPG).
 - Bitte vermeiden Sie Fehler, Warnungen und Meldungen beim Bearbeiten von LaTeX-Dateien.
 - Aufgaben-Nummerierungen in den Slides werden nicht automatisch aktualisiert, wenn entsprechende Teile in den Skripts angepasst werden. Daher sollten Sie die Nummerierung in den Slides manuell anpassen, wenn Sie die entsprechenden Teile in den Skripts anpassen.
+- Bitte definieren Sie alle im Skript verwendeten Akronyme und technischen Abkürzungen (z.B. `CPU`, `RAM`, `ALU`, `HDD`, `SSD`, `SI`, `API`) zentral im Glossar (`Preambles/pre_6_glossaries.tex`) und verwenden Sie diese im Fliestext konsequent mit `\gls{...}` bzw. `\glspl{...}`.

@@ -66,6 +66,10 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Temporary Disabling**: In `Skript.tex` or `main.tex`, you may temporarily comment out other chapters, title pages, and appendices to accelerate compilation when iteratively testing or visually inspecting figures (e.g. with `pdftoppm`).
 - **Mandatory Restoration**: All temporarily commented out chapters, title pages, and appendices must be fully restored (uncommented) to their original state before finishing the task.
 
+### 2.11 Glossaries & Acronyms (`\gls{...}`)
+- **Consistent Glossary Usage**: All acronyms and technical abbreviations used in scripts and materials (e.g., `CPU`, `RAM`, `ALU`, `HDD`, `SSD`, `SI`, `OS`, `API`, `SQL`, `RGB`) must be defined in `Preambles/pre_6_glossaries.tex`.
+- **Referencing in Text**: Always reference acronyms in `.tex` script files using `\gls{ACRONYM}` (singular) or `\glspl{ACRONYM}` (plural). In section headings, use `\glsentryshort{ACRONYM}` where appropriate to avoid hyperref / PDF bookmark warnings.
+
 ---
 
 ## 3. Project Structure & Compilation Workflow
@@ -126,3 +130,4 @@ Before submitting changes or marking a task complete:
 6. [ ] **Keep WIP Chapters Commented Out**: Ensure chapters marked as 'under construction' (e.g. `Kapitel_06.tex` in `Skript.tex`) remain commented out.
 7. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
 8. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
+9. [ ] **Use Glossaries (`\gls{...}`) for Acronyms**: Ensure all acronyms are defined in `Preambles/pre_6_glossaries.tex` and referenced via `\gls{...}` / `\glspl{...}`.

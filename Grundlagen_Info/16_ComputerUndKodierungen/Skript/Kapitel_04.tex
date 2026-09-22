@@ -22,16 +22,103 @@ Fast alle heute eingesetzten Rechner basieren auf dem Entwurf des Mathematikers 
 Die Hauptkomponenten sind:
 
 \begin{description}
-    \item[\tib{CPU}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms aus. Enthält Steuerwerk, ALU und Register.
-    \item[\tib{Arbeitsspeicher (RAM)}\index{RAM}] Speichert aktuell laufende Programme und Daten. Der Inhalt geht beim Ausschalten verloren (\emph{flüchtig}).
-    \item[\tib{Massenspeicher}\index{Massenspeicher}] Dauerhafte Ablage von Programmen und Dateien (HDD, SSD). Der Inhalt bleibt auch ohne Strom erhalten (\emph{nicht flüchtig}).
-    \item[\tib{Ein-/Ausgabe}\index{Ein-/Ausgabe}] Verbindet den Computer mit der Aussenwelt: Tastatur, Maus, Bildschirm, Netzwerk, USB usw.
+    \item[\tib{\gls{CPU}}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms aus. Enthält Steuerwerk, \gls{ALU} und Register.
+    \item[\tib{Arbeitsspeicher (\gls{RAM})}\index{RAM}] Speichert aktuell laufende Programme und Daten. Der Inhalt geht beim Ausschalten verloren (\emph{flüchtig}).
+    \item[\tib{Massenspeicher}\index{Massenspeicher}] Dauerhafte Ablage von Programmen und Dateien (\gls{HDD}, \gls{SSD}). Der Inhalt bleibt auch ohne Strom erhalten (\emph{nicht flüchtig}).
+    \item[\tib{Ein-/Ausgabe}\index{Ein-/Ausgabe}] Verbindet den Computer mit der Aussenwelt: Tastatur, Maus, Bildschirm, Netzwerk, \gls{USB} usw.
     \item[\tib{Systembus}\index{Systembus}] Kommunikationskanal, über den alle Komponenten Daten und Steuersignale austauschen.
 \end{description}
+
+\subsection{Das mentale Modell: Die Büro-Analogie}
+
+Um sich das Zusammenspiel und die spezifischen Rollen der Komponenten einzuprägen, hilft der Vergleich mit einem typischen Arbeitsplatz im Büro:
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lll@{}}
+        \textbf{Komponente} & \textbf{Rolle im Büro / am Arbeitsplatz} & \textbf{Funktion im Computer} \\\midrule
+        \textbf{\gls{CPU} (Prozessor)} & \textbf{Arbeitende Person} & Führt Programmbefehle schrittweise aus \\
+        \quad $\hookrightarrow$ \textit{Steuerwerk} & Gehirn / Planer (liest Anleitung) & Decodiert Befehle, steuert Gesamtablauf und Takt \\
+        \quad $\hookrightarrow$ \textit{\gls{ALU}} & Taschenrechner / Werkzeug in Händen & Führt Rechenoperationen und Vergleiche aus \\
+        \quad $\hookrightarrow$ \textit{Register} & Notizblock / Hände unmittelbar vor sich & Schnellste, winzige Zwischenspeicher der \gls{CPU} \\
+        \textbf{\gls{RAM} (Arbeitsspeicher)} & \textbf{Schreibtischplatte} & Schneller Zugriff; am Feierabend geleert (\emph{flüchtig}) \\
+        \textbf{Massenspeicher (\gls{SSD}/\gls{HDD})} & \textbf{Aktenschrank / Archiv} & Grosse, dauerhafte Dateiablage (\emph{nicht flüchtig}) \\
+        \textbf{Systembus} & \textbf{Laufwege / Förderband} & Verbindet alle Bereiche für schnellen Datentransfer \\
+        \textbf{Ein-/Ausgabe (I/O)} & \textbf{Posteingang \& Fenster/Aushang} & Schnittstelle zur Aussenwelt (Tastatur, Monitor) \\
+    \end{tabular}%
+    }
+    \caption{Die Büro-Analogie zur Veranschaulichung der Computerkomponenten.}
+    \label{tab:computer_analogie}
+\end{table}
+
+\subsection{Vom Schema zur realen Hardware}
+
+Auf der Hauptplatine (\tib{Mainboard}\index{Mainboard} bzw.\ \textit{Motherboard}) eines Computers sind diese theoretischen Komponenten als physische Bausteine angeordnet. Die Leiterbahnen auf der Platine bilden den Systembus, über den Daten zwischen Sockel, Speicherbänken und Anschlüssen fliessen (\cref{fig:mainboard_schema}).
+
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}
+    \caption{Stilisierter Aufbau eines Mainboards mit den Hauptkomponenten.}
+    \label{fig:mainboard_schema}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/cpu.jpg}
+        \caption{\gls{CPU} (AMD Ryzen Prozessor mit Heatspreader). \href{https://commons.wikimedia.org/wiki/File:AMD_Ryzen_5_2600_(39851733273).jpg}{\color{RoyalBlue}\scriptsize[Quelle: Fritzchens Fritz, CC0]}}
+        \label{fig:foto_cpu}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ram.jpg}
+        \caption{\gls{RAM} (DDR4-Arbeitsspeicher-Riegel). \href{https://commons.wikimedia.org/wiki/File:RAM_Module_(SDRAM-DDR4).jpg}{\color{RoyalBlue}\scriptsize[Quelle: ElooKoN, CC BY-SA 4.0]}}
+        \label{fig:foto_ram}
+    \end{subfigure}
+    
+    \vspace{0.8em}
+    
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd.jpg}
+        \caption{Massenspeicher (M.2 \gls{NVMe} \gls{SSD}). \href{https://commons.wikimedia.org/wiki/File:Samsung_980_PRO_PCIe_4.0_NVMe_SSD_1TB-top_PNr\%C2\%B00915.jpg}{\color{RoyalBlue}\scriptsize[Quelle: D-Kuru, CC BY-SA 4.0]}}
+        \label{fig:foto_ssd}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/mainboard.jpg}
+        \caption{Mainboard (ATX-Hauptplatine). \href{https://commons.wikimedia.org/wiki/File:Gigabyte_GA-H87M-D3H_motherboard_\%C2\%B5ATX_with_Intel_Socket_1150.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Gigabyte, FAL/CC BY-SA]}}
+        \label{fig:foto_mainboard}
+    \end{subfigure}
+    \caption{Reale Hardware-Komponenten eines modernen Computers.}
+    \label{fig:echte_hardware}
+\end{figure}
+
+\begin{myexercise}
+    Ordnen Sie jeder Computerkomponente die passende Aufgabe zu. Verbinden Sie dazu die Begriffe (1--5) mit den Beschreibungen (A--E).
+    \begin{center}
+        \begin{tabular}{ll}
+            \textbf{Komponente} & \textbf{Beschreibung} \\\midrule
+            1. \gls{CPU} & A. Verbindet den Computer mit Tastatur, Bildschirm und Netzwerk \\
+            2. Arbeitsspeicher (\gls{RAM}) & B. Führt die Anweisungen eines Programms aus \\
+            3. Massenspeicher & C. Speichert aktuell benötigte Programme und Daten vorübergehend \\
+            4. Ein-/Ausgabe & D. Überträgt Daten und Steuersignale zwischen den Komponenten \\
+            5. Systembus & E. Speichert Programme und Dateien dauerhaft \\
+        \end{tabular}
+    \end{center}
+    \begin{myanswer}
+        1--B, 2--C, 3--E, 4--A, 5--D.
+    \end{myanswer}
+\end{myexercise}
 
 \begin{myremark}[Von Neumann vs.\ heute]
     Heutige Prozessoren weichen in Details von Neumann ab (z.\,B. mehrere Kerne, Caches, getrennte Busse für Daten und Instruktionen), folgen aber dem grundlegenden Prinzip des gespeicherten Programms.
 \end{myremark}
+
+
+
 
 \begin{myexercise}
     Warum ist es problematisch, wenn Programm und Daten im \emph{gleichen} Speicher liegen? Überlegen Sie, was passieren könnte, wenn ein fehlerhaftes Programm versehentlich in den Speicherbereich schreibt, in dem sein eigener Programmcode liegt.
@@ -40,23 +127,23 @@ Die Hauptkomponenten sind:
     \end{myanswer}
 \end{myexercise}
 
-\section{Die CPU im Detail}
+\section{Die \gls{CPU} im Detail}
 
-\subsection{ALU -- Arithmetisch-logische Einheit}
+\subsection{\gls{ALU} -- Arithmetisch-logische Einheit}
 
-Die \tib{ALU}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der CPU. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl. \cref{sec:halbaddierer}).
+Die \tib{\gls{ALU}}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der \gls{CPU}. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl. \cref{sec:halbaddierer}).
 
 \subsection{Steuerwerk}
 
-Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert den Ablauf aller Operationen. Es liest Befehle aus dem Speicher, interpretiert sie und gibt der ALU und den übrigen Komponenten die entsprechenden Steuersignale.
+Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert den Ablauf aller Operationen. Es liest Befehle aus dem Speicher, interpretiert sie und gibt der \gls{ALU} und den übrigen Komponenten die entsprechenden Steuersignale.
 
 \subsection{Register}
 
-\tib{Register}\index{Register} sind sehr schnelle, aber winzige Zwischenspeicher direkt in der CPU. Sie halten die Werte, mit denen die ALU gerade rechnet (z.\,B. die zwei Summanden und das Resultat einer Addition). Typische Grösse: 64~Bit pro Register -- also 8 Byte (vgl. \cref{mydefinition:bit-byte}).
+\tib{Register}\index{Register} sind sehr schnelle, aber winzige Zwischenspeicher direkt in der \gls{CPU}. Sie halten die Werte, mit denen die \gls{ALU} gerade rechnet (z.\,B. die zwei Summanden und das Resultat einer Addition). Typische Grösse: 64~Bit pro Register -- also 8 Byte (vgl. \cref{mydefinition:bit-byte}).
 
-\section{Arbeitsspeicher (RAM)}
+\section{Arbeitsspeicher (\gls{RAM})}
 
-Der \tib{RAM}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Man kann sich den RAM als eine lange Tabelle vorstellen, in der jede Zeile einer \tib{Speicherzelle}\index{Speicherzelle} entspricht und eine eindeutige \tib{Adresse}\index{Adresse} hat:
+Der \tib{\gls{RAM}}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Man kann sich den \gls{RAM} als eine lange Tabelle vorstellen, in der jede Zeile einer \tib{Speicherzelle}\index{Speicherzelle} entspricht und eine eindeutige \tib{Adresse}\index{Adresse} hat:
 
 \begin{table}[H]
     \centering
@@ -67,7 +154,7 @@ Der \tib{RAM}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle 
         \texttt{0x02} & \texttt{11001010} \\\midrule
         $\vdots$ & $\vdots$ \\
     \end{tabular}
-    \caption{Schematische Darstellung des RAM: jede Adresse zeigt auf eine Speicherzelle von einem Byte.}
+    \caption{Schematische Darstellung des \gls{RAM}: jede Adresse zeigt auf eine Speicherzelle von einem Byte. Die Notation \texttt{0x} kennzeichnet hexadezimale Adressen.}
     \label{tab:ram}
 \end{table}
 
@@ -75,25 +162,149 @@ Der \tib{RAM}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle 
     Die Adressen in \cref{tab:ram} sind in \tib{hexadezimaler Schreibweise}\index{Hexadezimalsystem} angegeben (vgl. \cref{section:stellenwertdarst}) -- daher das Präfix \texttt{0x}. Hexadezimalzahlen eignen sich hier besonders gut, da zwei Hex-Ziffern genau einem Byte entsprechen (vgl. \cref{ex:byte-max}).
 \end{myattention}
 
-Typische Grössen heutiger Rechner: 8--64~GB RAM (vgl. \cref{table:daten-groessenordnungen}). Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der CPU, der häufig benötigte Daten zwischenspeichert, um den langsameren RAM zu entlasten.
+Typische Grössen heutiger Rechner: 8--64~GB \gls{RAM} (vgl. \cref{table:daten-groessenordnungen}). Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der \gls{CPU}, der häufig benötigte Daten zwischenspeichert, um den langsameren \gls{RAM} zu entlasten.
+
+\subsection{Exkurs: \glsentryshort{SI}-Präfixe und Grössenordnungen in der Informatik}
+
+Das \tib{\gls{SI}}\index{Internationales Einheitensystem (SI)} (\emph{Système international d'unités}, französisch für internationales Einheitensystem) ist das weltweit am weitesten verbreitete und standardisierte Einheitensystem für physikalische Grössen (wie die Sekunde für Zeitdauern oder das Hertz für Schwingungsfrequenzen). Um sehr grosse oder extrem kleine Zahlenwerte kompakt und lesbar darzustellen, definiert das \gls{SI} genormte Vorsätze (Präfixe) auf Basis von Zehnerpotenzen.
+
+In der Informatik begegnen uns sowohl extrem kleine Einheiten (z.\,B.\ Nanosekunden bei \gls{CPU}-Takten und \gls{RAM}-Latenzen) als auch gewaltige Datenmengen (Gigabytes und Terabytes). Zur Orientierung und Umrechnung fasst \cref{table:daten-groessenordnungen} die standardisierten \gls{SI}-Vorsätze zusammen:
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lllll@{}}
+        \textbf{Präfix} & \textbf{Symbol} & \textbf{Faktor (Zehnerpotenz)} & \textbf{Bedeutung} & \textbf{Typisches Beispiel in der Informatik} \\\midrule
+        \multicolumn{5}{@{}l}{\textit{\textbf{Kleine Einheiten (Zeit, Latenz, Taktzyklen)}}} \\\midrule
+        Nano & $\mathrm{n}$ & $10^{-9} = 0{,}000\,000\,001$ & Milliardstel & \gls{CPU}-Taktzyklus ($1\,\mathrm{GHz} \leftrightarrow 1\,\mathrm{ns}$), \gls{RAM}-Zugriff ($10\text{--}50\,\mathrm{ns}$) \\
+        Mikro & $\mu$ & $10^{-6} = 0{,}000\,001$ & Millionstel & \gls{SSD}-Latenz ($20\text{--}100\,\mu\mathrm{s}$), Interrupt-Reaktionszeit \\
+        Milli & $\mathrm{m}$ & $10^{-3} = 0{,}001$ & Tausendstel & \gls{HDD}-Latenz ($5\text{--}15\,\mathrm{ms}$), Netzwerk-Ping ($10\text{--}50\,\mathrm{ms}$) \\\midrule
+        \multicolumn{5}{@{}l}{\textit{\textbf{Grosse Einheiten (Speicherkapazitäten, Übertragungsraten, Taktfrequenzen)}}} \\\midrule
+        Kilo & $\mathrm{k}$ & $10^3 = 1\,000$ & Tausend & Textdatei / Icon ($50\,\mathrm{kB}$), $1\,\mathrm{kHz}$ Frequenz \\
+        Mega & $\mathrm{M}$ & $10^6 = 1\,000\,000$ & Million & Foto / MP3-Song ($5\text{--}25\,\mathrm{MB}$), \gls{HDD}-Rate ($150\,\mathrm{MB/s}$) \\
+        Giga & $\mathrm{G}$ & $10^9 = 1\,000\,000\,000$ & Milliarde & \gls{RAM} ($16\,\mathrm{GB}$), \gls{CPU}-Takt ($3{,}6\,\mathrm{GHz}$), \gls{SSD}-Rate ($7\,\mathrm{GB/s}$) \\
+        Tera & $\mathrm{T}$ & $10^{12} = 1\,000\,000\,000\,000$ & Billion & \gls{SSD}-/\gls{HDD}-Massenspeicher ($1\text{--}4\,\mathrm{TB}$) \\
+        Peta & $\mathrm{P}$ & $10^{15} = 1\,000\,000\,000\,000\,000$ & Billiarde & Grosse Rechenzentren, Cloud-Datenspeicher \\
+    \end{tabular}%
+    }
+    \caption{Übersicht der gebräuchlichen \gls{SI}-Präfixe für Zeiten, Frequenzen und Datenmengen.}
+    \label{table:daten-groessenordnungen}
+\end{table}
+
+\begin{myremark}[Dezimal- vs.\ Binärpräfixe bei Datenmengen]
+    Im \gls{SI}-System steht $\mathrm{k}$ exakt für $10^3 = 1\,000$ und $\mathrm{M}$ für $10^6 = 1\,000\,000$. Historisch wurde in der Informatik wegen der Zweierpotenzen oft mit $2^{10} = 1024$ gerechnet. Zur eindeutigen Unterscheidung wurden die \tib{Binärpräfixe}\index{Binärpräfixe} Kibi- ($\mathrm{KiB} = 1024\,\mathrm{B}$), Mebi- ($\mathrm{MiB} = 1024^2\,\mathrm{B}$) und Gibibyte ($\mathrm{GiB} = 1024^3\,\mathrm{B}$) genormt (IEC 60027-2). Bei Speicherherstellern und im Schulunterricht wird üblicherweise die dezimale \gls{SI}-Norm ($1\,\mathrm{GB} = 1000\,\mathrm{MB} = 10^9\,\mathrm{B}$) verwendet.
+\end{myremark}
+
+\begin{myexercise}\label{myexercise:si-praefixe-umwandlung}
+    \textbf{Mini-Übung: Unhandliche Zahlen mit \glsentryshort{SI}-Präfixen lesbar machen.}
+    In technischen Datenblättern und Programmen stösst man oft auf unübersichtliche Zahlen ohne Einheitsvorsätze. Wandeln Sie folgende Angaben in eine lesbare Form mit dem jeweils passendsten \gls{SI}-Präfix um:
+    \begin{enumerate}[(a)]\setlength\itemsep{2pt}
+        \item \textbf{\gls{RAM}-Lesezugriff:} $0{,}000\,000\,015\,\mathrm{s}$
+        \item \textbf{\gls{NVMe}-\gls{SSD}-Latenz:} $0{,}000\,04\,\mathrm{s}$
+        \item \textbf{\gls{CPU}-Taktfrequenz:} $3\,600\,000\,000\,\mathrm{Hz}$
+        \item \textbf{System-Update (Dateigrösse):} $4\,800\,000\,000\,\mathrm{Byte}$
+        \item \textbf{Backup-Server (Kapazität):} $12\,000\,000\,000\,000\,\mathrm{Byte}$
+    \end{enumerate}
+
+    \begin{myanswer}
+        \begin{enumerate}[(a)]\setlength\itemsep{2pt}
+            \item $0{,}000\,000\,015\,\mathrm{s} = 15 \times 10^{-9}\,\mathrm{s} = \mathbf{15\,\mathrm{ns}}$ (Nanosekunden).
+            \item $0{,}000\,04\,\mathrm{s} = 40 \times 10^{-6}\,\mathrm{s} = \mathbf{40\,\mu\mathrm{s}}$ (Mikrosekunden).
+            \item $3\,600\,000\,000\,\mathrm{Hz} = 3{,}6 \times 10^9\,\mathrm{Hz} = \mathbf{3{,}6\,\mathrm{GHz}}$ (Gigahertz).
+            \item $4\,800\,000\,000\,\mathrm{Byte} = 4{,}8 \times 10^9\,\mathrm{Byte} = \mathbf{4{,}8\,\mathrm{GB}}$ (Gigabyte).
+            \item $12\,000\,000\,000\,000\,\mathrm{Byte} = 12 \times 10^{12}\,\mathrm{Byte} = \mathbf{12\,\mathrm{TB}}$ (Terabyte).
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
 
 \section{Massenspeicher}
 
+Während der Arbeitsspeicher (\gls{RAM}) Daten nur flüchtig speichert, dient der \tib{Massenspeicher} zur dauerhaften Sicherung von Betriebssystem, Programmen und Dateien. In modernen Computern kommen heute vor allem zwei Technologien zum Einsatz:
+
 \begin{description}
-    \item[\tib{HDD}\index{HDD} (Hard Disk Drive)] Magnetische Scheiben speichern Bits als winzige magnetisierte Bereiche. Langsamer, aber billig und langlebig für grosse Datenmengen.
-    \item[\tib{SSD}\index{SSD} (Solid State Drive)] Daten werden in Flashspeicher-Zellen als elektrische Ladung gespeichert. Deutlich schneller als HDDs, keine beweglichen Teile.
+    \item[\tib{\gls{HDD}}\index{HDD} (Hard Disk Drive)] Magnetische Metallscheiben (\textit{Platter}) rotieren mit mehreren tausend Umdrehungen pro Minute. Ein beweglicher Lese-/Schreibarm schwebt auf einem winzigen Luftpolster über den Scheiben und liest oder magnetisiert Bereiche auf der Oberfläche.
+    \item[\tib{\gls{SSD}}\index{SSD} (Solid State Drive)] Reine Halbleitertechnik ohne bewegliche mechanische Bauteile. Die Daten werden in Form elektrischer Ladung in nicht-flüchtigen Flash-Speicherzellen (NAND-Flash) abgelegt und von einem integrierten Speichercontroller gesteuert.
 \end{description}
 
-\begin{myexample}[Unterschied RAM -- SSD]
-    Der RAM eines modernen Computers kann Daten mit Übertragungsraten von 30--50~GB/s lesen. Eine SSD schafft 1--7~GB/s, eine herkömmliche HDD nur ca.\ 100--200~MB/s.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/hdd_inside.jpg}
+        \caption{Geöffnete \gls{HDD}: rotierende Magnetscheiben und mechanischer Lese-/Schreibarm. \href{https://commons.wikimedia.org/wiki/File:Hard_disk_platters_and_head.jpg}{\color{RoyalBlue}\scriptsize[Quelle: M.\ Field, CC BY-SA 3.0]}}
+        \label{fig:foto_hdd_inside}
+    \end{subfigure}\hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.88\linewidth,height=3.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd_inside.jpg}
+        \caption{Geöffnete \gls{SSD}: Platine mit Speichercontroller und Flash-Chips (keine Mechanik). \href{https://commons.wikimedia.org/wiki/File:OCZ_Agility_3_PCB.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Phiarc, CC BY-SA 4.0]}}
+        \label{fig:foto_ssd_inside}
+    \end{subfigure}
+    \caption{Vergleich des internen Aufbaus von Festplatte (\gls{HDD}) und Solid State Drive (\gls{SSD}).}
+    \label{fig:hdd_ssd_aufbau}
+\end{figure}
 
-    \textbf{Faustregel: Je schneller der Speicher, desto teurer ist er in der Regel pro Gigabyte.} Deshalb kombiniert ein Computer verschiedene Speicherarten: schnellen RAM für aktuell benötigte Daten und günstigeren Massenspeicher für die dauerhafte Ablage grosser Datenmengen.
+\subsection{Vergleich von Geschwindigkeit und Latenz}
+
+Der fundamentale Unterschied im Aufbau führt zu drastischen Leistungsunterschieden bei zwei zentralen Messgrössen:
+\begin{enumerate}
+    \item \textbf{Zugriffszeit (Latenz):} Die Zeitverzögerung, bis der Speicher den ersten angeforderten Datenblock liefert. Bei einer \gls{HDD} muss der Arm physisch zur passenden Spur fahren (\emph{Seek-Time}) und warten, bis die rotierende Scheibe den richtigen Sektor unter den Kopf dreht ($5\text{--}15\,\mathrm{ms}$). Eine \gls{SSD} adressiert Flash-Zellen rein elektronisch ($0.02\text{--}0.1\,\mathrm{ms}$), was Zugriffe um den Faktor \textbf{ca.\ 200 beschleunigt}.
+    \item \textbf{Datendurchsatz (Übertragungsrate):} Die kontinuierliche Datenmenge pro Sekunde beim Lesen oder Schreiben grösserer zusammenhängender Dateien.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_hdd_ssd_speed.tex}
+    }
+    \caption{Übertragungsraten und Zugriffszeiten im direkten Vergleich zwischen \gls{HDD}, \gls{SSD} und \gls{RAM}.}
+    \label{fig:speed_vergleich}
+\end{figure}
+
+\begin{myexample}[Speicherhierarchie und Kosten]
+    Der \gls{RAM} eines modernen Computers kann Daten mit Übertragungsraten von 30--50~GB/s lesen. Eine \gls{NVMe}-\gls{SSD} schafft bis zu 7~GB/s, eine ältere \gls{SATA}-\gls{SSD} ca.\ 550~MB/s und eine herkömmliche mechanische \gls{HDD} nur ca.\ 100--200~MB/s.
+
+    \textbf{Faustregel: Je schneller der Speicher, desto teurer ist er in der Regel pro Gigabyte.} Deshalb kombiniert ein Computer verschiedene Speicherarten hierarchisch: extrem schnellen, aber teuren und flüchtigen \gls{RAM} für aktuell laufende Prozesse und günstigeren Massenspeicher für die dauerhafte Ablage grosser Datenmengen.
 \end{myexample}
 
-\begin{myexercise}
-    Ein Foto mit einer Grösse von 24~MB soll von einer SSD (Lesegeschwindigkeit: 2~GB/s) geladen werden. Wie lange dauert dies ungefähr?
+\begin{myexercise}\label{myexercise:foto-laden-ssd-hdd}
+    \textbf{Foto laden: \gls{SSD} vs.\ \gls{HDD} und die Rolle des Arbeitsspeichers.}
+    Ein hochauflösendes Foto mit einer Grösse von $24\,\mathrm{MB}$ soll in ein Bildbearbeitungsprogramm geladen werden. Für die Speicherarten gelten folgende Kennwerte:
+    \begin{itemize}
+        \item \textbf{\gls{SSD}:} Lesegeschwindigkeit $2\,\mathrm{GB/s} = 2000\,\mathrm{MB/s}$, Zugriffszeit (Latenz) $0{,}05\,\mathrm{ms}$.
+        \item \textbf{\gls{HDD}:} Lesegeschwindigkeit $150\,\mathrm{MB/s}$, Zugriffszeit (Latenz) $10\,\mathrm{ms}$.
+        \item \textbf{\gls{RAM}:} Übertragungsrate $40\,\mathrm{GB/s}$, Latenz $0{,}00005\,\mathrm{ms}$.
+    \end{itemize}
+
+    \begin{enumerate}[(a)]
+        \item \textbf{Reine Übertragungsdauer:} Wie lange dauert das reine serielle Einlesen des 24-MB-Fotos auf der \gls{SSD} im Vergleich zur herkömmlichen \gls{HDD}? ($t=\frac{\text{Datenmenge}}{\text{Lesegeschwindigkeit}}$).
+        \item \textbf{Einfluss der Latenz:} Vor der Datenübertragung muss der Speicher den ersten Block adressieren (Zugriffszeit). Berechnen Sie die Gesamtdauer ($t_\text{gesamt} = t_\text{Latenz} + t_\text{Übertragung}$) für \gls{SSD} und \gls{HDD}.
+        \item \textbf{Viele kleine Dateien:} Nun soll kein einzelnes Foto geladen werden, sondern eine Thumbnail-Vorschau aus \textbf{1'000 kleinen Mini-Bildern} zu je $24\,\mathrm{kB}$ (Gesamtmenge ebenfalls $24\,\mathrm{MB}$). Für jedes Bild fällt erneut die volle Zugriffszeit an ($t_\text{gesamt} = 1000 \times t_\text{Latenz} + t_\text{Übertragung}$). Wie lange dauert das Laden auf \gls{SSD} und auf \gls{HDD}? Warum bricht die \gls{HDD} hier so massiv ein?
+        \item \textbf{Zielort der Daten:} Wohin genau fliessen die Daten beim \enquote{Öffnen} des Fotos, und warum kann die \gls{CPU} das Bild nicht einfach direkt auf der \gls{SSD} bearbeiten?
+        \item \textbf{Speichern und Flüchtigkeit:} Sie bearbeiten das geöffnete Bild über längere Zeit. Was passiert bei einem plötzlichen Stromausfall, wenn Sie noch nicht auf \enquote{Speichern} gedrückt haben? Begründen Sie mit den physikalischen Eigenschaften von \gls{RAM} und Massenspeicher.
+    \end{enumerate}
+
     \begin{myanswer}
-        $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 0{,}012\,\mathrm{s} = 12\,\mathrm{ms}$.
+        \begin{enumerate}[(a)]
+            \item \textbf{Reine Übertragungsdauer:}
+            \begin{itemize}
+                \item \textbf{\gls{SSD}:} $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 0{,}012\,\mathrm{s} = 12\,\mathrm{ms}$.
+                \item \textbf{\gls{HDD}:} $\dfrac{24\,\mathrm{MB}}{150\,\mathrm{MB/s}} = 0{,}160\,\mathrm{s} = 160\,\mathrm{ms}$ (über $13\times$ langsamer).
+            \end{itemize}
+            \item \textbf{Gesamtdauer bei einer einzelnen Datei:}
+            \begin{itemize}
+                \item \textbf{\gls{SSD}:} $0{,}05\,\mathrm{ms} + 12\,\mathrm{ms} = 12{,}05\,\mathrm{ms} \approx 0{,}012\,\mathrm{s}$.
+                \item \textbf{\gls{HDD}:} $10\,\mathrm{ms} + 160\,\mathrm{ms} = 170\,\mathrm{ms} = 0{,}17\,\mathrm{s}$.
+            \end{itemize}
+            \item \textbf{1'000 kleine Dateien (Thumbnail-Galerie):}
+            \begin{itemize}
+                \item \textbf{\gls{SSD}:} $1000 \times 0{,}05\,\mathrm{ms} + 12\,\mathrm{ms} = 50\,\mathrm{ms} + 12\,\mathrm{ms} = 62\,\mathrm{ms} \approx 0{,}06\,\mathrm{s}$ (praktisch verzögerungsfrei).
+                \item \textbf{\gls{HDD}:} $1000 \times 10\,\mathrm{ms} + 160\,\mathrm{ms} = 10\,000\,\mathrm{ms} + 160\,\mathrm{ms} = 10{,}16\,\mathrm{s}$ (über 10 Sekunden Wartezeit!).
+                \item \textbf{Begründung:} Bei der \gls{HDD} muss der mechanische Lese-/Schreibarm für jedes einzelne Bild neu positioniert werden und auf die rotierende Scheibe warten (\emph{Seek-Time}). Bei der \gls{SSD} erfolgt der Zugriff rein elektronisch in Mikrosekunden.
+            \end{itemize}
+            \item \textbf{Zielort:} Die Daten werden vom Massenspeicher (\gls{SSD}/\gls{HDD}) in den \textbf{Arbeitsspeicher (\gls{RAM})} kopiert. Die \gls{CPU} kann Befehle nur im \gls{RAM} und in ihren eigenen Registern mit voller Busgeschwindigkeit ($40\,\mathrm{GB/s}$) und Nanosekunden-Latenz abarbeiten; Massenspeicher wäre für die laufende Bildberechnung viel zu langsam.
+            \item \textbf{Stromausfall:} Alle noch nicht gespeicherten Bearbeitungsschritte gehen verloren. Der \gls{RAM} ist ein \emph{flüchtiger} Speicher, dessen Inhalt ohne Versorgungsspannung sofort gelöscht wird. Erst beim Speichern werden die Bilddaten über das Dateisystem dauerhaft auf den \emph{nicht-flüchtigen} Massenspeicher (\gls{SSD}/\gls{HDD}) geschrieben.
+        \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
@@ -101,61 +312,61 @@ Typische Grössen heutiger Rechner: 8--64~GB RAM (vgl. \cref{table:daten-groesse
     \textbf{Ein neues Game von Steam herunterladen.}
     Sie möchten ein Game mit einer Downloadgrösse von 120~GB herunterladen. Stellen Sie sich vor, die Download-Geschwindigkeit sei unbegrenzt: Nur die Schreibgeschwindigkeit des Zielspeichers begrenzt, wie schnell die Daten gespeichert werden können.
 
-    Verwenden Sie für dieses vereinfachte Rechenmodell die folgenden konstanten \emph{Schreibgeschwindigkeiten}. Auf jedem Speicher stehen mindestens 120~GB frei, auch beim hier angenommenen RAM. Entpacken und Installation werden nicht berücksichtigt. Rechnen Sie mit $1\,\mathrm{GB}=1000\,\mathrm{MB}$.
+    Verwenden Sie für dieses vereinfachte Rechenmodell die folgenden konstanten \emph{Schreibgeschwindigkeiten}. Auf jedem Speicher stehen mindestens 120~GB frei, auch beim hier angenommenen \gls{RAM}. Entpacken und Installation werden nicht berücksichtigt. Rechnen Sie mit $1\,\mathrm{GB}=1000\,\mathrm{MB}$.
     \begin{center}
         \begin{tabular}{lc}
             Speicher & Angenommene Schreibgeschwindigkeit \\ \midrule
-            RAM & $40\,\mathrm{GB/s}$ \\
-            SSD & $2\,\mathrm{GB/s}$ \\
-            HDD & $150\,\mathrm{MB/s}$ \\
+            \gls{RAM} & $40\,\mathrm{GB/s}$ \\
+            \gls{SSD} & $2\,\mathrm{GB/s}$ \\
+            \gls{HDD} & $150\,\mathrm{MB/s}$ \\
         \end{tabular}
     \end{center}
     \begin{enumerate}[(a)]
-        \item Wie lange dauert das reine Speichern der 120~GB jeweils in RAM, auf SSD und auf HDD? Geben Sie die Zeiten in Sekunden und, wo sinnvoll, in Minuten an. Nutzen Sie $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$.
-        \item Der RAM ist am schnellsten. Warum ist er trotzdem keine geeignete dauerhafte Ablage für das heruntergeladene Game?
+        \item Wie lange dauert das reine Speichern der 120~GB jeweils in \gls{RAM}, auf \gls{SSD} und auf \gls{HDD}? Geben Sie die Zeiten in Sekunden und, wo sinnvoll, in Minuten an. Nutzen Sie $t=\frac{\text{Datenmenge}}{\text{Schreibgeschwindigkeit}}$.
+        \item Der \gls{RAM} ist am schnellsten. Warum ist er trotzdem keine geeignete dauerhafte Ablage für das heruntergeladene Game?
     \end{enumerate}
     \begin{myanswer}
         \begin{enumerate}[(a)]
             \item Die Datenmenge beträgt $120\,\mathrm{GB}=120\,000\,\mathrm{MB}$.
             \begin{itemize}
-                \item \textbf{RAM:} $\frac{120\,\mathrm{GB}}{40\,\mathrm{GB/s}}=3\,\mathrm{s}$.
-                \item \textbf{SSD:} $\frac{120\,\mathrm{GB}}{2\,\mathrm{GB/s}}=60\,\mathrm{s}=1\,\mathrm{min}$.
-                \item \textbf{HDD:} $\frac{120\,000\,\mathrm{MB}}{150\,\mathrm{MB/s}}=800\,\mathrm{s}=13\,\mathrm{min}\,20\,\mathrm{s}$.
+                \item \textbf{\gls{RAM}:} $\frac{120\,\mathrm{GB}}{40\,\mathrm{GB/s}}=3\,\mathrm{s}$.
+                \item \textbf{\gls{SSD}:} $\frac{120\,\mathrm{GB}}{2\,\mathrm{GB/s}}=60\,\mathrm{s}=1\,\mathrm{min}$.
+                \item \textbf{\gls{HDD}:} $\frac{120\,000\,\mathrm{MB}}{150\,\mathrm{MB/s}}=800\,\mathrm{s}=13\,\mathrm{min}\,20\,\mathrm{s}$.
             \end{itemize}
-            \item RAM ist flüchtig: Beim Ausschalten gehen die Daten verloren. SSD und HDD behalten sie auch ohne Strom. Die berechneten Zeiten betreffen nur das Schreiben der Daten im vereinfachten Modell; sie sind keine Vorhersage der gesamten Download- und Installationsdauer. Nicht zuletzt verfügen die meisten Computer über deutlich weniger RAM als 120~GB, sodass das Game gar nicht in den RAM passen würde.
+            \item \gls{RAM} ist flüchtig: Beim Ausschalten gehen die Daten verloren. \gls{SSD} und \gls{HDD} behalten sie auch ohne Strom. Die berechneten Zeiten betreffen nur das Schreiben der Daten im vereinfachten Modell; sie sind keine Vorhersage der gesamten Download- und Installationsdauer. Nicht zuletzt verfügen die meisten Computer über deutlich weniger \gls{RAM} als 120~GB, sodass das Game gar nicht in den \gls{RAM} passen würde.
         \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
 \section{Der Fetch-Decode-Execute-Zyklus}\label{sec:fde}
 
-Die CPU führt Anweisungen in einem einfachen, immer wiederholten Schema aus, dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus}:
+Die \gls{CPU} führt Anweisungen in einem einfachen, immer wiederholten Schema aus, dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus}:
 
 \begin{figure}[H]
     \centering
     \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_fetch_decode_execute.tex}
-    \caption{Der Fetch-Decode-Execute-Zyklus: die CPU wiederholt diesen Ablauf Milliarden Mal pro Sekunde.}
+    \caption{Der Fetch-Decode-Execute-Zyklus: die \gls{CPU} wiederholt diesen Ablauf Milliarden Mal pro Sekunde.}
     \label{fig:fde}
 \end{figure}
 
 \begin{enumerate}
-    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch} (Holen): Das Steuerwerk liest den nächsten Befehl aus dem RAM an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
+    \item \tib{Fetch}\index{Fetch-Decode-Execute-Zyklus!Fetch} (Holen): Das Steuerwerk liest den nächsten Befehl aus dem \gls{RAM} an der Adresse, auf die der \emph{Programmzähler} (engl.\ \emph{program counter}) zeigt.
     \item \tib{Decode}\index{Fetch-Decode-Execute-Zyklus!Decode} (Dekodieren): Der Befehl wird in seine Bestandteile zerlegt: \emph{Was ist zu tun?} (Operationscode, z.\,B. Addieren) und \emph{Mit welchen Daten?} (Operanden, z.\,B. Register R1 und R2).
-    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute} (Ausführen): Die ALU oder eine andere Komponente führt die Anweisung aus (z.\,B. Addition), das Ergebnis wird in ein Register oder in den RAM geschrieben, und der Programmzähler rückt weiter.
+    \item \tib{Execute}\index{Fetch-Decode-Execute-Zyklus!Execute} (Ausführen): Die \gls{ALU} oder eine andere Komponente führt die Anweisung aus (z.\,B. Addition), das Ergebnis wird in ein Register oder in den \gls{RAM} geschrieben, und der Programmzähler rückt weiter.
 \end{enumerate}
 
-\begin{myexample}[Konkreter Ablauf eines FDE-Zyklus]
+\begin{myexample}[Konkreter Ablauf eines \gls{FDE}-Zyklus]
     Angenommen, im Register \texttt{R1} steht der Wert $3$, im Register \texttt{R2} der Wert $5$, und an Speicheradresse \texttt{100} liegt der Maschinenbefehl \texttt{ADD R1, R2}:
     \begin{itemize}
-        \item \textbf{Fetch:} Der Programmzähler steht auf Adresse \texttt{100}. Das Steuerwerk liest das Binärmuster dieses Befehls aus dem RAM in das Befehlsregister der CPU. Gleichzeitig wird der Programmzähler auf die nächste Adresse (\texttt{101}) vorbereitet.
+        \item \textbf{Fetch:} Der Programmzähler steht auf Adresse \texttt{100}. Das Steuerwerk liest das Binärmuster dieses Befehls aus dem \gls{RAM} in das Befehlsregister der \gls{CPU}. Gleichzeitig wird der Programmzähler auf die nächste Adresse (\texttt{101}) vorbereitet.
         \item \textbf{Decode:} Das Steuerwerk entschlüsselt das Bitmuster. Es erkennt: \enquote{Operation: Addition; Operand 1: Register \texttt{R1}; Operand 2: Register \texttt{R2}; Ziel: Register \texttt{R1}}.
-        \item \textbf{Execute:} Die ALU schaltet die Werte der beiden Register an ihre Eingänge, berechnet $3 + 5 = 8$ und speichert das Ergebnis $8$ zurück in das Register \texttt{R1}. Der Zyklus ist abgeschlossen.
+        \item \textbf{Execute:} Die \gls{ALU} schaltet die Werte der beiden Register an ihre Eingänge, berechnet $3 + 5 = 8$ und speichert das Ergebnis $8$ zurück in das Register \texttt{R1}. Der Zyklus ist abgeschlossen.
     \end{itemize}
 \end{myexample}
 
 \subsection{Taktfrequenz und die Einheit Hertz (Hz)}
 
-Damit alle Komponenten einer CPU synchron zusammenarbeiten, gibt ein elektronischer Taktgeber einen gleichmässigen Rhythmus vor -- wie der Schrittmacher eines Orchesters.
+Damit alle Komponenten einer \gls{CPU} synchron zusammenarbeiten, gibt ein elektronischer Taktgeber einen gleichmässigen Rhythmus vor -- wie der Schrittmacher eines Orchesters.
 
 Die Geschwindigkeit dieses Takts heisst \tib{Taktfrequenz}\index{Taktfrequenz} und wird in der physikalischen Einheit \tib{Hertz (Hz)}\index{Hertz (Hz)} gemessen:
 \[
@@ -170,7 +381,7 @@ Heutige Prozessoren arbeiten im Gigahertz-Bereich:
         $1\,\mathrm{GHz}$ (Gigahertz) & Milliarde Takte & $10^9 = 1\,000\,000\,000\,\mathrm{Hz}$ \\
     \end{tabular}
 \end{center}
-Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}6$ Milliarden Taktzyklen pro Sekunde. Je nach Prozessorarchitektur benötigt ein Befehl einen oder mehrere Taktzyklen, oder moderne CPUs führen durch parallele Einheiten (Pipelining, Mehrkernprozessoren) sogar mehrere Befehle pro Taktzyklus aus.
+Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}6$ Milliarden Taktzyklen pro Sekunde. Je nach Prozessorarchitektur benötigt ein Befehl einen oder mehrere Taktzyklen, oder moderne \glspl{CPU} führen durch parallele Einheiten (Pipelining, Mehrkernprozessoren) sogar mehrere Befehle pro Taktzyklus aus.
 
 
 \begin{myexercise}
@@ -188,21 +399,21 @@ Ein Prozessor mit einer Taktfrequenz von $3{,}6\,\mathrm{GHz}$ durchläuft $3{,}
 \end{myexercise}
 
 \begin{mychallenge}
-    Der Addierbefehl \texttt{ADD R1, R2} weist die CPU an, den Inhalt der Register \texttt{R1} und \texttt{R2} zu addieren. Ordnen Sie die folgenden Teilschritte den drei Phasen Fetch, Decode und Execute zu:
+    Der Addierbefehl \texttt{ADD R1, R2} weist die \gls{CPU} an, den Inhalt der Register \texttt{R1} und \texttt{R2} zu addieren. Ordnen Sie die folgenden Teilschritte den drei Phasen Fetch, Decode und Execute zu:
     \begin{itemize}
         \item Der Programmzähler wird um eine Stelle weitergeschaltet.
-        \item Die ALU berechnet die Summe der beiden Register.
+        \item Die \gls{ALU} berechnet die Summe der beiden Register.
         \item Das Steuerwerk erkennt, dass es sich um einen Additionsbefehl mit zwei Registeroperanden handelt.
-        \item Der Befehl \texttt{ADD R1, R2} wird als Bitfolge aus dem RAM gelesen.
+        \item Der Befehl \texttt{ADD R1, R2} wird als Bitfolge aus dem \gls{RAM} gelesen.
     \end{itemize}
     \begin{myanswer}
         \begin{itemize}
-            \item Befehl aus RAM lesen $\to$ Fetch
+            \item Befehl aus \gls{RAM} lesen $\to$ Fetch
             \item Programmzähler weiterschalten $\to$ Fetch
             \item Befehl als Additionsbefehl mit zwei Registeroperanden erkennen $\to$ Decode
-            \item ALU berechnet Summe $\to$ Execute
+            \item \gls{ALU} berechnet Summe $\to$ Execute
         \end{itemize}
     \end{myanswer}
 \end{mychallenge}
 
-Wir haben nun gesehen, wie CPU, Arbeitsspeicher, Massenspeicher und Ein-/Ausgabe zusammenspielen, um Programme auszuführen. Im nächsten Kapitel betrachten wir, wie das Betriebssystem diese Hardware-Ressourcen verwaltet und den Anwendungen zugänglich macht.
+Wir haben nun gesehen, wie \gls{CPU}, Arbeitsspeicher, Massenspeicher und Ein-/Ausgabe zusammenspielen, um Programme auszuführen. Im nächsten Kapitel betrachten wir, wie das Betriebssystem diese Hardware-Ressourcen verwaltet und den Anwendungen zugänglich macht.

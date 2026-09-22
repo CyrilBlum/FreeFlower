@@ -1,0 +1,92 @@
+\begin{tikzpicture}[
+    scale=0.88,
+    every node/.style={transform shape},
+    board/.style={fill=DarkSlateGray!12, draw=DarkSlateGray!80, line width=1.4pt, rounded corners=6pt},
+    trace/.style={draw=RoyalBlue!80, line width=1.2pt},
+    buslabel/.style={font=\scriptsize\bfseries\sffamily, text=RoyalBlue!90!black, fill=white, inner sep=1.5pt, rounded corners=2pt}
+]
+    % --- Mainboard Platine ---
+    \draw[board] (-6.3, -4.2) rectangle (6.3, 4.2);
+    \node[anchor=north west, font=\bfseries\sffamily\footnotesize, text=DarkSlateGray!80] at (-4.2, 4.0) {Hauptplatine (Mainboard)};
+
+    % --- I/O Panel (links) ---
+    \draw[fill=Salmon!25, draw=Salmon!90!black, line width=1pt, rounded corners=2pt] (-6.1, 0.4) rectangle (-4.8, 3.4);
+    \node[rotate=90, font=\bfseries\sffamily\scriptsize, text=Salmon!90!black] at (-5.45, 1.9) {I/O-Panel};
+    \foreach \y in {0.8, 1.5, 2.2, 2.9} {
+        \draw[fill=gray!60, draw=black!70] (-6.2, \y-0.2) rectangle (-5.9, \y+0.2);
+    }
+    \node[anchor=east, font=\tiny\sffamily, text=black!75, align=right] at (-6.25, 1.9) {Tastatur/Maus\\Monitor / LAN};
+
+    % --- CPU Sockel & Prozessor (Mitte-Links) ---
+    \draw[fill=ForestGreen!15, draw=ForestGreen!80!black, line width=1.4pt, rounded corners=4pt] (-3.9, 0.4) rectangle (-0.5, 3.4);
+    \node[anchor=north, font=\bfseries\sffamily\footnotesize, text=ForestGreen!90!black] at (-2.2, 3.35) {CPU-Sockel};
+
+    % CPU Innenleben (ALU, Register, Steuerwerk)
+    \draw[fill=ForestGreen!30, draw=ForestGreen!90!black, line width=1pt, rounded corners=3pt] (-3.6, 0.6) rectangle (-0.8, 2.8);
+    
+    % Sub-blocks
+    \draw[fill=ForestGreen!60, draw=ForestGreen!90!black, rounded corners=1.5pt] (-3.4, 1.8) rectangle (-2.7, 2.5);
+    \node[font=\tiny\bfseries\sffamily, text=white] at (-3.05, 2.15) {ALU};
+    
+    \draw[fill=Gray!60, draw=Gray!90!black, rounded corners=1.5pt] (-2.55, 1.8) rectangle (-1.85, 2.5);
+    \node[font=\tiny\bfseries\sffamily, text=white] at (-2.2, 2.15) {Reg};
+    
+    \draw[fill=RoyalBlue!60, draw=RoyalBlue!90!black, rounded corners=1.5pt] (-1.7, 1.8) rectangle (-1.0, 2.5);
+    \node[font=\tiny\bfseries\sffamily, text=white] at (-1.35, 2.15) {Ctrl};
+    
+    \node[font=\tiny\sffamily\bfseries, text=ForestGreen!90!black] at (-2.2, 1.1) {CPU (Prozessor)};
+
+    % --- RAM Bänke (Rechts oben) ---
+    \draw[fill=Teal!15, draw=Teal!80!black, line width=1.2pt, rounded corners=3pt] (0.8, 0.4) rectangle (5.8, 3.4);
+    \node[anchor=north, font=\bfseries\sffamily\footnotesize, text=Teal!90!black] at (3.3, 3.35) {Arbeitsspeicher (RAM-Bänke)};
+
+    % 4 RAM Riegel
+    \foreach \x/\label in {1.3/DIMM 1, 2.5/DIMM 2, 3.7/DIMM 3, 4.9/DIMM 4} {
+        \draw[fill=Teal!35, draw=Teal!90!black, line width=0.8pt, rounded corners=1pt] (\x-0.35, 0.6) rectangle (\x+0.35, 2.8);
+        \node[rotate=90, font=\tiny\sffamily\bfseries, text=Teal!90!black] at (\x, 1.7) {\label};
+        \foreach \y in {0.85, 1.4, 1.95, 2.5} {
+            \draw[fill=black!75] (\x-0.25, \y-0.12) rectangle (\x-0.08, \y+0.12);
+            \draw[fill=black!75] (\x+0.08, \y-0.12) rectangle (\x+0.25, \y+0.12);
+        }
+    }
+
+    % --- Chipsatz (Mitte) ---
+    \draw[fill=gray!40, draw=black!80, line width=1.1pt, rounded corners=3pt] (1.6, -1.8) rectangle (3.2, -0.6);
+    \node[font=\tiny\sffamily\bfseries, text=black, align=center] at (2.4, -1.2) {Chipsatz\\(Controller)};
+
+    % --- Massenspeicher (M.2 NVMe SSD) (Rechts unten) ---
+    \draw[fill=Orchid!15, draw=Orchid!80!black, line width=1.2pt, rounded corners=3pt] (0.6, -3.9) rectangle (5.8, -2.4);
+    \node[anchor=north, font=\bfseries\sffamily\footnotesize, text=Orchid!90!black] at (3.2, -2.45) {Massenspeicher (M.2 NVMe SSD)};
+    \draw[fill=Orchid!35, draw=Orchid!90!black, line width=0.8pt, rounded corners=2pt] (0.9, -3.8) rectangle (5.5, -3.1);
+    \foreach \cx in {1.5, 2.5, 3.5, 4.5} {
+        \draw[fill=black!80] (\cx-0.35, -3.72) rectangle (\cx+0.35, -3.18);
+    }
+
+    % --- PCIe Steckplätze (Links unten) ---
+    \draw[fill=gray!25, draw=black!60, line width=1pt, rounded corners=2pt] (-5.6, -1.5) rectangle (-0.6, -0.9);
+    \node[font=\tiny\bfseries\sffamily, text=black!70] at (-3.1, -1.2) {PCIe $\times$16 Slot (z.\,B. Grafikkarte)};
+    \draw[fill=gray!25, draw=black!60, line width=1pt, rounded corners=2pt] (-5.6, -2.5) rectangle (-1.6, -1.9);
+    \node[font=\tiny\bfseries\sffamily, text=black!70] at (-3.6, -2.2) {PCIe $\times$4 Slot};
+    \draw[fill=gray!25, draw=black!60, line width=1pt, rounded corners=2pt] (-5.6, -3.5) rectangle (-1.6, -2.9);
+    \node[font=\tiny\bfseries\sffamily, text=black!70] at (-3.6, -3.2) {SATA / Erweiterungen};
+
+    % --- Systembus (Leiterbahnen) ---
+    % CPU <-> RAM (Speicherbus)
+    \draw[trace, double distance=2pt] (-0.4, 1.9) -- (0.8, 1.9);
+    \node[buslabel] at (0.2, 2.2) {Speicherbus};
+
+    % CPU <-> I/O Panel
+    \draw[trace] (-3.8, 1.9) -- (-4.8, 1.9);
+
+    % CPU <-> Chipsatz
+    \draw[trace, double distance=2pt] (-2.1, 0.4) -- (-2.1, -0.4) -- (2.7, -0.4) -- (2.7, -0.6);
+    
+    % Chipsatz <-> M.2 SSD
+    \draw[trace, double distance=2pt] (2.7, -1.8) -- (2.7, -2.4);
+    \node[buslabel] at (2.7, -2.1) {PCIe / DMI};
+
+    % Chipsatz <-> PCIe Slots
+    \draw[trace] (1.8, -1.2) -- (-0.6, -1.2);
+    \node[buslabel] at (0.6, -0.9) {Systembus};
+
+\end{tikzpicture}

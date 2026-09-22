@@ -34,6 +34,56 @@ Das Programm ist selbst nur ein Stück Daten -- also eine Bitfolge, die jederzei
 \end{center}
 \end{frame}
 
+\begin{frame}\FDUtitle{Die Büro-Analogie (mentales Modell)}
+\begin{center}
+\scalebox{0.82}{
+\begin{tabular}{lll}
+    \textbf{Komponente} & \textbf{Rolle im Büro} & \textbf{Eigenschaft} \\\midrule
+    \textbf{CPU} & \textbf{Arbeitende Person} & Rechnet und führt Befehle aus \\
+    \quad $\hookrightarrow$ \textit{Steuerwerk} & Gehirn / Planer (liest Anleitung) & Steuert Ablauf und Takt \\
+    \quad $\hookrightarrow$ \textit{ALU} & Taschenrechner / Werkzeug & Arithmetik und Vergleiche \\
+    \quad $\hookrightarrow$ \textit{Register} & Notizblock / Hände & Winzig, extrem schnell \\
+    \textbf{RAM} & \textbf{Schreibtischplatte} & Schnell; am Feierabend leer (\emph{flüchtig}) \\
+    \textbf{Massenspeicher} & \textbf{Aktenschrank / Archiv} & Dauerhaft (\emph{nicht flüchtig}), langsamer \\
+    \textbf{Systembus} & \textbf{Laufwege / Förderband} & Verbindet alle Bauteile \\
+    \textbf{Ein-/Ausgabe} & \textbf{Posteingang \& Fenster} & Schnittstelle zur Aussenwelt \\
+\end{tabular}}
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Hauptplatine (Mainboard)}
+\begin{center}
+\resizebox{0.82\textwidth}{!}{%
+\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_mainboard.tex}%
+}
+\end{center}
+\end{frame}
+
+\begin{frame}\FDUtitle{Reale Hardware-Komponenten}
+\begin{columns}[T,onlytextwidth]
+\column{0.24\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=2.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/cpu.jpg}
+\vskip2pt
+\textbf{\scriptsize CPU}\\\tiny Prozessor (Sockel)
+\column{0.24\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=2.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ram.jpg}
+\vskip2pt
+\textbf{\scriptsize RAM}\\\tiny Arbeitsspeicher
+\column{0.24\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=2.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd.jpg}
+\vskip2pt
+\textbf{\scriptsize SSD}\\\tiny Massenspeicher
+\column{0.24\textwidth}
+\centering
+\includegraphics[width=\linewidth,height=2.7cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/mainboard.jpg}
+\vskip2pt
+\textbf{\scriptsize Mainboard}\\\tiny Hauptplatine / Busse
+\end{columns}
+\end{frame}
+
 \begin{frame}\FDUtitle{Warum ist das riskant?}
 \begin{center}
 Was könnte passieren, wenn ein fehlerhaftes Programm versehentlich seinen eigenen Programmcode überschreibt?

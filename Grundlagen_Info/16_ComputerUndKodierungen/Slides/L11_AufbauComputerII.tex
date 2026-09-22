@@ -30,30 +30,88 @@ Die Adressen sind hexadezimal (Lektion 3) -- daher das Präfix \texttt{0x}.
 \end{itemize}
 \end{frame}
 
-\begin{frame}\FDUtitle{Massenspeicher}
+\begin{frame}\FDUtitle{Grössenordnungen in der Informatik (\gls{SI}-Präfixe)}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{.46\textwidth}
-\large\bfseries\color{FDUteal}HDD
+\begin{column}{.48\textwidth}
+\large\bfseries\color{FDUteal}Kleine Einheiten \scriptsize(Zeit / Latenz)
 \vspace{2mm}
-\normalsize Magnetische Scheiben speichern Bits als winzige magnetisierte Bereiche. Langsam, aber billig und langlebig.
+\footnotesize
+\begin{tabular}{@{}lll@{}}
+    \textbf{Präfix} & \textbf{Faktor} & \textbf{Beispiel} \\\midrule
+    \textbf{Nano} ($\mathrm{n}$) & $10^{-9}$ & RAM ($50\,\mathrm{ns}$), $1\,\mathrm{GHz}$ Takt \\
+    \textbf{Mikro} ($\mu$) & $10^{-6}$ & SSD-Zugriff ($50\,\mu\mathrm{s}$) \\
+    \textbf{Milli} ($\mathrm{m}$) & $10^{-3}$ & HDD-Zugriff ($10\,\mathrm{ms}$) \\
+\end{tabular}
 \end{column}
-\begin{column}{.46\textwidth}
-\large\bfseries\color{FDUblue}SSD
+\begin{column}{.48\textwidth}
+\large\bfseries\color{FDUblue}Grosse Einheiten \scriptsize(Speicher / Frequenz)
 \vspace{2mm}
-\normalsize Daten als elektrische Ladung in Flashspeicher-Zellen. Deutlich schneller, keine beweglichen Teile.
+\footnotesize
+\begin{tabular}{@{}lll@{}}
+    \textbf{Präfix} & \textbf{Faktor} & \textbf{Beispiel} \\\midrule
+    \textbf{Kilo} ($\mathrm{k}$) & $10^3$ & Text ($50\,\mathrm{kB}$), $1\,\mathrm{kHz}$ \\
+    \textbf{Mega} ($\mathrm{M}$) & $10^6$ & MP3, HDD ($150\,\mathrm{MB/s}$) \\
+    \textbf{Giga} ($\mathrm{G}$) & $10^9$ & RAM ($16\,\mathrm{GB}$), $3{,}6\,\mathrm{GHz}$ \\
+    \textbf{Tera} ($\mathrm{T}$) & $10^{12}$ & Massenspeicher ($1\text{--}4\,\mathrm{TB}$) \\
+\end{tabular}
 \end{column}
 \end{columns}
-\vspace{5mm}
-\begin{center}
-RAM: 30--50 GB/s \quad SSD: 1--7 GB/s \quad HDD: 100--200 MB/s
-\end{center}
 \end{frame}
 
-\begin{frame}\FDUtitle{Übung: Ladezeit}
-\begin{center}
-Ein Foto (24 MB) wird von einer SSD mit 2 GB/s Lesegeschwindigkeit geladen. Wie lange dauert das?
-\end{center}
-\only<2->{\begin{center}\Large $\dfrac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = 12\,\mathrm{ms}$\end{center}}
+\begin{frame}\FDUtitle{Mini-Übung: \gls{SI}-Präfixe umwandeln}
+Wandeln Sie in handliche Einheiten mit \gls{SI}-Präfixen um:
+\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{4pt}
+  \item RAM-Lesezugriff: $0{,}000\,000\,015\,\mathrm{s} = 15 \times 10^{-9}\,\mathrm{s} = \mathbf{15\,\mathrm{ns}}$
+  \item NVMe-SSD-Latenz: $0{,}000\,04\,\mathrm{s} = 40 \times 10^{-6}\,\mathrm{s} = \mathbf{40\,\mu\mathrm{s}}$
+  \item Prozessor-Taktfrequenz: $3\,600\,000\,000\,\mathrm{Hz} = 3{,}6 \times 10^9\,\mathrm{Hz} = \mathbf{3{,}6\,\mathrm{GHz}}$
+  \item System-Update: $4\,800\,000\,000\,\mathrm{Byte} = 4{,}8 \times 10^9\,\mathrm{Byte} = \mathbf{4{,}8\,\mathrm{GB}}$
+  \item Schul-Backup-Server: $12\,000\,000\,000\,000\,\mathrm{Byte} = 12 \times 10^{12}\,\mathrm{Byte} = \mathbf{12\,\mathrm{TB}}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}\FDUtitle{Massenspeicher: HDD vs.\ SSD (Aufbau)}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.48\textwidth}
+\centering
+\large\bfseries\color{FDUteal}HDD \scriptsize(Magnetisch/Mechanisch)
+\vspace{1mm}
+\includegraphics[width=0.9\linewidth,height=2.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/hdd_inside.jpg}
+\vskip2pt
+\tiny Rotierende Scheiben \& beweglicher Schreib-/Lesearm.\\
+$\hookrightarrow$ Mechanische Trägheit (\textbf{Latenz: $\approx 10\,\mathrm{ms}$})
+\end{column}
+\begin{column}{.48\textwidth}
+\centering
+\large\bfseries\color{FDUblue}SSD \scriptsize(Elektronisch/Halbleiter)
+\vspace{1mm}
+\includegraphics[width=0.9\linewidth,height=2.8cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/ssd_inside.jpg}
+\vskip2pt
+\tiny Flash-Speicherchips \& Controller (keine Mechanik).\\
+$\hookrightarrow$ Rein elektronisch (\textbf{Latenz: $\approx 0.05\,\mathrm{ms}$, $\approx 200\times$ schneller})
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}\FDUtitle{Massenspeicher: Geschwindigkeit \& Latenz}
+\centering
+\resizebox{!}{0.72\textheight}{%
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_hdd_ssd_speed.tex}
+}
+\end{frame}
+
+\begin{frame}\FDUtitle{Übung: Foto laden (SSD vs.\ HDD \& RAM)}
+Ein hochauflösendes Foto ($24\,\mathrm{MB}$) soll geladen werden:
+\begin{itemize}\setlength\itemsep{2pt}
+  \item \textbf{SSD:} $2\,\mathrm{GB/s}$ ($2000\,\mathrm{MB/s}$), Latenz $0{,}05\,\mathrm{ms}$ \quad \textbf{HDD:} $150\,\mathrm{MB/s}$, Latenz $10\,\mathrm{ms}$
+\end{itemize}
+\begin{enumerate}[<+->][(a)]\small\setlength\itemsep{3pt}
+  \item \textbf{Übertragungsdauer:} SSD: $\frac{24\,\mathrm{MB}}{2000\,\mathrm{MB/s}} = \mathbf{12\,\mathrm{ms}}$ \quad vs. \quad HDD: $\frac{24\,\mathrm{MB}}{150\,\mathrm{MB/s}} = \mathbf{160\,\mathrm{ms}}$ ($>13\times$ langsamer)
+  \item \textbf{Mit Latenz:} SSD: $0{,}05 + 12 = \mathbf{12{,}05\,\mathrm{ms}}$ \quad vs. \quad HDD: $10 + 160 = \mathbf{170\,\mathrm{ms}}$
+  \item \textbf{1'000 Mini-Bilder} ($1000 \times 24\,\mathrm{kB} = 24\,\mathrm{MB}$):\\
+  SSD: $1000 \times 0{,}05 + 12 = \mathbf{62\,\mathrm{ms}}$ \quad vs. \quad HDD: $1000 \times 10 + 160 = \mathbf{10{,}16\,\mathrm{s}}$!
+  \item \textbf{Zielort:} Daten fliessen in den \textbf{RAM} (CPU rechnet nur dort mit $\mathrm{ns}$-Latenz).
+  \item \textbf{Stromausfall:} RAM ist \textbf{flüchtig} $\to$ ungespeicherte Änderungen sind weg.
+\end{enumerate}
 \end{frame}
 
 \begin{frame}\FDUtitle{Aufgabe 5.3: Ein Game von Steam herunterladen}
