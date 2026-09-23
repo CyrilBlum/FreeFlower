@@ -141,20 +141,30 @@ def process_nested_command(text, cmd_name, convert_fn):
 def compile_tikz_snippet(tikz_code):
     """Compiles a standalone TikZ snippet to PDF and high-res PNG for web display."""
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Overlay diagrams cannot be rendered in standalone mode
+    if "overlay" in tikz_code or "remember picture" in tikz_code:
+        return ""
+
     h = hashlib.md5(tikz_code.strip().encode("utf-8")).hexdigest()[:12]
     out_png = IMAGES_DIR / f"tikz_{h}.png"
     out_pdf = IMAGES_DIR / f"tikz_{h}.pdf"
 
-    if out_png.exists():
+    if out_png.exists() and out_png.stat().st_size > 1000:
         return f"images/tikz_{h}.png"
 
     tex_source = (
         "\\documentclass[tikz,border=3mm]{standalone}\n"
-        "\\input{Preambles/pre_0_packages.tex}\n"
-        "\\input{Preambles/pre_1_options.tex}\n"
-        "\\input{Preambles/pre_2_macros.tex}\n"
+        "\\usepackage[svgnames,dvipsnames]{xcolor}\n"
+        "\\usepackage{tikz}\n"
+        "\\usepackage{pgfplots}\n"
+        "\\pgfplotsset{compat=1.18}\n"
+        "\\usepackage{fontawesome5}\n"
+        "\\usepackage{listings}\n"
+        "\\usepackage{amsmath,amssymb}\n"
+        "\\usepackage{graphicx}\n"
         "\\input{Preambles/pre_3_tikz.tex}\n"
-        "\\input{Preambles/pre_4_custom_envs.tex}\n"
+        "\\input{Preambles/pre_2_macros.tex}\n"
         "\\begin{document}\n"
         + tikz_code.strip() + "\n"
         "\\end{document}\n"
@@ -356,9 +366,6 @@ def convert_tex_content(tex_text, ch_num="1"):
     for i, block in enumerate(lst_blocks):
         text = text.replace(f"___LSTLISTING_PLACEHOLDER_{i}___", block)
 
-    # Clean standalone TeX closing braces
-    text = re.sub(r'^\s*\}\s*$', '', text, flags=re.MULTILINE)
-
     # Clean texorpdfstring
     text = re.sub(r'\\texorpdfstring\{[^\}]*\\lstinline[\|!]([^\|!]+)[\|!][^\}]*\}\{([^\}]+)\}', r'`\1`', text)
 
@@ -393,18 +400,7 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = re.sub(r'\\subsection\{([^\}]+)\}(?:\s*\\label\{([^\}]+)\})?', convert_subsection, text)
     text = re.sub(r'\\subsubsection\{([^\}]+)\}(?:\s*\\label\{([^\}]+)\})?', convert_subsubsection, text)
 
-    # Convert \lstinputlisting to pyodide / static blocks
-    text = re.sub(r'\\lstinputlisting(?:\[[^\]]*\])?\{([^\}]+)\}', resolve_lstinputlisting, text)
-
-    # Convert \begin{lstlisting}[opts] ... \end{lstlisting}
-    def convert_lstlisting(m):
-        code = m.group(2).strip()
-        code = code.replace(r'\end{lstlisting}', '')
-        return format_code_block(code)
-
-    text = re.sub(r'\\begin\{lstlisting\}(?:\[([^\]]*)\])?(.*?)\\end\{lstlisting\}', convert_lstlisting, text, flags=re.DOTALL)
-
-    # Process figures and standalone graphics BEFORE stripping figure environments
+    # Process figures and standalone graphics BEFORE converting lstlisting blocks
     def process_figure(m):
         fig_content = m.group(1)
         caption_match = re.search(r'\\caption\{([^\}]+)\}', fig_content)
@@ -436,8 +432,6 @@ def convert_tex_content(tex_text, ch_num="1"):
     # Process standalone TikZ (not overlay)
     def process_standalone_tikz(m):
         tikz_code = m.group(0)
-        if "overlay" in tikz_code or "remember picture" in tikz_code:
-            return ""
         img_path = compile_tikz_snippet(tikz_code)
         return f"\n\n::: {{.text-center}}\n![]({img_path})\n:::\n\n" if img_path else ""
 
@@ -449,6 +443,17 @@ def convert_tex_content(tex_text, ch_num="1"):
         return f"![]({img_path})"
 
     text = re.sub(r'\\includegraphics(?:\[[^\]]*\])?\{([^\}]+)\}', process_standalone_includegraphics, text)
+
+    # Convert \lstinputlisting to pyodide / static blocks
+    text = re.sub(r'\\lstinputlisting(?:\[[^\]]*\])?\{([^\}]+)\}', resolve_lstinputlisting, text)
+
+    # Convert \begin{lstlisting}[opts] ... \end{lstlisting}
+    def convert_lstlisting(m):
+        code = m.group(2).strip()
+        code = code.replace(r'\end{lstlisting}', '')
+        return format_code_block(code)
+
+    text = re.sub(r'\\begin\{lstlisting\}(?:\[([^\]]*)\])?(.*?)\\end\{lstlisting\}', convert_lstlisting, text, flags=re.DOTALL)
 
     # Convert Custom Environments to Quarto Callouts in unified document-order pass
     ENV_CONFIGS = {
@@ -683,6 +688,8 @@ def update_quarto_yml(chapters):
     yml_content = f"""project:
   type: website
   output-dir: _site
+  resources:
+    - "images/*"
 
 website:
   title: "FreeFlower | Programmieren"
