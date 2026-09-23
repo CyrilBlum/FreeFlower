@@ -324,23 +324,46 @@ MeinGame/
     Verbinden Sie die vorherigen Bausteine: Bewegen Sie den Spieler, sammeln Sie Items (Punkte zählen), spielen Sie dabei einen Sound ab und zeichnen Sie im Hintergrund Ihren Sonnenuntergang. Begrenzen Sie die Spielzeit auf 60 Sekunden und zeigen Sie die verbleibende Zeit im Fenstertitel an.
 \end{mychallenge}
 
-\begin{myexercise}[Pong-Spiel]
-    Erstellen Sie das klassische Pong-Spiel mit zwei Paddles und einem Ball.
+\section{Dateiverarbeitung: Speicher- \& Highscore-Systeme (File I/O)}
+Damit ein Game Spielstände, Einstellungen oder Highscores auch nach dem Beenden des Programms behält, müssen Daten dauerhaft auf dem Datenträger gespeichert werden. In Python erfolgt der Dateizugriff am sichersten mit dem \lstinline|with open(...)|-Konstrukt, welches sicherstellt, dass die Datei nach dem Bearbeiten automatisch geschlossen wird.
+
+\subsection{Einfache Textdateien (.txt)}
+Mit dem Modus \lstinline|"r"| (Read) werden Daten gelesen, mit \lstinline|"w"| (Write) überschrieben und mit \lstinline|"a"| (Append) angefügt.
+
+\begin{mydefinition}[Dateien lesen und schreiben]
+\begin{lstlisting}
+# 1. Highscore aus Textdatei laden (mit try/except, falls Datei noch nicht existiert)
+try:
+    with open("highscore.txt", "r") as file:
+        highscore = int(file.read())
+except FileNotFoundError:
+    highscore = 0
+
+# 2. Neuen Highscore in Textdatei schreiben
+with open("highscore.txt", "w") as file:
+    file.write(str(highscore))
+\end{lstlisting}
+\end{mydefinition}
+
+\begin{myexercise}[Pong-Spiel mit dauerhaftem Highscore]\label{myexercise:HighscoreTxt}
+    Erstellen Sie das klassische Pong-Spiel mit zwei Paddles, einem Ball und dauerhaftem Highscore-Speicher in einer Datei \texttt{highscore.txt}.
 
     Das folgende Video zeigt das fertige Pong-Spiel: \url{https://youtu.be/vCoBgJlUg_c}
 
-    Die Paddles werden mit den Tasten \lstinline|W/S| (links) und \lstinline|UP/DOWN| (rechts) gesteuert. Der Ball bewegt sich automatisch und prallt von den Paddles und den oberen/unteren Bildschirmrändern ab. Zählen Sie die Punkte, wenn ein Spieler den Ball am Gegner vorbei spielt. Gehen Sie Schritt für Schritt vor, indem Sie folgende Elemente umsetzen:
+    Die Paddles werden mit den Tasten \lstinline|W/S| (links) und \lstinline|UP/DOWN| (rechts) gesteuert. Der Ball bewegt sich automatisch und prallt von den Paddles und den oberen/unteren Bildschirmrändern ab. Zählen Sie die Punkte, wenn ein Spieler den Ball am Gegner vorbei spielt. Gehen Sie Schritt für Schritt vor:
     \begin{enumerate}
         \item Rechtecke für Paddles und Ball zeichnen
         \item Mittellinie zeichnen
         \item Tastatur-Eingaben für Paddle-Bewegung (\texttt{W/S} und \texttt{UP/DOWN})
         \item Ball von der Mitte aus in eine zufällige Richtung starten lassen
-        \item Kollisionserkennung für Ball und Paddles, Richtung von Ball umkehren bei Kollision oder sofern der Ball die oberen/unteren Ränder berührt
-        \item Punkte zählen und anzeigen
+        \item Kollisionserkennung für Ball und Paddles, Richtung von Ball umkehren bei Kollision oder oberen/unteren Rändern
+        \item Punkte zählen und aktuellen Spielstand im Fenster anzeigen
+        \item \textbf{Highscore laden \& anzeigen:} Laden Sie vor der Game-Schleife den Highscore aus der Datei \texttt{highscore.txt}. Fangen Sie mit \lstinline|try / except FileNotFoundError:| den Fall ab, dass die Datei beim allerersten Start noch nicht existiert (in diesem Fall ist \lstinline|highscore = 0|). Zeichnen Sie den Highscore unterhalb des aktuellen Spielstands.
+        \item \textbf{Highscore speichern:} Sobald der Punktestand eines Spielers den bisherigen Highscore übertrifft, aktualisieren Sie \lstinline|highscore| und schreiben den neuen Wert mit \lstinline|with open("highscore.txt", "w") as file:| direkt in die Datei.
         \item Soundeffekte bei Kollisionen und Punkten
     \end{enumerate}
     \begin{myanswer}
-        Eine mögliche Lösung zum Pong-Spiel finden Sie auf Moodle.
+        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
     \end{myanswer}
 \end{myexercise}
 
@@ -463,7 +486,35 @@ def reset_ball(direction):  # direction: -1 nach links, +1 nach rechts
     \end{itemize}
 \end{myexercise}
 
-\subsection{Objektorientierte Spielobjekte mit Pygame-Sprites}
+\subsection{Strukturierte Tabellen mit CSV (.csv)}
+Möchte man eine Rangliste (Leaderboard) mit mehreren Spielernamen und Punkteständen speichern, eignet sich das CSV-Format (Comma-Separated Values). Python bietet dafür das eingebaute Modul \lstinline|csv|.
+
+\begin{mydefinition}[CSV-Dateien lesen und schreiben]
+\begin{lstlisting}
+import csv
+
+# Leaderboard speichern
+scores = [["Alice", 240], ["Bob", 180], ["Clara", 310]]
+with open("highscores.csv", "w", newline="", encoding="utf-8") as file:
+    writer = csv.writer(file)
+    writer.writerow(["Player", "Score"])  # Header
+    writer.writerows(scores)
+
+# Leaderboard laden
+with open("highscores.csv", "r", encoding="utf-8") as file:
+    reader = csv.reader(file)
+    next(reader, None)  # Header-Zeile überspringen
+    for row in reader:
+        player_name = row[0]
+        player_score = int(row[1])
+\end{lstlisting}
+\end{mydefinition}
+
+\begin{myexercise}[Leaderboard-Tabelle mit CSV]\label{myexercise:HighscoreCsv}
+Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-Datei \texttt{highscores.csv} einliest, die Einträge nach Punktestand absteigend sortiert und die Top-3-Spieler auf der Konsole oder im Pygame-Fenster ausgibt.
+\end{myexercise}
+
+\section{Objektorientierte Spielobjekte mit Pygame-Sprites}
 In komplexeren Spielen möchten wir häufig viele gleichartige Spielobjekte gleichzeitig verwalten -- beispielsweise Dutzende Münzen, Sterne, Hindernisse oder Laser-Schüsse. Bisher mussten wir Positionen, Bewegungen und Kollisionen für jedes Objekt einzeln mit separaten Variablen, Schleifen und Listen steuern.
 
 Pygame stellt dafür mit \lstinline|pg.sprite.Sprite| und \lstinline|pg.sprite.Group| ein elegantes, objektorientiertes System bereit, das direkt an das Klassen-Konzept aus \cref{ch:K07_Klassen} anknüpft:
@@ -498,67 +549,6 @@ Folgender Code zeigt das Einsammeln mehrerer Münzen-Sprites mit automatischer K
     \begin{myanswer}
         Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
     \end{myanswer}
-\end{myexercise}
-
-
-
-\section{Dateiverarbeitung: Speicher- \& Highscore-Systeme (File I/O)}
-Damit ein Game Spielstände, Einstellungen oder Highscores auch nach dem Beenden des Programms behält, müssen Daten dauerhaft auf dem Datenträger gespeichert werden. In Python erfolgt der Dateizugriff am sichersten mit dem \lstinline|with open(...)|-Konstrukt, welches sicherstellt, dass die Datei nach dem Bearbeiten automatisch geschlossen wird.
-
-\subsection{Einfache Textdateien (.txt)}
-Mit dem Modus \lstinline|"r"| (Read) werden Daten gelesen, mit \lstinline|"w"| (Write) überschrieben und mit \lstinline|"a"| (Append) angefügt.
-
-\begin{mydefinition}[Dateien lesen und schreiben]
-\begin{lstlisting}
-# 1. Highscore aus Textdatei lesen
-with open("highscore.txt", "r") as file:
-    highscore = int(file.read())
-
-# 2. Neuen Highscore in Textdatei schreiben
-with open("highscore.txt", "w") as file:
-    file.write(str(highscore))
-\end{lstlisting}
-\end{mydefinition}
-
-\begin{myexercise}[Pong-Erweiterung: Highscore speichern und anzeigen]\label{myexercise:HighscoreTxt}
-    Erweitern Sie Ihr Pong-Spiel so, dass der bisherige Highscore dauerhaft in einer Textdatei gespeichert, beim Spielstart geladen und im Spielfenster angezeigt wird:
-    \begin{enumerate}
-        \item Erstellen Sie im selben Ordner wie Ihr Skript eine Datei namens \texttt{highscore.txt} und schreiben Sie eine \lstinline|0| hinein.
-        \item \textbf{Highscore laden:} Öffnen und lesen Sie die Datei vor der Game-Schleife mit \lstinline|with open("highscore.txt", "r") as file:| und speichern Sie den Wert als Zahl in der Variable \lstinline|highscore|.
-        \item \textbf{Highscore anzeigen:} Zeichnen Sie den Highscore mit \lstinline|font.render(...)| und \lstinline|screen.blit(...)| unterhalb des aktuellen Spielstands im Spielfenster.
-        \item \textbf{Highscore speichern:} Sobald der Punktestand eines Spielers den bisherigen Highscore übertrifft, aktualisieren Sie \lstinline|highscore| und schreiben den neuen Wert mit \lstinline|with open("highscore.txt", "w") as file:| direkt in die Datei.
-    \end{enumerate}
-    \begin{myanswer}
-        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
-    \end{myanswer}
-\end{myexercise}
-
-\subsection{Strukturierte Tabellen mit CSV (.csv)}
-Möchte man eine Rangliste (Leaderboard) mit mehreren Spielernamen und Punkteständen speichern, eignet sich das CSV-Format (Comma-Separated Values). Python bietet dafür das eingebaute Modul \lstinline|csv|.
-
-\begin{mydefinition}[CSV-Dateien lesen und schreiben]
-\begin{lstlisting}
-import csv
-
-# Leaderboard speichern
-scores = [["Alice", 240], ["Bob", 180], ["Clara", 310]]
-with open("highscores.csv", "w", newline="", encoding="utf-8") as file:
-    writer = csv.writer(file)
-    writer.writerow(["Player", "Score"])  # Header
-    writer.writerows(scores)
-
-# Leaderboard laden
-with open("highscores.csv", "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    next(reader, None)  # Header-Zeile überspringen
-    for row in reader:
-        player_name = row[0]
-        player_score = int(row[1])
-\end{lstlisting}
-\end{mydefinition}
-
-\begin{myexercise}[Leaderboard-Tabelle mit CSV]\label{myexercise:HighscoreCsv}
-Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-Datei \texttt{highscores.csv} einliest, die Einträge nach Punktestand absteigend sortiert und die Top-3-Spieler auf der Konsole oder im Pygame-Fenster ausgibt.
 \end{myexercise}
 
 \section{Game-Auftrag}

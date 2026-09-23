@@ -193,9 +193,13 @@ jobs:
         git fetch --all
         git reset --hard origin/main
 
+    - name: Add TeX Live to PATH
+      run: echo "/mnt/HC_Volume_100926434/texlive/2024/bin/x86_64-linux" >> $GITHUB_PATH
+
     - name: Build Quarto Web Site
       shell: bash
       run: |
+        export PATH="/mnt/HC_Volume_100926434/texlive/2024/bin/x86_64-linux:$HOME/.local/bin:$PATH"
         python3 web_mvp/convert_tex_to_qmd.py
 
     - name: Deploy to Hetzner Web Directory

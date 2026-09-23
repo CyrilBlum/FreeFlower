@@ -24,8 +24,11 @@ left_score = 0
 right_score = 0
 
 # 1. Highscore beim Start aus Datei laden
-with open("highscore.txt", "r") as file:
-    highscore = int(file.read())
+try:
+    with open("highscore.txt", "r") as file:
+        highscore = int(file.read())
+except FileNotFoundError:
+    highscore = 0
 
 running = True
 while running:

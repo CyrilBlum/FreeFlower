@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
 Automated Build Script: Advanced TeX to Quarto Web Skript Converter
-Converts FreeFlower LaTeX chapter files into ultra-compact, interactive Quarto (.qmd) Web pages.
-Configures auto-hiding sticky navbar, VS Code Dark listings, full article layout, and exact tcolorbox color schemes.
+Converts FreeFlower LaTeX chapter files into interactive Quarto (.qmd) Web pages.
+Renders and includes native TikZ diagrams, PDFs, vector graphics, and fixes nested LaTeX commands.
 """
 
 import os
 import re
 import sys
+import shutil
+import hashlib
 import subprocess
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CHAPTERS_DIR = REPO_ROOT / "Grundlagen_Info" / "00_Programmieren" / "Skript" / "Chapters"
 WEB_DIR = REPO_ROOT / "web_mvp"
+IMAGES_DIR = WEB_DIR / "images"
 
 CHAPTER_MAPPING = [
     {"tex": "K01_Getting_Started.tex", "qmd": "01_getting_started.qmd", "num": "1", "title": "Getting Started"},
@@ -41,6 +44,19 @@ EMOJI_MAP = {
     'smiling-face': '😊',
 }
 
+KEY_MAP = {
+    r'\tab': 'Tab',
+    r'\shift': 'Shift',
+    r'\ctrl': 'Strg',
+    r'\Alt': 'Alt',
+    r'\cmd': 'Cmd',
+    r'\return': 'Enter',
+    r'\enter': 'Enter',
+    r'\esc': 'Esc',
+    r'\space': 'Leertaste',
+    r'\backspace': 'Backspace',
+}
+
 def format_code_block(code_content, caption_str=""):
     """Determines whether code should be an interactive pyodide block or static python block."""
     code_content = code_content.strip()
@@ -66,6 +82,173 @@ def resolve_lstinputlisting(match):
         except Exception as e:
             return f"\n```python\n# Failed to read {rel_path}: {e}\n```\n"
     return f"\n```python\n# Listing file not found: {rel_path}\n```\n"
+
+def replace_balanced_command(text, cmd_name, transform_fn):
+    r"""Finds occurrences of \cmd_name{...} with balanced braces and replaces them."""
+    pattern = r'\\' + cmd_name + r'\{'
+    while True:
+        m = re.search(pattern, text)
+        if not m:
+            break
+        start_idx = m.start()
+        content_start = m.end()
+        depth = 1
+        i = content_start
+        while i < len(text) and depth > 0:
+            if text[i] == '{':
+                depth += 1
+            elif text[i] == '}':
+                depth -= 1
+            i += 1
+        if depth == 0:
+            inner = text[content_start : i - 1]
+            replacement = transform_fn(inner)
+            text = text[:start_idx] + replacement + text[i:]
+        else:
+            break
+    return text
+
+def process_nested_command(text, cmd_name, convert_fn):
+    r"""Finds occurrences of \cmd_name{arg1}{arg2}... handling nested braces properly."""
+    pattern = r'\\' + cmd_name + r'\{'
+    while True:
+        m = re.search(pattern, text)
+        if not m:
+            break
+        start_pos = m.start()
+        curr_pos = m.end() - 1
+        args = []
+        while curr_pos < len(text) and text[curr_pos] == '{':
+            depth = 1
+            idx = curr_pos + 1
+            while idx < len(text) and depth > 0:
+                if text[idx] == '{':
+                    depth += 1
+                elif text[idx] == '}':
+                    depth -= 1
+                idx += 1
+            if depth == 0:
+                args.append(text[curr_pos + 1 : idx - 1])
+                curr_pos = idx
+                while curr_pos < len(text) and text[curr_pos].isspace():
+                    curr_pos += 1
+            else:
+                break
+        replacement = convert_fn(args)
+        text = text[:start_pos] + replacement + text[curr_pos:]
+    return text
+
+def compile_tikz_snippet(tikz_code):
+    """Compiles a standalone TikZ snippet to PDF and high-res PNG for web display."""
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    h = hashlib.md5(tikz_code.strip().encode("utf-8")).hexdigest()[:12]
+    out_png = IMAGES_DIR / f"tikz_{h}.png"
+    out_pdf = IMAGES_DIR / f"tikz_{h}.pdf"
+
+    if out_png.exists():
+        return f"images/tikz_{h}.png"
+
+    tex_source = (
+        "\\documentclass[tikz,border=3mm]{standalone}\n"
+        "\\input{Preambles/pre_0_packages.tex}\n"
+        "\\input{Preambles/pre_1_options.tex}\n"
+        "\\input{Preambles/pre_2_macros.tex}\n"
+        "\\input{Preambles/pre_3_tikz.tex}\n"
+        "\\input{Preambles/pre_4_custom_envs.tex}\n"
+        "\\begin{document}\n"
+        + tikz_code.strip() + "\n"
+        "\\end{document}\n"
+    )
+
+    tmp_tex = REPO_ROOT / f"_tmp_tikz_{h}.tex"
+    tmp_pdf = REPO_ROOT / f"_tmp_tikz_{h}.pdf"
+    tmp_out_prefix = REPO_ROOT / f"_tmp_tikz_{h}_out"
+
+    try:
+        tmp_tex.write_text(tex_source, encoding="utf-8")
+        subprocess.run(
+            ["lualatex", "--interaction=nonstopmode", tmp_tex.name],
+            cwd=REPO_ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=30
+        )
+        if tmp_pdf.exists() and tmp_pdf.stat().st_size > 0:
+            shutil.copy2(tmp_pdf, out_pdf)
+            subprocess.run(
+                ["pdftoppm", "-png", "-r", "150", str(tmp_pdf), str(tmp_out_prefix)],
+                cwd=REPO_ROOT,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=20
+            )
+            # Find generated png
+            gen_pngs = sorted(REPO_ROOT.glob(f"_tmp_tikz_{h}_out*.png"))
+            if gen_pngs:
+                shutil.move(str(gen_pngs[0]), str(out_png))
+                return f"images/tikz_{h}.png"
+    except Exception as e:
+        print(f"[!] TikZ compile warning for hash {h}: {e}")
+    finally:
+        for p in REPO_ROOT.glob(f"_tmp_tikz_{h}*"):
+            try:
+                p.unlink()
+            except Exception:
+                pass
+
+    return ""
+
+def copy_or_convert_image(img_rel_path):
+    """Finds image in repository, copies or converts PDF to PNG into web_mvp/images."""
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    clean_path = img_rel_path.strip().strip('"').strip("'")
+
+    found_file = None
+    direct_path = REPO_ROOT / clean_path
+    if direct_path.exists() and direct_path.is_file():
+        found_file = direct_path
+    else:
+        for ext in [".png", ".jpg", ".jpeg", ".pdf", ".svg", ".PNG", ".JPG"]:
+            cand = REPO_ROOT / f"{clean_path}{ext}"
+            if cand.exists() and cand.is_file():
+                found_file = cand
+                break
+
+    if not found_file:
+        return clean_path
+
+    stem = found_file.stem
+    ext = found_file.suffix.lower()
+
+    if ext == ".pdf":
+        out_pdf = IMAGES_DIR / f"{stem}.pdf"
+        out_png = IMAGES_DIR / f"{stem}.png"
+        shutil.copy2(found_file, out_pdf)
+        if not out_png.exists():
+            try:
+                tmp_prefix = REPO_ROOT / f"_tmp_img_{stem}"
+                subprocess.run(
+                    ["pdftoppm", "-png", "-r", "150", str(found_file), str(tmp_prefix)],
+                    cwd=REPO_ROOT,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    timeout=20
+                )
+                gen_pngs = sorted(REPO_ROOT.glob(f"_tmp_img_{stem}*.png"))
+                if gen_pngs:
+                    shutil.move(str(gen_pngs[0]), str(out_png))
+                for p in REPO_ROOT.glob(f"_tmp_img_{stem}*"):
+                    try:
+                        p.unlink()
+                    except Exception:
+                        pass
+            except Exception as e:
+                print(f"[!] Error converting PDF {found_file}: {e}")
+        return f"images/{stem}.png" if out_png.exists() else f"images/{stem}.pdf"
+    else:
+        out_file = IMAGES_DIR / found_file.name
+        shutil.copy2(found_file, out_file)
+        return f"images/{found_file.name}"
 
 def convert_tabular_to_markdown(match):
     """Converts a LaTeX tabular environment into a clean Markdown table."""
@@ -137,36 +320,6 @@ def clean_tex_escapes(text):
     text = text.replace(r'\end{lstlisting}', '')
     return text
 
-def process_nested_command(text, cmd_name, convert_fn):
-    r"""Finds occurrences of \cmd_name{arg1}{arg2}... handling nested braces properly."""
-    pattern = r'\\' + cmd_name + r'\{'
-    while True:
-        m = re.search(pattern, text)
-        if not m:
-            break
-        start_pos = m.start()
-        curr_pos = m.end() - 1
-        args = []
-        while curr_pos < len(text) and text[curr_pos] == '{':
-            depth = 1
-            idx = curr_pos + 1
-            while idx < len(text) and depth > 0:
-                if text[idx] == '{':
-                    depth += 1
-                elif text[idx] == '}':
-                    depth -= 1
-                idx += 1
-            if depth == 0:
-                args.append(text[curr_pos + 1 : idx - 1])
-                curr_pos = idx
-                while curr_pos < len(text) and text[curr_pos].isspace():
-                    curr_pos += 1
-            else:
-                break
-        replacement = convert_fn(args)
-        text = text[:start_pos] + replacement + text[curr_pos:]
-    return text
-
 def convert_tex_content(tex_text, ch_num="1"):
     """Applies transformation rules to convert TeX markup to clean Quarto Markdown."""
     text = tex_text
@@ -203,7 +356,7 @@ def convert_tex_content(tex_text, ch_num="1"):
     for i, block in enumerate(lst_blocks):
         text = text.replace(f"___LSTLISTING_PLACEHOLDER_{i}___", block)
 
-    # Clean standalone TeX closing braces (e.g. from \iftoggle{...}{...}{})
+    # Clean standalone TeX closing braces
     text = re.sub(r'^\s*\}\s*$', '', text, flags=re.MULTILINE)
 
     # Clean texorpdfstring
@@ -251,28 +404,51 @@ def convert_tex_content(tex_text, ch_num="1"):
 
     text = re.sub(r'\\begin\{lstlisting\}(?:\[([^\]]*)\])?(.*?)\\end\{lstlisting\}', convert_lstlisting, text, flags=re.DOTALL)
 
-    # Convert inline code & text formatting
-    text = re.sub(r'\\lstinline[\|!]([^\|!]+)[\|!]', r'`\1`', text)
-    text = re.sub(r'\\texttt\{([^\}]+)\}', r'`\1`', text)
-    text = re.sub(r'\\textbf\{([^\}]+)\}', r'**\1**', text)
-    text = re.sub(r'\\textit\{([^\}]+)\}', r'*\1*', text)
-    text = re.sub(r'\\emph\{([^\}]+)\}', r'*\1*', text)
-    text = re.sub(r'\\enquote\{([^\}]+)\}', r'"\1"', text)
-    text = re.sub(r'\\smallField\{[^\}]*\}', '___', text)
-    text = re.sub(r'\\textcolor\{[^\}]+\}\{([^\}]+)\}', r'\1', text)
+    # Process figures and standalone graphics BEFORE stripping figure environments
+    def process_figure(m):
+        fig_content = m.group(1)
+        caption_match = re.search(r'\\caption\{([^\}]+)\}', fig_content)
+        label_match = re.search(r'\\label\{([^\}]+)\}', fig_content)
+        caption_text = clean_tex_escapes(caption_match.group(1).strip()) if caption_match else ""
+        label_id = label_match.group(1).strip() if label_match else ""
 
-    # Convert Emojis
-    text = re.sub(r'\\emoji\{([^\}]+)\}', lambda m: EMOJI_MAP.get(m.group(1), ''), text)
+        # Check for tikzpicture inside figure
+        tikz_m = re.search(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', fig_content, flags=re.DOTALL)
+        if tikz_m:
+            img_path = compile_tikz_snippet(tikz_m.group(0))
+            if img_path:
+                lbl_html = f'<span id="{label_id}"></span>\n' if label_id else ""
+                cap_str = f"*{caption_text}*" if caption_text else ""
+                return f"\n\n::: {{.text-center}}\n{lbl_html}![]({img_path})\n\n{cap_str}\n:::\n\n"
 
-    # Convert LaTeX Tabular to Markdown Table
-    text = re.sub(r'\\begin\{table\}(?:\[[^\]]*\])?\s*\\centering\s*\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}\s*(?:\\caption\{[^\}]*\})?\s*(?:\\label\{[^\}]*\})?\s*\\end\{table\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
-    text = re.sub(r'\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
+        # Check for includegraphics inside figure
+        inc_m = re.search(r'\\includegraphics(?:\[[^\]]*\])?\{([^\}]+)\}', fig_content)
+        if inc_m:
+            img_path = copy_or_convert_image(inc_m.group(1))
+            lbl_html = f'<span id="{label_id}"></span>\n' if label_id else ""
+            cap_str = f"*{caption_text}*" if caption_text else ""
+            return f"\n\n::: {{.text-center}}\n{lbl_html}![]({img_path})\n\n{cap_str}\n:::\n\n"
 
-    # Clean leftover LaTeX line breaks (\\) in prose text
-    text = re.sub(r'\\\\', '', text)
+        return ""
 
-    # Convert Enumerate List
-    text = re.sub(r'\\begin\{enumerate\}(.*?)\\end\{enumerate\}', convert_enumerate, text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{figure\}(?:\[[^\]]*\])?(.*?)\\end\{figure\}', process_figure, text, flags=re.DOTALL)
+
+    # Process standalone TikZ (not overlay)
+    def process_standalone_tikz(m):
+        tikz_code = m.group(0)
+        if "overlay" in tikz_code or "remember picture" in tikz_code:
+            return ""
+        img_path = compile_tikz_snippet(tikz_code)
+        return f"\n\n::: {{.text-center}}\n![]({img_path})\n:::\n\n" if img_path else ""
+
+    text = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', process_standalone_tikz, text, flags=re.DOTALL)
+
+    # Process standalone \includegraphics
+    def process_standalone_includegraphics(m):
+        img_path = copy_or_convert_image(m.group(1))
+        return f"![]({img_path})"
+
+    text = re.sub(r'\\includegraphics(?:\[[^\]]*\])?\{([^\}]+)\}', process_standalone_includegraphics, text)
 
     # Convert Custom Environments to Quarto Callouts in unified document-order pass
     ENV_CONFIGS = {
@@ -381,10 +557,43 @@ def convert_tex_content(tex_text, ch_num="1"):
 
     text = re.sub(r'\\begin\{myanswer\}(?:\[([^\]]+)\])?(.*?)\\end\{myanswer\}', convert_answer, text, flags=re.DOTALL)
 
-    # Convert \url{}, \href{}{}, and \footnote{} with support for nested braces
+    # Convert inline code & text formatting with robust balanced command replacements
+    text = re.sub(r'\\lstinline[\|!]([^\|!]+)[\|!]', r'`\1`', text)
+    text = re.sub(r'\\lstinline\{([^\}]+)\}', r'`\1`', text)
+    text = replace_balanced_command(text, 'enquote', lambda s: f'"{s}"')
+    text = replace_balanced_command(text, 'textbf', lambda s: f'**{s}**')
+    text = replace_balanced_command(text, 'textit', lambda s: f'*{s}*')
+    text = replace_balanced_command(text, 'emph', lambda s: f'*{s}*')
+    text = replace_balanced_command(text, 'texttt', lambda s: f'`{s}`')
+    text = replace_balanced_command(text, 'textsf', lambda s: s)
+    text = replace_balanced_command(text, 'textsc', lambda s: s)
+    text = replace_balanced_command(text, 'tib', lambda s: f'**{s}**')
+
+    def convert_keys(inner):
+        for k, v in KEY_MAP.items():
+            inner = inner.replace(k, v)
+        inner = inner.replace('+', ' + ')
+        return f"<kbd>{inner.strip()}</kbd>"
+
+    text = replace_balanced_command(text, 'keys', convert_keys)
+
+    # Two-argument commands
+    text = process_nested_command(text, "textcolor", lambda args: args[1] if len(args) >= 2 else "")
+    text = process_nested_command(text, "setcm", lambda args: f"\\{{ {args[0]} \\mid {args[1]} \\}}" if len(args) >= 2 else "")
+    text = process_nested_command(text, "floor", lambda args: f"\\lfloor {args[0]} \\rfloor" if args else "")
+    text = replace_balanced_command(text, 'smallField', lambda s: '___')
+
+    # Convert Emojis
+    text = re.sub(r'\\emoji\{([^\}]+)\}', lambda m: EMOJI_MAP.get(m.group(1), ''), text)
+
+    # Convert \url{}, \href{}{}, and \footnote{}
     text = process_nested_command(text, "url", lambda args: f"[{args[0]}]({args[0]})" if args else "")
     text = process_nested_command(text, "href", lambda args: f"[{args[1]}]({args[0]})" if len(args) >= 2 else "")
     text = process_nested_command(text, "footnote", lambda args: f"^[{args[0]}]" if args else "")
+
+    # Convert LaTeX Tabular to Markdown Table
+    text = re.sub(r'\\begin\{table\}(?:\[[^\]]*\])?\s*\\centering\s*\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}\s*(?:\\caption\{[^\}]*\})?\s*(?:\\label\{[^\}]*\})?\s*\\end\{table\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{tabular\}\{[^\}]+\}(.*?)\\end\{tabular\}', convert_tabular_to_markdown, text, flags=re.DOTALL)
 
     # Convert display math environments to $$ ... $$
     text = re.sub(r'\\\[(.*?)\\\]', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
@@ -392,14 +601,20 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = re.sub(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
     text = re.sub(r'\\begin\{gather\*?\}(.*?)\\end\{gather\*?\}', r'\n\n$$\n\1\n$$\n\n', text, flags=re.DOTALL)
 
-    # Clean TeX math helpers for web math rendering
+    # Clean TeX math helpers
     text = re.sub(r'\\colorbox\{[^\}]*\}\{\\ensuremath\{([^\}]+)\}\}', r'\1', text)
     text = re.sub(r'\\colorbox\{[^\}]*\}\{([^\}]+)\}', r'\1', text)
-    text = re.sub(r'\\floor\{([^\}]+)\}', r'\\lfloor \1 \\rfloor', text)
 
-    # Clean todolist environments
+    # Clean todolist & list environments
     text = re.sub(r'\\begin\{todolist\}', '', text)
     text = re.sub(r'\\end\{todolist\}', '', text)
+    text = re.sub(r'\\begin\{center\}', '', text)
+    text = re.sub(r'\\end\{center\}', '', text)
+    text = re.sub(r'\\begin\{itemize\}', '', text)
+    text = re.sub(r'\\end\{itemize\}', '', text)
+
+    # Convert Enumerate List
+    text = re.sub(r'\\begin\{enumerate\}(.*?)\\end\{enumerate\}', convert_enumerate, text, flags=re.DOTALL)
 
     # Remove TikZ marks and formatting leftovers
     text = re.sub(r'\\tikzmark(?:node)?\{[^\}]+\}', '', text)
@@ -409,7 +624,8 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = re.sub(r'\\clearpage', '', text)
     text = re.sub(r'\\small', '', text)
     text = re.sub(r'\\large', '', text)
-    text = re.sub(r'\\faListUl', '', text)
+    text = re.sub(r'\\faListUl', '📋', text)
+    text = re.sub(r'\\\\', ' ', text)
 
     # Clean up TeX artifacts: \cref{}, \label{}, \index{}
     def convert_cref(m):
@@ -430,14 +646,7 @@ def convert_tex_content(tex_text, ch_num="1"):
     text = re.sub(r'\\label\{[^\}]+\}', '', text)
     text = re.sub(r'\\index\{[^\}]+\}', '', text)
 
-    # Remove TeX figure environments and clean up unneeded TeX commands
-    text = re.sub(r'\\begin\{figure\}.*?\\end\{figure\}', '', text, flags=re.DOTALL)
-    text = re.sub(r'\\begin\{center\}', '', text)
-    text = re.sub(r'\\end\{center\}', '', text)
-    text = re.sub(r'\\begin\{itemize\}', '', text)
-    text = re.sub(r'\\end\{itemize\}', '', text)
-
-    # Clean leading spaces and tabs outside explicit triple-backtick code blocks to prevent accidental indented code blocks
+    # Clean leading spaces outside explicit code blocks
     cleaned_lines = []
     in_code_block = False
     for line in text.split('\n'):
@@ -454,6 +663,10 @@ def convert_tex_content(tex_text, ch_num="1"):
 
     # Clean escape sequences
     text = clean_tex_escapes(text)
+
+    # Ensure all ::: fences are on clean separate lines
+    text = re.sub(r'([^\n])\s*(:::\s*(?:\{[^\}]*\}|$))', r'\1\n\n\2', text)
+    text = re.sub(r'^(:::\s*(?:\{[^\}]*\}|$))\s*([^\n])', r'\1\n\n\2', text, flags=re.MULTILINE)
 
     # Clean multiple blank lines
     text = re.sub(r'\n{3,}', '\n\n', text)
@@ -518,6 +731,7 @@ format:
             } else {
               navbar.style.transform = "translateY(0)";
             }
+          });
           document.addEventListener("click", function(e) {
             let link = e.target.closest(".callout-header a");
             if (link) {
@@ -530,10 +744,10 @@ format:
       - coatless-quarto/pyodide
 """
     (WEB_DIR / "_quarto.yml").write_text(yml_content, encoding="utf-8")
-    print("[✓] Generated web_mvp/_quarto.yml (No sidebar, top navbar auto-hide on scroll)")
+    print("[✓] Generated web_mvp/_quarto.yml")
 
 def main():
-    print("=== FreeFlower TeX -> Quarto Web Converter (VS Code Dark & Ultra-Compact) ===")
+    print("=== FreeFlower TeX -> Quarto Web Converter (with TikZ & PDF Graphics) ===")
     converted_chapters = []
 
     for ch in CHAPTER_MAPPING:
