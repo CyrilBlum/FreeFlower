@@ -72,8 +72,9 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Referencing in Text**: Always reference acronyms in `.tex` script files using `\gls{ACRONYM}` (singular) or `\glspl{ACRONYM}` (plural). In section headings, use `\glsentryshort{ACRONYM}` where appropriate to avoid hyperref / PDF bookmark warnings.
 
 ### 2.12 Git Commit Messages
-- **Detailed and Comprehensive Messages**: Commit messages must always be substantive, comprehensive, and detailed.
-- **Structure**: Include a concise subject line followed by an extensive body explaining *what* was changed, *why* the architectural/pedagogical changes were made, and listing all touched modules, exercises, figures, and files. Avoid terse, generic, or one-line commit messages.
+- **Detailed but Concise Messages**: Commit messages must be informative and substantive, but not overly long or verbose.
+- **Length**: Depending on the scope of changes, keep the body to a couple of lines, up to a **maximum of 10 lines** for very comprehensive edits.
+- **Structure**: Include a concise subject line followed by bullet points summarizing *what* was changed and *why* (mentioning key touched modules, exercises, or figures where relevant). Avoid terse, generic one-liners as well as overly verbose multi-paragraph essays.
 
 ---
 

@@ -510,24 +510,27 @@ Mit dem Modus \lstinline|"r"| (Read) werden Daten gelesen, mit \lstinline|"w"| (
 
 \begin{mydefinition}[Dateien lesen und schreiben]
 \begin{lstlisting}
-# Highscore in Datei schreiben
-highscore = 250
-with open("highscore.txt", "w", encoding="utf-8") as file:
-    file.write(str(highscore))
+# 1. Highscore aus Textdatei lesen
+with open("highscore.txt", "r") as file:
+    highscore = int(file.read())
 
-# Highscore aus Datei lesen
-with open("highscore.txt", "r", encoding="utf-8") as file:
-    content = file.read().strip()
-    highscore = int(content)
+# 2. Neuen Highscore in Textdatei schreiben
+with open("highscore.txt", "w") as file:
+    file.write(str(highscore))
 \end{lstlisting}
 \end{mydefinition}
 
-\begin{myexercise}[Highscore-Speicher in Pygame]\label{myexercise:HighscoreTxt}
-Schreiben Sie zwei Hilfsfunktionen \lstinline|load_highscore()| und \lstinline|save_highscore(score)| für Ihr Game:
-\begin{enumerate}
-    \item \lstinline|load_highscore()| prüft mit \lstinline|os.path.exists("highscore.txt")|, ob die Datei existiert. Falls ja, liest sie die Zahl aus und gibt sie als \lstinline|int| zurück. Falls nicht (oder bei einem Fehler), gibt sie \lstinline|0| zurück.
-    \item \lstinline|save_highscore(score)| schreibt den neuen Punktestand in die Datei \texttt{highscore.txt}.
-\end{enumerate}
+\begin{myexercise}[Pong-Erweiterung: Highscore speichern und anzeigen]\label{myexercise:HighscoreTxt}
+    Erweitern Sie Ihr Pong-Spiel so, dass der bisherige Highscore dauerhaft in einer Textdatei gespeichert, beim Spielstart geladen und im Spielfenster angezeigt wird:
+    \begin{enumerate}
+        \item Erstellen Sie im selben Ordner wie Ihr Skript eine Datei namens \texttt{highscore.txt} und schreiben Sie eine \lstinline|0| hinein.
+        \item \textbf{Highscore laden:} Öffnen und lesen Sie die Datei vor der Game-Schleife mit \lstinline|with open("highscore.txt", "r") as file:| und speichern Sie den Wert als Zahl in der Variable \lstinline|highscore|.
+        \item \textbf{Highscore anzeigen:} Zeichnen Sie den Highscore mit \lstinline|font.render(...)| und \lstinline|screen.blit(...)| unterhalb des aktuellen Spielstands im Spielfenster.
+        \item \textbf{Highscore speichern:} Sobald der Punktestand eines Spielers den bisherigen Highscore übertrifft, aktualisieren Sie \lstinline|highscore| und schreiben den neuen Wert mit \lstinline|with open("highscore.txt", "w") as file:| direkt in die Datei.
+    \end{enumerate}
+    \begin{myanswer}
+        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+    \end{myanswer}
 \end{myexercise}
 
 \subsection{Strukturierte Tabellen mit CSV (.csv)}

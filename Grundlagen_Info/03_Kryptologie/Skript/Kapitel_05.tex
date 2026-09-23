@@ -30,6 +30,30 @@ Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden
 	\label{fig:pki-ablauf}
 \end{figure}
 
+\begin{myremark}[Wozu nützen Signaturen, wenn sich jeder ein Zertifikat holen kann?]
+	Eine häufige Frage lautet: \emph{Wenn sich jeder beliebig ein Zertifikat von einer \gls{CA} ausstellen lassen kann, wo liegt dann der Sicherheitsgewinn?}
+
+	Der entscheidende Unterschied ist: Jeder kann sich ein Zertifikat für seine \textbf{eigene} Identität beziehungsweise Domain ausstellen lassen -- aber eben \textbf{nicht} für die eines anderen.
+
+	In einer \gls{PKI} kommen dabei \textbf{zwei verschiedene Signaturen} auf zwei Ebenen zum Einsatz:
+	\begin{enumerate}
+		\item \textbf{Die Zertifizierungsstelle signiert ein Zertifikat:} Die \gls{CA} bestätigt mit ihrem privaten Schlüssel verbindlich die Zuordnung eines öffentlichen Schlüssels zu einer bestimmten Domain (oder Person). Dafür muss der Antragsteller der \gls{CA} nachweisen, dass er diese Domain tatsächlich kontrolliert.
+		\item \textbf{Der Besitzer signiert mit seinem privaten Schlüssel:} Mit dem im Zertifikat beglaubigten öffentlichen Schlüssel kann jedermann auf der Welt prüfen, ob die Signatur passt und ob die signierten Daten unverändert sind.
+	\end{enumerate}
+
+	\smallskip\noindent\textbf{Konkretes Beispiel:}
+	Ein Angreifer kann sich problemlos ein gültiges Zertifikat für seine eigene Domain wie \texttt{meine-fake-bank.ch} ausstellen lassen. Damit kann er jedoch:
+	\begin{itemize}
+		\item \textbf{weder} im Browser als \texttt{ubs.com} auftreten (da ihm keine anerkannte \gls{CA} ein Zertifikat für eine fremde Domain ausstellt),
+		\item \textbf{noch} Signaturen erzeugen, die zum öffentlichen Schlüssel der echten \texttt{ubs.com} passen (da er deren privaten Schlüssel nicht besitzt).
+	\end{itemize}
+
+	\smallskip\noindent\textbf{Wichtiges Missverständnis -- Gültig $\neq$ Vertrauenswürdig:}
+	Ein gültiges Zertifikat bedeutet \textbf{nicht}: \enquote{\emph{Dieser Anbieter ist vertrauenswürdig und ehrlich}}, sondern ausschliesslich: \enquote{\emph{Dieser öffentliche Schlüssel gehört nachweislich zu dieser Domain}}. Auch eine betrügerische Phishing-Website kann völlig legal ein gültiges Zertifikat für ihre eigene Betrugsdomain besitzen.
+
+	Der Vorteil von \gls{RSA}-Signaturen liegt genau in dieser Asymmetrie: Alle dürfen prüfen, aber ausschliesslich der Besitzer des privaten Schlüssels kann die passende Signatur erzeugen. Die Zertifizierungsstelle hilft zusätzlich dabei, zweifelsfrei zu wissen, \emph{wessen} Schlüssel man zum Prüfen verwendet.
+\end{myremark}
+
 \begin{myexercise}[Ablauf einer zertifizierten digitalen Signatur in der Praxis]
 	Alice möchte einen wichtigen Vertrag digital an Bob senden. Um sicherzustellen, dass Bob der Signatur vertrauen kann, nutzt Alice ein digitales Zertifikat einer vertrauenswürdigen Zertifizierungsstelle (\gls{PKI}/\gls{CA}).
 	

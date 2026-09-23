@@ -374,7 +374,7 @@ Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, k
 \end{figure}
 
 \begin{myexercise}[Kombinierte Signatur und Verschlüsselung in der Praxis]
-	Alice möchte die geheime Botschaft $m = 4$ an Bob senden. Die Übertragung soll sowohl \textbf{vertraulich} (geheim) als auch \textbf{authentisch} (nachweisbar von Alice) sein. Dazu nutzen beide das \gls{RSA}-Verfahren für \emph{Sign-then-Encrypt}.
+	Alice möchte die geheime Botschaft $m = 4$ an Bob senden. Die Übertragung soll sowohl \textbf{vertraulich} (geheim) als auch \textbf{authentisch} (nachweisbar von Alice) sein. Dazu nutzen beide das \gls{RSA}-Verfahren für \emph{Sign-then-Encrypt}. Führen Sie alle Berechnungen in Python durch (z.\,B. auf \url{https://webtigerpython.ethz.ch}).
 
 	Folgende Schlüsselpaare sind bekannt:
 	\begin{itemize}
@@ -392,11 +392,7 @@ Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, k
 		\begin{enumerate}
 			\item \textbf{Signaturerstellung (mit $d_A = 7$ und $n_A = 33$):}
 			      \[
-				      s = m^{d_A} \bmod n_A = 4^7 \bmod 33.
-			      \]
-			      Wegen $4^3 = 64 \equiv 31 \equiv -2 \pmod{33}$ gilt:
-			      \[
-				      4^7 = (4^3)^2 \cdot 4 \equiv (-2)^2 \cdot 4 = 4 \cdot 4 = 16 \pmod{33} \implies s = 16.
+				      s = m^{d_A} \bmod n_A = 4^7 \bmod 33 = 16.
 			      \]
 			\item \textbf{Verschlüsselung für Bob (mit $e_B = 3$ und $n_B = 55$):}
 			      \begin{align*}
@@ -406,15 +402,16 @@ Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, k
 			      Alice überträgt das Chiffratpaar $(c_m, c_s) = (9, 26)$.
 			\item \textbf{Entschlüsselung durch Bob (mit $d_B = 27$ und $n_B = 55$):}
 			      \begin{align*}
-				      m & = (c_m)^{d_B} \bmod n_B = 9^{27} \bmod 55 = 4, \\
-				      s & = (c_s)^{d_B} \bmod n_B = 26^{27} \bmod 55 = 16.
+				      m & = c_m^{d_B} \bmod n_B = 9^{27} \bmod 55 = 4, \\
+				      s & = c_s^{d_B} \bmod n_B = 26^{27} \bmod 55 = 16.
 			      \end{align*}
-			      (Zwischenschritt: $9^3 = 234 \equiv 14 \pmod{55}$, $9^9 = 14^3 \equiv -6 \pmod{55}$, $9^{27} \equiv (-6)^3 = -216 \equiv 4 \pmod{55}$).
 			\item \textbf{Signaturprüfung durch Bob (mit $e_A = 3$ und $n_A = 33$):}
 			      \[
 				      m' = s^{e_A} \bmod n_A = 16^3 \bmod 33 = 4096 \bmod 33 = 4.
 			      \]
 			      Da $m' = m = 4$, ist die Signatur gültig: Die Nachricht ist geheim übertragen worden, stammt garantiert von Alice und wurde nicht manipuliert.
 		\end{enumerate}
+
+		\lstinputlisting{Grundlagen_Info/03_Kryptologie/Python package/encryption/rsa_sign_then_encrypt.py}
 	\end{myanswer}
 \end{myexercise}
