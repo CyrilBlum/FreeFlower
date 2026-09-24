@@ -1,8 +1,7 @@
 \begin{frame}[label=title]
 	\centering
-	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
-	\end{figure}
+	\includegraphics[keepaspectratio, width=0.55\textwidth, height=0.48\textheight]{Logos/FreeFlower.pdf}
+	\par\medskip
 	Informatik: Data Science und Sicherheit\\
 	\textbf{Public-Key Kryptologie} \emoji{old-key}\emoji{open-file-folder}
 \end{frame}
@@ -28,7 +27,7 @@
 % \begin{frame}{One-Time-Pad}
 %  \begin{myBox}[ONE-TIME-PAD, Frank Miller (1882)]{mybox:onetime}
 % \begin{enumerate}
-%   \item Erzeuge einen Schlüssel der (mindestens) so lange ist wie der Klartext. Jeder einzelne Buchstabe des Schlüssels muss vollkommen zufällig gewählt werden. 
+%   \item Erzeuge einen Schlüssel der (mindestens) so lange ist wie der Klartext. Jeder einzelne Buchstabe des Schlüssels muss vollkommen zufällig gewählt werden.
 %   \item Der Schlüssel darf nicht mehrfach verwendet werden (nicht einmal Teile des Schlüssels).
 %   \item Der Schlüssel muss von den kommunizierenden Parteien geheim gehalten werden.
 % \end{enumerate}
@@ -45,14 +44,15 @@
 %   \end{itemize}
 % \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[t]{Alice erzeugt ihr Schlüsselpaar}
 	\begin{itemize}
 		\item Alice generiert ein Paar von Schlüsseln: einen öffentlichen Schlüssel und einen privaten Schlüssel (Geheimnis), welche miteinander in einem Zusammenhang stehen.
 		\item Den öffentlichen Schlüssel macht sie öffentlich bekannt. Den privaten Schlüssel muss sie für sich behalten.
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[t]{Bob sendet eine Nachricht an Alice}
+	\small
 	\begin{itemize}
 		\item Bob möchte eine verschlüsselte Nachricht an Alice senden.
 		\item Dazu nimmt er sich (eine Kopie) ihres öffentlichen Schlüssels und verwendet diesen um die Nachricht zu verschlüsseln.
@@ -62,155 +62,176 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-	In unserem Beispiel ist der öffentliche Schlüssel von Alice der folgende Graph:
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.8\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {}             ;
-				\node[state] (B) [right of=A] {};
-				\node[state] (C) [below right of=A] {};
-				\node[state] (D) [below left of=A] {};
-				\node[state] (E) [right of=C] {};
-				\node[state] (F) [below of=D] {};
-				\node[state] (G) [below right of=C] {};
+\begin{frame}{Alices öffentlicher Schlüssel}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			In unserem Beispiel ist der öffentliche Schlüssel von Alice der folgende Graph:
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {}             ;
+					\node[state] (B) [right of=A] {};
+					\node[state] (C) [below right of=A] {};
+					\node[state] (D) [below left of=A] {};
+					\node[state] (E) [right of=C] {};
+					\node[state] (F) [below of=D] {};
+					\node[state] (G) [below right of=C] {};
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		\caption*{Alice's öffentlicher Schlüssel (public key)}
-		% \label{fig:Knobel}
-	\end{figure}
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Verschlüsselung durch Bob (Schritt 1 von 2)}
-	Bob möchte die Nachricht (Klartext, geheime Zahl) \green{31} an Alice übermitteln. Dazu verwendet er ihren öffentlichen Schlüssel (Graphen). Er wählt die schwarzen Zahlen in den Knoten so, dass deren Summe genau der Nachricht \green{31} entspricht. Diese schwarzen Zahlen muss Bob geheim behalten.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.6\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {5}             ;
-				\node[state] (B) [right of=A] {17};
-				\node[state] (C) [below right of=A] {-11};
-				\node[state] (D) [below left of=A] {3};
-				\node[state] (E) [right of=C] {14};
-				\node[state] (F) [below of=D] {-2};
-				\node[state] (G) [below right of=C] {5};
+\begin{frame}{Verschlüsselung: Geheime Zahlen wählen}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			\small
+			Bob möchte die Nachricht (Klartext, geheime Zahl) \green{31} an Alice übermitteln. Dazu verwendet er ihren öffentlichen Schlüssel (Graphen). Er wählt die schwarzen Zahlen in den Knoten so, dass deren Summe genau der Nachricht \green{31} entspricht. Diese schwarzen Zahlen muss Bob geheim behalten.
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
-	\begin{align*}
-		5 + 17 + 3 - 11 + 14 - 2 + 5  = \green{31}
-	\end{align*}
+			\[
+				5 + 17 + 3 - 11 + 14 - 2 + 5 = \green{31}
+			\]
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {5}             ;
+					\node[state] (B) [right of=A] {17};
+						\node[state] (C) [below right of=A] {-11};
+						\node[state] (D) [below left of=A] {3};
+					\node[state] (E) [right of=C] {14};
+					\node[state] (F) [below of=D] {-2};
+					\node[state] (G) [below right of=C] {5};
+
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Verschlüsselung durch Bob (Schritt 2 von 2)}
-	Bob berechnet die \red{roten} Zahlen. Die rote Zahl in dem Knoten $i$ ist die Summe der schwarzen Zahlen des Knoten $i$ selbst und aller seiner Nachbarn. Bob muss nun diese schwarzen Zahlen aus dem Graphen löschen.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.6\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state,align=center] (A) {$5$\\$\red{(14)}$}             ;
-				\node[state,align=center] (B) [right of=A] {$17$\\$\red{(25)}$};
-				\node[state,align=center] (C) [below right of=A] {$-11$\\$\red{(25)}$};
-				\node[state,align=center] (D) [below left of=A] {$3$\\$\red{(6)}$};
-				\node[state,align=center] (E) [right of=C] {$14$\\$\red{(25)}$};
-				\node[state,align=center] (F) [below of=D] {$-2$\\$\red{(6)}$};
-				\node[state,align=center] (G) [below right of=C] {$5$\\$\red{(17)}$};
+\begin{frame}{Verschlüsselung: Nachbarsummen berechnen}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			\small
+			Bob berechnet die \red{roten} Zahlen. Die rote Zahl in dem Knoten $i$ ist die Summe der schwarzen Zahlen des Knoten $i$ selbst und aller seiner Nachbarn. Bob muss nun diese schwarzen Zahlen aus dem Graphen löschen.
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state,align=center] (A) {$5$\\$\red{(14)}$}             ;
+					\node[state,align=center] (B) [right of=A] {$17$\\$\red{(25)}$};
+					\node[state,align=center] (C) [below right of=A] {$-11$\\$\red{(25)}$};
+					\node[state,align=center] (D) [below left of=A] {$3$\\$\red{(6)}$};
+					\node[state,align=center] (E) [right of=C] {$14$\\$\red{(25)}$};
+					\node[state,align=center] (F) [below of=D] {$-2$\\$\red{(6)}$};
+					\node[state,align=center] (G) [below right of=C] {$5$\\$\red{(17)}$};
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Schritt 2 von 2 der Verschlüsselung durch Bob}
-	Der folgende Graph mit den roten Zahlen ist nun die verschlüsselte Nachricht, welche Bob an Alice (über einen unsicheren Kanal) senden darf:
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.8\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state,align=center] (A) {$\red{14}$}             ;
-				\node[state,align=center] (B) [right of=A] {$\red{25}$};
-				\node[state,align=center] (C) [below right of=A] {$\red{25}$};
-				\node[state,align=center] (D) [below left of=A] {$\red{6}$};
-				\node[state,align=center] (E) [right of=C] {$\red{25}$};
-				\node[state,align=center] (F) [below of=D] {$\red{6}$};
-				\node[state,align=center] (G) [below right of=C] {$\red{17}$};
+\begin{frame}{Verschlüsselung: Nachricht an Alice senden}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			Der folgende Graph mit den roten Zahlen ist nun die verschlüsselte Nachricht, welche Bob an Alice (über einen unsicheren Kanal) senden darf:
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state,align=center] (A) {$\red{14}$}             ;
+					\node[state,align=center] (B) [right of=A] {$\red{25}$};
+					\node[state,align=center] (C) [below right of=A] {$\red{25}$};
+					\node[state,align=center] (D) [below left of=A] {$\red{6}$};
+					\node[state,align=center] (E) [right of=C] {$\red{25}$};
+					\node[state,align=center] (F) [below of=D] {$\red{6}$};
+					\node[state,align=center] (G) [below right of=C] {$\red{17}$};
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[label=repetition]
-	\begin{figure}[fragile]
-		\begin{mydefinition}[Dominating Set]\label{mydefinition:DominatingSet}
+\begin{frame}[t,label=repetition]{Dominating Set}
+	\begin{mydefinition}[Dominating Set]\label{mydefinition:DominatingSet}
 		Sei $G = (V, E)$ ein Graph.
 		\begin{itemize}
 			\item Ein Knoten $i$ \tib{dominiert} einen Knoten $j$ falls $i = j$ (ein Knoten dominiert sich selbst) oder falls eine Kante von $i$ nach $j$ existiert.
 			\item Eine Teilmenge $S\subseteq V$ heisst \tib{Dominating Set} (DS) von $G$, falls jeder Knoten von $G$ von mindestens einem Knoten in $S$ dominiert wird.
-			\item Ein Dominating Set wird \tib{perfect} (PDS) genannt, falls jeder Knoten von $G$ von genau einem Knoten in $S$ dominiert wird.
 		\end{itemize}
-		\end{mydefinition}
-	\end{figure}
+	\end{mydefinition}
 \end{frame}
 
-\begin{frame}[fragile]
-	\begin{figure}[H]
+\begin{frame}[t]{Perfect Dominating Set}
+	\begin{mydefinition}[Perfect Dominating Set]
+		Ein Dominating Set wird \tib{perfect} (PDS) genannt, falls jeder Knoten von $G$ von genau einem Knoten in $S$ dominiert wird.
+	\end{mydefinition}
+\end{frame}
+
+\begin{frame}{Dominating Sets im Vergleich}
+	\begin{figure}
 		\centering
 		\begin{subfigure}[b]{0.3\textwidth}
-			\adjustbox{width=0.8\textwidth}{%
+			\adjustbox{width=0.95\linewidth,max totalheight=0.34\textheight}{%
 				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
 					\tikzstyle{every state}=[text=black]
 					\node[state] (A) {}             ;
@@ -235,7 +256,7 @@
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[b]{0.3\textwidth}
-			\adjustbox{width=0.8\textwidth}{%
+			\adjustbox{width=0.95\linewidth,max totalheight=0.34\textheight}{%
 				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
 					\tikzstyle{every state}=[text=black]
 					\node[state] (A) {}             ;
@@ -260,7 +281,7 @@
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[b]{0.3\textwidth}
-			\adjustbox{width=0.8\textwidth}{%
+			\adjustbox{width=0.95\linewidth,max totalheight=0.34\textheight}{%
 				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
 					\tikzstyle{every state}=[text=black]
 					\node[state] (A) {}             ;
@@ -287,198 +308,293 @@
 	\end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Schlüsselgenerierung durch Alice (Schritt 1 von 4)}
-	Beginne mit einigen Knoten.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.8\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {}             ;
-				\node[state] (B) [right of=A] {};
-				\node[state] (C) [below right of=A] {};
-				\node[state] (D) [below left of=A] {};
-				\node[state] (E) [right of=C] {};
-				\node[state] (F) [below of=D] {};
-				\node[state] (G) [below right of=C] {};
+\begin{frame}{Schlüsselgenerierung (1/4): Knoten anlegen}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			Beginne mit einigen Knoten.
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {}             ;
+					\node[state] (B) [right of=A] {};
+					\node[state] (C) [below right of=A] {};
+					\node[state] (D) [below left of=A] {};
+					\node[state] (E) [right of=C] {};
+					\node[state] (F) [below of=D] {};
+					\node[state] (G) [below right of=C] {};
 
-				%   \path (A) edge (B)
-				%   (A) edge (D)
-				%   (A) edge (C)
-				%   (B) edge (C)
-				%   (B) edge (E)
-				%   (D) edge (F)
-				%   (F) edge (G)
-				%   (E) edge (G)
-				% ;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					%   \path (A) edge (B)
+					%   (A) edge (D)
+					%   (A) edge (C)
+					%   (B) edge (C)
+					%   (B) edge (E)
+					%   (D) edge (F)
+					%   (F) edge (G)
+					%   (E) edge (G)
+					% ;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 
-\begin{frame}[fragile]{Schlüsselgenerierung durch Alice (Schritt 2 von 4)}
-	Wähle die Knoten, welche zum PDS gehören sollen.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.8\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {}             ;
-				\node[state] (B) [right of=A] {};
-				\node[state] (C) [below right of=A] {};
-				\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
-				\node[state,fill=Red,draw=Red] (E) [right of=C] {};
-				\node[state] (F) [below of=D] {};
-				\node[state] (G) [below right of=C] {};
+\begin{frame}{Schlüsselgenerierung (2/4): PDS wählen}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			Wähle die Knoten, welche zum PDS gehören sollen.
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {}             ;
+					\node[state] (B) [right of=A] {};
+					\node[state] (C) [below right of=A] {};
+					\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
+					\node[state,fill=Red,draw=Red] (E) [right of=C] {};
+					\node[state] (F) [below of=D] {};
+					\node[state] (G) [below right of=C] {};
 
-				%   \path (A) edge (B)
-				%   (A) edge (D)
-				%   (A) edge (C)
-				%   (B) edge (C)
-				%   (B) edge (E)
-				%   (D) edge (F)
-				%   (F) edge (G)
-				%   (E) edge (G)
-				% ;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					%   \path (A) edge (B)
+					%   (A) edge (D)
+					%   (A) edge (C)
+					%   (B) edge (C)
+					%   (B) edge (E)
+					%   (D) edge (F)
+					%   (F) edge (G)
+					%   (E) edge (G)
+					% ;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Schlüsselgenerierung durch Alice (Schritt 3 von 4)}
-	Verbinde jeden Knoten, der nicht im PDS liegt mit genau einem Knoten aus dem PDS.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.8\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {}             ;
-				\node[state] (B) [right of=A] {};
-				\node[state] (C) [below right of=A] {};
-				\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
-				\node[state,fill=Red,draw=Red] (E) [right of=C] {};
-				\node[state] (F) [below of=D] {};
-				\node[state] (G) [below right of=C] {};
+\begin{frame}{Schlüsselgenerierung (3/4): Knoten verbinden}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			Verbinde jeden Knoten, der nicht im PDS liegt mit genau einem Knoten aus dem PDS.
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {}             ;
+					\node[state] (B) [right of=A] {};
+					\node[state] (C) [below right of=A] {};
+					\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
+					\node[state,fill=Red,draw=Red] (E) [right of=C] {};
+					\node[state] (F) [below of=D] {};
+					\node[state] (G) [below right of=C] {};
 
-				\path %(A) edge (B)
-				(A) edge (D)
-				%   (A) edge (C)
-				%   (B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				%   (F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					\path %(A) edge (B)
+					(A) edge (D)
+					%   (A) edge (C)
+					%   (B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					%   (F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Schlüsselgenerierung durch Alice (Schritt 4 von 4)}
-	Füge zur Verschleierung weitere Kanten zwischen den Knoten, welche nicht zum PDS gehören, hinzu. Zeichne also keine weiteren Kanten, welche in den roten Knoten beginnen / enden! Der Graph ist ihr öffentlicher Schlüssel. Die beiden roten Knoten (perfect dominating set) ist ihr privater Schlüssel.
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.6\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
-				\node[state] (A) {}             ;
-				\node[state] (B) [right of=A] {};
-				\node[state] (C) [below right of=A] {};
-				\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
-				\node[state,fill=Red,draw=Red] (E) [right of=C] {};
-				\node[state] (F) [below of=D] {};
-				\node[state] (G) [below right of=C] {};
+\begin{frame}{Schlüsselgenerierung (4/4): Kanten ergänzen}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			\small
+			Füge zur Verschleierung weitere Kanten zwischen den Knoten, welche nicht zum PDS gehören, hinzu. Zeichne also keine weiteren Kanten, welche in den roten Knoten beginnen / enden! Der Graph ist ihr öffentlicher Schlüssel. Die beiden roten Knoten (perfect dominating set) ist ihr privater Schlüssel.
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
+					\node[state] (A) {}             ;
+					\node[state] (B) [right of=A] {};
+					\node[state] (C) [below right of=A] {};
+					\node[state,fill=Red,draw=Red] (D) [below left of=A] {};
+					\node[state,fill=Red,draw=Red] (E) [right of=C] {};
+					\node[state] (F) [below of=D] {};
+					\node[state] (G) [below right of=C] {};
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-		% \caption*{(a)}
-		% \label{fig:Knobel}
-	\end{figure}
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+			% \caption*{(a)}
+			% \label{fig:Knobel}
+		\end{column}
+	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Angriff durch Lösen eines linearen Gleichungssystems}
-	\begin{figure}[H]
-		\centering
-		\adjustbox{width=0.4\textwidth}{%
-			\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
-				\tikzstyle{every state}=[text=black]
+\begin{frame}{Angriff mit einem linearen Gleichungssystem}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{0.48\textwidth}
+			\centering
+			\adjustbox{width=\linewidth,max totalheight=0.65\textheight}{%
+				\begin{tikzpicture}[shorten >=1pt,auto,node distance=3cm, semithick, scale=0.1]
+					\tikzstyle{every state}=[text=black]
 
-				\node[state,align=center] (A) {\textcolor{red}{14}\\\(\mathit{A}\)};
-				\node[state,align=center] (B) [right of=A] {\textcolor{red}{25}\\\(\mathit{B}\)};
-				\node[state,align=center] (C) [below right of=A] {\textcolor{red}{25}\\\(\mathit{C}\)};
-				\node[state,align=center] (D) [below left of=A] {\textcolor{red}{6}\\\(\mathit{D}\)};
-				\node[state,align=center] (E) [right of=C] {\textcolor{red}{25}\\\(\mathit{E}\)};
-				\node[state,align=center] (F) [below of=D] {\textcolor{red}{6}\\\(\mathit{F}\)};
-				\node[state,align=center] (G) [below right of=C] {\textcolor{red}{17}\\\(\mathit{G}\)};
+					\node[state,align=center] (A) {\textcolor{red}{14}\\\(\mathit{A}\)};
+					\node[state,align=center] (B) [right of=A] {\textcolor{red}{25}\\\(\mathit{B}\)};
+					\node[state,align=center] (C) [below right of=A] {\textcolor{red}{25}\\\(\mathit{C}\)};
+					\node[state,align=center] (D) [below left of=A] {\textcolor{red}{6}\\\(\mathit{D}\)};
+					\node[state,align=center] (E) [right of=C] {\textcolor{red}{25}\\\(\mathit{E}\)};
+					\node[state,align=center] (F) [below of=D] {\textcolor{red}{6}\\\(\mathit{F}\)};
+					\node[state,align=center] (G) [below right of=C] {\textcolor{red}{17}\\\(\mathit{G}\)};
 
-				\path (A) edge (B)
-				(A) edge (D)
-				(A) edge (C)
-				(B) edge (C)
-				(B) edge (E)
-				(C) edge (E)
-				(D) edge (F)
-				(F) edge (G)
-				(E) edge (G)
-				;
-			\end{tikzpicture}
-		} %
-	\end{figure}
+					\path (A) edge (B)
+					(A) edge (D)
+					(A) edge (C)
+					(B) edge (C)
+					(B) edge (E)
+					(C) edge (E)
+					(D) edge (F)
+					(F) edge (G)
+					(E) edge (G)
+					;
+				\end{tikzpicture}
+			} %
+		\end{column}
+		\begin{column}{0.48\textwidth}
+			\small
+			\[
+				\begin{aligned}
+					(1) \quad        & 14 = A + B + C + D \\
+					(2) \quad        & 25 = A + B + C + E \\
+					\blue{(3)} \quad & 25 = A + B + C + E \\
+					(4) \quad        & 6  = A + D + F     \\
+					(5) \quad        & 25 = B + C + E + G \\
+					(6) \quad        & 6  = D + F + G     \\
+					(7) \quad        & 17 = E + F + G     \\
+				\end{aligned}
+			\]
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Was bedeutet eine Lösung des Gleichungssystems?}
+	Eine \textbf{Lösung} legt für \textbf{alle sieben Unbekannten}
+	$A, B, C, D, E, F, G$ je eine Zahl fest. Setzt man diese Zahlen ein,
+	müssen \textbf{alle sieben Gleichungen gleichzeitig stimmen}.
+
+	\medskip
+	In unserem Beispiel sind unter anderem diese beiden Belegungen möglich:
+	\begin{center}
+		\begin{tabular}{lrrrrrrr}
+			\toprule
+			& $A$ & $B$ & $C$ & $D$ & $E$ & $F$ & $G$ \\
+			\midrule
+			Bobs Zahlen & 5 & 17 & $-11$ & 3 & 14 & $-2$ & 5 \\
+			Andere Lösung & 5 & 6 & 0 & 3 & 14 & $-2$ & 5 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	Beide Belegungen ergeben dieselben roten Nachbarsummen.
+	Bei $B$ und $C$ ist jeweils nur die gemeinsame Summe $B+C=6$ entscheidend.
+\end{frame}
+
+\begin{frame}{Redundante Gleichungen: Die Summe bleibt eindeutig}
+	\begin{itemize}
+		\item Die Gleichungen (2) und (3) sind identisch: Die Wiederholung liefert keine zusätzliche Information.
+		\item Die Nachricht ist die \textbf{Summe aller sieben Knotenzahlen}. Addiert man (4) und (5), erhält man:
+	\end{itemize}
 	\[
 		\begin{aligned}
-			(1) \quad        & 14 = A + B + C + D \\
-			(2) \quad        & 25 = A + B + C + E \\
-			\blue{(3)} \quad & 25 = A + B + C + E \\
-			(4) \quad        & 6  = A + D + F     \\
-			(5) \quad        & 25 = B + C + E + G \\
-			(6) \quad        & 6  = D + F + G     \\
-			(7) \quad        & 17 = E + F + G     \\
+			6 &= A + D + F, \\
+			25 &= B + C + E + G, \\[2pt]
+			\green{31} &= A + B + C + D + E + F + G.
 		\end{aligned}
 	\]
+	Jede Zahlenbelegung, die alle Gleichungen erfüllt, hat somit die Gesamtsumme \green{31}. Das gilt auch für die beiden Belegungen auf der vorherigen Folie.
 \end{frame}
 
-\begin{frame}[fragile]{Brute-Force durch lineares Gleichungssystem}
-	\begin{tikzpicture}[scale=0.5]
-		% \draw[style=help lines] (-7.9,-7.9) grid (7.9,7.9);
-		%[step=0.5cm]      (-6.9,-6.9) grid (6.9,6.9);
-
-		\draw[->] (0,0) -- (12,0) node[right] {{\tiny Problemgrösse (z.B. Anzahl Knoten)}};
-		\draw[->] (0,0) -- (0,12) node[above] {{\tiny Anzahl benötigte Rechenoperationen}};
-		\draw[domain=0:6, smooth, variable=\x, blue] plot ({\x}, {0.05*\x*\x*\x});
-
-
-		% {\tiny
-		% \foreach \x/\xtext in {-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7}
-		% \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below] {$\xtext$};
-		% 
-		% \foreach \y/\ytext in {-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7}
-		% \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left] {$\ytext$};
-		% }
-		% 
-		% \draw [fill] (0,0) circle [radius=.1];
-		% \draw [fill] (4,2) circle [radius=.1];
-	\end{tikzpicture}
+\begin{frame}{Warum ist die Summe immer eindeutig?}
+	\small
+	Die folgende Überlegung gilt für jeden Graphen dieses Verfahrens, der ein PDS besitzt:
+	\begin{enumerate}
+		\item Betrachte irgendeine Zahlenbelegung, die alle Gleichungen erfüllt. Jede rote Zahl ist dann die Summe der eingesetzten Zahl am eigenen Knoten und der Zahlen seiner Nachbarn.
+		\item Addiert Alice die roten Zahlen an den PDS-Knoten, zählt sie deshalb die eingesetzten Zahlen in deren Nachbarschaften mit, jeweils einschliesslich des PDS-Knotens selbst.
+		\item Beim PDS gehört jeder Knoten zu \textbf{genau einer} solchen Nachbarschaft. Jede eingesetzte Zahl wird also \textbf{genau einmal} gezählt.
+	\end{enumerate}
+	\[
+		\begin{gathered}
+			\text{Summe aller eingesetzten}\\
+			\text{Knotenzahlen}
+		\end{gathered}
+		=
+		\begin{gathered}
+			\text{Summe der roten Zahlen}\\
+			\text{an den PDS-Knoten}
+		\end{gathered}
+	\]
+	Die rechte Seite ist durch die übermittelten roten Zahlen festgelegt.
+	Deshalb ist die linke Seite bei jeder passenden Zahlenbelegung gleich.
 \end{frame}
 
-\input{Grundlagen_Info/03_Kryptologie/Slides/L02f_Bin_OTP}
-\input{Grundlagen_Info/03_Kryptologie/Slides/L03a_Drei_Wege_Schluesseltausch}
-\input{Grundlagen_Info/03_Kryptologie/Slides/L03b_Diffie_Hellman_Merkle}
+\begin{frame}{Wie nutzt ein Angreifer diese Eigenschaft?}
+	\begin{enumerate}
+		\item Aus dem öffentlichen Graphen und den roten Zahlen stellt er das Gleichungssystem auf.
+		\item Mit dem Gauss-Verfahren findet er \textbf{eine} Zahlenbelegung, die alle Gleichungen erfüllt. Falls Variablen frei wählbar bleiben, kann er dafür beispielsweise $0$ einsetzen und die übrigen Zahlen daraus berechnen.
+		\item Er addiert alle gefundenen Knotenzahlen. Diese Summe ist die \textbf{geheime Nachricht}.
+	\end{enumerate}
+	\medskip
+	Er muss weder Bobs ursprüngliche Zahlen noch das geheime PDS kennen.
+	Die PDS-Eigenschaft garantiert, dass jede passende Belegung dieselbe Summe liefert.
+\end{frame}
 
+\begin{frame}{Rechenaufwand des Gauss-Verfahrens}
+	\centering
+	% Auch Achsenbeschriftungen in die Grössenbegrenzung einbeziehen.
+	\adjustbox{max width=\linewidth,max totalheight=0.72\textheight}{%
+		\begin{tikzpicture}[x=0.65cm,y=0.38cm]
+			% \draw[style=help lines] (-7.9,-7.9) grid (7.9,7.9);
+			%[step=0.5cm]      (-6.9,-6.9) grid (6.9,6.9);
+
+			\draw[->] (0,0) -- (12,0) node[below left,align=right,font=\small] {Problemgrösse\\(z.B. Anzahl Knoten)};
+			\draw[->] (0,0) -- (0,12) node[above right,font=\small] {Anzahl benötigte Rechenoperationen};
+			\draw[domain=0:6, smooth, variable=\x, blue] plot ({\x}, {0.05*\x*\x*\x});
+
+
+			% {\tiny
+			% \foreach \x/\xtext in {-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7}
+			% \draw[shift={(\x,0)}] (0pt,2pt) -- (0pt,-2pt) node[below] {$\xtext$};
+			%
+			% \foreach \y/\ytext in {-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7}
+			% \draw[shift={(0,\y)}] (2pt,0pt) -- (-2pt,0pt) node[left] {$\ytext$};
+			% }
+			%
+			% \draw [fill] (0,0) circle [radius=.1];
+			% \draw [fill] (4,2) circle [radius=.1];
+		\end{tikzpicture}
+	}
+\end{frame}
+
+% \input{Grundlagen_Info/03_Kryptologie/Slides/L02f_Bin_OTP}
+% \input{Grundlagen_Info/03_Kryptologie/Slides/L03a_Drei_Wege_Schluesseltausch}
+% \input{Grundlagen_Info/03_Kryptologie/Slides/L03b_Diffie_Hellman_Merkle}
