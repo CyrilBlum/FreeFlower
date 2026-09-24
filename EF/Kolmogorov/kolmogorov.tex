@@ -501,7 +501,7 @@ Es existieren Wörter, die nicht komprimierbar sind, die also eine Kolmogorov-Ko
 
 Ein inkompressibles Wort erlaubt also keine Beschreibung, die kürzer ist als das Wort selbst. Es gibt somit keinen kürzeren Plan zu seiner Generierung als seine vollständige Beschreibung. Dies motiviert die folgende, von der gewählten Beschreibungssprache bis auf eine additive Konstante abhängige Definition.
 
-\begin{mydefinition}[$c$-inkompressibles binäres Wort]\label{mydefinition:zufall}
+\begin{mydefinition}[$c$-inkompressibles binäres Wort]\label{mydefinition:cincompressible}
 \leavevmode
 Es sei $c\geq0$ eine natürliche Zahl. Ein binäres Wort $w$ heisst $c$-inkompressibel, falls
 \begin{align*}
@@ -510,11 +510,16 @@ Es sei $c\geq0$ eine natürliche Zahl. Ein binäres Wort $w$ heisst $c$-inkompre
 Ein $0$-inkompressibles Wort nennen wir kurz inkompressibel. Diese Begriffe beziehen sich stets auf die fest gewählte optimale universelle Beschreibungssprache.
 \end{mydefinition}
 
+\begin{mydefinition}[Zufällige binäre Wörter und Zahlen]\label{mydefinition:zufall}
+\leavevmode
+Ein binäres Wort $w$ heisst zufällig, falls $C(w)\geq\abs{w}$ gilt, wenn $w$ also $0$-inkompressibel ist. Eine natürliche Zahl $n>0$ heisst zufällig, falls ihr binärer Code zufällig ist, also $C(n)\geq\abs{bin(n)}$.
+\end{mydefinition}
+
 \begin{myexercise}
 	\leavevmode
-	Warum bietet es sich bei einer natürlichen Zahl $n>0$ an, ihre Inkompressibilität relativ zur Länge von $bin(n)$ zu beurteilen?
+	In gewisser Literatur wird die Zufälligkeit einer natürlichen Zahl $n>0$ mit der Bedingung $C(n)\geq\abs{bin(n)} \textcolor{Red}{- 1}$ definiert anstelle von $C(n)\geq\abs{bin(n)}$. Wieso könnte es sinnvoll sein, diesen Term $-1$ in der Definition zuzulassen? Tipp: Überlege, was die Binärdarstellungen aller natürlichen Zahlen $n>0$ gemeinsam haben.
 	\begin{myanswer}
-		Nach Definition gilt $C(n)=C(bin(n))$. Die Binärdarstellung besitzt die Länge $\abs{bin(n)}=\ceil{\log_2(n+1)}$. Da ihre erste Stelle für $n>0$ stets eine $1$ ist, enthält sie nur $\abs{bin(n)}-1$ frei wählbare Bits. Jede exakte Schwelle bleibt jedoch bis auf eine additive Konstante von der gewählten optimalen universellen Beschreibungssprache abhängig.
+		Da jede natürliche Zahl $n>0$ in binärer Darstellung mit einer $1$ beginnt, kann man die führende $1$ bereits als festen Bestandteil der Beschreibung betrachten. Die führende $1$ muss also nicht in der Beschreibung enthalten sein. Damit kann man die Länge der Beschreibung um $1$ Bit reduzieren, was den Term $-1$ in der Definition rechtfertigt. Gemäss dieser Defintion wird eine natürliche Zahl $n>0$ also erst dann als zufällig bezeichnet, wenn sie nicht kürzer als mit $\abs{bin(n)}-1$ beschrieben werden kann.
 	\end{myanswer}
 \end{myexercise}
 
