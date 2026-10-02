@@ -1,0 +1,184 @@
+\begin{tikzpicture}[
+    font=\sffamily,
+    layer/.style={
+        draw=#1!80!black,
+        fill=#1!16,
+        thick,
+        rounded corners=5pt
+    },
+    infoboxbg/.style={
+        draw=#1!50!black!30,
+        fill=white,
+        rounded corners=4pt,
+        line width=0.6pt
+    },
+    subbox/.style={
+        draw=CornflowerBlue!80!black,
+        fill=white,
+        rounded corners=3pt,
+        font=\scriptsize,
+        inner sep=2.5pt,
+        align=center
+    },
+    hwbox/.style={
+        draw=black!25,
+        fill=white!94!black,
+        rounded corners=3pt,
+        inner sep=2.5pt,
+        align=center,
+        minimum width=1.85cm,
+        minimum height=1.02cm
+    },
+    darrow/.style={
+        draw=black!60,
+        line width=1.2pt,
+        {Latex[length=1.4mm]}-{Latex[length=1.4mm]}
+    },
+    divider/.style={
+        draw=#1!70!black!30,
+        line width=0.7pt
+    }
+]
+    % Layer bounds: x from -6.8 to 6.8 (total width 13.6cm)
+    % Left column:   x = -6.8 to -3.15
+    % Middle column: x = -3.15 to 2.35
+    % Right column (white boxes): x = 2.35 to 6.70 (strictly left-aligned at 2.35, width 4.35cm)
+
+    % ================= LAYER 1: Anwendung =================
+    \filldraw[layer=Salmon] (-6.8, 2.45) rectangle (6.8, 3.45);
+    \draw[divider=Salmon] (-3.15, 2.45) -- (-3.15, 3.45);
+    \node[anchor=west] at (-6.62, 2.95) {\large\faLaptop\hspace{2mm}\small\textbf{Anwendung}};
+    \node[anchor=west, font=\scriptsize, text=black!85] at (-2.95, 2.95) {
+        \shortstack[l]{z.\,B. Browser, Textverarbeitung,\\Tabellenkalkulation, Games, etc.}
+    };
+    % Right white box: x from 2.35 to 6.70
+    \filldraw[infoboxbg=Salmon] (2.35, 2.50) rectangle (6.70, 3.40);
+    \node[anchor=west, align=left, font=\scriptsize, text=black!90] at (2.55, 2.95) {
+        Verarbeitet Daten,\\z.\,B. versenden von Druckdaten.
+    };
+
+    % Arrow 1 <-> 2
+    \draw[darrow] (0.0, 2.45) -- (0.0, 2.25);
+
+    % ================= LAYER 2: Systemaufrufe / API =================
+    \filldraw[layer=Goldenrod] (-6.8, 1.25) rectangle (6.8, 2.25);
+    \draw[divider=Goldenrod] (-3.15, 1.25) -- (-3.15, 2.25);
+    \node[anchor=west] at (-6.62, 1.75) {
+        \large\faPlug\hspace{2mm}\shortstack[l]{\small\textbf{Systemaufrufe /}\\\small\textbf{\glsentryshort{API}}}
+    };
+    \node[anchor=west, font=\scriptsize, text=black!85] at (-2.95, 1.75) {
+        z.\,B. open(), read(), write(), print(), \dots
+    };
+    % Right white box: x from 2.35 to 6.70
+    \filldraw[infoboxbg=Goldenrod] (2.35, 1.30) rectangle (6.70, 2.20);
+    \node[anchor=west, align=left, font=\scriptsize, text=black!90] at (2.55, 1.75) {
+        Einheitliche Schnittstelle\\für alle Anwendungen.
+    };
+
+    % Arrow 2 <-> 3
+    \draw[darrow] (0.0, 1.25) -- (0.0, 1.05);
+
+    % ================= LAYER 3: Betriebssystem (Kernel) =================
+    \filldraw[layer=DarkSeaGreen] (-6.8, -0.30) rectangle (6.8, 1.05);
+    \draw[divider=DarkSeaGreen] (-3.15, -0.30) -- (-3.15, 1.05);
+    \node[anchor=west] at (-6.62, 0.375) {
+        \large\faCogs\hspace{2mm}\shortstack[l]{\small\textbf{Betriebssystem}\\\small\textbf{(Kernel)}}
+    };
+    \node[anchor=west, font=\scriptsize, text=black!85] at (-2.95, 0.375) {
+        \shortstack[l]{Prozessverwaltung, Speicherverwaltung,\\Dateisystem, Sicherheit}
+    };
+    % Right white box: x from 2.35 to 6.70
+    \filldraw[infoboxbg=DarkSeaGreen] (2.35, -0.24) rectangle (6.70, 0.99);
+    \node[anchor=west, align=left, font=\scriptsize, text=black!90] at (2.55, 0.375) {
+        Wählt den passenden\\Treiber und leitet die\\Daten weiter.
+    };
+
+    % Arrow 3 <-> 4
+    \draw[darrow] (0.0, -0.30) -- (0.0, -0.50);
+
+    % ================= LAYER 4: Gerätetreiber =================
+    \filldraw[layer=CornflowerBlue] (-6.8, -2.15) rectangle (6.8, -0.50);
+    \draw[divider=CornflowerBlue] (-3.15, -2.15) -- (-3.15, -0.50);
+    \node[anchor=west] at (-6.62, -1.325) {\large\faMicrochip\hspace{2mm}\small\textbf{Gerätetreiber}};
+    \node[anchor=west, font=\scriptsize, text=black!85] at (-2.95, -0.96) {
+        Übersetzt in gerätespezifische Befehle
+    };
+    % Right white box: x from 2.35 to 6.70
+    \filldraw[infoboxbg=CornflowerBlue] (2.35, -1.36) rectangle (6.70, -0.56);
+    \node[anchor=west, align=left, font=\scriptsize, text=black!90] at (2.55, -0.96) {
+        Für jedes Gerät ein\\eigener Treiber.
+    };
+
+    % Driver sub-boxes inside Layer 4
+    \node[subbox, minimum width=1.80cm, minimum height=0.58cm] (drv1) at (-1.90, -1.74) {
+        \faMicrochip\hspace{1.5mm}\shortstack[l]{\scriptsize Drucker-\\\scriptsize treiber}
+    };
+    \node[subbox, minimum width=1.80cm, minimum height=0.58cm] (drv2) at (0.10, -1.74) {
+        \faMicrochip\hspace{1.5mm}\shortstack[l]{\scriptsize Netzwerk-\\\scriptsize treiber}
+    };
+    \node[subbox, minimum width=1.80cm, minimum height=0.58cm] (drv3) at (2.10, -1.74) {
+        \faMicrochip\hspace{1.5mm}\shortstack[l]{\scriptsize Grafik-\\\scriptsize treiber}
+    };
+    \node[subbox, minimum width=1.80cm, minimum height=0.58cm] (drv4) at (4.10, -1.74) {
+        \faMicrochip\hspace{1.5mm}\shortstack[l]{\scriptsize USB-\\\scriptsize treiber}
+    };
+    \node[font=\bfseries\small, text=black!60] at (5.65, -1.74) {\dots};
+
+    % ================= LAYER 5: Hardware =================
+    \filldraw[layer=Gray] (-6.8, -3.45) rectangle (6.8, -2.35);
+    \draw[divider=Gray] (-3.15, -3.45) -- (-3.15, -2.35);
+    \node[anchor=west] at (-6.62, -2.90) {\large\faServer\hspace{2mm}\small\textbf{Hardware}};
+
+    % Hardware sub-boxes
+    % 1: Drucker
+    \node[hwbox, minimum width=1.80cm, minimum height=0.92cm] (hw1) at (-1.90, -2.90) {
+        \normalsize\faPrint\\[1pt]
+        \scriptsize Drucker
+    };
+    % 2: Netzwerkkarte
+    \node[hwbox, minimum width=1.80cm, minimum height=0.92cm] (hw2) at (0.10, -2.90) {
+        \tikz[baseline=-2pt, scale=0.85]{
+            \draw[very thick, line cap=round] (-0.42, 0.28) -- (-0.42, -0.28);
+            \draw[thick, rounded corners=0.8pt, fill=white] (-0.37, -0.20) rectangle (0.42, 0.20);
+            \draw[thick, fill=black!85] (-0.30, -0.12) rectangle (-0.08, 0.12);
+            \fill[white] (-0.26, -0.06) rectangle (-0.12, 0.06);
+            \draw[fill=black!85] (0.06, -0.10) rectangle (0.32, 0.10);
+            \fill[black!70] (-0.05, -0.25) rectangle (0.25, -0.20);
+        }\\[1pt]
+        \scriptsize Netzwerkkarte
+    };
+    % 3: Grafikkarte
+    \node[hwbox, minimum width=1.80cm, minimum height=0.92cm] (hw3) at (2.10, -2.90) {
+        \tikz[baseline=-2pt, scale=0.85]{
+            \draw[very thick, line cap=round] (-0.42, 0.28) -- (-0.42, -0.28);
+            \draw[thick, rounded corners=0.8pt, fill=white] (-0.37, -0.20) rectangle (0.42, 0.20);
+            \draw[thick, fill=black!5] (0.08, 0) circle (0.15);
+            \fill[black] (0.08, 0) circle (0.04);
+            \foreach \a in {0,60,120,180,240,300} {
+                \draw[thin, line cap=round] (0.08, 0) -- ++(\a:0.14);
+            }
+            \draw[thin] (-0.28, -0.12) -- (-0.28, 0.12);
+            \draw[thin] (-0.22, -0.12) -- (-0.22, 0.12);
+            \fill[black!70] (-0.18, -0.25) rectangle (0.28, -0.20);
+        }\\[1pt]
+        \scriptsize Grafikkarte
+    };
+    % 4: USB-Gerät
+    \node[hwbox, minimum width=1.80cm, minimum height=0.92cm] (hw4) at (4.10, -2.90) {
+        \tikz[baseline=-2pt, rotate=38, scale=0.88]{
+            \draw[thick, fill=black!85, rounded corners=0.5pt] (-0.11, -0.18) rectangle (0.11, 0.08);
+            \draw[thick, fill=white] (-0.08, 0.08) rectangle (0.08, 0.22);
+            \fill[black!85] (-0.05, 0.13) rectangle (-0.01, 0.18);
+            \fill[black!85] (0.01, 0.13) rectangle (0.05, 0.18);
+        }\\[1pt]
+        \scriptsize USB-Gerät
+    };
+    \node[font=\bfseries\small, text=black!60] at (5.65, -2.90) {\dots};
+
+    % Arrows between drivers and hardware
+    \draw[darrow] (drv1.south) -- (hw1.north);
+    \draw[darrow] (drv2.south) -- (hw2.north);
+    \draw[darrow] (drv3.south) -- (hw3.north);
+    \draw[darrow] (drv4.south) -- (hw4.north);
+
+\end{tikzpicture}

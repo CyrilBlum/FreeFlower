@@ -63,6 +63,13 @@ Massenspeicher (SSD, HDD) speichern Daten als rohe Bitsequenzen (vgl. \cref{ch:k
 
 Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, USB-Gerät, \ldots) hat seine eigene Schnittstelle. \tib{Treiber}\index{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
 
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_software_stack_detailliert.tex}
+    \caption{Das Zusammenspiel der Software-Schichten bei der Geräteverwaltung: Die Anwendung nutzt eine einheitliche \glsentryshort{API} (z.\,B. zum Senden von Druckdaten), das Betriebssystem wählt den passenden Treiber, und dieser steuert die konkrete Hardware an.}
+    \label{fig:software_stack_detailliert}
+\end{figure}
+
 \section{Zusammenspiel von Hardware, Betriebssystem und Anwendungen}
 
 Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert, wenn eine Benutzerin die Taste \texttt{A} drückt und das Zeichen im Texteditor erscheint:
@@ -120,6 +127,9 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
 \begin{mychallenge}
     Sie haben nun den gesamten Weg von der Zahlendarstellung (\cref{ch:zahlendarstellungen}) über Kodierungen (\cref{ch:kodierungen}) und logische Gatter (\cref{ch:logische_gatter}) bis zum vollständigen Computer und Betriebssystem verfolgt. Beschreiben Sie in eigenen Worten, was passiert -- auf allen Ebenen des Software-Stacks --, wenn Sie in einem Texteditor die Tastenkombination \enquote{Strg+S} drücken, um eine Datei zu speichern.
     \begin{myanswer}
-        Eine mögliche Antwort: Die Tastatur-Hardware erkennt den Tastendruck und sendet elektrische Impulse, der Tastaturtreiber übersetzt diese in einen Tastaturcode, das Betriebssystem meldet dem Texteditor das Ereignis \enquote{Strg+S gedrückt}. Der Texteditor löst über einen Systemaufruf (API) eine Schreiboperation aus. Das Betriebssystem übersetzt den Text (kodiert z.\,B. als UTF-8-Bitfolge, vgl. \cref{ch:kodierungen}) über das Dateisystem in konkrete Speicherzellen auf der SSD oder HDD und aktualisiert die entsprechenden Metadaten (Dateiname, Grösse, Position). Auf unterster Ebene führt die CPU dabei unzählige Fetch-Decode-Execute-Zyklen (\cref{sec:fde}) aus, die letztlich alle auf einfachen logischen Gattern (\cref{ch:logische_gatter}) beruhen.
+        \begin{center}
+            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_strg_s_ablauf.tex}
+        \end{center}
+        Eine mögliche Antwort: Die Tastatur-Hardware erkennt den Tastendruck und sendet elektrische Impulse, der Tastaturtreiber übersetzt diese in einen Tastaturcode, das Betriebssystem meldet dem Texteditor das Ereignis \enquote{Strg+S gedrückt}. Der Texteditor löst über einen Systemaufruf (\glsentryshort{API}) eine Schreiboperation aus. Das Betriebssystem übersetzt den Text (kodiert z.\,B. als UTF-8-Bitfolge, vgl. \cref{ch:kodierungen}) über das Dateisystem in konkrete Speicherzellen auf der \glsentryshort{SSD} oder \glsentryshort{HDD} und aktualisiert die entsprechenden Metadaten (Dateiname, Grösse, Position). Auf unterster Ebene führt die \glsentryshort{CPU} dabei unzählige Fetch-Decode-Execute-Zyklen (\cref{sec:fde}) aus, die letztlich alle auf einfachen logischen Gattern (\cref{ch:logische_gatter}) beruhen.
     \end{myanswer}
 \end{mychallenge}

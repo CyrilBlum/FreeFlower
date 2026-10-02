@@ -562,9 +562,9 @@ Im Folgenden wählen Sie in Zweier-Gruppen (bei ungrader Anzahl Personen eine Dr
     \item \textbf{Shooter (z.B. Space Invaders):} Steuern Sie ein Raumschiff und schiessen Sie auf herannahende Gegner. Jeder abgeschossene Gegner gibt Punkte.
 \end{itemize}
 
-Weitere Themen können in Absprache mit der Lehrperson gewählt werden. Wichtig ist, dass das Spiel die geforderten Python-Konzepte sinnvoll einsetzt (siehe Anforderungen) und die Komplexität angemessen ist (nicht zu einfach, aber auch nicht zu komplex). Das Spiel sollte mehr als nur 10 Sekunden lang Spass machen und nicht zu einfach zu spielen sein. Es sollte eine Herausforderung darstellen, die Spieler motiviert, immer wieder zu spielen und ihre Punktzahl zu verbessern.
+Weitere Themen können in Absprache mit der Lehrperson gewählt werden. Wichtig ist, dass das Spiel die geforderten Python-Konzepte sinnvoll einsetzt (s. \cref{sec:anforderungen}) und die Komplexität angemessen ist (nicht zu einfach, aber auch nicht zu komplex). Das Spiel sollte mehr als nur einige Minuten lang Spass machen und die Schwierigkeit sollte im Laufe des Spiels ansteigen. Es sollte eine Herausforderung darstellen, die Spieler motiviert, immer wieder zu spielen und ihre Punktzahl zu verbessern.
 
-\subsection{Anforderungen}
+\subsection{Anforderungen}\label{sec:anforderungen}
 
 Ihr Projekt sollte folgende, essentielle Python-Konzepte sinnvoll einsetzen
 \begin{todolist}
@@ -581,25 +581,24 @@ Ihr Projekt sollte folgende, essentielle Python-Konzepte sinnvoll einsetzen
 Ihr Game muss \textbf{Kommentare} enthalten, die den Code erklären und die Struktur des Programms verdeutlichen. Verwenden Sie sowohl einzeilige Kommentare (mit \lstinline|#|) als auch mehrzeilige Kommentare (mit \texttt{"""..."""}) für Funktionen und Klassen. \textbf{Schauen Sie sich die detaillierten Bewertungskriterien auf Moodle an, um sicherzustellen, dass Ihr Code den Anforderungen entspricht.}
 
 \subsection{Bonus}
-
+Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um das Spiel interessanter und komplexer zu gestalten. Folgende Auflistung enthält einige Beispiele für mögliche Boni:
 \begin{todolist}
     \item Python-spezifisch:
     \begin{todolist}
         \item Verwendung von \texttt{try/except} zur Behandlung von Fehlern (z.\,B. Laden von Medien, Division durch Null)
-        \item Verwendung von \texttt{with}-Anweisung zum sicheren Öffnen und Schliessen von Dateien (z.\,B. Highscore speichern)
-        \item Wenn Sie ein Punktesystem mit Highscore (gespeichert in einer Datei) implementieren.
+        \item Verwendung von \texttt{with}-Anweisung zum sicheren Öffnen und Schliessen von Dateien (z.\,B. Highscore speichern in einer Datei)
     \end{todolist}
     \item Game-spezifisch:
     \begin{todolist}
-        % \item Wenn Sie ein Startmenü und/oder ein Game-Over-Bildschirm implementieren.
-        % \item Wenn Sie Animationen (z.\,B. bewegte Spielfigur, animierte Hindernisse) einbauen.
-        % \item Wenn Sie verschiedene Level oder Schwierigkeitsgrade (z.\,B. schnellere Hindernisse, mehr Items) implementieren.
+        \item Wenn Sie ein komplexes Startmenü mit Game-Optionen implementieren.
+        \item Wenn Sie Animationen (z.\,B. bewegte Spielfigur, animierte Hindernisse) einbauen.
+        \item Wenn Sie zahlreiche Level oder Schwierigkeitsgrade (z.\,B. zahlreiche Hindernis-Arten etc.) implementieren.
         \item Wenn Sie viele Power-Ups (z.\,B. temporäre Unverwundbarkeit, Doppelte Punkte) einbauen.
         \item Wenn Sie viele eigens erstellte Hintergrundmusik und/oder Soundeffekte (z.\,B. bei Kollision, Item-Sammlung) einbauen.
         \item Wenn Sie das Spiel mit einem Gamepad/Controller steuern können.
         \item Wenn Sie einen Online-Multiplayer-Modus (z.\,B. über LAN) implementieren.
     \end{todolist}
-    \item Weitere Ideen für Bonus:
+    \item Weitere Aspekte:
     \begin{todolist}
         \item Wenn Sie das Spiel mit einem Level-Editor (zum Erstellen eigener Level) erweitern können.
         \item Wenn Sie das Spiel mit einem Story-Modus (mit Handlung und Charakteren) erweitern können.

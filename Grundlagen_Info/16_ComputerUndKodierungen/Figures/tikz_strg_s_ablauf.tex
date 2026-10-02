@@ -1,0 +1,103 @@
+\begin{tikzpicture}[
+    font=\sffamily,
+    layer/.style={
+        draw=#1!80!black,
+        fill=#1!16,
+        thick,
+        rounded corners=5pt
+    },
+    stepbox/.style={
+        draw=#1!80!black,
+        fill=white,
+        line width=0.7pt,
+        rounded corners=4pt,
+        align=center,
+        font=\fontsize{6.3pt}{7.5pt}\selectfont,
+        inner sep=2pt,
+        minimum height=0.86cm
+    },
+    col1/.style={
+        stepbox=#1,
+        minimum width=3.15cm
+    },
+    col2/.style={
+        stepbox=#1,
+        minimum width=3.70cm
+    },
+    flowarr/.style={
+        draw=black!70,
+        line width=1.4pt,
+        -{Latex[length=2.2mm]}
+    }
+]
+    % Layer bounds: x from -6.0 to 6.0 (total width 12.0cm)
+
+    % ================= LAYER 1: Anwendungen =================
+    \filldraw[layer=Salmon] (-6.0, 2.07) rectangle (6.0, 3.21);
+    \node[anchor=west] at (-5.75, 2.64) {\large\faLaptop\hspace{2mm}\small\textbf{Anwendungen}};
+    \node[stepbox=Salmon, minimum width=3.40cm] (b5) at (1.55, 2.64) {
+        5. Texteditor erkennt\\Speichern
+    };
+
+    % ================= LAYER 2: Systemaufrufe / API =================
+    \filldraw[layer=Goldenrod] (-6.0, 0.73) rectangle (6.0, 1.87);
+    \node[anchor=west] at (-5.75, 1.30) {
+        \large\faPlug\hspace{2mm}\shortstack[l]{\small\textbf{Systemaufrufe /}\\\small\textbf{\glsentryshort{API}}}
+    };
+    \node[col1=Goldenrod] (b4) at (-0.50, 1.30) {
+        4. Ereignis \guillemotleft Strg + S\\gedrückt\guillemotright{} an die\\Anwendung
+    };
+    \node[col2=Goldenrod] (b6) at (3.65, 1.30) {
+        6. Texteditor fordert\\write()
+    };
+
+    % ================= LAYER 3: Betriebssystem (Kernel) =================
+    \filldraw[layer=DarkSeaGreen] (-6.0, -0.61) rectangle (6.0, 0.53);
+    \node[anchor=west] at (-5.75, -0.04) {
+        \large\faCogs\hspace{2mm}\shortstack[l]{\small\textbf{Betriebssystem}\\\small\textbf{(Kernel)}}
+    };
+    \node[col1=DarkSeaGreen] (b3) at (-0.50, -0.04) {
+        3. Tasteneingabe wird\\als Ereignis verarbeitet
+    };
+    \node[col2=DarkSeaGreen] (b7) at (3.65, -0.04) {
+        7. Text $\to$ UTF-8-Bytes;\\Dateisystem ordnet Blöcke zu\\und aktualisiert Metadaten
+    };
+
+    % ================= LAYER 4: Gerätetreiber =================
+    \filldraw[layer=CornflowerBlue] (-6.0, -1.95) rectangle (6.0, -0.81);
+    \node[anchor=west] at (-5.75, -1.38) {\large\faMicrochip\hspace{2mm}\small\textbf{Gerätetreiber}};
+    \node[col1=CornflowerBlue] (b2) at (-0.50, -1.38) {
+        2. Tastensignale $\to$\\Tastencodes
+    };
+    \node[col2=CornflowerBlue] (b8) at (3.65, -1.38) {
+        8. Schreibauftrag für\\\glsentryshort{SSD}/\glsentryshort{HDD}
+    };
+
+    % ================= LAYER 5: Hardware =================
+    \filldraw[layer=Gray] (-6.0, -3.52) rectangle (6.0, -2.15);
+    \node[anchor=west] at (-5.75, -2.72) {\large\faServer\hspace{2mm}\small\textbf{Hardware}};
+    \node[col1=Gray] (b1) at (-0.50, -2.72) {
+        1. Tastatur erkennt\\Strg + S
+    };
+    \node[col2=Gray] (b9) at (3.65, -2.72) {
+        9. \glsentryshort{SSD}/\glsentryshort{HDD} speichert\\Daten
+    };
+    \node[anchor=center, font=\fontsize{5.8pt}{7.0pt}\selectfont, text=black!85] at (0.0, -3.34) {
+        \glsentryshort{CPU}: Fetch--Decode--Execute-Zyklen während des gesamten Ablaufs; logische Gatter führen Befehle aus.
+    };
+
+    % Left vertical arrow: Höhere Abstraktion
+    \draw[draw=black!70, line width=1.5pt, -{Latex[length=2.8mm]}] (-6.3, -3.35) -- (-6.3, 3.05)
+        node[midway, above=1pt, sloped, font=\scriptsize\bfseries, text=black!75] {Höhere Abstraktion};
+
+    % Connecting flow arrows
+    \draw[flowarr] (b1.north) -- (b2.south);
+    \draw[flowarr] (b2.north) -- (b3.south);
+    \draw[flowarr] (b3.north) -- (b4.south);
+    \draw[flowarr, rounded corners=6pt] (b4.north) -- (b4.north |- b5.west) -- (b5.west);
+    \draw[flowarr, rounded corners=6pt] (b5.east) -- (b5.east -| b6.north) -- (b6.north);
+    \draw[flowarr] (b6.south) -- (b7.north);
+    \draw[flowarr] (b7.south) -- (b8.north);
+    \draw[flowarr] (b8.south) -- (b9.north);
+
+\end{tikzpicture}
