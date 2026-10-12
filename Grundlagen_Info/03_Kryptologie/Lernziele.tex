@@ -1,41 +1,53 @@
 \chapter{Lernziele Kryptologie}
 
+Die folgenden Lernziele geben Ihnen einen Überblick über die zentralen Konzepte und Fähigkeiten, die in den einzelnen Kapiteln dieses Skripts behandelt werden.
+
+\section*{Kapitel 1: Geheimschriften und einfache Kryptosysteme}
 \begin{todolist}
-  \item Ich weiss wie die folgenden Kryptosysteme funktionieren (Verschlüsselung und Entschlüsselung bei gegebenem Schlüssel):
-  \begin{todolist}
-    \item Skytale
-    \item Caesar
-    \item Vigenère
-    \item One-Time-Pad
-    \item RSA
-  \end{todolist}
-  \item Ich kenne die Grundbegriffe: Klartext, Kryptotext, Verschlüsselung (Chiffrierung), Entschlüsselung (Dechiffrierung), Schlüssel, Kryptografie / Kryptologie, Kryptosystem.
-  \item Ich kenne die grundlegenden Sicherheitsziele: Vertraulichkeit, Integrität, Authentizität und Verbindlichkeit (Nichtabstreitbarkeit) und kann sie kurz erläutern.
-  \item Ich kann das Kerckhoffsche Prinzip erklären.
-  \item Ich kann einen Caesar-Kryptotext durch Ausprobieren aller 25 Verschiebungen knacken (Brute-Force) und erkenne den richtigen Klartext.
-  \item Ich kann einen Kryptotext, der durch die Vigenère-Verschlüsselung entstanden ist, mit Hilfe des Tools auf folgender Webseite entschlüsseln: \href{https://cryptbreaker.marcwidmer.xyz}{Link zum Cryptbreaker}
-  \item Ich kann die Idee der Häufigkeitsanalyse erklären.
-  \item Ich kann eine gruppenweise Häufigkeitsanalyse durchführen, um Vigenère bei bekannter Schlüssellänge zu knacken.
-  \item Ich kann erläutern, weshalb eine kurze Schlüssellänge Vigenère schwächt (Wiederholungsmuster, Aufteilung in Gruppen) und warum lange bzw. OTP-lange Schlüssel nicht angreifbar durch Häufigkeitsanalyse sind.
+  \item Ich kenne die Grundbegriffe der Kryptologie: Klartext, Kryptotext, Schlüssel, Verschlüsselung, Entschlüsselung, Kryptosystem sowie die Abgrenzung zwischen Kryptographie, Kryptoanalyse und Kryptologie.
+  \item Ich kenne die vier zentralen Schutzziele: Vertraulichkeit, Integrität, Authentizität und Verbindlichkeit (Nichtabstreitbarkeit) und kann sie an Beispielen erläutern.
+  \item Ich kann das Kerckhoffs-Prinzip erklären und begründen, warum Sicherheit ausschliesslich auf der Geheimhaltung des Schlüssels und nicht des Algorithmus beruhen darf.
+  \item Ich kann einfache historische Verfahren (Skytale, Caesar, monoalphabetische Substitution) zur Ver- und Entschlüsselung anwenden.
+  \item Ich kann einen Caesar-Kryptotext durch Ausprobieren aller 25 möglichen Verschiebungen (Brute-Force) brechen.
+  \item Ich kann das Prinzip der Häufigkeitsanalyse natürlicher Sprachen erklären und anwenden, um monoalphabetisch verschlüsselte Texte zu knacken.
+\end{todolist}
+
+\section*{Kapitel 2: Vigenère und One-Time-Pad}
+\begin{todolist}
   \item Ich kann den Unterschied zwischen monoalphabetischer und polyalphabetischer Substitution erklären.
-  \item Ich kann einen monoalphabetisch substituierten Text mittels Häufigkeitsanalyse und schrittweisem Erraten entschlüsseln.
-  \item Ich kann die Friedmansche Charakteristik für einen kurzen Text von Hand berechnen.
-  \item Ich kann mit der Friedmanschen Charakteristik die Länge eines Vigenère-Schlüssels bestimmen.
-  \item Ich kann erklären, was mit der Friedmanschen Charakteristik berechnet wird.
-  \item Ich kann beim One-Time-Pad begründen, warum es (bei perfekter Zufälligkeit, einmaliger Verwendung und gleicher Länge wie der Klartext) perfekte Sicherheit bietet (Schlüsselraum = Nachrichtenraum, Gleichverteilung der möglichen Klartexte).
-  \item Ich kann die Anzahl möglicher OTP-Schlüssel einer gegebenen Länge berechnen (z.B. $26^n$ für Buchstaben, $2^n$ für Bits).
-  \item Ich kann erklären, warum die Wiederverwendung eines OTP-Schlüssels zu Informationsleckage führt und ein Beispiel analysieren.
-  \item Ich kann die binäre Version des OTP (Bitweise XOR) anwenden und Kryptotexte berechnen.
-  \item Ich kenne die Eigenschaften der XOR-Operation: Kommutativität, Assoziativität, neutrales Element 0, Involution (selbstinverse: $a\oplus a = 0$, $a\oplus 0 = a$) und deren Bedeutung für Ver- und Entschlüsselung.
-  \item Ich kann erläutern, warum zweimalige Anwendung desselben Schlüssels (mit XOR) den Klartext zurückgibt.
-  \item Ich kann das Three-Pass Protocol (Schlüsseltausch mit drei Durchgängen) Schritt für Schritt durchführen und die beteiligten Nachrichten ($k_A, k_{AB}, k_B$) bestimmen.
-  \item Ich kann erklären, warum das Three-Pass Protocol unsicher ist, wenn ein Angreifer alle drei Kryptotexte mitschneidet (Rekonstruktion von $t$ durch XOR aller Nachrichten).
-  \item Ich kann das Diffie-Hellman-Merkle-Schlüsseltauschverfahren mit kleinen Zahlen durchführen und den gemeinsamen Schlüssel berechnen.
-  \item Ich kann das zugrunde liegende Sicherheitsprinzip von Diffie-Hellman (Schwierigkeit des diskreten Logarithmusproblems) erklären.
-  \item Ich kann den Man-in-the-Middle-Angriff auf Diffie-Hellman beschreiben und erläutern, wie digitale Signaturen (z.B. RSA) Authentizität sicherstellen.
-  % \item Ich verstehe das Beispiel des \textit{public-key-}Verfahrens mit dem Graphen (Schlüssel: perfect dominating set) und kann erklären, warum hier kein Schlüsselaustausch zwischen Bob und Alice notwendig ist.
-  % \item Ich verstehe das Prinzip hinter public-Key-Verfahren.
-  \item Ich kann eine Nachricht mit RSA asymmetrisch ver- und entschlüsseln, indem ich ein Beispiel mit kleinen Zahlen durchführe.
-  \item Ich kann den Unterschied zwischen symmetrischen und asymmetrischen Verfahren (z.B. Vigenère/OTP vs. RSA/Diffie-Hellman) erklären.
-  \item Ich kann die Bedrohung klassischer asymmetrischer Verfahren (RSA, DHM) durch Quantencomputer (Shor-Algorithmus) erklären und das Grundprinzip der Post-Quanten-Kryptographie (z.\,B.\ gitterbasierte Verfahren wie LWE) beschreiben.
+  \item Ich kann Nachrichten mit der Vigenère-Chiffre bei gegebenem Schlüsselwort ver- und entschlüsseln.
+  \item Ich kann erklären, wie die Schlüssellänge einer Vigenère-Chiffre bestimmt werden kann (Kasiski-Test und Friedmansche Charakteristik / Koinzidenzindex).
+  \item Ich kann erläutern, wie Vigenère bei bekannter Schlüssellänge durch Zerlegung in Teiltexte und gruppenweise Häufigkeitsanalyse gebrochen werden kann.
+  \item Ich kann begründen, warum das One-Time-Pad (OTP) perfekte Sicherheit nach Shannon bietet (echter Zufall, Schlüssellänge mindestens Textlänge, Einmaligkeit).
+  \item Ich kann erklären, warum die Wiederverwendung eines OTP-Schlüssels (Two-Time-Pad) zu Informationsleckage führt.
+  \item Ich kenne die Eigenschaften der XOR-Operation ($\oplus$: Kommutativität, Assoziativität, neutrales Element 0, Selbstinversität: $a \oplus a = 0$) und kann das binäre OTP für Ver- und Entschlüsselung anwenden.
+\end{todolist}
+
+\section*{Kapitel 3: Schlüsseltausch-Verfahren}
+\begin{todolist}
+  \item Ich kann das Problem des Schlüsselaustauschs bei symmetrischen Verfahren erläutern.
+  \item Ich kann das Shamir Three-Pass Protocol (Drei-Wege-Schlüsseltausch) schrittweise durchführen und erklären, warum es bei ausschliesslicher Verwendung von XOR unsicher ist ($k_A \oplus k_AB \oplus k_B = t$).
+  \item Ich kann die Bedeutung des Definitionszeichens (:=) sowie des Kongruenzzeichens ($\equiv$) erklären.
+  \item Ich kann das Diffie-Hellman-Merkle-Verfahren (DHM) mit kleinen Zahlen durchführen und den gemeinsamen Schlüssel berechnen ($K = g^{ab} \bmod p$).
+  \item Ich kann den Man-in-the-Middle-Angriff (MitM) auf unauthentifizierte Schlüsseltauschverfahren beschreiben.
+\end{todolist}
+
+\section*{Kapitel 4: Asymmetrische Kryptosysteme und Digitale Signaturen}
+\begin{todolist}
+  \item Ich kann das Prinzip der Public-Key-Kryptographie (Schlüsselpaar aus öffentlichem und privatem Schlüssel) und den Unterschied zu symmetrischen Verfahren erklären.
+  \item Ich kann die Schritte des RSA-Verfahrens (Schlüsselerzeugung mit Primzahlen $p, q$, Verschlüsselung $c = m^e \bmod n$, Entschlüsselung $m = c^d \bmod n$) mit kleinen Zahlen durchführen.
+  \item Ich kann die Sicherheitsgrundlage von RSA (Schwierigkeit der Primfaktorzerlegung von $n = p \cdot q$) erläutern.
+  \item Ich kann das Prinzip digitaler Signaturen mit RSA durch Rollenumkehr der Schlüssel erklären (Signieren mit privatem Schlüssel: $s = m^d \bmod n$, Verifizieren mit öffentlichem Schlüssel: $s^e \equiv m \pmod n$).
+  \item Ich kann erklären, welche Schutzziele digitale Signaturen gewährleisten (Authentizität der Absenderin und Integrität der Nachricht).
+  % \item Ich kann die Rolle kryptographischer Hashfunktionen (digitaler Fingerabdruck, Lawineneffekt, Kollisionsresistenz) erklären und begründen, warum in der Praxis Hashwerte signiert werden.
+  \item Ich kann den Unterschied zwischen einer reinen digitalen Signatur (Klartextübertragung) und kombinierter Signatur und Verschlüsselung (\emph{Sign-then-Encrypt}) anhand ihrer Schutzziele erklären und anwenden.
+\end{todolist}
+
+\section*{Kapitel 5: Digitale Zertifikate und Public-Key-Infrastrukturen (PKI)}
+\begin{todolist}
+  \item Ich kann das Vertrauensproblem unbeglaubigter öffentlicher Schlüssel in der Praxis beschreiben (fehlende Bindung zwischen Schlüssel und Person/Domain).
+  \item Ich kann erklären, wie ein digitales Zertifikat und eine Zertifizierungsstelle (CA) dieses Problem lösen, indem die CA die Bindung eines Schlüssels an eine Identität signiert.
+  \item Ich kann die zwei verschiedenen Signaturen in einer PKI unterscheiden: Signatur der CA auf dem Zertifikat vs. Signatur des Besitzers auf einer Nachricht.
+  % \item Ich kann das Missverständnis aufklären, dass ein gültiges Zertifikat nicht die allgemeine Vertrauenswürdigkeit eines Anbieters beweist, sondern ausschliesslich die Echtheit der Domainbindung (Phishing-Gefahr).
+  % \item Ich kann den Aufbau einer hierarchischen Zertifikatkette (Root-CA im Trust Store des Betriebssystems/Browsers, Intermediate-CA, Serverzertifikat) und den Sicherheitsvorteil der Kaskade erklären.
 \end{todolist}
