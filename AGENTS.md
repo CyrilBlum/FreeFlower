@@ -39,6 +39,7 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 ### 2.5 Compilation Policy & Quality Standard
 - **No Automatic Compilation**: AI agents do **not** need to compile edited `.tex` files unless the user explicitly requests it.
 - **Zero-Error Standard (when compilation is requested)**: If the user explicitly asks for compilation, all modified TeX documents must compile without errors, fatal warnings, or unresolved reference/citation issues under LuaLaTeX.
+- **Server TeX Live Version**: The remote build server (Hetzner self-hosted runner) runs **TeX Live 2024** (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20). This exact version is required to successfully build files on the server.
 
 ### 2.6 Synchronizing Exercises: Slides vs. Handouts/Scripts
 - **Manual Exercise Sync**: Exercise and task numberings in Beamer slides are **not** updated automatically when corresponding parts in scripts or exercise handouts are changed.
@@ -110,6 +111,7 @@ The main entry point is `main.tex`. Document types are controlled via the `\docu
 - `4` = `flashcards` (Learning cards)
 
 #### Compilation Sequences
+*Target environment: TeX Live 2024 (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20)*
 - **`book` documentclass**:
   ```bash
   lualatex main.tex -> biber main -> makeglossaries main -> lualatex main.tex -> lualatex main.tex

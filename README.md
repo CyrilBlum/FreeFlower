@@ -22,6 +22,10 @@ https://cyrilblum.github.io/FreeFlower/
 
 To compile this project, navigate to `main.tex` and chose to run either a `book`, `article`, `exam`, `beamer` or `flashcard` documentclass, using the toggles. Uncomment a line to compile a certain project. 
 
+### TeX Live Version Requirements
+
+The remote build server (Hetzner self-hosted runner) runs **TeX Live 2024** (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20). This exact TeX Live version is required to successfully build files on the server and ensure compatibility with all preambles, custom macros, and packages.
+
 We recommend running `latexmk -pdflua -silent main.tex` or the following **compilation sequences**
 - `book`: `lualatex -> biber -> makeglossaries -> lualatex -> lualatex` 
 - other document classes: `lualatex -> lualatex`

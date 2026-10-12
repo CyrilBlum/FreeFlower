@@ -10,6 +10,9 @@ permalink: /latex-setup.html
 
 Diese Anleitung beschreibt die lokale Installation von LaTeX unter macOS und Windows sowie die Einrichtung und Kompilierung in VS Code mit der Erweiterung LaTeX Workshop.
 
+> ⚠️ **Erforderliche TeX Live-Version**
+> Auf dem Build-Server (Hetzner CI/CD Runner) läuft **TeX Live 2024** (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20). Genau diese TeX Live-Version (2024) wird zwingend vorausgesetzt, um Dokumente auf dem Server erfolgreich zu bauen und Inkompatibilitäten bei Paketaktualisierungen zu vermeiden.
+
 ## Anleitung für macOS
 
 Öffnen Sie ein neues Terminal-Fenster, indem Sie zunächst die Spotlight-Suche mit `Cmd` + `Leertaste` öffnen. Geben Sie dort `Terminal` ein und bestätigen Sie mit `Enter`.
