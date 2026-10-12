@@ -62,10 +62,10 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
   - `% \input{Grundlagen_Info/03_Kryptologie/Skript/Kapitel_06.tex} % Kapitel 6: Post-Quanten-Kryptographie` (in `Grundlagen_Info/03_Kryptologie/Skript/Skript.tex`)
 - **Agent Rule**: Never uncomment these WIP chapters when compiling, building, or refactoring unless the user explicitly requests to work on or test that specific draft chapter.
 
-### 2.10 Active Topic in `main.tex` During Development & Restoration Before Commit
-- **Active Project Input during Development**: When working on a specific topic/module (e.g., `\input{Grundlagen_Info/16_ComputerUndKodierungen/Skript/Skript.tex}`), keep that topic's `\input{...}` uncommented (active) in `main.tex` throughout the working session.
-- **Faster Compilation During Iterative Checks**: In `Skript.tex` or `main.tex`, you may temporarily comment out other chapters, title pages, and appendices to accelerate compilation when iteratively testing or visually inspecting figures (e.g. with `pdftoppm`).
-- **Mandatory Restoration Before Commit & Push**: Before committing and pushing to `main`, ensure that all temporarily commented out sub-chapters/appendices in `Skript.tex` are restored, and re-comment out the project's `\input{...}` in `main.tex` so `main.tex` remains clean by default.
+### 2.10 Active Topic & Document Class in `main.tex` During Development vs. Commits
+- **Activate Target File & Document Class During Development**: Whenever you modify or work on a document (e.g., a script chapter, presentation slides, or an article), activate that topic's `\input{...}` in `main.tex` AND set the corresponding `\documentToggle` (along with the matching active `\documentclass`) for that document type (e.g., `0` for `book`, `3` for `beamer`, `1` for `article`). This allows the user to immediately and easily compile and preview the document within an IDE such as VS Code without manual configuration.
+- **Faster Compilation During Iterative Checks**: In sub-main files (e.g., `Skript.tex`), you may temporarily comment out sibling chapters or appendices to accelerate local testing. Always restore these within the sub-main files before finishing.
+- **Never Commit Development Changes to `main.tex`**: When creating Git commits, **never commit session-specific changes to `main.tex`**. In principle, `main.tex` must remain unchanged in commits. Discard or unstage active topic/toggle changes in `main.tex` (e.g., via `git checkout main.tex`) before committing, **unless** an intentional structural change was made (such as adding a newly created document, updating a moved document path, or modifying global preamble includes).
 
 ### 2.11 Glossaries & Acronyms (`\gls{...}`)
 - **Consistent Glossary Usage**: All acronyms and technical abbreviations used in scripts and materials (e.g., `CPU`, `RAM`, `ALU`, `HDD`, `SSD`, `SI`, `OS`, `API`, `SQL`, `RGB`) must be defined in `Preambles/pre_6_glossaries.tex`.
@@ -137,4 +137,4 @@ Before submitting changes or marking a task complete:
 7. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
 8. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
 9. [ ] **Use Glossaries (`\gls{...}`) for Acronyms**: Ensure all acronyms are defined in `Preambles/pre_6_glossaries.tex` and referenced via `\gls{...}` / `\glspl{...}`.
-10. [ ] **Re-comment Active Project in `main.tex` Before Commit/Push**: Ensure `main.tex` has project `\input{...}` lines re-commented out before committing and pushing to `main`.
+10. [ ] **Keep `main.tex` Unchanged in Commits**: Ensure session-specific `\input{...}` activations and `\documentToggle` switches in `main.tex` are NOT committed (revert via `git checkout main.tex`), unless a new document was added or paths were restructured.
