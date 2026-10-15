@@ -39,6 +39,7 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 ### 2.5 Compilation Policy & Quality Standard
 - **No Automatic Compilation**: AI agents do **not** need to compile edited `.tex` files unless the user explicitly requests it.
 - **Zero-Error Standard (when compilation is requested)**: If the user explicitly asks for compilation, all modified TeX documents must compile without errors, fatal warnings, or unresolved reference/citation issues under LuaLaTeX.
+- **Always Compile in `build/` Subfolder**: Compilation must **always** be directed to the `build/` subfolder (using `--output-directory=build`). Never compile directly into the root repository directory.
 - **Server TeX Live Version**: The remote build server (Hetzner self-hosted runner) runs **TeX Live 2024** (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20). This exact version is required to successfully build files on the server.
 
 ### 2.6 Synchronizing Exercises: Slides vs. Handouts/Scripts
@@ -48,10 +49,13 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 ### 2.7 Cleanup of Temporary Rendered Artifacts
 - **Always Clean Up Rendered Images**: When using tools like `pdftoppm` to generate temporary `.png` files for visual inspection and verification, always delete all agent-generated `.png` files from the repository directory before finishing the task.
 
-### 2.8 Cleanup of LaTeX Auxiliary Files
-- **Always Clean Up Aux Files**: After every build, delete all LaTeX auxiliary files from the repository directory before finishing the task. This includes (but is not limited to):
-  `aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`
-- You can remove them with a command such as:
+### 2.8 Compilation in `build/` Subfolder & Cleanup
+- **Always Compile in `build/`**: All compilation runs must output to the `build/` subfolder (`--output-directory=build`). This keeps the repository root directory completely clean of auxiliary files.
+- **Auxiliary Files in `build/`**: The `build/` directory is ignored by Git (`.gitignore`). Ensure auxiliary files never leak into the root directory. To clean up build artifacts or reset build state, remove files inside `build/`:
+  ```bash
+  rm -rf build/*
+  ```
+- **Never Leave Root Aux Files**: If any auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) are generated in the root directory, remove them immediately before finishing:
   ```bash
   rm -f main.{aux,log,out,toc,lof,lot,glo,idx,fls,fdb_latexmk,synctex.gz}
   ```
@@ -110,16 +114,43 @@ The main entry point is `main.tex`. Document types are controlled via the `\docu
 - `3` = `beamer` (Presentation slides)
 - `4` = `flashcards` (Learning cards)
 
+#### Build Directory & CLI Tool Options
+Compilation must **always** be performed using the `build/` subfolder. Ensure the directory exists before compiling (`mkdir -p build`).
+
+The exact CLI tool options (matching the project's VS Code LaTeX Workshop configuration) are:
+- **LuaLaTeX** (`lualatex`):
+  ```bash
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
+  ```
+- **Bibliography** (`biber`):
+  ```bash
+  biber --input-directory=build --output-directory=build main
+  ```
+- **Glossaries** (`makeglossaries`):
+  ```bash
+  makeglossaries -d build main
+  ```
+
 #### Compilation Sequences
 *Target environment: TeX Live 2024 (`tlnet-final`, LuaHBTeX 1.18.0, Biber 2.20)*
-- **`book` documentclass**:
+- **`book` documentclass** (Full cycle with bibliography and glossaries):
   ```bash
-  lualatex main.tex -> biber main -> makeglossaries main -> lualatex main.tex -> lualatex main.tex
+  mkdir -p build
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
+  biber --input-directory=build --output-directory=build main
+  makeglossaries -d build main
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
   ```
+  *(Output PDF: `build/main.pdf`)*
+
 - **Other documentclasses** (`article`, `beamer`, `exam`, `flashcards`):
   ```bash
-  lualatex main.tex -> lualatex main.tex
+  mkdir -p build
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
+  lualatex --output-directory=build --interaction=nonstopmode --synctex=1 main.tex
   ```
+  *(Output PDF: `build/main.pdf`)*
 
 #### Batch Script (`compile_tex.sh`)
 - **Never use `compile_tex.sh` to compile documents**: AI agents must **never** run `compile_tex.sh` to build or verify documents. Only compile manually using direct `lualatex` / `biber` / `makeglossaries` commands when needed, unless the explicit task is specifically to debug or test `compile_tex.sh` itself.
@@ -130,13 +161,13 @@ The main entry point is `main.tex`. Document types are controlled via the `\docu
 
 Before submitting changes or marking a task complete:
 
-1. [ ] **Verify Compilation (Only if explicitly requested)**: If the user requested compilation, ensure the edited `.tex` file compiles clean using LuaLaTeX without syntax errors or broken package dependencies.
+1. [ ] **Verify Compilation in `build/` (Only if explicitly requested)**: If the user requested compilation, ensure the edited `.tex` file compiles clean using LuaLaTeX into the `build/` subfolder (`--output-directory=build`) without syntax errors or broken package dependencies.
 2. [ ] **Check Vector/TikZ Graphics**: Ensure new figures use TikZ or `.pdf`/`.svg` vector formats.
 3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`).
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.
 5. [ ] **Preserve Formatting & Comments**: Keep inline comments clean and informative.
 6. [ ] **Keep WIP Chapters Commented Out**: Ensure chapters marked as 'under construction' (e.g. `Kapitel_06.tex` in `Skript.tex`) remain commented out.
 7. [ ] **Clean Up Rendered PNGs**: Delete all temporary PNG files generated during visual verification (`pdftoppm`) before finishing.
-8. [ ] **Clean Up Aux Files**: Delete all LaTeX auxiliary files (`aux`, `log`, `out`, `toc`, `lof`, `lot`, `glo`, `idx`, `fls`, `fdb_latexmk`, `synctex.gz`) generated during compilation before finishing.
+8. [ ] **Clean Up Aux Files & Ensure Clean Root**: Ensure compilation was run with output directed to `build/` so no auxiliary files (`aux`, `log`, `out`, `toc`, etc.) leak into the repository root directory. If temporary files in `build/` need clearing, remove them (`rm -rf build/*`).
 9. [ ] **Use Glossaries (`\gls{...}`) for Acronyms**: Ensure all acronyms are defined in `Preambles/pre_6_glossaries.tex` and referenced via `\gls{...}` / `\glspl{...}`.
 10. [ ] **Keep `main.tex` Unchanged in Commits**: Ensure session-specific `\input{...}` activations and `\documentToggle` switches in `main.tex` are NOT committed (revert via `git checkout main.tex`), unless a new document was added or paths were restructured.
