@@ -434,11 +434,7 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 				            a \equiv b \pmod m
 			            \]
 			            Hier ist $\pmod m$ keine Operation auf $b$, sondern beschreibt den \textbf{Bezugsrahmen} der Gleichheit. Die Aussage wird gelesen als: \emph{$a$ ist kongruent zu $b$ modulo $m$}. Sie bedeutet, dass $a$ und $b$ bei der Division durch $m$ \textbf{denselben Rest} ergeben (bzw.\ dass $m$ die Differenz $a - b$ teilt).\\
-			            \textbf{Beispiele:}
-			            \begin{itemize}
-				            \item $17 \equiv 2 \pmod 5$ (denn beide Zahlen ergeben bei der Division durch $5$ den Rest $\mathbf{2}$).
-				            \item $17 \equiv 22 \pmod 5$ (ebenfalls wahr, da $17$ und $22$ denselben Rest haben, obwohl $22$ noch nicht auf den kleinsten Rest reduziert ist).
-			            \end{itemize}
+			            \textbf{Beispiele:} $17 \equiv 2 \pmod 5$, denn beide Zahlen ergeben bei der Division durch $5$ den Rest $\mathbf{2}$. Ebenso gilt $17 \equiv 22 \pmod 5$, da $17$ und $22$ denselben Rest haben, obwohl $22$ noch nicht auf den kleinsten Rest reduziert ist.
 		      \end{enumerate}
 		      In Rechenschritten darf eine Zahl daher jederzeit durch eine kongruente Zahl (insbesondere ihren kleinsten Rest modulo $m$) ersetzt werden.
 		      
@@ -512,6 +508,7 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 		\item \textbf{Zwischenergebnisse sofort reduzieren:} Nach der Potenzierungsregel mit $k=2$ gilt $((g^m \bmod p))^2 \bmod p = (g^m)^2 \bmod p = g^{2m} \bmod p$. Man darf also das Zwischenergebnis bei jedem Schritt sofort modulo $p$ reduzieren!
 	\end{enumerate}
 
+	Für das folgende Beispiel setzen wir $g=3$, $p=7$ und $a=13$. Wir berechnen also $g^a \bmod p = 3^{13} \bmod 7$.
 	Wir zerlegen den Exponenten $13$ in Zweierpotenzen: $13 = \mathbf{\textcolor{purple}{8}} + \mathbf{\textcolor{ForestGreen}{4}} + \mathbf{\textcolor{red}{1}}$.
 	
 	\smallskip\noindent
