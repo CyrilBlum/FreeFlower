@@ -81,13 +81,18 @@ Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden
 			      \begin{enumerate}
 				      \item \textbf{Zertifikatsprüfung:} Er prüft die \gls{CA}-Signatur mit dem vorinstallierten öffentlichen \gls{CA}-Schlüssel:\\
 				            $z' = (\text{Cert}_A)^{e_{\text{CA}}} \bmod n_{\text{CA}}$.\\
-				            Gilt $z' = z$, gehört der enthaltene Schlüssel $(e_A, n_A)$ garantiert Alice.
+				            Gilt $z' = z$ und steht in $z$ der Name \enquote{Alice}, gehört der enthaltene Schlüssel $(e_A, n_A)$ garantiert Alice.
 				      \item \textbf{Signaturprüfung:} Er prüft die Signatur mit dem verifizierten Schlüssel $(e_A, n_A)$:\\
 				            $m' = s^{e_A} \bmod n_A$.\\
 				            Gilt $m' = m$, ist der Vertrag unverfälscht und stammt von Alice.
 
 			      \end{enumerate}
-			\item Eve besitzt kein von der \gls{CA} signiertes Zertifikat auf ihren Namen. Sendet sie ihr eigenes Schlüsselpaar $(e_E, n_E)$ mit, schlägt die Zertifikatsprüfung mit $(e_{\text{CA}}, n_{\text{CA}})$ fehl. Verwendet sie Alices Zertifikat mit $(e_A, n_A)$, schlägt die Signaturprüfung mit $s = m^{d_E} \bmod n_E$ fehl, da $s^{e_A} \not\equiv m \pmod{n_A}$.
+			\item Je nachdem, welchen öffentlichen Schlüssel Eve mitliefert, scheitert der Angriff an einer anderen Stelle:
+			      \begin{itemize}
+				      \item \textbf{Eigener Schlüssel als angeblicher Schlüssel von Alice:} Für $(\text{\enquote{Alice}}, e_E, n_E)$ stellt keine \gls{CA} ein Zertifikat aus, und Eve kann die \gls{CA}-Signatur ohne $d_{\text{CA}}$ nicht fälschen. Die Zertifikatsprüfung mit $(e_{\text{CA}}, n_{\text{CA}})$ schlägt fehl.
+				      \item \textbf{Alices Zertifikat:} Die Zertifikatsprüfung gelingt, die Signaturprüfung schlägt jedoch fehl, da $s = m^{d_E} \bmod n_E$ und somit $s^{e_A} \not\equiv m \pmod{n_A}$.
+				      \item \textbf{Eigenes gültiges Zertifikat auf den Namen Eve:} Beide Rechnungen gelingen. Das Zertifikat bestätigt aber nur, dass $(e_E, n_E)$ zu \emph{Eve} gehört. Bob erkennt den Angriff, weil der Name im Zertifikat nicht der erwarteten Unterzeichnerin Alice entspricht.
+			      \end{itemize}
 		\end{enumerate}
 	\end{myanswer}
 \end{myexercise}
