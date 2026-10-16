@@ -182,7 +182,8 @@ jobs:
   compile-web:
     name: Build & Deploy Web Platform (python.in-form-atik.ch)
     runs-on: self-hosted
-    needs: [prepare-compile]
+    needs: [compile-beamer, prepare-compile]
+    if: always() && needs.prepare-compile.result == 'success' && !cancelled()
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2

@@ -51,6 +51,28 @@ Ein solcher Zeitabschnitt, der einem Programm zugeteilt wird, heisst \tib{Zeitsc
 
 Das Betriebssystem weist jedem Prozess einen eigenen Bereich im RAM zu und stellt sicher, dass Prozesse nicht in den Speicherbereich anderer Prozesse eingreifen können (\tib{Speicherschutz}\index{Speicherschutz}). Dies verhindert, dass ein fehlerhaftes oder bösartiges Programm das gesamte System destabilisiert -- vgl. dazu auch die Überlegungen zur Von-Neumann-Architektur in \cref{ch:aufbau_computer}.
 
+Was geschieht, wenn alle laufenden Programme zusammen mehr Arbeitsspeicher brauchen, als eingebaut ist? Das Betriebssystem bricht nicht einfach ab, sondern lagert gerade wenig benutzte Teile des RAM-Inhalts in eine Datei auf dem Massenspeicher aus (\tib{Auslagerung}\index{Auslagerung}, englisch \tib{Swapping}\index{Swap}; die Datei heisst Auslagerungsdatei oder Swap). Dazu teilt es den Speicher in gleich grosse Stücke, sogenannte \tib{Seiten}\index{Seite (Speicher)} (typisch 4~KiB bzw. 16~KiB). Jedes Programm sieht weiterhin einen grossen, zusammenhängenden Speicher (\tib{virtueller Speicher}\index{virtueller Speicher}); welche Seiten tatsächlich im RAM liegen und welche ausgelagert sind, verwaltet das Betriebssystem. Greift ein Programm auf eine ausgelagerte Seite zu, muss das Betriebssystem sie zuerst vom Massenspeicher zurück in den RAM holen und dafür eine andere Seite auslagern.
+
+Das funktioniert, hat aber einen Preis: Ein Zugriff auf die \gls{SSD} dauert rund 1000-mal so lang wie ein Zugriff auf den RAM, bei einer \gls{HDD} sogar über 100\,000-mal so lang (vgl.\ \cref{fig:speed_vergleich}). Deshalb wird ein Computer mit zu wenig RAM spürbar träge, obwohl die \gls{CPU} kaum ausgelastet ist: Sie wartet auf den Speicher. Typisches Zeichen ist ein Programm, das nach einer Pause beim Zurückwechseln einige Sekunden stockt, weil seine Seiten inzwischen ausgelagert wurden. Abhilfe schaffen weniger gleichzeitig geöffnete Programme (z.\,B.\ Browser-Tabs) oder mehr RAM; eine schnellere CPU hilft nicht.
+
+\begin{myexample}[Auslagerung beobachten]
+    Unter Windows zeigt der Task-Manager unter \emph{Leistung $\to$ Arbeitsspeicher} den Wert \emph{Zugesichert}; ist er grösser als der eingebaute RAM, wird ausgelagert. Unter macOS zeigt die Aktivitätsanzeige im Bereich \emph{Speicher} den Wert \emph{Benutzter Swap} und die Farbe des \emph{Speicherdrucks} (grün, gelb, rot).
+\end{myexample}
+
+\begin{myexercise}\label{myexercise:swap}
+    Ein Laptop hat 16~GB RAM. Betriebssystem und Programme brauchen zusammen 20~GB, die Auslagerungsdatei liegt auf einer \gls{SSD}. Ein RAM-Zugriff dauert 50~ns $= 0{,}05\,\mu\mathrm{s}$, ein Zugriff auf die SSD $50\,\mu\mathrm{s}$. Messungen zeigen, dass 1\,\% aller Speicherzugriffe eine ausgelagerte Seite treffen.
+    \begin{enumerate}
+        \item Wie viele GB werden ausgelagert?
+        \item Wie lange dauert ein Speicherzugriff im Durchschnitt? Wie viel mal langsamer ist das als ohne Auslagerung?
+    \end{enumerate}
+    \begin{myanswer}
+        \begin{enumerate}
+            \item $20\,\mathrm{GB} - 16\,\mathrm{GB} = 4\,\mathrm{GB}$.
+            \item Gewichteter Mittelwert: $0{,}99 \cdot 0{,}05\,\mu\mathrm{s} + 0{,}01 \cdot 50\,\mu\mathrm{s} = 0{,}0495\,\mu\mathrm{s} + 0{,}5\,\mu\mathrm{s} \approx 0{,}55\,\mu\mathrm{s}$. Das ist $0{,}55 / 0{,}05 \approx 11$-mal langsamer. Schon ein Prozent ausgelagerter Zugriffe verlangsamt den Speicher also um eine Grössenordnung.
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
 \subsection{Dateisystem}
 
 Massenspeicher (SSD, HDD) speichern Daten als rohe Bitsequenzen (vgl. \cref{ch:kodierungen}). Das \tib{Dateisystem}\index{Dateisystem} organisiert diese Bits in \tib{Dateien}\index{Datei} und \tib{Verzeichnisse}\index{Verzeichnis} (Ordner). Es legt fest, wo auf dem Speicher eine Datei beginnt, wie lang sie ist und welche Zugriffsrechte sie hat.
