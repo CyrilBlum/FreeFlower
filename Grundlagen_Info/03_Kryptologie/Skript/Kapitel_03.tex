@@ -649,9 +649,35 @@ Wenn der Angreifer (Eve) alle drei Kryptotexte ($k_A, k_{AB}, k_B$) abfangen kan
 	\end{aenum}
 	\begin{myanswer}
 		\begin{aenum}
-			\item $a = 2, b = 3$ und $s_{AB} = 2^{2}\mod 5 = s_{BA} = 4^3 \mod 5 = 4$
-			\item $a = 5, b = 7$ und $s_{AB} = 11^5 \mod 13 = s_{BA} = 6^7 \mod 13 = 7$
+			\item Wir berechnen die Potenzen von $g=3$ modulo $5$, bis die öffentlichen Werte $x=4$ und $y=2$ auftreten:
+			      \[
+				      3^1 \equiv 3,\quad 3^2 \equiv 4,\quad 3^3 \equiv 2 \pmod 5.
+			      \]
+			      Also sind $a=2$ und $b=3$. Damit erhalten wir auf beiden Seiten:
+			      \begin{align*}
+				      s_{AB} &= y^a \bmod p = 2^2 \bmod 5 = 4, \\
+				      s_{BA} &= x^b \bmod p = 4^3 \bmod 5 = 64 \bmod 5 = 4.
+			      \end{align*}
+			\item Durch fortgesetztes Multiplizieren mit $2$ und Reduzieren modulo $13$ erhalten wir:
+			      \[
+				      \begin{array}{c|rrrrrrr}
+					      k & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+					      \hline
+					      2^k \bmod 13 & 2 & 4 & 8 & 3 & 6 & 12 & 11
+				      \end{array}
+			      \]
+			      Wegen $x=6$ und $y=11$ sind somit $a=5$ und $b=7$. Mit wiederholtem Quadrieren folgt:
+			      \begin{align*}
+				      11^2 &\equiv 4, & 11^4 &\equiv 3 \pmod{13}, \\
+				      6^2 &\equiv 10, & 6^4 &\equiv 9 \pmod{13}.
+			      \end{align*}
+			      Damit berechnen wir den gemeinsamen Schlüssel:
+			      \begin{align*}
+				      s_{AB} &= 11^5 \bmod 13 = (3\cdot 11) \bmod 13 = 7, \\
+				      s_{BA} &= 6^7 \bmod 13 = (9\cdot 10\cdot 6) \bmod 13 = 7.
+			      \end{align*}
 		\end{aenum}
+		Bei diesen kleinen Primzahlen lassen sich die geheimen Exponenten durch Ausprobieren finden. Die gefundenen Werte erfüllen die Vorgabe $1\leq a,b<p$ aus dem Protokoll.
 	\end{myanswer}
 \end{myexercise}
 

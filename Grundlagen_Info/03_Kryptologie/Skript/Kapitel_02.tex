@@ -433,6 +433,16 @@ Der Kasiski-Test erlaubt uns, Hinweise auf die Schlüssellänge zu erhalten, ohn
 	Versuchen Sie, auf diesem Link eine weitere Challenge-Aufgabe zu lösen, indem Sie die Werkzeuge \emph{Kasiski}, \emph{Frequency} (Häufigkeit) und \emph{Vigenère} verwenden:
 
 	\qrcode[height=2cm]{https://cryptbreaker.marcwidmer.xyz/problems/vigenere}
+	\begin{myanswer}
+		Der konkrete Schlüssel und der Klartext hängen von der gewählten Challenge ab. Ein möglicher Lösungsweg ist:
+		\begin{enumerate}
+			\item Wiederholte Zeichenfolgen im Kryptotext suchen und ihre Abstände bestimmen. Gemeinsame Teiler dieser Abstände liefern Kandidaten für die Schlüssellänge. Zufällige Wiederholungen können dabei irreführen.
+			\item Für eine vermutete Schlüssellänge $m$ den Text in $m$ Gruppen aufteilen: Die erste Gruppe enthält die Positionen $1, 1+m, 1+2m, \ldots$, die zweite die Positionen $2, 2+m, 2+2m, \ldots$ usw.
+			\item Jede Gruppe als Caesar-Verschlüsselung untersuchen. Unter der Annahme, dass der häufigste Buchstabe ein verschlüsseltes \texttt{E} ist, die Verschiebung und damit den jeweiligen Schlüsselbuchstaben bestimmen.
+			\item Mit dem zusammengesetzten Schlüssel entschlüsseln. Falls kein sinnvoller Text entsteht, andere häufige Buchstaben oder eine andere Schlüssellänge ausprobieren.
+		\end{enumerate}
+		Zur Kontrolle den gefundenen Klartext erneut verschlüsseln: Dabei muss der ursprüngliche Kryptotext entstehen. Dokumentieren Sie Schlüssellänge, Schlüssel, Klartext und die Beobachtungen, die zum Schlüssel geführt haben.
+	\end{myanswer}
 \end{mychallenge}
 
 %% Link führt ins Leere
@@ -552,7 +562,23 @@ Aus \cref{fig:fc} lässt sich ablesen, dass die Schlüssellänge vermutlich 3 se
 
 	Wie interpretieren Sie die beiden Zahlen?
 	\begin{myanswer}
-		Die Friedmansche Charakteristik beträgt 29.5\% und 7.3\%, respektive. Wie Sie sehen, ist die Friedmansche Charakteristik höher für Texte, bei denen jeder Buchstabe relativ häufiger vorkommt.
+		\texttt{PAPPERLAPAPP} hat 12 Buchstaben: \texttt{P} kommt sechsmal, \texttt{A} dreimal und \texttt{E}, \texttt{R}, \texttt{L} je einmal vor. Die übrigen 21 Buchstaben kommen nicht vor. Somit gilt:
+		\begin{align*}
+			FC(\texttt{PAPPERLAPAPP})
+			&= \left(\frac{6}{12}-\frac{1}{26}\right)^2
+			 + \left(\frac{3}{12}-\frac{1}{26}\right)^2 \\
+			&\quad + 3\left(\frac{1}{12}-\frac{1}{26}\right)^2
+			 + 21\left(0-\frac{1}{26}\right)^2 \\
+			&\approx 0.2949 = 29.49\%.
+		\end{align*}
+		\texttt{BACKSTEIN} besteht aus 9 verschiedenen Buchstaben; 17 Buchstaben des Alphabets kommen nicht vor:
+		\[
+			FC(\texttt{BACKSTEIN})
+			= 9\left(\frac{1}{9}-\frac{1}{26}\right)^2
+			+ 17\left(0-\frac{1}{26}\right)^2
+			\approx 0.0726 = 7.26\%.
+		\]
+		Die Verteilung bei \texttt{PAPPERLAPAPP} ist wegen der vielen \texttt{P} und \texttt{A} stärker auf einzelne Buchstaben konzentriert. Deshalb ist die Friedmansche Charakteristik höher. Auch bei \texttt{BACKSTEIN} ist sie nicht null: Die Gleichverteilung bezieht sich auf alle 26 Buchstaben, nicht nur auf die vorkommenden. Bei so kurzen Texten lassen sich daraus keine verlässlichen Rückschlüsse auf ein Verschlüsselungsverfahren ziehen.
 	\end{myanswer}
 \end{myexercise}
 
@@ -602,10 +628,49 @@ Aus \cref{fig:fc} lässt sich ablesen, dass die Schlüssellänge vermutlich 3 se
 		\item Entschlüsseln Sie nun den Kryptotext, indem Sie die Funktion \lstinline|def vigenere(text, key, encrypt=False)| verwenden.
 	\end{itemize}
 
+	\begin{myanswer}
+		Da Text und Schlüssel frei gewählt werden, gibt es keine einheitliche Zeichenfolge als Lösung. Der folgende Ablauf dient als Muster; \lstinline|klartext| und \lstinline|kryptotext| enthalten jeweils nur Grossbuchstaben von \texttt{A} bis \texttt{Z} (Umlaute vorher als \texttt{AE}, \texttt{OE}, \texttt{UE} schreiben, Leer- und Satzzeichen entfernen).
+
+		\textbf{Teil 1:} Beispielsweise mit dem Schlüssel \texttt{BRAVO} verschlüsseln:
+		\begin{lstlisting}
+schluessel = "BRAVO"
+kryptotext = vigenere(klartext, schluessel, encrypt=True)
+		\end{lstlisting}
+		Nur der Kryptotext wird weitergegeben. Die empfangende Person untersucht zunächst mögliche Schlüssellängen:
+		\begin{lstlisting}
+werte = get_friedman_vals(kryptotext, 11)
+for laenge, wert in enumerate(werte, start=1):
+    print(laenge, wert)
+		\end{lstlisting}
+		\textbf{Teil 2:} Bei einem hinreichend langen, typischen deutschen Text erwarten wir für diesen Beispielschlüssel erhöhte Werte bei Länge 5 und deren Vielfachen. Deshalb prüfen wir zunächst $m=5$. Der höchste Wert allein bestimmt die Schlüssellänge nicht eindeutig.
+		\begin{lstlisting}
+m = 5  # Vermutete Schluessellaenge aus der Analyse
+for i in range(m):
+    show_letter_freq(kryptotext[i::m])
+		\end{lstlisting}
+		Falls \texttt{E} in jeder Klartextgruppe am häufigsten ist, sind die häufigsten Kryptotextbuchstaben \texttt{F}, \texttt{V}, \texttt{E}, \texttt{Z}, \texttt{S}. Mit der Nummerierung $A=0,\ldots,Z=25$ ergeben sich durch Subtraktion von $4$ modulo $26$ die Verschiebungen $1,17,0,21,14$, also \texttt{BRAVO}. Ist \texttt{E} in einer Gruppe nicht am häufigsten, müssen weitere Verschiebungen ausprobiert und anhand des entstehenden Klartexts geprüft werden.
+		\begin{lstlisting}
+gefundener_schluessel = "BRAVO"
+entschluesselt = vigenere(
+    kryptotext, gefundener_schluessel, encrypt=False
+)
+print(entschluesselt)
+		\end{lstlisting}
+		Zum Abschluss vergleichen beide Personen das Ergebnis mit dem ursprünglichen, bereinigten Klartext. Beide Texte müssen vollständig übereinstimmen.
+	\end{myanswer}
 \end{mychallenge}
 
 \begin{mychallenge}
 	Lösen Sie drei \emph{beliebige Probleme} auf der \href{https://cryptbreaker.marcwidmer.xyz}{Analyse-Webseite}.
+	\begin{myanswer}
+		Individuelle Lösungen, abhängig von den drei gewählten Problemen. Halten Sie für jedes Problem das verwendete Verfahren, den gefundenen Schlüssel, den Klartext und Ihren Lösungsweg fest.
+		\begin{itemize}
+			\item Bei Caesar können Sie alle 26 Verschiebungen ausprobieren oder die Buchstabenhäufigkeiten nutzen.
+			\item Bei allgemeiner monoalphabetischer Substitution helfen Buchstabenhäufigkeiten, wiederkehrende Wortmuster und eine schrittweise ergänzte Zuordnungstabelle.
+			\item Bei Vigenère bestimmen Sie zunächst eine mögliche Schlüssellänge mit dem Kasiski-Test oder der Friedmanschen Charakteristik und untersuchen danach jede Gruppe mit einer Häufigkeitsanalyse.
+		\end{itemize}
+		Ein plausibler Klartext und die erneute Verschlüsselung mit dem gefundenen Schlüssel dienen als Kontrolle: Die erneute Verschlüsselung muss den vorgegebenen Kryptotext ergeben.
+	\end{myanswer}
 \end{mychallenge}
 
 
