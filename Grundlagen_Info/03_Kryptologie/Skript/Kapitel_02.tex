@@ -464,7 +464,7 @@ William Friedman (1891-1969) war ein russisch-amerikanischer Kryptologe und Pion
 	\label{fig:william-friedman}
 \end{figure}
 
-Die Friedmansche Charakteristik macht sich zunutze, dass Buchstaben im Klartext ungleich verteilt sind. Falls jeder Buchstabe gleich häufig vorkommen würde, wäre die erwartete Häufigkeit jedes Buchstabens genau $1/26$. In keiner natürlichen Sprache besitzen alle Buchstaben dieselbe relative Häufigkeit. Die Häufigkeitsverteilung der Buchstaben in deutschen Texten haben wir bereits in \cref{tab:alle-haeufigkeiten} gesehen. Die relative Häufigkeit des Buchstabens \texttt{E} in deutschen Texten ist beispielsweise ca. 17.4\%. Die relative Häufigkeit eines Buchstabens $\square$ in einem Text $T$ bezeichnen wir mit $h_\square(T)$.
+Die Friedmansche Charakteristik macht sich zunutze, dass Buchstaben im Klartext ungleich verteilt sind. Falls jeder Buchstabe gleich häufig vorkommen würde, wäre die erwartete Häufigkeit jedes Buchstabens genau $1/26$. In keiner natürlichen Sprache besitzen alle Buchstaben dieselbe relative Häufigkeit. Die Häufigkeitsverteilung der Buchstaben in deutschen Texten haben wir bereits in \cref{tab:alle-haeufigkeiten} gesehen. Die relative Häufigkeit des Buchstabens \texttt{E} in deutschen Texten ist beispielsweise ca. \qty{17.4}{\percent}. Die relative Häufigkeit eines Buchstabens $\square$ in einem Text $T$ bezeichnen wir mit $h_\square(T)$.
 
 Die Friedmansche Charakteristik berechnet, wie ungleich alle Buchstaben in einem Text verteilt sind, indem sie die quadrierte Differenz der relativen Häufigkeit jedes Buchstabens zu $1/26$ berechnet. Diese quadrierten Abweichungen werden danach alle aufsummiert (siehe \cref{eq:fc}).
 
@@ -481,7 +481,7 @@ Die Friedmansche Charakteristik berechnet, wie ungleich alle Buchstaben in einem
 	      & =\sum_{\Delta\in \text{Alphabet}}\lr{h_\Delta(T)-\frac{1}{26}}^2
 \end{align}
 
-Eine stark ungleiche Verteilung von Buchstaben in einem Text $T$ führt also zu einer hohen Friedmanschen Charakteristik $FC(T)$, währenddem gleichmässig verteilte Buchstaben im Text $T$ zu einer tieferen $FC(T)$ führen. Deutschsprachige (Klar-)Texte haben durchschnittlich etwa einen Wert von 3.8\% (0.038) (siehe \cref{fig:vig-subgroup-1-avg}).
+Eine stark ungleiche Verteilung von Buchstaben in einem Text $T$ führt also zu einer hohen Friedmanschen Charakteristik $FC(T)$, währenddem gleichmässig verteilte Buchstaben im Text $T$ zu einer tieferen $FC(T)$ führen. Deutschsprachige (Klar-)Texte haben durchschnittlich etwa einen Wert von \qty{3.8}{\percent} (0.038) (siehe \cref{fig:vig-subgroup-1-avg}).
 
 \begin{figure}[H]
 	\centering
@@ -569,14 +569,14 @@ Aus \cref{fig:fc} lässt sich ablesen, dass die Schlüssellänge vermutlich 3 se
 			 + \left(\frac{3}{12}-\frac{1}{26}\right)^2 \\
 			&\quad + 3\left(\frac{1}{12}-\frac{1}{26}\right)^2
 			 + 21\left(0-\frac{1}{26}\right)^2 \\
-			&\approx 0.2949 = 29.49\%.
+			&\approx 0.2949 = \qty{29.49}{\percent}.
 		\end{align*}
 		\texttt{BACKSTEIN} besteht aus 9 verschiedenen Buchstaben; 17 Buchstaben des Alphabets kommen nicht vor:
 		\[
 			FC(\texttt{BACKSTEIN})
 			= 9\left(\frac{1}{9}-\frac{1}{26}\right)^2
 			+ 17\left(0-\frac{1}{26}\right)^2
-			\approx 0.0726 = 7.26\%.
+			\approx 0.0726 = \qty{7.26}{\percent}.
 		\]
 		Die Verteilung bei \texttt{PAPPERLAPAPP} ist wegen der vielen \texttt{P} und \texttt{A} stärker auf einzelne Buchstaben konzentriert. Deshalb ist die Friedmansche Charakteristik höher. Auch bei \texttt{BACKSTEIN} ist sie nicht null: Die Gleichverteilung bezieht sich auf alle 26 Buchstaben, nicht nur auf die vorkommenden. Bei so kurzen Texten lassen sich daraus keine verlässlichen Rückschlüsse auf ein Verschlüsselungsverfahren ziehen.
 	\end{myanswer}
@@ -606,10 +606,10 @@ Aus \cref{fig:fc} lässt sich ablesen, dass die Schlüssellänge vermutlich 3 se
 
 	\texttt{\colorstring[black]{WORBHHHLUQOWWLDSYSQOWOUKSUDSNEGAAZAEBKISMRILHGPCVLIBZTRLMHYUSIEBILWJKULZSPGHCEFZUQOIQOWCOLSBCVKISZMOSFSZTNBHOSTSUFILHZPCVTEWUHSYZBVCVQEBLMKHHBNEBLIUAIVYDFHEBNTSBCVGUBBNUBTGVMCLGHPHFDAZAEBDISPHFHUGKUBZTIUDBLBSSUATIQOSHLIUAMSPNPBS}}
 
-	Verwenden Sie dazu das Python-Skript auf Moodle, mit der Funktion \lstinline|def calculate_fc(text)|. Was entnehmen Sie aus Ihrer Antwort? Wurde der Text mit Caesar oder mit Vigenère verschlüsselt?
+	Verwenden Sie dazu das Python-Skript auf Moodle, mit der Funktion \lstinline|calculate_fc(text)|. Was entnehmen Sie aus Ihrer Antwort? Wurde der Text mit Caesar oder mit Vigenère verschlüsselt?
 
 	\begin{myanswer}
-		Der tiefe Wert von 1.4\% deutet darauf hin, dass der Text vermutlich mit Vigenère verschlüsselt wurde.
+		Der tiefe Wert von \qty{1.4}{\percent} deutet darauf hin, dass der Text vermutlich mit Vigenère verschlüsselt wurde.
 	\end{myanswer}
 \end{mychallenge}
 
@@ -618,14 +618,14 @@ Aus \cref{fig:fc} lässt sich ablesen, dass die Schlüssellänge vermutlich 3 se
 
 	Teil 1: Verschlüsselung
 	\begin{itemize}
-		\item Verschlüsseln Sie Ihren Text, indem Sie die Funktion \lstinline|def vigenere(text, key, encrypt=True)| verwenden.
+		\item Verschlüsseln Sie Ihren Text, indem Sie die Funktion \lstinline|vigenere(text, key, encrypt=True)| verwenden.
 		\item Senden Sie Ihren verschlüsselten Text an Ihre(n) Partner(in), nicht aber den Schlüssel.
 	\end{itemize}
 	Teil 2: Entschlüsselung
 	\begin{itemize}
-		\item Sie erhalten den Kryptotext und müssen nun zuerst den Schlüssel herausfinden. Bestimmen Sie diesen mithilfe der Friedmanschen Charakteristik, indem Sie die Funktion \lstinline|def get_friedman_vals(text, maxkeylen)| verwenden.
+		\item Sie erhalten den Kryptotext und müssen nun zuerst den Schlüssel herausfinden. Bestimmen Sie diesen mithilfe der Friedmanschen Charakteristik, indem Sie die Funktion \lstinline|get_friedman_vals(text, maxkeylen)| verwenden.
 		\item Nachdem Sie die Schlüssellänge bestimmt haben, finden Sie innerhalb jeder Gruppe dem häufigsten Buchstaben. Dies können Sie mit der Funktion \lstinline|def show_letter_freq(text)| einfach umsetzen. Somit sollten Sie das Schlüsselwort herausfinden können.
-		\item Entschlüsseln Sie nun den Kryptotext, indem Sie die Funktion \lstinline|def vigenere(text, key, encrypt=False)| verwenden.
+		\item Entschlüsseln Sie nun den Kryptotext, indem Sie die Funktion \lstinline|vigenere(text, key, encrypt=False)| verwenden.
 	\end{itemize}
 
 	\begin{myanswer}
