@@ -81,6 +81,9 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Length**: Depending on the scope of changes, keep the body to a couple of lines, up to a **maximum of 10 lines** for very comprehensive edits.
 - **Structure**: Include a concise subject line followed by bullet points summarizing *what* was changed and *why* (mentioning key touched modules, exercises, or figures where relevant). Avoid terse, generic one-liners as well as overly verbose multi-paragraph essays.
 
+### 2.13 GitHub CLI (`gh`)
+- **Tool Available**: The GitHub CLI (`gh`) is installed and available in the environment. Agents can use `gh` commands to check GitHub Actions CI/CD runs (`gh run list`), view failed build logs (`gh run view <id> --log-failed`), and interact with GitHub repository workflows.
+
 ---
 
 ## 3. Project Structure & Compilation Workflow
