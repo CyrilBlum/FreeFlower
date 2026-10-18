@@ -16,9 +16,9 @@ All materials are written in LaTeX (primarily using LuaLaTeX) and supporting Pyt
 
 These rules are strictly enforced and based on the official [FreeFlower Collaboration Guidelines](https://cyrilblum.github.io/FreeFlower/zusammenarbeit.html):
 
-### 2.1 Branching & Pull Requests
-- **Never push directly to `main`**.
-- Always create a dedicated branch (e.g., `feature/...`, `fix/...`, `docs/...`) and submit work via a **Pull Request**.
+### 2.1 Branching, Pushing & Pull Requests
+- **Pushing to `main` is allowed**: Pushing directly to `main` is permitted for users/maintainers with write permissions (branches or pull requests are optional and not strictly required).
+- **Contributors without direct push access**: Note that not all users have permissions to push directly to `main`. Contributors without write permissions must use a dedicated branch (e.g., `feature/...`, `fix/...`) and submit work via a Pull Request.
 - Before starting significant new modules or structural changes, ensure contact has been established with the project maintainers.
 
 ### 2.2 LaTeX & Code Style
