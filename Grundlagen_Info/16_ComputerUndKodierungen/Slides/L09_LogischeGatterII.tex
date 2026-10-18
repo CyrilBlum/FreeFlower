@@ -220,13 +220,19 @@ Mehrere Addierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Bi
 \end{center}
 \end{frame}
 
+\newcommand{\RCAinputSol}[2]{$#1_{#2} = \ifx a#1\ifcase#2 1\or 0\or 1\or 0\fi\else\ifcase#2 1\or 1\or 1\or 0\fi\fi$}
+\newcommand{\RCAcarrySol}[1]{$c_{#1} = \mathbf{\ifnum#1=4 0\else 1\fi}$}
+\newcommand{\RCAsumSol}[1]{$s_{#1} = \mathbf{\ifnum#1>1 1\else 0\fi}$}
+
 \begin{frame}\FDUtitle{Lösung: Signalverfolgung im Addierwerk}
-{\def\RCAinput#1#2{$#1_{#2} = \ifx a#1\ifcase#2 1\or 0\or 1\or 0\fi\else\ifcase#2 1\or 1\or 1\or 0\fi\fi$}%
- \def\RCAcarry#1{$c_{#1} = \mathbf{\ifnum#1=4 0\else 1\fi}$}%
- \def\RCAsum#1{$s_{#1} = \mathbf{\ifnum#1>1 1\else 0\fi}$}%
+\begingroup
+\let\RCAinput\RCAinputSol
+\let\RCAcarry\RCAcarrySol
+\let\RCAsum\RCAsumSol
 \begin{center}
 \scalebox{0.7}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}}
-\end{center}}
+\end{center}
+\endgroup
 \vspace{-2mm}
 \begin{center}
 $\mathbf{0101_2 + 0111_2 = 01100_2 = 12_{10}}$ \quad ($5 + 7 = 12$ \checkmark)
