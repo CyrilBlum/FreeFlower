@@ -8,7 +8,7 @@ Hier setzt das \tib{Betriebssystem}\index{Betriebssystem} an: Es bildet eine ein
 
 \section{Der Software-Stack}
 
-Man spricht von einem \tib{Software-Stack}\index{Software-Stack} (Schichtenmodell), um die aufeinander aufbauenden Abstraktionsebenen eines Computers zu beschreiben:
+Man spricht von einem \tib{Software-Stack}\index{Software-Stack} (Schichtenmodell), um die aufeinander aufbauenden Abstraktionsebenen eines Computers zu beschreiben (siehe \cref{fig:software_stack}):
 
 \begin{figure}[H]
     \centering
@@ -29,7 +29,7 @@ Das Betriebssystem (englisch: \emph{operating system}, OS) übernimmt vier zentr
 
 \subsection{Prozessverwaltung}
 
-Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (Browser, Musik-Player, Textverarbeitung, \ldots). Da aber oft nur ein physischer Prozessorkern vorhanden ist (oder deutlich weniger als die Anzahl laufender Programme), teilt das Betriebssystem die CPU-Zeit durch raschen Wechsel auf:
+Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (Browser, Musik-Player, Textverarbeitung, \ldots). Da aber oft nur ein physischer Prozessorkern vorhanden ist (oder deutlich weniger als die Anzahl laufender Programme), teilt das Betriebssystem die \gls{CPU}-Zeit durch raschen Wechsel auf (siehe \cref{fig:multitasking}):
 
 \begin{figure}[H]
     \centering
@@ -49,18 +49,18 @@ Ein solcher Zeitabschnitt, der einem Programm zugeteilt wird, heisst \tib{Zeitsc
 
 \subsection{Speicherverwaltung}
 
-Das Betriebssystem weist jedem Prozess einen eigenen Bereich im RAM zu und stellt sicher, dass Prozesse nicht in den Speicherbereich anderer Prozesse eingreifen können (\tib{Speicherschutz}\index{Speicherschutz}). Dies verhindert, dass ein fehlerhaftes oder bösartiges Programm das gesamte System destabilisiert -- vgl. dazu auch die Überlegungen zur Von-Neumann-Architektur in \cref{ch:aufbau_computer}.
+Das Betriebssystem weist jedem Prozess einen eigenen Bereich im \gls{RAM} zu und stellt sicher, dass Prozesse nicht in den Speicherbereich anderer Prozesse eingreifen können (\tib{Speicherschutz}\index{Speicherschutz}). Dies verhindert, dass ein fehlerhaftes oder bösartiges Programm das gesamte System destabilisiert -- vgl. dazu auch die Überlegungen zur Von-Neumann-Architektur in \cref{ch:aufbau_computer}.
 
-Was geschieht, wenn alle laufenden Programme zusammen mehr Arbeitsspeicher brauchen, als eingebaut ist? Das Betriebssystem bricht nicht einfach ab, sondern lagert gerade wenig benutzte Teile des RAM-Inhalts in eine Datei auf dem Massenspeicher aus (\tib{Auslagerung}\index{Auslagerung}, englisch \tib{Swapping}\index{Swap}; die Datei heisst Auslagerungsdatei oder Swap). Dazu teilt es den Speicher in gleich grosse Stücke, sogenannte \tib{Seiten}\index{Seite (Speicher)} (typisch 4~KiB bzw. 16~KiB). Jedes Programm sieht weiterhin einen grossen, zusammenhängenden Speicher (\tib{virtueller Speicher}\index{virtueller Speicher}); welche Seiten tatsächlich im RAM liegen und welche ausgelagert sind, verwaltet das Betriebssystem. Greift ein Programm auf eine ausgelagerte Seite zu, muss das Betriebssystem sie zuerst vom Massenspeicher zurück in den RAM holen und dafür eine andere Seite auslagern.
+Was geschieht, wenn alle laufenden Programme zusammen mehr Arbeitsspeicher brauchen, als \gls{RAM} vorhanden ist? Das Betriebssystem bricht nicht einfach ab, sondern lagert gerade wenig benutzte Teile des RAM-Inhalts in eine Datei auf dem Massenspeicher aus (\tib{Auslagerung}\index{Auslagerung}, englisch \tib{Swapping}\index{Swap}; die Datei heisst Auslagerungsdatei oder Swap). Dazu teilt es den Speicher in gleich grosse Stücke, sogenannte \tib{Seiten}\index{Seite (Speicher)} (typisch 4~KiB bzw. 16~KiB). Jedes Programm sieht weiterhin einen grossen, zusammenhängenden Speicher (\tib{virtueller Speicher}\index{virtueller Speicher}); welche Seiten tatsächlich im \gls{RAM} liegen und welche ausgelagert sind, verwaltet das Betriebssystem. Greift ein Programm auf eine ausgelagerte Seite zu, muss das Betriebssystem sie zuerst vom Massenspeicher zurück in den \gls{RAM} holen und dafür eine andere Seite auslagern.
 
-Das funktioniert, hat aber einen Preis: Ein Zugriff auf die \gls{SSD} dauert rund 1000-mal so lang wie ein Zugriff auf den RAM, bei einer \gls{HDD} sogar über 100\,000-mal so lang (vgl.\ \cref{fig:speed_vergleich}). Deshalb wird ein Computer mit zu wenig RAM spürbar träge, obwohl die \gls{CPU} kaum ausgelastet ist: Sie wartet auf den Speicher. Typisches Zeichen ist ein Programm, das nach einer Pause beim Zurückwechseln einige Sekunden stockt, weil seine Seiten inzwischen ausgelagert wurden. Abhilfe schaffen weniger gleichzeitig geöffnete Programme (z.\,B.\ Browser-Tabs) oder mehr RAM; eine schnellere CPU hilft nicht.
+Das funktioniert, hat aber einen Preis: Ein Zugriff auf die \gls{SSD} dauert rund 1000-mal so lang wie ein Zugriff auf den \gls{RAM}, bei einer \gls{HDD} sogar über 100\,000-mal so lang (vgl.\ \cref{fig:speed_vergleich}). Deshalb wird ein Computer mit zu wenig \gls{RAM} spürbar träge, obwohl die \gls{CPU} kaum ausgelastet ist: Sie wartet auf den Speicher. Typisches Zeichen ist ein Programm, das nach einer Pause beim Zurückwechseln einige Sekunden stockt, weil seine Seiten inzwischen ausgelagert wurden. Abhilfe schaffen weniger gleichzeitig geöffnete Programme (z.\,B.\ Browser-Tabs) oder mehr \gls{RAM}; eine schnellere \gls{CPU} hilft nicht.
 
 \begin{myexample}[Auslagerung beobachten]
-    Unter Windows zeigt der Task-Manager unter \emph{Leistung $\to$ Arbeitsspeicher} den Wert \emph{Zugesichert}; ist er grösser als der eingebaute RAM, wird ausgelagert. Unter macOS zeigt die Aktivitätsanzeige im Bereich \emph{Speicher} den Wert \emph{Benutzter Swap} und die Farbe des \emph{Speicherdrucks} (grün, gelb, rot).
+    Unter Windows zeigt der Task-Manager unter \emph{Leistung $\to$ Arbeitsspeicher} den Wert \emph{Zugesichert}; ist er grösser als der eingebaute \gls{RAM}, wird ausgelagert. Unter macOS zeigt die Aktivitätsanzeige im Bereich \emph{Speicher} den Wert \emph{Benutzter Swap} und die Farbe des \emph{Speicherdrucks} (grün, gelb, rot).
 \end{myexample}
 
 \begin{myexercise}\label{myexercise:swap}
-    Ein Laptop hat 16~GB RAM. Betriebssystem und Programme brauchen zusammen 20~GB, die Auslagerungsdatei liegt auf einer \gls{SSD}. Ein RAM-Zugriff dauert 50~ns $= 0{,}05\,\mu\mathrm{s}$, ein Zugriff auf die SSD $50\,\mu\mathrm{s}$. Messungen zeigen, dass 1\,\% aller Speicherzugriffe eine ausgelagerte Seite treffen.
+    Ein Laptop hat 16~GB \gls{RAM}. Betriebssystem und Programme brauchen zusammen 20~GB, die Auslagerungsdatei liegt auf einer \gls{SSD}. Ein RAM-Zugriff dauert 50~ns $= 0{,}05\,\mu\mathrm{s}$, ein Zugriff auf die \gls{SSD} $50\,\mu\mathrm{s}$. Messungen zeigen, dass 1\,\% aller Speicherzugriffe eine ausgelagerte Seite treffen.
     \begin{enumerate}
         \item Wie viele GB werden ausgelagert?
         \item Wie lange dauert ein Speicherzugriff im Durchschnitt? Wie viel mal langsamer ist das als ohne Auslagerung?
@@ -75,7 +75,7 @@ Das funktioniert, hat aber einen Preis: Ein Zugriff auf die \gls{SSD} dauert run
 
 \subsection{Dateisystem}
 
-Massenspeicher (SSD, HDD) speichern Daten als rohe Bitsequenzen (vgl. \cref{ch:kodierungen}). Das \tib{Dateisystem}\index{Dateisystem} organisiert diese Bits in \tib{Dateien}\index{Datei} und \tib{Verzeichnisse}\index{Verzeichnis} (Ordner). Es legt fest, wo auf dem Speicher eine Datei beginnt, wie lang sie ist und welche Zugriffsrechte sie hat.
+Massenspeicher (\gls{SSD}, \gls{HDD}) speichern Daten als rohe Bitsequenzen (vgl. \cref{ch:kodierungen}). Das \tib{Dateisystem}\index{Dateisystem} organisiert diese Bits in \tib{Dateien}\index{Datei} und \tib{Verzeichnisse}\index{Verzeichnis} (Ordner). Es legt fest, wo auf dem Speicher eine Datei beginnt, wie lang sie ist und welche Zugriffsrechte sie hat.
 
 \begin{myexample}[Dateisysteme]
     Bekannte Dateisysteme sind NTFS (Windows), ext4 (Linux) und APFS (macOS). Sie sorgen u.\,a. dafür, dass eine Datei schnell gefunden werden kann und auch nach einem unerwarteten Stromausfall konsistent bleibt.
@@ -83,7 +83,7 @@ Massenspeicher (SSD, HDD) speichern Daten als rohe Bitsequenzen (vgl. \cref{ch:k
 
 \subsection{Geräteverwaltung und Treiber}
 
-Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, USB-Gerät, \ldots) hat seine eigene Schnittstelle. \tib{Treiber}\index{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
+Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, \gls{USB}-Gerät, \ldots) hat seine eigene Schnittstelle. \tib{Treiber}\index{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit (siehe \cref{fig:software_stack_detailliert}) -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
 
 \begin{figure}[H]
     \centering
@@ -94,7 +94,7 @@ Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, USB-Gerät, \ldots)
 
 \section{Zusammenspiel von Hardware, Betriebssystem und Anwendungen}
 
-Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert, wenn eine Benutzerin die Taste \texttt{A} drückt und das Zeichen im Texteditor erscheint:
+Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert, wenn eine Benutzerin die Taste \texttt{A} drückt und das Zeichen im Texteditor erscheint (siehe \cref{fig:tastendruck}):
 
 \begin{figure}[H]
     \centering
@@ -104,7 +104,7 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
 \end{figure}
 
 \begin{myattention}
-    Der \enquote{Tastaturcode}, den der Treiber erzeugt, ist letztlich nichts anderes als eine Bitfolge -- ähnlich wie die ASCII-Kodierung aus \cref{ch:kodierungen}, die jedem Zeichen ein Byte zuordnet. Auch die Darstellung des Buchstabens \texttt{A} auf dem Bildschirm läuft letztlich über eine Kodierung von Pixeln und Farben, wie in \cref{ch:kodierungen} besprochen.
+    Der \enquote{Tastaturcode}, den der Treiber erzeugt, ist letztlich nichts anderes als eine Bitfolge -- ähnlich wie die \gls{ASCII}-Kodierung aus \cref{ch:kodierungen}, die jedem Zeichen ein Byte zuordnet. Auch die Darstellung des Buchstabens \texttt{A} auf dem Bildschirm läuft letztlich über eine Kodierung von Pixeln und Farben, wie in \cref{ch:kodierungen} besprochen.
 \end{myattention}
 
 \begin{myexercise}\label{myexercise:software-stack-zuordnung}
@@ -119,7 +119,7 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
         \begin{itemize}
             \item \textbf{A (NTFS-Dateisystem)} $\to$ Betriebssystem (Kernel)
             \item \textbf{B (Google Chrome)} $\to$ Anwendungen
-            \item \textbf{C (CPU führt Maschinenbefehl aus)} $\to$ Hardware
+            \item \textbf{C (\gls{CPU} führt Maschinenbefehl aus)} $\to$ Hardware
             \item \textbf{D (Grafikkartentreiber)} $\to$ Gerätetreiber
             \item \textbf{E (Aufruf \texttt{open("datei.txt")})} $\to$ Systemaufrufe / API
         \end{itemize}
@@ -127,6 +127,8 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
 \end{myexercise}
 
 \section{Bekannte Betriebssysteme}
+
+Einen Überblick über verbreitete Betriebssysteme und ihre typischen Einsatzgebiete gibt \cref{tab:betriebssysteme}:
 
 \begin{table}[H]
     \centering
@@ -152,6 +154,6 @@ Um das Zusammenspiel aller Ebenen zu verdeutlichen, verfolgen wir, was passiert,
         \begin{center}
             \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_strg_s_ablauf.tex}
         \end{center}
-        Eine mögliche Antwort: Die Tastatur-Hardware erkennt den Tastendruck und sendet elektrische Impulse, der Tastaturtreiber übersetzt diese in einen Tastaturcode, das Betriebssystem meldet dem Texteditor das Ereignis \enquote{Strg+S gedrückt}. Der Texteditor löst über einen Systemaufruf (\glsentryshort{API}) eine Schreiboperation aus. Das Betriebssystem übersetzt den Text (kodiert z.\,B. als UTF-8-Bitfolge, vgl. \cref{ch:kodierungen}) über das Dateisystem in konkrete Speicherzellen auf der \glsentryshort{SSD} oder \glsentryshort{HDD} und aktualisiert die entsprechenden Metadaten (Dateiname, Grösse, Position). Auf unterster Ebene führt die \glsentryshort{CPU} dabei unzählige Fetch-Decode-Execute-Zyklen (\cref{sec:fde}) aus, die letztlich alle auf einfachen logischen Gattern (\cref{ch:logische_gatter}) beruhen.
+        Eine mögliche Antwort: Die Tastatur-Hardware erkennt den Tastendruck und sendet elektrische Impulse, der Tastaturtreiber übersetzt diese in einen Tastaturcode, das Betriebssystem meldet dem Texteditor das Ereignis \enquote{Strg+S gedrückt}. Der Texteditor löst über einen Systemaufruf (\glsentryshort{API}) eine Schreiboperation aus. Das Betriebssystem übersetzt den Text (kodiert z.\,B. als \gls{UTF-8}-Bitfolge, vgl. \cref{ch:kodierungen}) über das Dateisystem in konkrete Speicherzellen auf der \glsentryshort{SSD} oder \glsentryshort{HDD} und aktualisiert die entsprechenden Metadaten (Dateiname, Grösse, Position). Auf unterster Ebene führt die \glsentryshort{CPU} dabei unzählige Fetch-Decode-Execute-Zyklen (\cref{sec:fde}) aus, die letztlich alle auf einfachen logischen Gattern (\cref{ch:logische_gatter}) beruhen.
     \end{myanswer}
 \end{mychallenge}

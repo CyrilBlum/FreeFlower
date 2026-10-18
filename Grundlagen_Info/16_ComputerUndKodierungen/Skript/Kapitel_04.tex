@@ -12,7 +12,7 @@ Eine solche Addierschaltung allein ist jedoch noch kein Computer: Sie berechnet 
 
 \section{Die Funktionsweise: Der Fetch-Decode-Execute-Zyklus}\label{sec:fde}
 
-Wie bringt man einer elektronischen Schaltung bei, ein ganzes Programm abzuarbeiten? Im Gegensatz zu einer reinen Schaltung, die dauerhaft nur eine einzige Aufgabe erfüllt (wie ein Volladdierer), arbeitet der Prozessor eines Computers in einem kontinuierlichen, rhythmischen Kreislauf -- dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus} (auch \emph{Befehlszyklus} genannt):
+Wie bringt man einer elektronischen Schaltung bei, ein ganzes Programm abzuarbeiten? Im Gegensatz zu einer reinen Schaltung, die dauerhaft nur eine einzige Aufgabe erfüllt (wie ein Volladdierer), arbeitet der Prozessor eines Computers in einem kontinuierlichen, rhythmischen Kreislauf -- dem \tib{Fetch-Decode-Execute-Zyklus}\index{Fetch-Decode-Execute-Zyklus} (auch \emph{Befehlszyklus} genannt, siehe \cref{fig:fde}):
 
 \begin{figure}[H]
     \centering
@@ -100,7 +100,7 @@ Nachdem wir die dynamische Funktionsweise des Befehlszyklus kennen, stellt sich 
         \caption*{\scriptsize\textbf{John von Neumann}\\(1903--1957)}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.70\textwidth}
-        Fast alle heutigen Rechner basieren auf dem Entwurf des ungarisch-amerikanischen Mathematikers und Universalgelehrten \textbf{John von Neumann}\index{Neumann, John von} aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}.
+        Fast alle heutigen Rechner basieren auf dem Entwurf des ungarisch-amerikanischen Mathematikers und Universalgelehrten \textbf{John von Neumann}\index{Neumann, John von} (\cref{fig:john_von_neumann}) aus dem Jahr 1945, der sogenannten \tib{Von-Neumann-Architektur}\index{Von-Neumann-Architektur}.
         
         Von Neumann zählte zu den prägendsten Wissenschaftlern des 20.\,Jahrhunderts (Pionier in Quantenmechanik, Spieltheorie und Informatik). Im bahnbrechenden EDVAC-Bericht (\enquote{First Draft of a Report on the EDVAC}) formulierte er das bis heute universelle Grundprinzip moderner Computer:
         \vspace{2mm}
@@ -111,6 +111,7 @@ Nachdem wir die dynamische Funktionsweise des Befehlszyklus kennen, stellt sich 
         \vspace{1mm}
         Das Programm ist somit kein starr verdrahteter Schaltkreis mehr, sondern eine Bitfolge im Speicher, die jederzeit geladen, ausgetauscht und modifiziert werden kann.
     \end{minipage}
+    \label{fig:john_von_neumann}
 \end{figure}
 
 \begin{figure}[H]
@@ -120,7 +121,7 @@ Nachdem wir die dynamische Funktionsweise des Befehlszyklus kennen, stellt sich 
     \label{fig:von_neumann}
 \end{figure}
 
-Die Hauptkomponenten sind:
+Die Hauptkomponenten sind (siehe Schema in \cref{fig:von_neumann}):
 
 \begin{description}
     \item[\tib{\gls{CPU}}\index{CPU} (Central Processing Unit, Prozessor)] Führt die Anweisungen eines Programms im Fetch-Decode-Execute-Zyklus aus. Enthält Steuerwerk, \gls{ALU} und Register.
@@ -134,7 +135,7 @@ Die Hauptkomponenten sind:
 
 \subsection{Das mentale Modell: Die Büro-Analogie}
 
-Um sich das Zusammenspiel und die spezifischen Rollen der Komponenten einzuprägen, hilft der Vergleich mit einem typischen Arbeitsplatz im Büro:
+Um sich das Zusammenspiel und die spezifischen Rollen der Komponenten einzuprägen, hilft der Vergleich mit einem typischen Arbeitsplatz im Büro (siehe \cref{tab:computer_analogie}):
 
 \begin{table}[H]
     \centering
@@ -158,7 +159,7 @@ Um sich das Zusammenspiel und die spezifischen Rollen der Komponenten einzupräg
 \end{table}
 
 \begin{myremark}[Wozu braucht es einen Chipsatz?]
-    Eine moderne \gls{CPU} ist auf maximale Rechengeschwindigkeit mit Nanosekunden-Taktung optimiert. Sie kann nicht für jedes langsamere Zusatzgerät (Tastatur, Maus, Festplatte, Soundkarte, USB-Ports) hunderte eigene Anschlusspins und Steuerleitungen bereitstellen. 
+    Eine moderne \gls{CPU} ist auf maximale Rechengeschwindigkeit mit Nanosekunden-Taktung optimiert. Sie kann nicht für jedes langsamere Zusatzgerät (Tastatur, Maus, Festplatte, Soundkarte, \gls{USB}-Ports) hunderte eigene Anschlusspins und Steuerleitungen bereitstellen. 
     
     Der \tib{Chipsatz}\index{Chipsatz} (auch \emph{Platform Controller Hub} oder \emph{Southbridge}) fungiert daher als intelligenter \textbf{Verkehrsleiter}: Er bündelt die vielen langsameren Signale von \gls{USB}, \gls{SATA}, Audio und Netzwerk und leitet sie über eine einzige, extrem schnelle Hauptleitung (z.\,B.\ \gls{PCIe} oder DMI) an die \gls{CPU} weiter. Dadurch wird der Hauptprozessor von Routine-Verwaltungsaufgaben entlastet.
 \end{myremark}
@@ -210,7 +211,7 @@ Auf der Hauptplatine (\tib{Mainboard}\index{Mainboard} bzw.\ \textit{Motherboard
     \end{myanswer}
 \end{myexercise}
 
-\section{Die \glsentryshort{CPU} im Detail}\label{sec:cpu_detail}
+\section{Die \texorpdfstring{\glsentryshort{CPU}}{CPU} im Detail}\label{sec:cpu_detail}
 
 Die \tib{\gls{CPU}}\index{CPU} (der Hauptprozessor) ist das eigentliche Rechenherz des Computers. Sie besteht aus mehreren Milliarden nanoskopisch kleiner Transistoren auf einem winzigen Silizium-Chip (\emph{Die}), der durch einen Metallüberzug (\emph{Heatspreader}) geschützt und gekühlt wird (\cref{fig:foto_cpu}).
 
@@ -223,7 +224,7 @@ Die \tib{\gls{CPU}}\index{CPU} (der Hauptprozessor) ist das eigentliche Rechenhe
 
 Im Inneren gliedert sich die \gls{CPU} in drei eng verzahnte Funktionseinheiten, die im Befehlszyklus (\cref{sec:fde}) zusammenarbeiten:
 
-\subsection{\glsentryshort{ALU} -- Arithmetisch-logische Einheit}
+\subsection{\texorpdfstring{\glsentryshort{ALU}}{ALU} -- Arithmetisch-logische Einheit}
 
 Die \tib{\gls{ALU}}\index{ALU} (englisch: \emph{Arithmetic Logic Unit}) ist das \enquote{Rechenzentrum} der \gls{CPU}. Sie führt arithmetische Operationen (Addition, Subtraktion, \ldots) und logische Operationen (AND, OR, Vergleiche, \ldots) auf Binärzahlen aus. Intern besteht sie -- wie in \cref{ch:logische_gatter} gesehen -- aus einer grossen Anzahl kombinierter Logikgatter, zum Beispiel Volladdierern (vgl.\ \cref{sec:halbaddierer}).
 
@@ -239,7 +240,7 @@ Das \tib{Steuerwerk}\index{Steuerwerk} (englisch: \emph{control unit}) steuert d
     Während eine \tib{\gls{CPU}}\index{CPU} aus wenigen (z.\,B.\ 4 bis 16), extrem schnellen und hochkomplexen Kernen für die sequenzielle Abarbeitung beliebiger Programmlogik besteht, besitzt ein Grafikprozessor (\tib{\gls{GPU}}\index{GPU}, \emph{Graphics Processing Unit}) tausende kleinere, parallel arbeitende Recheneinheiten. Eine \gls{GPU} ist darauf spezialisiert, dieselbe mathematische Operation (z.\,B.\ Matrix-Multiplikation) gleichzeitig auf riesigen Datenmengen auszuführen -- unverzichtbar für 3D-Computergrafik, Physiksimulationen und moderne \gls{KI}-Modelle.
 \end{myremark}
 
-\section{Arbeitsspeicher (\glsentryshort{RAM})}\label{sec:ram}
+\section{Arbeitsspeicher (\texorpdfstring{\glsentryshort{RAM}}{RAM})}\label{sec:ram}
 
 Der \tib{\gls{RAM}}\index{RAM} (englisch: \emph{Random Access Memory}) speichert alle Programme und Daten, die der Computer im Moment benötigt. Er wird als längliches Speichermodul direkt in die Speicherbänke des Mainboards gesteckt (\cref{fig:foto_ram}).
 
@@ -271,7 +272,7 @@ Man kann sich den \gls{RAM} als eine lange Tabelle vorstellen, in der jede Zeile
 
 Typische Grössen heutiger Rechner liegen bei 8--64~GB \gls{RAM}. Der \tib{Cache}\index{Cache} ist ein noch schnellerer, aber viel kleinerer Pufferspeicher in der \gls{CPU}, der häufig benötigte Daten zwischenspeichert, um den langsameren \gls{RAM} zu entlasten.
 
-\begin{myexcursion}[Bauformen und Speicherarten: \glsentryshort{DIMM}, \glsentryshort{DRAM} vs.\ \glsentryshort{SRAM} und \glsentryshort{DDR}-Generationen]\label{exc:ram-typen}
+\begin{myexcursion}[Bauformen und Speicherarten von \texorpdfstring{\glsentryshort{RAM}}{RAM}]\label{exc:ram-typen}
     In der Praxis unterscheidet man beim Arbeitsspeicher zwischen verschiedenen Technologien und Bauformen:
     \begin{itemize}
         \item \textbf{Bauform (\gls{DIMM} vs.\ \gls{SODIMM}):} \gls{RAM} für Desktop-Computer wird üblicherweise als \tib{\gls{DIMM}}\index{DIMM} (englisch \emph{Dual In-line Memory Module}) auf das Mainboard gesteckt. Die Kontakte auf Vorder- und Rückseite der Steckkarte sind elektrisch getrennt ausgeführt, was eine hohe Busbreite ermöglicht. Für kompakte Geräte wie Notebooks gibt es die platzsparende Bauform \tib{\gls{SODIMM}}\index{SO-DIMM} (\emph{Small Outline DIMM}).
@@ -285,7 +286,7 @@ Typische Grössen heutiger Rechner liegen bei 8--64~GB \gls{RAM}. Der \tib{Cache
     \end{itemize}
 \end{myexcursion}
 
-\section{Exkurs: \glsentryshort{SI}-Präfixe und Grössenordnungen in der Informatik}\label{sec:si_praefixe}
+\section{Exkurs: \texorpdfstring{\glsentryshort{SI}}{SI}-Präfixe und Grössenordnungen in der Informatik}\label{sec:si_praefixe}
 
 Das \tib{\gls{SI}}\index{Internationales Einheitensystem (SI)} (\emph{Système international d'unités}, französisch für internationales Einheitensystem) ist das weltweit am weitesten verbreitete und standardisierte Einheitensystem für physikalische Grössen (wie die Sekunde für Zeitdauern oder das Hertz für Schwingungsfrequenzen). Um sehr grosse oder extrem kleine Zahlenwerte kompakt und lesbar darzustellen, definiert das \gls{SI} genormte Vorsätze (Präfixe) auf Basis von Zehnerpotenzen.
 
@@ -468,21 +469,21 @@ Der fundamentale Unterschied im Aufbau führt zu drastischen Leistungsunterschie
     \end{myanswer}
 \end{myexercise}
 
-\subsection{\glsentryshort{PCIe} und Schnittstellen: Modularer Datentransfer}
+\subsection{\texorpdfstring{\glsentryshort{PCIe}}{PCIe} und Schnittstellen: Modularer Datentransfer}
 
 Warum erreichen moderne \glspl{SSD} Übertragungsraten von mehreren Gigabytes pro Sekunde, während ältere Festplatten und herkömmliche \gls{SATA}-\glspl{SSD} bei maximal ca.\ $550\,\mathrm{MB/s}$ limitiert sind? Der entscheidende Flaschenhals ist die Busschnittstelle:
 
 Herkömmliche Festplatten und ältere \glspl{SSD} nutzen den \tib{\gls{SATA}}\index{SATA}-Bus, der ursprünglich für langsamere mechanische Laufwerke konzipiert wurde. Moderne Hochleistungskomponenten und schnelle Massenspeicher nutzen stattdessen \tib{\gls{PCIe}}\index{PCIe} (\emph{Peripheral Component Interconnect Express}).
 
-\gls{PCIe} ist ein modularer, serieller Punkt-zu-Punkt-Verbindungsstandard. Die Datenübertragung wird auf mehrere parallele Datenbahnen verteilt, sogenannte \tib{Lanes}\index{PCIe-Lane} (gekennzeichnet als $\times 1$, $\times 4$, $\times 8$ oder $\times 16$). Die Bandbreite verdoppelt sich mit jeder neuen \gls{PCIe}-Generation und skaliert linear mit der Anzahl der Lanes:
+\gls{PCIe} ist ein modularer, serieller Punkt-zu-Punkt-Verbindungsstandard. Die Datenübertragung wird auf mehrere parallele Datenbahnen verteilt, sogenannte \tib{Lanes}\index{PCIe-Lane} (gekennzeichnet als $\times 1$, $\times 4$, $\times 8$ oder $\times 16$). Die Bandbreite verdoppelt sich mit jeder neuen \gls{PCIe}-Generation und skaliert linear mit der Anzahl der Lanes (siehe \cref{tab:pcie_bandbreiten}):
 
 \begin{table}[H]
     \centering
     \begin{tabularx}{\linewidth}{@{}l *{3}{>{\centering\arraybackslash}X}@{}}
         \textbf{\glsentryshort{PCIe}-Generation} & \textbf{Lane ($\times 1$)} & \textbf{$\times 4$ (M.2-\glsentryshort{SSD})} & \textbf{$\times 16$ (Grafikkarte)} \\\midrule
-        PCIe 3.0 & ca.\ $1\,\mathrm{GB/s}$ & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ \\
-        PCIe 4.0 & ca.\ $2\,\mathrm{GB/s}$ & ca.\ $8\,\mathrm{GB/s}$ & ca.\ $32\,\mathrm{GB/s}$ \\
-        PCIe 5.0 & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ & ca.\ $64\,\mathrm{GB/s}$ \\
+        \gls{PCIe} 3.0 & ca.\ $1\,\mathrm{GB/s}$ & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ \\
+        \gls{PCIe} 4.0 & ca.\ $2\,\mathrm{GB/s}$ & ca.\ $8\,\mathrm{GB/s}$ & ca.\ $32\,\mathrm{GB/s}$ \\
+        \gls{PCIe} 5.0 & ca.\ $4\,\mathrm{GB/s}$ & ca.\ $16\,\mathrm{GB/s}$ & ca.\ $64\,\mathrm{GB/s}$ \\
     \end{tabularx}
     \caption{Theoretische Bandbreiten von \glsentryshort{PCIe} je nach Generation und Lane-Anzahl.}
     \label{tab:pcie_bandbreiten}
@@ -494,7 +495,7 @@ Neben den internen \gls{PCIe}-Lanes existieren weitere weit verbreitete Schnitts
     \centering
     \begin{tabularx}{\linewidth}{@{}l c l X@{}}
         \textbf{Schnittstelle} & \textbf{Anschluss} & \textbf{Bandbreite} & \textbf{Typischer Einsatzzweck} \\\midrule
-        \textbf{\glsentryshort{USB}-A} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_a.jpg}} & $0{,}06\text{--}0{,}6\,\mathrm{GB/s}$ & Universeller Standard-Stecker für Maus, Tastatur, Drucker und USB-Sticks. \\\midrule
+        \textbf{\glsentryshort{USB}-A} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_a.jpg}} & $0{,}06\text{--}0{,}6\,\mathrm{GB/s}$ & Universeller Standard-Stecker für Maus, Tastatur, Drucker und \gls{USB}-Sticks. \\\midrule
         \textbf{\glsentryshort{USB}-C} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/usb_c.jpg}} & $1{,}25\text{--}5\,\mathrm{GB/s}$ & Verdrehsicherer Universalanschluss für Smartphones, Laptops, Monitore und mobile \glspl{SSD}. \\\midrule
         \textbf{Thunderbolt} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/thunderbolt.jpg}} & $5\text{--}15\,\mathrm{GB/s}$ & Hochgeschwindigkeits-Port (oft mit \glsentryshort{USB}-C-Form) für externe Grafikkarten (eGPU) und Docks. \\\midrule
         \textbf{\glsentryshort{SATA}} & \raisebox{-0.38\height}{\includegraphics[height=0.9cm,keepaspectratio]{Grundlagen_Info/16_ComputerUndKodierungen/Figures/sata_close.jpg}} & ca.\ $0{,}55\text{--}0{,}6\,\mathrm{GB/s}$ & Internes Flachbandkabel für herkömmliche $3{,}5$-Zoll-\glspl{HDD} und $2{,}5$-Zoll-\glspl{SSD}. \\\midrule
@@ -517,8 +518,8 @@ Neben den internen \gls{PCIe}-Lanes existieren weitere weit verbreitete Schnitts
         2. Extrem schnelle interne System-\glsentryshort{SSD} (M.2, $\approx 7\,\mathrm{GB/s}$) & B. \glsentryshort{SATA}-Kabel ($\approx 0{,}55\,\mathrm{GB/s}$) \\
         3. Externe Desktop-Grafikkarte (eGPU) am Laptop ($\approx 5\,\mathrm{GB/s}$) & C. \glsentryshort{PCIe} 4.0 $\times 16$ ($\approx 32\,\mathrm{GB/s}$) \\
         4. Schnelle externe mobile Video-\glsentryshort{SSD} ($\approx 1{,}5\,\mathrm{GB/s}$) & D. Thunderbolt 3/4 ($\approx 5\,\mathrm{GB/s}$) \\
-        5. Grosse interne $3{,}5$-Zoll-Archiv-Festplatte (\glsentryshort{HDD}, $\approx 0{,}15\,\mathrm{GB/s}$) & E. \glsentryshort{USB}-C (USB 3.2 Gen 2, $\approx 1{,}25\,\mathrm{GB/s}$) \\
-        6. Computermaus und Tastatur ($\approx 0{,}001\,\mathrm{GB/s}$) & F. \glsentryshort{USB}-A (USB 2.0/3.0, $\approx 0{,}06\text{--}0{,}5\,\mathrm{GB/s}$) \\
+        5. Grosse interne $3{,}5$-Zoll-Archiv-Festplatte (\glsentryshort{HDD}, $\approx 0{,}15\,\mathrm{GB/s}$) & E. \glsentryshort{USB}-C (\gls{USB} 3.2 Gen 2, $\approx 1{,}25\,\mathrm{GB/s}$) \\
+        6. Computermaus und Tastatur ($\approx 0{,}001\,\mathrm{GB/s}$) & F. \glsentryshort{USB}-A (\gls{USB} 2.0/3.0, $\approx 0{,}06\text{--}0{,}5\,\mathrm{GB/s}$) \\
     \end{tabularx}
     \vspace{2mm}
 
@@ -544,8 +545,8 @@ Neben den internen \gls{PCIe}-Lanes existieren weitere weit verbreitete Schnitts
             \item Vorteile von \gls{USB}-C:
             \begin{enumerate}[1.]
                 \item \emph{Verdrehsicherheit:} Der Stecker ist punktsymmetrisch und passt in beiden Orientierungen auf Anhieb in die Buchse.
-                \item \emph{Hohe Stromversorgung (USB Power Delivery):} Bis zu 240~Watt Ladeleistung ermöglichen das Laden von Notebooks über dasselbe Datenkabel.
-                \item \emph{Vielseitigkeit (Alternate Mode):} Überträgt gleichzeitig DisplayPort-Videosignale, Audiosignale und Daten über einen einzigen Anschluss.
+                \item \emph{Hohe Stromversorgung (\gls{USB} Power Delivery):} Bis zu 240~Watt Ladeleistung ermöglichen das Laden von Notebooks über dasselbe Datenkabel.
+                \item \emph{Vielseitigkeit (Alternate Mode):} Überträgt gleichzeitig Display\-Port-Video\-signale, Audiosignale und Daten über einen einzigen Anschluss.
             \end{enumerate}
         \end{enumerate}
     \end{myanswer}

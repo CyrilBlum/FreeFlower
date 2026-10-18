@@ -178,69 +178,73 @@ Ein Volladdierer besteht aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Ga
 \end{frame}
 
 \begin{frame}\FDUtitle{Schriftliche Binäraddition im Addierwerk}
-Mehrere Volladdierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Binärzahlen stellenweise zu addieren:
+Mehrere Addierer werden kaskadiert (\textit{Ripple-Carry-Addierer}), um ganze Binärzahlen stellenweise zu addieren:
 \vspace{2mm}
 \begin{center}
-\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_addierer.tex}
+\scalebox{0.7}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}}
 \end{center}
-\begin{center}\color{FDUteal}\bfseries Jede Spalte der Addition wird von genau einem Volladdierer-Baustein berechnet!\end{center}
+\begin{center}\color{FDUteal}\bfseries Jede Spalte der Addition wird von genau einem Addierer-Baustein berechnet!\end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Schriftliche Binäraddition}
-\aufgabebox{Berechnen Sie $011_2+010_2$ schriftlich mit Überträgen}
+\aufgabebox{Berechnen Sie $0101_2+0111_2$ schriftlich mit Überträgen}
 \vspace{3mm}
 \textbf{Hinweis:} Im Binärsystem gilt $1+1=10_2$ ($0$ schreiben und Übertrag $1$ in die nächste Spalte).
 \end{frame}
 
 \begin{frame}\FDUtitle{Lösung: Schriftliche Binäraddition}
 \[
-    \begin{array}{rccc}
-        & 0 & 1 & 1 \\
-        + & 0 & 1 & 0 \\
-        \text{Übertrag} & 1 & & \\\hline
-        & 1 & 0 & 1
+    \begin{array}{rccccc}
+        &   & 0 & 1 & 0 & 1 \\
+        + &   & 0 & 1 & 1 & 1 \\
+        \text{Übertrag} & 0 & 1 & 1 & 1 &   \\\hline
+        & 0 & 1 & 1 & 0 & 0
     \end{array}
 \]
 \vspace{2mm}
 \begin{itemize}[<+->]
-    \item \textbf{Rechts:} $1+0=1$, Übertrag $0$.
-    \item \textbf{Mitte:} $1+1=10_2$, also $0$ schreiben und Übertrag $1$.
-    \item \textbf{Links:} $0+0+1=1$, Übertrag $0$.
+    \item \textbf{Bit 0 (rechts):} $1+1=10_2$, also $0$ schreiben und Übertrag $1$.
+    \item \textbf{Bit 1:} $0+1+1=10_2$, also $0$ schreiben und Übertrag $1$.
+    \item \textbf{Bit 2:} $1+1+1=11_2$, also $1$ schreiben und Übertrag $1$.
+    \item \textbf{Bit 3:} $0+0+1=1$, Übertrag $0$.
 \end{itemize}
 \vspace{1mm}
-\textbf{Ergebnis:} $011_2+010_2=101_2=5_{10}$. Kontrolle: $3+2=5$.
+\textbf{Ergebnis:} $0101_2+0111_2=01100_2=12_{10}$. Kontrolle: $5+7=12$.
 \end{frame}
 
 \begin{frame}\FDUtitle{Übung: Signalverfolgung im Addierwerk}
-\aufgabebox{Signalverfolgung im Addierwerk ($011_2+010_2$)}
+\aufgabebox{Signalverfolgung im 4-Bit-Addierer ($0101_2+0111_2$)}
 \vspace{1mm}
 \begin{center}
-\scalebox{0.75}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}}
+\scalebox{0.7}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}}
 \end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Lösung: Signalverfolgung im Addierwerk}
+{\def\RCAinput#1#2{$#1_{#2} = \ifx a#1\ifcase#2 1\or 0\or 1\or 0\fi\else\ifcase#2 1\or 1\or 1\or 0\fi\fi$}%
+ \def\RCAcarry#1{$c_{#1} = \mathbf{\ifnum#1=4 0\else 1\fi}$}%
+ \def\RCAsum#1{$s_{#1} = \mathbf{\ifnum#1>1 1\else 0\fi}$}%
 \begin{center}
-\scalebox{0.75}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}}
-\end{center}
+\scalebox{0.7}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}}
+\end{center}}
 \vspace{-2mm}
 \begin{center}
-$\mathbf{011_2 + 010_2 = 0101_2 = 5_{10}}$ \quad ($3 + 2 = 5$ \checkmark)
+$\mathbf{0101_2 + 0111_2 = 01100_2 = 12_{10}}$ \quad ($5 + 7 = 12$ \checkmark)
 \end{center}
 \end{frame}
 
 \begin{frame}\FDUtitle{Challenge: Eine Kette von Überträgen}
-\challengebox{Berechnen Sie $111_2+001_2$ schriftlich}
+\challengebox{Berechnen Sie $1111_2+0001_2$ schriftlich}
 \end{frame}
 
 \begin{frame}\FDUtitle{Lösung: Eine Kette von Überträgen}
 \[
-    \begin{array}{rcccc}
-        & & 1 & 1 & 1 \\
-        + & & 0 & 0 & 1 \\
-        \text{Übertrag} & 1 & 1 & 1 & \\\hline
-        & 1 & 0 & 0 & 0
+    \begin{array}{rccccc}
+        & & 1 & 1 & 1 & 1 \\
+        + & & 0 & 0 & 0 & 1 \\
+        \text{Übertrag} & 1 & 1 & 1 & 1 & \\\hline
+        & 1 & 0 & 0 & 0 & 0
     \end{array}
 \]
-Rechts entsteht durch $1+1=10_2$ ein Übertrag. In den nächsten beiden Spalten ergibt $1+0+1=10_2$ jeweils wieder einen Übertrag. Der letzte Übertrag bildet eine neue linke Stelle. Ergebnis: $1000_2=8_{10}$. Kontrolle: $7+1=8$.
+Rechts entsteht durch $1+1=10_2$ ein Übertrag. In den nächsten drei Spalten ergibt $1+0+1=10_2$ jeweils wieder einen Übertrag. Der letzte Übertrag bildet eine neue linke Stelle. Ergebnis: $10000_2=16_{10}$. Kontrolle: $15+1=16$.
 \end{frame}

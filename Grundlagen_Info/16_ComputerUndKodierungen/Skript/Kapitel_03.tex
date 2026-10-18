@@ -2,7 +2,7 @@
 
 \section{Vom Stromkreis zur Information}
 
-Wir wissen aus \cref{ch:zahlendarstellungen,ch:kodierungen} bereits, dass sich beliebige Informationen -- Zahlen, Buchstaben, Bilder -- als Folgen von \tib{Bits}\index{Bit} darstellen lassen (vgl. \cref{mydefinition:bit-byte}). Nun wollen wir der Frage nachgehen, wie ein Computer diese Nullen und Einsen tatsächlich \emph{physikalisch} verarbeitet. Wir starten dazu bei der Hardware: Ein Chip ist zunächst ein Netzwerk aus leitenden Verbindungen und schaltenden Bauelementen. Die zentrale Idee lautet: \textbf{Elektrische Zustände werden als logische Zustände interpretiert}.
+Wir wissen aus \cref{ch:zahlendarstellungen,ch:kodierungen} bereits, dass sich beliebige Informationen -- Zahlen, Buchstaben, Bilder -- als Folgen von \tib{Bits}\index{Bit} darstellen lassen (vgl. \cref{mydefinition:bit-byte}). Nun wollen wir der Frage nachgehen, wie ein Computer diese Nullen und Einsen tatsächlich \emph{physikalisch} verarbeitet. Wir starten dazu bei der Hardware: Ein Chip ist zunächst ein Netzwerk aus leitenden Verbindungen und schaltenden Bauelementen. Die zentrale Idee lautet: \textbf{Elektrische Zustände werden als logische Zustände interpretiert} (siehe \cref{fig:stromkreis_grundidee}).
 
 \begin{figure}[H]
     \centering
@@ -39,7 +39,7 @@ In modernen Mikroprozessoren übernehmen \tib{Transistoren}\index{Transistor} di
 Ein logisches \tib{Gatter}\index{Gatter} fasst eine Schaltung aus solchen Schaltern zu einem standardisierten Baustein zusammen: Es nimmt ein oder mehrere digitale Eingangssignale entgegen und liefert ein klares Ausgangssignal ($0$ oder $1$). In den folgenden Abschnitten betrachten wir für jeden Gattertyp sein logisches Verhalten (Wahrheitstabelle), sein genormtes Schaltzeichen und seine anschauliche Umsetzung als elektrische Schaltung.
 
 \begin{myremark}[Exkurs: CMOS-Technologie in modernen Halbleiterchips]
-    In echten Mikrochips (wie der CPU in Smartphones oder Computern) verwendet man die sogenannte \gls{CMOS}-Technologie (\textit{Complementary Metal-Oxide-Semiconductor}). Dabei arbeiten zwei gegensätzliche Transistortypen (p- und n-Kanal-Transistoren) paarweise als komplementäre Schalter: Der eine schliesst bei $0$ die Verbindung zur Versorgungsspannung ($V_{\text{DD}} = 1$), der andere bei $1$ die Verbindung zur Masse ($0\,\text{V} = 0$). Durch diese komplementäre Anordnung fliesst im ruhenden Zustand fast kein Strom.
+    In echten Mikrochips (wie der \gls{CPU} in Smartphones oder Computern) verwendet man die sogenannte \gls{CMOS}-Technologie (\textit{Complementary Metal-Oxide-Semiconductor}). Dabei arbeiten zwei gegensätzliche Transistortypen (p- und n-Kanal-Transistoren) paarweise als komplementäre Schalter: Der eine schliesst bei $0$ die Verbindung zur Versorgungsspannung ($V_{\text{DD}} = 1$), der andere bei $1$ die Verbindung zur Masse ($0\,\text{V} = 0$). Durch diese komplementäre Anordnung fliesst im ruhenden Zustand fast kein Strom.
 \end{myremark}
 
 \begin{mydefinition}[Hardware-relevante Kennwerte]
@@ -58,7 +58,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 \subsection{NOT -- Negation (Inverter)}
 
 \begin{mydefinition}[NOT-Gatter]
-    Das \textbf{NOT-Gatter} (Inverter) hat \emph{einen} Eingang $x$ und kehrt dessen Signal um:
+    Das \textbf{NOT-Gatter} (Inverter, Schaltsymbol in \cref{fig:not_gatter}, Wahrheitstabelle in \cref{tab:not}) hat \emph{einen} Eingang $x$ und kehrt dessen Signal um:
     \[
         \overline{0} = 1, \qquad \overline{1} = 0.
     \]
@@ -81,6 +81,8 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \caption{Wahrheitstabelle des NOT-Gatters.}
     \label{tab:not}
 \end{table}
+
+Elektrisch lässt sich das NOT-Verhalten durch einen Ruhekontakt nachbilden (siehe \cref{fig:not_schaltung}).
 
 \begin{figure}[H]
     \centering
@@ -147,7 +149,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 \subsection{AND -- Konjunktion (UND)}
 
 \begin{mydefinition}[AND-Gatter]
-    Das \textbf{AND-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{beide} Eingänge \texttt{1} sind:
+    Das \textbf{AND-Gatter} (Schaltsymbol in \cref{fig:and_gatter}, Wahrheitstabelle in \cref{tab:and}) hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{beide} Eingänge \texttt{1} sind:
     \[
         x \wedge y = 1 \iff x = 1 \text{ und } y = 1.
     \]
@@ -173,6 +175,8 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:and}
 \end{table}
 
+Elektrisch lässt sich das AND-Gatter als Reihenschaltung zweier Arbeitskontakte umsetzen (siehe \cref{fig:and_schaltung}).
+
 \begin{figure}[H]
     \centering
     \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_and_schaltung.tex}
@@ -191,7 +195,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
 \subsection{OR -- Disjunktion (ODER)}
 
 \begin{mydefinition}[OR-Gatter]
-    Das \textbf{OR-Gatter} hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{mindestens einer} der Eingänge \texttt{1} ist:
+    Das \textbf{OR-Gatter} (Schaltsymbol in \cref{fig:or_gatter}, Wahrheitstabelle in \cref{tab:or}) hat \emph{zwei} Eingänge $x$ und $y$ und liefert genau dann den Ausgang \texttt{1}, wenn \emph{mindestens einer} der Eingänge \texttt{1} ist:
     \[
         x \vee y = 1 \iff x = 1 \text{ oder } y = 1.
     \]
@@ -217,6 +221,8 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \label{tab:or}
 \end{table}
 
+Elektrisch lässt sich das OR-Gatter als Parallelschaltung zweier Arbeitskontakte realisieren (siehe \cref{fig:or_schaltung}).
+
 \begin{figure}[H]
     \centering
     \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_or_schaltung.tex}
@@ -241,7 +247,7 @@ Die Grundlage aller Rechenoperationen eines Computers bilden \tib{Boolesche Funk
     \end{myanswer}
 \end{myexercise}
 
-\section{Weitere Gatter: NAND, NOR und XOR}
+\section{Weitere Gatter: \texorpdfstring{\glsentryshort{NAND}}{NAND}, NOR und \texorpdfstring{\glsentryshort{XOR}}{XOR}}
 
 Aus den drei Grundverknüpfungen lassen sich weitere wichtige Gatter ableiten, die in der Praxis eine zentrale Rolle spielen.
 
@@ -250,7 +256,7 @@ Aus den drei Grundverknüpfungen lassen sich weitere wichtige Gatter ableiten, d
 Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Challenges.
 
 \begin{mydefinition}[NAND-Gatter]
-    Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} liefert die Negation des AND-Gatters:
+    Das \tib{\gls{NAND}-Gatter}\index{NAND-Gatter} (Schaltsymbol in \cref{fig:nand_gatter}, Wahrheitstabelle in \cref{tab:nand}) liefert die Negation des AND-Gatters:
     \[
         \overline{x \wedge y}.
     \]
@@ -280,7 +286,7 @@ Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Chall
 Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern lassen sich \emph{alle} anderen logischen Funktionen (NOT, AND, OR, \ldots) nachbauen (funktionale Vollständigkeit).
 
 \begin{mychallenge}\label{myexercise:nand-not}
-    Zeigen Sie, dass sich das NOT-Gatter allein mit einem NAND-Gatter realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $\overline{x \wedge x}$ auf, indem Sie folgende Tabelle Schritt für Schritt von links nach rechts ausfüllen.
+    Zeigen Sie, dass sich das NOT-Gatter allein mit einem NAND-Gatter realisieren lässt. Stellen Sie dazu die Wahrheitstabelle von $\overline{x \wedge x}$ auf, indem Sie die Tabelle in \cref{tab:nand-not} Schritt für Schritt von links nach rechts ausfüllen.
     \begin{table}[H]
         \centering
         \begin{tabular}{c|c|c}
@@ -362,7 +368,7 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
     \end{myanswer}
 \end{mychallenge}
 
-\begin{myremark}[Exkurs: Theorie vs. Praxis -- Werden Chips wirklich nur aus NAND gebaut?]
+\begin{myremark}[Exkurs: Werden Chips wirklich nur aus \glsentryshort{NAND} gebaut?]
     \begin{itemize}
         \item \textbf{Theorie \& Didaktik:} Das NAND-Gatter ist \emph{funktional vollständig} -- jeder beliebige Computer lässt sich theoretisch rein aus NAND-Gattern bauen (bekannter didaktischer Ansatz wie in \textit{Nand2Tetris}). Historisch wurde z.\,B. der \textit{Apollo Guidance Computer} (1966) fast ausschliesslich aus einheitlichen NOR-Gattern gefertigt, um Herstellungskosten und Ausfallraten zu senken.
         \item \textbf{Praxis in modernen CMOS-Prozessoren:} Heutige Mikrochips werden \textbf{nicht} aus einzelnen NAND-Gattern zusammengeschaltet. Stattdessen nutzen Chiphersteller sogenannte \textit{Standard-Zellbibliotheken}, in denen jeder Gattertyp direkt auf Transistorebene optimiert ist:
@@ -378,7 +384,7 @@ Das NAND-Gatter ist besonders bedeutsam: Durch Kombinationen von NAND-Gattern la
 Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Challenges.
 
 \begin{mydefinition}[NOR-Gatter]
-    Das \textbf{NOR-Gatter} liefert die Negation des OR-Gatters:
+    Das \textbf{NOR-Gatter} (Schaltsymbol in \cref{fig:nor_gatter}, Wahrheitstabelle in \cref{tab:nor}) liefert die Negation des OR-Gatters:
     \[
         \overline{x \vee y}.
     \]
@@ -416,7 +422,7 @@ Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Chall
 \subsection{XOR -- Exklusiv-ODER (Antivalenz)}
 
 \begin{mydefinition}[XOR-Gatter]
-    Das \textbf{XOR-Gatter} (Exklusiv-ODER) liefert genau dann den Ausgang \texttt{1}, wenn sich die beiden Eingänge \emph{voneinander unterscheiden} ($x \neq y$):
+    Das \textbf{XOR-Gatter} (Exklusiv-ODER, Schaltsymbol in \cref{fig:xor_gatter}, Wahrheitstabelle in \cref{tab:xor}) liefert genau dann den Ausgang \texttt{1}, wenn sich die beiden Eingänge \emph{voneinander unterscheiden} ($x \neq y$):
     \[
         x \oplus y = 1 \iff (x = 1 \text{ und } y = 0) \text{ oder } (x = 0 \text{ und } y = 1).
     \]
@@ -451,7 +457,7 @@ Dieser Abschnitt ist eine freiwillige Vertiefung. Alle Aufgaben darin sind Chall
 
 \section{Schaltkreise für die Binäraddition: Halbaddierer und Volladdierer}\label{sec:halbaddierer}
 
-Wie verarbeitet eine digitale Schaltung (wie die \gls{ALU} in einer CPU) arithmetische Operationen? Das Herzstück jedes Prozessors ist die Fähigkeit, zwei Binärzahlen zu addieren. Bevor wir uns ansehen, wie dies mit Logikgattern gelöst wird, betrachten wir das Prinzip der binären Addition.
+Wie verarbeitet eine digitale Schaltung (wie die \gls{ALU} in einer \gls{CPU}) arithmetische Operationen? Das Herzstück jedes Prozessors ist die Fähigkeit, zwei Binärzahlen zu addieren. Bevor wir uns ansehen, wie dies mit Logikgattern gelöst wird, betrachten wir das Prinzip der binären Addition.
 
 \subsection{Rechnen im Binärsystem}
 
@@ -495,7 +501,7 @@ Ein Beispiel für die schriftliche Addition zweier Binärzahlen:
 \begin{myexercise}\label{myexercise:overflow}
 	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen: $11110001_2 + 00001111_2$.
 	\begin{myanswer}
-		Mathematisch korrekt ist $100000000_2$ ($256_{10}$). In einer festen 8-Bit-Umgebung (wie im Register/ALU eines 8-Bit-Prozessors) passt die 9. Stelle nicht mehr in das Register. Die vorderste $1$ geht verloren und das Resultat wird zu $00000000_2$. Man spricht von einem \tib{Überlauf}\index{Überlauf} (\textit{overflow}).
+		Mathematisch korrekt ist $100000000_2$ ($256_{10}$). In einer festen 8-Bit-Umgebung (wie im Register/\gls{ALU} eines 8-Bit-Prozessors) passt die 9. Stelle nicht mehr in das Register. Die vorderste $1$ geht verloren und das Resultat wird zu $00000000_2$. Man spricht von einem \tib{Überlauf}\index{Überlauf} (\textit{overflow}).
 	\end{myanswer}
 \end{myexercise}
 
@@ -607,7 +613,7 @@ Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge}
     \end{myanswer}
 \end{myexercise}
 
-Aus diesen beiden Formeln wird ersichtlich, wie sich ein Volladdierer aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen lässt. Die drei internen Signale benennen wir nach ihrer Aufgabe:
+Aus diesen beiden Formeln wird ersichtlich, wie sich ein Volladdierer aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen lässt (siehe Blockschaltbild in \cref{fig:volladdierer_block}). Die drei internen Signale benennen wir nach ihrer Aufgabe:
 \begin{itemize}
     \item Der erste Halbaddierer (HA 1) addiert $x$ und $y$. Er liefert die \textbf{Zwischensumme} $\textcolor{violet}{p} = x \oplus y$ und den Übertrag $g = x \land y$. Ist $g = 1$, so \emph{erzeugt} (\textit{generate}) die Stelle selbst einen Übertrag, weil $x = y = 1$.
     \item Der zweite Halbaddierer (HA 2) addiert die Zwischensumme $p$ und den eingehenden Übertrag $c_{\text{in}}$. Er liefert das Summenbit $\textcolor{ForestGreen}{s} = p \oplus c_{\text{in}}$ und den Übertrag $h = p \land c_{\text{in}}$. Ist $h = 1$, so wird der eingehende Übertrag \emph{weitergereicht}: Genau eines der Bits $x, y$ ist $1$, dazu kommt $c_{\text{in}} = 1$.
@@ -621,7 +627,7 @@ Aus diesen beiden Formeln wird ersichtlich, wie sich ein Volladdierer aus \textb
     \label{fig:volladdierer_block}
 \end{figure}
 
-Setzt man für die beiden Halbaddierer ihre Gatter ein (\cref{fig:halbaddierer}), erhält man den Volladdierer auf Gatterebene. Er besteht aus \textbf{fünf Gattern}: zwei XOR, zwei AND und einem OR.
+Setzt man für die beiden Halbaddierer ihre Gatter ein (\cref{fig:halbaddierer}), erhält man den Volladdierer auf Gatterebene (siehe \cref{fig:volladdierer_gatter}). Er besteht aus \textbf{fünf Gattern}: zwei XOR, zwei AND und einem OR.
 
 \begin{figure}[H]
     \centering
