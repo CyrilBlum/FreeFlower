@@ -1,0 +1,40 @@
+% Volladdierer auf Gatterebene: HA 1 (p, g), HA 2 (s, h), OR (c_out).
+% Bezeichnungen wie in der Moodle-Frage «4-Bit-Addierer» (p, g, h).
+\begin{tikzpicture}[circuit logic US, circuit symbol unit=11pt, >=stealth,
+    dot/.style={circle, fill, inner sep=1.3pt},
+    hablock/.style={draw=gray!70, dashed, rounded corners=4pt},
+    every node/.append style={font=\small}]
+    % Gatter
+    \node[xor gate, draw, thick] (xor1) at (3.0, 4.0) {};
+    \node[and gate, draw, thick] (and1) at (3.0, 1.0) {};
+    \node[xor gate, draw, thick] (xor2) at (7.4, 4.2) {};
+    \node[and gate, draw, thick] (and2) at (7.4, 2.4) {};
+    \node[or gate, draw, thick]  (or1)  at (10.6, 1.4) {};
+
+    % Eingänge x, y (HA 1)
+    \draw[thick, NavyBlue] (0, 4.6) node[left] {$x$} -- (2.1, 4.6) |- (xor1.input 1);
+    \draw[thick, NavyBlue] (1.2, 4.6) node[dot] {} |- (and1.input 1);
+    \draw[thick, BrickRed] (0, 3.4) node[left] {$y$} -- (2.1, 3.4) |- (xor1.input 2);
+    \draw[thick, BrickRed] (1.6, 3.4) node[dot] {} |- (and1.input 2);
+
+    % Zwischensumme p = x XOR y
+    \draw[thick, violet] (xor1.output) -- (5.4, 0 |- xor1.output) node[pos=0.4, above] {$p$}
+        |- (xor2.input 1);
+    \draw[thick, violet] (5.4, 0 |- xor2.input 1) node[dot] {} |- (and2.input 1);
+
+    % Eingangsübertrag c_in (von oben)
+    \draw[thick, BurntOrange] (0, 5.6) node[left] {$c_{\text{in}}$} -- (6.2, 5.6) |- (xor2.input 2);
+    \draw[thick, BurntOrange] (6.2, 0 |- xor2.input 2) node[dot] {} |- (and2.input 2);
+
+    % Ausgänge
+    \draw[thick, ->, ForestGreen] (xor2.output) -- (12.4, 0 |- xor2.output) node[right] {$s$ (Summe)};
+    \draw[thick] (and2.output) -- node[above] {$h$} (9.2, 0 |- and2.output) |- (or1.input 1);
+    \draw[thick] (and1.output) -- node[above, pos=0.3] {$g$} (9.2, 0 |- and1.output) |- (or1.input 2);
+    \draw[thick, ->, BurntOrange] (or1.output) -- (12.4, 0 |- or1.output) node[right] {$c_{\text{out}}$ (Übertrag)};
+
+    % Halbaddierer markieren
+    \draw[hablock] (0.8, 0.2) rectangle (4.1, 5.0);
+    \node[font=\small\bfseries, gray] at (2.45, -0.15) {HA 1};
+    \draw[hablock] (5.0, 1.6) rectangle (8.5, 5.0);
+    \node[font=\small\bfseries, gray] at (6.75, 1.25) {HA 2};
+\end{tikzpicture}

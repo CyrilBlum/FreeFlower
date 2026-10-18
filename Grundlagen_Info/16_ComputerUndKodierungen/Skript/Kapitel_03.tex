@@ -607,11 +607,11 @@ Ein \tib{Volladdierer}\index{Volladdierer} besitzt daher \textbf{drei Eingänge}
     \end{myanswer}
 \end{myexercise}
 
-Aus diesen beiden Formeln wird direkt ersichtlich, wie sich ein Volladdierer modular aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen lässt:
+Aus diesen beiden Formeln wird ersichtlich, wie sich ein Volladdierer aus \textbf{zwei Halbaddierern} und einem \textbf{OR-Gatter} aufbauen lässt. Die drei internen Signale benennen wir nach ihrer Aufgabe:
 \begin{itemize}
-    \item Der erste Halbaddierer (HA 1) verknüpft $x$ und $y$ zu $s_1 = x \oplus y$ sowie $c_1 = x \land y$.
-    \item Der zweite Halbaddierer (HA 2) addiert das vorläufige Summenbit $s_1$ mit $c_{\text{in}}$ zu $s = s_1 \oplus c_{\text{in}}$ sowie $c_2 = s_1 \land c_{\text{in}}$.
-    \item Ein OR-Gatter verknüpft schliesslich die beiden Überträge zum finalen $c_{\text{out}} = c_1 \lor c_2$.
+    \item Der erste Halbaddierer (HA 1) addiert $x$ und $y$. Er liefert die \textbf{Zwischensumme} $\textcolor{violet}{p} = x \oplus y$ und den Übertrag $g = x \land y$. Ist $g = 1$, so \emph{erzeugt} (\textit{generate}) die Stelle selbst einen Übertrag, weil $x = y = 1$.
+    \item Der zweite Halbaddierer (HA 2) addiert die Zwischensumme $p$ und den eingehenden Übertrag $c_{\text{in}}$. Er liefert das Summenbit $\textcolor{ForestGreen}{s} = p \oplus c_{\text{in}}$ und den Übertrag $h = p \land c_{\text{in}}$. Ist $h = 1$, so wird der eingehende Übertrag \emph{weitergereicht}: Genau eines der Bits $x, y$ ist $1$, dazu kommt $c_{\text{in}} = 1$.
+    \item Ein OR-Gatter fasst die beiden möglichen Überträge zusammen: $\textcolor{BurntOrange}{c_{\text{out}}} = g \lor h$.
 \end{itemize}
 
 \begin{figure}[H]
@@ -621,104 +621,198 @@ Aus diesen beiden Formeln wird direkt ersichtlich, wie sich ein Volladdierer mod
     \label{fig:volladdierer_block}
 \end{figure}
 
-\subsection{Kaskadierung zum mehrstelligen Addierwerk (Ripple-Carry)}
-
-Kaskadiert man $n$ Volladdierer hintereinander, indem man den Übertragsausgang $c_{\text{out}}$ jeder Stelle an den Übertragseingang $c_{\text{in}}$ der nächsthöheren Stelle weiterleitet, entsteht ein mehrstelliges Addierwerk (sogenannter \tib{Ripple-Carry-Addierer}\index{Ripple-Carry-Addierer}).
-
-Bei drei Volladdierern heissen die weitergereichten Überträge $c_1$, $c_2$ und $c_3$. Der letzte Übertrag bildet die zusätzliche linke Ergebnisstelle: $s_3=c_3$.
-
-Genau diese Schaltung führt elektronisch die \textbf{schriftliche Addition im Binärsystem} aus: Jede Bitstelle (jede Spalte der schriftlichen Rechnung) wird von einem eigenen Volladdierer berechnet. Der Übertrag \enquote{plätschert} (\textit{ripples}) dabei von der niederwertigsten Stelle (Bit 0, ganz rechts) bis zur höchstwertigen Stelle (links) durch die Kette:
+Setzt man für die beiden Halbaddierer ihre Gatter ein (\cref{fig:halbaddierer}), erhält man den Volladdierer auf Gatterebene. Er besteht aus \textbf{fünf Gattern}: zwei XOR, zwei AND und einem OR.
 
 \begin{figure}[H]
     \centering
-    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_addierer.tex}
-    \caption{Kaskadierung von 3 Volladdierern (FA 0, FA 1, FA 2) zu einem 3-Bit-Ripple-Carry-Addierer.}
-    \label{fig:ripple_carry_addierer}
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_volladdierer_gatter.tex}
+    \caption{Volladdierer auf Gatterebene. Ein Punkt markiert eine Verzweigung; Leitungen, die sich ohne Punkt kreuzen, sind nicht verbunden.}
+    \label{fig:volladdierer_gatter}
 \end{figure}
+
+\begin{myremark}[Warum genügt $c_{\text{out}} = g \lor h$?]
+    Ein Übertrag entsteht, wenn mindestens zwei der drei Eingänge $1$ sind (\cref{myexercise:volladdierer-formel}). Das geschieht auf genau zwei Arten: Entweder sind $x$ und $y$ beide $1$ (dann ist $g = 1$), oder genau eines von $x, y$ ist $1$ und zusätzlich $c_{\text{in}} = 1$ (dann ist $h = 1$). Die beiden Fälle schliessen sich aus: Ist $g = 1$, so ist $p = 1 \oplus 1 = 0$ und damit $h = 0$. Das OR-Gatter erhält also nie zwei Einsen gleichzeitig.
+\end{myremark}
+
+\begin{myexample}[Ein Volladdierer rechnet $1 + 0 + 1$]
+    Mit $x = 1$, $y = 0$ und $c_{\text{in}} = 1$ ergeben sich der Reihe nach:
+    \begin{align*}
+        \text{HA 1:} \quad & p = 1 \oplus 0 = 1,                           & g & = 1 \land 0 = 0, \\
+        \text{HA 2:} \quad & s = p \oplus c_{\text{in}} = 1 \oplus 1 = 0, & h & = p \land c_{\text{in}} = 1 \land 1 = 1, \\
+        \text{OR:}   \quad & c_{\text{out}} = g \lor h = 0 \lor 1 = 1.
+    \end{align*}
+    Ausgabe $(c_{\text{out}}\,s)_2 = 10_2 = 2_{10}$, und tatsächlich gilt $1 + 0 + 1 = 2$.
+\end{myexample}
+
+\subsection{Der 4-Bit-Addierer (Ripple-Carry-Addierer)}\label{sec:4bit_addierer}
+
+Ein Volladdierer addiert eine einzige Spalte der schriftlichen Addition. Um zwei 4-Bit-Zahlen zu addieren, schaltet man daher vier Addierer nebeneinander, einen pro Spalte, und verbindet sie über ihre Überträge.
+
+\paragraph{Bits nummerieren.}
+Wir schreiben die beiden Summanden als $A = (\textcolor{NavyBlue}{a_3\,a_2\,a_1\,a_0})_2$ und $B = (\textcolor{BrickRed}{b_3\,b_2\,b_1\,b_0})_2$. Der Index bezeichnet die \textbf{Position} des Bits, gezählt von rechts ab $0$, nicht seinen Wert. Das Bit an Position $i$ hat den Stellenwert $2^i$:
+\begin{center}
+    \begin{tabular}{lcccc}
+        Position $i$           & 3 (links) & 2     & 1     & 0 (rechts) \\ \midrule
+        Stellenwert $2^i$      & 8         & 4     & 2     & 1          \\
+        Bits von $A$           & $a_3$     & $a_2$ & $a_1$ & $a_0$      \\
+        Bits von $B$           & $b_3$     & $b_2$ & $b_1$ & $b_0$      \\
+    \end{tabular}
+\end{center}
+Beispiel: $A = 11_{10} = 1011_2$ hat $a_3 = 1$, $a_2 = 0$, $a_1 = 1$, $a_0 = 1$.
+
+\paragraph{Stufen verbinden.}
+Die Schaltung für Position $i$ heisst \textbf{Stufe $i$}. Sie erhält die Bits $a_i$ und $b_i$ sowie den Übertrag $\textcolor{BurntOrange}{c_i}$ aus der Stufe rechts davon. Sie liefert das Summenbit $\textcolor{ForestGreen}{s_i}$ und gibt den Übertrag $\textcolor{BurntOrange}{c_{i+1}}$ an die Stufe links davon weiter (\cref{fig:4bit_addierer}).
+\begin{itemize}
+    \item \textbf{Stufe 0 ist ein Halbaddierer.} Rechts von Bit 0 gibt es keine Spalte, also auch keinen eingehenden Übertrag ($c_0 = 0$). Zwei Bits addiert bereits der Halbaddierer: $s_0 = a_0 \oplus b_0$ und $c_1 = a_0 \land b_0$. (Ein Volladdierer mit $c_{\text{in}} = 0$ würde dasselbe liefern, denn dann ist $h = 0$; er bräuchte aber drei Gatter mehr.)
+    \item \textbf{Stufen 1 bis 3 sind Volladdierer.} Jede von ihnen berechnet wie oben
+    \[
+        p_i = a_i \oplus b_i, \quad g_i = a_i \land b_i, \quad h_i = p_i \land c_i, \quad s_i = p_i \oplus c_i, \quad c_{i+1} = g_i \lor h_i.
+    \]
+    \item \textbf{Das Ergebnis hat fünf Bits.} Der letzte Übertrag $c_4$ wird zur zusätzlichen linken Stelle: $A + B = (c_4\,s_3\,s_2\,s_1\,s_0)_2$. Fünf Bits genügen immer, denn höchstens ist $15 + 15 = 30 = 11110_2$. Ein 4-Bit-Register kann $c_4$ jedoch nicht speichern: Ist $c_4 = 1$, entsteht ein \tib{Überlauf}\index{Überlauf} (vgl.\ \cref{myexercise:overflow}).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}
+    \caption{4-Bit-Addierer aus einem Halbaddierer (Stufe 0) und drei Volladdierern (Stufen 1--3). Bit 0 liegt rechts, die Überträge laufen von rechts nach links.}
+    \label{fig:4bit_addierer}
+\end{figure}
+
+Eine solche Kette heisst \tib{Ripple-Carry-Addierer}\index{Ripple-Carry-Addierer}. Sie führt elektronisch genau die \textbf{schriftliche Addition im Binärsystem} aus: Jede Stufe übernimmt eine Spalte, und der Übertrag wandert wie beim Rechnen auf Papier von rechts nach links.
+
+\paragraph{Gatter zählen.}
+Der Halbaddierer in Stufe 0 besteht aus 1 XOR und 1 AND, jeder der drei Volladdierer aus 2 XOR, 2 AND und 1 OR. Insgesamt braucht der 4-Bit-Addierer also
+\[
+    1 + 3 \cdot 2 = 7 \text{ XOR}, \qquad 1 + 3 \cdot 2 = 7 \text{ AND}, \qquad 3 \cdot 1 = 3 \text{ OR}, \qquad \text{zusammen } 17 \text{ Gatter.}
+\]
+
+\begin{myexample}[$11 + 6$ im 4-Bit-Addierer]
+    Es ist $A = 11_{10} = 1011_2$ und $B = 6_{10} = 0110_2$. Wir rechnen die Stufen von rechts nach links; jede Stufe übernimmt den Übertrag $c_i$ aus der vorigen Zeile.
+    \begin{center}
+        \begin{tabular}{lcccccccc}
+            Stufe $i$ & $a_i$ & $b_i$ & $c_i$ & $p_i$ & $g_i$ & $h_i$ & $s_i$ & $c_{i+1}$ \\ \midrule
+            0 (HA)    & 1     & 0     & --    & --    & --    & --    & 1     & 0         \\
+            1 (FA)    & 1     & 1     & 0     & 0     & 1     & 0     & 0     & 1         \\
+            2 (FA)    & 0     & 1     & 1     & 1     & 0     & 1     & 0     & 1         \\
+            3 (FA)    & 1     & 0     & 1     & 1     & 0     & 1     & 0     & 1         \\
+        \end{tabular}
+    \end{center}
+    In Stufe 0 gilt $s_0 = 1 \oplus 0 = 1$ und $c_1 = 1 \land 0 = 0$. In Stufe 1 \emph{entsteht} ein Übertrag ($g_1 = 1$), in den Stufen 2 und 3 wird er \emph{weitergereicht} ($h_2 = h_3 = 1$).
+    Ergebnis: $(c_4\,s_3\,s_2\,s_1\,s_0)_2 = 10001_2 = 16 + 1 = 17_{10}$. Kontrolle: $11 + 6 = 17$ \checkmark. Dieselben Überträge erscheinen in der schriftlichen Rechnung:
+    \[
+        \begin{array}{rccccc}
+                            &   & 1 & 0 & 1 & 1 \\
+            +               &   & 0 & 1 & 1 & 0 \\
+            \text{Übertrag} & 1 & 1 & 1 &   &   \\\hline
+                            & 1 & 0 & 0 & 0 & 1
+        \end{array}
+    \]
+    Ein 4-Bit-Register würde nur $0001_2 = 1$ speichern: ein Überlauf.
+\end{myexample}
 
 \begin{myremark}[Warum heisst es \enquote{Ripple-Carry}?]
     Der Name setzt sich aus zwei englischen Begriffen zusammen:
     \begin{itemize}
         \item \textbf{Carry (Übertrag):} Bezeichnet den beim Addieren entstehenden Übertrag, der an die nächsthöhere Bitstelle weitergereicht werden muss.
-        \item \textbf{Ripple (Kräuseln / Wellenbewegung):} Da der Ausgangsübertrag $\textcolor{BurntOrange}{c_{\text{out}}}$ jeder Stufe den Eingang $\textcolor{BurntOrange}{c_{\text{in}}}$ der nächsten Stufe speist, kann ein Volladdierer sein stabiles Ergebnis erst dann berechnen, wenn das Übertragssignal der vorherigen Stufe bereitsteht. Im ungünstigsten Fall (z.\,B. bei $\textcolor{NavyBlue}{111_2} + \textcolor{BrickRed}{001_2} = \textcolor{ForestGreen}{1000_2}$) muss der Übertrag nacheinander wie eine Welle durch die gesamte Kette \enquote{durchplätschern} (\textit{ripple through}).
+        \item \textbf{Ripple (Kräuseln / Wellenbewegung):} Da der Ausgangsübertrag $\textcolor{BurntOrange}{c_{i+1}}$ jeder Stufe den Eingang der nächsten Stufe speist, kann eine Stufe ihr Ergebnis erst dann sicher berechnen, wenn der Übertrag der vorherigen Stufe feststeht. Im ungünstigsten Fall (z.\,B. bei $\textcolor{NavyBlue}{1111_2} + \textcolor{BrickRed}{0001_2} = \textcolor{ForestGreen}{10000_2}$) muss der Übertrag nacheinander wie eine Welle durch die gesamte Kette \enquote{durchplätschern} (\textit{ripple through}).
     \end{itemize}
     Die Signallaufzeit wächst daher linear mit der Anzahl der Bits ($O(n)$). In modernen Hochleistungsprozessoren kommen für breitere Zahlen (z.\,B. 32 oder 64 Bit) vorausschauende Addierwerke zum Einsatz (wie der \textit{Carry-Lookahead-Addierer}), welche alle Überträge parallel ermitteln.
 \end{myremark}
 
+Zusammengefasst addiert man zwei Zahlen mit dem 4-Bit-Addierer in vier Schritten:
+\begin{enumerate}
+    \item Beide Zahlen als 4-Bit-Binärzahlen schreiben und die Bits $a_3 \ldots a_0$, $b_3 \ldots b_0$ ablesen.
+    \item Stufe 0 (Halbaddierer): $s_0 = a_0 \oplus b_0$, $c_1 = a_0 \land b_0$.
+    \item Stufen 1, 2, 3 (Volladdierer) der Reihe nach: $c_i$ aus der vorigen Stufe übernehmen, dann $p_i, g_i, h_i$ und daraus $s_i$ und $c_{i+1}$ berechnen.
+    \item Ergebnis $(c_4\,s_3\,s_2\,s_1\,s_0)_2$ ablesen und mit der Dezimalrechnung kontrollieren. Stimmt es nicht, liegt der Fehler in einem Zwischenschritt.
+\end{enumerate}
 
 \begin{myexercise}\label{myexercise:binaeraddition-einfach}
-	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen: $011_2 + 010_2$.
+	Rechnen Sie die folgenden beiden Binärzahlen schriftlich zusammen und notieren Sie alle Überträge: $0101_2 + 0111_2$. Kontrollieren Sie das Ergebnis im Dezimalsystem.
 	\begin{myanswer}
 		\[
-			\begin{array}{rccc}
-				& 0 & 1 & 1 \\
-				+ & 0 & 1 & 0 \\
-				\text{Übertrag} & 1 & & \\\hline
-				& 1 & 0 & 1
+			\begin{array}{rccccc}
+				                &   & 0 & 1 & 0 & 1 \\
+				+               &   & 0 & 1 & 1 & 1 \\
+				\text{Übertrag} & 0 & 1 & 1 & 1 &   \\\hline
+				                & 0 & 1 & 1 & 0 & 0
 			\end{array}
 		\]
-		Dezimal-Kontrolle: $3_{10} + 2_{10} = 5_{10} = 101_2$.
+		Dezimal-Kontrolle: $5_{10} + 7_{10} = 12_{10} = 1100_2$.
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}\label{myexercise:volladdierer-kette}
-    \textbf{Signalverfolgung im Ripple-Carry-Addierwerk.}
-    Die schriftliche Addition ($011_2 + 010_2$) aus der vorherigen Aufgabe wird nun elektronisch im 3-Bit-Addierwerk berechnet ($a = 011_2$, $b = 010_2$, $c_0 = 0$):
-    \begin{center}
-        \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_aufgabe.tex}
-    \end{center}
-    Ermitteln Sie die Signale Schritt für Schritt von rechts nach links (Bit 0 bis Bit 2):
+    \textbf{Signalverfolgung im 4-Bit-Addierer.}
+    Die Addition $A + B$ mit $A = 5_{10}$ und $B = 7_{10}$ aus \cref{myexercise:binaeraddition-einfach} wird nun elektronisch im 4-Bit-Addierer (\cref{fig:4bit_addierer}) berechnet.
     \begin{enumerate}[(a)]
-        \item Bestimmen Sie für jede Stufe den Ausgangsübertrag ($c_1, c_2, c_3$) sowie das Summenbit ($s_0, s_1, s_2$). Den Ausgangsübertrag können Sie berechnen mit 
+        \item Schreiben Sie $A$ und $B$ als 4-Bit-Binärzahlen. Geben Sie $a_1$ und $b_3$ an.
+        \item \textbf{Stufe 0 (Halbaddierer):} Berechnen Sie $s_0$ und $c_1$.
+        \item \textbf{Stufen 1 bis 3 (Volladdierer):} Füllen Sie die Tabelle Zeile für Zeile aus. Übernehmen Sie dabei $c_i$ aus der vorigen Zeile und berechnen Sie
         \[
-            c_{i+1} = (a_i \wedge b_i) \vee (a_i \wedge c_i) \vee (b_i \wedge c_i), \quad i = 0, 1, 2.
+            p_i = a_i \oplus b_i, \quad g_i = a_i \land b_i, \quad h_i = p_i \land c_i, \quad s_i = p_i \oplus c_i, \quad c_{i+1} = g_i \lor h_i.
         \]
-        Das Summenbit können Sie berechnen mit
-        \[
-            s_i = a_i \oplus b_i \oplus c_i, \quad i = 0, 1, 2.
-        \]
-        Für das letzte Summenbit $s_3$ gilt $s_3 = c_3$.
-        \item Geben Sie das Gesamtergebnis $(s_3\,s_2\,s_1\,s_0)_2$ im Binär- und Dezimalsystem an und vergleichen Sie es mit Ihrer schriftlichen Rechnung aus \cref{myexercise:binaeraddition-einfach}.
+        \begin{center}
+            \renewcommand{\arraystretch}{1.4}
+            \begin{tabular}{l*{8}{p{1.1cm}}}
+                Stufe $i$ & $a_i$ & $b_i$ & $c_i$ & $p_i$ & $g_i$ & $h_i$ & $s_i$ & $c_{i+1}$ \\ \midrule
+                1 & & & & & & & & \\ \midrule
+                2 & & & & & & & & \\ \midrule
+                3 & & & & & & & & \\
+            \end{tabular}
+        \end{center}
+        \item Geben Sie das Gesamtergebnis $(c_4\,s_3\,s_2\,s_1\,s_0)_2$ im Binär- und im Dezimalsystem an und vergleichen Sie es mit Ihrer schriftlichen Rechnung aus \cref{myexercise:binaeraddition-einfach}. In welchen Stufen \emph{entsteht} ein Übertrag ($g_i = 1$), in welchen wird er \emph{weitergereicht} ($h_i = 1$)?
+        \item Wie viele XOR-, AND- und OR-Gatter enthält der gesamte 4-Bit-Addierer?
     \end{enumerate}
     \begin{myanswer}
-        \begin{center}
-            \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_ripple_carry_loesung.tex}
-        \end{center}
         \begin{enumerate}[(a)]
-            \item \textbf{Bit 0 (FA 0):} $a_0=1, b_0=0, c_0=0 \Rightarrow s_0 = 1 \oplus 0 \oplus 0 = \mathbf{1}$, Übertrag $c_1 = \mathbf{0}$.
-            \item \textbf{Bit 1 (FA 1):} $a_1=1, b_1=1, c_1=0 \Rightarrow s_1 = 1 \oplus 1 \oplus 0 = \mathbf{0}$, Übertrag $c_2 = \mathbf{1}$.
-            \item \textbf{Bit 2 (FA 2):} $a_2=0, b_2=0, c_2=1 \Rightarrow s_2 = 0 \oplus 0 \oplus 1 = \mathbf{1}$, Übertrag $s_3 = c_3 = \mathbf{0}$.
-            \item \textbf{Ergebnis:} $(s_3\,s_2\,s_1\,s_0)_2 = \mathbf{0101_2} = \mathbf{5_{10}}$.
+            \item $A = 0101_2$, $B = 0111_2$. Also $a_1 = 0$ (zweite Stelle von rechts in $A$) und $b_3 = 0$ (linke Stelle in $B$).
+            \item $s_0 = a_0 \oplus b_0 = 1 \oplus 1 = 0$, \quad $c_1 = a_0 \land b_0 = 1 \land 1 = 1$.
+            \item \phantom{x}
+            \begin{center}
+                \begin{tabular}{lcccccccc}
+                    Stufe $i$ & $a_i$ & $b_i$ & $c_i$ & $p_i$ & $g_i$ & $h_i$ & $s_i$ & $c_{i+1}$ \\ \midrule
+                    1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 \\
+                    2 & 1 & 1 & 1 & 0 & 1 & 0 & 1 & 1 \\
+                    3 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 \\
+                \end{tabular}
+            \end{center}
+            {\def\RCAinput#1#2{$#1_{#2} = \ifx a#1\ifcase#2 1\or 0\or 1\or 0\fi\else\ifcase#2 1\or 1\or 1\or 0\fi\fi$}%
+             \def\RCAcarry#1{$c_{#1} = \mathbf{\ifnum#1=4 0\else 1\fi}$}%
+             \def\RCAsum#1{$s_{#1} = \mathbf{\ifnum#1>1 1\else 0\fi}$}%
+             \begin{center}
+                 \scalebox{0.9}{\input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_4bit_addierer.tex}}
+             \end{center}}
+            \item $(c_4\,s_3\,s_2\,s_1\,s_0)_2 = 01100_2 = 8 + 4 = 12_{10}$. Kontrolle: $5 + 7 = 12$ \checkmark. Die Überträge $c_1 = c_2 = c_3 = 1$ und $c_4 = 0$ stimmen mit der schriftlichen Rechnung überein. Ein Übertrag entsteht in Stufe 0 ($c_1 = a_0 \land b_0 = 1$) und in Stufe 2 ($g_2 = 1$); in Stufe 1 wird er weitergereicht ($h_1 = 1$).
+            \item 1 Halbaddierer und 3 Volladdierer: $1 + 3 \cdot 2 = 7$ XOR, $1 + 3 \cdot 2 = 7$ AND und $3$ OR.
         \end{enumerate}
-        Dies entspricht exakt der schriftlichen Addition:
-        \[
-            \begin{array}{rccc}
-                & 0 & 1 & 1 \\
-                + & 0 & 1 & 0 \\
-                \text{Übertrag} & 1 & & \\\hline
-                & 1 & 0 & 1
-            \end{array}
-        \]
-        Kontrolle im Dezimalsystem: $3_{10} + 2_{10} = 5_{10}$.
     \end{myanswer}
 \end{myexercise}
 
 \begin{mychallenge}\label{mychallenge:volladdierer-uebertragskette}
     \textbf{Eine Kette von Überträgen.}
-    Berechnen Sie $111_2+001_2$ schriftlich und notieren Sie alle Überträge. Erklären Sie, weshalb links eine zusätzliche Stelle entsteht. Kontrollieren Sie das Ergebnis im Dezimalsystem.
+    Berechnen Sie $1111_2 + 0001_2$ mit dem 4-Bit-Addierer.
+    \begin{enumerate}[(a)]
+        \item Bestimmen Sie $s_0$ und $c_1$ sowie für die Stufen 1 bis 3 die Signale $p_i, g_i, h_i, s_i$ und $c_{i+1}$.
+        \item Erklären Sie, weshalb dies der ungünstigste Fall für die Laufzeit ist.
+        \item Welche Zahl steht in einem 4-Bit-Register, das nur $s_3\,s_2\,s_1\,s_0$ speichert?
+    \end{enumerate}
     \begin{myanswer}
-\[
-    \begin{array}{rcccc}
-        & & 1 & 1 & 1 \\
-        + & & 0 & 0 & 1 \\
-        \text{Übertrag} & 1 & 1 & 1 & \\\hline
-        & 1 & 0 & 0 & 0
-    \end{array}
-\]
-Rechts entsteht durch $1+1=10_2$ ein Übertrag. In den nächsten beiden Spalten ergibt $1+0+1=10_2$ jeweils wieder einen Übertrag. Der letzte Übertrag bildet eine neue linke Stelle. Ergebnis: $1000_2=8_{10}$. Kontrolle: $7+1=8$.
+        \begin{enumerate}[(a)]
+            \item Stufe 0: $s_0 = 1 \oplus 1 = 0$, $c_1 = 1 \land 1 = 1$. In den Stufen 1 bis 3 ist jeweils $a_i = 1$, $b_i = 0$ und $c_i = 1$, also $p_i = 1$, $g_i = 0$, $h_i = 1$, $s_i = 0$ und $c_{i+1} = 1$. Ergebnis: $(c_4\,s_3\,s_2\,s_1\,s_0)_2 = 10000_2 = 16_{10}$; Kontrolle: $15 + 1 = 16$.
+            \item Der Übertrag entsteht ganz rechts und wird von jeder weiteren Stufe weitergereicht ($h_1 = h_2 = h_3 = 1$). Jede Stufe kann ihr $s_i$ erst berechnen, wenn $c_i$ feststeht. Der Übertrag muss also nacheinander durch alle vier Stufen laufen.
+            \item $0000_2 = 0$, denn $c_4 = 1$ passt nicht ins Register: ein Überlauf.
+        \end{enumerate}
     \end{myanswer}
 \end{mychallenge}
 
-Jeder Volladdierer übernimmt eine Spalte dieser schriftlichen Rechnung.
+\begin{mychallenge}\label{mychallenge:addierer-gatteranzahl}
+    \textbf{Breitere Addierer.}
+    Ein 8-Bit-Addierer ist gleich aufgebaut wie der 4-Bit-Addierer: ein Halbaddierer in Stufe 0, Volladdierer in den übrigen Stufen. Wie viele XOR-, AND- und OR-Gatter braucht er? Geben Sie eine Formel für einen $n$-Bit-Addierer an.
+    \begin{myanswer}
+        8 Bit: 1 Halbaddierer und 7 Volladdierer, also $1 + 7 \cdot 2 = 15$ XOR, $15$ AND und $7$ OR, zusammen $37$ Gatter.
+        Allgemein: $2n - 1$ XOR, $2n - 1$ AND und $n - 1$ OR, zusammen $5n - 3$ Gatter. Für $n = 4$ ergibt dies die $17$ Gatter von oben.
+    \end{myanswer}
+\end{mychallenge}
 
 Wir haben nun gesehen, wie aus einzelnen Transistoren Gatter, und aus Gattern vollwertige Rechenschaltungen wie der Halb- und Volladdierer entstehen. Im nächsten Kapitel betrachten wir, wie aus solchen Bausteinen ein vollständiger Computer aufgebaut wird.

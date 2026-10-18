@@ -15,7 +15,7 @@
     \draw[thick, ->] (-0.8, 0.45) node[left] {$y$} -- (0, 0.45);
     
     % Sum line from HA 1 to HA 2
-    \draw[thick, ->] (1.8, 1.35) -- node[above, font=\small] {$s_1$} (3.6, 1.35);
+    \draw[thick, ->] (1.8, 1.35) -- node[above, font=\small] {$p$} (3.6, 1.35);
     
     % Carry-in line to HA 2
     \draw[thick, ->] (-0.8, -0.55) node[left] {$c_{\text{in}}$} -- (2.8, -0.55) |- (3.6, 0.45);
@@ -24,10 +24,10 @@
     \draw[thick, ->] (5.4, 1.35) -- (9.2, 1.35) node[right] {\textbf{$s$ (Summe)}};
     
     % Carry 1 line (from HA 1 to OR gate input 2)
-    \draw[thick] (1.8, 0.45) -- node[above, font=\small] {$c_1$} (2.2, 0.45) |- (or1.input 2);
+    \draw[thick] (1.8, 0.45) -- node[above, font=\small] {$g$} (2.2, 0.45) |- (or1.input 2);
     
     % Carry 2 line (from HA 2 to OR gate input 1)
-    \draw[thick] (5.4, 0.45) -- node[above, font=\small] {$c_2$} (6.2, 0.45) |- (or1.input 1);
+    \draw[thick] (5.4, 0.45) -- node[above, font=\small] {$h$} (6.2, 0.45) |- (or1.input 1);
     
     % Final Carry-out line
     \draw[thick, ->] (or1.output) -- (9.2, -0.9) node[right] {\textbf{$c_{\text{out}}$ (Übertrag)}};
