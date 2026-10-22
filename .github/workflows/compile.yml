@@ -92,10 +92,10 @@ jobs:
           echo "Forcing full rebuild"
           echo "files=" >> $GITHUB_OUTPUT
         else
-          if [ -n "${{ github.event.before }}" ]; then
-            git diff --name-only ${{ github.event.before }} ${{ github.sha }} | paste -sd, - > changed_files.txt
+          if [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            git -c core.quotepath=false diff --name-only ${{ github.event.before }} ${{ github.sha }} | paste -sd, - > changed_files.txt
           else
-            git diff --name-only HEAD^ HEAD | paste -sd, - > changed_files.txt
+            git -c core.quotepath=false diff --name-only HEAD^ HEAD | paste -sd, - > changed_files.txt
           fi
           echo "files=$(cat changed_files.txt)" >> $GITHUB_OUTPUT
         fi
@@ -115,9 +115,11 @@ jobs:
 
     - name: Compile book
       shell: bash
+      env:
+        CHANGED_FILES: ${{ needs.prepare-compile.outputs.changed_files }}
       run: |
         mkdir -p PDFs
-        ./compile_tex.sh "${{ needs.prepare-compile.outputs.changed_files }}" "book"
+        ./compile_tex.sh "$CHANGED_FILES" "book"
 
     - name: Upload likely culprit file
       if: failure()
@@ -143,7 +145,9 @@ jobs:
 
     - name: Compile article
       shell: bash
-      run: ./compile_tex.sh "${{ needs.prepare-compile.outputs.changed_files }}" "article"
+      env:
+        CHANGED_FILES: ${{ needs.prepare-compile.outputs.changed_files }}
+      run: ./compile_tex.sh "$CHANGED_FILES" "article"
 
     - name: Upload likely culprit file
       if: failure()
@@ -169,7 +173,9 @@ jobs:
 
     - name: Compile beamer
       shell: bash
-      run: ./compile_tex.sh "${{ needs.prepare-compile.outputs.changed_files }}" "beamer"
+      env:
+        CHANGED_FILES: ${{ needs.prepare-compile.outputs.changed_files }}
+      run: ./compile_tex.sh "$CHANGED_FILES" "beamer"
 
     - name: Upload likely culprit file
       if: failure()

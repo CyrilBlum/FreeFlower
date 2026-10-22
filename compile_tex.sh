@@ -18,7 +18,14 @@ else
 fi
 
 # Parse changed files into an array (if provided)
-IFS=',' read -r -a CHANGED_FILES <<<"$CHANGED_FILES_CSV"
+IFS=',' read -r -a RAW_CHANGED_FILES <<<"$CHANGED_FILES_CSV"
+CHANGED_FILES=()
+for f in "${RAW_CHANGED_FILES[@]}"; do
+    # Strip optional surrounding quotes if present
+    f="${f#\"}"
+    f="${f%\"}"
+    [ -n "$f" ] && CHANGED_FILES+=("$f")
+done
 
 # Return success if a path appears in the changed-files list.
 path_changed_in_commit() {
