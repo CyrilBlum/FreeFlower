@@ -155,16 +155,19 @@ Fehler:
 
 	\question[2] Sei $w_n := 0^{2^{n^3}}$ für jedes $n\in\N, n>0$ ein binäres Wort.	Gib eine (asymptotisch) möglichst gute obere Schranke für die Kolmogorov-Komplexität $C(w_n)$ von $w_n$ an, gemessen in der Länge $\abs{w_n}$ von $w_n$.
 	\begin{solution}
-		Das folgende \texttt{C'++} Programm erzeugt das Wort $w_n$:
+		Der folgende \texttt{C'++}-Pseudocode erzeugt das Wort $w_n$. Dabei steht \texttt{Natural} für beliebig grosse natürliche Zahlen; alle Rechenoperationen werden exakt ausgeführt. Der Block \texttt{0b***n+++} enthält die fest eingetragene Binärdarstellung von $n$.
 		\begin{lstlisting}[language=C++,caption=$W_n$]
     #include <iostream>
-    #include <cmath> // für die pow Funktion
-    
+
     void Wn() {
-		Natural k = 0b***n+++;
-		k = pow(k, 3);
-		k = pow(2, k);
-        for (int i = 1; i <= k; ++i) {
+        Natural n = 0b***n+++;
+        Natural exponent = n * n * n;
+        Natural k = 1;
+        // Wiederholtes Verdoppeln ergibt exakt 2^(n^3).
+        for (Natural j = 0; j < exponent; ++j) {
+            k = 2 * k;
+        }
+        for (Natural i = 0; i < k; ++i) {
             std::cout << 0;
         }
     }
@@ -224,16 +227,19 @@ für beliebiges natürliches $n>0$.
 			für alle $i\in\N, i>0$. Offensichtlich ist diese Zahlenfolge streng monoton wachsend und $i = \log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}$.
 
 		\vspace{\baselineskip}
-		Die kürzeste binäre Darstellung von $y_i$ ist eine Eins gefolgt von $2^{i+2}$ Nullen, also $\text{bin}\lr{y_i} = 1(0)^{2^{i+2}}$. Das folgende \texttt{C'++} Programm erzeugt das Wort $y_i$:
+		Die kürzeste binäre Darstellung von $y_i$ ist eine Eins gefolgt von $2^{i+2}$ Nullen, also $\text{bin}\lr{y_i} = 1(0)^{2^{i+2}}$. Der folgende \texttt{C'++}-Pseudocode erzeugt das binäre Wort $bin(y_i)$. Auch hier steht \texttt{Natural} für beliebig grosse natürliche Zahlen mit exakter Arithmetik. Der Block \texttt{0b***i+++} enthält die fest eingetragene Binärdarstellung von $i$.
 		\begin{lstlisting}[language=C++,caption=$yi$]
     #include <iostream>
-    #include <cmath> // für die pow Funktion
-    
+
     void yi() {
-		Natural k = 0b***i+++;
-		k = pow(2, k + 2);
-		std::cout << 1;
-        for (int j = 1; j <= k; ++j) {
+        Natural i = 0b***i+++;
+        Natural k = 1;
+        // Wiederholtes Verdoppeln ergibt exakt 2^(i+2).
+        for (Natural j = 0; j < i + 2; ++j) {
+            k = 2 * k;
+        }
+        std::cout << 1;
+        for (Natural j = 0; j < k; ++j) {
             std::cout << 0;
         }
     }

@@ -208,6 +208,24 @@ und tippe: \texttt{Preferences: Open User Settings (JSON)}. Dies sollte das File
 \end{myexercise}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Lösung: Text formatieren}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\documentclass{article}
+\begin{document}
+\begin{center}
+\textbf{What can} be asserted \underline{witho}ut evidence
+can also be \textit{dismissed} without evi\underline{denc}e.
+\end{center}
+\end{document}
+\end{lstlisting}
+\begin{itemize}
+    \item Die geschweiften Klammern bestimmen, welche Zeichen formatiert werden.
+    \item \lstinline[style=LaTeX]|\underline{witho}ut| unterstreicht nur einen Teil des Wortes.
+    \item Ein einfacher Zeilenwechsel im Quelltext wird wie ein Leerzeichen behandelt.
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Pakete}
@@ -254,6 +272,24 @@ $\alpha + 4 = \gamma -2$
 \end{frame}
 
 \begin{frame}[fragile]
+\frametitle{Lösung: Satz des Pythagoras}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\documentclass{article}
+\begin{document}
+\begin{itemize}
+    \item Pythagoras: $a^2 + b^2 = c^2$
+    \item $\Rightarrow c = \sqrt{a^2 + b^2}$
+\end{itemize}
+\end{document}
+\end{lstlisting}
+\begin{itemize}
+    \item \lstinline[style=LaTeX]|^2| setzt die Zahl als Exponenten.
+    \item \lstinline[style=LaTeX]|\sqrt{...}| setzt den gesamten Klammerinhalt unter die Wurzel.
+    \item \lstinline[style=LaTeX]|\Rightarrow| erzeugt den Pfeil $\Rightarrow$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
 \frametitle{Beispiel: Bilder in \LaTeX\ einfügen}
 \begin{lstlisting}[style=LaTeX, numbers=left, tabsize=2]
 \begin{figure}
@@ -276,11 +312,30 @@ benötigt \lstinline[style=LaTeX]|\usepackage{graphicx}|
 Speichere ein Bild deiner Wahl in demselben Ordner wie dein \LaTeX-Dokument ab. Skaliere das Bild angemessen und gib ihm eine kurze Beschreibung in blauer Farbe.
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{EF/LaTeX/Slides/saltwater_crocodile.jpg}
+    \includegraphics[width=0.35\textwidth]{EF/LaTeX/Slides/saltwater_crocodile.jpg}
     \caption{\textcolor{blue}{Salzwasserkrokodil an Strand in Darwin, Australien}}
     \label{fig:crocodile}
 \end{figure}
 \end{myexercise}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Lösung: Bild mit blauer Beschreibung}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\begin{document}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.35\textwidth]{bild.pdf}
+    \caption{\textcolor{blue}{Meine Bildbeschreibung}}
+\end{figure}
+\end{document}
+\end{lstlisting}
+Ersetze \texttt{bild.pdf} durch den Namen deiner Bilddatei im selben Ordner und passe die Beschreibung an.
+
+\lstinline[style=LaTeX]|0.35\textwidth| entspricht 35 Prozent der Textbreite; die Höhe wird proportional angepasst.
 \end{frame}
 
 
@@ -293,6 +348,26 @@ e^{i\pi}+1 &= 0\\
 (x+y)^n &= \sum_{r=0}^n\binom{n}{r}x^r y^{n-r}
 \end{align}
 \end{myexercise}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Lösung: Formeln mit \texttt{align}}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{align}
+e^{i\pi}+1 &= 0\\
+&\sqrt[4]{8}\\
+(x+y)^n &= \sum_{r=0}^n\binom{n}{r}x^r y^{n-r}
+\end{align}
+\end{document}
+\end{lstlisting}
+\begin{itemize}
+    \item \lstinline[style=LaTeX]|&| markiert die Ausrichtung; \lstinline[style=LaTeX]|\\| beginnt eine neue Zeile.
+    \item \lstinline[style=LaTeX]|\sqrt[4]{8}| erzeugt die vierte Wurzel aus $8$.
+    \item \texttt{align} aktiviert den Mathematikmodus selbst; zusätzliche Dollar-Zeichen entfallen.
+\end{itemize}
 \end{frame}
 
 
@@ -321,6 +396,38 @@ Finde mindestens vier Fehler im obigen \LaTeX-Dokument.
 \end{myexercise}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Lösung: Fehler finden}
+\small
+\begin{enumerate}
+    \item \lstinline[style=LaTeX]|\usepackage{xcolor}| gehört in die Präambel, vor \lstinline[style=LaTeX]|\begin{document}|.
+    \item \lstinline[style=LaTeX]|\alpha| benötigt den Mathematikmodus: \lstinline[style=LaTeX]|$\alpha$|.
+    \item Zum Unterstreichen lautet der Befehl \lstinline[style=LaTeX]|\underline{24}|, nicht \lstinline[style=LaTeX]|\underscore{24}|.
+    \item Für die nummerierte Liste muss \texttt{enumerate} anstelle von \texttt{itemize} verwendet werden.
+    \item Am Ende fehlt \lstinline[style=LaTeX]|\end{document}|.
+    \item Nach \enquote{Griechisch} fehlt der Zeilenumbruch \lstinline[style=LaTeX]|\\|. \lstinline[style=LaTeX]|\indent| erzeugt stattdessen einen Einzug; hier passt \lstinline[style=LaTeX]|\noindent|.
+\end{enumerate}
+Die Punkte 4 und 6 betreffen das gewünschte Aussehen; sie verhindern für sich allein die Kompilierung nicht.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Lösung: Korrigiertes Dokument}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\documentclass{article}
+\usepackage{xcolor}
+\begin{document}
+\noindent
+\textcolor{red}{Griechisch}\\
+Informationen über das griechische Alphabet:
+\begin{enumerate}
+    \item Der erste Buchstabe des griechischen Alphabets
+          ist $\alpha$.
+    \item Das Alphabet umfasst \underline{24} Buchstaben.
+\end{enumerate}
+\end{document}
+\end{lstlisting}
+\end{frame}
+
 
 \begin{frame}[fragile]
 \begin{myexercise}
@@ -329,6 +436,53 @@ Finde mindestens vier Fehler im obigen \LaTeX-Dokument.
         \item Versuche den AI-Coding Assistenten eine gleichartige Tabelle erstellen zu lassen. Welches Vorgehen scheint dir einfacher?
     \end{enumerate}
 \end{myexercise}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Mögliche Lösung: Tabelle mit 3 Zeilen und 4 Spalten}
+Füge diesen Code zwischen \lstinline[style=LaTeX]|\begin{document}| und \lstinline[style=LaTeX]|\end{document}| ein. Zusätzliche Pakete sind nicht nötig.
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\begin{lstlisting}[style=LaTeX, basicstyle=\footnotesize\ttfamily]
+\begin{center}
+\begin{tabular}{|r|r|r|r|}
+\hline
+1 & 2 & 3 & 4 \\ \hline
+5 & 6 & 7 & 8 \\ \hline
+9 & 10 & 11 & 12 \\ \hline
+\end{tabular}
+\end{center}
+\end{lstlisting}
+\end{column}
+\begin{column}{0.4\textwidth}
+\centering
+\begin{tabular}{|r|r|r|r|}
+\hline
+1 & 2 & 3 & 4 \\ \hline
+5 & 6 & 7 & 8 \\ \hline
+9 & 10 & 11 & 12 \\ \hline
+\end{tabular}
+\end{column}
+\end{columns}
+\begin{itemize}
+    \item Vier \texttt{r} legen vier rechtsbündige Spalten fest.
+    \item \lstinline[style=LaTeX]|&| trennt Zellen, \lstinline[style=LaTeX]|\\| beendet eine Zeile.
+    \item \lstinline[style=LaTeX]|\hline| zeichnet eine waagrechte Linie.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Mögliche Lösung: Tabelle erstellen lassen}
+\textbf{Beispiel für einen Auftrag an den Assistenten:}
+\begin{quote}
+Erstelle LaTeX-Code für eine Tabelle mit genau 3 Zeilen und 4 Spalten. Fülle sie zeilenweise mit den Zahlen 1 bis 12. Richte alle Zahlen rechtsbündig aus und zeichne Linien zwischen den Zellen. Verwende nur die tabular-Umgebung, ohne zusätzliche Pakete.
+\end{quote}
+\textbf{Möglicher Vergleich:}
+\begin{itemize}
+    \item Ein Tabelleneditor erleichtert das direkte Eingeben und Anordnen der Zellen.
+    \item Ein Assistent kann aus einer präzisen Beschreibung einen passenden Codevorschlag erstellen.
+    \item Welcher Weg einfacher ist, hängt von deinen Vorlieben ab. Prüfe bei beiden Wegen Zeilen, Spalten, Werte und das gesetzte Ergebnis.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]

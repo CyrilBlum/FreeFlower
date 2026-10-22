@@ -1,64 +1,64 @@
-\chapter{Turingmaschinen}
-\section{Turing-Maschinen}
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\tikzstyle{every path}=[very thick]
+\chapter{Berechenbarkeit}
+% \section{Turing-Maschinen}
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{tikzpicture}
+% 		\tikzstyle{every path}=[very thick]
 
-		\edef\sizetape{0.7cm}
-		\tikzstyle{tmtape}=[draw,minimum size=\sizetape]
-		\tikzstyle{tmhead}=[arrow box,draw,minimum size=.5cm,arrow box
-		arrows={east:.25cm, west:0.25cm}]
+% 		\edef\sizetape{0.7cm}
+% 		\tikzstyle{tmtape}=[draw,minimum size=\sizetape]
+% 		\tikzstyle{tmhead}=[arrow box,draw,minimum size=.5cm,arrow box
+% 		arrows={east:.25cm, west:0.25cm}]
 
-		%% Draw TM tape
-		\begin{scope}[start chain=1 going right,node distance=-0.15mm]
-			\node [on chain=1,tmtape,draw=none] {$\ldots $};
-			\node [on chain=1,tmtape] {};
-			\node [on chain=1,tmtape] (input) {b};
-			\node [on chain=1,tmtape] {b};
-			\node [on chain=1,tmtape] {a};
-			\node [on chain=1,tmtape] {a};
-			\node [on chain=1,tmtape] {a};
-			\node [on chain=1,tmtape] {a};
-			\node [on chain=1,tmtape] {};
-			\node [on chain=1,tmtape,draw=none] {$\ldots $};
-			\node [on chain=1] {\textbf{Input/Output Tape}};
-		\end{scope}
+% 		%% Draw TM tape
+% 		\begin{scope}[start chain=1 going right,node distance=-0.15mm]
+% 			\node [on chain=1,tmtape,draw=none] {$\ldots $};
+% 			\node [on chain=1,tmtape] {};
+% 			\node [on chain=1,tmtape] (input) {b};
+% 			\node [on chain=1,tmtape] {b};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {};
+% 			\node [on chain=1,tmtape,draw=none] {$\ldots $};
+% 			\node [on chain=1] {\textbf{Input/Output Tape}};
+% 		\end{scope}
 
-		%% Draw TM Finite Control
-		\begin{scope}
-			[shift={(3cm,-5cm)},start chain=circle placed {at=(-\tikzchaincount*60:1.5)}]
-			\foreach \i in {q_0,q_1,q_2,q_3,\ddots,q_n}
-			\node [on chain] {$\i$};
+% 		%% Draw TM Finite Control
+% 		\begin{scope}
+% 			[shift={(3cm,-5cm)},start chain=circle placed {at=(-\tikzchaincount*60:1.5)}]
+% 			\foreach \i in {q_0,q_1,q_2,q_3,\ddots,q_n}
+% 			\node [on chain] {$\i$};
 
-			% Arrow to current state
-			\node (center) {};
-			\draw[->] (center) -- (circle-2);
+% 			% Arrow to current state
+% 			\node (center) {};
+% 			\draw[->] (center) -- (circle-2);
 
-			\node[rounded corners,draw=black,thick,fit=(circle-1) (circle-2) (circle-3)
-				(circle-4) (circle-5) (circle-6),
-				label=below:\textbf{Finite Control}] (fsbox)
-			{};
-		\end{scope}
+% 			\node[rounded corners,draw=black,thick,fit=(circle-1) (circle-2) (circle-3)
+% 				(circle-4) (circle-5) (circle-6),
+% 				label=below:\textbf{Finite Control}] (fsbox)
+% 			{};
+% 		\end{scope}
 
-		%% Draw TM head below (input) tape cell
-		\node [tmhead,yshift=-.3cm] at (input.south) (head) {$q_1$};
+% 		%% Draw TM head below (input) tape cell
+% 		\node [tmhead,yshift=-.3cm] at (input.south) (head) {$q_1$};
 
-		%% Link Finite Control with Head
-		\path[->,draw] (fsbox.north) .. controls (4.5,-1) and (0,-2) .. node[right]
-		(headlinetext)
-		{}
-		(head.south);
-		\node[xshift=3cm] at (headlinetext)
-		{\begin{tabular}{c}
-				\textbf{Reading and Writing Head} \\
-				\textbf{(moves in both directions)}
-			\end{tabular}};
+% 		%% Link Finite Control with Head
+% 		\path[->,draw] (fsbox.north) .. controls (4.5,-1) and (0,-2) .. node[right]
+% 		(headlinetext)
+% 		{}
+% 		(head.south);
+% 		\node[xshift=3cm] at (headlinetext)
+% 		{\begin{tabular}{c}
+% 				\textbf{Reading and Writing Head} \\
+% 				\textbf{(moves in both directions)}
+% 			\end{tabular}};
 
-	\end{tikzpicture}
-	\caption{Turing-Maschine}
-	\label{fig:xdfdadf}
-\end{figure}
+% 	\end{tikzpicture}
+% 	\caption{Turing-Maschine}
+% 	\label{fig:xdfdadf}
+% \end{figure}
 
 \section{Halteproblem}
 \begin{mydefinition}[Halteproblem]\label{mydefinition:halteproblem}
@@ -70,11 +70,80 @@ Das Halteproblem kann von keinem Algorithmus entschieden werden.
 \end{mytheorem}
 
 \begin{myremark}\label{myremark:H_lambda}
-	Es lässt sich leicht zeigen, dass auch das Problem, für jedes beliebige Programm $M$ zu entscheiden, ob $M$ auf der Eingabe $\lambda$ (leeres Wort) hält, nicht berechenbar ist.
+	Auch das Problem, für jedes beliebige Programm $M$ zu entscheiden, ob $M$ auf der Eingabe $\lambda$ (leeres Wort) hält, ist unentscheidbar.
 	\begin{myproof}
-		Wäre dieses Problem lösbar, könnte man damit auch das allgemeine Halteproblem lösen (indem man den Input einfach fest in den Code von $M$ schreibt).
+		Angenommen, es gäbe einen Algorithmus $H_\lambda$, der für jedes Programm entscheidet, ob es auf der Eingabe $\lambda$ hält. Er müsste immer nach endlich vielen Schritten mit \emph{Ja} oder \emph{Nein} antworten.
+
+		\textbf{Allgemeine Konstruktion.} Sei $M$ ein beliebiges Programm und $x$ eine beliebige Eingabe für $M$. Aus diesem Paar konstruieren wir ein neues Programm $P$. Es enthält den Code von $M$ und die Zeichenfolge $x$ als festen Wert. Das Programm $P$ nimmt eine Eingabe $y$ entgegen, ignoriert diese aber und führt stattdessen $M$ mit der fest eingebauten Eingabe $x$ aus. Sobald $M$ hält, hält auch $P$.
+
+		Dabei sind $x$ und $y$ zu unterscheiden: $x$ wird beim Schreiben von $P$ fest in dessen Code eingetragen; $y$ wird erst beim Start von $P$ als Eingabe übergeben. Wir werden $P$ auf der Eingabe $y=\lambda$ betrachten.
+
+		\textbf{Beispiel zur Illustration.} Nur für dieses Beispiel wählen wir $x=\texttt{abba}$. Wenn wir $M$ als Funktion darstellen, lautet der zusätzliche Code für $P$ in Python-Schreibweise:
+\begin{lstlisting}[language=Python, numbers=none]
+def P(y):
+    M("abba")
+
+P("")
+\end{lstlisting}
+		Beim Aufruf \texttt{P("")} erhält $P$ den leeren String \texttt{""}, der das leere Wort $\lambda$ darstellt. Der Parameter \texttt{y} wird im Funktionsrumpf nicht verwendet. Der Aufruf \texttt{M("abba")} übergibt dagegen die Zeichenfolge \texttt{abba} an $M$.
+
+		\textbf{Allgemeiner Schluss.} Für jedes beliebige Paar $(M,x)$ gilt für das daraus konstruierte Programm $P$: Hält $M$ auf $x$, dann hält auch $P$ auf $\lambda$. Läuft $M$ auf $x$ endlos weiter, dann läuft auch $P$ auf $\lambda$ endlos weiter. Somit gilt
+		\[
+			P \text{ hält auf } \lambda
+			\quad\Longleftrightarrow\quad
+			M \text{ hält auf } x.
+		\]
+		Um zu entscheiden, ob $M$ auf $x$ hält, konstruieren wir also $P$ und geben dessen \emph{Code} an $H_\lambda$. Wir übernehmen die Antwort von $H_\lambda$. Die Konstruktion von $P$ benötigt nur endlich viele Schritte: Wir kopieren den Code von $M$ und tragen $x$ als festen Wert in den Aufruf ein. Dazu müssen wir weder $M$ noch $P$ ausführen. Da auch $H_\lambda$ nach Annahme immer hält, liefert dieses Verfahren für jedes Paar $(M,x)$ nach endlich vielen Schritten die richtige Antwort.
+
+		Das wäre ein Algorithmus für das allgemeine Halteproblem, das aber unentscheidbar ist. Deshalb kann es den angenommenen Algorithmus $H_\lambda$ nicht geben.
 	\end{myproof}
 \end{myremark}
+
+\begin{mytheorem}[Kolmogorov-Komplexität und Halteproblem]\label{mytheorem:kolmogorov_H_lambda}
+	Wäre die Funktion
+	\[
+		H_\lambda(P) =
+		\begin{cases}
+			1, & \text{falls } P \text{ auf der Eingabe } \lambda \text{ hält},\\
+			0, & \text{falls } P \text{ auf der Eingabe } \lambda \text{ nicht hält}
+		\end{cases}
+	\]
+	berechenbar, so wäre auch die Kolmogorov-Komplexität $C(x)$ für jedes binäre Wort $x$ berechenbar. Da wir im Skript zur Kolmogorov-Komplexität bereits gezeigt haben, dass $C$ nicht berechenbar ist, folgt: $H_\lambda$ ist nicht berechenbar. Dabei erhält $H_\lambda$ den Code des Programms $P$ als Argument.
+	\begin{myproof}
+		Angenommen, es gäbe einen Algorithmus für $H_\lambda$. Sei $x$ ein beliebiges binäres Wort. Gesucht ist $C(x)$, also die Länge eines kürzesten Programmcodes, dessen Programm auf der Eingabe $\lambda$ genau $x$ ausgibt und hält. Wir verwenden dabei die festgelegte Programmiersprache und binäre Kodierung aus dem Skript zur Kolmogorov-Komplexität.
+
+		Der folgende Algorithmus $A$ durchläuft alle binären Wörter $w_1,w_2,\ldots$ in \emph{kanonischer Reihenfolge}: zuerst nach aufsteigender Länge, innerhalb derselben Länge lexikographisch. Die Folge beginnt also mit
+		\[
+			\lambda,\;0,\;1,\;00,\;01,\;10,\;11,\;000,\;\ldots
+		\]
+		Jedes $w_i$ wird als möglicher Programmcode geprüft.\footnote{Bei der Definition über kompilierte Programme lässt sich auch die Zugehörigkeit zur gewählten Programmiersprache mithilfe von $H_\lambda$ entscheiden: Ein Suchprogramm mit fest eingebautem Kandidaten startet auf der Eingabe $\lambda$ und zählt mögliche Quelltexte auf. Es führt deren Kompilierungen schrittweise abwechselnd aus, sodass jede einzelne immer wieder Rechenschritte erhält. Es hält genau dann, wenn eine dieser Kompilierungen den gesuchten Code liefert. $H_\lambda$ entscheidet, ob dieses Suchprogramm hält.}
+
+		\textbf{Algorithmus $A$ (Pseudocode)}
+		\begin{algorithmic}[1]
+			\Require Ein beliebiges binäres Wort $x$
+			\Ensure Die Kolmogorov-Komplexität $C(x)$
+			\For{$i=1,2,3,\ldots$}
+				\State Erzeuge das nächste Wort $w_i$ der kanonischen Reihenfolge.
+				\If{$w_i$ der Code eines gültigen Programms $M$ ist}
+					\If{$H_\lambda(M)=1$}
+						\State Führe das Programm $M$ mit der Eingabe $\lambda$ aus, bis es hält.
+						\State $u \gets$ die vollständige Ausgabe dieser Ausführung
+						\If{$u=x$}
+							\State \Return $\abs{w_i}$
+						\EndIf
+					\EndIf
+				\EndIf
+			\EndFor
+		\end{algorithmic}
+		Ist $w_i$ kein gültiger Programmcode, hält $M$ auf $\lambda$ nicht oder ist seine Ausgabe ungleich $x$, geht $A$ zum nächsten Wort $w_{i+1}$ über. Bei \textbf{return} gibt $A$ die Länge von $w_i$ in Bits zurück und beendet die Suche.
+
+		\textbf{Warum hält $A$ für jedes $x$?} Jede Anfrage an $H_\lambda$ endet nach Annahme. Das Programm $M$ wird nur ausgeführt, wenn $H_\lambda$ bestätigt hat, dass es auf $\lambda$ hält; deshalb endet auch diese Ausführung. Ausserdem gibt es für jedes $x$ ein Programm, das auf $\lambda$ die fest im Code gespeicherte Zeichenfolge $x$ ausgibt und hält. Sein Code kommt nach endlich vielen Wörtern in der Folge vor. Spätestens bei diesem Code findet $A$ eine passende Ausgabe und hält.
+
+		\textbf{Warum ist die zurückgegebene Länge gleich $C(x)$?} Beim ersten Treffer sind bereits sämtliche kürzeren Wörter geprüft worden. Keines davon ist der Code eines Programms, das auf $\lambda$ genau $x$ ausgibt und hält; sonst hätte $A$ schon dort die Suche beendet. Der gefundene Code ist somit ein kürzester Code für $x$, und $A$ gibt genau $C(x)$ zurück.
+
+		Damit wäre $C(x)$ für jedes binäre Wort $x$ berechenbar, im Widerspruch zum bereits bewiesenen Ergebnis. Also ist $H_\lambda$ nicht berechenbar.
+	\end{myproof}
+\end{mytheorem}
 
 
 \section{Berechenbare Zahlen (Computable Numbers)}
@@ -142,7 +211,7 @@ Ein entsprechendes Python-Programm ist in \cref{listing:n_digit_sqrt_2} in \cref
 \end{myexample}
 
 \begin{myexample}
-Für jede natürliche Zahl $n$ definieren wir die Funktion $f$ wie folgt: $f(n) = 1$, falls die $n$-te Turingmaschine auf dem Input $\lambda$ (leeres Wort) hält und $f(0) = 0$ sonst. Die reelle Zahl
+Wir betrachten eine feste, algorithmisch erzeugbare Aufzählung aller Programme. Für jede natürliche Zahl $n$ definieren wir die Funktion $f$ wie folgt: $f(n) = 1$, falls das $n$-te Programm auf der Eingabe $\lambda$ (leeres Wort) hält, und $f(n) = 0$ sonst. Die reelle Zahl
 \begin{align*}
 	r := \sum_{n\in\N}f(n)\cdot 2^{-n}
 \end{align*}
