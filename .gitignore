@@ -343,4 +343,4 @@ Various/Wahlpflichtmodul\ Statistik/*.csv
 
 Logos/build/
 
-*.db
+Private/*
