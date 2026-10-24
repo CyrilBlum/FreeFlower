@@ -1,0 +1,133 @@
+\chapter{Station A: Spurensuche}\label{ch:spurensuche}
+
+\begin{myremark}
+	Der Unbekannte wusste, wo Lena wohnt. Dabei hat sie ihre Adresse nie gepostet.
+	Wie ist das möglich? An dieser Station finden Sie heraus, welche Spuren Fotos, Apps und Geräte hinterlassen.
+\end{myremark}
+
+\section{Was in einem Foto steckt}
+
+Jedes Foto, das Sie mit dem Handy aufnehmen, enthält neben dem Bild selbst zusätzliche Informationen, sogenannte \tib{Metadaten}.
+Sie werden im \acrshort{EXIF}-Format direkt in der Bilddatei gespeichert, zum Beispiel:
+\begin{itemize}
+	\item Datum und Uhrzeit der Aufnahme,
+	\item Hersteller und Modell des Handys,
+	\item Einstellungen der Kamera (Blitz, Belichtung, \dots),
+	\item und -- falls die Standortfunktion eingeschaltet ist -- die genauen \acrshort{GPS}-Koordinaten des Aufnahmeorts.
+\end{itemize}
+
+Viele grosse Plattformen entfernen die Standortdaten beim Hochladen. Das gilt aber nicht für alle Dienste, und oft nicht, wenn ein Bild als Datei verschickt wird (z.\,B. per E-Mail, AirDrop oder \enquote{als Dokument}).
+Ausserdem verrät häufig schon der Bildinhalt viel: ein Strassenschild, eine Hausnummer, das Schullogo auf dem Pullover.
+
+\begin{myexercise}[Mein eigenes Foto]
+	Öffnen Sie auf Ihrem Handy ein Foto, das Sie selbst aufgenommen haben, und lassen Sie sich die Informationen dazu anzeigen
+	(iPhone: Foto antippen und nach oben wischen; Android/Google Fotos: Foto öffnen, Menü \enquote{\dots} oder nach oben wischen).
+	Notieren Sie, was Sie finden. Zeigen Sie das Foto niemandem.
+
+	\begin{center}
+		\renewcommand{\arraystretch}{1.6}
+		\begin{tabular}{p{5cm}p{8cm}}
+			\textbf{Information}       & \textbf{Gefunden? Was steht dort?} \\
+			\midrule
+			Datum und Uhrzeit          &                                    \\
+			Gerät (Modell)             &                                    \\
+			Ort / Karte                &                                    \\
+			Weitere Angaben            &                                    \\
+		\end{tabular}
+	\end{center}
+\end{myexercise}
+
+\begin{myexercise}[Detektivarbeit am Testfoto]\label{ex:testfoto}
+	Laden Sie das Testfoto \enquote{Lena\_Garten.jpg} herunter, das Ihre Lehrperson bereitgestellt hat.
+	Öffnen Sie die Dateiinformationen auf dem Laptop
+	(Windows: Rechtsklick, \enquote{Eigenschaften}, Register \enquote{Details}; macOS: in \enquote{Vorschau} öffnen, \enquote{Werkzeuge}, \enquote{Informationen einblenden}).
+	\begin{enumerate}
+		\item Wann wurde das Foto aufgenommen?
+		\item Mit welchem Gerät?
+		\item Wo wurde es aufgenommen? Geben Sie die Koordinaten in eine Kartenanwendung ein.
+		\item Erklären Sie in einem Satz, wie der Unbekannte Lenas Wohnort herausfinden konnte.
+	\end{enumerate}
+	\begin{myanswer}
+		(a) 30.~Januar 2027, 14:23~Uhr. (b) Apple iPhone~13.
+		(c) $47{,}35455^\circ$\,N, $8{,}55127^\circ$\,E: Chinagarten in Zürich (im Fall steht dieser Ort für Lenas Garten).
+		(d) Lena hat ein Foto aus ihrem Garten verschickt, das die \acrshort{GPS}-Koordinaten enthielt. Wer die Datei erhielt, konnte den Ort auf einer Karte anzeigen.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}[Standort beim Fotografieren ausschalten]
+	Suchen Sie auf Ihrem Handy die Einstellung, mit der die Kamera \emph{keinen} Standort mehr speichert.
+	Notieren Sie den Weg dorthin (z.\,B. \enquote{Einstellungen $\rightarrow$ \dots}).
+	Entscheiden Sie selbst, ob Sie die Einstellung ändern möchten.
+	\schreibzeile
+	\schreibzeile
+	\begin{myanswer}
+		iPhone: Einstellungen $\rightarrow$ Datenschutz \& Sicherheit $\rightarrow$ Ortungsdienste $\rightarrow$ Kamera $\rightarrow$ \enquote{Nie}.
+		Android: in der Kamera-App unter Einstellungen die Option \enquote{Standort speichern} bzw. \enquote{Standort-Tags} ausschalten (Bezeichnung je nach Hersteller).
+		Beim Teilen auf dem iPhone kann der Ort zudem unter \enquote{Optionen} für ein einzelnes Bild entfernt werden.
+	\end{myanswer}
+\end{myexercise}
+
+\section{Was Apps über Sie wissen dürfen}
+
+Apps fragen um \tib{Berechtigungen}: Zugriff auf Standort, Kamera, Mikrofon, Kontakte oder Fotos.
+Manche brauchen diese wirklich (eine Karten-App den Standort), andere sammeln damit vor allem Daten für Werbung.
+
+\begin{myexercise}[Berechtigungs-Check]
+	Wählen Sie drei Apps auf Ihrem Handy aus und prüfen Sie deren Berechtigungen
+	(iPhone: Einstellungen $\rightarrow$ App auswählen; Android: Einstellungen $\rightarrow$ Apps $\rightarrow$ App $\rightarrow$ Berechtigungen).
+	Tragen Sie ein, was die App darf (\faCheck) und ob sie das für ihre Aufgabe wirklich braucht.
+
+	\begin{center}
+		\renewcommand{\arraystretch}{1.6}
+		\small
+		\begin{tabular}{p{2.4cm}cccc p{3.2cm}}
+			\textbf{App} & \textbf{Standort} & \textbf{Kamera} & \textbf{Mikrofon} & \textbf{Kontakte} & \textbf{Braucht sie das?} \\
+			\midrule
+			             &                   &                 &                   &                   &                           \\
+			             &                   &                 &                   &                   &                           \\
+			             &                   &                 &                   &                   &                           \\
+		\end{tabular}
+	\end{center}
+\end{myexercise}
+
+\section{Ihr Gerät hat einen Fingerabdruck}
+
+Viele Menschen lehnen auf Webseiten die Cookies ab, damit sie nicht verfolgt werden.
+Die Werbebranche nutzt deshalb zunehmend eine andere Methode: das \tib{Fingerprinting}.
+Dabei liest eine Webseite Dutzende harmlose Merkmale Ihres Geräts aus -- Bildschirmgrösse, Zeitzone, Sprache, installierte Schriftarten, Version des Betriebssystems und vieles mehr.
+Einzeln sagen diese Merkmale wenig aus. Zusammen ergeben sie aber eine Kombination, die je nach Messung bei 80 bis 90 Prozent aller Geräte einzigartig ist.
+So kann ein Gerät wiedererkannt werden, auch ohne Cookies und ohne dass Sie es bemerken.
+
+\begin{myexercise}[Wie einzigartig ist mein Browser?]
+	Öffnen Sie auf Ihrem Laptop oder Handy die Seite \url{https://coveryourtracks.eff.org} und starten Sie den Test (\enquote{Test your browser}).
+	\begin{enumerate}
+		\item Hat Ihr Browser einen einzigartigen Fingerabdruck (\enquote{unique fingerprint})?
+		\item Nennen Sie drei Merkmale, die der Test über Ihr Gerät herausgefunden hat.
+	\end{enumerate}
+	\schreibzeile
+	\schreibzeile
+\end{myexercise}
+
+\begin{mychallenge}[Inkognito hilft nicht]
+	Wiederholen Sie den Test in einem privaten Fenster (Inkognito-Modus).
+	Erklären Sie, warum der Inkognito-Modus zwar den Verlauf und die Cookies löscht, aber kaum gegen Fingerprinting schützt.
+	\schreibzeile
+	\schreibzeile
+	\begin{myanswer}
+		Der Inkognito-Modus speichert lokal keinen Verlauf und löscht Cookies nach dem Schliessen.
+		Die Merkmale des Geräts (Bildschirm, Schriftarten, Zeitzone, Betriebssystem, \dots) bleiben aber gleich und werden der Webseite weiterhin mitgeteilt.
+		Darum ergibt sich derselbe oder ein sehr ähnlicher Fingerabdruck.
+	\end{myanswer}
+\end{mychallenge}
+
+\begin{mychallenge}[Spurensuche im Bild]
+	Nicht nur Metadaten verraten einen Ort. Suchen Sie in einem eigenen Foto, das Sie gerne posten würden, nach Hinweisen im Bildinhalt
+	(Schilder, Hausnummern, Logos, Spiegelungen). Was müssten Sie abdecken oder wegschneiden?
+\end{mychallenge}
+
+\begin{fallakte}[-- Station A]
+	Was ist bei Lena schiefgelaufen? Was hätte sie anders machen können?
+	\schreibzeile
+	\schreibzeile
+	\schreibzeile
+\end{fallakte}

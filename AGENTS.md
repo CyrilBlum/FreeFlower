@@ -35,6 +35,7 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Avoid Screenshots / Raster Images**: Do **not** use raster graphics (PNG, JPG, GIF) for diagrams, formulas, or UI mockups.
 - **Prioritize Native LaTeX / TikZ**: Generate diagrams, flowcharts, and technical drawings natively in LaTeX using TikZ (see `Preambles/pre_3_tikz.tex`).
 - **Use Vector Formats**: When a graphic cannot be rendered natively in TikZ, use vector formats strictly (`.pdf` or `.svg`).
+- **Scope of the TikZ/vector rule**: It applies to algorithms, formal content, diagrams, formulas and technical drawings. **Illustrative material** (e.g. realistic mockups of SMS/e-mails/apps, story illustrations, photos for exercises) may be raster images (PNG/JPG) when TikZ would be disproportionately laborious. Such images must be self-made or properly licensed, use fictional names/brands, and live in the topic's `Figures/` (or `Material/`) folder.
 
 ### 2.5 Compilation Policy & Quality Standard
 - **No Automatic Compilation**: AI agents do **not** need to compile edited `.tex` files unless the user explicitly requests it.
@@ -157,6 +158,16 @@ The exact CLI tool options (matching the project's VS Code LaTeX Workshop config
 
 #### Batch Script (`compile_tex.sh`)
 - **Never use `compile_tex.sh` to compile documents**: AI agents must **never** run `compile_tex.sh` to build or verify documents. Only compile manually using direct `lualatex` / `biber` / `makeglossaries` commands when needed, unless the explicit task is specifically to debug or test `compile_tex.sh` itself.
+
+### 3.3 Creating a New Script (`book`)
+- **Skeleton**: A topic's sub-main file (e.g. `Skript.tex`) is `\input` by `main.tex` *after* the preamble and contains its own `\begin{document} … \end{document}`. Commands/environments specific to the script may be defined at its top, before `\begin{document}`. Minimal pattern (see `Grundlagen_Info/16_ComputerUndKodierungen/Skript/Skript.tex` or `Medienkompetenzwoche/UG_Datenschutz/Skript.tex`): `\settoggle{includelogo}{true}`, define `\thesubject`, `\thetopic`, `\thelogo`, `\logosize`, set `\lhead`/`\rhead`, `\settoggle{emoji}{false}`, `\def\arrayB{…}`, `\maketitlepage{<title>}{<subtitle>}` (empty subtitle prints «Skript»), `\tableofcontents`, then one `\input` per chapter file (`\chapter{…}` each), `\appendix`, and `\printglossaries` if acronyms are used. Register the new file in `main.tex` (commented line in the matching toggle section).
+- **Environments** (`Preambles/pre_4_custom_envs.tex`): `myexercise[Title]`, `mychallenge[Title]` (share one counter, numbered per chapter), `myanswer` (inside an exercise/challenge; solution box), `myremark`, `mysummary[Title]`, `myprocedure[Title]`, `myattention`, `myexample`, `myexcursion`, `mydefinition`, `mycaution[Title]`, `mybox`; list `aenum` for (a), (b), …; macro `\tib{…}` (bold italic key term). Custom boxes can reuse `tcolorboxTemplate[title=…, colback=…, colframe=…, colbacktitle=…]`.
+- **Student version without solutions**: compile with the class option `exerciseonly` (second `book` line in `main.tex`); it hides all `myanswer` boxes. Restore the default class line afterwards.
+- **Glossary pitfalls**: the first `\gls{X}` prints «long (short)». Do not write the long form yourself before `\gls{X}`, and use `\acrshort{X}` in compounds (e.g. `\acrshort{GPS}-Koordinaten`) or right after spelling the term out. In the `exerciseonly` version, solutions are skipped, so the «first use» can move.
+- **Tables**: give `p{…}` columns a total width clearly below `\textwidth` (column padding adds up); inside tcolorboxes less. `\small` before `tabular` helps for wide grids. Check the log for `Overfull \hbox` and fix anything above a few pt.
+- **Long URLs and compounds** cause overfull lines: put long `\url{…}` on their own line or add discretionary hyphens (`Daten\-schutz\-…`); a word with an explicit hyphen (`Sicherheits-`) cannot be hyphenated elsewhere.
+- **Language**: Swiss Standard German (no «ß»; search the new files for `ß` before compiling), formal «Sie» for students, quotes via `\enquote{…}`.
+- **Local build notes**: `biber` may fail locally on macOS (`lipo` extraction error); this is harmless for documents without citations (`citations` toggle false). When copying compiled PDFs elsewhere, take `build/main.pdf` after the final LuaLaTeX pass.
 
 ---
 

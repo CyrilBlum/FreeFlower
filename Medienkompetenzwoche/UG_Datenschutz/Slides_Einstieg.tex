@@ -1,0 +1,117 @@
+%!TeX program = lualatex
+% Einstiegsfolien zum Lernatelier «Der Fall Lena» (Medienkompetenzwoche, 1. Klassen, Modul B)
+\providecommand{\FIGlena}{Medienkompetenzwoche/UG_Datenschutz/Figures}
+
+% grosses Icon mit Beschriftung darunter (für Missions- und Regelfolien)
+\newcommand{\iconblock}[3]{% #1 Icon, #2 Farbe, #3 Text
+	\begin{minipage}[t]{.3\textwidth}\centering
+		{\color{#2}\fontsize{40}{44}\selectfont #1}\\[3mm]
+		{\large\bfseries #3}
+	\end{minipage}%
+}
+
+\begin{frame}\lessontitle{Medienkompetenzwoche \textperiodcentered{} Modul B}{Der Fall Lena}{Datenschutz, Sicherheit \& Copyright}\end{frame}
+
+% --- Die Geschichte: drei Bildschirme, je eine Frage ---
+\begin{frame}{Montag, 7:12 Uhr}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{.5\textwidth}\centering
+			\includegraphics[height=.78\textheight,keepaspectratio]{\FIGlena/lena_1_gehackt}
+		\end{column}
+		\begin{column}{.46\textwidth}
+			\Huge\bfseries Was ist hier\\los?
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Montag, 7:20 Uhr}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{.5\textwidth}\centering
+			\includegraphics[height=.78\textheight,keepaspectratio]{\FIGlena/lena_2_nachricht}
+		\end{column}
+		\begin{column}{.46\textwidth}
+			\Huge\bfseries Woher weiss er das?
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Montag, 7:34 Uhr}
+	\begin{columns}[c,onlytextwidth]
+		\begin{column}{.5\textwidth}\centering
+			\includegraphics[height=.78\textheight,keepaspectratio]{\FIGlena/lena_3_klassenchat}
+		\end{column}
+		\begin{column}{.46\textwidth}
+			\Huge\bfseries Ist das\\okay?
+		\end{column}
+	\end{columns}
+\end{frame}
+
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUblue]{Ihre Mission}{Finden Sie heraus, was passiert ist -- und wie man sich schützt.}\end{frame}}
+
+\begin{frame}{Drei Stationen}
+	\vspace{6mm}
+	\centering
+	\iconblock{\faSearch}{FDUblue}{A\\Spurensuche}\hfill
+	\iconblock{\faKey}{FDUteal}{B\\Tatort Konto}\hfill
+	\iconblock{\faCopyright}{FDUgreen}{C\\Darf ich das posten?}
+
+	\vspace{10mm}
+	{\large Am Ende jeder Station: \textbf{Fallakte} ausfüllen \faFolderOpen}
+\end{frame}
+
+% --- Live-Experiment ---
+\begin{frame}{Live-Experiment}
+	\centering
+	{\color{FDUblue}\fontsize{70}{76}\selectfont\faFingerprint}\\[6mm]
+	{\LARGE\bfseries Wie einzigartig ist dieser Browser?}\\[6mm]
+	{\large\texttt{coveryourtracks.eff.org}}
+\end{frame}
+
+\begin{frame}{Was verrät dieses Foto?}
+	\centering
+	\includegraphics[height=.72\textheight,keepaspectratio]{\FIGlena/Lena_Garten}\\[2mm]
+	{\large Lena hat nur dieses Foto verschickt. \textbf{Mehr nicht.}}
+\end{frame}
+
+% --- Instruktionen ---
+\begin{frame}{So arbeiten Sie}
+	\vspace{4mm}
+	\centering
+	\iconblock{\faUserFriends}{FDUblue}{Zu zweit}\hfill
+	\iconblock{\faMapSigns}{FDUteal}{Stationen A, B, C\\(Reihenfolge laut Liste)}\hfill
+	\iconblock{\faCheckSquare[regular]}{FDUgreen}{Laufzettel\\abhaken}
+
+	\vspace{8mm}
+	\begin{tikzpicture}
+		% Zeitstrahl des Halbtags
+		\foreach \x/\w/\c/\t in {0/1.4/FDUblue/Start, 1.4/7.7/FDUteal/Lernatelier (ca.\ 110 Min.), 9.1/2.5/FDUgreen/Produkt, 11.6/1.2/FDUink/Ende}
+			{\fill[\c!80] (\x,0) rectangle ++(\w,.7); \node[white,font=\small\bfseries] at (\x+\w/2,.35) {\t};}
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Drei Regeln}
+	\vspace{6mm}
+	\centering
+	\iconblock{\faEyeSlash}{BrickRed}{Private Fotos\\bleiben privat}\hfill
+	\iconblock{\faKey}{BrickRed}{Nie echte\\Passwörter eintippen}\hfill
+	\iconblock{\faUsers}{FDUblue}{Frage? Team \faArrowRight{} andere Teams \faArrowRight{} LP}
+\end{frame}
+
+\begin{frame}{Los geht's!}
+	\centering
+	{\Huge\bfseries Skript, Kapitel 1}\\[4mm]
+	{\large Lesen Sie Ihre Startstation auf der Liste ab.}\\[10mm]
+	{\color{FDUteal}\fontsize{60}{66}\selectfont\faUserSecret}
+\end{frame}
+
+% --- Abschluss (am Ende des Halbtags) ---
+{\setbeamertemplate{footline}{\darkfootline}
+\begin{frame}\sectionframe[FDUgreen]{Fall gelöst?}{Was hätte Lena anders machen können?}\end{frame}}
+
+\begin{frame}{Exit-Ticket}
+	\centering
+	{\color{FDUgreen}\fontsize{60}{66}\selectfont\faFlagCheckered}\\[6mm]
+	{\LARGE\bfseries Eine Sache, die ich heute noch ändere:}\\[4mm]
+	{\large Standort der Kamera \textperiodcentered{} neues Passwort \textperiodcentered{} 2FA \textperiodcentered{} \dots}
+\end{frame}

@@ -1,0 +1,84 @@
+\chapter{Fall lösen und Produkt}\label{ch:produkt}
+
+\section{Den Fall Lena lösen}\label{sec:fall_loesen}
+
+\begin{myexercise}[Die Auflösung]
+	Tragen Sie Ihre drei Fallakten zusammen. Schreiben Sie Lena eine kurze Nachricht (4--6 Sätze):
+	Was ist passiert, und welche \textbf{drei} Dinge sollte sie ab heute anders machen?
+	\schreibzeile
+	\schreibzeile
+	\schreibzeile
+	\schreibzeile
+	\schreibzeile
+	\begin{myanswer}
+		Mögliche Punkte: Standort in der Kamera ausschalten bzw. Fotos ohne Ortsangaben verschicken;
+		für jedes Konto ein eigenes, langes Passwort verwenden und die \gls{TFA} einschalten;
+		bei Nachrichten mit Zeitdruck oder Passwortabfrage nie auf Links klicken;
+		bei blossstellenden Bildern die Löschung verlangen, melden und Hilfe holen.
+	\end{myanswer}
+\end{myexercise}
+
+\section{Ihr Produkt}\label{sec:produkt_waehlen}
+
+Wählen Sie im Team \textbf{eines} der beiden Produkte. Zeit: etwa 30 Minuten.
+
+\subsection{Produkt 1: Entscheidungsbaum \enquote{Darf ich das posten?}}
+
+Gestalten Sie auf einem A3-Plakat einen Entscheidungsbaum, mit dem eine Mitschülerin in wenigen Sekunden prüfen kann, ob sie ein Bild oder Video posten darf.
+Der folgende Anfang zeigt die Idee. Ergänzen Sie mindestens drei weitere Fragen (z.\,B. zu Lizenzen, Musik, Standort im Bild) und gestalten Sie das Plakat ansprechend.
+
+\begin{center}
+	\begin{tikzpicture}[
+			node distance=0.9cm and 1.4cm,
+			frage/.style={draw=RoyalBlue, fill=RoyalBlue!10, rounded corners, align=center, text width=4.2cm, minimum height=1cm},
+			ja/.style={draw=ForestGreen, fill=ForestGreen!10, rounded corners, align=center, text width=3cm},
+			nein/.style={draw=BrickRed, fill=BrickRed!10, rounded corners, align=center, text width=3cm},
+			pfeil/.style={-{Stealth}, thick},
+			lbl/.style={font=\small, fill=white, inner sep=1pt}
+		]
+		\node[frage] (f1) {Habe ich das Bild selbst gemacht?};
+		\node[frage, below=of f1] (f2) {Sind Personen erkennbar?};
+		\node[nein, right=of f1] (n1) {Lizenz prüfen \\ (\cref{ex:fallkarten}, Nr.~4 und 5)};
+		\node[frage, below=of f2] (f3) {Sind alle einverstanden?};
+		\node[ja, left=of f2] (j1) {\dots weitere Fragen \dots};
+		\node[nein, right=of f3] (n2) {Nicht posten!};
+		\node[ja, below=of f3] (j2) {\dots weitere Fragen \dots};
+
+		\draw[pfeil] (f1) -- node[lbl] {nein} (n1);
+		\draw[pfeil] (f1) -- node[lbl] {ja} (f2);
+		\draw[pfeil] (f2) -- node[lbl] {nein} (j1);
+		\draw[pfeil] (f2) -- node[lbl] {ja} (f3);
+		\draw[pfeil] (f3) -- node[lbl] {nein} (n2);
+		\draw[pfeil] (f3) -- node[lbl] {ja} (j2);
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Produkt 2: Phishing-Falle bauen}
+
+Gestalten Sie auf einer Karte eine erfundene Phishing-Nachricht (SMS, E-Mail oder Chat), die möglichst echt wirkt und \textbf{mindestens drei} Warnsignale versteckt.
+Notieren Sie die Lösung auf der Rückseite. Danach tauschen Sie die Karte mit einem anderen Team: Wer findet alle Warnsignale?
+
+\begin{myattention}
+	Verwenden Sie nur \textbf{erfundene} Firmen, Namen und Adressen. Keine echten Links, keine echten Personen, keine echten Logos.
+\end{myattention}
+
+\subsection{Checkliste für Ihr Produkt}
+
+\begin{center}
+	\renewcommand{\arraystretch}{1.4}
+	\begin{tabular}{p{12.5cm}c}
+		\textbf{Kriterium}                                                                   & \textbf{erfüllt}   \\
+		\midrule
+		Der Inhalt ist fachlich richtig (vergleichen Sie mit den Stationen A--C).            & \faSquare[regular] \\
+		Das Produkt ist ohne Erklärung verständlich.                                         & \faSquare[regular] \\
+		Es enthält mindestens drei eigene Ideen (Fragen bzw. Warnsignale).                   & \faSquare[regular] \\
+		Es verletzt selbst keine Rechte (keine fremden Bilder ohne Lizenz, keine echten Personen). & \faSquare[regular] \\
+	\end{tabular}
+\end{center}
+
+\section{Exit-Ticket}
+
+\begin{myexercise}[Eine Sache ändere ich heute noch]
+	Notieren Sie \textbf{eine} konkrete Sache, die Sie heute noch an Ihrem Handy oder Ihren Konten ändern werden.
+	\schreibzeile
+\end{myexercise}

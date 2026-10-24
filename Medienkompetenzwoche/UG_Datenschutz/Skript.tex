@@ -1,0 +1,53 @@
+\setcounter{tocdepth}{1} % Show chapters and sections in ToC
+
+% Fallakte: Box am Ende jeder Station, in der die SuS ihre Erkenntnisse zum Fall Lena festhalten
+\newenvironment{fallakte}[1][]
+{%
+	\begin{tcolorboxTemplate}[
+			title=\faFolderOpen{} Fallakte Lena #1,
+			parbox=false,
+			colback=BurntOrange!10,
+			colframe=BurntOrange!80!black,
+			colbacktitle=BurntOrange!80!black]
+		}%
+		{%
+	\end{tcolorboxTemplate}
+}
+
+% leere Schreibzeile mit vorgegebener Breite (Standard: ganze Zeile)
+\newcommand{\schreibzeile}[1][\linewidth]{\par\vspace{0.6cm}\noindent\rule{#1}{0.4pt}\par}
+
+\begin{document}
+
+%% Project-specific Preambles
+\settoggle{includelogo}{true}
+
+\newcommand{\thesubject}{Medienkompetenzwoche}
+\newcommand{\thetopic}{Datenschutz, Sicherheit \& Copyright}
+\newcommand{\thelogo}{Logos/FreeFlower.pdf}
+\newcommand{\logosize}{.5\textwidth}
+
+\lhead[ \leftmark ]{\thetopic}
+\rhead[\thesubject]{\textcopyleft{} \href{https://github.com/CyrilBlum/FreeFlower}{FreeFlower}, \the\year}
+
+\settoggle{emoji}{false}
+\def\arrayB{"detective","locked","camera","key","fishing-pole","copyright","check-mark-button"}
+\maketitlepage{\thetopic}{Lernatelier \enquote{Der Fall Lena} -- 1.~Klassen}
+\tableofcontents
+\clearpage
+
+%% content %%
+\input{Medienkompetenzwoche/UG_Datenschutz/Kapitel_00.tex} % Einstieg, Ablauf, Laufzettel
+\input{Medienkompetenzwoche/UG_Datenschutz/Kapitel_01.tex} % Station A: Spurensuche
+\input{Medienkompetenzwoche/UG_Datenschutz/Kapitel_02.tex} % Station B: Tatort Konto
+\input{Medienkompetenzwoche/UG_Datenschutz/Kapitel_03.tex} % Station C: Darf ich das posten?
+\input{Medienkompetenzwoche/UG_Datenschutz/Kapitel_04.tex} % Fall lösen und Produkt
+
+\clearpage
+\appendix
+\input{Medienkompetenzwoche/UG_Datenschutz/Anhang_Lehrpersonen.tex} % Unterrichtsablauf für LP
+
+\clearpage
+\printglossaries
+
+\end{document}
