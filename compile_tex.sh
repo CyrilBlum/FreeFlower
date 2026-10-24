@@ -24,6 +24,8 @@ for f in "${RAW_CHANGED_FILES[@]}"; do
     # Strip optional surrounding quotes if present
     f="${f#\"}"
     f="${f%\"}"
+    # Strip optional trailing slash
+    f="${f%/}"
     [ -n "$f" ] && CHANGED_FILES+=("$f")
 done
 
@@ -31,7 +33,7 @@ done
 path_changed_in_commit() {
     local candidate="$1"
     for changed in "${CHANGED_FILES[@]}"; do
-        if [[ "$candidate" == "$changed" ]] || [[ "$candidate" == */"$changed" ]] || [[ "$changed" == */"$candidate" ]]; then
+        if [[ "$candidate" == "$changed" ]] || [[ "$candidate" == */"$changed" ]] || [[ "$changed" == */"$candidate" ]] || [[ "$candidate" == "$changed"/* ]] || [[ "$candidate" == *"/$changed/"* ]]; then
             return 0
         fi
     done

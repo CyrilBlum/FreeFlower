@@ -9,6 +9,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
     inputs:
+      target_files:
+        description: 'Specific file(s) or folder to rebuild (comma-separated, e.g. Grundlagen_Info/16_ComputerUndKodierungen)'
+        required: false
+        default: ''
       full_rebuild:
         description: 'Rebuild all projects?'
         required: false
@@ -91,6 +95,9 @@ jobs:
         if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ github.event.inputs.full_rebuild }}" = "true" ]; then
           echo "Forcing full rebuild"
           echo "files=" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.target_files }}" ]; then
+          echo "Targeted rebuild: ${{ github.event.inputs.target_files }}"
+          echo "files=${{ github.event.inputs.target_files }}" >> $GITHUB_OUTPUT
         else
           if [ -n "${{ github.event.before }}" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
             git -c core.quotepath=false diff --name-only ${{ github.event.before }} ${{ github.sha }} | paste -sd, - > changed_files.txt
