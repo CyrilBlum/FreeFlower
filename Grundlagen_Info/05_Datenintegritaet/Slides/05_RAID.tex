@@ -108,8 +108,43 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{\glsentryshort{RAID} ist kein Backup}
+    \begin{columns}[T,onlytextwidth]
+        \column{.48\textwidth}
+        \textbf{\acrshort{RAID} schützt vor \dots}
+        \begin{itemize}
+            \item Ausfall einer Festplatte (\acrshort{RAID} 6: zwei)
+            \item Stillstand: das System läuft weiter
+        \end{itemize}
+        \column{.48\textwidth}
+        \textbf{\acrshort{RAID} schützt \textit{nicht} vor \dots}
+        \begin{itemize}[<+->]
+            \item versehentlichem Löschen / Überschreiben
+            \item Ransomware
+            \item Diebstahl, Brand, Wasserschaden
+            \item \textit{bit rot}, das unbemerkt bleibt
+        \end{itemize}
+    \end{columns}
+    \vspace{4mm}
+    \begin{center}
+        \only<5>{Jede Änderung landet sofort auf \textit{allen} Festplatten $\rightarrow$ es braucht eine \textbf{separate} Kopie: ein \textbf{Backup}.}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Die 3-2-1-Regel}
+    \begin{center}
+        \resizebox{.95\textwidth}{!}{\input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_backup_321.tex}}
+    \end{center}
+    \begin{itemize}
+        \item Backups automatisch und regelmässig erstellen, ältere Versionen aufbewahren
+        \item Wiederherstellung testen -- erst dann weiss man, dass das Backup funktioniert
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Auftrag (Skript)}
     \begin{itemize}
-        \item \aufgabebox{1.29 - 1.34}
+        \item \aufgabebox{1.27 - 1.28 (\acrshort{XOR})}
+        \item \aufgabebox{1.29 - 1.34 (\acrshort{RAID})}
+        \item \aufgabebox{1.35 - 1.36 (Backup)}
     \end{itemize}
 \end{frame}

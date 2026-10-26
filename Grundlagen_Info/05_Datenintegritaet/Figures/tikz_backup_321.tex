@@ -1,0 +1,25 @@
+% 3-2-1-Backup-Regel: 3 Kopien, auf 2 verschiedenen Medien, davon 1 ausser Haus.
+% Wird im Skript (Abschnitt Backup) und auf den RAID-Folien verwendet.
+\begin{tikzpicture}[
+        copy/.style={draw, rounded corners, thick, minimum width=3.2cm, minimum height=1.5cm, align=center, font=\small},
+        zone/.style={draw, dashed, rounded corners, inner sep=8pt},
+        lbl/.style={font=\footnotesize\bfseries, anchor=south west}
+    ]
+    % Zuhause: Original und erste Kopie auf einem anderen Medium
+    \node[copy, fill=blue!10]   (orig)  at (0,0)   {\faLaptop\\[2pt] Original\\ \footnotesize Laptop (SSD)};
+    \node[copy, fill=green!12]  (copy1) at (4,0)   {\faHdd\\[2pt] Kopie 1\\ \footnotesize externe Festplatte / \acrshort{NAS}};
+    % Ausser Haus: zweite Kopie
+    \node[copy, fill=orange!15] (copy2) at (9.8,0)   {\faCloud\\[2pt] Kopie 2\\ \footnotesize Cloud / Festplatte bei Verwandten};
+
+    \node[zone, fit=(orig)(copy1)]  (home) {};
+    \node[zone, fit=(copy2)]        (away) {};
+    \node[lbl] at (home.north west) {Zuhause};
+    \node[lbl] at (away.north west) {Ausser Haus};
+
+    \draw[-latex, thick] (orig) -- (copy1);
+    \draw[-latex, thick] (copy1) -- (copy2);
+
+    % Die drei Regeln unter der Grafik
+    \node[font=\small, align=center] at (4.9,-1.9)
+    {\textbf{3} Kopien \quad\textperiodcentered\quad auf \textbf{2} verschiedenen Medien \quad\textperiodcentered\quad davon \textbf{1} ausser Haus};
+\end{tikzpicture}

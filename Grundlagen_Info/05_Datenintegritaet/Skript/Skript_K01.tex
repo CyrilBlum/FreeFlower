@@ -2445,3 +2445,75 @@ Bei \gls{RAID} 6 werden sogar zwei Paritätsbits verwendet, womit diese Konfigur
 \end{myexercise}
 
 
+\section{Backup: \glsentryshort{RAID} ist kein Backup}\label{sec:backup}
+
+\gls{RAID} schützt davor, dass beim Ausfall \textit{einer} Festplatte (bzw. zweier bei \gls{RAID} 6) Daten verloren gehen und das System stillsteht. Gegen viele andere Ursachen von Datenverlust hilft \gls{RAID} hingegen nicht, denn jede Änderung wird sofort auf alle Festplatten übertragen:
+\begin{itemize}
+    \item Eine Datei wird versehentlich gelöscht oder überschrieben -- auf allen Festplatten gleichzeitig.
+    \item Eine Schadsoftware (\tib{Ransomware}) verschlüsselt alle Dateien -- auch auf den gespiegelten Festplatten.
+    \item Diebstahl, Brand oder Wasserschaden zerstören das ganze Gerät mitsamt allen Festplatten.
+    \item Ein beschädigtes Bit (\textit{bit rot}) wird unbemerkt weitergegeben, oder es ist unklar, welche der beiden Kopien die richtige ist.
+\end{itemize}
+
+\begin{myremark}
+    \gls{RAID} sorgt für \tib{Verfügbarkeit} (das System läuft weiter, wenn eine Festplatte ausfällt). Ein \tib{Backup} hingegen ist eine \textit{separate} Kopie der Daten, die zeitlich und räumlich vom Original getrennt ist und aus der man frühere Versionen wiederherstellen kann. Merksatz: \enquote{\gls{RAID} ist kein Backup.}
+\end{myremark}
+
+Eine bewährte Faustregel für Backups ist die \tib{3-2-1-Regel} (\cref{fig:backup321}):
+\begin{itemize}
+    \item \textbf{3} Kopien der Daten (das Original und zwei Backups),
+    \item auf \textbf{2} verschiedenen Speichermedien (z.B. interne SSD und externe Festplatte), damit nicht derselbe Defekt beide Kopien trifft,
+    \item davon \textbf{1} Kopie ausser Haus (z.B. in der Cloud oder bei Verwandten), damit auch Diebstahl oder Brand nicht alle Kopien zerstören.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_backup_321.tex}
+    \caption{Die 3-2-1-Regel für Backups}
+    \label{fig:backup321}
+\end{figure}
+
+Damit ein Backup im Ernstfall auch wirklich hilft, sollte es \textbf{automatisch} und \textbf{regelmässig} erstellt werden, \textbf{ältere Versionen} aufbewahren (damit man auch eine Datei von letzter Woche zurückholen kann) und gelegentlich \textbf{getestet} werden: Erst eine erfolgreiche Wiederherstellung zeigt, dass das Backup funktioniert. Um zudem zu bemerken, dass eine Kopie beschädigt ist (\textit{bit rot}), speichern moderne Dateisysteme und Backup-Programme zu jeder Datei eine \tib{Prüfsumme} und vergleichen diese regelmässig -- dieselbe Idee wie bei den Prüfbits am Anfang dieses Kapitels.
+
+\begin{myexercise}[\acrshort{RAID} oder Backup?]
+    Kreuzen Sie für jedes Szenario an, ob ein \gls{RAID} 1 bzw. ein Backup nach der 3-2-1-Regel die Daten rettet. Begründen Sie kurz.
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{p{7.2cm}cc}
+            \textbf{Szenario}                                                        & \textbf{\acrshort{RAID} 1} & \textbf{3-2-1-Backup} \\\midrule
+            (a) Eine Festplatte fällt aus.                                           &                            &                       \\\midrule
+            (b) Sie löschen versehentlich einen Ordner mit Fotos.                    &                            &                       \\\midrule
+            (c) Ransomware verschlüsselt alle Dateien auf dem Computer und dem \acrshort{NAS}. &              &                       \\\midrule
+            (d) In der Wohnung brennt es.                                            &                            &                       \\\midrule
+            (e) Sie bemerken, dass ein zwei Jahre altes Foto beschädigt ist.         &                            &                       \\
+        \end{tabular}
+    \end{table}
+
+    \begin{myanswer}
+        \begin{enumerate}[label=(\alph*)]
+            \item \acrshort{RAID} 1: \textbf{ja}, das System läuft ohne Unterbruch weiter. Backup: \textbf{ja}, aber man muss die Daten erst wiederherstellen.
+            \item \acrshort{RAID} 1: \textbf{nein}, das Löschen wird sofort auf beide Festplatten gespiegelt. Backup: \textbf{ja}, aus einer früheren Version.
+            \item \acrshort{RAID} 1: \textbf{nein}, auch die Spiegelkopie wird verschlüsselt. Backup: \textbf{ja}, sofern mindestens eine Kopie nicht ständig verbunden war (offline oder ausser Haus) und daher nicht mitverschlüsselt wurde.
+            \item \acrshort{RAID} 1: \textbf{nein}, alle Festplatten stehen im selben Gerät. Backup: \textbf{ja}, dank der Kopie ausser Haus.
+            \item \acrshort{RAID} 1: \textbf{nein}, die Beschädigung ist längst auf beiden Festplatten (oder es ist unklar, welche Kopie stimmt). Backup: \textbf{ja}, wenn ältere Versionen aufbewahrt werden und die Beschädigung (z.B. dank Prüfsummen) bemerkt wird.
+        \end{enumerate}
+    \end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}[Eigene Backup-Strategie]
+    Lara speichert ihre Fotos auf dem Laptop und hat zusätzlich ein \acrshort{NAS} mit zwei Festplatten im \acrshort{RAID}-1-Modus, das jede Nacht automatisch alle Fotos vom Laptop kopiert.
+    \begin{aenum}
+        \item Erfüllt Lara die 3-2-1-Regel? Begründen Sie.
+        \item Schlagen Sie eine Verbesserung vor, die mit wenig Aufwand die 3-2-1-Regel erfüllt.
+        \item Wie sieht Ihre eigene Backup-Strategie für die Fotos auf Ihrem Smartphone aus? Beurteilen Sie sie mit der 3-2-1-Regel.
+    \end{aenum}
+
+    \begin{myanswer}
+        \begin{aenum}
+            \item Nein. Sie hat zwar zwei Kopien (Laptop und \acrshort{NAS}) auf zwei verschiedenen Medien, aber beide stehen im selben Haus. Die beiden \acrshort{RAID}-Festplatten zählen nicht als zwei Kopien, da sie jede Änderung (z.B. Löschen, Ransomware) sofort gemeinsam übernehmen.
+            \item Eine dritte Kopie ausser Haus, z.B. eine verschlüsselte Cloud-Sicherung des \acrshort{NAS} oder eine externe Festplatte, die regelmässig aktualisiert und bei Verwandten aufbewahrt wird. Zusätzlich sollte das \acrshort{NAS} ältere Versionen (Snapshots) aufbewahren.
+            \item Individuelle Antwort. Typisch: Fotos nur auf dem Smartphone und in einer Cloud (2 Kopien, 1 ausser Haus) -- es fehlt eine dritte Kopie, z.B. eine gelegentliche Kopie auf eine externe Festplatte.
+        \end{aenum}
+    \end{myanswer}
+\end{myexercise}
