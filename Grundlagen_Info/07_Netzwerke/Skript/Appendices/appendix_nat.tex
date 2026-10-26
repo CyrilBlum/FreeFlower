@@ -1,5 +1,5 @@
 
-\chapter{\texorpdfstring{\gls{NAT} und Port Forwarding}{NAT und Port Forwarding}}
+\chapter{\texorpdfstring{\glsentryshort{NAT} und Port Forwarding}{NAT und Port Forwarding}}
 \label{app:nat_port_forwarding}
 \section{\texorpdfstring{\acrfull{NAT}}{Network Address Translation (NAT)}}
 \textbf{\gls{NAT}} (Network Address Translation) ist ein Verfahren, das in Routern verwendet wird, um die Kommunikation zwischen Computern in einem lokalen Netzwerk und dem Internet zu ermöglichen. Dabei wird die lokale \gls{IP}-Adresse eines Computers in eine globale \gls{IP}-Adresse übersetzt, wenn Datenpakete das lokale Netzwerk verlassen, und umgekehrt, wenn Datenpakete aus dem Internet empfangen werden. Dies ermöglicht es mehreren Computern in einem lokalen Netzwerk, dieselbe globale \gls{IP}-Adresse zu teilen, wodurch die Anzahl der benötigten globalen Adressen reduziert wird.
@@ -9,9 +9,9 @@ Stellen Sie sich vor, Sie haben ein lokales Netzwerk mit mehreren Computern, die
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c|c|c}
-		\textbf{Phase} & \textbf{Quell-IP} & \textbf{Ziel-IP} & \textbf{Ort} \\
-		\midrule\midrule
+	\begin{tabular}{cccc}
+		\textbf{Phase} & \textbf{Quell-\acrshort{IP}} & \textbf{Ziel-\acrshort{IP}} & \textbf{Ort} \\
+		\midrule
 		Vor \gls{NAT} & \texttt{192.168.1.10} (lokal) & \texttt{8.8.8.8} & Lokales Netzwerk \\
 		\midrule
 		Nach \gls{NAT} & \texttt{203.0.113.5} (global) & \texttt{8.8.8.8} & Internet \\
@@ -28,9 +28,9 @@ Dadurch können mehrere Geräte im lokalen Netzwerk gleichzeitig mit verschieden
 
 \gls{NAT} wird weiter unterschieden in:
 \begin{itemize}
-    \item \textbf{Statisches NAT}: Hierbei wird eine feste Zuordnung zwischen jeder lokalen \gls{IP}-Adresse und einer globalen \gls{IP}-Adresse erstellt. Dies wird oft für Server verwendet, die von aussen erreichbar sein müssen. Für private Netzwerke mit vielen Geräten ist dies jedoch unpraktisch, da es viele globale \gls{IP}-Adressen erfordert.
-    \item \textbf{Dynamisches NAT}: Hierbei wird eine lokale \gls{IP}-Adresse dynamisch einer verfügbaren globalen \gls{IP}-Adresse zugeordnet, wenn eine Verbindung nach aussen hergestellt wird. Dies ist effizienter als statisches \gls{NAT}, da nicht für jedes Gerät eine feste globale Adresse benötigt wird. Aufgrund der Tatsache, dass mehrere \gls{IP}-Adressen benötigt werden, ist dies jedoch immer noch nicht ideal für grosse Netzwerke.
-    \item \textbf{\gls{PAT} (Port Address Translation)}: Auch als \textbf{NAT Overloading} bekannt, ermöglicht \gls{PAT} mehreren Geräten in einem lokalen Netzwerk, dieselbe globale \gls{IP}-Adresse zu teilen, indem unterschiedliche Port-Nummern verwendet werden. Dies ist die am häufigsten verwendete Form von \gls{NAT} in Heimnetzwerken, da es die Anzahl der benötigten globalen \gls{IP}-Adressen minimiert. Jeder lokale Computer wird durch eine Kombination aus der gemeinsamen globalen \gls{IP}-Adresse und einer eindeutigen Port-Nummer identifiziert In Praxis wird mit \gls{NAT} indirekt meistens \gls{PAT} gemeint.
+    \item \textbf{Statisches \acrshort{NAT}}: Hierbei wird eine feste Zuordnung zwischen jeder lokalen \gls{IP}-Adresse und einer globalen \gls{IP}-Adresse erstellt. Dies wird oft für Server verwendet, die von aussen erreichbar sein müssen. Für private Netzwerke mit vielen Geräten ist dies jedoch unpraktisch, da es viele globale \gls{IP}-Adressen erfordert.
+    \item \textbf{Dynamisches \acrshort{NAT}}: Hierbei wird eine lokale \gls{IP}-Adresse dynamisch einer verfügbaren globalen \gls{IP}-Adresse zugeordnet, wenn eine Verbindung nach aussen hergestellt wird. Dies ist effizienter als statisches \gls{NAT}, da nicht für jedes Gerät eine feste globale Adresse benötigt wird. Aufgrund der Tatsache, dass mehrere \gls{IP}-Adressen benötigt werden, ist dies jedoch immer noch nicht ideal für grosse Netzwerke.
+    \item \textbf{\gls{PAT}}: Auch als \textbf{\acrshort{NAT} Overloading} bekannt, ermöglicht \gls{PAT} mehreren Geräten in einem lokalen Netzwerk, dieselbe globale \gls{IP}-Adresse zu teilen, indem unterschiedliche Port-Nummern verwendet werden. Dies ist die am häufigsten verwendete Form von \gls{NAT} in Heimnetzwerken, da es die Anzahl der benötigten globalen \gls{IP}-Adressen minimiert. Jeder lokale Computer wird durch eine Kombination aus der gemeinsamen globalen \gls{IP}-Adresse und einer eindeutigen Port-Nummer identifiziert. In der Praxis wird mit \gls{NAT} indirekt meistens \gls{PAT} gemeint.
 \end{itemize}
 
 \section{\texorpdfstring{\acrfull{PAT}}{Port Address Translation (PAT)}}
@@ -46,9 +46,9 @@ Dabei ist es sogar möglich, dass mehrere lokale Geräte über denselben lokalen
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c|c|c|c}
+    \begin{tabular}{ccccc}
         \textbf{Lokale \gls{IP}:Port} & \textbf{Globale \gls{IP}:Port} & \textbf{Ziel-\gls{IP}:Port} & \textbf{Protokoll} & \textbf{Status} \\
-        \midrule\midrule
+        \midrule
         \texttt{192.168.1.10:45000} & \texttt{203.0.113.5:45000} & \texttt{8.8.8.8:443} & \gls{TCP} & Aktiv \\
         \midrule
         \texttt{192.168.1.11:45000} & \texttt{203.0.113.5:45001} & \texttt{8.8.8.8:443} & \gls{TCP} & Aktiv \\
@@ -58,18 +58,18 @@ Dabei ist es sogar möglich, dass mehrere lokale Geräte über denselben lokalen
     \caption{\gls{PAT}-Tabelle mit mehreren lokalen Geräten, die gleichzeitig auf externe Server zugreifen}
 \end{table}
 
-In diesem Beispiel verwenden alle drei lokalen Computer zufälligerweise denselben lokalen Port (45000), erhalten jedoch vom Router unterschiedliche globale Ports (45000, 45001, 45002) zugewiesen. Zwei Computer (192.168.1.10 und 192.168.1.11) greifen auf denselben externen Server \texttt{8.8.8.8:443} zu, während der dritte Computer (192.168.1.12) auf einen anderen Server \texttt{93.184.216.34:80} zugreift. Der Router kann die eingehenden Antworten anhand der Kombination aus globaler \gls{IP}-Adresse und globalem Port eindeutig dem richtigen lokalen Computer zuordnen.
+In diesem Beispiel verwenden alle drei lokalen Computer zufälligerweise denselben lokalen Port (45000), erhalten jedoch vom Router unterschiedliche globale Ports (45000, 45001, 45002) zugewiesen. Zwei Computer (\texttt{192.168.1.10} und \texttt{192.168.1.11}) greifen auf denselben externen Server \texttt{8.8.8.8:443} zu. Der dritte Computer (\texttt{192.168.1.12}) greift hingegen auf einen anderen Server zu, nämlich auf \texttt{93.184.216.34:80}. Der Router kann die eingehenden Antworten anhand der Kombination aus globaler \gls{IP}-Adresse und globalem Port eindeutig dem richtigen lokalen Computer zuordnen.
 
 \section{Port Forwarding}
-Port Forwarding kann verwendet werden, um eingehende Verbindungen von externen Computern an bestimmte lokale Computer weiterzuleiten. Dies ist besonders nützlich, wenn ein lokaler Computer (z.B. ein Webserver oder ein Spieleserver) von ausserhalb des lokalen Netzwerks erreichbar sein soll. Durch das Einrichten von Port Forwarding im Router kann der Datenverkehr, der an eine bestimmte Port-Nummer der globalen \gls{IP}-Adresse gesendet wird, an die entsprechende lokale \gls{IP}-Adresse und Port-Nummer weitergeleitet werden. 
+Port Forwarding kann verwendet werden, um eingehende Verbindungen von externen Computern an bestimmte lokale Computer weiterzuleiten. Dies ist besonders nützlich, wenn ein lokaler Computer (z.B. ein Webserver oder ein Spieleserver) von ausserhalb des lokalen Netzwerks erreichbar sein soll. Durch das Einrichten von Port Forwarding im Router kann der Datenverkehr, der an eine bestimmte Port-Nummer der globalen \gls{IP}-Adresse gesendet wird, an die entsprechende lokale \gls{IP}-Adresse und Port-Nummer weitergeleitet werden.
 
 \begin{myexample}[Port Forwarding]
 Angenommen, Sie haben einen Webserver in Ihrem lokalen Netzwerk mit der lokalen \gls{IP}-Adresse \texttt{192.168.1.20} und möchten, dass dieser von ausserhalb Ihres Netzwerks über das Internet erreichbar ist. Ihr Router hat die globale \gls{IP}-Adresse \texttt{203.0.113.5}. Sie richten im Router eine Port-Weiterleitung ein, die eingehende Verbindungen auf Port 80 (\gls{HTTP}) der globalen Adresse an die lokale Adresse \texttt{192.168.1.20} auf Port 80 weiterleitet. Dadurch können externe Benutzer über \texttt{http://203.0.113.5} auf Ihren Webserver zugreifen, obwohl dieser sich in einem privaten Netzwerk befindet. Die Forwarding-Tabelle im Router könnte wie folgt aussehen:
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c|c|c}
-		\textbf{Externer Port} & \textbf{Interne IP} & \textbf{Interner Port} & \textbf{Protokoll} \\
-		\midrule\midrule
+	\begin{tabular}{cccc}
+		\textbf{Externer Port} & \textbf{Interne \acrshort{IP}} & \textbf{Interner Port} & \textbf{Protokoll} \\
+		\midrule
 		80 & \texttt{192.168.1.20} & 80 & \gls{TCP} \\
 	\end{tabular}
 	\caption{Port Forwarding-Tabelle im Router}
@@ -81,20 +81,22 @@ Das Protokoll kann entweder \gls{TCP} oder \gls{UDP} sein, je nachdem, welche Ar
 \begin{myexample}[\acrshort{NAS} im lokalen Netzwerk von aussen erreichbar machen]
 	Angenommen, Sie kaufen ein \gls{NAS} für Ihr Heimnetzwerk, um Dateien zentral zu speichern und von verschiedenen Geräten darauf zuzugreifen. Ihr \gls{NAS} hat die lokale \gls{IP}-Adresse \texttt{192.168.1.20}. Sie möchten jedoch auch von ausserhalb Ihres Heimnetzwerks auf das \gls{NAS} zugreifen können, z.B. wenn Sie unterwegs sind. Ihr Internetanbieter hat Ihnen die globale \gls{IP}-Adresse \texttt{203.0.113.5} zugewiesen. Zudem haben Sie sich eine statische \gls{IP}v4-Adresse gekauft, damit sich Ihre \gls{IP}-Adresse nicht ändert.
 
-	Um dies zu ermöglichen, müssen Sie Port Forwarding auf Ihrem Router einrichten. Angenommen, Ihr \gls{NAS} verwendet den Standardport 8080 für den Zugriff auf die Weboberfläche. Sie richten im Router eine Port-Weiterleitung ein, die eingehende Verbindungen auf den Port 8080 der globalen Adresse \texttt{203.0.113.5} an die lokale Adresse \texttt{192.168.1.20} weiterleitet. Dadurch können Sie von ausserhalb Ihres Heimnetzwerks auf Ihr \gls{NAS} zugreifen, indem Sie in Ihrem Webbrowser die Adresse \texttt{http://203.0.113.5:8080} eingeben.
-	
+	Um dies zu ermöglichen, müssen Sie Port Forwarding auf Ihrem Router einrichten. Angenommen, Ihr \gls{NAS} verwendet den Port 8080 für den Zugriff auf die Weboberfläche. Sie richten im Router eine Port-Weiterleitung ein, die eingehende Verbindungen auf den Port 8080 der globalen Adresse \texttt{203.0.113.5} an die lokale Adresse \texttt{192.168.1.20} weiterleitet. Dadurch können Sie von ausserhalb Ihres Heimnetzwerks auf Ihr \gls{NAS} zugreifen, indem Sie in Ihrem Webbrowser die Adresse \texttt{http://203.0.113.5:8080} eingeben.
+
 	Die Forwarding-Tabelle im Router könnte wie folgt aussehen:
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c|c|c|c}
-			\textbf{Externer Port} & \textbf{Interne IP} & \textbf{Interner Port} & \textbf{Protokoll} \\
-			\midrule\midrule
+		\begin{tabular}{cccc}
+			\textbf{Externer Port} & \textbf{Interne \acrshort{IP}} & \textbf{Interner Port} & \textbf{Protokoll} \\
+			\midrule
 			8080 & \texttt{192.168.1.20} & 8080 & \gls{TCP} \\
-	\end{tabular}
-	\caption{Port Forwarding-Tabelle im Router}
-\end{table}
+		\end{tabular}
+		\caption{Port Forwarding-Tabelle im Router}
+	\end{table}
 
 	Damit Ihr \gls{NAS} auch wirklich immer die lokale \gls{IP}-Adresse \texttt{192.168.1.20} behält, sollten Sie im Router eine \gls{IP}-Reservierung für die \gls{MAC}-Adresse Ihres \gls{NAS} einrichten (s. \cref{remark:ip-reservation}).
+
+	\textbf{Achtung:} Ein auf diese Weise direkt aus dem Internet erreichbares \gls{NAS} ist ein beliebtes Angriffsziel (z.B. für Ransomware). Sicherer ist es, sich von unterwegs über ein \gls{VPN} mit dem Heimnetzwerk zu verbinden und keinen Port des \gls{NAS} direkt freizugeben. Falls doch Port Forwarding verwendet wird, sollten mindestens eine verschlüsselte Verbindung (\gls{HTTPS}), ein starkes Passwort und aktuelle Software eingesetzt werden.
 \end{myexample}
 
 \begin{myremark}[Unterschied \gls{NAT} und Port Forwarding]
@@ -102,9 +104,9 @@ Das Protokoll kann entweder \gls{TCP} oder \gls{UDP} sein, je nachdem, welche Ar
 
 \begin{itemize}
 	\item \textbf{\gls{NAT}}: Ist ein automatischer Prozess, der auf dem Router läuft und dafür sorgt, dass Computer im lokalen Netzwerk mit dem Internet kommunizieren können. \gls{NAT} übersetzt automatisch lokale \gls{IP}-Adressen in globale Adressen für ausgehende Verbindungen und führt die Rückübersetzung für eingehende Antworten durch. Dies geschieht transparent und erfordert keine manuelle Konfiguration pro Gerät.
-	
+
 	\item \textbf{Port Forwarding}: Ist eine manuell konfigurierte Funktionalität, die es ermöglicht, eingehende Verbindungen von aussen gezielt an spezifische lokale Computer weiterzuleiten. Während \gls{NAT} primär für ausgehende Verbindungen zuständig ist, ermöglicht Port Forwarding, dass externe Benutzer von aussen initiierte Verbindungen zu Servern im lokalen Netzwerk herstellen können.
-	
+
 	\item \textbf{Zusammenhang}: Port Forwarding funktioniert auf Basis von \gls{NAT}. Es nutzt die \gls{NAT}-Tabelle des Routers, um eingehende Verbindungen korrekt an die richtigen lokalen Geräte weiterzuleiten. Ohne \gls{NAT} wäre Port Forwarding nicht möglich.
 \end{itemize}
 

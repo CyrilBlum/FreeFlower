@@ -10,7 +10,7 @@
 \begin{document}
 
 \lstset{style=Python}
-%% Project-specific Preambles 
+%% Project-specific Preambles
 \settoggle{includelogo}{true}
 
 \newcommand{\thesubject}{Informatik}
@@ -49,11 +49,11 @@
     #1}
 
 
-% Farben für jede Schicht
-\newcommand{\applicationLayerColor}{Gold}
-\newcommand{\transportLayerColor}{Indigo}
-\newcommand{\networkLayerColor}{RoyalBlue}
-\newcommand{\dataLinkLayerColor}{Gray}
+% Farben für jede Schicht (\providecommand: auch in den Slides definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
 
 % contents
 % \input{Grundlagen_Info/07_Netzwerke/Skript/Chapters/4cid/4cid_problemformulierung.tex}
@@ -64,7 +64,7 @@
 \clearpage
 
 \appendix
-\renewcommand{\thesubsection}{\Alph{subsection}} 
+\renewcommand{\thesubsection}{\Alph{subsection}}
 \input{Grundlagen_Info/07_Netzwerke/Skript/Appendices/appendix_game.tex}
 \input{Grundlagen_Info/07_Netzwerke/Skript/Appendices/appendix_filius_install.tex}
 \input{Grundlagen_Info/07_Netzwerke/Skript/Appendices/appendix_nat.tex}

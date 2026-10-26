@@ -4,7 +4,7 @@
 Bevor wir uns mit dem Internet als spezielles Netzwerk befassen, wollen wir allgemein nochmals auf Netzwerke eingehen. Im Alltag treffen Sie Netzwerke an unterschiedlichsten Orten an, zum Beispiel:
 \begin{itemize}
 	\item Transport-Netzwerke: Die Post, DHL, Planzer, etc.
-	\item Soziale Netzwerke: TikTok, Youtube, Instagram, etc.
+	\item Soziale Netzwerke: TikTok, YouTube, Instagram, etc.
 	\item Mobilitäts-Netzwerke: Das Strassennetz, SBB, Flixbus, etc.
 	\item Shopping-Netzwerke: Aliexpress, Uber, etc.
 	\item Computer-Netzwerke: \textbf{Das Internet}, Firmen-Netzwerke etc.
@@ -22,11 +22,11 @@ Häufig werden die Begriffe \enquote{Internet} und \enquote{Computer-Netze}, bzw
 Kommunikation war schon seit jeher ein zentrales Bedürfnis der Menschheit. Mit der Erfindung des Telefons, des Radios und später des Internets hat sich die Art und Weise, wie wir kommunizieren, jedoch grundlegend vereinfacht sowie verändert. Im Folgenden schauen wir kurz die wichtigsten Schritte an, die zur Erfindung des Internets geführt haben.
 
 \subsubsection*{Die Anfänge: ARPANET und die 1960er Jahre}
-Die Motivation für die Entwicklung des \gls{ARPANET} lag darin, ein robustes, dezentrales Kommunikationsnetzwerk zu schaffen, das auch im Falle von Ausfällen einzelner Knoten funktionsfähig bleibt. Insbesondere sollte das Netzwerk den Austausch von Informationen zwischen Universitäten und Forschungseinrichtungen ermöglichen und die Zusammenarbeit fördern. Ein weiterer wichtiger Beweggrund war die Suche nach einer Kommunikationsinfrastruktur, die im Kontext des Kalten Krieges auch militärischen Anforderungen an Ausfallsicherheit und Flexibilität genügte.Dieses Netzwerk sollte ursprünglich militärischen Zwecken dienen, fand jedoch schnell Anwendung in der akademischen und Forschungswelt.
+Die Motivation für die Entwicklung des \gls{ARPANET} lag darin, ein robustes, dezentrales Kommunikationsnetzwerk zu schaffen, das auch im Falle von Ausfällen einzelner Knoten funktionsfähig bleibt. Insbesondere sollte das Netzwerk den Austausch von Informationen zwischen Universitäten und Forschungseinrichtungen ermöglichen und die Zusammenarbeit fördern. Finanziert wurde das Netzwerk im Kontext des Kalten Krieges vom US-Verteidigungsministerium, und Ideen zu ausfallsicheren, dezentralen Netzen stammten unter anderem aus militärisch motivierter Forschung. Die verbreitete Vorstellung, das \gls{ARPANET} sei als atomkriegssicheres Militärnetz gebaut worden, ist jedoch stark vereinfacht: Genutzt wurde es von Anfang an vor allem in der akademischen und Forschungswelt.
 
 \begin{itemize}
 	\item 1969: Die erste Nachricht wird zwischen zwei Computern am \gls{ARPANET} übertragen.
-	\item 1972: Die erste E-Mail wird verschickt.
+	\item 1971: Die erste E-Mail wird verschickt.
 	\item 1973: \gls{ARPANET} wird international, erste Verbindungen nach Norwegen und Grossbritannien.
 \end{itemize}
 
@@ -47,7 +47,7 @@ Ein entscheidender Schritt in der Geschichte des Internets war die Entwicklung v
 Eine schematische Darstellung der Verbindung von verschiedenen Netzwerken über das \gls{TCP}/\gls{IP}-Protokoll ist in \cref{table:osi-layers} zu finden.
 
 \subsubsection*{Das \acrshort{WWW} und die 1990er Jahre}
-Die Erfindung des \gls{WWW} durch Tim Berners-Lee im Jahr 1990 revolutionierte die Nutzung des Internets. Kernstück des \gls{WWW} ist das Hypertext Transfer Protocol (\gls{HTTP}), das es ermöglicht, Webseiten zu erstellen und diese gegenseitig zu verlinken. Mit der Einführung von \gls{HTML} konnten Inhalte strukturiert und formatiert werden. Dies führte zu einer explosionsartigen Zunahme von Webseiten und Nutzern. Eine typische Webseite, wie wir sie heute kennen, ist über eine Web-Adresse, oder genauer gesagt \gls{URL} erreichbar, wie in folgendem Beispiel:
+Die Erfindung des \gls{WWW} durch Tim Berners-Lee im Jahr 1990 revolutionierte die Nutzung des Internets. Kernstück des \gls{WWW} ist das \gls{HTTP}, das es ermöglicht, Webseiten zu erstellen und diese gegenseitig zu verlinken. Mit der Einführung von \gls{HTML} konnten Inhalte strukturiert und formatiert werden. Dies führte zu einer explosionsartigen Zunahme von Webseiten und Nutzern. Eine typische Webseite, wie wir sie heute kennen, ist über eine Web-Adresse, oder genauer gesagt \gls{URL} erreichbar, wie in folgendem Beispiel:
 
 \begin{lstlisting}[language=HTML]
 https://www.beispielseite.ch/unterseite.html
@@ -57,7 +57,7 @@ Eine \gls{URL} (Uniform Resource Locator) ist eine eindeutige Adresse, die auf e
 
 Der Domain-Name steht für einen Computer im Internet, auf dem die Webseite gespeichert ist. Dieser Computer wird auch als \textbf{Webserver} bezeichnet.
 
-Jede Webseite ist dabei als einfache Textdatei gespeichert, mit der Dateiendung \texttt{.html} (oder \texttt{.htm}). \gls{HTML} ist dabei eine Art Code-Sprache, die es ermöglicht, Text, Bilder und Links zu strukturieren. Eine einfache HTML-Datei könnte zum Beispiel so aussehen:
+Jede Webseite ist dabei als einfache Textdatei gespeichert, mit der Dateiendung \texttt{.html} (oder \texttt{.htm}). \gls{HTML} ist dabei eine Art Code-Sprache, die es ermöglicht, Text, Bilder und Links zu strukturieren. Eine einfache \gls{HTML}-Datei könnte zum Beispiel so aussehen:
 
 \begin{lstlisting}[language=HTML]
 <!DOCTYPE html>
@@ -70,8 +70,9 @@ Jede Webseite ist dabei als einfache Textdatei gespeichert, mit der Dateiendung 
 	<p>Dies ist ein einfacher Textabschnitt.</p>
 	<a href="https://www.andereseite.ch/start.html">Andere Webseite</a>
 </body>
+</html>
 \end{lstlisting}
-Auf der vorletzten Zeile sehen Sie den Link zu einer anderen Webseite. Dieser Link ist ein sogenannter \textbf{Hyperlink}, der es ermöglicht, von einer Webseite zu einer anderen zu navigieren. Hyperlinks sind das Herzstück des \gls{WWW} und ermöglichen die Vernetzung von Informationen im Internet. Sie bestehen aus einem Text (der anklickbar ist) und einer \gls{URL}, die die Adresse der verlinkten Seite angibt. Ein Protokoll namens \gls{HTTP} regelt, wie diese Links angefragt und die entsprechenden Seiten übertragen werden.
+Auf der drittletzten Zeile sehen Sie den Link zu einer anderen Webseite. Dieser Link ist ein sogenannter \textbf{Hyperlink}, der es ermöglicht, von einer Webseite zu einer anderen zu navigieren. Hyperlinks sind das Herzstück des \gls{WWW} und ermöglichen die Vernetzung von Informationen im Internet. Sie bestehen aus einem Text (der anklickbar ist) und einer \gls{URL}, die die Adresse der verlinkten Seite angibt. Ein Protokoll namens \gls{HTTP} regelt, wie diese Links angefragt und die entsprechenden Seiten übertragen werden.
 
 Ein Browser kann den \gls{HTML}-Code benutzerfreundlich anzeigen und Verweise auf andere Webseiten als anklickbare Links anzeigen. Die Kombination von \gls{HTML}, \gls{HTTP} und der \gls{URL} ermöglichte es, Informationen auf einfache Weise zu teilen und zu durchsuchen.
 
@@ -79,8 +80,8 @@ Mit der Einführung von grafischen Webbrowsern wurde das Internet für die breit
 
 \begin{itemize}
 	\item 1991: Das \gls{WWW} wird der Öffentlichkeit vorgestellt.
-	\item 1993: Der erste grafische Webbrowser (Mosaic) erscheint.
-	\item 1995: Kommerzielle Nutzung des Internets wird möglich, Gründung von Unternehmen wie Amazon und eBay.
+	\item 1993: Der erste weit verbreitete grafische Webbrowser (Mosaic) erscheint.
+	\item Mitte der 1990er: Kommerzielle Nutzung des Internets wird möglich, Gründung von Unternehmen wie Amazon (1994) und eBay (1995).
 \end{itemize}
 
 \begin{figure}[H]
@@ -122,7 +123,7 @@ Wie auf \cref{fig:internet_use_by_income_class} zu sehen ist, hat sich die Inter
 Die Kommunikation über das Internet verläuft in unterschiedlichen Teilschritten. Man spricht von dem \textit{Schichtenmodell}. Als Analogie zum Schichtenmodell sei folgende Situation gegeben, in der die Chefs zweier unterschiedlicher Firmen miteinander kommunizieren wollen (siehe \cref{fig:schichtenmodellAnalogie}):
 \begin{enumerate}
 	\item Chef 1 (\faFemale, in Europa) möchte mit Chef 2 (\faMale, in Asien) sprechen.
-	\item Dazu übermittelt Chef 1 dem Sekretariat Ihre Nachricht an Chef 2. Das Sekretariat schreibt die Nachricht nieder und übermittelt der lokalen Post den Brief an Chef 2.
+	\item Dazu übermittelt Chef 1 dem Sekretariat ihre Nachricht an Chef 2. Das Sekretariat schreibt die Nachricht nieder und übermittelt der lokalen Post den Brief an Chef 2.
 	\item Die lokale Post kümmert sich nun um den Transport zur asiatischen Post, wo der Brief an das Sekretariat von Firma 2 übergeben und schlussendlich an Chef 2 gelangt.
 \end{enumerate}
 
@@ -173,33 +174,33 @@ Die Kommunikation über das Internet verläuft in unterschiedlichen Teilschritte
 		\node[above=5pt of region2.north, anchor=center, align=center]{\textcolor{red}{Firma 2, Asien}};
 
 	\end{tikzpicture}
-	\label{fig:schichtenmodellAnalogie}
 	\caption{Analogie zum Schichtenmodell: Kommunikation zwischen zwei grossen Firmen}
+	\label{fig:schichtenmodellAnalogie}
 \end{figure}
 
 Dieser Kommunikationsablauf kann in Schichten mit jeweiligen dazugehörigen Prozessen aufgeteilt werden:
 \begin{enumerate}
-	\item \textbf{Schicht \enquote{Chefs}}: damit die beiden Chefs mit einander sinnvolle Gespräche führen können, verfügen Sie über gemeinsame Standards (Sprache, Wissen etc.) sowie Protokolle (standardisierte Abläufe der Begrüssung etc.).
+	\item \textbf{Schicht \enquote{Chefs}}: Damit die beiden Chefs miteinander sinnvolle Gespräche führen können, verfügen sie über gemeinsame Standards (Sprache, Wissen etc.) sowie Protokolle (standardisierte Abläufe der Begrüssung etc.).
 	\item \textbf{Schicht \enquote{Sekretariat}}: Damit die Sekretariate miteinander kommunizieren können, benötigen auch sie standardisierte Abläufe oder Protokolle, etwa, wie man einen Brief korrekt verfasst, datiert und adressiert.
 	\item \textbf{Schicht \enquote{Post}}: Die Post verfügt ebenfalls über standardisierte Protokolle (wie werden Briefe und Pakete von A nach B transportiert? Mit welchen Transportmitteln, über welche Routen?)
 \end{enumerate}
 Die Vorteile des Schichtenmodells scheinen offensichtlich:
 \begin{itemize}
 	\item \textbf{Unabhängigkeit der Schichten}: Falls die Post das Transportmittel ändert, müssen die Sekretariate die Briefe nicht neu verfassen.
-	\item \textbf{Modularität und Spezialisierung}: Statt das jemand alles tun muss (Chef 1 reist nach Asien zu Chef 2), kann der Prozess für die jeweiligten Beteiligten schnell und effizient abgewickelt werden.
+	\item \textbf{Modularität und Spezialisierung}: Statt dass jemand alles tun muss (Chef 1 reist nach Asien zu Chef 2), kann der Prozess für die jeweiligen Beteiligten schnell und effizient abgewickelt werden.
 \end{itemize}
 
 \subsection{\texorpdfstring{Schichtenmodelle \acrshort{TCP} / \acrshort{IP} und \acrshort{OSI}}{TCP / IP und OSI}}
 
-Im Zusammenhang mit dem Internet werden häufig zwei Schichtenmodelle gegenübergestellt: Das vollständige, detaillierte \acrfull{OSI}-Modell mit 7 Schichten sowie das etwas vereinfachte \acrfull{TCP}-\acrfull{IP}-Modell mit 4 Schichten. Die beiden Schichten, deren Aufgaben, Informationsformen und Protokolle sind in \cref{table:osi-layers} abgebildet.
+Im Zusammenhang mit dem Internet werden häufig zwei Schichtenmodelle gegenübergestellt: Das vollständige, detaillierte \acrfull{OSI}-Modell mit 7 Schichten sowie das etwas vereinfachte \acrshort{TCP}/\acrshort{IP}-Modell mit 4 Schichten. Die beiden Schichten, deren Aufgaben, Informationsformen und Protokolle sind in \cref{table:osi-layers} abgebildet.
 
 
 \begin{table}[H]
 	\centering
 	\footnotesize
 	\input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_osi-tcpip-table.tex}
+	\caption{Internet-Schichten-Modelle \gls{OSI} und \gls{TCP}/\gls{IP} sowie deren wichtigste Aufgaben, Informationsformen, Geräte und Protokolle}
 	\label{table:osi-layers}
-	\caption{Internet-Schichten-Modelle \gls{OSI} und \gls{TCP}-\gls{IP} sowie deren wichtigste Aufgaben, Informationsformen, Geräte und Protokolle}
 \end{table}
 
 \begin{myexercise}[Netzwerkspiel]\label{ex:schichtenmodell-spiel}
@@ -223,9 +224,9 @@ Im Zusammenhang mit dem Internet werden häufig zwei Schichtenmodelle gegenüber
 	\end{myanswer}
 \end{myexercise}
 
-Im Folgenden gehen verwenden wir hauptsächlich das etwas vereinfachte \acrfull{TCP}-\acrfull{IP}-Modell und gehen kurz auf jede Schicht ein.
+Im Folgenden verwenden wir hauptsächlich das etwas vereinfachte \acrshort{TCP}/\acrshort{IP}-Modell und gehen kurz auf jede Schicht ein.
 
-Im echten Internet werden Daten häufig als \textbf{Frame} (Paket) verschickt, ähnlich wie im Spiel aus \cref{ex:schichtenmodell-spiel}. Jedes Paket besteht dabei aus einem \textbf{Header} (Kopfteil) und einem \textbf{Payload} (Nutzteil). Der Header enthält dabei wichtige Informationen über das Paket, wie zum Beispiel die Quell- und Zieladresse, die Sequenznummer und andere Metadaten. Der Payload enthält die eigentlichen Daten, die übertragen werden sollen (z.B. eine Nachricht, ein Bild, ein Video etc.). Jede Schicht fügt dabei ihren eigenen Header hinzu, bevor das Paket an die nächste Schicht weitergegeben wird. Beim Empfänger werden die Header in umgekehrter Reihenfolge entfernt, um die ursprünglichen Daten wiederherzustellen.
+Im echten Internet werden Daten in einzelnen \textbf{Paketen} (allgemein: Dateneinheiten) verschickt, ähnlich wie im Spiel aus \cref{ex:schichtenmodell-spiel}. Jedes Paket besteht dabei aus einem \textbf{Header} (Kopfteil) und einem \textbf{Payload} (Nutzteil). Der Header enthält dabei wichtige Informationen über das Paket, wie zum Beispiel die Quell- und Zieladresse, die Sequenznummer und andere Metadaten. Der Payload enthält die eigentlichen Daten, die übertragen werden sollen (z.B. eine Nachricht, ein Bild, ein Video etc.). Jede Schicht fügt dabei ihren eigenen Header hinzu, bevor das Paket an die nächste Schicht weitergegeben wird. Beim Empfänger werden die Header in umgekehrter Reihenfolge entfernt, um die ursprünglichen Daten wiederherzustellen.
 
 \begin{figure}[H]
 	\centering
@@ -247,31 +248,31 @@ Je nach Rolle der Computer in einem Rechner-Netz ist häufig von \textbf{Client}
 \end{mydefinition}
 
 
-\section{\texorpdfstring{\textcolor{\dataLinkLayerColor}{Netzzugriff-Schicht}}{Netzzugriff-Schicht}}
+\section{\texorpdfstring{\textcolor{\dataLinkLayerColor}{Netzzugangsschicht}}{Netzzugangsschicht}}
 
 \subsection{MAC-Adressen}
-Bisher haben wir mehrheitlich darüber gesprochen, wie Datenpakete zwischen adressierten Empfängern (siehe \gls{IP}-Adressen) hin- und hergeschickt werden, und wie Adressen in (Sub-)Netzwerke unterteilt und in verständliche Namen umgewandelt werden können. Eine \gls{IP}-Adresse kann mit der Adresse eines Hauses verglichen werden. Allerdings legt der Briefträger die Briefe und Pakete nicht an einer Adresse ab, sondern in einem Briefkasten, also einem konkreten Objekt. Falls sich der Briefkasten oder sogar das ganze Haus ändert, so bleibt die Adresse doch dieselbe. Ähnlich dieser Analogie kann in einem Computer die gesamte Hardware ausgetauscht werden, inklusive der Netzwerkkarte, welche sich um das Verschicken und Empfangen von Daten kümmert, und trotzdem sollte der Datentransport zum Computer weiterhin funktionieren. Damit dies klappt, benötigen wir ein weiteres Protokoll, welches die \gls{IP}-Adresse in eine so genannte \gls{MAC}-Adresse umwandelt.
+Wie wir im Schichtenmodell (siehe \cref{table:osi-layers}) gesehen haben, werden Datenpakete mit \gls{IP}-Adressen an ihre Empfänger adressiert. Wie diese Adressen aufgebaut sind, in (Sub-)Netzwerke unterteilt und in verständliche Namen umgewandelt werden, sehen wir in den folgenden Abschnitten. Eine \gls{IP}-Adresse kann mit der Adresse eines Hauses verglichen werden. Allerdings legt der Briefträger die Briefe und Pakete nicht an einer Adresse ab, sondern in einem Briefkasten, also einem konkreten Objekt. Falls sich der Briefkasten oder sogar das ganze Haus ändert, so bleibt die Adresse doch dieselbe. Ähnlich dieser Analogie kann in einem Computer die gesamte Hardware ausgetauscht werden, inklusive der Netzwerkkarte, welche sich um das Verschicken und Empfangen von Daten kümmert, und trotzdem sollte der Datentransport zum Computer weiterhin funktionieren. Damit dies klappt, benötigen wir ein weiteres Protokoll, welches die \gls{IP}-Adresse in eine so genannte \gls{MAC}-Adresse umwandelt.
 
 \begin{mydefinition}[\gls{MAC}-Adresse]
 Die \gls{MAC}-Adresse ist die physische Adresse der Netzwerkkarte in einem Computer, also sozusagen der \enquote{Fingerabdruck} der Netzwerkkarte. Sie wird normalerweise mit 48 bit (= 6 Bytes) angegeben, welche normalerweise der Kürze wegen in hexadezimaler Schreibweise notiert werden. Ein Beispiel einer \gls{MAC}-Adresse könnte wie folgt aussehen: \commandbox{48-2C-6A-1E-59-3D}.
 \end{mydefinition}
 
-\subsection{\texorpdfstring{\gls{ARP}}{ARP}}
-Damit ein Gerät innerhalb eines lokalen Netzwerks eine Nachricht an ein anderes Gerät senden kann, muss die \gls{IP}-Adresse des Empfängers in eine \gls{MAC}-Adresse umgewandelt werden. Da es jedoch keine direkte Möglichkeit gibt, eine \gls{MAC}-Adresse aus einer \gls{IP}-Adresse zu berechnen, muss ein spezielles Protokoll verwendet werden, um diese Zuordnung herzustellen. Dieses Protokoll wird als \textbf{Address Resolution Protocol} (\gls{ARP})  (auf Deutsch: \textit{Adressauflösungsprotokoll})  bezeichnet. Dieses wird jedes Mal ausgeführt, wenn ein Computer eine Nachricht an eine bestimmte \gls{IP}-Adresse senden will, aber die \gls{MAC}-Adresse des nächsten Empfängers (\textit{gateway})  noch  \textit{nicht} kennt. In diesem Fall sendet der Computer eine Anfrage an alle Computer im selben Subnetz (\textit{Broadcast}), um die \gls{MAC}-Adresse des gewünschten Empfängers zu erfahren. Der Computer mit der gesuchten \gls{IP}-Adresse antwortet dann mit seiner \gls{MAC}-Adresse (\textit{Unicast}) und der sendende Computer kann nun die Nachricht an den Empfänger weiterleiten.
+\subsection{\texorpdfstring{\glsentryshort{ARP}}{ARP}}
+Damit ein Gerät innerhalb eines lokalen Netzwerks eine Nachricht an ein anderes Gerät senden kann, muss die \gls{IP}-Adresse des Empfängers in eine \gls{MAC}-Adresse umgewandelt werden. Da es jedoch keine direkte Möglichkeit gibt, eine \gls{MAC}-Adresse aus einer \gls{IP}-Adresse zu berechnen, muss ein spezielles Protokoll verwendet werden, um diese Zuordnung herzustellen. Dieses Protokoll wird als \textbf{\gls{ARP}} (auf Deutsch: \textit{Adressauflösungsprotokoll}) bezeichnet. Dieses wird jedes Mal ausgeführt, wenn ein Computer eine Nachricht an eine bestimmte \gls{IP}-Adresse senden will, aber die \gls{MAC}-Adresse des nächsten Empfängers (des Ziels selbst oder, falls dieses in einem anderen Netz liegt, des \textit{Gateways}) noch \textit{nicht} kennt. In diesem Fall sendet der Computer eine Anfrage an alle Computer im selben Subnetz (\textit{Broadcast}), um die \gls{MAC}-Adresse des gewünschten Empfängers zu erfahren. Der Computer mit der gesuchten \gls{IP}-Adresse antwortet dann mit seiner \gls{MAC}-Adresse (\textit{Unicast}) und der sendende Computer kann nun die Nachricht an den Empfänger weiterleiten.
 
 Ein Beispiel, wie das \gls{ARP}-Protokoll funktioniert, könnte wie folgt aussehen:
 \begin{itemize}
 	\item Computer \commandbox|192.168.0.33| will Nachricht senden an \commandbox|192.168.0.34| im selben Subnetz (Subnetz-Maske: \commandBluebox|255.255.255.0|)
-	\item \commandbox|192.168.0.33| sendet daher eine Nachricht an alle Computer in \commandbox|192.168.0.x|: \enquote{Wer hat die IP \commandbox|192.168.0.34|}?
-	\item Computer \commandbox|192.168.0.34| antwortet: \enquote{Ich! Meine MAC ist \commandbox|60:4E:46:F5:08:09|.}
-	\item Nun kann der Computer seine Nachricht direkt an den nächsten Empfänger (\textit{gateway}) übergeben.
+	\item \commandbox|192.168.0.33| sendet daher eine Nachricht an alle Computer in \commandbox|192.168.0.x|: \enquote{Wer hat die \gls{IP} \commandbox|192.168.0.34|?}
+	\item Computer \commandbox|192.168.0.34| antwortet: \enquote{Ich! Meine \gls{MAC} ist \commandbox|60:4E:46:F5:08:09|.}
+	\item Nun kann der Computer seine Nachricht direkt an den Empfänger \commandbox|192.168.0.34| übergeben (da sich dieser im selben Subnetz befindet, ist kein \textit{Gateway} nötig).
 \end{itemize}
 
 Die Resultate aller \gls{ARP}-Anfragen werden in einer so genannten \textbf{ARP-Tabelle} gespeichert, damit nicht jedes Mal eine neue Anfrage gesendet werden muss. Diese Tabelle wird periodisch aktualisiert, um sicherzustellen, dass die Zuordnungen aktuell bleiben. Um die \gls{ARP}-Tabelle auf einem Computer anzuzeigen, kann der Befehl \commandbox*|arp -a| im Terminal (MacOS, UNIX-Systeme), bzw. \texttt{cmd} (Windows) verwendet werden.
 
 \subsection{Ping}
 % TODO potentially add tcolorbox for each terminal command introduced, with example use
-Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Netzwerk erreichbar ist. Dabei wird eine minimale, inhaltslose Nachricht an einen anderen Rechner (=\gls{IP}-Adresse) geschickt. Das Ziel ist es, zu überprüfen, ob eine gewisse \gls{IP}-Adresse im Netzwerk existiert. Der Befehl \enquote{\textit{ping}} ist vergleichbar mit einem Ping-Pong-Spiel: Der Absender-Rechner, der eine \enquote{ping}-Nachricht schickt, erhält vom Ziel-Rechner, sofern dieser erreicht wird, viermal eine \enquote{pong}-Nachricht zurückgeschickt. Der \texttt{ping}-Befehl kann im Terminal (MacOS, UNIX-Systeme), bzw \texttt{cmd} (Windows) wie folgt ausgeführt werden: \commandbox*|ping [ip address]|, also z.B. \commandbox*|ping 159.233.1.22|. Der Ping-Befehl verwendet das \gls{ICMP}-Protokoll (Internet Control Message Protocol) der Internetschicht, um die Nachrichten zu verschicken. Das \gls{ICMP}-Protokoll ist ein Protokoll, das speziell für die Übertragung von Kontroll-Nachrichten im Netzwerk entwickelt wurde, allerdings nicht für den Datentransfer von Nutzdaten.
+Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Netzwerk erreichbar ist. Dabei wird eine minimale, inhaltslose Nachricht an einen anderen Rechner (=\gls{IP}-Adresse) geschickt. Das Ziel ist es, zu überprüfen, ob eine gewisse \gls{IP}-Adresse im Netzwerk existiert. Der Befehl \enquote{\textit{ping}} ist vergleichbar mit einem Ping-Pong-Spiel: Der Absender-Rechner, der eine \enquote{ping}-Nachricht schickt, erhält vom Ziel-Rechner, sofern dieser erreicht wird, auf jede Anfrage eine \enquote{pong}-Nachricht zurückgeschickt (unter Windows werden standardmässig vier Anfragen gesendet, unter MacOS und Linux so lange, bis der Befehl mit \keys{\ctrl + C} abgebrochen wird). Der \texttt{ping}-Befehl kann im Terminal (MacOS, UNIX-Systeme), bzw. \texttt{cmd} (Windows) wie folgt ausgeführt werden: \commandbox*|ping [ip address]|, also z.B. \commandbox*|ping 159.233.1.22|. Der Ping-Befehl verwendet das \gls{ICMP} der Internetschicht, um die Nachrichten zu verschicken. Das \gls{ICMP}-Protokoll ist ein Protokoll, das speziell für die Übertragung von Kontroll-Nachrichten im Netzwerk entwickelt wurde, allerdings nicht für den Datentransfer von Nutzdaten.
 
 \begin{mycaution}[Ping of Death]
 	Eine Spezial-Variante des \texttt{ping}-Befehls ist der sogenannte \textcolor{red}{\faSkull{} Ping of Death}, bei dem ein bösartiger Computer ein zu grosses Datenpaket an einen anderen Computer schickte, das beim Zusammensetzen zum Zusammensturz des Zielrechners führte. Dies ist seit Ende der 90er-Jahre auf den meisten Computern nicht mehr möglich: Die Sicherheitslücke wurde behoben, indem beispielsweise die Paketgrösse vor dem Zusammensetzen überprüft wurde.
@@ -285,14 +286,14 @@ Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Net
 	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 1} an und führen Sie alle gezeigten Schritte ebenfalls in Filius aus.
 \end{myexercise}
 
-Ähnlich wie das Datenaustausch-Tool in Filius kann der Datenaustausch in einem echten Netzwerk mit einem Netzwerk-Analyse-Tool wie beispielsweise \textbf{WireShark} beobachtet werden. WireShark ermöglicht es, den gesamten Datenverkehr in einem Netzwerk mitzuschneiden und zu analysieren. So können auch die \gls{ARP}-Anfragen und -Antworten beobachtet werden.
+Ähnlich wie das Datenaustausch-Tool in Filius kann der Datenaustausch in einem echten Netzwerk mit einem Netzwerk-Analyse-Tool wie beispielsweise \textbf{Wireshark} beobachtet werden. Wireshark ermöglicht es, den gesamten Datenverkehr in einem Netzwerk mitzuschneiden und zu analysieren. So können auch die \gls{ARP}-Anfragen und -Antworten beobachtet werden.
 
-\begin{myexercise}[WireShark-Auszug]
-	Sie erhalten folgenden WireShark-Auszug eines \gls{ARP}-Protokolls. Beantworten Sie die Fragen dazu.
+\begin{myexercise}[Wireshark-Auszug: \acrshort{ARP}]
+	Sie erhalten folgenden Wireshark-Auszug eines \gls{ARP}-Protokolls. Beantworten Sie die Fragen dazu.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{Grundlagen_Info/07_Netzwerke/Figures/wiresharkARP.png}
-		\caption{WireShark-Auszug eines \gls{ARP}-Protokolls}
+		\caption{Wireshark-Auszug eines \gls{ARP}-Protokolls}
 		\label{fig:arp-wireshark}
 	\end{figure}
 	\begin{itemize}
@@ -311,8 +312,8 @@ Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Net
 	\end{myanswer}
 \end{myexercise}
 
-\begin{mychallenge}[WireShark-Installation und \gls{ARP} mit WireShark beobachten]
-	Installieren Sie das Netzwerk-Analyse-Tool \textbf{WireShark} auf Ihrem Computer (Anleitung siehe \href{https://www.wireshark.org/download.html}{wireshark.org}). Versuchen Sie, einen \gls{ARP}-Austausch in Ihrem eigenen Netzwerk zu beobachten. Dazu müssen Sie zuerst den \gls{ARP}-Cache Ihres Computers leeren. Folgende Befehle müssen in der Befehlszeile eingegeben werden, diese kann wie folgt geöffnet werden:
+\begin{mychallenge}[Wireshark-Installation und \gls{ARP} mit Wireshark beobachten]
+	Installieren Sie das Netzwerk-Analyse-Tool \textbf{Wireshark} auf Ihrem Computer (Anleitung siehe \href{https://www.wireshark.org/download.html}{wireshark.org}). Versuchen Sie, einen \gls{ARP}-Austausch in Ihrem eigenen Netzwerk zu beobachten. Dazu müssen Sie zuerst den \gls{ARP}-Cache Ihres Computers leeren. Folgende Befehle müssen in der Befehlszeile eingegeben werden, diese kann wie folgt geöffnet werden:
 
 	\begin{itemize}
 		\item Windows: Öffnen Sie die Eingabeaufforderung (cmd) via \keys{\faWindows+R} und Eingabe von \texttt{cmd}
@@ -325,7 +326,7 @@ Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Net
 		\item MacOS: \commandbox*|sudo arp -a -d|
 	\end{itemize}
 
-	Danach müssen Sie in WireShark die richtige Netzwerkschnittstelle auswählen (z.B. WLAN oder Ethernet) und einen Display-Filter für \gls{ARP} setzen. Geben Sie dazu in das Filter-Feld Folgendes ein:
+	Danach müssen Sie in Wireshark die richtige Netzwerkschnittstelle auswählen (z.B. WLAN oder Ethernet) und einen Display-Filter für \gls{ARP} setzen. Geben Sie dazu in das Filter-Feld Folgendes ein:
 
 	\commandbox|arp && (arp.src.proto_ipv4 == MEINEIP or arp.dst.proto_ipv4 == MEINEIP)|
 
@@ -333,14 +334,14 @@ Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Net
 
 	\begin{itemize}
 		\item Windows: \commandbox*|ipconfig|
-		\item MacOS: \commandbox*|ifconfig getifaddr en0|
+		\item MacOS: \commandbox*|ipconfig getifaddr en0|
 	\end{itemize}
 
-	Starten Sie die Aufnahme in WireShark und versuchen Sie, eine beliebige Webseite in Ihrem Browser zu öffnen. Beobachten Sie die \gls{ARP}-Anfragen und -Antworten in WireShark.
+	Starten Sie die Aufnahme in Wireshark und versuchen Sie, eine beliebige Webseite in Ihrem Browser zu öffnen. Beobachten Sie die \gls{ARP}-Anfragen und -Antworten in Wireshark.
 \end{mychallenge}
 
 \subsection{Verschlüsselung von Netzwerken}
-In einem lokalen Netzwerk können Datenpakete von jedem Gerät im selben Netzwerk abgefangen und gelesen werden. Um die Sicherheit und Vertraulichkeit der Daten zu gewährleisten, werden verschiedene Verschlüsselungsmethoden verwendet. Eine gängige Methode ist die Verwendung des \gls{WPA}-Protokolls, welches eine starke Verschlüsselung der Datenpakete ermöglicht. \gls{WPA} verwendet den \gls{AES}-Verschlüsselungsalgorithmus, um die Daten zu schützen. Dabei handelt es sich um einen symmetrischen Verschlüsselungsalgorithmus, welcher als sehr sicher gilt und in vielen Anwendungen eingesetzt wird.
+In einem lokalen Netzwerk können Datenpakete von jedem Gerät im selben Netzwerk abgefangen und gelesen werden. Um die Sicherheit und Vertraulichkeit der Daten zu gewährleisten, werden verschiedene Verschlüsselungsmethoden verwendet. Eine gängige Methode ist die Verwendung des \gls{WPA}-Protokolls, welches eine Verschlüsselung der Datenpakete ermöglicht. Die erste Version von \gls{WPA} verwendete noch das veraltete Verfahren \gls{RC4}; ab \gls{WPA}2 wird der \gls{AES}-Verschlüsselungsalgorithmus verwendet, um die Daten zu schützen. Dabei handelt es sich um einen symmetrischen Verschlüsselungsalgorithmus, welcher als sehr sicher gilt und in vielen Anwendungen eingesetzt wird.
 
 Es gibt verschiedene Versionen von \gls{WPA}, darunter \gls{WPA}2 und \gls{WPA}3, die jeweils verbesserte Sicherheitsfunktionen bieten. In einem passwortfreien Netzwerk (offenes Netzwerk) sind die Datenpakete grundsätzlich unverschlüsselt und können von jedem Gerät im selben Netzwerk abgefangen und gelesen werden. Um dies zu illustrieren, schauen wir uns folgenden Wireshark-Auszug eines unverschlüsselten \gls{HTTP}-Datenpakets an.
 
@@ -356,15 +357,15 @@ Im unteren Teil von \cref{fig:http-wireshark} ist der Payload des Pakets dargest
 \end{myexample}
 
 \begin{mycaution}[Strafrechtliche Aspekte beim Mithören von Netzwerken]
-	Das Abfangen und Mitlesen von Datenpaketen in einem Netzwerk ohne ausdrückliche Erlaubnis der beteiligten Parteien ist in vielen Ländern illegal und kann strafrechtlich verfolgt werden. In der Schweiz beispielsweise verstösst das unbefugte Abfangen von Daten gegen das Bundesgesetz über den Datenschutz (DSG) und das Strafgesetzbuch (StGB). Personen, die beim unbefugten Abfangen von Daten erwischt werden, können mit Geldstrafen oder sogar Freiheitsstrafen belegt werden. Es ist daher wichtig, die rechtlichen Rahmenbedingungen zu kennen und einzuhalten.
+	Das Abfangen und Mitlesen von Datenpaketen in einem Netzwerk ohne ausdrückliche Erlaubnis der beteiligten Parteien ist in vielen Ländern illegal und kann strafrechtlich verfolgt werden. In der Schweiz beispielsweise verstösst das unbefugte Abfangen von Daten gegen das Bundesgesetz über den Datenschutz (\acrshort{DSG}) und das Strafgesetzbuch (StGB). Personen, die beim unbefugten Abfangen von Daten erwischt werden, können mit Geldstrafen oder sogar Freiheitsstrafen belegt werden. Es ist daher wichtig, die rechtlichen Rahmenbedingungen zu kennen und einzuhalten.
 \end{mycaution}
 
-\begin{myexercise}[WireShark-Auszug]
-	Sam und Martina haben ein Python-Game geschrieben mit Multiplayer-Funktionalität innerhalb des lokalen Netzwerks. Sam hat das Spiel auf seinem Computer gestartet und Martina möchte sich mit Sams Spiel verbinden. Sams Computer hat die \gls{IP}-Adresse \commandbox|192.168.0.97| und Martinas Computer die \gls{IP}-Adresse \commandbox|192.168.0.121|. Unten ist ein WireShark-Auszug von Martinas Computer zu sehen, als sie versucht, sich mit Sams Spiel zu verbinden. Beantworten Sie die Fragen dazu.
+\begin{myexercise}[Wireshark-Auszug: Multiplayer-Spiel]
+	Sam und Martina haben ein Python-Game geschrieben mit Multiplayer-Funktionalität innerhalb des lokalen Netzwerks. Sam hat das Spiel auf seinem Computer gestartet und Martina möchte sich mit Sams Spiel verbinden. Sams Computer hat die \gls{IP}-Adresse \commandbox|192.168.0.97| und Martinas Computer die \gls{IP}-Adresse \commandbox|192.168.0.121|. Unten ist ein Wireshark-Auszug von Martinas Computer zu sehen, als sie versucht, sich mit Sams Spiel zu verbinden. Beantworten Sie die Fragen dazu.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{Grundlagen_Info/07_Netzwerke/Figures/wiresharkGame.png}
-		\caption{WireShark-Auszug von Martinas Computer}
+		\caption{Wireshark-Auszug von Martinas Computer}
 		\label{fig:game-wireshark}
 	\end{figure}
 	\begin{itemize}
@@ -393,7 +394,7 @@ Jede Netzwerkkarte kann nur mit genau einem anderen Gerät in einem lokalen Netz
 Beim Erstellen eines Netzwerks stellt sich als Erstes die Frage, welche Computer man mit welchen anderen Computern verbinden soll. Die Struktur der Verbindungen in einem Netzwerk kann also umformuliert werden als Graphen-Problem, bei dem es zu bestimmen gibt, welche Knoten eines Graphen miteinander über eine Kante verbunden werden. In den folgenden Graphen bezeichnen Knoten die Computer und Kanten die Verbindungen (Kabel) zwischen den Computern. Die verschiedenen möglichen Strukturen eines Netzwerks werden auch als \textbf{Topologie} bezeichnet. Einige Beispiel-Topologien sind in \cref{fig:topologie} gezeigt.
 \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_topologies.tex}
 
-Da Computer in Realität häufig nur über eine einzige Netzwerkkarte verfügen, können sie auch nur mit einem weiteren Computer verbunden werden. In einem lokalen Netzwerk (\gls{LAN}) trifft man daher häufig die Form einer Stern-Topologie an, bei der alle Computer mit einer zentralen \textbf{Switch} verbunden werden, also einem Gerät, welches mehrere Rechner an einem zentralen Punkt miteinander verbindet.
+Da Computer in Realität häufig nur über eine einzige Netzwerkkarte verfügen, können sie auch nur mit einem weiteren Computer verbunden werden. In einem lokalen Netzwerk (\gls{LAN}) trifft man daher häufig die Form einer Stern-Topologie an, bei der alle Computer mit einem zentralen \textbf{Switch} verbunden werden, also einem Gerät, welches mehrere Rechner an einem zentralen Punkt miteinander verbindet.
 
 \begin{myexercise}[Topologien vergleichen]
 	Vergleichen Sie die Stern-Topologie mit der Vollvermascht-Topologie:
@@ -404,15 +405,15 @@ Da Computer in Realität häufig nur über eine einzige Netzwerkkarte verfügen,
 	\end{itemize}
 	\begin{myanswer}
 		\begin{itemize}
-			\item In der Stern-Topologie ist es einfacher, ein neues Gerät anzuschliessen, da nur ein Kabel zum zentralen Switch benötigt wird. Falls kein zentraler Switch benötigt wird, ist beispielsweise die vollvermaschte Topologie einfacher, da das neue Gerät zu jedem anderen Gerät maximal ein Kabel benötigt.
-			\item In der Vollvermaschten Topologie funktioniert die Kommunikation immer noch gut, selbst wenn einzelne Kabel oder Geräte ausfallen.
-			\item In der Vollvermaschten Topologie müssen mehr Kabel gekauft werden.
+			\item In der Stern-Topologie ist es einfacher, ein neues Gerät anzuschliessen, da nur ein Kabel zum zentralen Switch benötigt wird. In der vollvermaschten Topologie muss das neue Gerät hingegen mit jedem bereits vorhandenen Gerät über ein eigenes Kabel verbunden werden.
+			\item In der vollvermaschten Topologie funktioniert die Kommunikation immer noch gut, selbst wenn einzelne Kabel oder Geräte ausfallen.
+			\item In der vollvermaschten Topologie müssen mehr Kabel gekauft werden.
 		\end{itemize}
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}[Kabelanzahl in Stern-Topologien]
-	Wie viele Kabel müssen in der Stern-Topologie gekauft werden\dots
+	Wie viele Kabel müssen in der Stern-Topologie gekauft werden (das Gerät im Zentrum, z.B. ein Switch, zählt dabei als eines der Geräte)\dots
 	\begin{itemize}
 		\item Für 6 Geräte?
 		\item Für 10 Geräte?
@@ -444,7 +445,7 @@ Da Computer in Realität häufig nur über eine einzige Netzwerkkarte verfügen,
 \end{myexercise}
 
 \subsection{Unicast, Multicast und Broadcast}
-Je nachdem für wie viele Teilnehmer eines Netzwerks eine Sendung bestimmt ist, unterscheidet man bei der Datenübertragung zwischen \textbf{Unicast}, \textbf{Multicast} und \textbf{Broadcast} (siehe \cref{fig:unicast-multicast-broadcast}). Obschon dieses Unterkapitel hier bei der Netzzugriff-Schicht angesiedelt ist, so betrifft diese Unterscheidung alle Schichten des OSI-Modells, da sie die Art der Datenübertragung im gesamten Netzwerk beschreibt.
+Je nachdem für wie viele Teilnehmer eines Netzwerks eine Sendung bestimmt ist, unterscheidet man bei der Datenübertragung zwischen \textbf{Unicast}, \textbf{Multicast} und \textbf{Broadcast} (siehe \cref{fig:unicast-multicast-broadcast}). Obschon dieses Unterkapitel hier bei der Netzzugangsschicht angesiedelt ist, so betrifft diese Unterscheidung alle Schichten des \gls{OSI}-Modells, da sie die Art der Datenübertragung im gesamten Netzwerk beschreibt.
 
 \begin{figure}[H]
 	\centering
@@ -482,6 +483,8 @@ Je nachdem für wie viele Teilnehmer eines Netzwerks eine Sendung bestimmt ist, 
 	% Broadcast
 	\begin{subfigure}[b]{0.3\textwidth}
 		\centering
+		% scale down to the subfigure width (label "Empfänger 2" sticks out on the right)
+		\resizebox{\linewidth}{!}{%
 		\begin{tikzpicture}
 			% Nodes
 			\node[fill=ForestGreen, circle, minimum size=6mm, label=above:{Sender}] (A) at (0,0) {};
@@ -492,7 +495,8 @@ Je nachdem für wie viele Teilnehmer eines Netzwerks eine Sendung bestimmt ist, 
 			\draw[->, thick, RoyalBlue] (A) -- (B);
 			\draw[->, thick, RoyalBlue] (A) -- (C);
 			\draw[->, thick, RoyalBlue] (A) -- (D);
-		\end{tikzpicture}
+		\end{tikzpicture}%
+		}
 		\caption{Broadcast: 1:alle}
 	\end{subfigure}
 	\caption{Unicast, Multicast und Broadcast: Übertragungsarten im Netzwerk}
@@ -502,37 +506,37 @@ Je nachdem für wie viele Teilnehmer eines Netzwerks eine Sendung bestimmt ist, 
 \begin{myexercise}[Alltagsbeispiele für Übertragungsarten im Netzwerk]
 	Welche Art der Datenübertragung verwenden die folgenden Alltagssituationen?
 	\begin{itemize}
-		\item Whatsapp-Nachricht an eine befreundete Person
+		\item WhatsApp-Nachricht an eine befreundete Person
 		\item Lautsprecherdurchsage im gesamten Flughafen
 		\item Lautsprecherdurchsage auf dem Gleis bei der SBB
 		\item Info-Box im Intranet
 		\item Frage einer Person an eine Gruppe der Klasse
-		\item Email der Schulleitung an alle Eltern
+		\item E-Mail der Schulleitung an alle Eltern
 	\end{itemize}
 	\begin{myanswer}
 		\begin{itemize}
-			\item Whatsapp-Nachricht an eine befreundete Person: \textbf{Unicast} (1:1)
+			\item WhatsApp-Nachricht an eine befreundete Person: \textbf{Unicast} (1:1)
 			\item Lautsprecherdurchsage im gesamten Flughafen: \textbf{Broadcast} (an alle Anwesenden im Flughafen)
 			\item Lautsprecherdurchsage auf dem Gleis bei der SBB: \textbf{Multicast} (an alle auf dem Gleis aber nicht an alle Anwesenden im Bahnhof)
 			\item Info-Box im Intranet: \textbf{Broadcast} (an alle Nutzer des Intranets)
 			\item Frage an eine Gruppe der Klasse: \textbf{Multicast} (an eine bestimmte Gruppe, z.B. die Teammitglieder eines Projekts)
-			\item Email der Schulleitung an alle Eltern: \textbf{Multicast} (an eine definierte Empfängergruppe)
+			\item E-Mail der Schulleitung an alle Eltern: \textbf{Multicast} (an eine definierte Empfängergruppe)
 		\end{itemize}
 	\end{myanswer}
 \end{myexercise}
 
 
 \section{\texorpdfstring{\textcolor{\networkLayerColor}{Vermittlungsschicht / Internetschicht}}{Vermittlungsschicht / Internetschicht}}
-Die Übertragungssicherungsschicht befasst sich mit der stabilen Übertragung von Daten zwischen zwei Rechnern. Wofür sie jedoch nicht zuständig ist, ist die Adressierung und Identifizierung von Computern im Netzwerk. Diesem Aspekt ist die Internetschicht gewidmet.
+Die Netzzugangsschicht befasst sich mit der stabilen Übertragung von Daten zwischen zwei Rechnern. Wofür sie jedoch nicht zuständig ist, ist die Adressierung und Identifizierung von Computern im Netzwerk. Diesem Aspekt ist die Internetschicht gewidmet.
 
-\subsection{IP-Adressen}
+\subsection{\texorpdfstring{\glsentryshort{IP}-Adressen}{IP-Adressen}}
 
 Eine \acrfull{IP}-Adresse ist eine Netzwerk-Adresse eines Computers. Somit ist sie in gewisser Weise der Wohnadresse einer Person ähnlich. Häufig werden \gls{IP}-Adressen noch im \textbf{IPv4}-Format angegeben: Dieses besteht aus 4 bytes, also 4 Zahlen von 0 bis 255. Die \gls{IP}v4-Adresse wird meist dezimal angegeben (beispielsweise \texttt{192.168.0.1}).
 
 Häufig wird zwischen der \textbf{lokalen} und der \textbf{globalen} \gls{IP}-Adresse unterschieden:
 \begin{itemize}
 	\item Die \textbf{lokale} \gls{IP}-Adresse (auch private \gls{IP}-Adresse genannt) ist die Adresse eines Computers innerhalb eines lokalen Netzwerks (z.B. im Heimnetzwerk oder Firmennetzwerk). Diese Adresse ist nur innerhalb dieses lokalen Netzwerks gültig und kann von anderen Computern im Internet nicht direkt erreicht werden.
-	\item Die \textbf{globale} \gls{IP}-Adresse (auch öffentliche \gls{IP}-Adresse genannt) ist die Adresse eines Computers im gesamten Internet. Diese Adresse ist weltweit eindeutig und ermöglicht es Computern, miteinander über das Internet zu kommunizieren. Die globale \gls{IP}-Adresse wird in der Regel von einem Internetdienstanbieter (\gls{ISP}) zugewiesen.
+	\item Die \textbf{globale} \gls{IP}-Adresse (auch öffentliche \gls{IP}-Adresse genannt) ist die Adresse eines Computers im gesamten Internet. Diese Adresse ist weltweit eindeutig und ermöglicht es Computern, miteinander über das Internet zu kommunizieren. Die globale \gls{IP}-Adresse wird in der Regel von einem Internetdienstanbieter, englisch \gls{ISP}, zugewiesen.
 \end{itemize}
 
 Der Grund, warum es lokale und globale \gls{IP}-Adressen gibt, liegt darin, dass es nicht genügend globale \gls{IP}-Adressen für alle Geräte auf der Welt gibt. Durch die Verwendung von lokalen \gls{IP}-Adressen in privaten Netzwerken können viele Geräte dieselbe lokale Adresse verwenden, solange sie sich in unterschiedlichen Netzwerken befinden. Der Router in einem lokalen Netzwerk übernimmt dann die Aufgabe, die Kommunikation zwischen den lokalen Geräten und dem Internet zu koordinieren, indem er die lokalen Adressen in die globale Adresse übersetzt (dies wird als \gls{NAT} bezeichnet). Weitere Informationen zu \gls{NAT} sowie Port Forwarding finden Sie in \cref{app:nat_port_forwarding}. Ein Beispiel für die Umwandlung von lokalen in globale \gls{IP}-Adressen ist in \cref{fig:nat-example} dargestellt.
@@ -597,14 +601,14 @@ Der Grund, warum es lokale und globale \gls{IP}-Adressen gibt, liegt darin, dass
 			% NAT table
 			\node[below=0.1cm of nat, text width=3.5cm, font=\tiny, inner sep=8pt, draw, rounded corners, fill=\networkLayerColor!10] (natTable) {
 				\textbf{\acrshort{NAT}-Tabelle}
-				\begin{tabular}{p{1.4cm}|p{1.4cm}}
+				\begin{tabular}{p{1.4cm}p{1.4cm}}
 					\textbf{Lokal} & \textbf{Global} \\
-					\midrule\midrule
+					\midrule
 					192.168.0.10   & 80.152.43.21    \\
 				\end{tabular}
 			};
 		\end{tikzpicture}
-		\caption{Schritt 2: Router übersetzt lokale IP und sendet Anfrage}
+		\caption{Schritt 2: Router übersetzt lokale \gls{IP} und sendet Anfrage}
 	\end{subfigure}
 
 	\begin{subfigure}[b]{\textwidth}
@@ -636,9 +640,9 @@ Der Grund, warum es lokale und globale \gls{IP}-Adressen gibt, liegt darin, dass
 			% NAT table
 			\node[below=0.1cm of nat, text width=3.5cm, font=\tiny, inner sep=8pt, draw, rounded corners, fill=\networkLayerColor!10] (natTable) {
 				\textbf{\acrshort{NAT}-Tabelle}
-				\begin{tabular}{p{1.4cm}|p{1.4cm}}
+				\begin{tabular}{p{1.4cm}p{1.4cm}}
 					\textbf{Lokal} & \textbf{Global} \\
-					\midrule\midrule
+					\midrule
 					192.168.0.10   & 80.152.43.21    \\
 				\end{tabular}
 			};
@@ -675,14 +679,14 @@ Der Grund, warum es lokale und globale \gls{IP}-Adressen gibt, liegt darin, dass
 			% NAT table
 			\node[below=0.1cm of nat, text width=3.5cm, font=\tiny, inner sep=8pt, draw, rounded corners, fill=\networkLayerColor!10] (natTable) {
 				\textbf{\acrshort{NAT}-Tabelle}
-				\begin{tabular}{p{1.4cm}|p{1.4cm}}
+				\begin{tabular}{p{1.4cm}p{1.4cm}}
 					\textbf{Lokal} & \textbf{Global} \\
-					\midrule\midrule
+					\midrule
 					192.168.0.10   & 80.152.43.21    \\
 				\end{tabular}
 			};
 		\end{tikzpicture}
-		\caption{Schritt 4: Router übersetzt globale IP zurück und sendet Antwort}
+		\caption{Schritt 4: Router übersetzt globale \gls{IP} zurück und sendet Antwort}
 	\end{subfigure}
 
 	\caption{Beispiel für die Umwandlung von lokalen in globale \gls{IP}-Adressen mittels \gls{NAT}}
@@ -703,7 +707,7 @@ Die lokale Netzwerk-Adresse eines Computers wird häufig automatisch von einem \
 \begin{mychallenge}[\commandbox*|ping| im lokalen Netzwerk]
 	In vielen Schul-\glspl{WLAN} ist das Anpingen von anderen Geräten aus Sicherheitsgründen deaktiviert. Wechseln Sie daher in ein anderes Netzwerk, z.B. den Hotspot Ihres Smartphones, um die Übung durchzuführen.
 
-	Tauschen Sie zu zweit ihre lokale \gls{IP}v4-Adresse aus (siehe \cref{ex:meine-ip}) und überprüfen Sie, ob Sie sich gegenseitig im lokalen Netzwerk anpingen können. Verwenden Sie dazu den Befehl \commandbox*|ping [lokale IP-Adresse des anderen Teilnehmers]| im Terminal (MacOS) oder in der Eingabeaufforderung (Windows).
+	Tauschen Sie zu zweit Ihre lokale \gls{IP}v4-Adresse aus (siehe \cref{ex:meine-ip}) und überprüfen Sie, ob Sie sich gegenseitig im lokalen Netzwerk anpingen können. Verwenden Sie dazu den Befehl \commandbox*|ping [lokale IP-Adresse des anderen Teilnehmers]| im Terminal (MacOS) oder in der Eingabeaufforderung (Windows).
 \end{mychallenge}
 
 
@@ -754,11 +758,11 @@ Die lokale Netzwerk-Adresse eines Computers wird häufig automatisch von einem \
 Wie wir in \cref{ex:ipv4} gesehen haben, gibt es zu wenige Adressen bei \gls{IP}v4. Daher wird \gls{IP}v4 graduell durch einen neuen Standard abgelöst, \textbf{\gls{IP}v6}, in welchem jede Adresse über 128 Bits verfügt, womit fast unendlich viele Geräte adressiert werden können.
 
 \begin{mydefinition}[\gls{IP}v6-Adressen]
-Eine \gls{IP}v6-Adresse besteht aus 128 Bits, wobei die 128 Bits in 8 Gruppen zu je 16 Bits aufgeteilt werden, welche durch Doppelpunkte getrennt sind. Zur einfacheren Lesbarkeit werden \gls{IP}v6-Adressen in hexadezimaler Schreibweise angegeben, also mit den Ziffern 0-9 und A-F. Eine typische \gls{IP}v6-Adresse sieht beispielsweise folgendermassen aus: \texttt{2001:0db8:85a3:0000:0000:8a2e:0370:7334}. Zur Vereinfachung können führende Nullen in einer Gruppe weggelassen werden, sowie aufeinanderfolgende Gruppen mit dem Wert 0 durch \enquote{::} ersetzt werden. Somit kann die obige Adresse auch als \texttt{2001:db8:85a3::8a2e:370:7334} geschrieben werden. Doppelte Doppelpunkt-Kürzungen sind jedoch nicht erlaubt (also z.B. \texttt{2001::85a3::8a2e:370:7334} ist ungültig).
+Eine \gls{IP}v6-Adresse besteht aus 128 Bits, wobei die 128 Bits in 8 Gruppen zu je 16 Bits aufgeteilt werden, welche durch Doppelpunkte getrennt sind. Zur einfacheren Lesbarkeit werden \gls{IP}v6-Adressen in hexadezimaler Schreibweise angegeben, also mit den Ziffern 0-9 und A-F. Eine typische \gls{IP}v6-Adresse sieht beispielsweise folgendermassen aus: \texttt{2001:0db8:85a3:0000:\allowbreak 0000:8a2e:0370:7334}. Zur Vereinfachung können führende Nullen in einer Gruppe weggelassen werden, sowie aufeinanderfolgende Gruppen mit dem Wert 0 durch \enquote{::} ersetzt werden. Somit kann die obige Adresse auch als \texttt{2001:db8:85a3::8a2e:370:7334} geschrieben werden. Doppelte Doppelpunkt-Kürzungen sind jedoch nicht erlaubt (also z.B. \texttt{2001::85a3::\allowbreak 8a2e:370:7334} ist ungültig).
 \end{mydefinition}
 
 \begin{myexercise}
-	Wie viele Adressen gibt es bei IPv6?
+	Wie viele Adressen gibt es bei \gls{IP}v6?
 	\begin{myanswer}
 		\[2^{128} \approx 3.4\cdot 10^{38}\]
 	\end{myanswer}
@@ -780,7 +784,7 @@ Eine \gls{IP}v6-Adresse besteht aus 128 Bits, wobei die 128 Bits in 8 Gruppen zu
 		\begin{itemize}
 			\item Keine gültige \gls{IP}-Adresse (erstes Byte > 255)
 			\item Gültige \gls{IP}v4-Adresse
-			\item Keine gültige \gls{IP}-Adresse (falsches IPv4-Format)
+			\item Keine gültige \gls{IP}-Adresse (falsches \gls{IP}v4-Format)
 			\item Gültige \gls{IP}v6-Adresse
 			\item Gültige \gls{IP}v6-Adresse
 			\item Gültige \gls{IP}v6-Adresse
@@ -807,35 +811,35 @@ Eine \gls{IP}v6-Adresse besteht aus 128 Bits, wobei die 128 Bits in 8 Gruppen zu
 \subsection{Netzmasken \& Subnetze}
 \textbf{Subnetzwerke} verbinden --- wie es der Name sagt --- mehrere Hosts zu einem (Sub-)Netzwerk. Dabei gehören mehrere Geräte zum gleichen Subnetz, falls sie:
 \begin{itemize}
-	\item Physisch miteinander verbunden sind (via Kabel, \gls{WLAN}, etc.)
-	\item Die gleiche Subnetzmaske teilen (später mehr dazu)
+	\item physisch miteinander verbunden sind (via Kabel, \gls{WLAN}, etc.)
+	\item denselben Netzwerkteil haben, d.h. ihre \gls{IP}-Adressen an allen Stellen übereinstimmen, die durch die Subnetzmaske vorgegeben sind (später mehr dazu)
 \end{itemize}
 
-Eine (Sub-)Netzmaske hat fast dasselbe Format wie eine \gls{IP}-Adresse und fasst mehrere \glspl{IP} zu einer Gruppe, d.h. einem Subnetz zusammen. Die Subnetzmaske gibt an, wie viele Stellen einer \gls{IP}-Adresse innerhalb eines Subnetzes gleich sein müssen. Sie besteht immer aus zwei \glspl{IP}-Adressen, wobei die erste \gls{IP}-Adresse einer gültigen Adresse innerhalb des Subnetzes entspricht, und die zweite \gls{IP}-Adresse vorgibt, wie stark eine weitere \gls{IP}-Adresse von der ersten \gls{IP}-Adresse abweichen dürfte, damit sie immer noch zum selben Netz gehört.
+Eine (Sub-)Netzmaske hat dasselbe Format wie eine \gls{IP}-Adresse und fasst mehrere \gls{IP}-Adressen zu einer Gruppe, d.h. einem Subnetz zusammen. Die Subnetzmaske gibt an, wie viele Stellen einer \gls{IP}-Adresse innerhalb eines Subnetzes gleich sein müssen: An allen Stellen, an denen die Maske binär eine \enquote{1} hat, müssen die \gls{IP}-Adressen übereinstimmen (Netzwerkteil); an den Stellen mit einer \enquote{0} dürfen sie sich unterscheiden (Host-Teil). Ein Subnetz wird daher immer durch eine \gls{IP}-Adresse zusammen mit einer Subnetzmaske angegeben.
 
 \begin{myexample}[Subnetzmasken]\label{example:subnet}
 Gegeben sei folgende Subnetzmaske:
 \begin{table}[H]
 	\centering
-	\begin{tabular}{r|l|l}
-		                                     & Dezimal                & Binär                                                                 \\\midrule\midrule
+	\begin{tabular}{rll}
+		                                     & Dezimal                & Binär                                                                 \\\midrule
 		\acrshort{IP}-Adresse von Computer 1 & \texttt{159.233.1.22}  & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00010110} \\\midrule
 		\acrshort{IP}-Adresse von Computer 2 & \texttt{159.233.1.1}   & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00000001} \\\midrule
 		Subnetzmaske                         & \texttt{255.255.255.0} & \texttt{\textcolor{ForestGreen}{11111111.11111111.11111111}.00000000}
 	\end{tabular}
-	\caption{Beispiel einer Subnetzmaske mit zwei IP-Adressen}
+	\caption{Beispiel einer Subnetzmaske mit zwei \gls{IP}-Adressen}
 	\label{table:ex-subnet}
 \end{table}
-Um herauszufinden, ob die IP-Adressen von Computer 1 und Computer 2 zum selben Netzwerk gehören, muss überprüft werden, ob die binäre IP-Adresse an all denjenigen Stellen gleich ist, wo die Subnetzmaske = \enquote{1} ist (also an allen grün markierten Stellen in \cref{table:ex-subnet}). In diesem Beispiel bedeutet dies, dass alle \gls{IP}-Adressen, welche mit \texttt{159.233.1.[...]} beginnen zum selben Netzwerk gehören.
+Um herauszufinden, ob die \gls{IP}-Adressen von Computer 1 und Computer 2 zum selben Netzwerk gehören, muss überprüft werden, ob die binäre \gls{IP}-Adresse an all denjenigen Stellen gleich ist, wo die Subnetzmaske = \enquote{1} ist (also an allen grün markierten Stellen in \cref{table:ex-subnet}). In diesem Beispiel bedeutet dies, dass alle \gls{IP}-Adressen, welche mit \texttt{159.233.1.[...]} beginnen zum selben Netzwerk gehören.
 \end{myexample}
 
 
 \begin{myexercise}[Geräte zu Subnetzen zuordnen]
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{l|l|l|m{2cm}}
+		\begin{tabular}{lllm{2cm}}
 
-			\textbf{Eigene \gls{IP}} & \textbf{Netzmaske} & \textbf{Ziel-\gls{IP}} & \textbf{Gleiches \newline Subnetz?} \\\midrule\midrule
+			\textbf{Eigene \gls{IP}} & \textbf{Netzmaske} & \textbf{Ziel-\gls{IP}} & \textbf{Gleiches \newline Subnetz?} \\\midrule
 
 			213.45.19.89             & 255.255.255.0      & 213.45.17.89           & \fldT                               \\\midrule
 
@@ -845,21 +849,21 @@ Um herauszufinden, ob die IP-Adressen von Computer 1 und Computer 2 zum selben N
 
 			88.100.11.17             & 0.0.0.0            & 213.45.19.89           & \fldT                               \\\midrule
 
-			10.0.0.0                 & 255.255.255.252    & 10.0.0.1               & \fldT                               \\\midrule
-			1.2.3.0                  & 255.255.255.252    & 1.2.3.5                & \fldT
+			10.0.0.2                 & 255.255.255.252    & 10.0.0.1               & \fldT                               \\\midrule
+			1.2.3.1                  & 255.255.255.252    & 1.2.3.5                & \fldT
 		\end{tabular}
 	\end{table}
 	\begin{itemize}
-		\item $\rightarrow$ \gls{IP}s dürfen sich nur an denjenigen Stellen unterscheiden, wo in der Maske (binär!) Nullen stehen.
+		\item $\rightarrow$ \glspl{IP} dürfen sich nur an denjenigen Stellen unterscheiden, wo in der Maske (binär!) Nullen stehen.
 		\item Umrechner dezimal $\rightarrow$ binär: \url{https://oinf.ch/interactive/ips-und-netzmaske/}
 	\end{itemize}
 	\begin{myanswer}
 
 		\begin{table}[H]
 			\centering
-			\begin{tabular}{l|l|l|l}
+			\begin{tabular}{llll}
 
-				\textbf{Eigene IP} & \textbf{Netzmaske} & \textbf{Ziel-IP}                       & \textbf{Gleiches Subnetz?}     \\\midrule\midrule
+				\textbf{Eigene \acrshort{IP}} & \textbf{Netzmaske} & \textbf{Ziel-\acrshort{IP}}                       & \textbf{Gleiches Subnetz?}     \\\midrule
 
 				213.45.19.89       & 255.255.255.0      & 213.45.\textcolor{red}{17}.89          & Nein                           \\\midrule
 
@@ -869,31 +873,31 @@ Um herauszufinden, ob die IP-Adressen von Computer 1 und Computer 2 zum selben N
 
 				88.100.11.17       & 0.0.0.0            & 213.45.19.89                           & Ja (alles \faCheck)            \\\midrule
 
-				10.0.0.0           & 255.255.255.252    & 10.0.0.1                               & Ja ($252_{10}=11111100_{2}$)   \\\midrule
-				1.2.3.0            & 255.255.255.252    & 1.2.3.5                                & Nein ($252_{10}=11111100_{2}$)
+				10.0.0.2           & 255.255.255.252    & 10.0.0.1                               & Ja ($252_{10}=11111100_{2}$)   \\\midrule
+				1.2.3.1            & 255.255.255.252    & 1.2.3.5                                & Nein ($252_{10}=11111100_{2}$)
 			\end{tabular}
 		\end{table}
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}[Subnetzgrösse berechnen]
-	Typischerweise beginnen alle \gls{IP}-Adressen, die auf das lokale Netzwerk (=das Netzwerk, in dem sich der eigene Computer befindet) mit \texttt{192.168.xxx.xxx}. Die Subnetzmaske lautet also \texttt{255.255.0.0}. Wie viele Hosts haben in so einem Netzwerk Platz? Schreiben Sie die Subnetzmaske binär auf und rechnen Sie aus, wie viele unterschiedliche Geräte sich in diesem lokalen Netzwerk befinden können.
+	Der für lokale Netzwerke reservierte (private) Adressbereich \texttt{192.168.0.0/16} umfasst alle \gls{IP}-Adressen, die mit \texttt{192.168.xxx.xxx} beginnen. Die Subnetzmaske dieses Bereichs lautet also \texttt{255.255.0.0}. (In einem typischen Heimnetzwerk wird davon meist nur ein kleineres Subnetz wie \texttt{192.168.1.0/24} verwendet.) Wie viele Hosts haben in einem Netzwerk mit dieser Subnetzmaske Platz? Schreiben Sie die Subnetzmaske binär auf und rechnen Sie aus, wie viele unterschiedliche Geräte sich in diesem lokalen Netzwerk befinden können.
 	\begin{myanswer}
-		Zwei Bytes (die zwei letzten Byte-Gruppen) der Subnetzmaske sind reserviert für unterschiedliche Kombinationen von \gls{IP}-Adressen. Es können sich daher bis zu $2^{16}$ = 65'536 Hosts in einem solchen lokalen Netzwerk befinden.
+		Zwei Bytes (die zwei letzten Byte-Gruppen) der Subnetzmaske sind reserviert für unterschiedliche Kombinationen von \gls{IP}-Adressen. Es gibt daher $2^{16} = 65\,536$ Adressen. Davon sind die erste (Netzadresse) und die letzte (Broadcast-Adresse) reserviert, es können sich also bis zu $2^{16} - 2 = 65\,534$ Hosts in einem solchen Netzwerk befinden.
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}[Subnetzmasken zuordnen]
-	Sechs Subnetze sind gegeben durch je eine Netzmaske und eine IP eines sich darin befindenden Rechners. Entscheiden Sie für jede links aufgeführte IP, zu welchen Subnetzen der entsprechende Rechner gehört.\vspace{-.2cm}
+	Sechs Subnetze sind gegeben durch je eine Netzmaske und eine \gls{IP} eines sich darin befindenden Rechners. Entscheiden Sie für jede links aufgeführte \gls{IP}, zu welchen Subnetzen der entsprechende Rechner gehört.\vspace{-.2cm}
 
 	\begin{table}[H]
 		\centering
 		\small
-		\begin{tabular}{m{2cm}||m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.5cm}}
-			\textbf{Netzmaske Subnetz} & \multicolumn{2}{c|}{255.255.255.0} & \multicolumn{2}{c|}{255.255.0.0} & \multicolumn{2}{c}{255.255.255.240}                               \\
+		\begin{tabular}{m{2cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.5cm}}
+			\textbf{Netzmaske Subnetz} & \multicolumn{2}{c}{255.255.255.0} & \multicolumn{2}{c}{255.255.0.0} & \multicolumn{2}{c}{255.255.255.240}                               \\
 			\midrule
-			IP                         & 3.4.5.6                            & 3.3.3.3                          & 3.4.5.6                             & 3.3.3.3 & 3.4.5.6 & 3.3.3.3 \\
-			\midrule\midrule
+			\acrshort{IP}              & 3.4.5.6                            & 3.3.3.3                          & 3.4.5.6                             & 3.3.3.3 & 3.4.5.6 & 3.3.3.3 \\
+			\midrule
 			3.3.3.4                    & \fldT                              & \fldT                            & \fldT                               & \fldT   & \fldT   & \fldT   \\\midrule
 			4.4.4.3                    & \fldT                              & \fldT                            & \fldT                               & \fldT   & \fldT   & \fldT   \\\midrule
 			3.4.5.99                   & \fldT                              & \fldT                            & \fldT                               & \fldT   & \fldT   & \fldT   \\\midrule
@@ -909,11 +913,11 @@ Um herauszufinden, ob die IP-Adressen von Computer 1 und Computer 2 zum selben N
 		\begin{table}[H]
 			\centering
 			\small
-			\begin{tabular}{m{2cm}||m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.5cm}|m{1.7cm}}
-				\textbf{Netzmaske Subnetz} & \multicolumn{2}{c|}{255.255.255.0} & \multicolumn{2}{c|}{255.255.0.0} & \multicolumn{2}{c}{255.255.255.240}                               \\
+			\begin{tabular}{m{2cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.5cm}m{1.7cm}}
+				\textbf{Netzmaske Subnetz} & \multicolumn{2}{c}{255.255.255.0} & \multicolumn{2}{c}{255.255.0.0} & \multicolumn{2}{c}{255.255.255.240}                               \\
 				\midrule
-				IP                         & 3.4.5.6                            & 3.3.3.3                          & 3.4.5.6                             & 3.3.3.3 & 3.4.5.6 & 3.3.3.3 \\
-				\midrule\midrule
+				\acrshort{IP}              & 3.4.5.6                            & 3.3.3.3                          & 3.4.5.6                             & 3.3.3.3 & 3.4.5.6 & 3.3.3.3 \\
+				\midrule
 				3.3.3.4                    & Nein                               & Ja                               & Nein                                & Ja      & Nein    & Ja      \\\midrule
 				4.4.4.3                    & Nein                               & Nein                             & Nein                                & Nein    & Nein    & Nein    \\\midrule
 				3.4.5.99                   & Ja                                 & Nein                             & Ja                                  & Nein    & Nein    & Nein    \\\midrule
@@ -927,20 +931,20 @@ Um herauszufinden, ob die IP-Adressen von Computer 1 und Computer 2 zum selben N
 
 
 \begin{mydefinition}[\acrshort{CIDR}-Notation]
-Das Netzwerk aus \cref{example:subnet} könnte dezimal angegeben werden wie folgt: 
+Das Netzwerk aus \cref{example:subnet} könnte dezimal angegeben werden wie folgt:
 
 \texttt{159.233.1.0/255.255.255.0}
 
-Dabei bezeichnet der erste Teil die \gls{IP}-Adresse eines (gültigen) Hosts im Subnetz, und der zweite Teil bezeichnet die Subnetzmaske. 
+Dabei bezeichnet der erste Teil die Netzadresse des Subnetzes (die erste Adresse im Subnetz, bei der alle Host-Bits 0 sind), und der zweite Teil bezeichnet die Subnetzmaske.
 
-Die Subnetzmaske wird häufig verkürzt in der sogenannten \gls{CIDR}-Schreibweise angegeben. Dabei wird die Subnetzmaske als \gls{IP}-Adresse gefolgt von einem Schrägstrich und der Anzahl der Einsen in der Subnetzmaske geschrieben. Die Subnetzmaske aus \cref{example:subnet} könnte somit auch als \texttt{159.233.1.0/24} geschrieben werden, da die Subnetzmaske 24 Einsen hat. 
+Die Subnetzmaske wird häufig verkürzt in der sogenannten \gls{CIDR}-Schreibweise angegeben. Dabei wird die Netzadresse gefolgt von einem Schrägstrich und der Anzahl der Einsen in der Subnetzmaske geschrieben. Die Subnetzmaske aus \cref{example:subnet} könnte somit auch als \texttt{159.233.1.0/24} geschrieben werden, da die Subnetzmaske 24 Einsen hat.
 
-Durch diese Schreibweise wird zudem schnell ersichtlich, wie gross das Netzwerk maximal sein darf. Die ersten 24 Bits der \gls{IP}-Adresse müssen immer gleich sein, daher bietet dieses Netzwerk Platz für maximal $2^{32-24} = 256$ unterschiedliche Hosts.
+Durch diese Schreibweise wird zudem schnell ersichtlich, wie gross das Netzwerk maximal sein darf. Die ersten 24 Bits der \gls{IP}-Adresse müssen immer gleich sein, daher umfasst dieses Netzwerk $2^{32-24} = 256$ Adressen. Davon sind die erste Adresse (Netzadresse, hier \texttt{159.233.1.0}) und die letzte Adresse (Broadcast-Adresse, hier \texttt{159.233.1.255}) reserviert, das Netzwerk bietet also Platz für maximal $256 - 2 = 254$ Hosts.
 \end{mydefinition}
 
 
 \begin{myexercise}[\acrshort{CIDR}-Notation]
-	Geben Sie die folgenden Subnetzmasken in \gls{CIDR}-Notation an und notieren Sie die möglichen Adressebereiche für beide Netze 2 und 3, also die kleinste und grösste mögliche \gls{IP}-Adresse im jeweiligen Subnetz. Notieren Sie zudem, wie viele Hosts in jedem Subnetz Platz haben.
+	Geben Sie die folgenden Subnetzmasken in \gls{CIDR}-Notation an und notieren Sie die möglichen Adressbereiche für beide Netze 2 und 3, also die kleinste und grösste mögliche \gls{IP}-Adresse im jeweiligen Subnetz. Notieren Sie zudem, wie viele Hosts in jedem Subnetz Platz haben.
 	\begin{itemize}
 		\item \textbf{Netz 1} (Beispiel): \texttt{24.10.10.0} mit Netzmaske \texttt{255.255.255.240}
 		\item \textbf{Netz 2}: \texttt{192.168.1.0} mit Netzmaske \texttt{255.255.255.192}
@@ -949,33 +953,29 @@ Durch diese Schreibweise wird zudem schnell ersichtlich, wie gross das Netzwerk 
 	Um die Adressbereiche zu berechnen, können Sie den Online-Rechner unter \url{https://oinf.ch/interactive/ips-und-netzmaske/} verwenden.
 
 	\begin{table}[H]
-			\centering
-			\begin{tabular}{l||m{2.5cm}|m{2.25cm}|m{2.5cm}|m{2.5cm}}
-								&  \multirow{2}{2cm}{\textbf{\gls{CIDR}-\newline Schreibweise}}&\multirow{2}{2.25cm}{\textbf{Anzahl Hosts}} & \multicolumn{2}{l}{\textbf{Adressbereich}} \\\cmidrule{4-5}
-								& & & \textbf{Start} & \textbf{Ende} \\
-				\midrule\midrule
-				Netz 1 & \texttt{24.10.10.0/28} & $2^{32-28} = 2^{4} = 16$ & \texttt{24.10.10.0} & \texttt{24.10.10.15} \\\midrule
-				Netz 2  & \fldT & \fldT& \fldT           & \fldT         \\
-				\midrule
-				Netz 3 & \fldT & \fldT     & \fldT&\fldT       \\
-				
-			\end{tabular}
-			\caption{Subnetzmasken in CIDR-Notation mit Anzahl Hosts und Adressbereichen}
-		\end{table}
+		\centering
+		\begin{tabular}{l m{2.5cm} m{2.5cm} m{2.5cm} m{2.5cm}}
+			       & \multirow{2}{2.5cm}{\textbf{\gls{CIDR}-\newline Schreibweise}} & \multirow{2}{2.5cm}{\textbf{Anzahl Hosts}} & \multicolumn{2}{l}{\textbf{Adressbereich}} \\\cmidrule{4-5}
+			       &                                                                &                                            & \textbf{Start}       & \textbf{Ende}        \\
+			\midrule
+			Netz 1 & \texttt{24.10.10.0/28}                                         & $2^{32-28} - 2 = 14$                       & \texttt{24.10.10.0}  & \texttt{24.10.10.15} \\\midrule
+			Netz 2 & \fldT                                                          & \fldT                                      & \fldT                & \fldT                \\\midrule
+			Netz 3 & \fldT                                                          & \fldT                                      & \fldT                & \fldT                \\
+		\end{tabular}
+		\caption{Subnetzmasken in \gls{CIDR}-Notation mit Anzahl Hosts und Adressbereichen}
+	\end{table}
 	\begin{myanswer}
 		\begin{table}[H]
 			\centering
-			\begin{tabular}{l||l|m{2.5cm}|l|l}
-								&  \multirow{2}{2cm}{\textbf{\gls{CIDR}-\newline Schreibweise}}&\multirow{2}{2.25cm}{\textbf{Anzahl Hosts}} & \multicolumn{2}{l}{\textbf{Adressbereich}} \\\cmidrule{4-5}
-																& & & \textbf{Start} & \textbf{Ende} \\
-												\midrule\midrule
-												Netz 1 & \texttt{24.10.10.0/28} & $2^{32-28} = 2^{4} = 16$ & \texttt{24.10.10.0} & \texttt{24.10.10.15} \\\midrule
-												Netz 2  & \texttt{192.168.1.0/26} & $2^{32-26} = 2^{6} = 64$& \texttt{192.168.1.0}           & \texttt{192.168.1.63}         \\
-												\midrule
-												Netz 3 & \texttt{10.0.0.0/9} & $2^{32-9} = 2^{23} = 8\,388\,608$     & \texttt{10.0.0.0}              & \texttt{10.127.255.255}       \\
-												
+			\begin{tabular}{l l m{3.3cm} l l}
+				       & \multirow{2}{2.5cm}{\textbf{\gls{CIDR}-\newline Schreibweise}} & \multirow{2}{3.3cm}{\textbf{Anzahl Hosts}}  & \multicolumn{2}{l}{\textbf{Adressbereich}}  \\\cmidrule{4-5}
+				       &                                                                &                                             & \textbf{Start}      & \textbf{Ende}         \\
+				\midrule
+				Netz 1 & \texttt{24.10.10.0/28}                                         & $2^{32-28} - 2 = 14$                        & \texttt{24.10.10.0}  & \texttt{24.10.10.15}  \\\midrule
+				Netz 2 & \texttt{192.168.1.0/26}                                        & $2^{32-26} - 2 = 62$                        & \texttt{192.168.1.0} & \texttt{192.168.1.63} \\\midrule
+				Netz 3 & \texttt{10.0.0.0/9}                                            & $2^{32-9} - 2 = 8\,388\,606$                & \texttt{10.0.0.0}    & \texttt{10.127.255.255} \\
 			\end{tabular}
-			\caption{Subnetzmasken in CIDR-Notation mit Anzahl Hosts und Adressbereichen}
+			\caption{Subnetzmasken in \gls{CIDR}-Notation mit Anzahl Hosts und Adressbereichen}
 		\end{table}
 	\end{myanswer}
 \end{myexercise}
@@ -984,42 +984,44 @@ Durch diese Schreibweise wird zudem schnell ersichtlich, wie gross das Netzwerk 
 \begin{figure}[H]
 	\centering
 	\input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_subnets.tex}
-	\caption{Zwei Subnetze (\gls{LAN} A und \gls{LAN} B) verbunden via Router}
+	\caption{Zwei Subnetze (\gls{LAN} A und \gls{LAN} B) verbunden via Router, der über \texttt{eth2} am Router des \gls{ISP} hängt}
 	\label{fig:router-subnetze}
 \end{figure}
-Bis anhin haben wir gesehen, wie wir einzelne Rechner mittels einer IP adressieren und wie wir diese mittels Subnetzen oder Switches zu einem lokalen Netzwerk oder \gls{LAN} verbinden. Was, wenn wir jedoch zwei Subnetze zu einem grossen Netzwerk oder \gls{WAN} verbinden wollen? Genau dies geschieht im Internet, welches im Wesentlichen aus einem Netzwerk von Netzwerken besteht. Um mehrere Netzwerke miteinander zu verbinden, verwenden wir einen \textbf{Router}. Diesen schauen wir uns in diesem Abschnitt genauer an.
+Bis anhin haben wir gesehen, wie wir einzelne Rechner mittels einer \gls{IP} adressieren und wie wir diese mittels Subnetzen oder Switches zu einem lokalen Netzwerk oder \gls{LAN} verbinden. Was, wenn wir jedoch zwei Subnetze zu einem grossen Netzwerk oder \gls{WAN} verbinden wollen? Genau dies geschieht im Internet, welches im Wesentlichen aus einem Netzwerk von Netzwerken besteht. Um mehrere Netzwerke miteinander zu verbinden, verwenden wir einen \textbf{Router}. Diesen schauen wir uns in diesem Abschnitt genauer an.
 
 Ähnlich einer Haustür verbindet ein Router ein Subnetz (=Haus) mit der Aussenwelt, er befindet sich also an der Grenze zwischen zwei oder mehreren Subnetzen. Über die Routing-Tabelle kann ein Router entscheiden, auf welchen Weg ein Datenpaket an die Aussenwelt verschickt werden kann. Eine typische Routing-Tabelle enthält folgende Informationen:
 
 \begin{itemize}
 	\item \textbf{Ziel-\gls{IP} und Netzmaske}: Diese beiden Spalten definieren, welche Subnetze dem Router bekannt sind (sowohl eigenes Subnetz wie andere Subnetze).
-	\item \textbf{Gateway} = Tor, Ein-/Ausfahrt: Der nächstgelegene Zielort, an den ein Paket geschickt werden muss, um eine gewisse Ziel-\gls{IP} zu erreichen. Das Gateway kann als eine Art \enquote{Tor zur Aussenwelt} angeschaut werden und ist häufig die \gls{IP}-Adresse des Routers der Ziel-\gls{IP}. Im Beispiel aus \cref{fig:router-subnetze} ist das Gateway für Pakete, die von \gls{LAN} A zu \gls{LAN} B geschickt werden sollen, die \gls{IP}-Adresse des Routers im \gls{LAN} A, also \texttt{192.168.1.1}.
-	\item \textbf{Interface} = Schnittstelle: Die physikalische Schnittstelle am Router (z.B. Ethernet-Stecker, daher häufig abgekürzt, beispielsweise, \texttt{eth0} für das erste Ethernet-Interface oder \texttt{wlan0} für das erste \gls{WLAN}-Interface), über die eine Ziel-Adresse (Gateway) erreichbar ist. Im Beispiel aus \cref{fig:router-subnetze} ist das Interface für Pakete, die von \gls{LAN} A zu \gls{LAN} B geschickt werden sollen, das Ethernet-Kabel, das den Router mit dem \gls{LAN} A verbindet, also \texttt{eth0}.
+	\item \textbf{Gateway} = Tor, Ein-/Ausfahrt: Die \gls{IP}-Adresse des nächsten Routers, an den ein Paket geschickt werden muss, um eine gewisse Ziel-\gls{IP} zu erreichen. Das Gateway kann als eine Art \enquote{Tor zur Aussenwelt} angeschaut werden. Ist das Ziel-Subnetz direkt mit dem Router verbunden, wird kein Gateway benötigt (Eintrag \texttt{0.0.0.0}). Im Beispiel aus \cref{fig:router-subnetze} ist für die Computer im \gls{LAN} A der Router mit seiner Adresse im \gls{LAN} A, also \texttt{192.168.1.1}, das Gateway, über das sie Pakete ins \gls{LAN} B schicken. Der Router selbst schickt Pakete ins Internet an sein eigenes Gateway, den Router des \gls{ISP} mit der Adresse \texttt{203.0.113.1}.
+	\item \textbf{Interface} = Schnittstelle: Die physikalische Schnittstelle am Router (z.B. Ethernet-Stecker, daher häufig abgekürzt, beispielsweise, \texttt{eth0} für das erste Ethernet-Interface oder \texttt{wlan0} für das erste \gls{WLAN}-Interface), über die eine Ziel-Adresse (Gateway) erreichbar ist. Im Beispiel aus \cref{fig:router-subnetze} verlassen Pakete, die von \gls{LAN} A zu \gls{LAN} B geschickt werden sollen, den Router über das Ethernet-Kabel, das ihn mit dem \gls{LAN} B verbindet, also über \texttt{eth1}. Pakete ins Internet verlassen ihn über \texttt{eth2}.
 \end{itemize}
 
 Ein Beispiel einer minimalen Routing-Tabelle ist in \cref{table:routing} abgebildet.
 
-\newcolumntype{S}{>{\small}p{5cm}<{\small}}   % small font, centered
-\newcolumntype{T}{>{\ttfamily}l<{\ttfamily}}   % small font, monospace
+% K statt S, um die S-Spalte von siunitx nicht zu überschreiben
+\newcolumntype{K}{>{\small}p{5cm}}   % small font, left-aligned paragraph
+\newcolumntype{T}{>{\ttfamily}l}     % monospace
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{ T | T | T | T | S }
+	\begin{tabular}{T T T T K}
 		\normalfont\textbf{Ziel-\gls{IP}} & \normalfont\textbf{Netzmaske} & \normalfont\textbf{Gateway} & \normalfont\textbf{Interface} & \normalsize\textbf{Kommentar}                                                                \\
-		\midrule\midrule
+		\midrule
 		192.168.1.0                       & 255.255.255.0                 & 0.0.0.0                     & eth0                          & Direkt verbundenes \gls{LAN} \texttt{192.168.1.0/24} wird über Kabel \texttt{eth0} erreicht. \\\midrule
 		192.168.2.0                       & 255.255.255.0                 & 0.0.0.0                     & eth1                          & Direkt verbundenes \gls{LAN} \texttt{192.168.2.0/24} wird über Kabel \texttt{eth1} erreicht. \\\midrule
-		0.0.0.0                           & 0.0.0.0                       & 192.168.1.1                 & eth0                          & Standardroute ins Internet (\textit{default gateway})                                        \\
+		203.0.113.0                       & 255.255.255.0                 & 0.0.0.0                     & eth2                          & Direkt verbundenes Netz \texttt{203.0.113.0/24} zum Router des \gls{ISP} über Kabel \texttt{eth2}. \\\midrule
+		0.0.0.0                           & 0.0.0.0                       & 203.0.113.1                 & eth2                          & Standardroute ins Internet (\textit{default gateway}) über den Router des \gls{ISP}            \\
 	\end{tabular}
-	\caption{Beispiel einer Routing-Tabelle eines Routers, welcher sich in zwei \glspl{LAN} \texttt{192.168.1.0/24} und \texttt{192.168.2.0/24} befindet.}
+	\caption{Beispiel einer Routing-Tabelle des Routers aus \cref{fig:router-subnetze}, welcher die zwei \glspl{LAN} \texttt{192.168.1.0/24} und \texttt{192.168.2.0/24} verbindet und über \texttt{eth2} mit dem Router des \gls{ISP} verbunden ist.}
 	\label{table:routing}
 \end{table}
 
-Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, die verwendet wird, wenn keine spezifischere Route für eine Ziel-\gls{IP} in der Routing-Tabelle gefunden werden kann. In der Regel ist das Default Gateway die \gls{IP}-Adresse des Routers, der das Subnetz mit dem Internet verbindet.
+Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, die verwendet wird, wenn keine spezifischere Route für eine Ziel-\gls{IP} in der Routing-Tabelle gefunden werden kann. In der Regel ist das Default Gateway die \gls{IP}-Adresse des nächsten Routers in Richtung Internet: Für die Computer im \gls{LAN} A ist dies \texttt{192.168.1.1}, für unseren Router selbst der Router des \gls{ISP} (\texttt{203.0.113.1}, erreichbar über \texttt{eth2}).
 
 
-\begin{myexercise}[Filius-Anwendung: Router \& Gateway]
-	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 3} an. Laden Sie danach die Datei \enquote{\texttt{Filius-3.fls}} von Moodle herunter und bearbeiten Sie die darin enthaltene Netzwerkkonfiguration:
+\begin{myexercise}[Filius-Anwendung: Router \& Gateway (zwei Netze)]
+	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 3} an. Laden Sie danach die Datei \enquote{\texttt{Filius 3 Routing.fls}} von Moodle herunter und bearbeiten Sie die darin enthaltene Netzwerkkonfiguration:
 	\begin{itemize}
 		\item Notieren Sie zuerst die beiden Netzwerke in \gls{CIDR}-Notation als Text.
 		\item Konfigurieren Sie danach den Router korrekt, indem Sie die passenden \glspl{IP} für die beiden Interfaces des Routers vergeben.
@@ -1035,19 +1037,19 @@ Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, 
 
 
 \begin{myremark}[Automatische Zuweisung von \acrshort{IP}-Adressen via \acrshort{DHCP}]
-	In der Praxis ist es unpraktisch, wenn jeder Computer in einem Netzwerk manuell mit einer \gls{IP}-Adresse konfiguriert werden muss. Daher wird häufig das \acrfull{DHCP} verwendet, um Computern automatisch eine \gls{IP}-Adresse zuzuweisen, wenn sie sich mit dem Netzwerk verbinden. 
-	
-	Ein \gls{DHCP}-Server verwaltet einen Pool von verfügbaren \gls{IP}-Adressen und weist diese dynamisch an Computer zu, die eine Verbindung zum Netzwerk herstellen. Dies erleichtert die Verwaltung von Netzwerken erheblich, insbesondere in Umgebungen mit vielen Geräten, wie z.B. in Unternehmen oder öffentlichen Netzwerken. 
+	In der Praxis ist es unpraktisch, wenn jeder Computer in einem Netzwerk manuell mit einer \gls{IP}-Adresse konfiguriert werden muss. Daher wird häufig das \acrfull{DHCP} verwendet, um Computern automatisch eine \gls{IP}-Adresse zuzuweisen, wenn sie sich mit dem Netzwerk verbinden.
+
+	Ein \gls{DHCP}-Server verwaltet einen Pool von verfügbaren \gls{IP}-Adressen und weist diese dynamisch an Computer zu, die eine Verbindung zum Netzwerk herstellen. Dies erleichtert die Verwaltung von Netzwerken erheblich, insbesondere in Umgebungen mit vielen Geräten, wie z.B. in Unternehmen oder öffentlichen Netzwerken.
 \end{myremark}
 
 \begin{myremark}[\gls{IP}-Reservierung]\label{remark:ip-reservation}
 	Falls ein gewisses Gerät immer dieselbe lokale \gls{IP}-Adresse benötigt (z.B. ein Drucker oder ein Server), kann bei vielen Routern eine so genannte \textbf{\gls{IP}-Reservierung} eingerichtet werden, die sicherstellt, dass dieses Gerät immer dieselbe \gls{IP}-Adresse erhält, selbst wenn es sich erneut mit dem Netzwerk verbindet. Dies wird typischerweise durch die Zuordnung der \gls{MAC}-Adresse des Geräts zu einer bestimmten \gls{IP}-Adresse im \gls{DHCP}-Server des Routers erreicht. Eine \gls{IP}-Reservationstabelle könnte beispielsweise wie folgt aussehen:
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{l|l}
-			\textbf{\gls{MAC}-Adresse}        & \textbf{Reservierte \gls{IP}-Adresse} \\\midrule\midrule
+		\begin{tabular}{ll}
+			\textbf{\gls{MAC}-Adresse}        & \textbf{Reservierte \gls{IP}-Adresse} \\\midrule
 			\texttt{00:1A:2B:3C:4D:5E}           & \texttt{192.168.1.20} \\\midrule
-			\texttt{11:22:33:44:55:66}           & \texttt{192.168.1.21} \\\midrule
+			\texttt{00:11:22:33:44:55}           & \texttt{192.168.1.21} \\\midrule
 			$\cdots$					 & $\dots$       \\
 		\end{tabular}
 		\caption{Beispiel einer \gls{IP}-Reservationstabelle}
@@ -1055,11 +1057,11 @@ Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, 
 \end{myremark}
 
 \subsection{\texorpdfstring{Zusammenfügen mehrerer \glspl{LAN} zum \gls{WAN} (Internet)}{Zusammenfügen mehrerer LANs zum WAN (Internet)}}
-Stellen Sie sich vor, Sie möchten mehrere lokale Netzwerke (\glspl{LAN}) zu einem grossen Netzwerk (\gls{WAN}) verbinden, ähnlich wie es im Internet der Fall ist. Jedes \gls{LAN} soll dabei über einen Router mit dem \gls{WAN} verbunden werden. Eine kohärente Auswahl von IP-Adressen für jedes Netzwerk und die Router ist dabei entscheidend, um eine übersichtliche und funktionierende Netzwerkinfrastruktur zu gewährleisten.
+Stellen Sie sich vor, Sie möchten mehrere lokale Netzwerke (\glspl{LAN}) zu einem grossen Netzwerk (\gls{WAN}) verbinden, ähnlich wie es im Internet der Fall ist. Jedes \gls{LAN} soll dabei über einen Router mit dem \gls{WAN} verbunden werden. Eine kohärente Auswahl von \gls{IP}-Adressen für jedes Netzwerk und die Router ist dabei entscheidend, um eine übersichtliche und funktionierende Netzwerkinfrastruktur zu gewährleisten.
 
 
-\begin{myexercise}[Filius-Anwendung: Router \& Gateway]
-	Schauen Sie sich (bei Bedarf) das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 4} an. Schauen Sie sich nach dem Video das etwas komplexere Netzwerk \enquote{\texttt{Filius 4 Routing Bugs.fls}} an, welches Sie von Moodle herunterladen können. Leider ist in diesem Netzwerk einiges kaputtgegangen und der Rechner \texttt{192.168.0.12} kann den Rechner \texttt{68.33.1.11} nicht mehr anpingen. Beheben Sie die Netzwerkkonfiguration, so dass die beiden Rechner sich wieder erreichen können. 
+\begin{myexercise}[Filius-Anwendung: Router \& Gateway (Fehlersuche)]
+	Schauen Sie sich (bei Bedarf) das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 4} an. Schauen Sie sich nach dem Video das etwas komplexere Netzwerk \enquote{\texttt{Filius 4 Routing Bugs.fls}} an, welches Sie von Moodle herunterladen können. Leider ist in diesem Netzwerk einiges kaputtgegangen und der Rechner \texttt{192.168.0.12} kann den Rechner \texttt{68.33.1.11} nicht mehr anpingen. Beheben Sie die Netzwerkkonfiguration, so dass die beiden Rechner sich wieder erreichen können.
 	\begin{itemize}
 		\item Führen Sie zuerst einen \commandbox*|ping|-Befehl vom Rechner \texttt{192.168.0.12} zum Rechner \texttt{68.33.1.11} aus und beobachten Sie anhand der grün aufleuchtenden Striche, bis zu welchem Punkt die Pakete gesendet werden können.
 		\item Setzen Sie bei den Routern korrekte Weiterleitungstabellen ein.
@@ -1083,11 +1085,10 @@ Die Daten, die zwischen zwei Computern übertragen werden, werden häufig auch a
 Einige der wichtigsten Metadaten sind:
 
 \begin{itemize}
-	\item \textbf{Der Port} (von engl. \textit{port} = Hafen): Dies ist eine Zahl, mit der der Computer weiss, welche Anwendung (z.B. Mail, Browser, Gaming-Programm etc.) Daten verschickt. Ein Computer kann, wie Sie vermutlich wissen, gleichzeitig über mehrere Programme Daten von anderen Computern empfangen und an sie schicken: sie können beispielsweise gleichzeitig eine Nachricht über WhatsApp schicken und ein Video schauen. Damit der Computer weiss, welche Anwendung die Daten verschickt, versieht er die Daten typischerweise mit einem Port. Obschon Ports für jedes Programm frei gewählt werden können, werden für bekannte Protokolle typischerweise Standard-Portnummern verwendet (siehe \cref{tab:tcpPorts}).
+	\item \textbf{Der Port} (von engl. \textit{port} = Hafen): Dies ist eine Zahl, mit der der Computer weiss, welche Anwendung (z.B. Mail, Browser, Gaming-Programm etc.) Daten verschickt. Ein Computer kann, wie Sie vermutlich wissen, gleichzeitig über mehrere Programme Daten von anderen Computern empfangen und an sie schicken: Sie können beispielsweise gleichzeitig eine Nachricht über WhatsApp schicken und ein Video schauen. Damit der Computer weiss, welche Anwendung die Daten verschickt, versieht er die Daten typischerweise mit einem Port. Obschon Ports für jedes Programm frei gewählt werden können, werden für bekannte Protokolle typischerweise Standard-Portnummern verwendet (siehe \cref{tab:tcpPorts}).
 	      \begin{table}[H]
 		      \centering
-		      \begin{tabular}{c||c|c}
-			      \toprule
+		      \begin{tabular}{ccc}
 			      \textbf{Port} & \textbf{Anwendung} & \textbf{Verwendung}                   \\
 			      \midrule
 			      20            & \acrfull{FTP}      & Dateitransfer                         \\
@@ -1099,11 +1100,10 @@ Einige der wichtigsten Metadaten sind:
 			      110           & \acrfull{POP3}     & E-Mail-Abholung                       \\
 			      143           & \acrfull{IMAP}     & E-Mail-Management                     \\
 			      443           & \acrfull{HTTPS}    & Verschlüsselter Webseiten-Abruf       \\
-			      993           & \acrfull{IMAP}     & E-Mail-Management über \acrshort{SSL} \\
-			      995           & \acrfull{POP3}     & E-Mail-Abholung über \acrshort{SSL}   \\
-			      \bottomrule
+			      993           & \acrfull{IMAP}     & E-Mail-Management über \acrshort{TLS} \\
+			      995           & \acrfull{POP3}     & E-Mail-Abholung über \acrshort{TLS}   \\
 		      \end{tabular}
-		      \caption{Gängige \gls{TCP}-Ports, Anwendungen und deren Verwendung}
+		      \caption{Gängige Ports, Anwendungen und deren Verwendung (\gls{DNS} verwendet hauptsächlich \gls{UDP}, die übrigen Anwendungen \gls{TCP})}
 		      \label{tab:tcpPorts}
 	      \end{table}
 	      Sowohl der \textit{Client} wie auch der \textit{Server} versehen die Daten mit jeweils einer Zahl, die für den Ursprungs-Port (\textit{Source Port}), respektive den Ziel-Port (\textit{Destination Port}) stehen.
@@ -1115,8 +1115,8 @@ Einige der wichtigsten Metadaten sind:
 	Testen Sie, was beim Aufrufen von \url{http://www.sbb.ch:80} und \url{http://www.sbb.ch:81} passiert. Erklären Sie den Unterschied.
 	\begin{myanswer}
 		\begin{itemize}
-			\item \url{http://www.sbb.ch:80} funktioniert, da Port 80 der Standard-Port für HTTP-Verbindungen ist. Der Webserver der SBB hört auf diesem Port und kann daher die Anfrage verarbeiten und die Webseite ausliefern.
-			\item \url{http://www.sbb.ch:81} funktioniert nicht, da Port 81 kein Standard-Port für HTTP-Verbindungen ist und der Webserver der SBB wahrscheinlich nicht auf diesem Port hört. Daher kann die Anfrage nicht verarbeitet werden und es wird keine Webseite ausgeliefert.
+			\item \url{http://www.sbb.ch:80} funktioniert, da Port 80 der Standard-Port für \gls{HTTP}-Verbindungen ist. Der Webserver der SBB hört auf diesem Port und kann daher die Anfrage verarbeiten und die Webseite ausliefern.
+			\item \url{http://www.sbb.ch:81} funktioniert nicht, da Port 81 kein Standard-Port für \gls{HTTP}-Verbindungen ist und der Webserver der SBB wahrscheinlich nicht auf diesem Port hört. Daher kann die Anfrage nicht verarbeitet werden und es wird keine Webseite ausgeliefert.
 		\end{itemize}
 	\end{myanswer}
 \end{myexercise}
@@ -1127,7 +1127,7 @@ Nebst \gls{TCP} gibt es noch ein weiteres Protokoll in der Transportschicht, das
 	Lösen Sie die Socket- und Port-Aufgaben auf folgendem Link: \url{https://www.inf-schule.de/rechnernetze/anwendung/socketprogrammierung/Anfragen_an_einen_Server_Stellen}.
 \end{mychallenge}
 
-Zusätzlich zur Steuerung der Datenübertragung können \gls{TCP}-Metadaten genutzt werden, um die erste Verbindung zwischen zwei Computern herzustellen. Dies erfolgt typischerweise über das 3-Wege-Handschlag-Protokoll (siehe \cref{fig:threewayHandshake}).
+Zusätzlich zur Steuerung der Datenübertragung können \gls{TCP}-Metadaten genutzt werden, um die erste Verbindung zwischen zwei Computern herzustellen. Dies erfolgt typischerweise über das Drei-Wege-Handschlag (siehe \cref{fig:threewayHandshake}).
 
 \begin{figure}[H]
 	\centering
@@ -1170,7 +1170,6 @@ Somit ist die \gls{TCP}-Verbindung nun erstellt und die beiden Maschinen können
 			\draw[->, thick] (Alice.south) -- node[xshift=-.2cm, rotate=270] {Zeitachse von Alice} (AliceZeit);
 			\draw[->, thick] (Bob.south) -- node[xshift=.2cm, rotate=270] {Zeitachse von Bob} (BobZeit);
 		\end{tikzpicture}
-		\label{fig:threewayHandshakeEx1}
 	\end{figure}
 	\begin{myanswer}
 		Bob sollte nicht einfach ins Kino gehen, weil er keine Bestätigung von Alice erhalten hat. Im Drei-Wege-Handschlag muss der Empfänger (Alice) die Anfrage bestätigen, bevor eine Verbindung (bzw. ein Treffen) zustande kommt. Ohne Antwort weiss Bob nicht, ob Alice die Nachricht erhalten hat oder überhaupt kommen wird.
@@ -1199,7 +1198,6 @@ Somit ist die \gls{TCP}-Verbindung nun erstellt und die beiden Maschinen können
 			\draw[->, thick] (Alice.south) -- node[xshift=-.2cm, rotate=270] {Zeitachse von Alice} (AliceZeit);
 			\draw[->, thick] (Bob.south) -- node[xshift=.2cm, rotate=270] {Zeitachse von Bob} (BobZeit);
 		\end{tikzpicture}
-		\label{fig:threewayHandshakeEx2}
 	\end{figure}
 	\begin{myanswer}
 		Alice sollte nicht einfach ins Kino gehen, weil sie keine Bestätigung von Bob erhalten hat. Im Drei-Wege-Handschlag muss der Empfänger (Bob) die Anfrage bestätigen, bevor eine Verbindung (bzw. ein Treffen) zustande kommt. Ohne Antwort weiss Alice nicht, ob Bob die Nachricht erhalten hat oder überhaupt kommen wird.
@@ -1216,9 +1214,9 @@ Ein einfacher Anwendungsfall eines Servers ist der sogenannte \textbf{Echo-Serve
 \end{myexercise}
 
 \begin{myexercise}
-	Schauen Sie sich das Datenaustausch-Fenster von \cref{ex:filius-echo-server} genauer an. 
+	Schauen Sie sich das Datenaustausch-Fenster von \cref{ex:filius-echo-server} genauer an.
 	\begin{enumerate}
-		\item Erklären Sie, was auf jeder Zeile passiert. 
+		\item Erklären Sie, was auf jeder Zeile passiert.
 		\item Über welche Ports erfolgt die Kommunikation beim Server und beim Client?
 	\end{enumerate}
 
@@ -1234,15 +1232,15 @@ Ein einfacher Anwendungsfall eines Servers ist der sogenannte \textbf{Echo-Serve
 		\begin{enumerate}
 			\item \textbf{Erklärung der Zeilen}:
 			\begin{enumerate}
-			\item \textbf{Zeile 1 (ARP)}: Der Client (\commandbox|192.168.0.10|) sendet eine \gls{ARP}-Anfrage (\textit{Broadcast}) an alle Geräte im Netzwerk, um die \gls{MAC}-Adresse des Servers (\commandbox|192.168.0.11|) zu finden.
-			\item \textbf{Zeile 2 (ARP)}: Der Server (\commandbox|192.168.0.11|) antwortet mit seiner \gls{MAC}-Adresse (\commandbox|86:77:1C:6A:51:D7|) direkt an den Client (\textit{Unicast}).
-			\item \textbf{Zeile 3 (TCP)}: Der Client startet den Drei-Wege-Handschlag mit einem SYN-Paket (Sequenznummer: \texttt{5.000.000}), um eine \gls{TCP}-Verbindung zum Server aufzubauen.
-			\item \textbf{Zeile 4 (TCP)}: Der Server antwortet mit \texttt{SYN+ACK} (eigene Sequenznummer: \texttt{4.000.000}, Bestätigung: \texttt{5.000.001}), um die Verbindung zu bestätigen und seine eigene Sequenznummer mitzuteilen.
-			\item \textbf{Zeile 5 (TCP)}: Der Client sendet ein \texttt{ACK}-Paket (Sequenznummer: \texttt{5.000.001}, Bestätigung: \texttt{4.000.001}), um den Drei-Wege-Handschlag abzuschliessen. Die \gls{TCP}-Verbindung ist nun etabliert.
+			\item \textbf{Zeile 1 (\acrshort{ARP})}: Der Client (\commandbox|192.168.0.10|) sendet eine \gls{ARP}-Anfrage (\textit{Broadcast}) an alle Geräte im Netzwerk, um die \gls{MAC}-Adresse des Servers (\commandbox|192.168.0.11|) zu finden.
+			\item \textbf{Zeile 2 (\acrshort{ARP})}: Der Server (\commandbox|192.168.0.11|) antwortet mit seiner \gls{MAC}-Adresse (\commandbox|86:77:1C:6A:51:D7|) direkt an den Client (\textit{Unicast}).
+			\item \textbf{Zeile 3 (\acrshort{TCP})}: Der Client startet den Drei-Wege-Handschlag mit einem SYN-Paket (Sequenznummer: \texttt{5.000.000}), um eine \gls{TCP}-Verbindung zum Server aufzubauen.
+			\item \textbf{Zeile 4 (\acrshort{TCP})}: Der Server antwortet mit \texttt{SYN+ACK} (eigene Sequenznummer: \texttt{4.000.000}, Bestätigung: \texttt{5.000.001}), um die Verbindung zu bestätigen und seine eigene Sequenznummer mitzuteilen.
+			\item \textbf{Zeile 5 (\acrshort{TCP})}: Der Client schliesst den Drei-Wege-Handschlag mit einem \texttt{ACK}-Paket ab (Sequenznummer: \texttt{5.000.001}, Bestätigung: \texttt{4.000.001}). Die \gls{TCP}-Verbindung ist nun etabliert.
 			\item \textbf{Zeile 6 (Anwendung)}: Der Client sendet die Nachricht \enquote{\texttt{hello!}} über die etablierte \gls{TCP}-Verbindung an den Echo-Server.
-			\item \textbf{Zeile 7 (TCP)}: Der Server bestätigt den Empfang der Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{4.000.001}, Bestätigung: \texttt{5.000.007}). Die Bestätigungsnummer ist um 7 erhöht worden, da eine Nachricht mit 7 Bytes empfangen wurde (jedes Zeichen ist ein Byte).
+			\item \textbf{Zeile 7 (\acrshort{TCP})}: Der Server bestätigt den Empfang der Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{4.000.001}, Bestätigung: \texttt{5.000.007}). Die Bestätigungsnummer ist um 6 erhöht worden, da eine Nachricht mit 6 Bytes empfangen wurde (jedes Zeichen von \enquote{\texttt{hello!}} ist ein Byte).
 			\item \textbf{Zeile 8 (Anwendung)}: Der Echo-Server sendet die Nachricht \enquote{\texttt{hello!}} unverändert zurück an den Client.
-			\item \textbf{Zeile 9 (TCP)}: Der Client bestätigt den Empfang der Echo-Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{5.000.007}, Bestätigung: \texttt{4.000.007}).
+			\item \textbf{Zeile 9 (\acrshort{TCP})}: Der Client bestätigt den Empfang der Echo-Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{5.000.007}, Bestätigung: \texttt{4.000.007}).
 		\end{enumerate}
 			\item \textbf{Ports der Kommunikation}:
 			\begin{itemize}
@@ -1253,23 +1251,23 @@ Ein einfacher Anwendungsfall eines Servers ist der sogenannte \textbf{Echo-Serve
 	\end{myanswer}
 \end{myexercise}
 
-\subsection{Email-Server}
-Ein Echo-Server ist zugegebenermassen ein sehr einfacher Anwendungsfall. In der Praxis gibt es viele komplexere Server, die verschiedene Dienste bereitstellen. Ein häufig verwendeter Server ist der \textbf{Email-Server}. Ein Email-Server ist dafür verantwortlich, E-Mails zu empfangen, zu speichern und zu senden. Es gibt verschiedene Protokolle, die für den Betrieb von Email-Servern verwendet werden, darunter:
+\subsection{E-Mail-Server}
+Ein Echo-Server ist zugegebenermassen ein sehr einfacher Anwendungsfall. In der Praxis gibt es viele komplexere Server, die verschiedene Dienste bereitstellen. Ein häufig verwendeter Server ist der \textbf{E-Mail-Server}. Ein E-Mail-Server ist dafür verantwortlich, E-Mails zu empfangen, zu speichern und zu senden. Es gibt verschiedene Protokolle, die für den Betrieb von E-Mail-Servern verwendet werden, darunter:
 \begin{itemize}
-	\item \textbf{\acrfull{SMTP}}: Dieses Protokoll wird hauptsächlich zum Senden von E-Mails verwendet. Es ermöglicht es einem Client, eine E-Mail an einen Server zu senden, der die E-Mail dann an den Empfänger weiterleitet. Standardmässig wird \gls{SMTP} über den Port 25 betrieben.
-	\item \textbf{\acrfull{POP3}}: Dieses Protokoll wird verwendet, um E-Mails von einem Server herunterzuladen. Es ermöglicht es einem Client, E-Mails vom Server abzurufen und lokal zu speichern. Standardmässig wird \gls{POP3} über den Port 110 betrieben.
-	\item \textbf{\acrfull{IMAP}}: Dieses Protokoll wird ebenfalls zum Abrufen von E-Mails verwendet, bietet jedoch mehr Funktionen als \gls{POP3}. Mit \gls{IMAP} können Clients E-Mails auf dem Server verwalten, ohne sie herunterzuladen. Standardmässig wird \gls{IMAP} über den Port 143 betrieben.
+	\item \textbf{\gls{SMTP}}: Dieses Protokoll wird hauptsächlich zum Senden von E-Mails verwendet. Es ermöglicht es einem Client, eine E-Mail an einen Server zu senden, der die E-Mail dann an den Empfänger weiterleitet. Standardmässig wird \gls{SMTP} über den Port 25 betrieben.
+	\item \textbf{\gls{POP3}}: Dieses Protokoll wird verwendet, um E-Mails von einem Server herunterzuladen. Es ermöglicht es einem Client, E-Mails vom Server abzurufen und lokal zu speichern. Standardmässig wird \gls{POP3} über den Port 110 betrieben.
+	\item \textbf{\gls{IMAP}}: Dieses Protokoll wird ebenfalls zum Abrufen von E-Mails verwendet, bietet jedoch mehr Funktionen als \gls{POP3}. Mit \gls{IMAP} können Clients E-Mails auf dem Server verwalten, ohne sie herunterzuladen. Standardmässig wird \gls{IMAP} über den Port 143 betrieben.
 \end{itemize}
 
-\begin{mychallenge}[Filius-Anwendung: Email-Server]
-	Erstellen Sie in Filius eine Client-Server-Architektur, ähnlich derjenigen aus Video 5. Diesmal soll der Server jedoch als Email-Server fungieren, der sowohl \gls{SMTP} als auch \gls{POP3} unterstützt. Installieren Sie dazu auf dem Server einen \enquote{E-Mail-Server} und auf dem Client einen \enquote{E-Mail-Client}. Indem Sie den E-Mail-Server konfigurieren, richten Sie automatich sowohl den \gls{SMTP}- wie auch den \gls{POP3}-Dienst ein.
-	Zunächst müssen Sie auf dem Server alle Konten anlegen, die es geben soll, und die Maildomain festlegen. Heisst die Maildomain beispielsweise \texttt{filius.ch}, so enden alle Email-Adressen auf \texttt{@filius.ch}. Auf der Client-Seite muss ebenfalls zuerst ein Konto eingerichtet werden. Testen Sie die Konfiguration, indem Sie eine E-Mail von einem Client an einen anderen Client senden und überprüfen, ob die E-Mail korrekt empfangen wird.
+\begin{mychallenge}[Filius-Anwendung: E-Mail-Server]
+	Erstellen Sie in Filius eine Client-Server-Architektur, ähnlich derjenigen aus Video 5. Diesmal soll der Server jedoch als E-Mail-Server fungieren, der sowohl \gls{SMTP} als auch \gls{POP3} unterstützt. Installieren Sie dazu auf dem Server einen \enquote{E-Mail-Server} und auf dem Client einen \enquote{E-Mail-Client}. Indem Sie den E-Mail-Server konfigurieren, richten Sie automatisch sowohl den \gls{SMTP}- wie auch den \gls{POP3}-Dienst ein.
+	Zunächst müssen Sie auf dem Server alle Konten anlegen, die es geben soll, und die Maildomain festlegen. Heisst die Maildomain beispielsweise \texttt{filius.ch}, so enden alle E-Mail-Adressen auf \texttt{@filius.ch}. Auf der Client-Seite muss ebenfalls zuerst ein Konto eingerichtet werden. Testen Sie die Konfiguration, indem Sie eine E-Mail von einem Client an einen anderen Client senden und überprüfen, ob die E-Mail korrekt empfangen wird.
 \end{mychallenge}
 
-Weshalb braucht es überhaupt einen Email-Server? Ohne einen Email-Server müsste jeder Computer, der eine E-Mail senden oder empfangen möchte, direkt mit dem Computer des Empfängers kommunizieren. Dies wäre jedoch unpraktisch, insbesondere wenn der Empfänger offline ist -- in diesem Falle müsste der Sender warten, bis der Empfänger wieder online ist, um die E-Mail zuzustellen, oder die Mail würde ungelesen im Internet verloren gehen, da der Empfänger nicht erreichbar ist. Im Allgemeinen sind Servers rund um die Uhr online. Im Beispiel eines Email-Servers kann der Server die E-Mails speichern, bis der Empfänger sie abruft. Ähnlich ist es auch bei anderen Servern, wie beispielsweise Web-Servern, welche wir als nächstes betrachten.
+Weshalb braucht es überhaupt einen E-Mail-Server? Ohne einen E-Mail-Server müsste jeder Computer, der eine E-Mail senden oder empfangen möchte, direkt mit dem Computer des Empfängers kommunizieren. Dies wäre jedoch unpraktisch, insbesondere wenn der Empfänger offline ist -- in diesem Falle müsste der Sender warten, bis der Empfänger wieder online ist, um die E-Mail zuzustellen, oder die Mail würde ungelesen im Internet verloren gehen, da der Empfänger nicht erreichbar ist. Im Allgemeinen sind Server rund um die Uhr online. Im Beispiel eines E-Mail-Servers kann der Server die E-Mails speichern, bis der Empfänger sie abruft. Ähnlich ist es auch bei anderen Servern, wie beispielsweise Web-Servern, welche wir als nächstes betrachten.
 
 \subsection{Web-Server}
-Eine Ihnen bekannte Situation findet sich vor, wenn ein Client $\mathcal{C}$ eine Webseite von einem Server $\mathcal{S}$ anfordert. Dies geschieht beispielsweise, wenn Sie von Ihrem Mobiltelefon oder Laptop aus eine Webseite über den Browser aufrufen. Im Folgenden werden wir auf vereinfachte Weise veranschaulichen, welche Schritte geschehen müssen, damit Sie ihre Webseite sehen können.
+Eine Ihnen bekannte Situation findet sich vor, wenn ein Client $\mathcal{C}$ eine Webseite von einem Server $\mathcal{S}$ anfordert. Dies geschieht beispielsweise, wenn Sie von Ihrem Mobiltelefon oder Laptop aus eine Webseite über den Browser aufrufen. Im Folgenden werden wir auf vereinfachte Weise veranschaulichen, welche Schritte geschehen müssen, damit Sie Ihre Webseite sehen können.
 
 
 \begin{enumerate}
@@ -1350,7 +1348,7 @@ Wir können den Ablauf einer Abfrage etwas detaillierter aufzeigen, indem wir ei
 		% Draw a 2D rectangle around the users
 		\node[fit=(userStart) (userEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](user) {User \\ \faUser};
 
-		% nodes for 
+		% nodes for
 		\node[entity, right=of userStart] (browserStart) {Übersetzt die \acrshort{URL} in einen \acrshort{HTTP}-Request};
 		\node[entity, right=of userEnd] (browserEnd) {Sammelt Daten, setzt Website zusammen (Darstellung)};
 		% Draw a 2D rectangle around the users
@@ -1373,7 +1371,7 @@ Wir können den Ablauf einer Abfrage etwas detaillierter aufzeigen, indem wir ei
 	\label{fig:http-request}
 \end{figure}
 
-Damit der User die Nachricht jedoch tatsächlich erhält, müssen noch einige weitere Schritte erfolgen. Wie werden beispielsweise die Daten vom Server zum Client transportiert? Dafür müssen wir uns näher mit der Transportschicht auseinandersetzen.
+Damit der User die Webseite tatsächlich erhält, müssen die Daten zudem vom Server zum Client transportiert werden. Dies übernehmen die darunterliegenden Schichten, die wir bereits kennengelernt haben: die Transportschicht (\gls{TCP}), die Vermittlungsschicht (\gls{IP}) und die Netzzugangsschicht (\gls{MAC}-Adressen).
 
 \begin{myexercise}[Filius-Anwendung: Web-Server]
 	Erstellen Sie in Filius eine Client-Server-Architektur, ähnlich derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 6}. Diesmal soll der Server als Web-Server fungieren. Installieren Sie dazu auf dem Server einen \enquote{Webserver} und auf dem Client einen \enquote{Webbrowser}. Die Dateien, welche dem Client dargestellt werden sollen, befinden sich bereits auf dem Server. Installieren Sie auf dem Server zusätzlich die Software \enquote{Text-Editor} und öffnen Sie die Datei \texttt{index.html}, im Ordner \texttt{webserver}, um den Inhalt der Webseite anzupassen. Fügen Sie einen neuen Titel und Text hinzu, der auf der Webseite angezeigt werden soll, und testen Sie von einem anderen Client aus, ob die Änderungen korrekt angezeigt werden.
@@ -1383,34 +1381,34 @@ Damit der User die Nachricht jedoch tatsächlich erhält, müssen noch einige we
 	Besuchen Sie folgende Webseite: \url{https://www.w3schools.com/html} und lesen Sie die Grundlagen von \gls{HTML}. Erstellen Sie anschliessend eine einfache \gls{HTML}-Datei mit einem Titel, einer Überschrift und einem Absatz. Speichern Sie die Datei als \texttt{meine\_erste\_webseite.html} und öffnen Sie sie in Ihrem Webbrowser, um das Ergebnis zu sehen.
 \end{mychallenge}
 
-\begin{mychallenge}[Filius-Anwendung: ``Echter'' Webserver via Modem (zu zweit)]
-	In Filius können Sie auch einen ``echten'' Webserver einrichten, der über ein Modem den anderen Rechnern im gleichen \gls{LAN} zur Verfügung steht. 
-	
-	Diese Aufgabe funktioniert nur, wenn Sie sich im gleichen Subnetz befinden. Sie sollten daher einen persönlichen Hotspot (z.B. via Mobiltelefon) erstellen, mit welchem sich beide Personen verbinden können.
-	
-	Richten Sie nun in Filius einen Webserver ein, der über ein Modem mit dem \gls{LAN} verbunden ist. Das Modem muss ihre lokale IP-Adresse haben. Belassen Sie den Standard-Port 12345. Richten Sie anschliessend auf einem anderen Rechner im gleichen \gls{LAN} auf Filius ein Netzwerk mit einem Client und einem Modem ein, das mit dem gleichen \gls{LAN} verbunden ist. Verwenden Sie als IP-Adresse im Modem die lokale IP-Adresse der ersten Person, bei welcher der Webserver läuft.
+\begin{mychallenge}[Filius-Anwendung: \enquote{Echter} Webserver via Modem (zu zweit)]
+	In Filius können Sie auch einen \enquote{echten} Webserver einrichten, der über ein Modem den anderen Rechnern im gleichen \gls{LAN} zur Verfügung steht.
 
-	Versuchen Sie zunächst, den Webserver der ersten Person von der zweiten Person aus mit einem \commandbox*|ping|-Befehl zu erreichen. Öffnen Sie anschliessend den Webbrowser auf dem Client der zweiten Person und geben Sie die IP-Adresse des Webservers der ersten Person ein, um auf die Webseiten der ersten Person zuzugreifen.
+	Diese Aufgabe funktioniert nur, wenn Sie sich im gleichen Subnetz befinden. Sie sollten daher einen persönlichen Hotspot (z.B. via Mobiltelefon) erstellen, mit welchem sich beide Personen verbinden können.
+
+	Richten Sie nun in Filius einen Webserver ein, der über ein Modem mit dem \gls{LAN} verbunden ist. Das Modem muss Ihre lokale \gls{IP}-Adresse haben. Belassen Sie den Standard-Port 12345. Richten Sie anschliessend auf einem anderen Rechner im gleichen \gls{LAN} auf Filius ein Netzwerk mit einem Client und einem Modem ein, das mit dem gleichen \gls{LAN} verbunden ist. Verwenden Sie als \gls{IP}-Adresse im Modem die lokale \gls{IP}-Adresse der ersten Person, bei welcher der Webserver läuft.
+
+	Versuchen Sie zunächst, den Webserver der ersten Person von der zweiten Person aus mit einem \commandbox*|ping|-Befehl zu erreichen. Öffnen Sie anschliessend den Webbrowser auf dem Client der zweiten Person und geben Sie die \gls{IP}-Adresse des Webservers der ersten Person ein, um auf die Webseiten der ersten Person zuzugreifen.
 \end{mychallenge}
 
 \begin{myremark}[Modem vs. Router]
-	In Filius gibt es sowohl Modems als auch Router. Ein \textbf{Modem} (\textbf{Mo}dulator-\textbf{Dem}odulator) ist ein Gerät, das digitale Signale in analoge Signale umwandelt und umgekehrt, um die Kommunikation über Telefonleitungen oder Kabelverbindungen zu ermöglichen. Ein \textbf{Router} hingegen ist ein Gerät, das Datenpakete zwischen verschiedenen Netzwerken weiterleitet und den Datenverkehr innerhalb eines Netzwerks verwaltet. In Filius wird ein Modem verwendet, um eine Verbindung zu einem externen Netzwerk herzustellen, während ein Router verwendet wird, um den Datenverkehr innerhalb eines lokalen Netzwerks zu steuern. In Wirklichkeit sind viele moderne Geräte eine Kombination aus Modem und Router, die beide Funktionen in einem einzigen Gerät vereinen.
+	In Filius gibt es sowohl Modems als auch Router. Ein \textbf{Modem} (\textbf{Mo}dulator-\textbf{Dem}odulator) ist ein Gerät, das digitale Signale in analoge Signale umwandelt und umgekehrt, um die Kommunikation über Telefonleitungen oder Kabelverbindungen zu ermöglichen. Ein \textbf{Router} hingegen ist ein Gerät, das Datenpakete zwischen verschiedenen Netzwerken weiterleitet (innerhalb eines lokalen Netzwerks übernimmt dies ein Switch). In Filius wird ein Modem verwendet, um das simulierte Netzwerk mit einem echten Netzwerk (z.B. mit Filius auf einem anderen Rechner) zu verbinden, während ein Router verschiedene simulierte Netzwerke miteinander verbindet. In Wirklichkeit sind viele moderne Geräte eine Kombination aus Modem und Router, die beide Funktionen in einem einzigen Gerät vereinen.
 \end{myremark}
 
-\begin{myremark}[\gls{HTTP} vs \gls{HTTPS}]
+\begin{myremark}[\acrshort{HTTP} vs \acrshort{HTTPS}]
 	\gls{HTTP} steht für \textbf{Hypertext Transfer Protocol} und ist das grundlegende Protokoll, das für die Übertragung von Webseiten im Internet verwendet wird. Es definiert, wie Nachrichten formatiert und übertragen werden und wie Webserver und Browser auf verschiedene Befehle reagieren sollen.
 
-	\gls{HTTPS} steht für \textbf{Hypertext Transfer Protocol Secure} und ist eine sichere Version von \gls{HTTP}. Der Hauptunterschied zwischen \gls{HTTP} und \gls{HTTPS} besteht darin, dass \gls{HTTPS} eine Verschlüsselungsschicht (meistens \gls{TLS}) hinzufügt, um die Kommunikation zwischen dem Browser und dem Webserver zu schützen. Dies stellt sicher, dass die übertragenen Daten nicht von Dritten abgefangen oder manipuliert werden können, was besonders wichtig ist, wenn sensible Informationen wie Passwörter oder Kreditkartendaten übertragen werden. Nur weil Webseiten verschlüsselt übertragen werden, sind sie aber nicht automatisch sicher -- die Webseite selber kann immer noch Schadcode enthalten oder unsichere Praktiken verwenden. Daher ist in den letzten Jahren auch das Schlösschen-Symbol aus der Adressleiste des Browsers verschwunden, da es fälschlicherweise suggeriert hat, dass die Webseite sicher sei.
+	\textbf{\gls{HTTPS}} ist eine sichere Version von \gls{HTTP}. Der Hauptunterschied zwischen \gls{HTTP} und \gls{HTTPS} besteht darin, dass \gls{HTTPS} eine Verschlüsselungsschicht (meistens \gls{TLS}) hinzufügt, um die Kommunikation zwischen dem Browser und dem Webserver zu schützen. Dies stellt sicher, dass die übertragenen Daten nicht von Dritten abgefangen oder manipuliert werden können, was besonders wichtig ist, wenn sensible Informationen wie Passwörter oder Kreditkartendaten übertragen werden. Nur weil Webseiten verschlüsselt übertragen werden, sind sie aber nicht automatisch sicher -- die Webseite selber kann immer noch Schadcode enthalten oder unsichere Praktiken verwenden. Daher ist in den letzten Jahren auch das Schlösschen-Symbol aus der Adressleiste des Browsers verschwunden, da es fälschlicherweise suggeriert hat, dass die Webseite sicher sei.
 \end{myremark}
 
-\subsection{\texorpdfstring{\gls{DNS}-Server}{DNS-Server}}
-Wie wir bereits gesehen haben, besteht eine \gls{URL}, also eine Adresse einer Webseite, aus der Angabe eines Servers und einem Dateipfad. Diese Datei fordert der Client von einem Server mittels \gls{HTTP}- oder \gls{HTTPS}-Protokoll an (siehe \cref{fig:http-request}). Allerdings möchte man sich nicht für jeden Server die IP-Adresse merken müssen: ähnlich Ihrer Kontaktliste auf dem Mobiltelefon, welche dazu dient, dass Sie sich nicht alle Telefonnummern auswendig merken müssen, ist ein \gls{DNS} im Wesentlichen eine Liste von merkbaren Webseiten-Namen (wie beispielsweise \texttt{sbb.ch}) und deren dazugehörigen \gls{IP}-Adressen, also den \gls{IP}-Adressen der Server, die die Webseiten-Dateien speichern. Ein Beispiel einer solchen Tabelle ist in \cref{tab:dnsEntries} gezeigt.
+\subsection{\texorpdfstring{\glsentryshort{DNS}-Server}{DNS-Server}}
+Wie wir bereits gesehen haben, besteht eine \gls{URL}, also eine Adresse einer Webseite, aus der Angabe eines Servers und einem Dateipfad. Diese Datei fordert der Client von einem Server mittels \gls{HTTP}- oder \gls{HTTPS}-Protokoll an (siehe \cref{fig:http-request}). Allerdings möchte man sich nicht für jeden Server die \gls{IP}-Adresse merken müssen: ähnlich Ihrer Kontaktliste auf dem Mobiltelefon, welche dazu dient, dass Sie sich nicht alle Telefonnummern auswendig merken müssen, ist ein \gls{DNS} im Wesentlichen eine Liste von merkbaren Webseiten-Namen (wie beispielsweise \texttt{sbb.ch}) und deren dazugehörigen \gls{IP}-Adressen, also den \gls{IP}-Adressen der Server, die die Webseiten-Dateien speichern. Ein Beispiel einer solchen Tabelle ist in \cref{tab:dnsEntries} gezeigt.
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c}
-		\textbf{Domain Name} & \textbf{IP-Adresse} \\
-		\midrule\midrule
+	\begin{tabular}{cc}
+		\textbf{Domain Name} & \textbf{\gls{IP}-Adresse} \\
+		\midrule
 		\texttt{beispiel.ch} & 192.168.0.11         \\
 		\midrule
 		\texttt{schule.ch}   & 192.168.0.12         \\
@@ -1425,7 +1423,7 @@ Wie wir bereits gesehen haben, besteht eine \gls{URL}, also eine Adresse einer W
 	\label{tab:dnsEntries}
 \end{table}
 
-Wenn eine Adresse wie \texttt{insta.org} im Browser eingetippt und angefordert wird, schickt der Client eine Anfrage an einen nahegelegenen \gls{DNS}-Server, der die \gls{IP}-Adresse retourniert (ähnlich einem Telefonbuch). Ein \gls{DNS} ist also ein Server, welcher den Clients eines Netzwerks eine Tabelle von Servern und damit verbundenen Namen zur Verfügung stellt. Eine solche \gls{DNS}-Abfrage ist illustriert in \cref{fig:dns}.
+Wenn eine Adresse wie \texttt{insta.com} im Browser eingetippt und angefordert wird, schickt der Client eine Anfrage an einen nahegelegenen \gls{DNS}-Server, der die \gls{IP}-Adresse retourniert (ähnlich einem Telefonbuch). Ein \gls{DNS} ist also ein Server, welcher den Clients eines Netzwerks eine Tabelle von Servern und damit verbundenen Namen zur Verfügung stellt. Eine solche \gls{DNS}-Abfrage ist illustriert in \cref{fig:dns}.
 
 \begin{figure}[H]
 	\resizebox{\textwidth}{!}{
@@ -1440,9 +1438,9 @@ Wenn eine Adresse wie \texttt{insta.org} im Browser eingetippt und angefordert w
 			\node[client] (client) {Client\\\texttt{192.168.0.10}};
 			\node[server, right=4.2cm of client] (dns) {\acrshort{DNS}-Server\\\texttt{192.168.2.1}};
 			\node[server, right=4.2cm of dns] (web) {Webserver\\\texttt{192.168.0.11}};
-			\node[text width=3.5cm, right=0cm of dns] (dnsTable) {\tiny \begin{tabular}{p{1.1cm}|l}
+			\node[text width=3.5cm, right=0cm of dns] (dnsTable) {\tiny \begin{tabular}{p{1.1cm}l}
 					\textbf{Domain\newline Name} & \textbf{\acrshort{IP}-Adresse} \\
-					\midrule\midrule
+					\midrule
 					\texttt{beispiel.ch}         & 192.168.0.11                    \\
 					\midrule
 					\texttt{schule.ch}           & 192.168.0.12                    \\
@@ -1469,7 +1467,7 @@ Wenn eine Adresse wie \texttt{insta.org} im Browser eingetippt und angefordert w
 	\label{fig:dns}
 \end{figure}
 
-Der Prozess der Beantwortung einer Frage nach der IP-Adresse einer Web-Adresse ist in Schritten 1 und 2 in \cref{fig:dns} gezeigt. Die Übersetzung eines Domain-Namens in eine \gls{IP}-Adresse wird auch als \textbf{Namensauflösung} bezeichnet.
+Der Prozess der Beantwortung einer Frage nach der \gls{IP}-Adresse einer Web-Adresse ist in Schritten 1 und 2 in \cref{fig:dns} gezeigt. Die Übersetzung eines Domain-Namens in eine \gls{IP}-Adresse wird auch als \textbf{Namensauflösung} bezeichnet.
 
 \begin{myexercise}[\gls{DNS}-Server: Verständnisfrage]
 	Weshalb kann der Client \texttt{192.168.0.10} bei \cref{fig:dns} nicht auf die Webseite \texttt{ksimlee.ch} zugreifen?
@@ -1481,18 +1479,18 @@ Der Prozess der Beantwortung einer Frage nach der IP-Adresse einer Web-Adresse i
 
 
 
-Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten im ersten Abschnitt die \gls{IP}-Adresse des \gls{DNS}-Servers, der die Anfrage beantwortet hat, sowie die \gls{IP}-Adresse des Webservers für die angefragte Webseite.
+Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten Sie im ersten Abschnitt die \gls{IP}-Adresse des \gls{DNS}-Servers, der die Anfrage beantwortet hat, sowie die \gls{IP}-Adresse des Webservers für die angefragte Webseite.
 
 
 \begin{myexercise}[\gls{IP}-Adresse einer Webseite herausfinden]
-	Verwenden Sie den Befehl \commandbox*|nslookup [domainname]| in der Befehlszeile (MacOS: Terminal, Windows: Powershell), um herauszufinden, welche \gls{IP}-Adresse zur Webseite \texttt{sbb.ch} gehört. Geben Sie diese \gls{IP} im URL-Fenster Ihres Browser ein und beobachten Sie, was passiert.
+	Verwenden Sie den Befehl \commandbox*|nslookup [domainname]| in der Befehlszeile (MacOS: Terminal, Windows: Powershell), um herauszufinden, welche \gls{IP}-Adresse zur Webseite \texttt{sbb.ch} gehört. Geben Sie diese \gls{IP} im \gls{URL}-Feld Ihres Browsers ein und beobachten Sie, was passiert.
 	\begin{myanswer}
-		Die IP-Adresse von \texttt{sbb.ch} kann mit dem Befehl \commandbox*|nslookup sbb.ch| ermittelt werden und ist \texttt{194.150.245.142}. Wenn wir die Adresse im Browser eingeben, landen wir leider trotzdem nicht auf der Seite der SBB: Dies kann damit zu tun haben, dass der Webserver der SBB so konfiguriert ist, dass er nur Anfragen akzeptiert, die den Domain-Namen \texttt{sbb.ch} oder einen anderen gültigen Domain-Namen enthalten. Ein Server kann so eingestellt werden, dass mehrere Domainnamen gleichzeitig auf die gleiche IP-Adresse zeigen (dies wird als \textbf{Virtual Hosting} bezeichnet). In diesem Fall erwartet der Server, dass die Anfragen den korrekten Domain-Namen im \gls{HTTP}-Header enthalten, um die richtige Webseite auszuliefern. Wenn wir nur die IP-Adresse verwenden, fehlt diese Information, und der Server weiss nicht, welche Webseite er zurückgeben soll.
+		Die \gls{IP}-Adresse von \texttt{sbb.ch} kann mit dem Befehl \commandbox*|nslookup sbb.ch| ermittelt werden und ist \texttt{194.150.245.142}. Wenn wir die Adresse im Browser eingeben, landen wir leider trotzdem nicht auf der Seite der SBB: Dies kann damit zu tun haben, dass der Webserver der SBB so konfiguriert ist, dass er nur Anfragen akzeptiert, die den Domain-Namen \texttt{sbb.ch} oder einen anderen gültigen Domain-Namen enthalten. Ein Server kann so eingestellt werden, dass mehrere Domainnamen gleichzeitig auf die gleiche IP-Adresse zeigen (dies wird als \textbf{Virtual Hosting} bezeichnet). In diesem Fall erwartet der Server, dass die Anfragen den korrekten Domain-Namen im \gls{HTTP}-Header enthalten, um die richtige Webseite auszuliefern. Wenn wir nur die IP-Adresse verwenden, fehlt diese Information, und der Server weiss nicht, welche Webseite er zurückgeben soll.
 	\end{myanswer}
 \end{myexercise}
 
-\begin{myexercise}[Filus-Anwendung: \gls{DNS}-Server]
-	Erstellen Sie in Filius eine Client-Server-Architektur, gemäss derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 7}. Ihre Konfiguration sollte aus 2 Servern bestehen, wovon der erste als \gls{DNS}-Server und der zweite als Web-Server fungiert. Der DNS-Server soll dem Client die \gls{IP}-Adresse des Web-Servers bereitstellen, damit der Client anschliessend eine Webseite vom Web-Server anfordern kann. Vergessen Sie nicht, den \gls{DNS}-Server zu starten sowie dessen \gls{IP}-Adresse auch bei jedem Client unter \enquote{\gls{DNS}-Server} einzutragen, damit dieser weiss, an welchen Server er die \gls{DNS}-Anfragen schicken muss!
+\begin{myexercise}[Filius-Anwendung: \gls{DNS}-Server]
+	Erstellen Sie in Filius eine Client-Server-Architektur, gemäss derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 7}. Ihre Konfiguration sollte aus 2 Servern bestehen, wovon der erste als \gls{DNS}-Server und der zweite als Web-Server fungiert. Der \gls{DNS}-Server soll dem Client die \gls{IP}-Adresse des Web-Servers bereitstellen, damit der Client anschliessend eine Webseite vom Web-Server anfordern kann. Vergessen Sie nicht, den \gls{DNS}-Server zu starten sowie dessen \gls{IP}-Adresse auch bei jedem Client unter \enquote{\gls{DNS}-Server} einzutragen, damit dieser weiss, an welchen Server er die \gls{DNS}-Anfragen schicken muss!
 \end{myexercise}
 
 \section{Weitere Aufgaben}
@@ -1500,7 +1498,7 @@ Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten im ersten A
 \begin{myexercise}[Video zu Netzwerkschichten und Protokollen (Zusammenfassung)]
 	Um die Netzwerkschichten und Protokolle visuell zu verstehen, schauen Sie sich folgendes Video an:
 	\begin{figure}[H]
-		\href{https://www.youtube.com/watch?v=PBWhzz_Gn10}{Youtube-Video (13')}
+		\href{https://www.youtube.com/watch?v=PBWhzz_Gn10}{YouTube-Video (13')}
 	\end{figure}
 
 	Notieren Sie sich dabei Ihre Antworten auf folgende Fragen:
@@ -1517,9 +1515,9 @@ Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten im ersten A
 \end{myexercise}
 
 \begin{myexercise}[Austausch zu Netzwerkschichten und Protokollen]
-	Tauschen Sie sich nun in 3er- bis 4er-Gruppen aus und tragen Sie ihre Notizen zusammen. Beantworten Sie danach folgende Fragen:
+	Tauschen Sie sich nun in 3er- bis 4er-Gruppen aus und tragen Sie Ihre Notizen zusammen. Beantworten Sie danach folgende Fragen:
 	\begin{itemize}
-		\item Was ist eine URL?
+		\item Was ist eine \gls{URL}?
 		\item Was macht \enquote{Mr. IP}?
 		\item Was macht der Router?
 		\item Was macht die Firewall?
@@ -1531,7 +1529,7 @@ Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten im ersten A
 
 
 \begin{mychallenge}[Weitere Filius-Aufgaben (Troubleshooting)]
-	Lösen Sie die Troubleshooting-Aufgaben 2.13 auf folgendem \href{https://mychallenge.mygymer.ch/base/?book=network}{Link}.
+	Lösen Sie die Troubleshooting-Aufgaben 2.13 auf folgendem \href{https://informatik.mygymer.ch/base/?book=network}{Link}.
 \end{mychallenge}
 
 \begin{mychallenge}[Vertiefung: Schichtenmodell]

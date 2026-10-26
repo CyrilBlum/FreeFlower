@@ -8,16 +8,17 @@
     ]
 
     % Socket symbol inside server rectangle
-    \node[client] (client) at (0, 0) {Client\\\texttt{198.168.0.10}};
-    \node[server] (server) at (10, 0) {Server\\\texttt{198.168.0.11}};
+    \node[client] (client) at (0, 0) {Client\\\texttt{192.168.0.10}};
+    \node[server] (server) at (10, 0) {Server\\\texttt{192.168.0.11}};
     % State boxes
     \node[rectangle, draw, fill=gray!10, below=3cm of client.east, text width=7cm, align=left, font=\small] (client_state) {
         \textbf{Client:} \\
+        % \alt with \phantom (not \only) keeps the box height constant across overlays
         \iftoggle{beamer}{
-            \only<4->{1. Socket erstellen (\texttt{.socket()})\\}
-            \only<5->{2. Mit Server-Socket verbinden (\texttt{.connect()})\\}
-            \only<6->{3. Nachricht senden (\texttt{.send()})\\}
-            \only<9->{4. Antwort empfangen (\texttt{.recv()})}
+            \alt<4->{1. Socket erstellen (\texttt{.socket()})}{\phantom{1. Socket erstellen (\texttt{.socket()})}}\\
+            \alt<5->{2. Mit Server-Socket verbinden (\texttt{.connect()})}{\phantom{2. Mit Server-Socket verbinden (\texttt{.connect()})}}\\
+            \alt<6->{3. Nachricht senden (\texttt{.send()})}{\phantom{3. Nachricht senden (\texttt{.send()})}}\\
+            \alt<9->{4. Antwort empfangen (\texttt{.recv()})}{\phantom{4. Antwort empfangen (\texttt{.recv()})}}
         }{
             1. Socket erstellen (\texttt{.socket()})\\
             2. Mit Server-Socket verbinden (\texttt{.connect()}) \\
@@ -29,17 +30,17 @@
     \node[rectangle, draw, fill=gray!10, below=3cm of server.east, xshift=-2cm, text width=7cm, align=left, font=\small] (server_state) {
         \textbf{Server:} \\
         \iftoggle{beamer}{
-            \only<1->{1. Socket erstellen (\texttt{.socket()})\\}
-            \only<2->{2. Socket binden (\texttt{.bind()})\\}
-            \only<3->{3. Warten auf Verbindungen (\texttt{.listen()})\\}
-            \only<5->{4. Accept Verbindung (\texttt{.accept()})\\}
-            \only<7->{5. Nachricht empfangen (\texttt{.recv()}) \\}
-            \only<8->{6. Antwort senden (\texttt{.send()})}
+            \alt<1->{1. Socket erstellen (\texttt{.socket()})}{\phantom{1. Socket erstellen (\texttt{.socket()})}}\\
+            \alt<2->{2. Socket binden (\texttt{.bind()})}{\phantom{2. Socket binden (\texttt{.bind()})}}\\
+            \alt<3->{3. Warten auf Verbindungen (\texttt{.listen()})}{\phantom{3. Warten auf Verbindungen (\texttt{.listen()})}}\\
+            \alt<5->{4. Verbindung akzeptieren (\texttt{.accept()})}{\phantom{4. Verbindung akzeptieren (\texttt{.accept()})}}\\
+            \alt<7->{5. Nachricht empfangen (\texttt{.recv()})}{\phantom{5. Nachricht empfangen (\texttt{.recv()})}}\\
+            \alt<8->{6. Antwort senden (\texttt{.send()})}{\phantom{6. Antwort senden (\texttt{.send()})}}
         }{
             1. Socket erstellen (\texttt{.socket()})\\
             2. Socket binden (\texttt{.bind()})\\
             3. Warten auf Verbindungen (\texttt{.listen()})\\
-            4. Accept Verbindung (\texttt{.accept()})\\
+            4. Verbindung akzeptieren (\texttt{.accept()})\\
             5. Nachricht empfangen (\texttt{.recv()}) \\
             6. Antwort senden (\texttt{.send()})
         }
@@ -53,7 +54,7 @@
     % Arrows with labels
     \node[rectangle, draw, fill=yellow!5, above right=.2cm and .6cm of server_socket, minimum width=2.2cm, minimum height=1.2cm, font=\small, align=center, rounded corners] (server_socket_text){
         \textbf{Socket:}\\
-        IP: \texttt{198.168.0.11}\\
+        IP: \texttt{192.168.0.11}\\
         Port: \texttt{12345}\\
         Protokoll: \texttt{TCP}
     };

@@ -1,11 +1,10 @@
+% Farben für jede Schicht (\providecommand: auch im Skript definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
+
 % command to make sure colorboxes don't create whitespace between code lines
-
-% Farben für jede Schicht
-\newcommand{\applicationLayerColor}{Gold}
-\newcommand{\transportLayerColor}{Indigo}
-\newcommand{\networkLayerColor}{RoyalBlue}
-\newcommand{\dataLinkLayerColor}{Gray}
-
 \fboxsep=.6pt
 
 % default settings for listings
@@ -41,7 +40,7 @@
             \begin{table}[H]
                 \tiny
                 \centering
-                \begin{tabular}{l|l}
+                \begin{tabular}{ll}
                     \coin{3} Von:       & \texttt{192.168.0.\fldNum}                                                           \\\midrule
                     \coin{3} An:        & \texttt{192.168.0.\fldNum}                                                           \\\midrule
                     \coin{2} Sequenz:   & \texttt{\TextField[width=5cm, print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}} \\\midrule
@@ -52,10 +51,10 @@
     \end{center}
     \textbf{Anleitung}\small
     \begin{itemize}[<+->]
-        \item (Bereits gemacht): Notieren Sie sich eine einzigartige IP-Adresse für Ihren Computer, startend mit \texttt{192.168.0.xyz} (z.B. \texttt{192.168.0.3}), wobei  $\texttt{xyz} \in [0,255]$
+        \item (Bereits gemacht): Notieren Sie sich eine einzigartige \acrshort{IP}-Adresse für Ihren Computer, startend mit \texttt{192.168.0.xyz} (z.B. \texttt{192.168.0.3}), wobei  $\texttt{xyz} \in [0,255]$
         \item[\coin{1}] (Vorderseite) Schreiben Sie eine Nachricht (max. 10 Zeichen pro Karte)
         \item[\coin{2}] (Vorderseite) Nummerieren Sie die Karten in der Reihenfolge, in der sie gesendet werden sollen (Sequenz)
-        \item[\coin{3}] (Rückseite) Fügen Sie die IP-Adressen der Absender- und Empfänger-Computer hinzu.
+        \item[\coin{3}] (Rückseite) Fügen Sie die \acrshort{IP}-Adressen der Absender- und Empfänger-Computer hinzu.
         \item[\faTruck] Übergeben Sie die Karten dem \enquote{Router} (= \enquote{Postbote})
     \end{itemize}
 \end{frame}
@@ -71,7 +70,7 @@
         \item Im Alltag:
               \begin{itemize}
                   \item Kommunikations-Netzwerke: Die Post, DHL, Planzer, ...
-                  \item Soziale Netzwerke: TikTok, Youtube, Instagram, ...
+                  \item Soziale Netzwerke: TikTok, YouTube, Instagram, ...
                   \item Transport-Netzwerke: SBB, Flixbus, ...
                   \item Shopping-Netzwerke: Aliexpress, Uber, ...
                   \item Computer-Netzwerke: \textbf{Das Internet}
@@ -136,7 +135,7 @@
             \begin{table}[H]
                 \centering
                 \footnotesize
-                \resizebox{\textwidth}{!}{
+                \adjustbox{max width=\textwidth, max totalheight=.78\textheight}{
                     \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_osi-tcpip-table.tex}}
             \end{table}
         \end{center}}
@@ -148,7 +147,7 @@
 \begin{frame}[fragile]{Schichten \& Protokolle}
     \begin{figure}[H]
         \centering
-        \resizebox{.8\textwidth}{!}{
+        \adjustbox{max width=.8\textwidth, max height=.35\textheight}{
             \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_schichtenmodell.tex}
         }
     \end{figure}
@@ -156,13 +155,13 @@
     \only<2>{
         \begin{table}[H]
             \centering
-            \begin{tabular}{p{2cm}|l}
+            \begin{tabular}{p{2cm}l}
                 \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
                 \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
                 \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                     \\\midrule
                 \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi}   \\
             \end{tabular}
-            \begin{tabular}{p{2cm}|l}
+            \begin{tabular}{p{2cm}l}
                 \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
                 \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
                 \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                     \\\midrule
@@ -171,6 +170,8 @@
         \end{table}
     }
     \pause
+    % onlyenv: the columns take no space on slide 2 (where the two tables are shown)
+    \begin{onlyenv}<3->
     \begin{columns}[t]
         \begin{column}{.5\textwidth}
             \textbf{Schichten}
@@ -189,6 +190,7 @@
             \end{itemize}
         \end{column}
     \end{columns}
+    \end{onlyenv}
 \end{frame}
 
 \begin{frame}[fragile]{Schichtenmodell}{Vorteile}
@@ -196,7 +198,7 @@
         \item \textbf{Modularität}: Aufbau auf bestehenden Schichten
         \item \textbf{Austauschbarkeit} / Flexibilität
               \begin{itemize}
-                  \item Übertragung über Kabel, WLAN etc. kann ausgetauscht werden, ohne dass darüberliegende Schichten tangiert werden
+                  \item Übertragung über Kabel, \acrshort{WLAN} etc. kann ausgetauscht werden, ohne dass darüberliegende Schichten tangiert werden
                   \item Analogie: Anstelle von Lastwagen kann Motorrad verwendet werden
               \end{itemize}
     \end{itemize}
@@ -223,13 +225,13 @@
 
 \begin{frame}[fragile]{Schichtenmodell}{Video}
     \begin{figure}[H]
-        \href{https://www.youtube.com/watch?v=PBWhzz_Gn10}{Youtube-Video (13')}
+        \href{https://www.youtube.com/watch?v=PBWhzz_Gn10}{YouTube-Video (13')}
     \end{figure}
 
     \begin{myexercise}[Gruppen-Auftrag]
         \begin{itemize}
-            \item Was ist eine URL?
-            \item Was macht \enquote{Mr. IP}?
+            \item Was ist eine \acrshort{URL}?
+            \item Was macht \enquote{Mr. \acrshort{IP}}?
             \item Was macht der Router?
             \item Was macht die Firewall?
             \item Was macht der Proxy Server?
@@ -239,19 +241,19 @@
     \end{myexercise}
 \end{frame}
 
-\section{Netzzzugangsschicht}
+\section{Netzzugangsschicht}
 \setbeamercolor{frametitle}{bg=\dataLinkLayerColor!20}
 \begin{frame}{Netzwerk-Spiel: \textbf{Internetschicht}}
-    Endgeräte fügen die IP-Adressen hinzu:
+    Endgeräte fügen die \acrshort{IP}-Adressen hinzu:
     \begin{table}[H]
         \centering
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
             \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                     \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi}   \\
         \end{tabular}
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
             \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                     \\\midrule
@@ -270,13 +272,13 @@
 \begin{frame}{Netzwerk-Spiel: \textbf{Netzzugangsschicht}}
     \begin{table}[H]
         \centering
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\networkLayerColor!20} Von:                                         & \sout{\texttt{192.168.0.3}}  \\\midrule
             \rowcolor{\networkLayerColor!20} An:                                          & \sout{\texttt{192.168.0.11}} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                            \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi}          \\
         \end{tabular}
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\networkLayerColor!20} Von:                                         & \sout{\texttt{192.168.0.3}}  \\\midrule
             \rowcolor{\networkLayerColor!20} An:                                          & \sout{\texttt{192.168.0.11}} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                            \\\midrule
@@ -285,47 +287,34 @@
     \end{table}
 \end{frame}
 
-\begin{frame}[fragile]{Netzwerk-Spiel: \textbf{Netzzugangsschicht}}{MAC-Adresse}
+\begin{frame}[fragile]{Netzwerk-Spiel: \textbf{Netzzugangsschicht}}{\acrshort{MAC}-Adresse}
     \begin{table}[H]
         \footnotesize
         \centering
-        \begin{tabular}{l|l}
+        \begin{tabular}{ll}
             \rowcolor{\dataLinkLayerColor!20} Von:         & \texttt{48:2C:6A:1E:59:3D} \\\midrule
             \rowcolor{\dataLinkLayerColor!20} An:          & \texttt{60:4E:46:F5:08:09} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:     & 1                          \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht: & \texttt{Hi Bob, wi}        \\
         \end{tabular}
-        \begin{tabular}{l|l}
+        \begin{tabular}{ll}
             \rowcolor{\dataLinkLayerColor!20} Von:         & \texttt{48:2C:6A:1E:59:3D} \\\midrule
             \rowcolor{\dataLinkLayerColor!20} An:          & \texttt{60:4E:46:F5:08:09} \\\midrule
             \rowcolor{\transportLayerColor!20}Sequenz:     & 2                          \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht: & \texttt{e geht's?}         \\
         \end{tabular}
     \end{table}
-    \faFingerprint{} \textbf{MAC-Adresse}
+    \faFingerprint{} \textbf{\acrshort{MAC}-Adresse:} Wie gelangt man überhaupt von einem Computer zum anderen?
     \begin{itemize}[<+->]
+        \item \gls{MAC}-Adresse: in jede Netzwerkkarte (jeden Computer) fest eingebaute Adresse
         \item Analogie: Übergabe Brief von einer Hand in die andere
-        \item \enquote{Fingerabdruck} eines Computers im Internet
-        \item 48 bit, die normalerweise in hexadezimaler Weise angegeben werden
-        \item Z.B. \commandbox{48:2C:6A:1E:59:3D}
-        \item Jede Netzwerkkarte hat eine MAC-Adresse
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{\faFingerprint{} \acrshort{MAC}-Adresse}{Netzzugangsschicht}
-    \begin{center}
-        Wie gelangt man überhaupt von einem Computer zum anderen?
-    \end{center}
-    \begin{itemize}[<+->]
-        \item \gls{MAC}-Adresse: In jedem Computer (in Netzwerkkarte) eingebaute Adresse
-        \item So etwas wie der \enquote{Fingerabdruck} eines Computers
-        \item Analogie: Übergabe Brief von einer Hand in die andere
+        \item \enquote{Fingerabdruck} der Netzwerkkarte, nur im lokalen Netzwerk sichtbar
         \item 48 bit, die normalerweise in hexadezimaler Weise angegeben werden
         \item Z.B. \commandbox{48:2C:6A:1E:59:3D}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{\acrfull{ARP}}{Verbindungsschicht}
+\begin{frame}[fragile]{\acrfull{ARP}}{Netzzugangsschicht}
     \begin{itemize}[<+->]
         \item Daten werden zwar mit Ziel-\gls{IP}-Adresse versehen, können jedoch nur von \gls{MAC} zu \gls{MAC} übergeben werden!
         \item Muss verwendet werden, um herauszufinden, welche \gls{MAC}-Adresse zu welcher \gls{IP}-Adresse gehört.
@@ -346,7 +335,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Topologie, grössere Netzwerke}
+\begin{frame}[shrink=8]{Topologie, grössere Netzwerke}
     \begin{center}
         Wie bauen wir am besten ein grösseres Netzwerk auf?
     \end{center}
@@ -365,7 +354,7 @@
         \centering
         % Use three responsive subfigures that scale to the local \linewidth so they look good
         % both in beamer (narrow) and article (wide).
-        \begin{subfigure}[b]{0.32\linewidth}
+        \begin{subfigure}[b]{0.26\linewidth}
             \centering
             \resizebox{\linewidth}{!}{%
                 \begin{tikzpicture}[every node/.style={circle,minimum size=6mm,inner sep=0pt}]
@@ -383,7 +372,7 @@
             }
             \caption*{\small Unicast: \texttt{1:1}}
         \end{subfigure}\pause\hfill
-        \begin{subfigure}[b]{0.32\linewidth}
+        \begin{subfigure}[b]{0.26\linewidth}
             \centering
             \resizebox{\linewidth}{!}{%
                 \begin{tikzpicture}[every node/.style={circle,minimum size=6mm,inner sep=0pt}]
@@ -403,7 +392,7 @@
             }
             \caption*{\small Multicast: \texttt{1:n}}
         \end{subfigure}\pause\hfill
-        \begin{subfigure}[b]{0.32\linewidth}
+        \begin{subfigure}[b]{0.26\linewidth}
             \centering
             \resizebox{\linewidth}{!}{%
                 \begin{tikzpicture}[every node/.style={circle,minimum size=6mm,inner sep=0pt}]
@@ -470,7 +459,7 @@
 \begin{frame}[fragile]{Lokale vs. globale \gls{IP}-Adresse}{\acrfull{NAT}}
     \begin{figure}[H]
         \centering
-        \resizebox{\linewidth}{!}{
+        \adjustbox{max width=\linewidth, max height=.55\textheight}{
             \begin{tikzpicture}[
                     base/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, text=white, rounded corners, text width=2.5cm, align=center, inner sep=8pt},
                     device/.style={base, fill=ForestGreen},
@@ -496,15 +485,15 @@
                 \only<1>{
                     \draw[arrow] (client.east) -- (nat.west) node[midway, above, text=black] {Anfrage von\\\texttt{192.168.0.10}};
                 }
-                
+
                 \only<2>{
                     \draw[arrow] (nat.east) -- (web.west) node[midway, above, text=black] {Anfrage von\\\texttt{80.152.43.21} \faCheck};
                 }
-                
+
                 \only<3>{
                     \draw[arrow] (web.west) -- (nat.east) node[midway, below, text=black] {Antwort an\\\texttt{80.152.43.21}};
                 }
-                
+
                 \only<4>{
                     \draw[arrow] (nat.west) -- (client.east) node[midway, below, text=black] {Antwort an\\\texttt{192.168.0.10} \faCheck};
                 }
@@ -513,9 +502,9 @@
                 \only<2->{
                     \node[below=0.1cm of nat, text width=3.5cm, font=\tiny, inner sep=8pt, draw, rounded corners, fill=\networkLayerColor!10] (natTable) {
                         \textbf{\acrshort{NAT}-Tabelle}
-                        \begin{tabular}{p{1.4cm}|p{1.4cm}}
+                        \begin{tabular}{p{1.4cm}p{1.4cm}}
                             \textbf{Lokal} & \textbf{Global} \\
-                            \midrule\midrule
+                            \midrule
                             192.168.0.10 & 80.152.43.21 \\
 
                         \end{tabular}
@@ -524,25 +513,25 @@
             \end{tikzpicture}
         }
     \end{figure}
-    
+
     \only<1-2>{
         \textbf{Ausgehende Anfrage}
         \begin{itemize}
-            \item Client sendet Anfrage mit lokaler IP-Adresse
-            \item Router ersetzt lokale IP durch seine globale IP
+            \item Client sendet Anfrage mit lokaler \acrshort{IP}-Adresse
+            \item Router ersetzt lokale \acrshort{IP} durch seine globale \acrshort{IP}
         \end{itemize}
     }
-    
+
     \only<3-4>{
         \textbf{Eingehende Antwort}
         \begin{itemize}
-            \item Server antwortet an die globale IP des Routers
-            \item Router schlägt in NAT-Tabelle nach und leitet an lokale IP weiter
+            \item Server antwortet an die globale \acrshort{IP} des Routers
+            \item Router schlägt in \acrshort{NAT}-Tabelle nach und leitet an lokale \acrshort{IP} weiter
         \end{itemize}
     }
 \end{frame}
 
-\begin{frame}[fragile]{Eigene IP-Adresse herausfinden}
+\begin{frame}[fragile]{Eigene \acrshort{IP}-Adresse herausfinden}
     \begin{itemize}
         \item MacOS, Terminal (via Spotlight-Suche): \\
               \commandbox*|ipconfig getifaddr en0|
@@ -564,18 +553,18 @@
 \begin{frame}
     Auftrag
     \begin{itemize}
-        \item \aufgabebox{1.12}: Eigene IPv4-Adresse herausfinden
+        \item \aufgabebox{1.12}: Eigene \acrshort{IP}v4-Adresse herausfinden
         \item \challengebox{1.13}: \commandbox*|ping| im echten Netzwerk testen
         \item \aufgabebox{1.16 - 1.18}: Notation \gls{IP}v4 und \gls{IP}v6
         \item \challengebox{1.14, 1.15}: Python, \acrshort{ARP}-Scan
-        
+
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{\faMapMarker{} Sub-Netze}{Vermittlungsschicht}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\linewidth]{Grundlagen_Info/07_Netzwerke/Figures/subnets}
+        \includegraphics[width=\linewidth, height=.75\textheight, keepaspectratio]{Grundlagen_Info/07_Netzwerke/Figures/subnets}
     \end{figure}
 \end{frame}
 
@@ -610,10 +599,10 @@
 \begin{frame}[fragile]{\faMapMarker{} Sub-Netze}{Vermittlungsschicht}
     \textbf{Subnetzwerke}
     \begin{itemize}[<+->]
-        \item Verschiedene Geräte gehören zum gleichen Subnetz, falls Sie
+        \item Verschiedene Geräte gehören zum gleichen Subnetz, falls sie
               \begin{itemize}
-                  \item Physisch miteinander verbunden sind (WLAN, Kabel, etc.)
-                  \item Die gleiche Subnetzmaske teilen (später mehr dazu)
+                  \item physisch miteinander verbunden sind (\acrshort{WLAN}, Kabel, etc.)
+                  \item denselben Netzwerkteil haben: \gls{IP}-Adressen stimmen überall dort überein, wo die Subnetzmaske eine 1 hat (später mehr dazu)
               \end{itemize}
     \end{itemize}
 \end{frame}
@@ -621,21 +610,21 @@
 \begin{frame}[fragile]{\faGlobe{} Netzmasken}{Vermittlungsschicht}
     \textbf{Netzmaske}
     \begin{itemize}[<+->]
-        \item Sieht ähnlich aus wie eine IP-Adresse: \commandBluebox|xxx.xxx.xxx.xxx|
-        \item Fasst mehrere IPs zu einer Gruppe (= Subnetz) zusammen
-        \item Gibt an, wie viele Stellen einer IP-Adresse gleich sein müssen, damit mehrer Computer zum gleichen (Sub-)Netzwerk gehören.
+        \item Sieht ähnlich aus wie eine \acrshort{IP}-Adresse: \commandBluebox|xxx.xxx.xxx.xxx|
+        \item Fasst mehrere \acrshortpl{IP} zu einer Gruppe (= Subnetz) zusammen
+        \item Gibt an, wie viele Stellen einer \acrshort{IP}-Adresse gleich sein müssen, damit mehrere Computer zum gleichen (Sub-)Netzwerk gehören.
         \item \textbf{Beispiel}:
               \begin{table}[H]
                   \centering
                   \tiny
-                  \begin{tabular}{r|l|l}
-                                   & Dezimal                        & Binär                                                                 \\\midrule\midrule
-                      IP 1         & \texttt{159.233.1.22}          & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00010110} \\\midrule
-                      IP 2         & \texttt{159.233.1.1}           & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00000001} \\\midrule
+                  \begin{tabular}{rll}
+                                   & Dezimal                        & Binär                                                                 \\\midrule
+                      \acrshort{IP} 1         & \texttt{159.233.1.22}          & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00010110} \\\midrule
+                      \acrshort{IP} 2         & \texttt{159.233.1.1}           & \texttt{\textcolor{ForestGreen}{10011111.11101001.00000001}.00000001} \\\midrule
                       Subnetzmaske & \commandBluebox|255.255.255.0| & \texttt{\textcolor{ForestGreen}{11111111.11111111.11111111}.00000000}
                   \end{tabular}
               \end{table}
-              Bedeutet, dass alle IP-Adressen die mit \commandbox|159.233.1.[...]| anfangen, zum selben Netzwerk gehören
+              Bedeutet, dass alle \acrshort{IP}-Adressen die mit \commandbox|159.233.1.[...]| anfangen, zum selben Netzwerk gehören
         \item Wird manchmal \enquote{informell} auch so angegeben: \commandBluebox|159.233.1.x|
     \end{itemize}
 \end{frame}
@@ -644,9 +633,9 @@
     \begin{table}[H]
         \centering
         \footnotesize
-        \begin{tabular}{l|l|l|p{2cm}}
+        \begin{tabular}{lllp{2cm}}
 
-            \textbf{Eigene IP} & \textbf{Netzmaske} & \textbf{Ziel-IP} & \textbf{Gleiches \newline Subnetz?} \\\midrule\midrule
+            \textbf{Eigene \acrshort{IP}} & \textbf{Netzmaske} & \textbf{Ziel-\acrshort{IP}} & \textbf{Gleiches \newline Subnetz?} \\\midrule
 
             213.45.19.89       & 255.255.255.0      & 213.45.17.89     &                                     \\\midrule
 
@@ -656,12 +645,12 @@
 
             88.100.11.17       & 0.0.0.0            & 213.45.19.89     &                                     \\\midrule
 
-            10.0.0.0           & 255.255.255.252    & 10.0.0.1         &                                     \\\midrule
-            1.2.3.0            & 255.255.255.252    & 1.2.3.5          &
+            10.0.0.2           & 255.255.255.252    & 10.0.0.1         &                                     \\\midrule
+            1.2.3.1            & 255.255.255.252    & 1.2.3.5          &
         \end{tabular}
     \end{table}
     \begin{itemize}
-        \item $\rightarrow$ IPs dürfen sich nur an denjenigen Stellen unterscheiden, wo in der Maske (binär!) Nullen stehen.
+        \item $\rightarrow$ \acrshortpl{IP} dürfen sich nur an denjenigen Stellen unterscheiden, wo in der Maske (binär!) Nullen stehen.
         \item Umrechner dezimal $\rightarrow$ binär: \qrcode[height=1cm]{https://oinf.ch/interactive/ips-und-netzmaske/}
     \end{itemize}
 \end{frame}
@@ -681,17 +670,17 @@
 \begin{frame}[fragile]{Subnetze \& Netzmasken}{Weitere Übungen (Lösung)}
     \begin{table}[H]
         \centering
-        \resizebox{\textwidth}{!}{
-            \begin{tabular}{p{1.2cm}||c|c||c|c||c|c|}
-                \textbf{Netzmaske Subnetz} & \multicolumn{2}{c||}{255.255.255.0} & \multicolumn{2}{c||}{255.255.0.0} & \multicolumn{2}{c|}{255.255.255.240}                                        \\
+        \adjustbox{max width=\textwidth, max totalheight=.8\textheight}{
+            \begin{tabular}{p{1.2cm}cccccc}
+                \textbf{Netzmaske Subnetz} & \multicolumn{2}{c}{255.255.255.0} & \multicolumn{2}{c}{255.255.0.0} & \multicolumn{2}{c}{255.255.255.240}                                        \\
                 \cmidrule{2-7}
-                                           & IP 3.4.5.6                          & IP 3.3.3.3                        & IP 3.4.5.6                           & IP 3.3.3.3 & IP 3.4.5.6 & IP 3.3.3.3 \\
-                \midrule\midrule
+                                           & \acrshort{IP} 3.4.5.6                          & \acrshort{IP} 3.3.3.3                        & \acrshort{IP} 3.4.5.6                           & \acrshort{IP} 3.3.3.3 & \acrshort{IP} 3.4.5.6 & \acrshort{IP} 3.3.3.3 \\
+                \midrule
                 3.3.3.4                    & Nein                                & Ja                                & Nein                                 & Ja         & Nein       & Ja         \\\midrule
                 4.4.4.3                    & Nein                                & Nein                              & Nein                                 & Nein       & Nein       & Nein       \\\midrule
                 3.4.5.99                   & Ja                                  & Nein                              & Ja                                   & Nein       & Nein       & Nein       \\\midrule
                 3.3.4.4                    & Nein                                & Nein                              & Nein                                 & Ja         & Nein       & Nein       \\\midrule
-                3.4.7.7                    & Nein                                & Ja                                & Ja                                   & Nein       & Nein       & Nein       \\\midrule
+                3.4.7.7                    & Nein                                & Nein                              & Ja                                   & Nein       & Nein       & Nein       \\\midrule
                 3.3.3.17                   & Nein                                & Ja                                & Nein                                 & Ja         & Nein       & Nein       \\
             \end{tabular}}
     \end{table}
@@ -705,19 +694,19 @@
     \begin{table}[H]
         \centering
 
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                   \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi} \\
         \end{tabular}
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                  \\\midrule
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{e geht's?} \\
         \end{tabular}
     \end{table}
 \end{frame}
 
-\begin{frame}[fragile]{\faBoxOpen{} TCP (\textit{Transmission Control Protocol}) Header}{Transportschicht}
-    TCP = Übertragungssteuerungsprotokoll
+\begin{frame}[fragile]{\faBoxOpen{} \acrshort{TCP} (\textit{Transmission Control Protocol}) Header}{Transportschicht}
+    \acrshort{TCP} = Übertragungssteuerungsprotokoll
     \begin{table}[H]
         \centering
         \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_table_tcpheader.tex}
@@ -727,34 +716,32 @@
 \begin{frame}[fragile]{\faShip{} Ports}{Transportschicht}
     \begin{table}[H]
         \centering
+        \footnotesize
         \begin{tabular}{ccc}
-            \toprule
             \textbf{Portnummer} & \textbf{Anwendung} & \textbf{Verwendung}             \\
             \midrule
-            20                  & FTP                & Dateitransfer                   \\
-            21                  & FTP                & Befehlssteuerung                \\
-            22                  & SSH                & Sichere Shell-Zugriffe          \\
-            23                  & Telnet             & Unverschlüsselte Fernsteuerung  \\
-            25                  & SMTP               & E-Mail-Versand                  \\
-            53                  & DNS                & Namensauflösung                 \\
-            80                  & HTTP               & Webseiten-Abruf                 \\
-            110                 & POP3               & E-Mail-Abholung                 \\
-            143                 & IMAP               & E-Mail-Management               \\
-            443                 & HTTPS              & Verschlüsselter Webseiten-Abruf \\
-            993                 & IMAP               & E-Mail-Management über SSL      \\
-            995                 & POP3               & E-Mail-Abholung über SSL        \\
-            \bottomrule
+            20                  & \acrshort{FTP}                & Dateitransfer                   \\
+            21                  & \acrshort{FTP}                & Befehlssteuerung                \\
+            22                  & \acrshort{SSH}                & Sichere Shell-Zugriffe          \\
+            25                  & \acrshort{SMTP}               & E-Mail-Versand                  \\
+            53                  & \acrshort{DNS}                & Namensauflösung                 \\
+            80                  & \acrshort{HTTP}               & Webseiten-Abruf                 \\
+            110                 & \acrshort{POP3}               & E-Mail-Abholung                 \\
+            143                 & \acrshort{IMAP}               & E-Mail-Management               \\
+            443                 & \acrshort{HTTPS}              & Verschlüsselter Webseiten-Abruf \\
+            993                 & \acrshort{IMAP}               & E-Mail-Management über \acrshort{TLS}      \\
+            995                 & \acrshort{POP3}               & E-Mail-Abholung über \acrshort{TLS}        \\
         \end{tabular}
-        \caption*{Gängige TCP-Ports, Anwendungen und deren Verwendung}
+        \caption*{Gängige Ports, Anwendungen und deren Verwendung (\acrshort{DNS} meist über \acrshort{UDP}, sonst \acrshort{TCP})}
     \end{table}
 \end{frame}
 
-\begin{frame}[fragile]{\faHandshake{} TCP: 3-way handshake}{Transportschicht}
+\begin{frame}[fragile]{\faHandshake{} \acrshort{TCP}: 3-way handshake}{Transportschicht}
     \begin{columns}[c]
         \begin{column}{.6\textwidth}
             \begin{figure}[H]
                 \centering
-                \resizebox{\textwidth}{!}{
+                \adjustbox{max width=\textwidth, max height=.75\textheight}{
                     \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_tcpHandshake.tex}
                     }
             \end{figure}
@@ -762,19 +749,19 @@
         \begin{column}{.4\textwidth}
             \footnotesize
             \begin{enumerate}
-                \item Computer A (\textit{client}, \texttt{10.0.0.2}) erstellt eine Verbindungsanfrage zum Computer B (\textit{server}, \texttt{10.0.0.3}), mittels einem Paket, das nur das \texttt{SYN}-Flaggen gesetzt hat.
-                \item Der Server antwortet sowohl mit einem gesetzten \texttt{SYN} und einem \texttt{ACK}-Flaggen
-                \item Im letzten Schritt antwortet der \textit{client} nochmals mit einem einzelnen \texttt{ACK}-Flaggen\\
-                      $\rightarrow$ TCP-Verbindung ist nun erstellt!
+                \item Computer A (\textit{client}, \texttt{10.0.0.1}) erstellt eine Verbindungsanfrage zum Computer B (\textit{server}, \texttt{10.0.0.2}) mittels eines Pakets, bei dem nur das \texttt{SYN}-Flag gesetzt ist.
+                \item Der Server antwortet mit einem Paket, bei dem sowohl das \texttt{SYN}- als auch das \texttt{ACK}-Flag gesetzt sind
+                \item Im letzten Schritt antwortet der \textit{client} nochmals mit einem einzelnen \texttt{ACK}-Flag\\
+                      $\rightarrow$ \acrshort{TCP}-Verbindung ist nun erstellt!
             \end{enumerate}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{\faHandshake{} TCP: 3-way handshake}{Auftrag}
+\begin{frame}[fragile]{\faHandshake{} \acrshort{TCP}: 3-way handshake}{Auftrag}
     \begin{itemize}
-        \item Skript: \aufgabebox{1.30-1.33 (TCP, Servers / Clients)}
-        \item \challengebox{1.34 (Email-Server)}
+        \item Skript: \aufgabebox{1.30-1.33 (\acrshort{TCP}, Server / Clients)}
+        \item \challengebox{1.34 (E-Mail-Server)}
     \end{itemize}
 \end{frame}
 
@@ -786,10 +773,10 @@
     Endgeräte verfassen Nachrichten:
     \begin{table}[H]
         \centering
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi} \\
         \end{tabular}
-        \begin{tabular}{p{2cm}|l}
+        \begin{tabular}{p{2cm}l}
             \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{e geht's?} \\
         \end{tabular}
     \end{table}
@@ -841,7 +828,7 @@
 \begin{frame}[fragile]{\acrfull{DNS}}
     \begin{itemize}
         \item Wenn Sie auf eine Webseite wie \url{https://sbb.ch} gehen, woher weiss der Client, von welchem Server er die Informationen anfragen soll?
-        \item \gls{DNS}: \acrshort{URL} $\rightleftarrows$ \acrshort{IP}-Adresse!
+        \item \gls{DNS}: Domain-Name $\rightleftarrows$ \acrshort{IP}-Adresse!
     \end{itemize}
 \end{frame}
 
@@ -859,9 +846,9 @@
                 \node[client] (client) {Client\\\texttt{192.168.0.10}};
                 \node[server, right=4.2cm of client] (dns) {\gls{DNS}-Server\\\texttt{192.168.2.1}};
                 \node[server, right=4.2cm of dns] (web) {Webserver\\\texttt{192.168.0.11}};
-                \node[text width=3cm, right=0cm of dns] (dnsTable) {\tiny \begin{tabular}{p{1.1cm}|p{1.2cm}}
-                        \textbf{Domain\newline Name} & \textbf{IP-\newline Addresse} \\
-                        \midrule\midrule
+                \node[text width=3cm, right=0cm of dns] (dnsTable) {\tiny \begin{tabular}{p{1.1cm}p{1.2cm}}
+                        \textbf{Domain\newline Name} & \textbf{\acrshort{IP}-\newline Adresse} \\
+                        \midrule
                         \texttt{beispiel.ch}         & 192.168.0.11                  \\
                         \midrule
                         \texttt{schule.ch}           & 192.168.0.12                  \\
@@ -889,15 +876,15 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{\faSitemap{} URL (Uniform Resource Locator)}{Präsentationsschicht: Webseiten}
+\begin{frame}[fragile]{\faSitemap{} \acrshort{URL} (Uniform Resource Locator)}{Präsentationsschicht: Webseiten}
 
-    URL = Web-Adresse
+    \acrshort{URL} = Web-Adresse
 
     \[
         \underbrace{\text{http://}}_{\text{Protokoll}}
         \underbrace{\text{www.}}_{\text{Subdomain}}
         \underbrace{\text{beispiel.}}_{\text{Domain}}
-        \underbrace{\text{ch}}_{\text{TLD\tikzmark{tld}}}
+        \underbrace{\text{ch}}_{\text{\acrshort{TLD}\tikzmark{tld}}}
         \underbrace{\text{/dokumente/}}_{\text{Ordner}}
         \underbrace{\text{reglemente.html}}_{\text{Dateiname}}
     \]
@@ -909,14 +896,14 @@
     \begin{itemize}[<+->]
         \item Erster Teil bezeichnet einen \textit{Server}
               \begin{itemize}
-                  \item z.B. 58.55.110.9 $\rightarrow$ \texttt{www.beispiel.ch}
+                  \item z.B. \texttt{www.beispiel.ch} $\rightarrow$ 58.55.110.9
               \end{itemize}
-        \item Alles nach der TLD ist ein normaler Ordnerpfad auf dem Computer
+        \item Alles nach der \acrshort{TLD} ist ein normaler Ordnerpfad auf dem Computer
     \end{itemize}
 
 \end{frame}
 
-\begin{frame}[fragile]{\faServer{} HTTP(S)-Protokoll}
+\begin{frame}[fragile]{\faServer{} \acrshort{HTTP}(S)-Protokoll}
     \begin{figure}[H]
         \centering
         \resizebox{\linewidth}{!}{
@@ -934,8 +921,8 @@
                 % Draw a 2D rectangle around the users
                 \node[fit=(userStart) (userEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](user) {User \\ \faUser};
 
-                % nodes for 
-                \node[entity, right=of userStart] (browserStart) {Übersetzt die URL in einen HTTP-Request};
+                % nodes for
+                \node[entity, right=of userStart] (browserStart) {Übersetzt die \acrshort{URL} in einen \acrshort{HTTP}-Request};
                 \node[entity, right=of userEnd] (browserEnd) {Sammelt Daten, setzt Website zusammen (rendern)};
                 % Draw a 2D rectangle around the users
                 \node[fit=(browserStart) (browserEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](browser) {Browser\\ \faLaptop};
@@ -947,9 +934,9 @@
                 \node[fit=(serverStart) (serverEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](server) {Web Server\\ \faServer};
 
                 % Connections
-                \draw[process, Crimson] (userStart.east) -- node[arrowtext, above] {1. URL \\ \texttt{http://\\www.beispiel.ch/\\index.html}} (browserStart.west);
-                \draw[process, Crimson] (browserStart.east) -- node[arrowtext, above] {2. HTTP Request \\ \texttt{GET /index.html}} (serverStart.west);
-                \draw[process, ForestGreen] (serverEnd.west) -- node[arrowtext, below] {3. HTTP Response \\ Statuscode + Daten} (browserEnd.east);
+                \draw[process, Crimson] (userStart.east) -- node[arrowtext, above] {1. \acrshort{URL} \\ \texttt{http://\\www.beispiel.ch/\\index.html}} (browserStart.west);
+                \draw[process, Crimson] (browserStart.east) -- node[arrowtext, above] {2. \acrshort{HTTP} Request \\ \texttt{GET /index.html}} (serverStart.west);
+                \draw[process, ForestGreen] (serverEnd.west) -- node[arrowtext, below] {3. \acrshort{HTTP} Response \\ Statuscode + Daten} (browserEnd.east);
                 \draw[process, ForestGreen] (browserEnd.west) -- node[arrowtext, below] {4. Webpage \\ Darstellung der Webseite \texttt{index.html}} (userEnd.east);
 
             \end{tikzpicture}}
@@ -959,7 +946,7 @@
 
 
 \begin{frame}[fragile]{\faLaptop{} Webseiten}{Präsentationsschicht}
-    Beispiel: HTML (\textit{Hypertext Markup Language})
+    Beispiel: \acrshort{HTML} (\textit{Hypertext Markup Language})
     \begin{itemize}[<+->]
         \item Demo (\textit{Inspect Element} oder \textit{View Page Source})
         \item Speichert die Struktur einer Webseite
@@ -972,21 +959,27 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Web- und \gls{DNS}-server}{Aufträge (Skript)}
+\begin{frame}[fragile]{Web- und \acrshort{DNS}-Server}{Aufträge (Skript)}
     \textbf{Webserver \textit{ohne} \gls{DNS}}
     \begin{itemize}
         \item \aufgabebox{Filius (Web-Server): 1.35}
         \item \challengebox{1.36 (\acrshort{HTML} besser verstehen)}
-        \item \challengebox{Filius (``Echter'' Web-Server): 1.37}
+        \item \challengebox{Filius (\enquote{Echter} Web-Server): 1.37}
     \end{itemize}
-    \textbf{\gls{DNS}}
-    \begin{itemize}
-        \item \aufgabebox{Aufgaben 1.38-1.40}
-    \end{itemize}
-
-    Weitere Aufgaben
-    \begin{itemize}
-        \item \aufgabebox{1.41-1.42}
-        \item \challengebox{1.43-1.44}
-    \end{itemize}
+    % two columns so that the frame fits on one slide
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \textbf{\gls{DNS}}
+            \begin{itemize}
+                \item \aufgabebox{Aufgaben 1.38-1.40}
+            \end{itemize}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \textbf{Weitere Aufgaben}
+            \begin{itemize}
+                \item \aufgabebox{1.41-1.42}
+                \item \challengebox{1.43-1.44}
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}

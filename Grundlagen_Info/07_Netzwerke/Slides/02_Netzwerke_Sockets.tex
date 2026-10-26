@@ -1,11 +1,10 @@
+% Farben für jede Schicht (\providecommand: auch im Skript definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
+
 % command to make sure colorboxes don't create whitespace between code lines
-
-% Farben für jede Schicht
-\newcommand{\applicationLayerColor}{Gold}
-\newcommand{\transportLayerColor}{Indigo}
-\newcommand{\networkLayerColor}{RoyalBlue}
-\newcommand{\dataLinkLayerColor}{Gray}
-
 \fboxsep=.6pt
 
 % default settings for listings
@@ -34,7 +33,7 @@
 
 \section{Client-to-Server}
 \begin{frame}[fragile]{Sockets}{Client-to-Server}
-    \resizebox{\textwidth}{!}{
+    \adjustbox{max width=\textwidth, max height=.82\textheight}{
         \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter02_fig_chat_clientserver.tex}
     }
 \end{frame}
@@ -57,7 +56,7 @@
 
 \section{Client-to-Client über Relay-Server}
 \begin{frame}[fragile]{Sockets}{Client-to-Client (Relay-Server)}
-    \resizebox{\textwidth}{!}{
+    \adjustbox{max width=\textwidth, max height=.8\textheight}{
         \begin{tikzpicture}[
                 base/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, text=white, rounded corners, text width=2.8cm, align=center, inner sep=8pt},
                 server/.style={base, fill=RoyalBlue, font=\scriptsize},
@@ -93,7 +92,7 @@
     }
 \end{frame}
 \begin{frame}{Client-to-Client über Relay-Server}
-    Einige wichtie Neuerungen im Code:
+    Einige wichtige Neuerungen im Code:
     \begin{itemize}[<+->]
         \item Server...
               \begin{itemize}
@@ -102,24 +101,24 @@
               \end{itemize}
         \item Clients...
               \begin{itemize}
-                  \item Müssen mit dem Relay-Server kommunizieren, anstatt direkt miteinander
-                  \item Verwenden nicht die IP-Adresse des anderen Clients, sondern die des Relay-Servers, um sich zu verbinden
-                  \item Adressieren ihre Nachrichten an den Namen des anderen Clients, damit der Relay-Server weiss, an wen er die Nachricht weiterleiten soll
-                  \item Verwenden ebenfalls \textbf{Threads}, um gleichzeitig Nachrichten vom Relay-Server empfangen und senden zu können
+                  \item müssen mit dem Relay-Server kommunizieren, anstatt direkt miteinander
+                  \item verwenden nicht die \acrshort{IP}-Adresse des anderen Clients, sondern die des Relay-Servers, um sich zu verbinden
+                  \item adressieren ihre Nachrichten an den Namen des anderen Clients, damit der Relay-Server weiss, an wen er die Nachricht weiterleiten soll
+                  \item verwenden ebenfalls \textbf{Threads}, um gleichzeitig Nachrichten vom Relay-Server empfangen und senden zu können
               \end{itemize}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Relay-Server}{Client-to-Client über Relay-Server, im LAN / WAN}
+\begin{frame}{Relay-Server}{Client-to-Client über Relay-Server, im \acrshort{LAN} / \acrshort{WAN}}
     \begin{itemize}
-        \item \aufgabebox{LAN: 2.10 - 2.14}
-        \item \aufgabebox{WAN: 2.15 - 2.17}
+        \item \aufgabebox{\acrshort{LAN}: 2.10 - 2.14}
+        \item \aufgabebox{\acrshort{WAN}: 2.15 - 2.17}
     \end{itemize}
     \textbf{Tipps}:
     \begin{itemize}
         \item Bearbeiten Sie nur \texttt{client.py}
-        \item Passwort für \texttt{Mein sicheres Netzwerk}: \textbf{\texttt{CVW-1234}}
-        \item IP-Adresse des Relay-Servers: \texttt{192.168.0.}\TextField[name=ip-relay, width=1.5cm,print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}
+        \item Passwort für \texttt{Mein sicheres Netzwerk}: \textbf{\texttt{CVB-1234}}
+        \item \acrshort{IP}-Adresse des Relay-Servers: \texttt{192.168.0.}\TextField[name=ip-relay, width=1.5cm,print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}
     \end{itemize}
 
 \end{frame}

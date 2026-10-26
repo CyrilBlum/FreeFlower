@@ -17,7 +17,11 @@
         \node[sw]   (SWL) at ({1*\colsep},-0.1) {\faNetworkWired\\Switch};
 
         % Router between switches
-        \node[router] (R) at ({2*\colsep},0) {\faServer\\Router\\\small \texttt{192.168.1.1} \\ \small \texttt{192.168.2.1}};
+        \node[router] (R) at ({2*\colsep},0) {\faServer\\Router\\\small \texttt{192.168.1.1} \\ \small \texttt{192.168.2.1} \\ \small \texttt{203.0.113.2}};
+
+        % Upstream: router of the ISP below the router (target of the default route via eth2)
+        \node[router] (ISP) at ({2*\colsep},-3.6) {\faServer\\ISP-Router\\\small \texttt{203.0.113.1}};
+        \node[font=\small, anchor=west] (NET) at ({3*\colsep},-3.6) {\faGlobe\ Internet};
 
         % Right LAN (LAN B)
         \node[sw]   (SWR) at ({3*\colsep},-0.1) {\faNetworkWired\\Switch};
@@ -37,11 +41,13 @@
         % Switches to router
         \draw[link] (SWL) -- (R) node[midway, above, font=\footnotesize] {\texttt{eth0}};
         \draw[link] (SWR) -- (R) node[midway, above, font=\footnotesize] {\texttt{eth1}};
+        \draw[link] (R) -- (ISP) node[midway, right, font=\footnotesize] {\texttt{eth2}};
+        \draw[link, dashed] (ISP) -- (NET);
 
         % Optional: draw a faint rounded box around each LAN
         \node[draw=RoyalBlue!60, rounded corners, thick, dashed, inner sep=6pt, fit=(A1)(A2)(A3)(SWL)(R.west)] (lan1area){};
         \node[draw=Crimson!60, rounded corners, thick, dashed, inner sep=6pt, fit=(B1)(B2)(B3)(SWR)(R.east)] (lan2area){};
-    
+
         % LAN labels
         \node[netlabel, RoyalBlue, align=left, anchor=south west] at (lan1area.north west) {LAN A: \texttt{192.168.1.0/24}};
         \node[netlabel,  Crimson, align=right, anchor=south east] at (lan2area.north east) {LAN B: \texttt{192.168.2.0/24}};

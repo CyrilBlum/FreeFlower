@@ -21,11 +21,11 @@
     \def\wA{5cm}   \def\hA{.8cm}   % Anwendung
     \def\wT{\wA+\increaseW}   \def\hT{\hA+\increaseH}   % Transport
     \def\wV{\wT+\increaseW}   \def\hV{\hT+\increaseH}   % Vermittlung
-    \def\wN{\wV+\increaseW}   \def\hN{\hV+\increaseH}   % Netzzugang
+    \def\wN{\wV+\increaseW}   \def\hN{\hV+\increaseH}   % Netzzugangsschicht
 
-    % ---- Netzzugang ----
+    % ---- Netzzugangsschicht ----
     \node[envelope, fill=\dataLinkLayerColor!15, minimum width=\wN, minimum height=\hN] (net) {};
-    \node[layerlabel] at (net.north west) {Netzzugang (\texttt{\acrshort{MAC}} zu \texttt{\acrshort{MAC}})};
+    \node[layerlabel] at (net.north west) {Netzzugangsschicht (\texttt{\acrshort{MAC}} zu \texttt{\acrshort{MAC}})};
 
     % ---- Vermittlung ----
     \node[envelope, fill=\networkLayerColor!20, minimum width=\wV, minimum height=\hV] (ver)
