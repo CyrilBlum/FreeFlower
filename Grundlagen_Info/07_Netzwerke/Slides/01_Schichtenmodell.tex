@@ -1,0 +1,237 @@
+% Farben für jede Schicht (\providecommand: auch im Skript definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
+
+% command to make sure colorboxes don't create whitespace between code lines
+\fboxsep=.6pt
+
+% default settings for listings
+\lstset{style=python}
+
+\title[Netzwerke]{Netzwerke}
+
+\subtitle{Schichtenmodell (Skript, Abschnitt 1.2)}
+
+\author[Blum, Cyril] % (optional)
+{Cyril Blum}
+
+\institute[KLW] % (optional)
+{
+    Fachschaft Informatik\\
+    Kantonsschule im Lee
+}
+
+\date[\today] % (optional)
+
+\logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
+
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+
+\frame{\titlepage}
+
+% Eingabefelder für die Spielkarten (\providecommand: Foliensätze können gemeinsam eingebunden werden)
+\providecommand{\fldNum}{\refstepcounter{FormCounter}\raisebox{-0.28\normalbaselineskip}{\TextField[name=\theFormCounter, width=2cm,print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}}}
+
+\begin{frame}{Netzwerk-Spiel (ca. 5')}
+    Sie sind ein Computer im Internet und möchten gerne eine Nachricht an einen anderen Computer senden:
+    \begin{center}
+        \begin{tcolorbox}[colframe=\networkLayerColor, colback=white, boxrule=1pt, arc=4pt, left=2pt, right=2pt, top=2pt, bottom=2pt]
+            \begin{table}[H]
+                \tiny
+                \centering
+                \begin{tabular}{ll}
+                    \coin{3} Von:       & \texttt{192.168.0.\fldNum}                                                           \\\midrule
+                    \coin{3} An:        & \texttt{192.168.0.\fldNum}                                                           \\\midrule
+                    \coin{2} Sequenz:   & \texttt{\TextField[width=5cm, print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}} \\\midrule
+                    \coin{1} Nachricht: & \TextField[width=5cm,print,borderwidth=0, backgroundcolor={0.9 0.9 0.9}]{}           \\
+                \end{tabular}
+            \end{table}
+        \end{tcolorbox}
+    \end{center}
+    \textbf{Anleitung}\small
+    \begin{itemize}[<+->]
+        \item (Bereits gemacht): Notieren Sie sich eine einzigartige \acrshort{IP}-Adresse für Ihren Computer, startend mit \texttt{192.168.0.xyz} (z.B. \texttt{192.168.0.3}), wobei  $\texttt{xyz} \in [0,255]$
+        \item[\coin{1}] (Vorderseite) Schreiben Sie eine Nachricht (max. 10 Zeichen pro Karte)
+        \item[\coin{2}] (Vorderseite) Nummerieren Sie die Karten in der Reihenfolge, in der sie gesendet werden sollen (Sequenz)
+        \item[\coin{3}] (Rückseite) Fügen Sie die \acrshort{IP}-Adressen der Absender- und Empfänger-Computer hinzu.
+        \item[\faTruck] Übergeben Sie die Karten dem \enquote{Router} (= \enquote{Postbote})
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Was sind Netzwerke?}
+    \begin{itemize}[<+->]
+        \item Graphen:
+              \begin{figure}[H]
+                  \centering
+                  \includegraphics[keepaspectratio, width=0.35 \paperwidth]{Grundlagen_Info/02_Graphen/Figures/4-graph-zusammenhaengend.png}
+              \end{figure}
+
+        \item Im Alltag:
+              \begin{itemize}
+                  \item Kommunikations-Netzwerke: Die Post, DHL, Planzer, ...
+                  \item Soziale Netzwerke: TikTok, YouTube, Instagram, ...
+                  \item Transport-Netzwerke: SBB, Flixbus, ...
+                  \item Shopping-Netzwerke: Aliexpress, Uber, ...
+                  \item Computer-Netzwerke: \textbf{Das Internet}
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Schichtenmodell}{Analogie}
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[
+                auto,
+                block/.style={
+                        minimum width=3cm,
+                        node distance=1.5cm,
+                        rectangle,
+                        fill=\networkLayerColor!50,
+                        align=center,
+                        rounded corners
+                    }
+            ]
+
+
+            % Define the nodes with FontAwesome icons
+            \node[block] (chefs) {\faFemale\ Chef};
+            \node[block, below=of chefs] (secretariat) {\faPhone\ Sekretariat};
+            \node[block, below=of secretariat] (postman) {\faMale\ Post};
+
+
+            % Define the nodes with FontAwesome icons
+
+            \node[block, right=of postman] (postman2) {\faMale\ Post};
+            \node[block, above=of postman2] (secretariat2) {\faPhone\ Sekretariat};
+            \node[block, above=of secretariat2] (chefs2) {\faMale\ Chef};
+
+
+            % Draw the dashed arrows
+            \draw[<->, dashed, \networkLayerColor!50, thick] (chefs) -- (chefs2);
+            \draw[<->, dashed, \networkLayerColor!50, thick] (secretariat) -- (secretariat2);
+            \draw[<->, dashed, \networkLayerColor!50, thick] (postman) -- (postman2);
+
+            \draw[->, line width=1mm,ForestGreen!50] (chefs) -- node[left]{\faComments} (secretariat) ;
+            \draw[->, line width=1mm,ForestGreen!50] (secretariat) -- node[left]{\faEnvelope} (postman) ;
+            \draw[->, line width=1mm,ForestGreen!50, bend right] (postman.south) to node[midway,below]{\faBicycle\ \faMotorcycle\ \faCar\ \faShip\ \faPlane} (postman2.south) ;
+            \draw[->, line width=1mm,ForestGreen!50] (postman2) -- node[right]{\faEnvelope} (secretariat2) ;
+            \draw[->, line width=1mm,ForestGreen!50] (secretariat2) -- node[right]{\faComments} (chefs2) ;
+
+            % fit rectangles around regions
+            \node[fit=(chefs) (postman), inner sep=8pt, red, dotted, draw, line width=1pt,rounded corners](region1) {};
+            \node[fit=(chefs2) (postman2), inner sep=8pt, red, dotted, draw, line width=1pt,rounded corners](region2) {};
+            % annotate both rectangles
+            \node[above=5pt of region1.north, anchor=center, align=center]{\textcolor{red}{Firma 1, Europa}};
+            \node[above=5pt of region2.north, anchor=center, align=center]{\textcolor{red}{Firma 2, Asien}};
+
+        \end{tikzpicture}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{Schichtenmodell: Übersicht}
+    \Wider[3em]{\begin{center}
+            \begin{table}[H]
+                \centering
+                \footnotesize
+                \adjustbox{max width=\textwidth, max totalheight=.78\textheight}{
+                    \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_osi-tcpip-table.tex}}
+            \end{table}
+        \end{center}}
+\end{frame}
+
+
+\setbeamercolor{frametitle}{bg=white}
+
+\begin{frame}[fragile]{Schichten \& Protokolle}
+    \begin{figure}[H]
+        \centering
+        \adjustbox{max width=.8\textwidth, max height=.35\textheight}{
+            \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_schichtenmodell.tex}
+        }
+    \end{figure}
+    \small\pause
+    \only<2>{
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{p{2cm}l}
+                \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
+                \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
+                \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                     \\\midrule
+                \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi}   \\
+            \end{tabular}
+            \begin{tabular}{p{2cm}l}
+                \rowcolor{\networkLayerColor!20} Von:                                         & \texttt{192.168.0.3}  \\\midrule
+                \rowcolor{\networkLayerColor!20} An:                                          & \texttt{192.168.0.11} \\\midrule
+                \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                     \\\midrule
+                \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{e geht's?}    \\
+            \end{tabular}
+        \end{table}
+    }
+    \pause
+    % onlyenv: the columns take no space on slide 2 (where the two tables are shown)
+    \begin{onlyenv}<3->
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \textbf{Schichten}
+            \begin{itemize}[<+->]
+                \item Z.B. Anwendungs-, Transport-, Vermittlungs-, Netzzugangsschicht
+                \item Erlauben es, spezialisierte Aufgaben in einzelne Schichten aufzuteilen: Z.B. Übermittlung von Signalen, Sprache-Regeln etc.
+            \end{itemize}
+        \end{column}
+        \pause
+        \begin{column}{.5\textwidth}
+            \textbf{Protokolle}
+            \begin{itemize}[<+->]
+                \item Definiert Ablauf einer Kommunikation, Aufbau der Datenpakete
+                \item Gibt es auf jeder Ebene des Schichtenmodells
+                \item Analogie: Begrüssungsformen, \textit{small talk}, etc.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \end{onlyenv}
+\end{frame}
+
+\begin{frame}[fragile]{Schichtenmodell}{Vorteile}
+    \begin{itemize}[<+->]
+        \item \textbf{Modularität}: Aufbau auf bestehenden Schichten
+        \item \textbf{Austauschbarkeit} / Flexibilität
+              \begin{itemize}
+                  \item Übertragung über Kabel, \acrshort{WLAN} etc. kann ausgetauscht werden, ohne dass darüberliegende Schichten tangiert werden
+                  \item Analogie: Anstelle von Lastwagen kann Motorrad verwendet werden
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Netzwerk-Spiel}{Diskussion}
+    \begin{itemize}[<+->]
+        \item Was sind die Aufgaben der einzelnen Schichten?
+              \begin{itemize}
+                  \item Anwendungsschicht
+                  \item Transportschicht
+                  \item Internetschicht
+                  \item Netzzugangsschicht
+              \end{itemize}
+        \item Sind Pakete immer angekommen?
+        \item Wo waren die Flaschenhälse bei der Übermittlung der Nachrichten?
+        \item Was ist der Unterschied zwischen einem Paket und einer Nachricht?
+        \item \aufgabebox{1.1 (Netzwerkspiel): Notizen zu Schichten, Protokollen und Geräten}
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Schichtenmodell}{Video}
+    \begin{figure}[H]
+        \href{https://www.youtube.com/watch?v=PBWhzz_Gn10}{YouTube-Video (13')}
+    \end{figure}
+
+    \begin{itemize}
+        \item \aufgabebox{1.43 (Video: Schichten, Geräte, Protokolle notieren)}
+        \item \aufgabebox{1.44 (Austausch in 3er- bis 4er-Gruppen, ca. 5')}
+    \end{itemize}
+\end{frame}
+

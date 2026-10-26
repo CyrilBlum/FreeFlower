@@ -1,0 +1,59 @@
+% Ablauf eines Webaufrufs als Sequenzdiagramm (Laptop, Router, DNS-Server, Webserver).
+% Farben der Pfeile = Schicht des jeweiligen Schritts (Farben aus Skript.tex bzw. den Folien).
+% Adressen aus den Dokumentationsbereichen (RFC 5737), damit keine echten Hosts gemeint sind.
+% \glsentryshort statt \acrshort: keine farbigen Glossar-Links in der Grafik.
+\begin{tikzpicture}[>=Stealth, font=\footnotesize,
+        actor/.style={draw, rounded corners, fill=ForestGreen!20, align=center, minimum width=2.6cm, minimum height=1cm},
+        stepno/.style={circle, draw=#1, text=#1, fill=white, thick, inner sep=1.5pt, font=\scriptsize\bfseries},
+        stepno/.default=black,
+        msg/.style={->, thick},
+        note/.style={draw=#1, text=#1, fill=white, rounded corners, align=center, font=\scriptsize, inner sep=3pt},
+        note/.default=black
+    ]
+    \def\appCol{\applicationLayerColor!80!black}
+
+    % Teilnehmende (x-Positionen)
+    \node[actor] (pc)  at (0,0)    {\faLaptop{} Laptop (Browser)\\\texttt{192.168.1.23}};
+    \node[actor] (rt)  at (3.8,0)  {Router / Gateway\\\texttt{192.168.1.1}};
+    \node[actor] (dns) at (7.6,0)  {\glsentryshort{DNS}-Server\\\texttt{203.0.113.53}};
+    \node[actor] (web) at (11.4,0) {Webserver\\\texttt{198.51.100.7}};
+
+    % Zeitachsen
+    \foreach \n in {pc, rt, dns, web} {
+            \draw[gray, dashed] (\n.south) -- ++(0,-11.2);
+        }
+
+    % 1: ARP (Netzzugangsschicht)
+    \draw[msg, \dataLinkLayerColor] (0,-1.4) -- node[above] {Wer hat \texttt{192.168.1.1}?} (3.8,-1.4);
+    \draw[msg, \dataLinkLayerColor] (3.8,-2.1) -- node[above] {Ich, \glsentryshort{MAC} \texttt{a4:2b:\dots}} (0,-2.1);
+    \node[stepno=\dataLinkLayerColor] at (-1.6,-1.75) {1};
+
+    % 2: DNS (Anwendungsschicht, über UDP)
+    \draw[msg, \appCol] (0,-3.0) -- node[above, pos=.3] {\glsentryshort{IP} von \texttt{www.example.org}?} (7.6,-3.0);
+    \draw[msg, \appCol] (7.6,-3.7) -- node[above, pos=.7] {\texttt{198.51.100.7}} (0,-3.7);
+    \node[stepno=\appCol] at (-1.6,-3.35) {2};
+
+    % 3: NAT und Routing (Vermittlungsschicht)
+    \node[note=\networkLayerColor] at (3.8,-4.6) {\glsentryshort{NAT}: Absender wird\\\texttt{203.0.113.45} (öffentlich)};
+    \node[note=\networkLayerColor] at (7.6,-4.6) {Routing über viele\\Router im Internet};
+    \node[stepno=\networkLayerColor] at (-1.6,-4.6) {3};
+
+    % 4: TCP-Verbindungsaufbau (Transportschicht)
+    \draw[msg, \transportLayerColor] (0,-5.6) -- node[above, pos=.2] {\texttt{SYN} (an Port 443)} (11.4,-5.6);
+    \draw[msg, \transportLayerColor] (11.4,-6.2) -- node[above, pos=.8] {\texttt{SYN-ACK}} (0,-6.2);
+    \draw[msg, \transportLayerColor] (0,-6.8) -- node[above, pos=.2] {\texttt{ACK}} (11.4,-6.8);
+    \node[stepno=\transportLayerColor] at (-1.6,-6.2) {4};
+
+    % 5: TLS (Anwendungsschicht)
+    \draw[<->, thick, \appCol] (0,-7.7) -- node[above, pos=.35] {\glsentryshort{TLS}: Zertifikat prüfen, Schlüssel vereinbaren} (11.4,-7.7);
+    \node[stepno=\appCol] at (-1.6,-7.7) {5};
+
+    % 6: HTTP (Anwendungsschicht)
+    \draw[msg, \appCol] (0,-8.7) -- node[above, pos=.25] {\texttt{GET /index.html}} (11.4,-8.7);
+    \draw[msg, \appCol] (11.4,-9.4) -- node[above, pos=.75] {\texttt{200 OK} + \glsentryshort{HTML}-Datei} (0,-9.4);
+    \node[stepno=\appCol] at (-1.6,-9.05) {6};
+
+    % 7: Darstellung und weitere Anfragen
+    \node[note, anchor=west] at (-0.9,-10.6) {Seite anzeigen, Bilder \& Stylesheets nachladen};
+    \node[stepno] at (-1.6,-10.6) {7};
+\end{tikzpicture}

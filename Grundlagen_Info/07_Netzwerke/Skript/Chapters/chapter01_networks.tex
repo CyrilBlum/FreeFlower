@@ -1493,6 +1493,70 @@ Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten Sie im erst
 	Erstellen Sie in Filius eine Client-Server-Architektur, gemäss derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 7}. Ihre Konfiguration sollte aus 2 Servern bestehen, wovon der erste als \gls{DNS}-Server und der zweite als Web-Server fungiert. Der \gls{DNS}-Server soll dem Client die \gls{IP}-Adresse des Web-Servers bereitstellen, damit der Client anschliessend eine Webseite vom Web-Server anfordern kann. Vergessen Sie nicht, den \gls{DNS}-Server zu starten sowie dessen \gls{IP}-Adresse auch bei jedem Client unter \enquote{\gls{DNS}-Server} einzutragen, damit dieser weiss, an welchen Server er die \gls{DNS}-Anfragen schicken muss!
 \end{myexercise}
 
+\section{Zusammenfassung: Ablauf eines Webaufrufs}\label{sec:webaufruf}
+
+Was passiert eigentlich, wenn Sie zuhause im \gls{WLAN} \texttt{https://www.example.org} in den Browser eintippen? Alle Schichten dieses Kapitels arbeiten dabei zusammen. \Cref{fig:webaufruf} zeigt den Ablauf vereinfacht; die Farben entsprechen den Schichten.
+
+\begin{enumerate}
+    \item \textcolor{\dataLinkLayerColor}{\textbf{Netzzugangsschicht}}: Der Webserver liegt nicht im eigenen Subnetz, also muss das Paket zuerst an den Router (\textit{default gateway}) \texttt{192.168.1.1}. Mit \gls{ARP} fragt der Laptop nach dessen \gls{MAC}-Adresse.
+    \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendungsschicht}}: Der Browser kennt nur den Namen \texttt{www.example.org}. Er fragt einen \gls{DNS}-Server nach der zugehörigen \gls{IP}-Adresse und erhält \texttt{198.51.100.7}.
+    \item \textcolor{\networkLayerColor}{\textbf{Vermittlungsschicht}}: Der Heimrouter ersetzt mit \gls{NAT} die private Absenderadresse durch seine öffentliche Adresse. Danach leiten viele Router im Internet das Paket Schritt für Schritt zum Ziel weiter.
+    \item \textcolor{\transportLayerColor}{\textbf{Transportschicht}}: Laptop und Webserver bauen mit dem 3-Way-Handshake eine \gls{TCP}-Verbindung zu Port 443 auf (\gls{HTTPS}).
+    \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendungsschicht}}: Mit \gls{TLS} prüft der Browser das Zertifikat des Servers, und beide vereinbaren einen Schlüssel. Ab jetzt ist alles verschlüsselt.
+    \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendungsschicht}}: Der Browser sendet die \gls{HTTP}-Anfrage \texttt{GET /index.html}; der Server antwortet mit \texttt{200 OK} und der \gls{HTML}-Datei.
+    \item Der Browser stellt die Seite dar und lädt die darin verlinkten Bilder und Stylesheets mit weiteren Anfragen nach.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{\input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_webaufruf.tex}}
+    \caption{Vereinfachter Ablauf eines Webaufrufs (Adressen aus den Dokumentationsbereichen)}
+    \label{fig:webaufruf}
+\end{figure}
+
+\begin{myremark}
+    Jede Nachricht wird auf dem Weg nach unten durch alle Schichten \enquote{verpackt}: Die \gls{HTTP}-Anfrage steckt in einem \gls{TCP}-Segment (Ports), dieses in einem \gls{IP}-Paket (Adressen) und dieses in einem Frame der Netzzugangsschicht (\gls{MAC}-Adressen). Der Empfänger packt die Nachricht in umgekehrter Reihenfolge wieder aus.
+\end{myremark}
+
+\begin{myexercise}[Ablauf eines Webaufrufs]
+    Lara tippt in ihrem Heimnetz \texttt{https://www.example.org/news.html} in den Browser ein.
+    \begin{aenum}
+        \item Bringen Sie die folgenden Schritte in die richtige Reihenfolge und ordnen Sie jedem Schritt die Schicht und das Protokoll zu:
+              \begin{itemize}
+                  \item Der Server schickt die \gls{HTML}-Datei.
+                  \item Der Laptop fragt nach der \gls{IP}-Adresse von \texttt{www.example.org}.
+                  \item Laptop und Server führen den 3-Way-Handshake durch.
+                  \item Der Laptop fragt nach der \gls{MAC}-Adresse des Routers.
+                  \item Browser und Server vereinbaren einen Schlüssel.
+                  \item Der Browser fordert \texttt{/news.html} an.
+              \end{itemize}
+        \item Wenige Sekunden später klickt Lara auf einen Link zu \url{https://www.example.org/sport.html}. Welche Schritte entfallen nun? Begründen Sie.
+    \end{aenum}
+
+    \begin{myanswer}
+        \begin{aenum}
+            \item
+                  \begin{enumerate}
+                      \item \gls{MAC}-Adresse des Routers erfragen -- Netzzugangsschicht, \gls{ARP}
+                      \item \gls{IP}-Adresse erfragen -- Anwendungsschicht, \gls{DNS}
+                      \item 3-Way-Handshake -- Transportschicht, \gls{TCP}
+                      \item Schlüssel vereinbaren -- Anwendungsschicht, \gls{TLS}
+                      \item \texttt{/news.html} anfordern -- Anwendungsschicht, \gls{HTTP} (\texttt{GET})
+                      \item \gls{HTML}-Datei schicken -- Anwendungsschicht, \gls{HTTP} (\texttt{200 OK})
+                  \end{enumerate}
+            \item \gls{ARP} und \gls{DNS} entfallen, weil Laptop und Browser die \gls{MAC}-Adresse des Routers bzw. die \gls{IP}-Adresse des Servers für eine gewisse Zeit zwischenspeichern (Cache). Meist entfallen auch Handshake und Schlüsselvereinbarung, weil der Browser die bestehende \gls{TCP}- bzw. \gls{TLS}-Verbindung wiederverwendet. Es bleibt nur die neue \gls{HTTP}-Anfrage \texttt{GET /sport.html}.
+        \end{aenum}
+    \end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Webaufruf in Wireshark]
+    Starten Sie eine Aufzeichnung in Wireshark und rufen Sie eine Webseite auf, die Sie heute noch nicht besucht haben. Suchen Sie in der Aufzeichnung mit den Filtern \texttt{dns} und \texttt{tcp.port == 443} die Schritte 2, 4 und 5 aus \cref{fig:webaufruf}. Weshalb sehen Sie den Inhalt der \gls{HTTP}-Anfrage nicht?
+
+    \begin{myanswer}
+        \gls{DNS}: eine Anfrage (\textit{Standard query}) und eine Antwort mit der \gls{IP}-Adresse. \gls{TCP}: drei Pakete mit den Flags \texttt{SYN}, \texttt{SYN, ACK} und \texttt{ACK}. \gls{TLS}: \textit{Client Hello} und \textit{Server Hello}. Den Inhalt der \gls{HTTP}-Anfrage sieht man nicht, weil er mit \gls{TLS} verschlüsselt ist.
+    \end{myanswer}
+\end{mychallenge}
+
 \section{Weitere Aufgaben}
 
 \begin{myexercise}[Video zu Netzwerkschichten und Protokollen (Zusammenfassung)]

@@ -1,0 +1,120 @@
+% Farben für jede Schicht (\providecommand: auch im Skript definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
+
+% command to make sure colorboxes don't create whitespace between code lines
+\fboxsep=.6pt
+
+% default settings for listings
+\lstset{style=python}
+
+\title[Netzwerke]{Netzwerke}
+
+\subtitle{Transportschicht (Skript, Abschnitt 1.5)}
+
+\author[Blum, Cyril] % (optional)
+{Cyril Blum}
+
+\institute[KLW] % (optional)
+{
+    Fachschaft Informatik\\
+    Kantonsschule im Lee
+}
+
+\date[\today] % (optional)
+
+\logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
+
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+
+\frame{\titlepage}
+
+\section{Transportschicht}
+\setbeamercolor{frametitle}{bg=\transportLayerColor!20}
+
+\begin{frame}{Netzwerk-Spiel: \textbf{Transportschicht}}
+    Endgeräte trennen die Nachrichten in Segmente auf und fügen Sequenznummern hinzu:
+    \begin{table}[H]
+        \centering
+
+        \begin{tabular}{p{2cm}l}
+            \rowcolor{\transportLayerColor!20}Sequenz:                                    & 1                   \\\midrule
+            \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi} \\
+        \end{tabular}
+        \begin{tabular}{p{2cm}l}
+            \rowcolor{\transportLayerColor!20}Sequenz:                                    & 2                  \\\midrule
+            \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{e geht's?} \\
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{\faBoxOpen{} \acrshort{TCP} (\textit{Transmission Control Protocol}) Header}{Transportschicht}
+    \acrshort{TCP} = Übertragungssteuerungsprotokoll
+    \begin{table}[H]
+        \centering
+        \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_table_tcpheader.tex}
+    \end{table}
+\end{frame}
+
+\begin{frame}[fragile]{\faShip{} Ports}{Transportschicht}
+    \begin{table}[H]
+        \centering
+        \footnotesize
+        \begin{tabular}{ccc}
+            \textbf{Portnummer} & \textbf{Anwendung} & \textbf{Verwendung}             \\
+            \midrule
+            20                  & \acrshort{FTP}                & Dateitransfer                   \\
+            21                  & \acrshort{FTP}                & Befehlssteuerung                \\
+            22                  & \acrshort{SSH}                & Sichere Shell-Zugriffe          \\
+            25                  & \acrshort{SMTP}               & E-Mail-Versand                  \\
+            53                  & \acrshort{DNS}                & Namensauflösung                 \\
+            80                  & \acrshort{HTTP}               & Webseiten-Abruf                 \\
+            110                 & \acrshort{POP3}               & E-Mail-Abholung                 \\
+            143                 & \acrshort{IMAP}               & E-Mail-Management               \\
+            443                 & \acrshort{HTTPS}              & Verschlüsselter Webseiten-Abruf \\
+            993                 & \acrshort{IMAP}               & E-Mail-Management über \acrshort{TLS}      \\
+            995                 & \acrshort{POP3}               & E-Mail-Abholung über \acrshort{TLS}        \\
+        \end{tabular}
+        \caption*{Gängige Ports, Anwendungen und deren Verwendung (\acrshort{DNS} meist über \acrshort{UDP}, sonst \acrshort{TCP})}
+    \end{table}
+\end{frame}
+
+\begin{frame}{\faShip{} Ports}{Auftrag (Skript)}
+    \begin{itemize}
+        \item \aufgabebox{1.28 (Ports für \acrshort{HTTP}-Verbindungen)}
+        \item \challengebox{1.29 (Weitere Port-Aufgaben)}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\faHandshake{} \acrshort{TCP}: 3-way handshake}{Transportschicht}
+    \begin{columns}[c]
+        \begin{column}{.6\textwidth}
+            \begin{figure}[H]
+                \centering
+                \adjustbox{max width=\textwidth, max height=.75\textheight}{
+                    \input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_tcpHandshake.tex}
+                    }
+            \end{figure}
+        \end{column}\vrule{}
+        \begin{column}{.4\textwidth}
+            \footnotesize
+            \begin{enumerate}
+                \item Computer A (\textit{client}, \texttt{10.0.0.1}) erstellt eine Verbindungsanfrage zum Computer B (\textit{server}, \texttt{10.0.0.2}) mittels eines Pakets, bei dem nur das \texttt{SYN}-Flag gesetzt ist.
+                \item Der Server antwortet mit einem Paket, bei dem sowohl das \texttt{SYN}- als auch das \texttt{ACK}-Flag gesetzt sind
+                \item Im letzten Schritt antwortet der \textit{client} nochmals mit einem einzelnen \texttt{ACK}-Flag\\
+                      $\rightarrow$ \acrshort{TCP}-Verbindung ist nun erstellt!
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\faHandshake{} \acrshort{TCP}: 3-way handshake}{Auftrag}
+    \begin{itemize}
+        \item Skript: \aufgabebox{1.30-1.33 (\acrshort{TCP}, Server / Clients)}
+        \item \challengebox{1.34 (E-Mail-Server)}
+    \end{itemize}
+\end{frame}
+
+

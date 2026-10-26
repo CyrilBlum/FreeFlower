@@ -1,0 +1,267 @@
+% Farben für jede Schicht (\providecommand: auch im Skript definiert)
+\providecommand{\applicationLayerColor}{Gold}
+\providecommand{\transportLayerColor}{Indigo}
+\providecommand{\networkLayerColor}{RoyalBlue}
+\providecommand{\dataLinkLayerColor}{Gray}
+
+% command to make sure colorboxes don't create whitespace between code lines
+\fboxsep=.6pt
+
+% default settings for listings
+\lstset{style=python}
+
+\title[Netzwerke]{Netzwerke}
+
+\subtitle{Anwendungsschicht (Skript, Abschnitte 1.6 bis 1.8)}
+
+\author[Blum, Cyril] % (optional)
+{Cyril Blum}
+
+\institute[KLW] % (optional)
+{
+    Fachschaft Informatik\\
+    Kantonsschule im Lee
+}
+
+\date[\today] % (optional)
+
+\logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
+
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+
+\frame{\titlepage}
+
+\section{Anwendungsschicht}
+\setbeamercolor{frametitle}{bg=\applicationLayerColor!20}
+
+\begin{frame}{Netzwerk-Spiel: \textbf{Anwendungsschicht}}
+    Endgeräte verfassen Nachrichten:
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{p{2cm}l}
+            \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{Hi Bob, wi} \\
+        \end{tabular}
+        \begin{tabular}{p{2cm}l}
+            \rowcolor{\applicationLayerColor!20}Nachricht\newline\tiny (max. 10 Zeichen): & \texttt{e geht's?} \\
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+
+\begin{frame}[fragile]{\faLaptop{} Client vs Server vs Host}{Anwendungsschicht}
+    Definitionen
+    \begin{itemize}[<+->]
+        \item \textbf{Client}
+              \begin{itemize}
+                  \item \enquote{Kunde} (von en. \textit{client})
+                  \item Computer(-Programm), das etwas will
+              \end{itemize}
+        \item \textbf{Server}
+              \begin{itemize}
+                  \item \enquote{Diener} (von en. \textit{to serve} = bedienen, $\neq$ \enquote{surf})
+                  \item Computer(-Programm), das etwas hat, das andere Computer(-Programme) brauchen
+                  \item Kann Verbindungsanfragen von anderen Computer(-Programmen) akzeptieren / ablehnen
+              \end{itemize}
+        \item \textbf{Host}
+              \begin{itemize}
+                  \item = Computer in einem Netzwerk, allgemein für \enquote{server} oder \enquote{client}
+                  \item \textit{Host name} = Name eines Computers
+              \end{itemize}
+
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\faSafari{} Browser}{Anwendungsschicht}
+    \begin{itemize}
+        \item Browser = Programm, kann eine Datei (meist \texttt{.html})...
+              \begin{itemize}
+                  \item ...über das Internet \textit{anfordern}
+                  \item ...nach dem Empfang \textit{darstellen}
+              \end{itemize}
+        \item Das Senden / Empfangen von Dateien übernimmt das Betriebssystem (z.B. Windows, MacOS)
+        \item Beispiele:
+              \begin{itemize}
+                  \item \faChrome{} Chrome
+                  \item \faFirefox{} Firefox
+                  \item \faSafari{} Safari
+                  \item \faEdge{} Edge
+                  \item  etc.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\acrfull{DNS}}
+    \begin{itemize}
+        \item Wenn Sie auf eine Webseite wie \url{https://sbb.ch} gehen, woher weiss der Client, von welchem Server er die Informationen anfragen soll?
+        \item \gls{DNS}: Domain-Name $\rightleftarrows$ \acrshort{IP}-Adresse!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\gls{DNS}}
+    \begin{figure}[H]
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}[
+                    base/.style={rectangle, draw, minimum width=2cm, minimum height=1cm, text=white, rounded corners, text width=2.3cm, align=center,inner sep=8pt},
+                    server/.style={base, fill=\networkLayerColor},
+                    client/.style={base, fill=ForestGreen},
+                    arrow/.style={-Stealth, thick, rounded corners,text width=4cm,align=center}
+                ]
+
+                % Nodes
+                \node[client] (client) {Client\\\texttt{192.168.0.10}};
+                \node[server, right=4.2cm of client] (dns) {\gls{DNS}-Server\\\texttt{192.168.2.1}};
+                \node[server, right=4.2cm of dns] (web) {Webserver\\\texttt{192.168.0.11}};
+                \node[text width=3cm, right=0cm of dns] (dnsTable) {\tiny \begin{tabular}{p{1.1cm}p{1.2cm}}
+                        \textbf{Domain\newline Name} & \textbf{\acrshort{IP}-\newline Adresse} \\
+                        \midrule
+                        \texttt{beispiel.ch}         & 192.168.0.11                  \\
+                        \midrule
+                        \texttt{schule.ch}           & 192.168.0.12                  \\
+                        \midrule
+                        \texttt{test.org}            & 192.168.0.13                  \\
+                        \midrule
+                        \texttt{insta.com}           & 192.168.0.14                  \\
+                        \midrule
+                        \texttt{...}                 & ...                           \\
+                    \end{tabular}};
+
+                % draw box around DNS node and DNS table
+                \node[fit=(dns) (dnsTable), inner sep=4pt, \networkLayerColor, dotted, draw, line width=1pt,rounded corners](dnsArea) {};
+
+                % Arrows
+                \draw[arrow] ($(client.east)+(0,0.15)$) -- ($(dns.west)+(0,0.15)$) node[midway, above] {\textbf{1.} \gls{DNS}-Anfrage\\\footnotesize\enquote{Wer ist \texttt{beispiel.ch}?}};
+                \draw[arrow] ($(dns.west)-(0,0.15)$) -- ($(client.east)-(0,0.15)$) node[midway, below] {\textbf{2.} \gls{DNS}-Antwort\\\footnotesize\enquote{\texttt{192.168.0.11}}};
+                \draw[arrow] (client) -- ++(0,2cm) -- node[above] {\textbf{3.} \gls{HTTP}-Anfrage\\\footnotesize (Webseite wird angefragt)} ++($(web)$) -- (web);
+                \draw[arrow] (web) -- ++(0,-2cm) -- node[below,midway] {\textbf{4.} \gls{HTTP}-Antwort\\\footnotesize (Webseite wird geliefert)} ++($(client)-(web)$) -- (client);
+
+            \end{tikzpicture}}
+        \centering
+        \caption{Schematischer Ablauf einer \gls{DNS}-Anfrage}
+        \label{fig:dns}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{\faSitemap{} \acrshort{URL} (Uniform Resource Locator)}{Präsentationsschicht: Webseiten}
+
+    \acrshort{URL} = Web-Adresse
+
+    \[
+        \underbrace{\text{http://}}_{\text{Protokoll}}
+        \underbrace{\text{www.}}_{\text{Subdomain}}
+        \underbrace{\text{beispiel.}}_{\text{Domain}}
+        \underbrace{\text{ch}}_{\text{\acrshort{TLD}\tikzmark{tld}}}
+        \underbrace{\text{/dokumente/}}_{\text{Ordner}}
+        \underbrace{\text{reglemente.html}}_{\text{Dateiname}}
+    \]
+    \begin{tikzpicture}[overlay, remember picture]
+        \node[below=of tld] (tldFull) {Top Level Domain};
+        \draw[red,-stealth] (tld.north) to[bend right] (tldFull);
+    \end{tikzpicture}
+
+    \begin{itemize}[<+->]
+        \item Erster Teil bezeichnet einen \textit{Server}
+              \begin{itemize}
+                  \item z.B. \texttt{www.beispiel.ch} $\rightarrow$ 58.55.110.9
+              \end{itemize}
+        \item Alles nach der \acrshort{TLD} ist ein normaler Ordnerpfad auf dem Computer
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{\faServer{} \acrshort{HTTP}(S)-Protokoll}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\linewidth}{!}{
+            \begin{tikzpicture}[
+                    font=\sffamily,
+                    every node/.style={align=center},
+                    entity/.style={rectangle, draw, fill=\networkLayerColor, text=white, minimum height=2.5cm, minimum width=3cm, rounded corners, text width=2.3cm, align=center, node distance=1.5cm and 3.5cm},
+                    process/.style={-Stealth, thick, draw},
+                    arrowtext/.style={text width=2.5cm, align=center, text=black, font=\footnotesize}
+                ]
+
+                % Nodes for user
+                \node[entity] (userStart) {Eingabe der \acrshort{URL} am Bildschirm};
+                \node[entity, below=of userStart] (userEnd) {Webseite am Bildschirm};
+                % Draw a 2D rectangle around the users
+                \node[fit=(userStart) (userEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](user) {User \\ \faUser};
+
+                % nodes for
+                \node[entity, right=of userStart] (browserStart) {Übersetzt die \acrshort{URL} in einen \acrshort{HTTP}-Request};
+                \node[entity, right=of userEnd] (browserEnd) {Sammelt Daten, setzt Website zusammen (rendern)};
+                % Draw a 2D rectangle around the users
+                \node[fit=(browserStart) (browserEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](browser) {Browser\\ \faLaptop};
+
+                % nodes for server
+                \node[entity, right=of browserStart] (serverStart) {Interpretiert den Request und sucht die Dateien};
+                \node[entity, right=of browserEnd] (serverEnd) {Sendet den Status der Suche und die Daten zur Webseite};
+                % Draw a 2D rectangle around the users
+                \node[fit=(serverStart) (serverEnd), inner sep=4pt, red, text=black, dotted, draw, line width=1pt,rounded corners](server) {Web Server\\ \faServer};
+
+                % Connections
+                \draw[process, Crimson] (userStart.east) -- node[arrowtext, above] {1. \acrshort{URL} \\ \texttt{http://\\www.beispiel.ch/\\index.html}} (browserStart.west);
+                \draw[process, Crimson] (browserStart.east) -- node[arrowtext, above] {2. \acrshort{HTTP} Request \\ \texttt{GET /index.html}} (serverStart.west);
+                \draw[process, ForestGreen] (serverEnd.west) -- node[arrowtext, below] {3. \acrshort{HTTP} Response \\ Statuscode + Daten} (browserEnd.east);
+                \draw[process, ForestGreen] (browserEnd.west) -- node[arrowtext, below] {4. Webpage \\ Darstellung der Webseite \texttt{index.html}} (userEnd.east);
+
+            \end{tikzpicture}}
+    \end{figure}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{\faLaptop{} Webseiten}{Präsentationsschicht}
+    Beispiel: \acrshort{HTML} (\textit{Hypertext Markup Language})
+    \begin{itemize}[<+->]
+        \item Demo (\textit{Inspect Element} oder \textit{View Page Source})
+        \item Speichert die Struktur einer Webseite
+        \item Kann weitere Dateien enthalten, beispielsweise:
+              \begin{itemize}
+                  \item CSS (Cascading Style Sheet), für die Darstellung (Farbe, Grösse etc.)
+                  \item JavaScript, jQuery etc. für die Interaktivität (Ein- und Ausblenden von Objekten etc.)
+              \end{itemize}
+        \item Wie man eine Webseite baut ist hier nicht das Hauptthema, wird aber in der Interessenwoche vermittelt
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Web- und \acrshort{DNS}-Server}{Aufträge (Skript)}
+    \textbf{Webserver \textit{ohne} \gls{DNS}}
+    \begin{itemize}
+        \item \aufgabebox{Filius (Web-Server): 1.35}
+        \item \challengebox{1.36 (\acrshort{HTML} besser verstehen)}
+        \item \challengebox{Filius (\enquote{Echter} Web-Server): 1.37}
+    \end{itemize}
+    \textbf{\gls{DNS}}
+    \begin{itemize}
+        \item \aufgabebox{1.38 - 1.40}
+    \end{itemize}
+\end{frame}
+
+\section{Zusammenfassung}
+\setbeamercolor{frametitle}{bg=white}
+
+\begin{frame}{Ablauf eines Webaufrufs}{Alle Schichten arbeiten zusammen}
+    \begin{center}
+        \adjustbox{max width=\textwidth, max totalheight=.8\textheight}{\input{Grundlagen_Info/07_Netzwerke/Skript/Includes/chapter01_fig_webaufruf.tex}}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Ablauf eines Webaufrufs}{Schritt für Schritt}
+    \begin{enumerate}[<+->]\small
+        \item \textcolor{\dataLinkLayerColor}{\textbf{Netzzugang}}: \acrshort{MAC}-Adresse des Routers mit \acrshort{ARP} erfragen
+        \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendung}}: \acrshort{IP}-Adresse des Webservers mit \acrshort{DNS} erfragen
+        \item \textcolor{\networkLayerColor}{\textbf{Vermittlung}}: \acrshort{NAT} im Heimrouter, Routing durchs Internet
+        \item \textcolor{\transportLayerColor}{\textbf{Transport}}: \acrshort{TCP}-Verbindung zu Port 443 (3-way handshake)
+        \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendung}}: \acrshort{TLS} -- Zertifikat prüfen, Schlüssel vereinbaren
+        \item \textcolor{\applicationLayerColor!80!black}{\textbf{Anwendung}}: \acrshort{HTTP}-Anfrage \texttt{GET}, Antwort \texttt{200 OK} mit \acrshort{HTML}
+        \item Seite darstellen, Bilder \& Stylesheets nachladen
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Auftrag (Skript)}
+    \begin{itemize}
+        \item \aufgabebox{1.41 (Ablauf eines Webaufrufs)}
+        \item \challengebox{1.42 (Webaufruf in Wireshark)}
+        \item \challengebox{1.45 - 1.46 (Filius-Troubleshooting, Vertiefung Schichtenmodell)}
+    \end{itemize}
+\end{frame}
