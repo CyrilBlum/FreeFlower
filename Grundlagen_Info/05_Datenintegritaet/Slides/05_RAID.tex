@@ -23,30 +23,36 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
 \frame{\titlepage}
 
 \begin{frame}{Problem: Bitrot}
     \begin{center}
-        \includegraphics[width=\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/bitrot.png}
+        \includegraphics[width=.88\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/bitrot.png}
+
+        % Quelle: wahrscheinlichste Herkunft des Screenshots (nicht abschliessend bestätigt)
+        {\tiny Quelle: Tony \& Chelsea Northrup, \enquote{NAS Storage for Photos \& Video: PROTECT YOUR DATA!}, YouTube, 2022, \url{https://www.youtube.com/watch?v=xvbnhCDfREk}}
     \end{center}
 \end{frame}
 
-\begin{frame}{Mögliche Lösung: NAS mit RAID}
+\begin{frame}{Mögliche Lösung: \glsentryshort{NAS} mit \glsentryshort{RAID}}
     \begin{center}
-        \includegraphics[width=.9\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/NAS.png}
+        \includegraphics[height=.45\textheight]{Grundlagen_Info/05_Datenintegritaet/Figures/NAS.png}
     \end{center}
     \begin{itemize}
-        \item NAS = Network Attached Storage (Netzwerkgebundener Speicher)
-        \item RAID = Redundant Array of Independent Disks (Redundante Anordnung unabhängiger Festplatten)
+        \item \gls{NAS}: Netzwerkgebundener Speicher
+        \item \gls{RAID}: Redundante Anordnung unabhängiger Festplatten
+        \item \textbf{Achtung:} \acrshort{RAID} ist kein Backup! Gelöschte, überschriebene, verschlüsselte (Ransomware) oder beschädigte Dateien landen sofort auf allen Platten $\rightarrow$ separates Backup (offline / extern)
     \end{itemize}
 \end{frame}
 
 
-\begin{frame}{RAID 0}
+\begin{frame}{\glsentryshort{RAID} 0}
     \begin{center}
-        \includegraphics[width=.25\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_0.pdf}
+        \includegraphics[width=.17\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_0.pdf}
+
+        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_0.svg}{Wikimedia Commons}, CC BY-SA 3.0}
     \end{center}
     \begin{itemize}
         \item \textbf{Prinzip:} Striping (Daten werden in Blöcke aufgeteilt und auf die Festplatten verteilt)
@@ -57,38 +63,44 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RAID 1}
+\begin{frame}{\glsentryshort{RAID} 1}
     \begin{center}
-        \includegraphics[width=.25\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_1.pdf}
+        \includegraphics[width=.17\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_1.pdf}
+
+        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_1.svg}{Wikimedia Commons}, CC BY-SA 3.0}
     \end{center}
     \begin{itemize}
-        \item \textbf{Prinzip:} Mirroring (Daten werden 1:1 auf alle Festplatten gespiegelt)
-        \item \textbf{Vorteil:} Hohe Ausfallsicherheit (eine Festplatte kann ausfallen)
+        \item \textbf{Prinzip:} Mirroring (je zwei Festplatten bilden ein identisches Spiegelpaar)
+        \item \textbf{Vorteil:} Hohe Ausfallsicherheit (pro Spiegelpaar kann eine Festplatte ausfallen)
         \item \textbf{Nachteil:} Nur halbe nutzbare Kapazität
         \item \textbf{Anwendung:} Wichtige Daten, z.B. Server
-        \item \textbf{Kapazität:} $n$ Festplatten $\rightarrow$ Kapazität einer Festplatte
+        \item \textbf{Kapazität:} $n$ Festplatten $\rightarrow$ $n/2$-fache Kapazität
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RAID 5}
+\begin{frame}{\glsentryshort{RAID} 5}
     \begin{center}
-        \includegraphics[width=.5\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5.pdf}
+        \includegraphics[width=.36\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5.pdf}
+
+        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_5.svg}{Wikimedia Commons}, CC BY-SA 3.0}
     \end{center}
     \begin{itemize}
         \item \textbf{Prinzip:} Striping mit verteilter Parität (Paritätsinformationen werden auf alle Festplatten verteilt)
         \item \textbf{Vorteil:} Gute Geschwindigkeit, Schutz bei Ausfall einer Festplatte
         \item \textbf{Nachteil:} Wiederherstellung bei Ausfall dauert lange
-        \item \textbf{Anwendung:} Dateiserver, NAS
+        \item \textbf{Anwendung:} Dateiserver, \gls{NAS}
         \item \textbf{Kapazität:} $n$ Festplatten $\rightarrow$ $(n-1)$-fache Kapazität
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RAID 6}
+\begin{frame}{\glsentryshort{RAID} 6}
     \begin{center}
         \includegraphics[width=.5\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_6.pdf}
+
+        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_6.svg}{Wikimedia Commons}, CC BY-SA 3.0}
     \end{center}
     \begin{itemize}
-        \item \textbf{Prinzip:} Striping mit doppelter Parität (zwei Paritätsblöcke pro Datenblock)
+        \item \textbf{Prinzip:} Striping mit doppelter Parität (zwei Paritätsblöcke pro Stripe)
         \item \textbf{Vorteil:} Schutz bei Ausfall von zwei Festplatten
         \item \textbf{Nachteil:} Noch geringere nutzbare Kapazität, langsamere Schreibgeschwindigkeit
         \item \textbf{Anwendung:} Grosse Speicherlösungen mit hoher Sicherheit
@@ -97,7 +109,7 @@
 \end{frame}
 
 \begin{frame}{Auftrag (Skript)}
-    \begin{itemize}        
+    \begin{itemize}
         \item \aufgabebox{1.29 - 1.34}
     \end{itemize}
 \end{frame}

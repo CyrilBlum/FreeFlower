@@ -23,7 +23,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
 \frame{\titlepage}
 
@@ -133,7 +133,7 @@
         \begin{column}{.45\textwidth}
             \begin{table}[H]
                 \centering
-                \begin{tabular}{c|c|c}
+                \begin{tabular}{ccc}
                     0 & 1 & 0 \\\midrule
                     1 & 0 & 1 \\
                 \end{tabular}
@@ -148,8 +148,8 @@
             \only<2>{
                 \begin{table}[H]
                 \centering
-                \begin{tabular}{c|c|c||c}
-                    \underline{1} & \underline{1} & \underline{1} & \underline{1}    \\\midrule\midrule
+                \begin{tabular}{cccc}
+                    \underline{1} & \underline{1} & \underline{1} & \underline{1}    \\\midrule
                     0             & 1             & 0             & \underline{1} \\\midrule
                     1             & 0             & 1             & \underline{0} \\
                 \end{tabular}
@@ -162,13 +162,13 @@
 \end{frame}
 
 \begin{frame}{Optimalität: so wenig Kontrollbits wie möglich}
-    Mehrere Möglichkeiten für Codewörter der Länge 16
+    Mehrere Möglichkeiten für Nachrichten der Länge 16
     \begin{itemize}[<+->]
         \item $16 = 4 \cdot 4 \rightarrow$ \underline{Kontrollbits: $4 + 4 + 1 = 9$}
         \item $16 = 2 \cdot 8 \rightarrow$ \underline{Kontrollbits: $2 + 8 + 1 = 11$}
         \item $16 = 1 \cdot 16 \rightarrow$ \underline{Kontrollbits: $1 + 16 + 1 = 18$}
         \item Die beiden Seiten des Rechtecks sollten möglichst gleich gross sein
-        \item Bei Codewörtern der Länge 48 $\rightarrow$ $6 \cdot 8$ ist optimal!
+        \item Bei Nachrichten der Länge 48 $\rightarrow$ $6 \cdot 8$ ist optimal!
     \end{itemize}
 \end{frame}
 

@@ -2,11 +2,11 @@
 
 \section{Einführung}
 
-Stellen Sie sich vor, Sie feiern Ihren 18. Geburtstag und wollen ihren besten Freunden einige Fotos aus ihrer Kindheit zeigen. Die Fotos sind aber leider alle verpixelt und können nicht richtig angezeigt werden! Oder stellen Sie sich vor, sie wollen in einigen Jahren Bilder von ihrem Date anschauen, die Bilder auf ihrer Festplatte sind jedoch unleserlich. \textit{Bad luck}? Fast genau dies ist dem Profi-Fotografen Tony Northrup geschehen, als er den 18. Geburtstag seiner Tochter mit Fotos aus deren Kindheit feiern wollte: \href{https://www.youtube.com/watch?v=xvbnhCDfREk}{Video}.
+Stellen Sie sich vor, Sie feiern Ihren 18. Geburtstag und wollen Ihren besten Freunden einige Fotos aus Ihrer Kindheit zeigen. Die Fotos sind aber leider alle verpixelt und können nicht richtig angezeigt werden! Oder stellen Sie sich vor, Sie wollen in einigen Jahren Bilder von Ihrem Date anschauen, die Bilder auf Ihrer Festplatte sind jedoch unleserlich. \textit{Bad luck}? Fast genau dies ist dem Profi-Fotografen Tony Northrup geschehen, als er den 18. Geburtstag seiner Tochter mit Fotos aus deren Kindheit feiern wollte: \href{https://www.youtube.com/watch?v=xvbnhCDfREk}{Video}.
 
-Bei der Übertragung von Bits über das Internet können einzelne Bits spontan verändert oder gelöscht werden -- dies kann fatale Folgen haben! Bei spontaner Änderung von einem 1 zu einem 0 (oder umgekehrt) spricht man von sogenanntem \textit{bit rot}.
+Bei der Übertragung von Bits über das Internet können einzelne Bits spontan verändert oder gelöscht werden -- dies kann fatale Folgen haben! Auch gespeicherte Daten können mit der Zeit unbemerkt beschädigt werden: Ändert sich ein gespeichertes Bit spontan von einer 1 zu einer 0 (oder umgekehrt), spricht man von sogenanntem \textit{bit rot}.
 
-Dies ist ein klassisches Beispiel für einen Fehler, der bei der Übertragung von Daten auftreten kann. Mit dem Begriff \enquote{Datenintegrität} bezeichnen wir die Korrektheit und Vollständigkeit von Daten. Datenintegrität ist ein wichtiges Thema in der Informatik, da es darum geht, sicherzustellen, dass Daten während ihrer Speicherung und Übertragung nicht verändert oder beschädigt werden.
+Dies sind klassische Beispiele für Fehler, die bei der Speicherung und Übertragung von Daten auftreten können. Mit dem Begriff \enquote{Datenintegrität} bezeichnen wir die Korrektheit und Vollständigkeit von Daten. Datenintegrität ist ein wichtiges Thema in der Informatik, da es darum geht, sicherzustellen, dass Daten während ihrer Speicherung und Übertragung nicht verändert oder beschädigt werden.
 
 \section{Prüfbits}
 
@@ -14,8 +14,8 @@ Buchstaben können auf unterschiedliche Weise kodiert sein -- bei \gls{ASCII} we
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c}
-        Buchstabe & Kodierung        \\\midrule\midrule
+    \begin{tabular}{cc}
+        Buchstabe & Kodierung        \\\midrule
         A         & \texttt{1000001} \\\midrule
         B         & \texttt{1000010} \\\midrule
         C         & \texttt{1000011} \\\midrule
@@ -28,8 +28,8 @@ Ein erster, einfacher Ansatz bestünde darin, jedem Code noch ein weiteres Bit a
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c}
-        Buchstabe & Kodierung                              \\\midrule\midrule
+    \begin{tabular}{cc}
+        Buchstabe & Kodierung                              \\\midrule
         A         & \texttt{1000001\underline{\textbf{0}}} \\\midrule
         B         & \texttt{1000010\underline{\textbf{0}}} \\\midrule
         C         & \texttt{1000011\underline{\textbf{1}}} \\\midrule
@@ -60,7 +60,7 @@ Die Idee von Prüfziffern ist, dass jede Prüfziffer nach dem gleichen Prinzip b
     \end{myanswer}
 \end{myexercise}
 
-Mit einem \gls{EAN} wird ein Standard für die Kodierung von Waren entwickelt. Fast alle käuflich erhältlichen Waren auf dem Markt enthalten einen solchen Code, welcher aus 13 Ziffern besteht. Häufig wird er in Form eines Strichcodes dargestellt, wobei zwei Striche eine Ziffer darstellen, sowie 2 mal 2 Striche, die den Rand angeben (siehe \cref{fig:ean}).
+Die \gls{EAN} ist ein Standard für die Kodierung von Waren. Fast alle käuflich erhältlichen Waren auf dem Markt enthalten einen solchen Code, welcher aus 13 Ziffern besteht. Häufig wird er in Form eines Strichcodes dargestellt, wobei zwei Striche eine Ziffer darstellen. Dazu kommen drei Begrenzungszeichen aus je zwei Strichen: das Start-, das Trenn- und das Stoppzeichen (siehe \cref{fig:ean}).
 
 \begin{figure}[H]
     \centering
@@ -91,10 +91,18 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
         \item Auslassen (eine Ziffer wird vergessen)
         \item 2 mal Vertippen $\rightarrow$ 2 Ziffern werden falsch getippt
     \end{itemize}
+    \begin{myanswer}
+        \begin{itemize}
+            \item \textbf{Vertippen:} wird immer erkannt. Ändert sich eine Ziffer um $d$ ($1 \leq |d| \leq 9$), ändert sich $s$ um $d$ (Gewicht 1) bzw. um $3d$ (Gewicht 3). Beides ist nie ein Vielfaches von 10, die Prüfziffer passt also nicht mehr.
+            \item \textbf{Vertauschen zweier benachbarter Ziffern:} wird meistens, aber nicht immer erkannt. Unterscheiden sich die beiden Ziffern um 5 (z.B. 0 und 5), ändert sich $s$ um $\pm 10$, und der Fehler bleibt unbemerkt (siehe \cref{ex:ean}).
+            \item \textbf{Auslassen:} wird erkannt, da der Code dann nur noch 12 statt 13 Ziffern hat und somit kein gültiger \gls{EAN} mehr ist.
+            \item \textbf{2 mal Vertippen:} wird nicht immer erkannt, da sich zwei Fehler gegenseitig aufheben können. Wird z.B. an Position 1 (Gewicht 1) eine Ziffer um 3 zu gross und an Position 3 (Gewicht 1) eine Ziffer um 3 zu klein getippt, bleibt $s$ gleich.
+        \end{itemize}
+    \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-    Berechnen Sie für 978314221213 die \gls{EAN}-13-Prüfziffer.
+    Berechnen Sie für 978314221213 die \acrshort{EAN}-13-Prüfziffer.
     \begin{myanswer}
         5
     \end{myanswer}
@@ -113,7 +121,7 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{l|p{3cm}|p{4cm}|l}
+            \begin{tabular}{lp{3cm}p{4cm}l}
                 \textbf{Position} & \textbf{Ziffer} & \textbf{Gewichtung\newline (siehe \cref{eq:ean})} & \textbf{Beitrag zu $s$} \\
                 \midrule
                 6                 & 3               & 3                                              & 9                       \\
@@ -123,7 +131,7 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
         \[\Downarrow\]
         \begin{table}[H]
             \centering
-            \begin{tabular}{l|p{3cm}|p{4cm}|l}
+            \begin{tabular}{lp{3cm}p{4cm}l}
                 \textbf{Position} & \textbf{Ziffer\newline (vertauscht)} & \textbf{Gewichtung\newline (siehe \cref{eq:ean})} & \textbf{Beitrag zu $s$} \\
                 \midrule
                 6                 & 8                                    & 3                                              & 24                      \\
@@ -138,85 +146,83 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
 
         Da sich $s$ um ein Vielfaches von 10 verändert, bleibt die Prüfziffer gleich, und der Fehler wird nicht entdeckt.
 
-        Dasselbe würde auch mit Positionen 5 und 6 funktionieren.
+        Dasselbe würde auch mit Positionen 4 und 5 (Ziffern 0 und 5) funktionieren.
     \end{myanswer}
 
-    \begin{mychallenge}
-        Begründen Sie allgemein, für welche Arten von Ziffern ein Vertauschen zweier benachbarten Ziffern in einer \gls{EAN}-Prüfziffer nicht entdeckt wird.
-        \begin{myanswer}
-            Damit ein Austausch zweier benachbarter Ziffern nicht entdeckt wird, darf sich die gewichtete Summe $s$ nicht ändern, da die Prüfziffer $x_{13}$ so gewählt ist, dass
-            \[
-                s + x_{13} \equiv 0 \mod 10
-            \]
-            gilt.
-
-            Bezeichne die beiden benachbarten Ziffern mit $a$ und $b$ an den Positionen $i$ und $i+1$. Die zugehörigen Gewichte im \gls{EAN}-System sind alternierend 1 und 3, also entweder $(g_i, g_{i+1}) = (1, 3)$ oder $(3, 1)$.
-
-            Der ursprüngliche Beitrag dieser beiden Ziffern zur Summe $s$ ist:
-            \[
-                s_\text{alt} = g_i \cdot a + g_{i+1} \cdot b
-            \]
-
-            Nach dem Vertauschen lautet der Beitrag:
-            \[
-                s_\text{neu} = g_i \cdot b + g_{i+1} \cdot a
-            \]
-
-            Die Änderung der Summe beträgt also:
-            \[
-                \Delta s = s_\text{neu} - s_\text{alt} = g_i \cdot b + g_{i+1} \cdot a - (g_i \cdot a + g_{i+1} \cdot b)
-                = (g_i - g_{i+1})(b - a)
-            \]
-
-            Da $g_i$ und $g_{i+1}$ abwechselnd $1$ und $3$ sind, ist $g_i - g_{i+1} \in \{-2, +2\}$. Es ergibt sich also:
-            \[
-                \Delta s = \pm 2 (b - a)
-            \]
-
-            Diese Änderung bleibt genau dann unbemerkt, wenn $\Delta s \equiv 0 \mod 10$ ist, also:
-            \[
-                \pm 2(b - a) \equiv 0 \mod 10 \quad \Leftrightarrow \quad b - a \equiv 0 \mod 5
-            \]
-
-            Es folgt:
-            \[
-                |b - a| \in \{0, 5\}
-            \]
-
-            Der Fall $b = a$ ist trivial, da keine Vertauschung erfolgt. Für eine echte Vertauschung mit $|b - a| = 5$ wird der Fehler \emph{nicht erkannt}.
-
-            \medskip
-
-            \textbf{Fazit:} Ein Vertauschen zweier benachbarter Ziffern im \gls{EAN}-Code bleibt genau dann unentdeckt, wenn sich ihre Werte um 5 unterscheiden, also $|b - a| = 5$ gilt.
-
-        \end{myanswer}
-    \end{mychallenge}
-
-
-
 \end{myexercise}
+
+\begin{mychallenge}
+    Begründen Sie allgemein, für welche Arten von Ziffern ein Vertauschen zweier benachbarter Ziffern in einer \gls{EAN}-Prüfziffer nicht entdeckt wird.
+    \begin{myanswer}
+        Damit ein Austausch zweier benachbarter Ziffern nicht entdeckt wird, darf sich die gewichtete Summe $s$ nicht ändern, da die Prüfziffer $x_{13}$ so gewählt ist, dass
+        \[
+            s + x_{13} \equiv 0 \mod 10
+        \]
+        gilt.
+
+        Wir bezeichnen die beiden benachbarten Ziffern mit $a$ und $b$ an den Positionen $i$ und $i+1$. Die zugehörigen Gewichte im \gls{EAN}-System sind alternierend 1 und 3, also entweder $(g_i, g_{i+1}) = (1, 3)$ oder $(3, 1)$.
+
+        Der ursprüngliche Beitrag dieser beiden Ziffern zur Summe $s$ ist:
+        \[
+            s_\text{alt} = g_i \cdot a + g_{i+1} \cdot b
+        \]
+
+        Nach dem Vertauschen lautet der Beitrag:
+        \[
+            s_\text{neu} = g_i \cdot b + g_{i+1} \cdot a
+        \]
+
+        Die Änderung der Summe beträgt also:
+        \[
+            \Delta s = s_\text{neu} - s_\text{alt} = g_i \cdot b + g_{i+1} \cdot a - (g_i \cdot a + g_{i+1} \cdot b)
+            = (g_i - g_{i+1})(b - a)
+        \]
+
+        Da $g_i$ und $g_{i+1}$ abwechselnd $1$ und $3$ sind, ist $g_i - g_{i+1} \in \{-2, +2\}$. Es ergibt sich also:
+        \[
+            \Delta s = \pm 2 (b - a)
+        \]
+
+        Diese Änderung bleibt genau dann unbemerkt, wenn $\Delta s \equiv 0 \mod 10$ ist, also:
+        \[
+            \pm 2(b - a) \equiv 0 \mod 10 \quad \Leftrightarrow \quad b - a \equiv 0 \mod 5
+        \]
+
+        Es folgt:
+        \[
+            |b - a| \in \{0, 5\}
+        \]
+
+        Der Fall $b = a$ ist trivial, da keine Vertauschung erfolgt. Für eine echte Vertauschung mit $|b - a| = 5$ wird der Fehler \emph{nicht erkannt}.
+
+        \medskip
+
+        \textbf{Fazit:} Ein Vertauschen zweier benachbarter Ziffern im \gls{EAN}-Code bleibt genau dann unentdeckt, wenn sich ihre Werte um 5 unterscheiden, also $|b - a| = 5$ gilt.
+
+    \end{myanswer}
+\end{mychallenge}
 
 \begin{myexercise}
     Nehmen wir an, dass an der vierten Position im Code aus \cref{ex:ean} eine 8 statt der 0 getippt wurde. Finden Sie mindestens 5 Möglichkeiten, an anderen Stellen den Fehler so zu machen, dass die fehlerhafte Darstellung einem \gls{EAN}-Code entspricht und somit dieser Doppelfehler unbemerkt bleibt.
     \begin{myanswer}
         Die Ziffer an Position 4 wurde von 0 auf 8 geändert. Da Position 4 das Gewicht 3 hat, verändert sich die Summe $s$ um
         \[
-            (8-0) \cdot 3 = -24
+            (8-0) \cdot 3 = +24
         \]
         Damit der Doppelfehler unbemerkt bleibt, muss an einer anderen Stelle ein Fehler mit dem Beitrag $-24$, $-14$, $-4$, $+6$, $+16$ etc. gemacht werden. In diesem Fall verändert sich $s$ um 0, +10, +20, +30 etc., sodass $x_{13}$ gleich bleibt.
 
         Dies könnte mit folgenden möglichen Änderungen erfolgen:
-        \[
-            \begin{tabular}{l|l|l|l||l}
+        \begin{center}
+            \begin{tabular}{lllll}
                 \textbf{Position} & \textbf{Gewicht} & \textbf{Änderung} & \textbf{Fehlerbeitrag} & \textbf{Gesamt-Fehler} \\
-                \midrule\midrule
+                \midrule
                 1                 & 1                & 4 $\rightarrow$ 0 & $-4$                   & $24-4=20$              \\\midrule
                 2                 & 3                & 0 $\rightarrow$ 2 & $+6$                   & $24+6=30$              \\\midrule
                 3                 & 1                & 3 $\rightarrow$ 9 & $+6$                   & $24+6=30$              \\\midrule
                 9                 & 1                & 5 $\rightarrow$ 1 & $-4$                   & $24-4=20$              \\\midrule
                 10                & 3                & 7 $\rightarrow$ 9 & $+6$                   & $24+6=30$              \\
             \end{tabular}
-        \]
+        \end{center}
 
         In all diesen Fällen bleibt die Prüfziffer $x_{13}$ unverändert, der Doppelfehler wird also nicht erkannt.
 
@@ -224,12 +230,12 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
 \end{myexercise}
 
 \begin{myexercise}
-    Die ursprünglichen \gls{ISBN}-10-Codes zur eindeutigen Bezeichnung von Büchern bestanden aus 9 Ziffern und einem Prüfsymbol aus den folgenden Ziffern:
+    Die ursprünglichen \gls{ISBN}-10-Codes zur eindeutigen Bezeichnung von Büchern bestanden aus 9 Ziffern und einem Prüfsymbol aus den folgenden Symbolen:
 
     \texttt{\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, X\}}
 
     wobei \texttt{X} die Zahl 10 repräsentierte. Für die neun Ziffern $x_1$, $x_2$, $\cdots$, $x_9$, hat man das Prüfsymbol $x_{10}$ wie folgt bestimmt:
-    \[10\times x_1+9\times x_2+8\times x_3\cdots+2\times x_9 + x_{10}\]
+    \[10\times x_1+9\times x_2+8\times x_3+\cdots+2\times x_9 + x_{10}\]
     ist ein Vielfaches von 11. Falls $x_{10} = 10$ ist das Prüfsymbol \texttt{X}.
     \begin{enumerate}
         \item Bestimmen Sie für die folgenden Symbolfolgen, welche \gls{ISBN}-10-Codes sind und welche es nicht sind:
@@ -260,7 +266,7 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
 
 \section{Fehler erkennen und korrigieren}
 
-Sie kennen Fehlererkennung bereits aus Ihrem Alltag: So beispielsweise bei der Rechtschreibprüfung in Word, die Ihnen das korrekte Wort vorschlägt (siehe \cref{fig:word})
+Sie kennen Fehlererkennung bereits aus Ihrem Alltag: So beispielsweise bei der Rechtschreibprüfung in Word, die Ihnen das korrekte Wort vorschlägt (siehe \cref{fig:word}).
 
 \begin{figure}[H]
     \centering
@@ -272,12 +278,12 @@ Sie kennen Fehlererkennung bereits aus Ihrem Alltag: So beispielsweise bei der R
 \begin{myexample}\label{ex:word}
 Wie viele Tippfehler werden im Beispiel aus \cref{fig:word} in jedem Fall erkannt?
 
-Im gezeigten Beispiel wird ein Tippfehler noch erkannt. Es wird jedoch nicht jeder Tippfehler garantiert erkannt: So könnte beispielsweise ein Tippfehler vom ursprünglich gemeinten Wort \enquote{Fehler} hin zu \enquote{Zehler} nicht erkannt werden, da \enquote{Zehler} sowohl einen Buchstaben Abstand zum (korrekten, beabsichtigten) Wort \enquote{Fehler} wie auch zum (nicht beabsichtigten, aber korrekten) Wort \enquote{Zähler} hat.
+Im gezeigten Beispiel wird ein Tippfehler noch erkannt. Garantiert erkannt wird jedoch nicht einmal ein einzelner Tippfehler: Wird aus dem ursprünglich gemeinten Wort \enquote{Fehler} durch einen Tippfehler das Wort \enquote{Fehlen}, entsteht wieder ein korrektes Wort, und der Fehler bleibt unbemerkt. Zudem kann nicht jeder erkannte Tippfehler eindeutig korrigiert werden: Ein Tippfehler vom Wort \enquote{Fehler} hin zu \enquote{Zehler} wird zwar erkannt, doch \enquote{Zehler} hat sowohl einen Buchstaben Abstand zum (korrekten, beabsichtigten) Wort \enquote{Fehler} wie auch zum (nicht beabsichtigten, aber korrekten) Wort \enquote{Zähler}.
 \end{myexample}
 
 Was können wir aus \cref{ex:word} lernen? Damit ein Fehler automatisch korrigiert werden kann, muss der Unterschied zwischen dem vertippten Wort und allen anderen möglichen Wörtern grösser sein als der Abstand zum ursprünglichen Wort.
 
-Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \textbf{k-fehler\-korrigierenden} Kodierungen. Eine Kodierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, $\cdots$ bis und mit \textbf{k} Bits in der Nachricht als Fehler erkannt wird. Falls bis zu \textbf{k} Fehler nicht nur erkannt sondern auch behoben werden können, spricht man von \textbf{k-fehlerkorrigierenden Kodierungen}.
+Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \textbf{k-fehler\-korrigierenden} Kodierungen. Eine Kodierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, $\cdots$ bis und mit \textbf{k} Bits in der Nachricht als Fehler erkannt wird. Falls bis zu \textbf{k} Fehler nicht nur erkannt, sondern auch behoben werden können, spricht man von \textbf{k-fehlerkorrigierenden Kodierungen}.
 
 \begin{myexample}\label{ex:code-kerk}
 \cref{tab:codes} zeigt, wie eine Nachricht so kodiert werden kann, dass Fehler erkannt werden:
@@ -288,9 +294,9 @@ Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \te
 \end{itemize}
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c|c|c}
+    \begin{tabular}{cccc}
                          & \textbf{Kodierung$_1$} & \textbf{Kodierung$_2$}     & \textbf{Kodierung$_3$}                \\
-        \midrule\midrule
+        \midrule
         \textbf{Weiss}   & 00                     & 00\textcolor{orange}{0000} & 00\textcolor{orange}{00\underline{0}} \\
         \midrule
         \textbf{Gelb}    & 01                     & 01\textcolor{orange}{0101} & 01\textcolor{orange}{01\underline{1}} \\
@@ -305,8 +311,8 @@ Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \te
 
 Wie viele Fehler werden durch die unterschiedlichen Kodierungen bestimmt erkannt?
 \begin{itemize}
-    \item In der ursprünglichen Kodierungen können Fehler nicht erkannt werden. Wird beispielsweise Weiss (\texttt{00}) fälschlicherweise als \texttt{01} versandt, geht der Empfänger davon aus, dass Gelb gesandt wurde und erkennt keine Fehler.
-    \item In der zweiten Kodierung werden zwei Fehler erkannt, da es zwei \enquote{Mutationen} benötigt, um zu einem anderen Code zu werden.
+    \item In der ursprünglichen Kodierung können Fehler nicht erkannt werden. Wird beispielsweise Weiss (\texttt{00}) fälschlicherweise als \texttt{01} versandt, geht der Empfänger davon aus, dass Gelb gesandt wurde und erkennt keine Fehler.
+    \item In der zweiten Kodierung werden bis zu zwei Fehler erkannt, da es mindestens drei \enquote{Mutationen} benötigt, um zu einem anderen Code zu werden.
     \item Bei der dritten Kodierung verhält es sich ebenso wie bei der zweiten.
 \end{itemize}
 Kodierung$_2$ und Kodierung$_3$ sind also betreffend Fehlererkennung gleich gut, allerdings ist Kodierung$_3$ kürzer und daher zu bevorzugen.
@@ -465,12 +471,12 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{myexercise}
 
 \begin{myexercise}\label{ex:fehler-kodierungen}
-    Bestimmen Sie, wie viele Fehler jede der folgenden Kodierungen erkennen kann. Bestimmen sie dazu als erstes den Mindest-Abstand innerhalb jeder Kodierung:
+    Bestimmen Sie, wie viele Fehler jede der folgenden Kodierungen erkennen kann. Bestimmen Sie dazu als Erstes den Mindest-Abstand innerhalb jeder Kodierung:
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c|c|c|c}
+        \begin{tabular}{ccccc}
                              & \textbf{4-Kopien} & \textbf{Xavier} & \textbf{1-Parity} & \textbf{0-Parity} \\
-            \midrule\midrule
+            \midrule
             \textbf{Weiss}   & \texttt{00000000} & \texttt{000000} & \texttt{000}      & \texttt{001}      \\
             \midrule
             \textbf{Gelb}    & \texttt{01010101} & \texttt{011011} & \texttt{011}      & \texttt{010}      \\
@@ -639,22 +645,34 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
         \end{table}
     \end{myanswer}
     \begin{myanswer}
-        Mindest-Abstände:
+        Mindest-Abstände und Anzahl sicher erkannter Fehler (Mindest-Abstand $-\,1$):
         \begin{itemize}
-            \item 4-Kopien: 4
-            \item Xavier: 4
-            \item 1-Parity: 2
-            \item 0-Parity: 2
+            \item 4-Kopien: Mindest-Abstand 4 $\rightarrow$ bis zu 3 Fehler werden erkannt
+            \item Xavier: Mindest-Abstand 4 $\rightarrow$ bis zu 3 Fehler werden erkannt
+            \item 1-Parity: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
+            \item 0-Parity: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
         \end{itemize}
     \end{myanswer}
 \end{myexercise}
 
 \begin{mychallenge}\label{challenge:3code}
     Finden Sie eine binäre Kodierung mit 3 Code-Wörtern der Länge 5 und Mindest-Abstand 3.
+    \begin{myanswer}
+        Mehrere Lösungen sind möglich, zum Beispiel \texttt{00000}, \texttt{11100} und \texttt{10011}:
+        \begin{itemize}
+            \item \texttt{00000} und \texttt{11100}: Abstand 3
+            \item \texttt{00000} und \texttt{10011}: Abstand 3
+            \item \texttt{11100} und \texttt{10011}: Abstand 4
+        \end{itemize}
+        Der Mindest-Abstand beträgt also 3.
+    \end{myanswer}
 \end{mychallenge}
 
 \begin{mychallenge}
     Gibt es eine binäre Kodierung mit 3 Code-Wörtern der Länge 5 und Mindest-Abstand 3, welche die Code-Wörter 00000 und 11111 beinhaltet?
+    \begin{myanswer}
+        Nein. Ein drittes Code-Wort müsste von \texttt{00000} mindestens Abstand 3 haben, also mindestens drei Einsen enthalten. Gleichzeitig müsste es von \texttt{11111} mindestens Abstand 3 haben, also mindestens drei Nullen enthalten. Dafür bräuchte es mindestens $3 + 3 = 6$ Bits, ein Code-Wort hat aber nur 5 Bits.
+    \end{myanswer}
 \end{mychallenge}
 
 
@@ -663,7 +681,7 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 
 Bisher haben wir gelernt, Kodierungen für gewisse Nachrichten zu finden, so dass ein gewisser Mindestabstand gewährleistet wird. Durch einen Mindestabstand von 2 (Bits) zwischen jedem Nachrichtenpaar wird gewährleistet, dass ein Fehler bestimmt erkannt wird, da es zwei Fehler (ungewollte Bit-Änderungen) bräuchte, damit aus einem gültigen Codewort ein anderes, gültiges Codewort wird.
 
-Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \textit{korrigieren}: Bei einer einzigen Änderung eines Bits wäre das resultierende Codewort dann immer noch näher an am ursprünglichen Codewort als an allen anderen Codewörtern.
+Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \textit{korrigieren}: Bei einer einzigen Änderung eines Bits wäre das resultierende Codewort dann immer noch näher am ursprünglichen Codewort als an allen anderen Codewörtern.
 
 \begin{myexercise}\label{ex:fehlerkorrektur}
     Finden Sie für die drei Nachrichten Rot, Blau und Grün eine Kodierung aus Bitfolgen der Länge 5, die 1-fehlerkorrigierend ist.
@@ -672,8 +690,8 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c}
-            \textbf{Farbe} & \textbf{Kodierung} \\\midrule\midrule
+        \begin{tabular}{cc}
+            \textbf{Farbe} & \textbf{Kodierung} \\\midrule
             Rot            & \texttt{00000}     \\\midrule
             Grün           &                    \\\midrule
             Blau           &                    \\
@@ -684,8 +702,8 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{c|c}
-                \textbf{Farbe} & \textbf{Kodierung} \\\midrule\midrule
+            \begin{tabular}{cc}
+                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
                 Rot            & \texttt{00000}     \\\midrule
                 Grün           & \texttt{00111}     \\\midrule
                 Blau           & \texttt{11100}     \\
@@ -714,7 +732,7 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
                 \begin{tabular}{c}
                     \texttt{0 0 1 1 1}             \\
                     \texttt{\underline{1 1 1 0 0}} \\
-                    \texttt{x x 0 x x}             \\
+                    \texttt{x x o x x}             \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
             \end{tabular}
@@ -758,19 +776,24 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
 
 \begin{mychallenge}\label{challenge:4bits}
     Könnte man \cref{ex:fehlerkorrektur} auch mit nur 4 Bits lösen?
+    \begin{myanswer}
+        Nein. Wir dürfen annehmen, dass \texttt{0000} eines der Code-Wörter ist: Flippt man in allen Code-Wörtern dieselben Stellen um, bleiben alle Abstände gleich. Jedes weitere Code-Wort braucht zu \texttt{0000} mindestens Abstand 3, enthält also mindestens drei Einsen. In Frage kommen nur \texttt{0111}, \texttt{1011}, \texttt{1101}, \texttt{1110} und \texttt{1111}. Je zwei dieser Wörter haben jedoch nur Abstand 1 oder 2 zueinander, es kann also höchstens eines davon gewählt werden.
+
+        Mit 4 Bits gibt es daher höchstens 2 Code-Wörter mit Mindest-Abstand 3. Für 3 Nachrichten braucht es mindestens 5 Bits.
+    \end{myanswer}
 \end{mychallenge}
 
 
-In \cref{challenge:4bits} haben wir versucht, eine binäre Kodierung mit 4 Bits für 3 Nachrichten zu finden. Um die Aufgabe einfacher zu lösen, können wir uns ein Hilfsmittel zunutze machen. Dabei zeichnen wir alle möglichen Codes der Länge 4 auf und verbinden diejenigen Codes, welche Abstand 1 haben, miteinander (siehe \cref{fig:4d}). Wenn wir nun einen Fehler korrigieren wollen, brauchen wir mindestens einen Abstand von 3 zwischen jedem benachbarten Bitpaar.
+In \cref{challenge:4bits} haben wir versucht, eine binäre Kodierung mit 4 Bits für 3 Nachrichten zu finden. Um die Aufgabe einfacher zu lösen, können wir uns ein Hilfsmittel zunutze machen. Dabei zeichnen wir alle möglichen Codes der Länge 4 auf und verbinden diejenigen Codes, welche Abstand 1 haben, miteinander (siehe \cref{fig:4d}). Wenn wir nun einen Fehler korrigieren wollen, brauchen wir mindestens einen Abstand von 3 zwischen je zwei ausgewählten Codewörtern.
 
 \begin{mydefinition}
-Um die Anzahl möglicher 1-fehlerkorrigierender Codewörter für eine gewisse Code-Länge herauszufinden, gehen wir wie folgt vor:
+Um möglichst viele 1-fehlerkorrigierende Codewörter für eine gewisse Code-Länge zu finden, gehen wir wie folgt vor:
 \begin{enumerate}
-    \item Wähle irgendein Codewort als erstes Codewort aus, z.B., \texttt{0000}.
-    \item Streiche alle Code-Wörter, welche von allen bisher ausgewählten Codewörtern weniger als Abstand 3 entfernt sind, also alle Codewörter mit Abstand 1 oder 2.
-    \item Wiederhole Schritte 1 und 2, bis alle Codewörter entweder ausgewählt oder durchgestrichen sind.
+    \item Ein beliebiges Codewort als erstes Codewort auswählen, z.B. \texttt{0000}.
+    \item Alle Code-Wörter streichen, welche von mindestens einem der bisher ausgewählten Codewörter weniger als Abstand 3 entfernt sind, also alle Codewörter mit Abstand 1 oder 2.
+    \item Schritte 1 und 2 mit einem noch nicht gestrichenen Codewort wiederholen, bis alle Codewörter entweder ausgewählt oder durchgestrichen sind.
 \end{enumerate}
-Auf diese Weise erhalten wir eine maximale Anzahl an Codewörtern, die 1-fehlerkorrigierend sind. Diese Methode funktioniert auch für andere Code-Längen, wie z.B. 3 (\cref{fig:3d}) oder 5 (\cref{fig:5d}).
+Auf diese Weise erhalten wir eine 1-fehlerkorrigierende Kodierung, die sich nicht mehr um weitere Codewörter erweitern lässt. Je nach Wahl der Codewörter ist dies jedoch nicht unbedingt die grösstmögliche Anzahl an Codewörtern.
 
 Soll der Code nur 1-fehlererkennend und nicht 1-fehlerkorrigierend sein, reicht es aus, in Schritt 2 alle Codewörter mit Abstand 1 zu streichen.
 
@@ -963,7 +986,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 
 Bisher haben wir primär eine Art kennengelernt, wie Fehler automatisch behoben werden können. Allerdings haben wir uns bisher in allen Beispielen auf sehr wenige gültige Codewörter beschränkt. Stellen Sie sich nur schon vor, Sie möchten alle Zeichen des Alphabets schicken. Die Suche nach geeigneten Codewörtern würde schnell sehr lang und unübersichtlich, der entsprechende Hyperwürfel könnte wohl kaum auf einem A4-Blatt dargestellt werden. Daher schauen wir uns in diesem Kapitel einen anderen Ansatz an, welcher für beliebig lange Codes funktioniert. Dazu schauen wir uns zuerst einen Zaubertrick an.
 
-Dazu braucht es zwei Zauberer. Der erste Zauberer verlässt zu beginn des Spiels den Raum.
+Dazu braucht es zwei Zauberer. Der erste Zauberer verlässt zu Beginn des Spiels den Raum.
 
 Der zweite Zauberer bittet eine beliebige Person, ein $n\cdot m$-Feld von Spiel-Karten auf dem Tisch auszulegen, so dass einige Karten mit dem Kopf nach oben zeigen und andere mit dem Kopf nach unten (siehe \cref{fig:zauberer-1}).
 
@@ -1006,9 +1029,12 @@ Der erste Zauberer, welcher bisher während dem ganzen Spiel ausserhalb des Raum
 
 \begin{mychallenge}
     Können Sie erraten, welche Karte in \cref{fig:zauberer-3} umgedreht wurde, ohne die vorherigen Bilder anzuschauen?
+    \begin{myanswer}
+        Umgedreht wurde die Karte in der vierten Zeile und der dritten Spalte. Nur in dieser Zeile und in dieser Spalte liegt eine ungerade Anzahl Karten mit dem Kopf nach oben (siehe Erklärung unten).
+    \end{myanswer}
 \end{mychallenge}
 
-Um zu erraten, welche Karte umgedreht wurden, zählt der Zauberer nun, wie viele Karten mit dem Kopf nach oben in jeder Zeile und Spalte liegen.
+Um zu erraten, welche Karte umgedreht wurde, zählt der Zauberer nun, wie viele Karten mit dem Kopf nach oben in jeder Zeile und Spalte liegen.
 \begin{itemize}
     \item Zeilen: 2, 2, 4, \textbf{3}, 2
     \item Spalten: 2, 2, \textbf{3}, 4, 2
@@ -1016,7 +1042,7 @@ Um zu erraten, welche Karte umgedreht wurden, zählt der Zauberer nun, wie viele
 
 Die umgedrehte Karte muss sich also genau auf der vierten Zeile und in der dritten Spalte befinden, da nur dort eine ungerade Anzahl Karten mit dem Kopf nach oben ist!
 
-\textbf{Erklärung}: Die helfende Person hat in Schritt 3 die Karten nicht ganz \enquote{zufällig} hinzugefügt, sondern sie so arrangiert, dass die Summe der Karten mit dem Kopf nach oben in jeder Zeile und in jeder Spalte gerade war.
+\textbf{Erklärung}: Die helfende Person hat in Schritt 2 die Karten nicht ganz \enquote{zufällig} hinzugefügt, sondern sie so arrangiert, dass die Anzahl der Karten mit dem Kopf nach oben in jeder Zeile und in jeder Spalte gerade war.
 
 \begin{mydefinition}[Kartentrick]\label{def:kartentrick}
 In der Kartentrick-Kodierung werden Codewörter in eine Tabelle eingefügt, danach werden für jede Spalte und jede Zeile Kontrollbits rechts, bzw. oben angefügt.
@@ -1029,7 +1055,7 @@ Dieses Wort der Länge 6 liesse sich gut in eine $2\times3$-Tabelle eintragen:
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c|c}
+    \begin{tabular}{ccc}
         0 & 1 & 0 \\\midrule
         1 & 0 & 1 \\
     \end{tabular}
@@ -1040,8 +1066,8 @@ Dieses Wort der Länge 6 liesse sich gut in eine $2\times3$-Tabelle eintragen:
 Nun fügen wir der Tabelle die \underline{Kontrollbits} oben und rechts hinzu:
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c|c||c}
-        \underline{1} & \underline{1} & \underline{1} & \texttt{1}    \\\midrule\midrule
+    \begin{tabular}{cccc}
+        \underline{1} & \underline{1} & \underline{1} & \texttt{1}    \\\midrule
         0             & 1             & 0             & \underline{1} \\\midrule
         1             & 0             & 1             & \underline{0} \\
     \end{tabular}
@@ -1067,8 +1093,8 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
     \begin{myanswer}
         \begin{table}[H]
             \centering
-            \begin{tabular}{c|c|c|c|c}
-                \underline{0} & \underline{0} & \underline{0} & \underline{1} & \underline{1} \\ \midrule\midrule
+            \begin{tabular}{ccccc}
+                \underline{0} & \underline{0} & \underline{0} & \underline{1} & \underline{1} \\ \midrule
                 0             & 1             & 0             & 1             & \underline{0} \\ \midrule
                 1             & 1             & 1             & 0             & \underline{1} \\ \midrule
                 1             & 0             & 1             & 0             & \underline{0} \\
@@ -1076,6 +1102,34 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
             \caption{Kartentrick-Kodierung für Nachricht \texttt{010111101010}}
             \label{tab:codeword1}
         \end{table}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{ccccc}
+                \underline{0} & \underline{0} & \underline{0} & \underline{0} & \underline{0} \\ \midrule
+                0             & 0             & 0             & 0             & \underline{0} \\ \midrule
+                0             & 0             & 0             & 0             & \underline{0} \\ \midrule
+                0             & 0             & 0             & 0             & \underline{0} \\
+            \end{tabular}
+            \caption{Kartentrick-Kodierung für Nachricht \texttt{000000000000}}
+            \label{tab:codeword2}
+        \end{table}
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{ccccc}
+                \underline{0} & \underline{0} & \underline{0} & \underline{1} & \underline{1} \\ \midrule
+                1             & 1             & 1             & 1             & \underline{0} \\ \midrule
+                0             & 0             & 1             & 0             & \underline{1} \\ \midrule
+                1             & 1             & 0             & 0             & \underline{0} \\
+            \end{tabular}
+            \caption{Kartentrick-Kodierung für Nachricht \texttt{111100101100}}
+            \label{tab:codeword3}
+        \end{table}
+        Die Code-Wörter (Nachricht, dann die erste Zeile, dann die letzte Spalte ohne erstes Bit) lauten somit:
+        \begin{enumerate}
+            \item \texttt{0 1 0 1 1 1 1 0 1 0 1 0 \underline{0 0 0 1 1 0 1 0}}
+            \item \texttt{0 0 0 0 0 0 0 0 0 0 0 0 \underline{0 0 0 0 0 0 0 0}}
+            \item \texttt{1 1 1 1 0 0 1 0 1 1 0 0 \underline{0 0 0 1 1 0 1 0}}
+        \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
@@ -1092,29 +1146,36 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
         Das rot eingefärbte Bit wurde beschädigt:
         \begin{table}[H]
             \centering
-            \begin{tabular}{c!{\color{red}\vrule width 2pt}c!{\color{red}\vrule width 2pt}c!{\color{red}\vrule width 2pt}c}
-                \begin{tabular}{c|c|c||c}
-                    \underline{1} & \underline{1} & \underline{0}      & \underline{0} \\ \midrule\midrule
+            \begin{tabular}{c@{\hspace{1.5em}}c@{\hspace{1.5em}}c@{\hspace{1.5em}}c}
+                \begin{tabular}{cccc}
+                    \underline{1} & \underline{1} & \underline{0}      & \underline{0} \\ \midrule
                     0             & 1             & \textcolor{red}{0} & \underline{0} \\ \midrule
                     1             & 0             & 1                  & \underline{0} \\
                 \end{tabular}                       &
-                \begin{tabular}{c|c|c||c}
-                    \underline{1} & \underline{1} & \underline{0} & \textcolor{red}{\underline{1}} \\ \midrule\midrule
+                \begin{tabular}{cccc}
+                    \underline{1} & \underline{1} & \underline{0} & \textcolor{red}{\underline{1}} \\ \midrule
                     0             & 1             & 1             & \underline{0}                  \\ \midrule
                     1             & 0             & 1             & \underline{0}                  \\
                 \end{tabular} &
-                \begin{tabular}{c|c|c||c}
-                    \underline{1} & \underline{1}      & \underline{1} & \underline{1} \\ \midrule\midrule
+                \begin{tabular}{cccc}
+                    \underline{1} & \underline{1}      & \underline{1} & \underline{1} \\ \midrule
                     1             & \textcolor{red}{1} & 1             & \underline{0} \\ \midrule
                     0             & 1                  & 0             & \underline{1} \\
                 \end{tabular}                       &
-                \begin{tabular}{c|c|c||c}
-                    \underline{1} & \underline{1}      & \underline{1} & \underline{1} \\ \midrule\midrule
+                \begin{tabular}{cccc}
+                    \underline{1} & \underline{1}      & \underline{1} & \underline{1} \\ \midrule
                     1             & 1                  & 1             & \underline{1} \\ \midrule
                     0             & \textcolor{red}{1} & 0             & \underline{0} \\
                 \end{tabular}
             \end{tabular}
         \end{table}
+        Korrigierte Code-Wörter und ursprüngliche Nachrichten:
+        \begin{enumerate}
+            \item \texttt{0 1 \textcolor{red}{1} 1 0 1 \underline{1 1 0 0 0 0}}, Nachricht \texttt{011101}
+            \item \texttt{0 1 1 1 0 1 \underline{1 1 0 \textcolor{red}{0} 0 0}}, Nachricht \texttt{011101} (nur ein Kontrollbit war falsch)
+            \item \texttt{1 \textcolor{red}{0} 1 0 1 0 \underline{1 1 1 1 0 1}}, Nachricht \texttt{101010}
+            \item \texttt{1 1 1 0 \textcolor{red}{0} 0 \underline{1 1 1 1 1 0}}, Nachricht \texttt{111000}
+        \end{enumerate}
     \end{myanswer}
 \end{myexercise}
 
@@ -1265,7 +1326,7 @@ vom jeweiligen Kontrollbit überwacht wird.
         \draw[orange,very thick]
         (1,-9) rectangle (2,0);
 
-        % Hervorhebung der ersten Spalte
+        % Hervorhebung der neunten Spalte
         \draw[orange,very thick]
         (9,-9) rectangle (10,0);
     \end{tikzpicture}
@@ -1385,24 +1446,6 @@ Kontrollbits \(c_1,\ldots,c_5\).
                 \node at (.5,.5-\i) {\(c_{\i}\)};
             }
 
-        % Überwachungsbereiche der Nachrichtenbits
-        % Entsprechend der Tabelle auf Folie 13
-        % \foreach \col in {1,2,3,4,11,12,13} {
-        %         \node at (\col+.5,-.5) {\(\times\)};
-        %     }
-        % \foreach \col in {1,5,6,7,11,12,13,14,15} {
-        %         \node at (\col+.5,-1.5) {\(\times\)};
-        %     }
-        % \foreach \col in {2,5,8,9,11,14,16} {
-        %         \node at (\col+.5,-2.5) {\(\times\)};
-        %     }
-        % \foreach \col in {3,6,8,10,12,14,15,16} {
-        %         \node at (\col+.5,-3.5) {\(\times\)};
-        %     }
-        % \foreach \col in {4,7,9,10,13,15,16} {
-        %         \node at (\col+.5,-4.5) {\(\times\)};
-        %     }
-
         % Kontrollbits: Einheitsmatrix
         \foreach \i in {1,...,5} {
                 \pgfmathtruncatemacro{\col}{16+\i}
@@ -1455,7 +1498,6 @@ Kodierung mit fünf Kontrollbits.
             }
 
         % Überwachungsbereiche der Nachrichtenbits
-        % Entsprechend der Tabelle auf Folie 13
         \foreach \col in {1,2,3,4,11,12,13} {
                 \node at (\col+.5,-.5) {\(\times\)};
             }
@@ -1507,14 +1549,14 @@ der Einsen gerade ist.
     \[
         \texttt{\textcolor{orange}{0101} 1111 00\textcolor{orange}{10 1}011}
     \]
-    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade also \(c_1 = 0\).
+    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade, also \(c_1 = 0\).
 
 
     Das Kontrollbit \(c_2\) überwacht die Nachrichtenbits \(a_1, a_5, a_6, a_7, a_{11}, a_{12}, a_{13}, a_{14}\) und \(a_{15}\).
     \[
         \texttt{\textcolor{orange}{0}101 \textcolor{orange}{111}1 00\textcolor{orange}{10 101}1}
     \]
-    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade also \(c_2 = 0\).
+    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade, also \(c_2 = 0\).
 
     usw.
 
@@ -1894,7 +1936,7 @@ ohne Loch einer 0.
 \begin{figure}[H]
     \centering
     \includegraphics[width = 0.5\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/Fortran_punch_card_ESA.jpg}
-    \caption{Fortran Lochkarte der European Space Agency (ESA), 70er Jahre, Till Niermann, CC BY-SA 3.0, via Wikimedia Commons}
+    \caption[Fortran Lochkarte der European Space Agency (ESA), 70er Jahre]{Fortran Lochkarte der European Space Agency (ESA), 70er Jahre, Till Niermann, CC BY-SA 3.0, via \href{https://commons.wikimedia.org/wiki/File:Fortran_punch_card_ESA.jpg}{Wikimedia Commons}}
     \label{fig:lochkarte}
 \end{figure}
 
@@ -1942,11 +1984,11 @@ der Fehlerkorrektur in digitalen Informationssystemen.
 
 
     \begin{enumerate}
-        \item Alice möchte den \((15,11)\)-Hamming-Code verwenden,
+        \item Alice möchte den erweiterten \((16,11)\)-Hamming-Code verwenden,
               um die Nachricht \texttt{1011 1100 010} zu versenden.
               Wie lautet die um die Kontrollbits ergänzte Nachricht?
 
-        \item Bob erhält die mit dem \((15,11)\)-Hamming-Code
+        \item Bob erhält die mit dem erweiterten \((16,11)\)-Hamming-Code
               kodierte Nachricht \texttt{0001 1011 0010 0011}.
               Korrigieren Sie den Fehler in der Nachricht.
     \end{enumerate}
@@ -1956,7 +1998,7 @@ der Fehlerkorrektur in digitalen Informationssystemen.
         \begin{enumerate}
             \item Die von Alice versendete Nachricht lautet:
                   \[
-                      \texttt{1011 1011 1110 0001}
+                      \texttt{0111 1011 1110 0010}
                   \]
 
                   \begin{center}
@@ -1965,17 +2007,17 @@ der Fehlerkorrektur in digitalen Informationssystemen.
                               every node/.style={font=\normalsize}
                           ]
                           \foreach \row/\col/\bit in {
-                                  1/1/1, 1/2/0, 1/3/1, 1/4/1,
+                                  1/1/0, 1/2/1, 1/3/1, 1/4/1,
                                   2/1/1, 2/2/0, 2/3/1, 2/4/1,
                                   3/1/1, 3/2/1, 3/3/1, 3/4/0,
-                                  4/1/0, 4/2/0, 4/3/0, 4/4/1
+                                  4/1/0, 4/2/0, 4/3/1, 4/4/0
                               } {
                                   \node at (\col-.5,4.5-\row) {\bit};
                               }
 
                           % Kontrollbits rot hervorheben
                           \foreach \col/\row/\bit in {
-                                  1/1/1, 2/1/0, 3/1/1,
+                                  1/1/0, 2/1/1, 3/1/1,
                                   1/2/1, 1/3/1
                               } {
                                   \node[red,fill=white,inner sep=1pt]
@@ -1987,7 +2029,8 @@ der Fehlerkorrektur in digitalen Informationssystemen.
                   \end{center}
 
             \item Die von Bob erhaltene Nachricht enthält einen
-                  Fehler an der Position 14. Das entsprechende Bit
+                  Fehler an der Position 13 (Positionen ab 0 gezählt,
+                  also beim 14.\ Bit). Das entsprechende Bit
                   muss von 0 auf 1 korrigiert werden.
 
                   \begin{center}
@@ -2004,14 +2047,15 @@ der Fehlerkorrektur in digitalen Informationssystemen.
                                   \node at (\col-.5,4.5-\row) {\bit};
                               }
                           % Kontrollbits rot hervorheben
-                          \foreach \col/\row in {
-                                  1/1, 2/1, 3/1, 1/2, 1/3
+                          \foreach \col/\row/\bit in {
+                                  1/1/0, 2/1/0, 3/1/0,
+                                  1/2/1, 1/3/0
                               } {
                                   \node[red,fill=white,inner sep=1pt]
-                                  at (\col-.5,4.5-\row) {0};
+                                  at (\col-.5,4.5-\row) {\bit};
                               }
 
-                          % Fehlerkorrektur an Position 14
+                          % Fehlerkorrektur an Position 13
                           \node[fill=white,inner sep=1pt]
                           at (1.5,.5)
                           {\(\cancel{0}\rightarrow 1\)};
@@ -2025,26 +2069,26 @@ der Fehlerkorrektur in digitalen Informationssystemen.
 
 \end{myexercise}
 
-\section{Der XOR-Operator}
+\section{Der \glsentryshort{XOR}-Operator}
 
-Um das Paritätsbit zweier binären Codes zu berechnen wird der \textbf{XOR-Operator} (\enquote{Exklusives Oder}, $\oplus$) verwendet. Die Addition modulo 2 zweier Bits (XOR) ist definiert in \cref{tab:mod2}.
+Um das Paritätsbit zweier binärer Codes zu berechnen, wird der \textbf{\acrshort{XOR}-Operator} (\enquote{Exklusives Oder}, $\oplus$) verwendet. Die Addition modulo 2 zweier Bits (\acrshort{XOR}) ist definiert in \cref{tab:mod2}.
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{c|c||c}
-        A & B & A $\oplus$ B \\\midrule\midrule
+    \begin{tabular}{ccc}
+        A & B & A $\oplus$ B \\\midrule
         0 & 0 & 0            \\\midrule
         0 & 1 & 1            \\\midrule
         1 & 0 & 1            \\\midrule
         1 & 1 & 0            \\
     \end{tabular}
-    \caption{XOR (Addition modulo 2) für alle 4 möglichen Bit-Kombinationen}
+    \caption{\glsentryshort{XOR} (Addition modulo 2) für alle 4 möglichen Bit-Kombinationen}
     \label{tab:mod2}
 \end{table}
 
-Das Ergebnis ist also genau dann 1, wenn genau eines der beiden Eingangsbits gleich 1 ist. XOR wird auch \enquote{Addition modulo 2} genannt, da das Resultat einer XOR-Operation immer genau der Summe beider Bits modulo 2 entspricht.
+Das Ergebnis ist also genau dann 1, wenn genau eines der beiden Eingangsbits gleich 1 ist. \acrshort{XOR} wird auch \enquote{Addition modulo 2} genannt, da das Resultat einer \acrshort{XOR}-Operation immer genau der Summe beider Bits modulo 2 entspricht.
 
-XOR kann nicht nur auf einzelne Bits, sondern auch auf mehrere Bitfolgen angewendet werden. Dabei wird jedes Bit der Folge 1 mit dem Bit der Folge 2 an derselben Stelle verglichen. Das Resultat einer XOR-Operation wird Parität ($P$) genannt.
+\acrshort{XOR} kann nicht nur auf einzelne Bits, sondern auch auf mehrere Bitfolgen angewendet werden. Dabei wird jedes Bit der Folge 1 mit dem Bit der Folge 2 an derselben Stelle verglichen. Das Resultat einer \acrshort{XOR}-Operation wird Parität ($P$) genannt.
 
 
 \begin{myexample}
@@ -2054,7 +2098,7 @@ Gegeben seien drei Datenblöcke:
     D_1 = 1011_2, \quad D_2 = 1100_2, \quad D_3 = 0110_2
 \]
 
-Die Parität \( P \) wird durch XOR-Verknüpfung berechnet:
+Die Parität \( P \) wird durch \acrshort{XOR}-Verknüpfung berechnet:
 
 \[
     P = D_1 \oplus D_2 \oplus D_3
@@ -2070,7 +2114,7 @@ Wir berechnen schrittweise:
     P = 0111_2 \oplus 0110_2 = 0001_2
 \]
 
-Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte aus, kann der fehlende Wert durch Umstellen der XOR-Operation wiederhergestellt werden.
+Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte aus, kann der fehlende Wert durch Umstellen der \acrshort{XOR}-Operation wiederhergestellt werden.
 \end{myexample}
 
 
@@ -2084,17 +2128,17 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
     Berechnen Sie \( A \oplus B \).
 
     \begin{myanswer}
-        Die Berechnung des XOR-Operators erfolgt bitweise:
+        Die Berechnung des \acrshort{XOR}-Operators erfolgt bitweise:
 
         \[
             A \oplus B = 1101_2 \oplus 1010_2
         \]
 
-        Wir berechnen XOR für jedes Bitpaar:
+        Wir berechnen \acrshort{XOR} für jedes Bitpaar:
 
         \[
-            \begin{array}{c|c|c}
-                A & B & A \oplus B \\\midrule\midrule
+            \begin{array}{ccc}
+                A & B & A \oplus B \\\midrule
                 1 & 1 & 0          \\
                 1 & 0 & 1          \\
                 0 & 1 & 1          \\
@@ -2109,7 +2153,7 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
         \]
 
         \textbf{Erklärung}:
-        Der XOR-Operator liefert 1, wenn die Eingangsbits unterschiedlich sind, und 0, wenn sie gleich sind. Da \( A \) und \( B \) an den Positionen 2, 3 und 4 unterschiedlich sind, stehen dort Einsen im Ergebnis.
+        Der \acrshort{XOR}-Operator liefert 1, wenn die Eingangsbits unterschiedlich sind, und 0, wenn sie gleich sind. Da \( A \) und \( B \) an den Positionen 2, 3 und 4 unterschiedlich sind, stehen dort Einsen im Ergebnis.
 
     \end{myanswer}
 \end{myexercise}
@@ -2125,7 +2169,7 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
     Berechnen Sie \( A \oplus B \oplus C \oplus D \).
 
     \begin{myanswer}
-        Die XOR-Berechnung erfolgt schrittweise:
+        Die \acrshort{XOR}-Berechnung erfolgt schrittweise:
 
         \[
             A \oplus B = 1011_2 \oplus 1100_2
@@ -2134,8 +2178,8 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
         Bitweise Berechnung:
 
         \[
-            \begin{array}{c|c|c}
-                A & B & A \oplus B \\\midrule\midrule
+            \begin{array}{ccc}
+                A & B & A \oplus B \\\midrule
                 1 & 1 & 0          \\
                 0 & 1 & 1          \\
                 1 & 0 & 1          \\
@@ -2149,24 +2193,24 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
             A \oplus B = 0111_2
         \]
 
-        Nun XOR mit \( C \):
+        Nun \acrshort{XOR} mit \( C \):
 
         \[
             0111_2 \oplus 0110_2
         \]
 
         \[
-            0111_2 \oplus 0110_2 = 0001_2 \\
+            0111_2 \oplus 0110_2 = 0001_2
         \]
 
-        Danach XOR mit \( D \):
+        Danach \acrshort{XOR} mit \( D \):
 
         \[
             0001_2 \oplus 1001_2
         \]
 
         \[
-            0001_2 \oplus  1001_2 = 1000_2 \\
+            0001_2 \oplus 1001_2 = 1000_2
         \]
 
         Das Endergebnis lautet:
@@ -2179,16 +2223,16 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
 \end{myexercise}
 
 
-\section{RAID}
+\section{\glsentryshort{RAID}}
 
-\gls{RAID} ist eine spannende Technologie, um die Funktionsweise von Paritätsbits in der Praxis zu Illustrieren. \gls{RAID} ist ein Standard zur Organisation mehrerer Festplatten zu einem sogenannten logischen Laufwerk. Dabei werden meherere physische Festplatten zu einer \enquote{virtuellen} Festplatte zusammengefasst. Ziel ist es, die Datensicherheit, die Ausfallsicherheit und/oder die Lese- und Schreib-Leistung zu verbessern. RAID wird häufig in Servern und Speichersystemen eingesetzt, um Redundanz zu gewährleisten oder die Geschwindigkeit von Speicherzugriffen zu erhöhen.
+\gls{RAID} ist eine spannende Technologie, um die Funktionsweise von Paritätsbits in der Praxis zu illustrieren. \gls{RAID} ist ein Standard zur Organisation mehrerer Festplatten zu einem sogenannten logischen Laufwerk. Dabei werden mehrere physische Festplatten zu einer \enquote{virtuellen} Festplatte zusammengefasst. Ziel ist es, die Datensicherheit, die Ausfallsicherheit und/oder die Lese- und Schreib-Leistung zu verbessern. \gls{RAID} wird häufig in Servern und Speichersystemen eingesetzt, um Redundanz zu gewährleisten oder die Geschwindigkeit von Speicherzugriffen zu erhöhen.
 
-Im Kontext der fehlerkorrigierenden und fehlererkennenden Kodierung spielt RAID eine wichtige Rolle. Während RAID 0 sich auf Performance ohne Redundanz konzentriert, nutzen andere RAID-Level, insbesondere RAID 5 und RAID 6, Paritätsdaten zur Fehlerkorrektur. Im folgenden schauen wir uns nur diejenigen RAID-Typen an, welche heute am weitesten verbreitet sind.
+Im Kontext der fehlerkorrigierenden und fehlererkennenden Kodierung spielt \gls{RAID} eine wichtige Rolle. Während \gls{RAID} 0 sich auf Performance ohne Redundanz konzentriert, nutzen andere \acrshort{RAID}-Level, insbesondere \gls{RAID} 5 und \gls{RAID} 6, Paritätsdaten zur Fehlerkorrektur. Im Folgenden schauen wir uns nur diejenigen \acrshort{RAID}-Typen an, welche heute am weitesten verbreitet sind.
 
 
 
-\subsection{RAID 0: Striping}
-RAID 0 verteilt Daten in Blöcken auf mehrere Festplatten (\textit{striping}), um die Lese- und Schreibgeschwindigkeit zu erhöhen. Dabei gibt es keine Redundanz, sodass der Ausfall einer einzigen Festplatte zu einem vollständigen Datenverlust führt.
+\subsection{\glsentryshort{RAID} 0: Striping}
+\gls{RAID} 0 verteilt Daten in Blöcken auf mehrere Festplatten (\textit{striping}), um die Lese- und Schreibgeschwindigkeit zu erhöhen. Dabei gibt es keine Redundanz, sodass der Ausfall einer einzigen Festplatte zu einem vollständigen Datenverlust führt.
 
 \begin{itemize}
     \item Vorteil: Sehr hohe Geschwindigkeit bei Lese- und Schreiboperationen.
@@ -2198,12 +2242,12 @@ RAID 0 verteilt Daten in Blöcken auf mehrere Festplatten (\textit{striping}), u
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_0}
-    \caption{RAID-0-Architektur mit zwei physischen Festplatten}
+    \caption[\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_0.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
     \label{fig:raid0}
 \end{figure}
 
 \begin{myexercise}
-    Ein System verwendet RAID 0 mit zwei Festplatten, wobei die Daten in 4-Byte-Blöcken verteilt werden. Gegeben ist die folgende Datei:
+    Ein System verwendet \gls{RAID} 0 mit zwei Festplatten, wobei die Daten in 4-Byte-Blöcken verteilt werden. Gegeben ist die folgende Datei:
 
     \begin{verbatim}
 ABCDEFGH
@@ -2212,19 +2256,19 @@ ABCDEFGH
     Wie werden die Daten auf den beiden Festplatten gespeichert?
 
     \begin{myanswer}
-        RAID 0 nutzt Striping ohne Redundanz. Die Daten werden abwechselnd auf die beiden Festplatten geschrieben:
+        \gls{RAID} 0 nutzt Striping ohne Redundanz. Die Daten werden in Blöcken zu je 4 Byte abwechselnd auf die beiden Festplatten geschrieben:
 
         \begin{verbatim}
-Festplatte 1: A C E G
-Festplatte 2: B D F H
+Festplatte 1: ABCD
+Festplatte 2: EFGH
 \end{verbatim}
 
         Dieses Verfahren erhöht die Geschwindigkeit, bietet jedoch keine Ausfallsicherheit.
     \end{myanswer}
 \end{myexercise}
 
-\subsection{RAID 1: Mirroring}
-RAID 1 speichert identische Kopien der Daten auf zwei Festplatten (\textit{mirroring}). Fällt eine Festplatte aus, können die Daten von der zweiten Festplatte wiederhergestellt werden.
+\subsection{\glsentryshort{RAID} 1: Mirroring}
+\gls{RAID} 1 speichert identische Kopien der Daten auf zwei Festplatten (\textit{mirroring}). Fällt eine Festplatte aus, können die Daten von der zweiten Festplatte wiederhergestellt werden.
 
 \begin{itemize}
     \item Vorteil: Sehr hohe Datensicherheit, da jede Information doppelt gespeichert wird.
@@ -2234,49 +2278,49 @@ RAID 1 speichert identische Kopien der Daten auf zwei Festplatten (\textit{mirro
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_1}
-    \caption{RAID-1-Architektur mit zwei physischen Festplatten}
+    \caption[\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_1.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
     \label{fig:raid1}
 \end{figure}
 
-Absicherung gegen Datenverlust kann mit lediglich 2 Festplatten nicht Speicherplatz-effizienter als mit RAID 1 erfolgen, d.h., ein Verlust von 50\% des physischen Speicherplatzes muss in Kauf genommen werden. Effizientere Lösungen bieten sich an, wenn weitere Speicherplatten vorhanden sind. Selbstverständlich kann RAID 1 auch mit 4, 6, 8 oder mehr Festplatten umgesetzt werden.
+Absicherung gegen Datenverlust kann mit lediglich 2 Festplatten nicht Speicherplatz-effizienter als mit \gls{RAID} 1 erfolgen, d.h., ein Verlust von 50\% des physischen Speicherplatzes muss in Kauf genommen werden. Effizientere Lösungen bieten sich an, wenn weitere Speicherplatten vorhanden sind. Selbstverständlich kann \gls{RAID} 1 auch mit 4, 6, 8 oder mehr Festplatten umgesetzt werden. Dabei bilden jeweils zwei Festplatten ein Spiegelpaar: Nutzbar bleibt die Hälfte der Gesamtkapazität, und pro Spiegelpaar darf eine Festplatte ausfallen. Fallen beide Festplatten desselben Paars aus, gehen Daten verloren.
 
 \begin{myexercise}
-    Ein Server verwendet RAID 1 mit zwei Festplatten. Was passiert, wenn eine der beiden Festplatten ausfällt? Kann das System weiterhin genutzt werden?
+    Ein Server verwendet \gls{RAID} 1 mit zwei Festplatten. Was passiert, wenn eine der beiden Festplatten ausfällt? Kann das System weiterhin genutzt werden?
 
     \begin{myanswer}
-        RAID 1 speichert eine vollständige Kopie aller Daten auf beiden Festplatten (Mirroring). Wenn eine Festplatte ausfällt, kann das System weiterhin auf die zweite Festplatte zugreifen, sodass keine Daten verloren gehen. Die ausgefallene Festplatte sollte jedoch ersetzt werden, um die Redundanz wiederherzustellen.
+        \gls{RAID} 1 speichert eine vollständige Kopie aller Daten auf beiden Festplatten (Mirroring). Wenn eine Festplatte ausfällt, kann das System weiterhin auf die zweite Festplatte zugreifen, sodass keine Daten verloren gehen. Die ausgefallene Festplatte sollte jedoch ersetzt werden, um die Redundanz wiederherzustellen.
     \end{myanswer}
 \end{myexercise}
 
-\subsection{RAID 4: Paritätsbits}
-RAID 4, 5 und 6 nutzen für die Datensicherheit statt \textit{mirroring} (Spiegelung der Daten) einen effizienteren Ansatz, um Daten über mehrere Laufwerke zu verteilen, indem sie Paritätsbits verwenden. Dabei verwendet RAID 5 ein einzelnes Paritätsbit, welches es über verschiedene Festplatten verteilt, so dass jeder \enquote{Striping-Block} $A_1A_2A_3\cdots$ über genau ein Paritätsbit $A_p$ verfügt (\cref{fig:raid5}).
+\subsection{\glsentryshort{RAID} 4: Paritätsbits}
+\gls{RAID} 4, 5 und 6 nutzen für die Datensicherheit statt \textit{mirroring} (Spiegelung der Daten) einen effizienteren Ansatz, um Daten über mehrere Laufwerke zu verteilen, indem sie Paritätsbits verwenden. Bei \gls{RAID} 4 werden die Daten wie bei \gls{RAID} 0 blockweise auf mehrere Festplatten verteilt. Zusätzlich gibt es eine eigene Paritäts-Festplatte, die für jeden \enquote{Striping-Block} $A_1A_2A_3\cdots$ genau ein Paritätsbit $A_p$ speichert (\cref{fig:raid4}).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.45\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_4}
-    \caption{RAID-4-Architektur mit vier physischen Festplatten und einem Paritätsbit}
+    \caption[\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten und einem Paritätsbit]{\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten und einem Paritätsbit (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_4.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
     \label{fig:raid4}
 \end{figure}
 
-\subsection{RAID 5: Verteilte Paritätsbits}
-Da das Paritätsbit bei jedem Schreibvorgang neu geschrieben werden muss (auch bei kleinen Dateien), wird bei RAID-4 die Paritäts-Festplatte übermässig stark beansprucht. Daher werden die Paritätsbits bei RAID-5 im Gegenteil zu RAID-4 auf alle Festplatten verteilt. Ansonsten funktioniert RAID-5 identisch wie RAID-4 (siehe \cref{fig:raid5}).
+\subsection{\glsentryshort{RAID} 5: Verteilte Paritätsbits}
+Da das Paritätsbit bei jedem Schreibvorgang neu geschrieben werden muss (auch bei kleinen Dateien), wird bei \gls{RAID} 4 die Paritäts-Festplatte übermässig stark beansprucht. Daher werden die Paritätsbits bei \gls{RAID} 5 im Gegensatz zu \gls{RAID} 4 auf alle Festplatten verteilt. Ansonsten funktioniert \gls{RAID} 5 identisch wie \gls{RAID} 4 (siehe \cref{fig:raid5}).
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.45\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5}
-    \caption{RAID-5-Architektur mit vier physischen Festplatten und einem \textit{verteilten} Paritätsbit}
+    \caption[\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und einem \textit{verteilten} Paritätsbit]{\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und einem \textit{verteilten} Paritätsbit (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_5.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
     \label{fig:raid5}
 \end{figure}
 
 
-Falls nun eine Festplatte ausfällt, können die verlorengegangenen Daten einfach rekonstruiert werden, indem das \textit{parity bit} über die verbliebenen Datenblöcke erneut berechnet wird. Somit ist ein Speicher-System bei RAID 5 gegen den Ausfall einer Festplatte gesichert.
+Falls nun eine Festplatte ausfällt, können die verlorengegangenen Daten einfach rekonstruiert werden, indem das \textit{parity bit} über die verbliebenen Datenblöcke erneut berechnet wird. Somit ist ein Speicher-System bei \gls{RAID} 5 gegen den Ausfall einer Festplatte gesichert.
 
-Bei RAID 5 ist das Paritätsbit für jeden Block auf einer anderen Festplatte gespeichert, wodurch die Performance beim Schreiben von Daten erhöht wird, da die Schreib-Last so auf alle Festplatten gleichmässig verteilt werden kann.
+Bei \gls{RAID} 5 ist das Paritätsbit für jeden Block auf einer anderen Festplatte gespeichert, wodurch die Performance beim Schreiben von Daten erhöht wird, da die Schreib-Last so auf alle Festplatten gleichmässig verteilt werden kann.
 
 Im Folgenden wird aufgezeigt, wie diese berechnet werden.
 
-RAID 5 verteilt die Paritätsinformationen über alle Festplatten. Die Berechnung erfolgt mit einer XOR-Operation. Beispiel mit vier Datenblöcken $D_1, D_2, D_3, D_4$:
+\gls{RAID} 5 verteilt die Paritätsinformationen über alle Festplatten. Die Berechnung erfolgt mit einer \acrshort{XOR}-Operation. Beispiel mit vier Datenblöcken $D_1, D_2, D_3, D_4$:
 
 \begin{equation}
     P = D_1 \oplus D_2 \oplus D_3 \oplus D_4
@@ -2298,20 +2342,20 @@ Die Paritätsberechnung ergibt:
 \end{align*}
 \end{myexample}
 
-Falls ein Datenblock ausfällt, kann er durch Umstellen der XOR-Operation rekonstruiert werden.
+Falls ein Datenblock ausfällt, kann er durch Umstellen der \acrshort{XOR}-Operation rekonstruiert werden.
 
 \begin{myexercise}
-    Ein RAID-5-System besteht aus drei Festplatten. Die gespeicherten Datenblöcke lauten:
+    Ein \acrshort{RAID}-5-System besteht aus drei Festplatten. Die gespeicherten Datenblöcke lauten:
 
     \begin{align*}
         D_1 & = 1011_2 \\
         D_2 & = 1100_2
     \end{align*}
 
-    Berechne das Paritätsbit $P$ für RAID 5.
+    Berechnen Sie das Paritätsbit $P$ für \gls{RAID} 5.
 
     \begin{myanswer}
-        Das Paritätsbit wird durch die XOR-Operation berechnet:
+        Das Paritätsbit wird durch die \acrshort{XOR}-Operation berechnet:
 
         \begin{align*}
             P & = D_1 \oplus D_2       \\
@@ -2325,27 +2369,27 @@ Falls ein Datenblock ausfällt, kann er durch Umstellen der XOR-Operation rekons
 
 Je mehr Festplatten verfügbar sind, desto mehr Speicherplatz ist prozentual für die Speicherung von Daten verfügbar. Da immer eine Festplatte für die Datensicherheit verwendet wird, stehen bei 3 Festplatten 2 für die Speicherung von Daten zur Verfügung, bei 4 Festplatten 3, bei 5 Festplatten 4 usw.
 
-\subsection{RAID 6: Zwei Paritätsbits}
+\subsection{\glsentryshort{RAID} 6: Zwei Paritätsbits}
 
-Bei RAID-6 werden sogar zwei Paritätsbits verwendet, womit diese Konfiguration Schutz von zwei Festplatten-Ausfällen bietet (\cref{fig:raid6}). Dadurch fallen jedoch auch zwei Festplatten als mögliche Speichermedien weg, da diese für die Datensicherheit benötigt werden.
+Bei \gls{RAID} 6 werden sogar zwei Paritätsbits verwendet, womit diese Konfiguration Schutz vor zwei Festplatten-Ausfällen bietet (\cref{fig:raid6}). Dadurch fallen jedoch auch zwei Festplatten als mögliche Speichermedien weg, da diese für die Datensicherheit benötigt werden.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_6}
-    \caption{RAID 5-Architektur mit fünf physischen Festplatten und zwei Paritätsbits}
+    \caption[\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsbits]{\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsbits (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_6.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
     \label{fig:raid6}
 \end{figure}
 
-RAID 6 verwendet zwei Paritätswerte: eine XOR-basierte Parität ($P$) wie in RAID 5 und eine zweite Parität $Q$, die durch eine Galois-Feld-Multiplikation berechnet wird. Für Beispiele einer Berechnung des zweiten Paritätsbits sei auf die Webseite von \href{https://blogs.oracle.com/solaris/post/understanding-raid-6-with-junior-high-math}{Oracle} hingewiesen.
+\gls{RAID} 6 verwendet zwei Paritätswerte: eine \acrshort{XOR}-basierte Parität ($P$) wie in \gls{RAID} 5 und eine zweite Parität $Q$, die durch eine Galois-Feld-Multiplikation berechnet wird. Für Beispiele einer Berechnung des zweiten Paritätsbits sei auf die Webseite von \href{https://blogs.oracle.com/solaris/post/understanding-raid-6-with-junior-high-math}{Oracle} hingewiesen.
 
 \begin{myexercise}
-    Marina gründet eine IT-Firma und kauft sich 8 Festplatten für die Speicherung ihrer Daten. Da sie viele Daten hat, möchte sie möglichst viel nutzbaren Speicherplatz haben, gleichzeitig möchte sie gegen den Ausfall von \textit{einer} Festplatte geschützt sein. Welche RAID-Konfiguration empfehlen Sie Marina (0, 1, 5 oder 6)? Begründen Sie Ihre Antwort.
+    Marina gründet eine IT-Firma und kauft sich 8 Festplatten für die Speicherung ihrer Daten. Da sie viele Daten hat, möchte sie möglichst viel nutzbaren Speicherplatz haben, gleichzeitig möchte sie gegen den Ausfall von \textit{einer} Festplatte geschützt sein. Welche \acrshort{RAID}-Konfiguration empfehlen Sie Marina (0, 1, 5 oder 6)? Begründen Sie Ihre Antwort.
     \begin{myanswer}
         \begin{itemize}
-            \item \textbf{Empfohlen: RAID 5} -- Maximiert Speicherplatz, schützt vor \textbf{1 Festplatten-Ausfall}.
+            \item \textbf{Empfohlen: \gls{RAID} 5} -- Maximiert Speicherplatz, schützt vor \textbf{1 Festplatten-Ausfall}.
             \item \textbf{Speicherausnutzung:} 7 von 8 Platten für Daten, 1 für Parität.
             \item \textbf{Performance:} Gutes \textbf{Lesen}, etwas langsameres \textbf{Schreiben} (Paritätsberechnung).
-            \item \textbf{Alternative: RAID 6} -- Mehr Sicherheit (\textbf{2 Plattenausfälle möglich}), aber weniger Speicher (6 nutzbar).
+            \item \textbf{Alternative: \gls{RAID} 6} -- Mehr Sicherheit (\textbf{2 Plattenausfälle möglich}), aber weniger Speicher (6 nutzbar).
         \end{itemize}
     \end{myanswer}
 
@@ -2353,48 +2397,48 @@ RAID 6 verwendet zwei Paritätswerte: eine XOR-basierte Parität ($P$) wie in RA
 \end{myexercise}
 
 \begin{myexercise}
-    Lara möchte ihre schönsten Fotos sichern und hat sich dazu zwei Festplatten gekauft. Da ihre Fotos für sie wichtig sind, möchte sie sich gegen den Ausfall einer Festplatte schützen und entscheidet sich daher für eine RAID-1-Konfiguration.
+    Lara möchte ihre schönsten Fotos sichern und hat sich dazu zwei Festplatten gekauft. Da ihre Fotos für sie wichtig sind, möchte sie sich gegen den Ausfall einer Festplatte schützen und entscheidet sich daher für eine \acrshort{RAID}-1-Konfiguration.
 
     \begin{itemize}
         \item Weshalb kann Lara selbst dann, wenn sie sich zwei gleich grosse Festplatten kauft, nur maximal die Hälfte des Speicherplatzes für sich nutzen?
-        \item Welche alternative RAID-Konfiguration könnte Lara in Betracht ziehen, um mehr Speicherplatz zu erhalten? Was wären Nachteile davon?
-        \item Welche RAID-Alternative gäbe es für Lara, um sowohl mehr Speicher als auch Redundanz zu gewährleisten?
+        \item Welche alternative \acrshort{RAID}-Konfiguration könnte Lara in Betracht ziehen, um mehr Speicherplatz zu erhalten? Was wären Nachteile davon?
+        \item Welche \acrshort{RAID}-Alternative gäbe es für Lara, um sowohl mehr Speicher als auch Redundanz zu gewährleisten?
     \end{itemize}
 
 
     \begin{myanswer}
         \begin{itemize}
-            \item \textbf{RAID 1}: Speicherhalbierung, da alle Daten gespiegelt werden (\textbf{mirroring}, redundante Kopie).
-            \item \textbf{Alternative}: RAID 0 (\textbf{striping}) $\rightarrow$ \textbf{doppelter Speicherplatz}, aber \textbf{kein Schutz} bei Festplattenausfall.
-            \item \textbf{Kompromiss}: RAID 5 (mind. 3 Platten) $\rightarrow$ \textbf{mehr Speicher} als RAID 1, aber trotzdem \textbf{Redundanz}.
+            \item \textbf{\gls{RAID} 1}: Speicherhalbierung, da alle Daten gespiegelt werden (\textbf{mirroring}, redundante Kopie).
+            \item \textbf{Alternative}: \gls{RAID} 0 (\textbf{striping}) $\rightarrow$ \textbf{doppelter Speicherplatz}, aber \textbf{kein Schutz} bei Festplattenausfall.
+            \item \textbf{Kompromiss}: \gls{RAID} 5 (mind. 3 Platten) $\rightarrow$ \textbf{mehr Speicher} als \gls{RAID} 1, aber trotzdem \textbf{Redundanz}.
         \end{itemize}
     \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-    Bestimmen Sie für den Fall, dass sie 6 Festplatten gleicher Grösse besitzen, den verfügbaren Speicherplatz für die Konfigurationen RAID 0, RAID 1, RAID 4, RAID 5 und RAID 6. Geben Sie den verfügbaren Speicherplatz als Bruch an (z.B. 3/6). Geben Sie zudem die Ausfallsicherheit an (wie viele Festplatten können \textit{im schlimmsten Fall} ausfallen ohne Datenverlust?).
-    
+    Bestimmen Sie für den Fall, dass Sie 6 Festplatten gleicher Grösse besitzen, den verfügbaren Speicherplatz für die Konfigurationen \gls{RAID} 0, \gls{RAID} 1, \gls{RAID} 4, \gls{RAID} 5 und \gls{RAID} 6. Geben Sie den verfügbaren Speicherplatz als Bruch an (z.B. 3/6). Geben Sie zudem die Ausfallsicherheit an (wie viele Festplatten können \textit{im schlimmsten Fall} ausfallen ohne Datenverlust?).
+
     \begin{table}[H]
         \centering
-        \begin{tabular}{c||c|c}
-            \textbf{Konfiguration} & \textbf{Verfügbare Festplatten} & \textbf{Ausfallsicherheit} \\\midrule\midrule
-            \textbf{RAID 0}        &                                 &                            \\[1cm]\midrule
-            \textbf{RAID 1}        &                                 &                            \\[1cm]\midrule
-            \textbf{RAID 4}        &                                 &                            \\[1cm]\midrule
-            \textbf{RAID 5}        &                                 &                            \\[1cm]\midrule
-            \textbf{RAID 6}        &                                 &                            \\[1cm]
+        \begin{tabular}{ccc}
+            \textbf{Konfiguration} & \textbf{Verfügbare Festplatten} & \textbf{Ausfallsicherheit} \\\midrule
+            \textbf{\gls{RAID} 0}  &                                 &                            \\[1cm]\midrule
+            \textbf{\gls{RAID} 1}  &                                 &                            \\[1cm]\midrule
+            \textbf{\gls{RAID} 4}  &                                 &                            \\[1cm]\midrule
+            \textbf{\gls{RAID} 5}  &                                 &                            \\[1cm]\midrule
+            \textbf{\gls{RAID} 6}  &                                 &                            \\[1cm]
         \end{tabular}
     \end{table}
     \begin{myanswer}
         \begin{table}[H]
             \centering
-            \begin{tabular}{c||c|c}
-                \textbf{Konfiguration} & \textbf{Verfügbare Festplatten} & \textbf{Ausfallsicherheit} \\\midrule\midrule
-                \textbf{RAID 0}        & 6/6                             & 0                          \\\midrule
-                \textbf{RAID 1}        & 3/6                             & 1                          \\\midrule
-                \textbf{RAID 4}        & 5/6                             & 1                          \\\midrule
-                \textbf{RAID 5}        & 5/6                             & 1                          \\\midrule
-                \textbf{RAID 6}        & 4/6                             & 2                          \\
+            \begin{tabular}{ccc}
+                \textbf{Konfiguration} & \textbf{Verfügbare Festplatten} & \textbf{Ausfallsicherheit} \\\midrule
+                \textbf{\gls{RAID} 0}  & 6/6                             & 0                          \\\midrule
+                \textbf{\gls{RAID} 1}  & 3/6                             & 1                          \\\midrule
+                \textbf{\gls{RAID} 4}  & 5/6                             & 1                          \\\midrule
+                \textbf{\gls{RAID} 5}  & 5/6                             & 1                          \\\midrule
+                \textbf{\gls{RAID} 6}  & 4/6                             & 2                          \\
             \end{tabular}
         \end{table}
     \end{myanswer}

@@ -93,13 +93,13 @@
 
 % Macro to cross out a single node
 \newcommand{\CrossOutNode}[1]{%
-  \draw[red, thick] 
-    ($(#1) + (-0.3, 0.3)$) 
-    -- 
+  \draw[red, thick]
+    ($(#1) + (-0.3, 0.3)$)
+    --
     ($(#1) + (0.3, -0.3)$);
-  \draw[red, thick] 
-    ($(#1) + (-0.3, -0.3)$) 
-    -- 
+  \draw[red, thick]
+    ($(#1) + (-0.3, -0.3)$)
+    --
     ($(#1) + (0.3, 0.3)$);
 }
 
@@ -111,13 +111,13 @@
 }
 % Macro to draw a circle around a single node
 \newcommand{\CircleNode}[2][RoyalBlue]{%
-  \draw[#1, thick] 
-    ($(#2)$) 
+  \draw[#1, thick]
+    ($(#2)$)
     circle (0.5);
 }
 
 % Macro to circle a list of nodes
-\newcommand{\CircleNodes}[2][blue]{%
+\newcommand{\CircleNodes}[2][RoyalBlue]{%
   \foreach \n in {#2} {%
     \CircleNode[#1]{\n}%
   }

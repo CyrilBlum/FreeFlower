@@ -23,7 +23,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
 \frame{\titlepage}
 
@@ -43,7 +43,7 @@
         \hfill
         \begin{subfigure}{0.32\textwidth}
             \includegraphics[width=\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/intro-hobbies.jpg}
-            \caption*{Hobbies}
+            \caption*{Hobbys}
         \end{subfigure}
         \hfill
         \begin{subfigure}{0.32\textwidth}
@@ -55,7 +55,7 @@
 
 \begin{frame}{Verkehrsschilder}
     \begin{center}
-        \includegraphics[width=\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/traffic-signs.png}
+        \includegraphics[height=.88\textheight]{Grundlagen_Info/05_Datenintegritaet/Figures/traffic-signs.png}
     \end{center}
 \end{frame}
 
@@ -64,10 +64,10 @@
         \item Laute $\rightarrow$ A, B, C, \ldots{} (26 Zeichen)
         \item A $\rightarrow$ 1000001, B $\rightarrow$ 1000010, C $\rightarrow$ 1000011
               \begin{itemize}
-                  \item ASCII
+                  \item \gls{ASCII}
                   \item Vorteil: Benötigt ein Alphabet aus nur zwei Zeichen
               \end{itemize}
-        \item A $\rightarrow$ 01, B $\rightarrow$ 101, C $\rightarrow$ 011 \ldots
+        \item A $\rightarrow$ 0, B $\rightarrow$ 10, C $\rightarrow$ 110 \ldots
               \begin{itemize}
                   \item Huffman \& Co
                   \item Vorteil: braucht je nach Text weniger Ressourcen (Speicher)
@@ -97,11 +97,11 @@
                 \node[draw, rounded corners, fill=red!10, minimum width=3.5cm, minimum height=1cm] (eve) at (6,-1.5) {\emoji{smiling-face-with-horns} Eve};
 
                 % Correct IBAN
-                \node[anchor=west] at (alice.east) [xshift=0.2cm, yshift=0.4cm] {\scriptsize \texttt{CH93 0076 2011 6248 5295 7}};
+                \node[anchor=west] at (alice.east) [xshift=0.2cm, yshift=0.4cm] {\scriptsize \texttt{CH93 0076 2011 6238 5295 7}};
                 \draw[->, thick] (alice) -- (bob) node[midway, above, sloped] {\footnotesize \textcolor{gray}{korrekt}};
 
                 % Mistyped IBAN
-                \node[anchor=west] at (alice.east) [xshift=0.2cm, yshift=-0.4cm] {\scriptsize \texttt{CH93 0076 2011 62\red{3}8 5295 7}};
+                \node[anchor=west] at (alice.east) [xshift=0.2cm, yshift=-0.4cm] {\scriptsize \texttt{CH93 0076 2011 62\red{4}8 5295 7}};
                 \draw[->, thick, red] (alice) -- (eve) node[midway, below, sloped] {\footnotesize \textcolor{red}{vertippt}};
             \end{tikzpicture}
         \end{center}
@@ -157,8 +157,8 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Prüfziffer im EAN}
-    EAN besteht aus 12 Ziffern + \red{eine Prüfziffer}
+\begin{frame}{Prüfziffer im \glsentryshort{EAN}}
+    \acrshort{EAN} besteht aus 12 Ziffern + \red{eine Prüfziffer}
     \begin{equation}\label{eq:ean}
         x_1x_2x_3x_4x_5x_6x_7x_8x_9x_{10}x_{11}x_{12}\textcolor{red}{x_{13}}
     \end{equation}

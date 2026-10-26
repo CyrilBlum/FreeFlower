@@ -23,7 +23,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.85\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
 \frame{\titlepage}
 
@@ -34,8 +34,8 @@
         \item Idee: jede Bitfolge steht für eine Nachricht
               \begin{table}[H]
                   \centering
-                  \begin{tabular}{c|c}
-                      \textbf{Nachricht} & \textbf{Codewort} \\ \midrule\midrule
+                  \begin{tabular}{cc}
+                      \textbf{Nachricht} & \textbf{Codewort} \\ \midrule
                       \texttt{Rot}       & \texttt{000}      \\ \midrule
 
                       \texttt{Blau}      & \texttt{011}      \\ \midrule
@@ -51,7 +51,7 @@
 
 \begin{frame}[fragile]{Wichtige Erkenntnis}
     \begin{center}
-        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlererkennend, wenn die Kodierung den Mindest-Abstand $k+1$ hat.}}
+        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlererkennend, wenn die Kodierung mindestens den Mindest-Abstand $k+1$ hat.}}
     \end{center}
     \only<2>{Z.B.: Die Kodierung \texttt{000}, \texttt{011} und \texttt{101} hat den kleinsten Abstand 2, also ist die Kodierung 1-fehlererkennend.}
 \end{frame}
@@ -67,8 +67,8 @@
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{>{\bfseries}l|l}
-                Information & \textbf{Code}  \\ \midrule\midrule
+            \begin{tabular}{>{\bfseries}ll}
+                Information & \textbf{Code}  \\ \midrule
                 Rot         & 00000 \\ \midrule
                 Blau        & ??    \\ \midrule
                 Grün        & ??    \\
@@ -80,8 +80,8 @@
 \begin{frame}[fragile]{Mögliche Lösung}
     \begin{table}[H]
             \centering
-            \begin{tabular}{>{\bfseries}l|l}
-                Information & \textbf{Code}  \\ \midrule\midrule
+            \begin{tabular}{>{\bfseries}ll}
+                Information & \textbf{Code}  \\ \midrule
                 Rot         & 00000 \\ \midrule
                 Blau        & 01110  \\ \midrule
                 Grün        & 10101  \\
@@ -96,14 +96,14 @@
         \item \textbf{Voraussetzung:} Der Abstand der Kodierung ist mindestens 3
     \end{itemize}
     \begin{center}
-        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlerkorrigierend, wenn der Mindestabstand mindestens $k+2$ beträgt.}}
+        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlerkorrigierend, wenn der Mindestabstand mindestens $2k+1$ beträgt.}}
     \end{center}
 \end{frame}
 
 
 \begin{frame}{Visualisierung}
     \begin{center}
-        Gibt es auch eine 1-Fehlerkorrigierende Kodierung mit drei Code-Wörtern der Länge 4?
+        Gibt es auch eine 1-fehlerkorrigierende Kodierung mit drei Code-Wörtern der Länge 4?
     \end{center}
     $\rightarrow$ \textbf{Visualisierung schafft Abhilfe}
 \end{frame}
@@ -153,6 +153,6 @@
 \begin{frame}{Auftrag}{Skript}
     \begin{itemize}
         \item Definition 1.1 lesen
-        \item \aufgabebox{1.13-1.17} (Challenges erst nachher)
+        \item \aufgabebox{1.14--1.18} (Challenges erst nachher)
     \end{itemize}
 \end{frame}
