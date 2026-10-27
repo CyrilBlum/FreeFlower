@@ -56,7 +56,7 @@ jobs:
 
     # Check out the repository
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     # Ensure latest version
     - name: Ensure latest version
@@ -112,7 +112,7 @@ jobs:
     needs: [prepare-compile]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Ensure latest version
       shell: bash
@@ -142,7 +142,7 @@ jobs:
     needs: [compile-book, prepare-compile]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Ensure latest version
       shell: bash
@@ -170,7 +170,7 @@ jobs:
     needs: [compile-article, prepare-compile]
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Ensure latest version
       shell: bash
@@ -199,7 +199,7 @@ jobs:
     if: always() && needs.prepare-compile.result == 'success' && !cancelled()
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
 
     - name: Ensure latest version
       shell: bash
