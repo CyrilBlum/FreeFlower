@@ -303,7 +303,8 @@ dauer = [0, 60, 122, 185, 241, 363, 543, 603, 666, 729, 786, 845]
 \end{frame}
 
 \section{Vorstellung}
-\input{Private/Vorstellung.tex}
+% Private/ ist nicht im Repo (.gitignore); auf dem CI-Server wird die Folie übersprungen
+\IfFileExists{Private/Vorstellung.tex}{\input{Private/Vorstellung.tex}}{}
 
 
 \section{Grundwerte \& Regeln}

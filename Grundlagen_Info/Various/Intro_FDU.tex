@@ -411,6 +411,8 @@ dauer = [0, 60, 122, 185, 241, 363, 543, 603, 666, 729, 786, 845]
 \begin{frame}\sectionframe[FDUblue]{Vorstellung}{Lernen wir uns kennen}
 \end{frame}
 
+% Private/ ist nicht im Repo (.gitignore); auf dem CI-Server wird die Folie übersprungen
+\IfFileExists{Private/Presentation/ch.pdf}{%
 \begin{frame}{Vorstellung}
 \centering
 \scalebox{0.78}{%
@@ -464,6 +466,7 @@ dauer = [0, 60, 122, 185, 241, 363, 543, 603, 666, 729, 786, 845]
 \end{tikzpicture}%
 }
 \end{frame}
+}{}
 
 \begin{frame}{Interessen}
 \begin{center}
