@@ -1,10 +1,10 @@
 \chapter{Asymmetrische Kryptosysteme}\label{chap:asymmetrische-kryptosysteme}
 
-In den bisher angeschauten Verschlüsselungsverfahren haben wir festgestellt, dass derselbe Schlüssel zur Ver- und Entschlüsselung verwendet wird. Daher spricht man bei diesen Verfahren von \emph{symmetrischen} Verschlüsselungsmethoden. Zudem haben wir gesehen, dass diese entweder unsicher (Caesar, Vigenère) sind, wenn der Schlüssel einfach geknackt werden kann, oder unpraktikabel (\gls{OTP}), wenn der Schlüssel zuerst übertragen werden muss. Diffie \& Hellman kamen daher 1975 auf die Idee, \emph{asymmetrische} Verschlüsselungsverfahren zu erschaffen, welche nach einem anderen Prinzip funktionieren. Im Gegensatz zu symmetrischen Verfahren kann man bei asymmetrischen Verfahren \emph{nicht} von der verschlüsselten Nachricht auf den Schlüssel schliessen, da unterschiedliche Schlüssel zum Ver- und Entschlüsseln verwendet werden.
+In den bisher angeschauten Verschlüsselungsverfahren haben wir festgestellt, dass derselbe Schlüssel zur Ver- und Entschlüsselung verwendet wird. Daher spricht man bei diesen Verfahren von \emph{symmetrischen} Verschlüsselungsmethoden. Zudem haben wir gesehen, dass diese entweder unsicher (Caesar, Vigenère) sind, wenn der Schlüssel einfach geknackt werden kann, oder unpraktikabel (\gls{OTP}), wenn der Schlüssel zuerst übertragen werden muss. Diffie \& Hellman veröffentlichten daher 1976 die Idee, \emph{asymmetrische} Verschlüsselungsverfahren zu erschaffen, welche nach einem anderen Prinzip funktionieren. Bei asymmetrischen Verfahren werden zwei unterschiedliche Schlüssel zum Ver- und Entschlüsseln verwendet, und der private Schlüssel lässt sich nicht aus dem öffentlichen berechnen.
 
 Die Grundidee hinter asymmetrischen Verschlüsselungsmethoden ist folgende:
 
-Alice (\emoji{woman-technologist}) und Bob (\emoji{man-technologist}) möchten auf verschlüsselte Weise Nachrichten austauschen, die den Anforderungen an sichere Kryptosysteme genügen (siehe \cref{sec:intro}). Bei der asymmetrischen Verschlüsselung generieren sowohl Alice wie Bob jeweils ein Schlüsselpaar, einen sogenannten \textbf{öffentlichen Schlüssel} (\emoji{key}), der von allen Personen gesehen und verwendet werden kann, sowie einen \textbf{privaten Schlüssel} (\emoji{lock}), der nur im Besitz von Alice bzw. Bob ist. Wenn Alice eine Nachricht an Bob senden will, verwendet sie Bobs \emph{öffentlichen} Schlüssel, um die Nachricht zu verschlüsseln. Die Nachricht kann jedoch mit dem öffentlichen Schlüssel nicht entschlüsselt werden, es handelt sich hier sozusagen um eine \emph{Einweg}-Funktion. Stattdessen muss Bob seinen \emph{privaten} Schlüssel zur Entschlüsselung verwenden, also den Schlüssel, auf den \emph{nur} Bob Zugriff hat (siehe \cref{fig:public-key-encryption}). Dies funktioniert in den meisten Fällen auch in die andere Richtung: eine Nachricht, die mit Bobs privatem Schlüssel verschlüsselt worden ist, kann nur mit Bobs öffentlichem Schlüssel entschlüsselt werden. Die Schlüssel sind mathematisch so konstruiert, dass es beinahe unmöglich ist, vom öffentlichen Schlüssel auf den privaten Schlüssel zu schliessen.
+Alice (\emoji{woman-technologist}) und Bob (\emoji{man-technologist}) möchten auf verschlüsselte Weise Nachrichten austauschen, die den Anforderungen an sichere Kryptosysteme genügen, insbesondere dem Kerckhoffs'schen Prinzip (siehe \cref{subsec:kerckhoffs}). Bei der asymmetrischen Verschlüsselung generieren sowohl Alice wie Bob jeweils ein Schlüsselpaar, einen sogenannten \textbf{öffentlichen Schlüssel} (\emoji{unlocked}), der von allen Personen gesehen und verwendet werden kann, sowie einen \textbf{privaten Schlüssel} (\emoji{key}), der nur im Besitz von Alice bzw. Bob ist. Wenn Alice eine Nachricht an Bob senden will, verwendet sie Bobs \emph{öffentlichen} Schlüssel, um die Nachricht zu verschlüsseln. Die Nachricht kann jedoch mit dem öffentlichen Schlüssel nicht entschlüsselt werden, es handelt sich hier sozusagen um eine \emph{Einweg}-Funktion. Stattdessen muss Bob seinen \emph{privaten} Schlüssel zur Entschlüsselung verwenden, also den Schlüssel, auf den \emph{nur} Bob Zugriff hat (siehe \cref{fig:public-key-encryption}). Dies funktioniert in den meisten Fällen auch in die andere Richtung: eine Nachricht, die mit Bobs privatem Schlüssel verschlüsselt worden ist, kann nur mit Bobs öffentlichem Schlüssel entschlüsselt werden. Die Schlüssel sind mathematisch so konstruiert, dass es beinahe unmöglich ist, vom öffentlichen Schlüssel auf den privaten Schlüssel zu schliessen.
 
 
 Durch den Aufbau asymmetrischer Verschlüsselungsverfahren entfällt die Problematik der Übermittlung des Schlüssels: jede Person generiert ihr eigenes Schlüsselpaar und stellt einen öffentlichen Schlüssel zur Verfügung. Ein Nachteil hierbei ist, dass die Verschlüsselung häufig mathematisch und bezüglich Rechenleistung anspruchsvoller ist, was insbesondere problematisch sein kann bei längeren Nachrichten oder wenn die Antwortzeit minimal sein soll.
@@ -19,12 +19,12 @@ Durch den Aufbau asymmetrischer Verschlüsselungsverfahren entfällt die Problem
 \section{\texorpdfstring{\acrshort{RSA}}{RSA}-Verfahren}
 \label{subsec:rsa}
 
-Das \acrfull{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für die Verschlüsselung als auch für digitale Signaturen verwendet werden kann. Es basiert auf der Schwierigkeit, grosse Zahlen in ihre Primfaktoren zu zerlegen. Im Folgenden werden die Grundlagen des Verfahrens und ein einfaches Beispiel vorgestellt.
+Das \gls{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für die Verschlüsselung als auch für digitale Signaturen verwendet werden kann. Es basiert auf der Schwierigkeit, grosse Zahlen in ihre Primfaktoren zu zerlegen. Im Folgenden werden die Grundlagen des Verfahrens und ein einfaches Beispiel vorgestellt.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/rsa.jpg}
-	\caption{Ron Rivest, Adi Shamir und Leonard Adleman, die Erfinder des \gls{RSA}-Verfahrens}
+	\caption{Ron Rivest, Adi Shamir und Leonard Adleman, die Erfinder des \acrshort{RSA}-Verfahrens}
 	\label{fig:rsa}
 \end{figure}
 
@@ -35,9 +35,9 @@ Das \acrfull{RSA}-Verfahren ist ein asymmetrisches Kryptosystem, das sowohl für
 	\item \textbf{Schlüsselerzeugung:}
 	      \begin{itemize}
 		      \item Wählen Sie \textbf{zwei (möglichst grosse) Primzahlen} \( p \) und \( q \).
-		      \item Berechnen Sie das \textbf{\gls{RSA}-Modul} \( n = p \cdot q \).
+		      \item Berechnen Sie den \textbf{\gls{RSA}-Modul} \( n = p \cdot q \).
 		      \item Berechnen Sie die \textbf{Eulersche Funktion} \( \varphi(n) = (p-1)(q-1) \). Die Eulersche Funktion \( \varphi(n) \) gibt die Anzahl der positiven ganzen Zahlen kleiner als \( n \) an, die teilerfremd zu \( n \) sind. Für eine Primzahl $p$ gilt \( \varphi(p) = p-1 \), daher \( \varphi(n) = \varphi(p \cdot q) = (p-1)(q-1) \).
-		      \item Wählen Sie den \textbf{\emph{Verschlüsselungsexponenten} \( e \)}, so dass dieser teilerfremd zu \( \varphi(n) \) und kleiner als $\varphi(n)$ ist. Dies bedeutet, dass der \gls{GGT} von $e$ und $\varphi(n)$ 1 ist ($\operatorname{ggT}(e, \varphi(n)) = 1$).
+		      \item Wählen Sie den \textbf{\emph{Verschlüsselungsexponenten} \( e \)}, so dass dieser teilerfremd zu \( \varphi(n) \) und kleiner als $\varphi(n)$ ist. Dies bedeutet, dass $e$ und $\varphi(n)$ als \gls{GGT} die Zahl 1 haben ($\operatorname{ggT}(e, \varphi(n)) = 1$).
 		      \item Berechnen Sie den \textbf{\emph{Entschlüsselungsexponenten} \( d \)}, so dass \( (e \cdot d) \equiv 1 \pmod{\varphi(n)} \) (privater Schlüssel). Dies bedeutet: Bei der Division des Produkts $e \cdot d$ durch $\varphi(n)$ bleibt der Rest $1$, sodass $e \cdot d = 1 + k \cdot \varphi(n)$ für eine ganze Zahl $k$ gilt.
 		      \item Die Zahlen $p$, $q$ und $\varphi(n)$ werden nun nicht mehr benötigt und können gelöscht werden.
 	      \end{itemize}
@@ -86,7 +86,7 @@ Um \gls{RSA} besser zu verstehen, rechnen wir ein einfaches Beispiel mit kleinen
 	\item Der öffentliche Schlüssel ist \( (e, n) = (3, 33) \), der private Schlüssel \( (d, n) = (7, 33) \).
 \end{enumerate}
 
-\textbf{Verschlüsselung:} Die Nachricht sei der Klartext \texttt{Code}, welches wir darstellen durch die Position der Buchstaben im Alphabet \( m = 3, 15, 4, 5 \). Berechne für jeden Buchstaben (hier nur für \texttt{C}, also 3, gezeigt):
+\textbf{Verschlüsselung:} Die Nachricht sei der Klartext \texttt{Code}, den wir durch die Positionen der Buchstaben im Alphabet darstellen: \( m = 3, 15, 4, 5 \). Wir berechnen für jeden Buchstaben (hier nur für \texttt{C}, also 3, gezeigt):
 \begin{align*}
 	c & = m^e \mod n  \\
 	  & = 3^3 \mod 33 \\
@@ -95,7 +95,7 @@ Um \gls{RSA} besser zu verstehen, rechnen wir ein einfaches Beispiel mit kleinen
 \end{align*}
 
 
-Der erste Buchstabe des Kryptotext wird also verschlüsselt als \( c = 27\).
+Der erste Buchstabe des Kryptotexts wird also verschlüsselt als \( c = 27\).
 
 \textbf{Entschlüsselung:}
 \begin{align*}
@@ -107,7 +107,7 @@ Der erste Buchstabe des Kryptotext wird also verschlüsselt als \( c = 27\).
 Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 \end{myexample}
 
-\begin{myexcursion}[Mathematischer Hintergrund: Der Satz von Euler und der \texorpdfstring{\acrshort{RSA}}{RSA}-Korrektheitsbeweis]\label{exc:rsa-beweis}\label{exc:euler}
+\begin{myexcursion}[Mathematischer Hintergrund: Der Satz von Euler und der \texorpdfstring{\acrshort{RSA}}{RSA}-Korrekt\-heits\-beweis]\label{exc:rsa-beweis}\label{exc:euler}
 	Warum stellt die Entschlüsselung $(m^e \bmod n)^d \bmod n$ garantiert die ursprüngliche Nachricht $m$ wieder her? Das mathematische Fundament hierfür liefert ein berühmter Satz des Schweizer Mathematikers Leonhard Euler (1707--1783).
 
 	\textbf{1. Die Eulersche $\varphi$-Funktion:}
@@ -140,18 +140,20 @@ Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 	\]
 	Daraus folgt für die Entschlüsselung eines Kryptotexts $c = m^e \bmod n$:
 	\begin{align*}
-		\text{Entschlüsselter Text} 
+		\text{Entschlüsselter Text}
 		  & = c^d \bmod n                                          && (\text{Definition der Entschlüsselung}) \\[0.4em]
 		  & = (m^e \bmod n)^d \bmod n                              && (\text{Kryptotext } c = m^e \bmod n \text{ einsetzen}) \\[0.4em]
 		  & \equiv (m^e)^d \pmod n                                 && (\text{Potenzierungsregel, s.~\cref{exc:potenzierungsregel}}) \\[0.4em]
 		  & \equiv m^{e \cdot d} \pmod n                           && (\text{Potenzgesetz: } (a^b)^c = a^{b \cdot c}) \\[0.4em]
 		  & \equiv m^{k \cdot \varphi(n) + 1} \pmod n              && (\text{Schlüsselbedingung: } e \cdot d = 1 + k \cdot \varphi(n)) \\[0.4em]
 		  & \equiv \left(m^{\varphi(n)}\right)^k \cdot m^1 \pmod n && (\text{Potenzgesetz: } a^{x+y} = a^x \cdot a^y) \\[0.4em]
-		  & \equiv (1)^k \cdot m \pmod n                           && (\text{Satz von Euler: } m^{\varphi(n)} \equiv 1) \\[0.4em]
+		  & \equiv (1)^k \cdot m \pmod n                           && (\text{Satz von Euler, falls } \operatorname{ggT}(m, n) = 1) \\[0.4em]
 		  & \equiv 1 \cdot m \pmod n                               && (1^k = 1) \\[0.4em]
 		  & = \mathbf{m}                                           && (\text{Klartext wiederhergestellt!})
 	\end{align*}
-	
+
+	\textbf{Voraussetzung:} Der Satz von Euler gilt nur für Nachrichten $m$ mit $\operatorname{ggT}(m, n) = 1$. Die \gls{RSA}-Entschlüsselung funktioniert aber auch sonst, also für die (bei grossem $n$ äusserst seltenen) Nachrichten $m$, die durch $p$ oder $q$ teilbar sind. Der Beweis dafür verwendet den chinesischen Restsatz und wird hier nicht ausgeführt (siehe auch \cref{mychallenge:euler}).
+
 	\textbf{Zusammenfassung der Kernidee:} Durch die Wahl von $e \cdot d = 1 + k \cdot \varphi(n)$ durchläuft der Exponent genau $k$ volle Umläufe der Länge $\varphi(n)$ modulo $n$, die nach dem Satz von Euler jeweils neutral zu $1$ werden ($1^k = 1$). Es bleibt exakt der Faktor $m^1 = m$ übrig.
 \end{myexcursion}
 
@@ -159,7 +161,7 @@ Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 	Alice möchte eine Nachricht an Bob mit \gls{RSA} verschlüsseln. Bob wählt die Hilfs-Primzahlen \( p = 5 \) und \( q = 7 \). Generieren Sie den öffentlichen Schlüssel ($e, n$) und den privaten Schlüssel ($d, n$) von Bob, indem Sie folgende Schritte ausführen:
 	\begin{enumerate}
 		\item Berechnen Sie \( n \) und \( \varphi(n) \).
-		\item Sie wählen $e$ und $d$ aus.
+		\item Wählen Sie $e$ und $d$.
 	\end{enumerate}
 
 	Verschlüsseln Sie nun die Nachricht \( m = 9 \) mit dem öffentlichen Schlüssel \( (e, n) \).
@@ -175,7 +177,7 @@ Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 				      c & = m^e\mod n   \\
 				        & = 9^5 \mod 35 \\
 				        & = 4
-			      \end{align*}.
+			      \end{align*}
 			\item Entschlüsselung:
 			      \begin{align*}
 				      m & = c^d\mod n    \\
@@ -189,18 +191,18 @@ Daraus ergibt sich \( m = 3 \), also die ursprüngliche Nachricht.
 \begin{myexercise}
 	Ist die Wahl von \( p \) und \( q \) im obigen Beispiel sinnvoll? Begründen Sie Ihre Antwort.
 	\begin{myanswer}
-		Nein, die Wahl von \( p \) und \( q \) ist nicht sinnvoll, da beide Primzahlen zu klein sind. In der Praxis sollten \( p \) und \( q \) jeweils mindestens 2048 Bit lang sein, um eine ausreichende Sicherheit zu gewährleisten. Ansonsten kann es, wie im vorliegenden Beispiel, vorkommen, dass der private Schlüssel leicht durch Faktorisierung von \( n \) berechnet werden kann, oder dass der private Schlüssel sogar gleich dem öffentlichen Schlüssel ist (wie in diesem Beispiel, wo \( d = e = 5 \)).
+		Nein, die Wahl von \( p \) und \( q \) ist nicht sinnvoll, da beide Primzahlen zu klein sind. In der Praxis sollte der Modul \( n = p \cdot q \) mindestens 2048 Bit lang sein (\( p \) und \( q \) also je etwa 1024 Bit), um eine ausreichende Sicherheit zu gewährleisten. Ansonsten kann es, wie im vorliegenden Beispiel, vorkommen, dass der private Schlüssel leicht durch Faktorisierung von \( n \) berechnet werden kann, oder dass der private Schlüssel sogar gleich dem öffentlichen Schlüssel ist (wie in diesem Beispiel, wo \( d = e = 5 \)).
 	\end{myanswer}
 \end{myexercise}
 
 \begin{mychallenge}\label{mychallenge:rsa-pair}
  Erstellen Sie nun zu zweit jeweils ein Schlüsselpaar mit dem \gls{RSA}-Verfahren. Verwenden Sie dazu Primzahlen \( p \) und \( q \) mit jeweils mindestens 2 Ziffern. Tauschen Sie danach Ihre öffentlichen Schlüssel aus und verschlüsseln Sie eine Nachricht (eine Zahl) an Ihren Partner. Entschlüsseln Sie danach die Nachricht wieder.
- 
+
  Eine Liste der ersten 1000 Primzahlen finden Sie hier: \url{https://en.wikipedia.org/wiki/List_of_prime_numbers}.
 \end{mychallenge}
 
 \begin{mychallenge}
-Verwenden Sie Ihre \gls{RSA}-Schlüssel aus \ref{mychallenge:rsa-pair}, um eine echte Nachricht als Zahl auszutauschen (ein Wort). Um ein Wort in Zahlen umzuwandeln (Buchstabe für Buchstabe) können Sie folgendes Python-Skript verwenden:
+Verwenden Sie Ihre \gls{RSA}-Schlüssel aus \cref{mychallenge:rsa-pair}, um eine echte Nachricht als Zahl auszutauschen (ein Wort). Um ein Wort in Zahlen umzuwandeln (Buchstabe für Buchstabe), können Sie folgendes Python-Skript verwenden:
 \begin{lstlisting}
 def text_to_numbers(text):
 	numbers = []
@@ -216,9 +218,9 @@ print(text_to_numbers("ABC"))  # Ausgabe: [1, 2, 3]
 \begin{mychallenge}
 	Wählen Sie zwei Primzahlen \( p \) und \( q \) mit jeweils mindestens 3 Ziffern. Generieren Sie den öffentlichen und privaten Schlüssel. Verschlüsseln Sie eine Nachricht Ihrer Wahl und entschlüsseln Sie diese wieder. Verwenden Sie Python, um die Berechnungen durchzuführen.
 
-	Die Zahl $d$ kann in Python folgendermassen berechnet werden:
+	Eine Liste der ersten 1000 Primzahlen finden Sie hier: \url{https://en.wikipedia.org/wiki/List_of_prime_numbers}.
 
-	Eine Liste der ersten 1000 Primzahlen finden Sie hier: \url{https://en.wikipedia.org/wiki/List_of_prime_numbers}
+	Die Zahl $d$ kann in Python folgendermassen berechnet werden:
 	\begin{lstlisting}
 d = pow(e, -1, phi_n)
 	\end{lstlisting}
@@ -228,10 +230,26 @@ d = pow(e, -1, phi_n)
 	\end{myanswer}
 \end{mychallenge}
 
+\begin{mychallenge}[Satz von Euler nachrechnen]\label{mychallenge:euler}
+	Diese Aufgabe vertieft den mathematischen Hintergrund aus \cref{exc:euler}.
+	\begin{enumerate}
+		\item Bestimmen Sie $\varphi(15)$, indem Sie alle Zahlen von $1$ bis $14$ aufzählen, die teilerfremd zu $15$ sind. Vergleichen Sie das Ergebnis mit der Formel $\varphi(p \cdot q) = (p-1)(q-1)$.
+		\item Überprüfen Sie den Satz von Euler für $a = 2$ und $n = 15$.
+		\item Im Beispiel zum \gls{RSA}-Verfahren (mit $n = 33$, $\varphi(n) = 20$, $e = 3$ und $d = 7$) wurde die Nachricht $m = 3$ verschlüsselt, obwohl $\operatorname{ggT}(3, 33) = 3$ ist. Berechnen Sie mit Python \lstinline|pow(3, 20, 33)| und \lstinline|pow(3, 21, 33)|. Was stellen Sie fest?
+	\end{enumerate}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item Teilerfremd zu $15$ sind $1, 2, 4, 7, 8, 11, 13, 14$, also ist $\varphi(15) = 8$. Die Formel liefert ebenfalls $\varphi(3 \cdot 5) = 2 \cdot 4 = 8$.
+			\item $2^{\varphi(15)} = 2^8 = 256 = 17 \cdot 15 + 1 \equiv 1 \pmod{15}$.
+			\item $3^{20} \bmod 33 = 12 \neq 1$: Der Satz von Euler gilt hier nicht, weil $3$ und $33$ nicht teilerfremd sind. Trotzdem ist $3^{21} \bmod 33 = 3$. Wegen $e \cdot d = 3 \cdot 7 = 21 = 1 \cdot \varphi(n) + 1$ liefert die Entschlüsselung also auch hier die ursprüngliche Nachricht $m = 3$. Dass dies für alle $m$ gilt, zeigt man mit dem chinesischen Restsatz.
+		\end{enumerate}
+	\end{myanswer}
+\end{mychallenge}
+
 \subsection*{Sicherheit des \texorpdfstring{\acrshort{RSA}}{RSA}-Verfahrens}
 Die Sicherheit der reinen \gls{RSA}-Verschlüsselung beruht auf der mathematischen Schwierigkeit der \textbf{Primfaktorzerlegung} (Faktorisierungsproblem). Ein Angreifer (Eve) hat Zugriff auf den öffentlichen Schlüssel $(e, n)$ sowie den abgefangenen Kryptotext $c$. Um daraus den privaten Entschlüsselungsexponenten $d$ zu berechnen, müsste Eve den Wert der Eulerschen Phi-Funktion $\varphi(n) = (p-1)(q-1)$ kennen. Dazu müsste sie die Zahl $n$ in ihre ursprünglichen Primfaktoren $p$ und $q$ zerlegen ($n = p \cdot q$).
 
-Während die Multiplikation zweier grosser Primzahlen für moderne Computer im Bruchteil einer Millisekunde durchführbar ist, existiert bis heute kein bekanntes effizientes Verfahren, um ein Produkt aus zwei sehr grossen Primzahlen wieder zu faktorisieren. Werden ausreichend lange Primzahlen gewählt (in der Praxis mindestens 2048 bis 4096 Bit, d.\,h.\ Zahlen mit über 600 Dezimalstellen), würde ein Kryptoanalyst selbst mit den leistungsfähigsten Supercomputern Millionen von Jahren für die Faktorisierung benötigen.
+Während die Multiplikation zweier grosser Primzahlen für moderne Computer im Bruchteil einer Millisekunde durchführbar ist, existiert bis heute kein bekanntes effizientes Verfahren, um ein Produkt aus zwei sehr grossen Primzahlen wieder zu faktorisieren. Wird ein ausreichend langer Modul $n$ gewählt (in der Praxis 2048 bis 4096 Bit, d.\,h.\ Zahlen mit über 600 Dezimalstellen), würde ein Kryptoanalyst selbst mit den leistungsfähigsten Supercomputern Millionen von Jahren für die Faktorisierung benötigen.
 
 \paragraph*{Sicherheitsproblem: Fehlende Authentizität des Absenders}
 Obwohl das \gls{RSA}-Verfahren die \textbf{Vertraulichkeit} der Nachricht schützt (nur der Empfänger Bob kann mit seinem privaten Schlüssel $d$ entschlüsseln), bietet reine Verschlüsselung \textbf{keine Authentizität}: Da Bobs öffentlicher Schlüssel $(e, n)$ öffentlich bekannt ist, kann \emph{jede} beliebige Person (also auch ein Angreifer wie Eve) eine Nachricht verschlüsseln und an Bob schicken, während sie behauptet, Alice zu sein. Bob hat keine Möglichkeit, anhand der verschlüsselten Nachricht nachzuweisen, wer sie tatsächlich verfasst hat.
@@ -308,9 +326,9 @@ Neben der Verschlüsselung von Nachrichten kann das \gls{RSA}-Verfahren auch zur
 \end{myexercise}
 
 \begin{myremark}[Praxis-Exkurs: Digitale Fingerabdrücke mit Hashfunktionen]
-	In der Praxis ist eine Nachricht $m$ (z.\,B.\ ein \gls{PDF}-Dokument, ein Foto oder ein Software-Update) oft viele Megabytes gross. Da \gls{RSA}-Berechnungen mit riesigen Zahlen extrem rechenintensiv sind und die Nachricht $m$ kleiner als der \gls{RSA}-Modul $n$ sein muss, signiert man in realen Systemen nicht die gesamte Datei direkt, sondern ihren \textbf{kryptographischen Hashwert}:
+	In der Praxis ist eine Nachricht $m$ (z.\,B.\ ein \acrshort{PDF}-Dokument, ein Foto oder ein Software-Update) oft viele Megabytes gross. Da \gls{RSA}-Berechnungen mit riesigen Zahlen extrem rechenintensiv sind und die Nachricht $m$ kleiner als der \gls{RSA}-Modul $n$ sein muss, signiert man in realen Systemen nicht die gesamte Datei direkt, sondern ihren \textbf{kryptographischen Hashwert}:
 	\begin{itemize}
-		\item \textbf{Was ist eine Hashfunktion?} Eine mathematische Einwegfunktion (z.\,B.\ \gls{SHA}-256), die aus einer beliebig langen Eingabedatei $m$ einen kurzen Prüfwert $H(m)$ fester Länge (den sogenannten \textbf{Hashwert} bzw.\ \enquote{digitalen Fingerabdruck}, z.\,B.\ 256 Bit) berechnet. 
+		\item \textbf{Was ist eine Hashfunktion?} Eine mathematische Einwegfunktion (z.\,B.\ \acrshort{SHA}-256), die aus einer beliebig langen Eingabedatei $m$ einen kurzen Prüfwert $H(m)$ fester Länge (den sogenannten \textbf{Hashwert} bzw.\ \enquote{digitalen Fingerabdruck}, z.\,B.\ 256 Bit) berechnet.
 		\item \textbf{Zentrale Eigenschaft (Lawineneffekt):} Bereits die Änderung eines einzigen Zeichens im Dokument führt zu einem vollkommen anderen Hashwert. Zudem ist es praktisch unmöglich, zwei verschiedene Dokumente mit demselben Hashwert zu finden (\emph{Kollisionsresistenz}).
 		\item \textbf{Ablauf in der Praxis:} Alice berechnet $h = H(m)$ und signiert nur diesen kurzen Fingerabdruck: $s = h^d \bmod n$. Bob berechnet seinerseits $H(m)$ aus der erhaltenen Datei und vergleicht es mit $h' = s^e \bmod n$.
 	\end{itemize}
@@ -335,9 +353,9 @@ Bei einer reinen Signatur wird die Nachricht $m$ \textbf{im Klartext} zusammen m
 	\item \textbf{Typische Einsatzgebiete:}
 	      \begin{itemize}
 		      \item \textbf{Software- und Betriebssystem-Updates:} Das Update soll von allen heruntergeladen werden können, die Signatur garantiert jedoch, dass es unverändert vom echten Hersteller stammt.
-		      \item \textbf{Gesetze, Behördendokumente \& Verträge:} Der Inhalt ist öffentlich bestimmt, die Signatur garantiert die Rechtsgültigkeit (z.\,B.\ digital signierte \glspl{PDF}).
+		      \item \textbf{Gesetze, Behördendokumente \& Verträge:} Der Inhalt ist öffentlich bestimmt, die Signatur garantiert die Rechtsgültigkeit (z.\,B.\ digital signierte \acrshortpl{PDF}).
 		      \item \textbf{Git-Commits:} Quellcode ist einsehbar, aber Commits werden kryptographisch signiert.
-		      \item \textbf{Digitale Zertifikate (\gls{PKI}):} Zertifikate müssen für jedermann lesbar sein.
+		      \item \textbf{Digitale Zertifikate in einer \gls{PKI}:} Zertifikate müssen für jedermann lesbar sein.
 	      \end{itemize}
 \end{itemize}
 
@@ -361,7 +379,7 @@ Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, k
 	\item \textbf{Typische Einsatzgebiete:}
 	      \begin{itemize}
 		      \item \textbf{Vertrauliche E-Mails:} Verschlüsselte und signierte Nachrichten via \gls{SMIME} oder \gls{PGP}/\gls{GPG}.
-		      \item \textbf{Ende-zu-Ende-verschlüsselte Messenger:} Signal, WhatsApp oder Threema.
+		      \item \textbf{Ende-zu-Ende-verschlüsselte Messenger:} Signal, WhatsApp oder Threema schützen ebenfalls Vertraulichkeit und Authentizität, verwenden dafür aber eigene Protokolle (Signal und WhatsApp das Signal-Protokoll) mit einem \gls{DHM}-Schlüsseltausch auf elliptischen Kurven und symmetrischer Verschlüsselung statt \gls{RSA}-Signaturen pro Nachricht.
 		      \item \textbf{Geschäftsgeheimnisse \& Patientendaten:} Vertrauliche Verträge und medizinische Akten.
 	      \end{itemize}
 \end{itemize}
@@ -412,6 +430,7 @@ Soll eine Nachricht sowohl \textbf{geheim} als auch \textbf{authentisch} sein, k
 			      Da $m' = m = 4$, ist die Signatur gültig: Die Nachricht ist geheim übertragen worden, stammt garantiert von Alice und wurde nicht manipuliert.
 		\end{enumerate}
 
-		\lstinputlisting{Grundlagen_Info/03_Kryptologie/Python package/encryption/rsa_sign_then_encrypt.py}
+		% kleinere Schrift, damit die Lösungsbox nicht am Seitenende abgeschnitten wird
+		\lstinputlisting[basicstyle=\ttfamily\scriptsize]{Grundlagen_Info/03_Kryptologie/Python package/encryption/rsa_sign_then_encrypt.py}
 	\end{myanswer}
 \end{myexercise}

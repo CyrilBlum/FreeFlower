@@ -17,7 +17,7 @@ Ein Angreifer (Eve) könnte ein eigenes Schlüsselpaar erzeugen und den öffentl
 \paragraph*{Praxisnahe Lösung: Digitale Zertifikate und \texorpdfstring{\acrshort{PKI}}{PKI}}
 Um das Vertrauensproblem in der Praxis zu lösen (beispielsweise beim sicheren Surfen via \gls{HTTPS} und \gls{TLS} oder bei der elektronischen Signatur), wird eine sogenannte \textbf{Public-Key-Infrastruktur} (\gls{PKI}) eingesetzt:
 \begin{itemize}
-	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, \glspl{CA}):} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Schlüsselausgabe die reale Identität der antragstellenden Person oder Institution.
+	\item \textbf{Zertifizierungsstellen (\emph{Certificate Authorities}, \acrshortpl{CA}):}\glsunset{CA} Unabhängige, staatlich oder industriell anerkannte Organisationen prüfen vor der Zertifikatsausstellung die reale Identität der antragstellenden Person oder Institution.
 	\item \textbf{Digitale Zertifikate:} Die \gls{CA} stellt ein standardisiertes Dokument (Zertifikat) aus, welches den öffentlichen Schlüssel an die Identität (z.\,B.\ den Domainnamen \texttt{www.beispiel.ch}) bindet. Dieses Zertifikat wird von der \gls{CA} mit deren eigenem privaten Schlüssel signiert.
 	\item \textbf{Vertrauensanker (Root-\glspl{CA}):} Betriebssysteme und Browser besitzen eine vorinstallierte Liste vertrauenswürdiger Stammzertifikate. Wird eine Verbindung aufgebaut, prüft die Software automatisch die Signaturkette (\emph{Certificate Chain}) bis zu einem vertrauenswürdigen Stammzertifikat.
 \end{itemize}
@@ -56,14 +56,14 @@ Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden
 
 \begin{myexercise}[Ablauf einer zertifizierten digitalen Signatur in der Praxis]
 	Alice möchte einen wichtigen Vertrag digital an Bob senden. Um sicherzustellen, dass Bob der Signatur vertrauen kann, nutzt Alice ein digitales Zertifikat einer vertrauenswürdigen Zertifizierungsstelle (\gls{PKI}/\gls{CA}).
-	
+
 	Folgende Schlüssel existieren:
 	\begin{itemize}
 		\item \textbf{Zertifizierungsstelle (\gls{CA}):} Öffentlicher Schlüssel $(e_{\text{CA}}, n_{\text{CA}})$ (auf Bobs Computer vorinstalliert), privater Schlüssel $d_{\text{CA}}$.
 		\item \textbf{Alice:} Öffentlicher Schlüssel $(e_A, n_A)$, privater Schlüssel $d_A$.
 		\item \textbf{Angreiferin (Eve):} Öffentlicher Schlüssel $(e_E, n_E)$, privater Schlüssel $d_E$.
 	\end{itemize}
-	
+
 	\begin{enumerate}
 		\item \textbf{Zertifikatserstellung:} Welche Formel berechnet die \gls{CA}, um aus den Antragsdaten $z = (\text{\enquote{Alice}}, e_A, n_A)$ das signierte Zertifikat $\text{Cert}_A$ zu erzeugen?
 		\item \textbf{Nachrichtenversand:} Welche Formel berechnet Alice zur Erzeugung der Signatur $s$ für den Vertrag $m$? Welche Daten überträgt sie an Bob?
@@ -89,8 +89,8 @@ Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden
 			      \end{enumerate}
 			\item Je nachdem, welchen öffentlichen Schlüssel Eve mitliefert, scheitert der Angriff an einer anderen Stelle:
 			      \begin{itemize}
-				      \item \textbf{Eigener Schlüssel als angeblicher Schlüssel von Alice:} Für $(\text{\enquote{Alice}}, e_E, n_E)$ stellt keine \gls{CA} ein Zertifikat aus, und Eve kann die \gls{CA}-Signatur ohne $d_{\text{CA}}$ nicht fälschen. Die Zertifikatsprüfung mit $(e_{\text{CA}}, n_{\text{CA}})$ schlägt fehl.
-				      \item \textbf{Alices Zertifikat:} Die Zertifikatsprüfung gelingt, die Signaturprüfung schlägt jedoch fehl, da $s = m^{d_E} \bmod n_E$ und somit $s^{e_A} \not\equiv m \pmod{n_A}$.
+				      \item \textbf{Eigener Schlüssel als angeblicher Schlüssel von Alice:} Für $(\text{\enquote{Alice}},\allowbreak e_E,\allowbreak n_E)$ stellt keine \gls{CA} ein Zertifikat aus, und Eve kann die \gls{CA}-Signatur ohne $d_{\text{CA}}$ nicht fälschen. Die Zertifikatsprüfung mit $(e_{\text{CA}}, n_{\text{CA}})$ schlägt fehl.
+				      \item \textbf{Alices Zertifikat:} Die Zertifikatsprüfung gelingt, aber die Signaturprüfung scheitert, da $s = m^{d_E} \bmod n_E$ und somit $s^{e_A} \not\equiv m \pmod{n_A}$.
 				      \item \textbf{Eigenes gültiges Zertifikat auf den Namen Eve:} Beide Rechnungen gelingen. Das Zertifikat bestätigt aber nur, dass $(e_E, n_E)$ zu \emph{Eve} gehört. Bob erkennt den Angriff, weil der Name im Zertifikat nicht der erwarteten Unterzeichnerin Alice entspricht.
 			      \end{itemize}
 		\end{enumerate}
@@ -101,13 +101,13 @@ Erst das Zusammenspiel aus kryptographischer Signatur und einer funktionierenden
 In der Praxis signiert eine oberste Zertifizierungsstelle (\textbf{Root-\gls{CA}}) fast nie direkt einzelne Webserver-Zertifikate. Das weltweite Vertrauensmodell basiert stattdessen auf einer mehrstufigen \textbf{Zertifikatkette} (\emph{Certificate Chain}, siehe \cref{fig:certificate-chain}):
 
 \begin{enumerate}
-	\item \textbf{Root-\gls{CA} (Stammzertifizierungsstelle):} Unbedingter Vertrauensanker (\emph{Trust Anchor}). Ihr selbstsigniertes Zertifikat ist fest im \textbf{Trust Store} des Betriebssystems oder Browsers vorinstalliert. Ihr privater Schlüssel wird streng isoliert offline aufbewahrt (\emph{Air-Gapped} in Hardware-Sicherheitsmodulen, \glspl{HSM}) und nur selten für Zwischenzertifikate aktiviert.
+	\item \textbf{Root-\gls{CA} (Stammzertifizierungsstelle):} Unbedingter Vertrauensanker (\emph{Trust Anchor}). Ihr selbstsigniertes Zertifikat ist fest im \textbf{Trust Store} des Betriebssystems oder Browsers vorinstalliert. Ihr privater Schlüssel wird streng isoliert offline aufbewahrt (\emph{Air-Gapped} in Hardware-Sicherheitsmodulen, \acrshortpl{HSM}) und nur selten für Zwischenzertifikate aktiviert.
 	\item \textbf{Intermediate-\gls{CA} (Zwischenzertifizierungsstelle):} Wird von der Root-\gls{CA} signiert und führt das operative Tagesgeschäft der Zertifikatsausstellung durch.
 	\item \textbf{Server- / Blatt-Zertifikat (\emph{Leaf Certificate}):} Das eigentliche Zertifikat der Domain (z.\,B.\ \texttt{www.sbb.ch}), signiert von der Intermediate-\gls{CA}.
 \end{enumerate}
 
 \paragraph*{Sicherheitsvorteil der Kaskade}
-Müsste die Root-\gls{CA} jedes Serverzertifikat signieren, wäre ihr privater Schlüssel permanent auf internetverbundenen Servern exponiert. Bei einem Schlüsselverlust einer Intermediate-\gls{CA} widerruft die Root-\gls{CA} lediglich dieses eine Zwischenzertifikat (via Zertifikatssperrlisten \glspl{CRL} oder Statusabfrage \gls{OCSP}). Das in Milliarden Endgeräten verankerte Root-Zertifikat bleibt unangetastet.
+Müsste die Root-\gls{CA} jedes Serverzertifikat signieren, wäre ihr privater Schlüssel permanent auf internetverbundenen Servern exponiert. Bei einem Schlüsselverlust einer Intermediate-\gls{CA} widerruft die Root-\gls{CA} lediglich dieses eine Zwischenzertifikat (via Zertifikatssperrlisten, \acrshortpl{CRL}, oder per Statusabfrage über \gls{OCSP}). Das in Milliarden Endgeräten verankerte Root-Zertifikat bleibt unangetastet.
 
 \begin{figure}[H]
 	\centering
@@ -117,7 +117,7 @@ Müsste die Root-\gls{CA} jedes Serverzertifikat signieren, wäre ihr privater S
 \end{figure}
 
 \paragraph*{Schweizer Vertrauensdienste (\texorpdfstring{\acrshort{ZertES}}{ZertES})}
-In der Schweiz regelt das \textbf{Bundesgesetz über die elektronische Signatur (\gls{ZertES})} die rechtliche Gleichstellung qualifizierter elektronischer Signaturen mit der eigenhändigen Unterschrift (Art.~14 Abs.~$2^{\text{bis}}$ OR). Anerkannte Schweizer Vertrauensdienste sind unter anderem \textbf{SwissSign} (Schweizerische Post / SwissID), \textbf{Swisscom Trust Services} und \textbf{SWITCHpki} (für Schweizer Hochschulen und Schulen).
+In der Schweiz regelt das \textbf{\gls{ZertES}} die rechtliche Gleichstellung qualifizierter elektronischer Signaturen mit der eigenhändigen Unterschrift (Art.~14 Abs.~$2^{\text{bis}}$ OR). Anerkannte Schweizer Vertrauensdienste sind unter anderem \textbf{SwissSign} (Schweizerische Post / SwissID), \textbf{Swisscom Trust Services} und \textbf{SWITCHpki} (für Schweizer Hochschulen und Schulen).
 
 \paragraph*{Zertifikatsprüfung im Webbrowser}
 Beim Aufruf einer \gls{HTTPS}-Website (z.\,B.\ \url{https://www.sbb.ch}) übermittelt der Server die gesamte Kette (Server- und Zwischenzertifikat). Der Browser prüft jede Signatur rückwärts bis zur Root-\gls{CA} im lokalen Trust Store.
@@ -139,37 +139,37 @@ Beim Aufruf einer \gls{HTTPS}-Website (z.\,B.\ \url{https://www.sbb.ch}) übermi
 	\label{fig:safari-certificate-sbb}
 \end{figure}
 
-\begin{myremark}[Wer betreibt Root-CAs? Von Tech-Giganten bis zu Staaten]
+\begin{myremark}[Wer betreibt Root-\glspl{CA}? Von Tech-Giganten bis zu Staaten]
 	Dass beim Aufruf von \texttt{sbb.ch} ein Technologiekonzern wie \emph{Amazon} als Root-\gls{CA} auftaucht, wirft eine naheliegende Frage auf: Warum sind Stammzertifizierungsstellen nicht ausschliesslich staatliche Behörden?
-	
+
 	Die Web-\gls{PKI} ist historisch dezentral gewachsen. Wer als Root-\gls{CA} anerkannt wird, entscheiden primär die Betreiber der Betriebssysteme und Browser (Apple, Google, Microsoft, Mozilla) im Rahmen des internationalen \emph{CA/Browser Forums}. Jede Root-\gls{CA} muss jährlich strenge, unabhängige Sicherheitsaudits (z.\,B.\ \emph{WebTrust}) nachweisen.
-	
+
 	In der Praxis unterscheidet man vier Hauptarten von Zertifizierungsstellen:
 	\begin{itemize}
 		\item \textbf{Cloud- \& Tech-Konzerne (z.\,B.\ Amazon Trust Services, Google Trust Services):} Betreiben eigene \glspl{PKI}, um Millionen von Servern und Kunden ihrer Cloud-Plattformen (wie \gls{AWS}) automatisiert und kostengünstig abzusichern.
 		\item \textbf{Kommerzielle Vertrauensdienste (z.\,B.\ DigiCert, SwissSign):} Unabhängige Sicherheitsunternehmen, deren Kerngeschäft in der Ausstellung und Identitätsprüfung für Dritte liegt.
-		\item \textbf{Gemeinnützige Initiativen (z.\,B.\ \emph{Let's Encrypt}):} Stellen kostenlose, automatisierte Zertifikate für jedermann bereit und sichern heute über die Hälfte des weltweiten Webverkehrs ab.
+		\item \textbf{Gemeinnützige Initiativen (z.\,B.\ \emph{Let's Encrypt}):} Stellen kostenlose, automatisierte Zertifikate für jedermann bereit. Von \emph{Let's Encrypt} stammt heute die Mehrheit aller Website-Zertifikate.
 		\item \textbf{Staatliche \glspl{PKI} (z.\,B.\ \emph{Swiss Government PKI}):} Dienen hoheitlichen Behördennetzen, eGovernment, Identitätskarten und qualifizierten elektronischen Signaturen gemäss \gls{ZertES}.
 	\end{itemize}
-	
+
 	\smallskip\noindent\textbf{Warum nutzt die SBB Amazon und nicht die Bundes-\gls{PKI}?}
 	Die SBB betreibt ihre Web-Infrastruktur auf \gls{AWS} (mit automatisierter Zertifikatsverwaltung). Zudem ist die bundeseigene \emph{Swiss Government PKI} eine interne Behörden-\gls{PKI} und nicht in weltweiten Standard-Browsern vorinstalliert; ihr Einsatz auf öffentlichen Webseiten würde bei Fahrgästen Zertifikatswarnungen auslösen.
 \end{myremark}
 
 \begin{myexercise}[Zertifikats-Detektiv im Webbrowser]
 	Öffnen Sie einen Webbrowser Ihrer Wahl (Safari, Chrome, Edge oder Firefox) und rufen Sie eine Schweizer Website auf, z.\,B.\ das Portal der Schweizerischen Bundesbahnen (\url{https://www.sbb.ch}), der Schweizer Bundesverwaltung (\url{https://www.admin.ch}) oder Ihrer Kantonsschule.
-	
+
 	\begin{enumerate}
 		\item Öffnen Sie über das jeweilige Browsermenü die Zertifikatsinformationen.
 		\item Welche Zertifikate bilden die Hierarchiekette von der obersten Root-\gls{CA} über Zwischenzertifikate bis zum Blatt-Zertifikat der Webseite?
 		\item Notieren Sie für das Blatt-Zertifikat:
 		      \begin{itemize}
-			      \item Den gemeinsamen Namen (\emph{Common Name}, \gls{CN}) bzw.\ die Domain.
+			      \item Den gemeinsamen Namen (\emph{Common Name}, \acrshort{CN})\glsunset{CN} bzw.\ die Domain.
 			      \item Die Gültigkeitsdauer (von / bis).
 			      \item Den verwendeten Algorithmus und die Schlüssellänge für den öffentlichen Schlüssel (z.\,B.\ \gls{RSA} 2048 Bit oder \gls{ECC} P-256).
-			      \item Den verwendeten Hash-Algorithmus der Signatur (z.\,B.\ \gls{SHA}-256).
+			      \item Den verwendeten Hash-Algorithmus der Signatur (z.\,B.\ \acrshort{SHA}-256).
 		      \end{itemize}
-		\item \textbf{Denkaufgabe:} Warum haben moderne Server-Zertifikate typischerweise nur noch eine kurze Gültigkeitsdauer von maximal 398 Tagen (bzw.\ oft nur 90 Tagen wie bei \emph{Let's Encrypt}), während Root-Zertifikate oft für 20 bis 30 Jahre ausgestellt werden?
+		\item \textbf{Denkaufgabe:} Warum haben moderne Server-Zertifikate typischerweise nur noch eine kurze Gültigkeitsdauer von maximal 200 Tagen (gemäss CA/Browser Forum seit März 2026, bis 2029 schrittweise 47 Tage, bei \emph{Let's Encrypt} oft nur 90 Tage), während Root-Zertifikate oft für 20 bis 30 Jahre ausgestellt werden?
 	\end{enumerate}
 	\begin{myanswer}
 		\begin{enumerate}
@@ -183,9 +183,9 @@ Beim Aufruf einer \gls{HTTPS}-Website (z.\,B.\ \url{https://www.sbb.ch}) übermi
 			\item Typische Werte:
 			      \begin{itemize}
 				      \item \textbf{\gls{CN}:} \texttt{www.sbb.ch} (Inhaberin: Schweizerische Bundesbahnen SBB)
-				      \item \textbf{Gültigkeit:} Typischerweise 1 Jahr (bzw.\ bis zum angegebenen Ablaufdatum).
+				      \item \textbf{Gültigkeit:} Höchstens 200 Tage (seit März 2026), bei \emph{Let's Encrypt} meist 90 Tage.
 				      \item \textbf{Öffentlicher Schlüssel:} \gls{RSA} (2048 Bit) bzw.\ \gls{ECC} (256 Bit).
-				      \item \textbf{Signatur-Hash:} \gls{SHA}-256 mit \gls{RSA}-Verschlüsselung (\texttt{sha256WithRSA}).
+				      \item \textbf{Signatur-Hash:} \acrshort{SHA}-256 mit \gls{RSA}-Verschlüsselung (\texttt{sha256WithRSA}).
 			      \end{itemize}
 			\item Kurze Laufzeiten bei Serverzertifikaten begrenzen das Zeitfenster für den Missbrauch, falls ein privater Serverschlüssel unbemerkt gestohlen wird. Zudem zwingen kurze Laufzeiten Administratoren zu automatisierten Erneuerungsprozessen und ermöglichen einen schnellen Wechsel zu sichereren kryptographischen Standards. Root-Zertifikate hingegen müssen jahrzehntelang gültig sein, da ihre Erneuerung ein manuelles Update von Milliarden Betriebssystemen und Firmware-Chips weltweit erfordert.
 		\end{enumerate}

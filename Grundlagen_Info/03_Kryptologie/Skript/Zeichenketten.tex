@@ -62,7 +62,7 @@ Im Nachfolgenden schauen wir uns einige Übungen an, mit denen wir die einzelnen
     \end{myanswer}
 \end{myexercise}
 
-Der Befehl \lstinline|for i in range(len(Klartext))| erstellt eine Variable \lstinline|i| innerhalb der \lstinline|for|-Schleife, welche jedes Zeichen von 0 bis zur Länge von \lstinline|Klartext| minus 1 geht. Weshalb minus 1? Das erste Zeichen von \lstinline|Klartext| wird in Python mit \lstinline|Klartext[0]| ausgelesen, das letzte mit \lstinline|Klartext[len(Klartext)-1]|, da wir bei 0 zu zählen beginnen und nicht bei 1. Mit dem Ausdruck \lstinline|Klartext[i]| wird also das \lstinline|i|-te Zeichen der Zeichenkette \lstinline|Klartext| ausgelesen, wobei \lstinline|i| von 0 bis zu (Länge des Klartexts minus 1) geht.
+Der Befehl \lstinline|for i in range(len(Klartext))| erstellt eine Variable \lstinline|i| innerhalb der \lstinline|for|-Schleife, welche alle Werte von 0 bis zur Länge von \lstinline|Klartext| minus 1 geht. Weshalb minus 1? Das erste Zeichen von \lstinline|Klartext| wird in Python mit \lstinline|Klartext[0]| ausgelesen, das letzte mit \lstinline|Klartext[len(Klartext)-1]|, da wir bei 0 zu zählen beginnen und nicht bei 1. Mit dem Ausdruck \lstinline|Klartext[i]| wird also das \lstinline|i|-te Zeichen der Zeichenkette \lstinline|Klartext| ausgelesen, wobei \lstinline|i| von 0 bis zu (Länge des Klartexts minus 1) geht.
 
 Der Befehl \lstinline|for i in range(len(Klartext))| kann auch geschrieben werden als Befehl \lstinline|for i in range(0, len(Klartext), 1)|, wobei dies meint:
 \begin{itemize}
@@ -73,7 +73,7 @@ Der Befehl \lstinline|for i in range(len(Klartext))| kann auch geschrieben werde
 Dieser Befehl könnte auch verwendet werden, um bei einer beliebigen Zahl zu starten (nicht notwendigerweise 0), und um \lstinline|i| in Schritten grösser als 1 zu vergrössern. Die allgemeine Syntax des Befehls lässt sich also wie folgt zusammenfassen: \lstinline|for i in range(start, ende, schrittgroesse)|.
 
 \begin{mychallenge}
-    Eine Person verrät uns lediglich die Vorwahl ihrer $10$-stelligen Mobiltelefonnummer. Zudem verrät sie Ihnen auch, dass ihre Telefonnummer gerade ist (also auf 2, 4, 6, 8 oder 0 endet).
+    Eine Person verrät Ihnen lediglich die Vorwahl ihrer $10$-stelligen Mobiltelefonnummer. Zudem verrät sie Ihnen auch, dass ihre Telefonnummer gerade ist (also auf 2, 4, 6, 8 oder 0 endet).
     Damit gibt es nur noch $5$ Millionen Kombinationen, die es (im schlimmsten Fall) auszuprobieren gilt.
     Schreiben Sie ein Python-Programm, welches die $200$ kleinsten, geraden Nummern auflistet.
     Die erste Nummer sollte $0790000000$ sein, die letzte $0790000198$.
@@ -97,7 +97,7 @@ Dieser Befehl könnte auch verwendet werden, um bei einer beliebigen Zahl zu sta
 
 
 \section{Verschlüsselung von Texten in Python}
-Während des Zweiten Weltkriegs arbeitete der brillante Mathematiker Alan Turing in Bletchley Park im Vereinten Königreich und war mit der entscheidenden Aufgabe betraut, den Enigma-Code zu knacken, den die Deutschen zur Verschlüsselung ihrer Nachrichten verwendeten. Um diesen komplexen Code zu entschlüsseln, musste Turing sein tiefes Verständnis von Sprache und Mustern nutzen. In diesem Kapitel folgen wir in Turings Fussstapfen und entziffern einige Geheimnachrichten!
+Während des Zweiten Weltkriegs arbeitete der brillante Mathematiker Alan Turing in Bletchley Park im Vereinigten Königreich und war mit der entscheidenden Aufgabe betraut, den Enigma-Code zu knacken, den die Deutschen zur Verschlüsselung ihrer Nachrichten verwendeten. Um diesen komplexen Code zu entschlüsseln, musste Turing sein tiefes Verständnis von Sprache und Mustern nutzen. In diesem Kapitel folgen wir in Turings Fussstapfen und entziffern einige Geheimnachrichten!
 
 \begin{figure}[H]
     \centering
@@ -113,11 +113,11 @@ Im Nachfolgenden schauen wir uns einige Python-Befehle an, die dazu dienen, mit 
 
 \begin{table}[H]
     \centering
-    \begin{longtable}{l|m{0.3\linewidth}|m{0.4\linewidth}}
-        \textbf{Python}                    & \textbf{Beschreibung}                                                                                                                          & \textbf{Beispiel}                                                 \\\midrule\midrule
+    \begin{longtable}{lm{0.28\linewidth}m{0.36\linewidth}}
+        \textbf{Python}                    & \textbf{Beschreibung}                                                                                                                          & \textbf{Beispiel}                                                 \\\midrule
         \lstinline|len(s)|                 & Gibt die Länge des Textes \lstinline|s| zurück.                                                                                                & \begin{lstlisting}[numbers=none]
 n = len("hallo") # 5
-\end{lstlisting}                                   \\\midrule\midrule
+\end{lstlisting}                                   \\\midrule
         \lstinline|s[index]|               & Greift auf das Zeichen an der Index-Position \lstinline|index| zu. Bei negativen Indizes zählt man von rechts.                                 & \begin{lstlisting}[numbers=none]
 s = "hallo"
 s[0]  # "h"
@@ -127,7 +127,7 @@ s[-1] # "o"
         \lstinline|s[start:end]|           & Extrahiert den Teiltext vom Index \lstinline|start| bis und ohne \lstinline|end|                                                               & \begin{lstlisting}
 text = "hallo"
 text[1:4] # "all"
-\end{lstlisting}                                                 \\\midrule\midrule
+\end{lstlisting}                                                 \\\midrule
         \lstinline|ord(c)|                 & Gibt die Position des Zeichens \lstinline|c| in der \href{https://en.wikipedia.org/wiki/List_of_Unicode_characters}{Unicode-Tabelle} zurück    & \begin{lstlisting}[numbers=none]
 ord('A') # 65
 ord('B') # 66
@@ -137,7 +137,7 @@ ord('Z') # 90
 chr(65) # "A"
 chr(66) # "B"
 chr(67) # "C"
-\end{lstlisting}                                   \\\midrule\midrule
+\end{lstlisting}                                   \\\midrule
         \lstinline|text1.count(text2)|     & Zählt, wie oft der Text \lstinline|text2| im Text \lstinline|text1| vorkommt                                                                   & \begin{lstlisting}[numbers=none]
 text = "Das Haus ist gross und das Dach ist grün."
 n = text.count("ist") # 2
@@ -149,16 +149,16 @@ text.find("ist") # 9
         \lstinline|text.replace(old, new)| & Ersetzt alle Vorkommen des Teil-Texts \lstinline|old| durch \lstinline|new|.                                                                   & \begin{lstlisting}[numbers=none]
 text = "hallo"
 text = text.replace("a", "e") # "hello"
-\end{lstlisting}                                   \\\midrule\midrule
+\end{lstlisting}                                   \\\midrule
         \lstinline|text.split(sep)|        & Zerlegt den Text an jedem \texttt{sep} und gibt eine Liste der Teiltexte zurück.                                                               & \begin{lstlisting}[numbers=none]
 text = "a,b,c"
-liste_texte = text.split(",") 
+liste_texte = text.split(",")
 # ["a", "b", "c"]
 \end{lstlisting}                                   \\\midrule
         \lstinline|sep.join(liste)|        & Verbindet die Elemente von \texttt{liste} zu einem Text, getrennt durch den Text \texttt{sep}.                                                 & \begin{lstlisting}[numbers=none]
-txt = ":".join(["a", "b", "c"]) 
+txt = ":".join(["a", "b", "c"])
 # "a:b:c"
-\end{lstlisting}                                   \\\midrule\midrule
+\end{lstlisting}                                   \\\midrule
         \lstinline|str(n)|                 & Zahl \texttt{n} in einen Text (engl. \textit{string}) umwandeln                                                                                & \begin{lstlisting}[numbers=none]
  zahl = 10
  zahl_als_text = str(zahl) # "10"
@@ -228,7 +228,7 @@ Die Lösung für \cref{ex:zweiertausch} könnte in Python wie folgt implementier
 \lstinputlisting{Grundlagen_Info/03_Kryptologie/Python package/encryption/zweiertausch.py}
 
 \begin{myexercise}
-    Schreiben Sie eine Python-Funktion \lstinline|def dreiertausch(klartext)|, welche den \enquote{Dreiertausch} aus der Einführungsaufgabe 2 implementiert.
+    Schreiben Sie eine Python-Funktion \lstinline|def dreiertausch(klartext)|, welche den \enquote{Dreiertausch} aus \cref{ex:zweiertausch} implementiert.
     \begin{myanswer}
         \lstinputlisting{Grundlagen_Info/03_Kryptologie/Python package/encryption/dreiertausch.py}
     \end{myanswer}
@@ -261,7 +261,7 @@ meine_liste = geheime_zahl_als_text.split("_")
 summe = 0
 for i in meine_liste:
     summe += int(i)
-    
+
 print(summe)
 \end{lstlisting}
     \end{myanswer}
@@ -280,7 +280,7 @@ print(" ".join(liste))
 \newpage
 \section{Caesar-Verschlüsselung in Python}
 \begin{myexercise}\label{ex:oneline}
-    Entwickeln Sie eine Funktion, die zwei Parameter entgegennimmt: den Klartext (nur Grossbuchstaben!) und den Schlüssel (0-25). Als erstes soll jeder Buchstaben des Klartexts auf einer neuen Zeile ausgegeben werden.
+    Entwickeln Sie eine Funktion, die zwei Parameter entgegennimmt: den Klartext (nur Grossbuchstaben!) und den Schlüssel (0-25). Als erstes soll jeder Buchstabe des Klartexts auf einer neuen Zeile ausgegeben werden.
 
     Beispiel: Falls der Text \texttt{HALLO} eingegeben wird, soll folgendes ausgegeben werden:
     \begin{lstlisting}[language=bash]
@@ -302,7 +302,7 @@ verschluessle("HALLO", 3)
 \end{myexercise}
 
 \begin{myexercise}\label{ex:oneline-ascii}
-    Passen Sie das Programm aus \cref{ex:oneline} so an, dass statt den Buchstaben die Position in der Unicode-Tabelle ausgegeben wird. Verwenden Sie dafür die Funktion \lstinline|ord()|.
+    Passen Sie das Programm aus \cref{ex:oneline} so an, dass statt der Buchstaben die Position in der Unicode-Tabelle ausgegeben wird. Verwenden Sie dafür die Funktion \lstinline|ord()|.
 
     Beispiel: Falls der Text \texttt{HALLO} eingegeben wird, soll folgendes ausgegeben werden:
     \begin{lstlisting}[language=bash]
@@ -346,7 +346,7 @@ verschluessle("HALLO", 2)
 \end{myexercise}
 
 \begin{myexercise}\label{ex:oneline-ascii-shift-char}
-    Passen Sie das Programm aus \cref{ex:oneline-ascii-shift} so an, dass Sie statt den verschobenen Unicode-Positionen die Buchstaben ausgeben. Verwenden Sie dafür die Funktion \lstinline|chr()|.
+    Passen Sie das Programm aus \cref{ex:oneline-ascii-shift} so an, dass Sie statt der verschobenen Unicode-Positionen die Buchstaben ausgeben. Verwenden Sie dafür die Funktion \lstinline|chr()|.
 
 
     Beispiel: Falls der Text \texttt{HALLO} eingegeben wird und die Verschiebung 2, soll folgendes ausgegeben werden:
@@ -369,9 +369,9 @@ verschluessle("HALLO", 2)
 \end{myexercise}
 
 \begin{myexercise}\label{ex:oneline-ascii-shift-char-safety}
-    Wenn man den Klartext \texttt{ZORRO} mit dem Schlüssel 14 verschlüsselt, erhält man mit dem Programm aus Aufgabe \cref{ex:oneline-ascii-shift-char} den Geheimtext \lstinline|h]``]|. Eigentlich sollte man aber den Geheimtext \texttt{NCFFC} erhalten. Lösen Sie das Problem!
+    Wenn man den Klartext \texttt{ZORRO} mit dem Schlüssel 14 verschlüsselt, erhält man mit dem Programm aus \cref{ex:oneline-ascii-shift-char} den Geheimtext \lstinline|h]``]|. Eigentlich sollte man aber den Geheimtext \texttt{NCFFC} erhalten. Lösen Sie das Problem!
 
-    Tipp: Der grösste gültige Unicode-Wert für Grossbuchstaben ist 90 für den Buchstaben \enquote{\texttt{Z}}. Wenn man einen Wert bekommt, der 91 oder grösser ist, muss man ihn verkleinern!
+    Tipp: Der grösste Unicode-Wert der Grossbuchstaben \texttt{A} bis \texttt{Z} ist 90 für den Buchstaben \enquote{\texttt{Z}}. Wenn man einen Wert bekommt, der 91 oder grösser ist, muss man ihn verkleinern!
 
     \begin{myanswer}
         \begin{lstlisting}
@@ -412,7 +412,7 @@ def caesar(klartext, schluessel):
         if n>90:
             n-=26
         kryptotext += chr(n)
-        
+
     return kryptotext
 
 res = caesar("ZORRO", 14)
@@ -422,7 +422,7 @@ print(res)
 \end{myexercise}
 
 \begin{myexercise}
-    Entwickeln Sie ein Programm, das über einen Parameter den Geheimtext und den Schlüssel entgegennimmt und dann mit Hilfe der Caesar-Chiffre den Klartext wiederherstellt. Testen Sie es anschliessend, indem Sie eine verschlüsselte Nachricht von Ihrer Sitznachbarin oder Ihrem Sitznachbar entschlüsseln!
+    Entwickeln Sie ein Programm, das über zwei Parameter den Geheimtext und den Schlüssel entgegennimmt und dann mit Hilfe der Caesar-Chiffre den Klartext wiederherstellt. Testen Sie es anschliessend, indem Sie eine verschlüsselte Nachricht von Ihrer Sitznachbarin oder Ihrem Sitznachbarn entschlüsseln!
 
     \begin{myanswer}
         \begin{lstlisting}
@@ -433,7 +433,7 @@ def caesar_ent(kryptotext, schluessel):
         if n<65:
             n+=26
         klartext += chr(n)
-        
+
     return klartext
 
 res = caesar_ent("NCFFC", 14)
@@ -464,7 +464,7 @@ def vigenere(text, key, encrypt=True):
 
     text_encrypted = "".join(text_encrypted)
     return text_encrypted
-    
+
 print(vigenere("TESTTEXT", "KEY", encrypt=True))
 \end{lstlisting}
     \end{myanswer}
@@ -479,7 +479,7 @@ print(vigenere("TESTTEXT", "KEY", encrypt=True))
 \end{myexercise}
 
 \begin{mychallenge}
-    Sie wollen all ihre Passwörter auf einer lokalen Textdatei abspeichern. Dies ist jedoch nicht sicher, denn falls jemand ihren Computer knackt, kann die Person alle Passwörter einsehen. Sie kommen auf folgende Idee: Statt die Passwörter aufzuschreiben, speichern Sie eine mit Vigenère verschlüsselte Variante davon. So müssen Sie sich lediglich den Vigenère-Schlüssel im Kopf merken, nicht aber ihre Passwörter. Verwenden Sie Ihr Programm aus \cref{ex:vig}, um ein Programm zu schreiben, das sie zuerst mit \lstinline|input| nach einem Schlüssel und einem verschlüsselten Passwort fragt. Das Programm gibt Ihnen danach ihr Passwort im Klartext zurück.
+    Sie wollen all Ihre Passwörter in einer lokalen Textdatei abspeichern. Dies ist jedoch nicht sicher, denn falls jemand Ihren Computer knackt, kann die Person alle Passwörter einsehen. Sie kommen auf folgende Idee: Statt die Passwörter aufzuschreiben, speichern Sie eine mit Vigenère verschlüsselte Variante davon. So müssen Sie sich lediglich den Vigenère-Schlüssel im Kopf merken, nicht aber Ihre Passwörter. Verwenden Sie Ihr Programm aus \cref{ex:vig}, um ein Programm zu schreiben, das Sie zuerst mit \lstinline|input| nach einem Schlüssel und einem verschlüsselten Passwort fragt. Das Programm gibt Ihnen danach Ihr Passwort im Klartext zurück. Diese Aufgabe ist nur eine Programmierübung: Vigenère ist leicht zu knacken, verwenden Sie für echte Passwörter einen Passwortmanager.
     \begin{myanswer}
         \begin{lstlisting}
 def vigenere(encrypt=False):
@@ -500,7 +500,7 @@ def vigenere(encrypt=False):
 
     text_encrypted = "".join(text_encrypted)
     return text_encrypted
-    
+
 print(vigenere(encrypt=False))
 \end{lstlisting}
     \end{myanswer}
@@ -510,7 +510,7 @@ print(vigenere(encrypt=False))
     Eine Nachricht wurde abgefangen: \lstinline|msg = "AZDIYDHRZNOZI"|.
 
     \begin{itemize}
-        \item Die Nachricht wurde mit der Caesar-Chiffre verschlüsselt. Finden Sie  zunächst einmal den häufigsten Buchstaben in der verschlüsselten Nachricht. \textbf{Tipp}: \enquote{A} und \enquote{Z} haben die Positionen 65 und 90 im Unicode. Um in einer Schleife alle Zahlen von \texttt{x} by \texttt{y} durchzugehen, können Sie Folgendes schreiben: \lstinline|for num in range(x, y+1):|.
+        \item Die Nachricht wurde mit der Caesar-Chiffre verschlüsselt. Finden Sie zunächst einmal den häufigsten Buchstaben in der verschlüsselten Nachricht. \textbf{Tipp}: \enquote{A} und \enquote{Z} haben die Positionen 65 und 90 im Unicode. Um in einer Schleife alle Zahlen von \texttt{x} bis \texttt{y} durchzugehen, können Sie Folgendes schreiben: \lstinline|for num in range(x, y+1):|.
 
         \item Bestimmen Sie den verwendeten Schlüssel, indem Sie die Funktion \lstinline|ord()| zweimal verwenden.
 
@@ -524,7 +524,7 @@ print(vigenere(encrypt=False))
 txt = "AZDIYDHRZNOZI"
 for num in range(65,91):
     print(chr(num), txt.count(chr(num)))
-    
+
 x = caesar_ent(txt, ord("Z")-ord("E"))
 res = x.replace("WESTEN","OSTEN")
 \end{lstlisting}
@@ -532,14 +532,27 @@ res = x.replace("WESTEN","OSTEN")
 \end{myexercise}
 
 \begin{myexercise}
-    Gegeben sei die durchschnittliche Buchstabenhäufigkeit für alle Buchstaben des deutschen Alphabets. Diese lässt sich berechnen, indem man die Häufigkeiten für sehr lange deutsche Texte aufsummiert.
+    Gegeben sei die durchschnittliche Buchstabenhäufigkeit für alle Buchstaben des deutschen Alphabets. Diese lässt sich berechnen, indem man die relativen Häufigkeiten über sehr viele lange deutsche Texte mittelt. Die folgende Liste enthält die Häufigkeiten von \texttt{A} bis \texttt{Z} in Prozent.
 
     \begin{lstlisting}[numbers=none]
 german_letter_frequencies = [6.51, 1.89, 3.06, 5.08, 17.40, 1.66, 3.01, 4.76, 7.55, 0.27, 1.21, 3.44, 2.53, 9.78, 2.51, 0.79, 0.02, 7.00, 7.27, 6.15, 4.35, 0.67, 1.89, 0.03, 0.04, 1.13]
 \end{lstlisting}
 
-    Berechnen Sie mithilfe des folgenden Python-Programms die Friedmansche Charakteristik für diese Häufigkeiten.
-    \lstinputlisting[numbers=none]{Grundlagen_Info/03_Kryptologie/Python package/encryption/friedman.py}
+    Berechnen Sie mithilfe der folgenden Python-Funktion die Friedmansche Charakteristik (siehe \cref{eq:fc}) für diese Häufigkeiten. Wie interpretieren Sie das Ergebnis?
+    \begin{lstlisting}[numbers=none]
+def calculate_fc(frequencies):
+    # frequencies: Häufigkeiten von A bis Z in Prozent
+    fc = 0
+    for f in frequencies:
+        fc += (f / 100 - 1 / 26) ** 2
+    return fc
+\end{lstlisting}
+    \begin{myanswer}
+        \begin{lstlisting}[numbers=none]
+print(round(calculate_fc(german_letter_frequencies), 4))  # 0.0377
+\end{lstlisting}
+        Die Friedmansche Charakteristik beträgt $FC \approx 0.0377$, also etwa \qty{3.8}{\percent}. Das ist der typische Wert für deutsche Klartexte. Ein Text mit gleich verteilten Buchstaben hätte den Wert $0$.
+    \end{myanswer}
 \end{myexercise}
 
 

@@ -32,7 +32,7 @@ Sicherlich haben Sie als Kind schon einmal eine Geheimschrift erfunden, um gehei
 			\includegraphics[width=\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/Freimaurer-Buchstaben.pdf}
 			\caption{Zuordnung der Symbole zu den lateinischen Grossbuchstaben}
 		\end{subfigure}
-		\caption[Freimaurer]{Freimaurer-Geheimschrift: Beispiel für ein Verfahren, dessen Sicherheit von der Geheimhaltung des Systems abhängt. \\ {\small Quelle: \href{https://de.wikipedia.org/wiki/Freimaurer-Alphabet}{Wikimedia Commons}}}
+		\caption[Freimaurer]{Freimaurer-Geheimschrift: Beispiel für ein Verfahren, dessen Sicherheit von der Geheimhaltung des Systems abhängt. \\ {\small Quellen: Alphabet von Stefan Kalscheuer (\href{https://de.wikipedia.org/wiki/Datei:Pigpen.svg}{Wikipedia}, CC BY-SA 3.0), Beispiel von Antonsusi (\href{https://commons.wikimedia.org/wiki/File:FreimaurerABC.svg}{Wikimedia Commons}, CC BY-SA 4.0)}}
 		\label{fig:Freimaurer}
 	\end{figure}
 \end{myexample}
@@ -52,7 +52,7 @@ Bob \emph{dechiffriert} den Geheimtext, um wieder den Klartext zu erhalten. Ein 
 			label={[mylabel, anchor=west]north east:{\textcolor{Red}{Geheimtext} $\big\downarrow\text{\tiny (Dechiffrierung)}$\\
 						\textcolor{Blue}{Klartext}}}] (bob) {Bob (Empfänger)};
 
-		\draw[->, thick, black] ([yshift=0mm]alice.east) coordinate(aux-a)-- coordinate[near start] (aux) node[above, text width=3cm, align=center]{Übermittlung über unsicheren Kanal e.g. Internet, Telefonie \\
+		\draw[->, thick, black] ([yshift=0mm]alice.east) coordinate(aux-a)-- coordinate[near start] (aux) node[above, text width=3cm, align=center]{Übermittlung über unsicheren Kanal, z.\,B. Internet, Telefonie \\
 				\textcolor{Red}{Geheimtext}} (aux-a-|bob.west);
 
 		\node[devil, minimum width=1.5cm, below right=13mm and 1.6cm of alice] (eve) {Eve (Gegner / Abhörer)};
@@ -99,7 +99,7 @@ Wir werden im Folgenden einige einfache Kryptosysteme kennenlernen, um zu verste
 \subsection{Das Kryptosystem \emph{Skytale}}
 Das bereits von den Griechen für militärische Zwecke verwendete Kryptosystem \emph{Skytale} basiert auf der \textbf{Transposition}: Dabei bleiben die Buchstaben des Klartexts im Kryptotext zwar erhalten, ändern aber nach folgendem Algorithmus ihre Positionen:
 \begin{itemize}
-	\item Schreibe den Klartext zeilenweise in eine Tabelle (Matrix) von links nach rechts.
+	\item Wir schreiben den Klartext zeilenweise von links nach rechts in eine Tabelle (Matrix).
 	\item Allfällige leere Felder in der letzten Zeile der Tabelle werden mit beliebigen (am besten zufällig gewählten) Buchstaben gefüllt.
 	\item Den Kryptotext erhalten wir, indem wir die Buchstaben Spalte für Spalte von links nach rechts und von oben nach unten lesen.
 \end{itemize}
@@ -110,7 +110,7 @@ Die Skytale wird mit einem Stab und einem Band umgesetzt (\cref{fig:skytale-band
 	\centering
 	\includegraphics[width=0.5\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/SkytaleWiki}
 	\caption[Skytale]{Praktische Umsetzung der Skytale-Verschlüsselung mit einem Stab und einem Band.
-		Die Anzahl Zeichen, die auf eine Windung des Bandes um den Stab passen, entspricht der Anzahl Zeilen in der Tabelle, also dem Schlüssel des Kryptosystems \emph{Skytale}. \\ {\small Quelle: \href{https://commons.wikimedia.org/wiki/File:Skytale.png}{Wikimedia Commons}}}
+		Die Anzahl Zeichen, die auf eine Windung des Bandes um den Stab passen, entspricht der Anzahl Zeilen in der Tabelle, also dem Schlüssel des Kryptosystems \emph{Skytale}. \\ {\small Foto: Luringen (\href{https://commons.wikimedia.org/wiki/File:Skytale.png}{Wikimedia Commons}), CC BY-SA 3.0}}
 	\label{fig:skytale-band}
 \end{figure}
 
@@ -119,7 +119,7 @@ Die Skytale wird mit einem Stab und einem Band umgesetzt (\cref{fig:skytale-band
 	\begin{center}
 		\texttt{WNGIAEIEMATSMKRTTEAGIEINANINTUGNDOJEEENL}
 	\end{center}
-	wurde mit einer Tabelle mit 5 Zeilen und 8 Spalten erzeugt. Wie lautet der Klartext? Tipp: Nehmen Sie Ihr bevorzugtes Tabellenkalkulationsprogramm zuhilfe oder verwenden Sie \href{https://cryptbreaker.marcwidmer.xyz/solve}{diesen Link} mit \emph{Analysewerkzeug} $\rightarrow$ \emph{Tabelle}.
+	wurde mit einer Tabelle mit 5 Zeilen und 8 Spalten erzeugt. Wie lautet der Klartext? Tipp: Nehmen Sie Ihr bevorzugtes Tabellenkalkulationsprogramm zu Hilfe oder verwenden Sie \href{https://cryptbreaker.marcwidmer.xyz/solve}{diesen Link} mit \emph{Analysewerkzeug} $\rightarrow$ \emph{Tabelle}.
 	\begin{myanswer}
 
 		Wir beginnen mit einer leeren $5\times 8$ Tabelle und schreiben den gegebenen Kryptotext spaltenweise von links nach rechts und von oben nach unten in die Tabelle ein:
@@ -316,7 +316,7 @@ Die Skytale wird mit einem Stab und einem Band umgesetzt (\cref{fig:skytale-band
 			\label{fig:transposition-cipher}
 		\end{figure}
 		Beachten Sie, dass die Buchstaben des Klartexts im Kryptotext erhalten bleiben, aber ihre Reihenfolge geändert wird.
-		Die Schlüssel für diese Kryptosystem sind die Anweisungen, wie die Buchstaben vertauscht werden, z.\,B. \enquote{Zweiertausch} oder \enquote{Dreiertausch}.
+		Die Schlüssel für dieses Kryptosystem sind die Anweisungen, wie die Buchstaben vertauscht werden, z.\,B. \enquote{Zweiertausch} oder \enquote{Dreiertausch}.
 	\end{myanswer}
 \end{myexercise}
 
@@ -351,7 +351,7 @@ Die Anzahl der Positionen, um die verschoben wird, bildet den Schlüssel des Kry
 	Dabei haben wir die innere Scheibe um 3 Positionen im Uhrzeigersinn gedreht, um die Verschlüsselung durchzuführen (\enquote{lesen von innen nach aussen}). Zur Entschlüsselung
 	\begin{itemize}
 		\item lesen wir die Drehscheiben, genau so wie sie in \cref{fig:caesar_3} angeordnet sind, von \enquote{aussen nach innen}
-		\item oder drehen die innere Scheibe um 3 Positionen gegen den Uhrzeigersinn zurück in die Ausgangsposition (\texttt{A} $\leftrightarrow$ \texttt{A}) und dann nochmals um 3 Positionen gegen den Uhrzeigersinn (dies können wir um eine Verschiebung um $-3$ Positionen anschauen).
+		\item oder drehen die innere Scheibe um 3 Positionen gegen den Uhrzeigersinn zurück in die Ausgangsposition (\texttt{A} $\leftrightarrow$ \texttt{A}) und dann nochmals um 3 Positionen gegen den Uhrzeigersinn (dies können wir als Verschiebung um $-3$ Positionen anschauen).
 		      Mit diesem Vorgehen können wir die Drehscheiben wieder von \enquote{innen nach aussen} lesen, um den Klartext zu erhalten.
 	\end{itemize}
 	\href{https://www.101computing.net/cipher-wheel.html}{Hier} finden Sie ein interaktives Werkzeug, um die Caesar-Verschlüsselung und -Entschlüsselung durchzuführen.
@@ -370,12 +370,12 @@ Kryptotext: PKSGTJSAYYZKPUYKLBKXRKASJKZNG...
 \begin{myexercise}\label{myexercise:vorbetrachung_haeufigkeitsanalyse}
 	Der Kryptotext
 	\begin{center}
-		\texttt{X G T Y G P F G U E J N W G U U G N B Y G K}
+		\texttt{X G T Y G P F G F G P U E J N W G U U G N B Y G K}
 	\end{center}
 	wurde mit Caesar verschlüsselt, der Schlüssel ist aber unbekannt.
 	Entschlüsseln Sie den Kryptotext, ohne alle Schlüssel auszuprobieren, wenn Sie wissen, dass der häufigste Buchstabe im Klartext \texttt{E} ist. Verwenden Sie das \href{https://www.101computing.net/cipher-wheel.html}{interaktive Werkzeug}, um die Entschlüsselung durchzuführen.
 	\begin{myanswer}
-		Der häufigste Buchstabe im Kryptotext ist \texttt{G}. Wir vermuten also, dass die \texttt{G}'s im gegebenen Kryptotext aus den \texttt{E}'s im Klartext entstanden. Dies entspricht einer Verschlüsselung mit dem Schlüssel 2 bzw. \texttt{C}. Wir können den Text mithilfe der Verschiebung \texttt{G} $\rightarrow$ \texttt{E} entschlüsseln:
+		Der häufigste Buchstabe im Kryptotext ist \texttt{G}. Wir vermuten also, dass die \texttt{G} im gegebenen Kryptotext aus den \texttt{E} im Klartext entstanden sind. Dies entspricht einer Verschlüsselung mit dem Schlüssel 2 bzw. \texttt{C}. Wir können den Text mithilfe der Verschiebung \texttt{G} $\rightarrow$ \texttt{E} entschlüsseln:
 		\begin{center}
 			\caesar[2]\\
 			\texttt{V E R W E N D E D E N S C H L U E S S E L Z W E I}
@@ -404,7 +404,7 @@ Das Schema in \cref{fig:schemaKryptosystem} zeigt die Kommunikation zwischen Ali
 			label={[mylabel, anchor=west]north east:{\textcolor{Red}{(\mbox{Kryptotext}, Schlüssel)} $\big\downarrow\text{\tiny (Entschlüsselung)}$\\
 						\textcolor{Blue}{Klartext}}}] (bob) {Bob (Empfänger)};
 
-		\draw[->, thick, black] ([yshift=0mm]alice.east) coordinate(aux-a)-- coordinate[near start] (aux) node[above, text width=3cm, align=center]{Übermittlung über unsicheren Kanal e.g. Internet, Telefonie \\
+		\draw[->, thick, black] ([yshift=0mm]alice.east) coordinate(aux-a)-- coordinate[near start] (aux) node[above, text width=3cm, align=center]{Übermittlung über unsicheren Kanal, z.\,B. Internet, Telefonie \\
 				\textcolor{Red}{Kryptotext}} (aux-a-|bob.west);
 
 		\node[devil, minimum width=1.5cm, below right=13mm and 1.6cm of alice] (eve) {Eve (Gegner / Abhörer)};
@@ -431,11 +431,11 @@ Das Schema in \cref{fig:schemaKryptosystem} zeigt die Kommunikation zwischen Ali
 \end{mydefinition}
 
 \begin{myremark}[Geheimschrift als Spezialfall eines Kryptosystems]
-	Eine Geheimschrift ist ein Spezialfall eines Kryptosystems, bei dem die Schlüsselmenge nur ein einziges Element enthält, nämlich die Anweisung, wie die Buchstaben vertauscht werden.
-	Umgekehrt, kann ein Kryptosystem als eine Sammlung von Geheimschriften betrachtet werden, wobei für jede mögliche Schlüssel eine Geheimschrift definiert ist, die die Buchstaben entsprechend der Verschlüsselungsregel vertauscht.
+	Eine Geheimschrift ist ein Spezialfall eines Kryptosystems, bei dem die Schlüsselmenge nur ein einziges Element enthält, nämlich die Anweisung, wie die Buchstaben ersetzt werden.
+	Umgekehrt kann ein Kryptosystem als eine Sammlung von Geheimschriften betrachtet werden, wobei für jeden möglichen Schlüssel eine Geheimschrift definiert ist, die die Buchstaben entsprechend der Verschlüsselungsregel ersetzt.
 \end{myremark}
 
-\subsection{Kerckhoffs'sches Prinzip}
+\subsection{Kerckhoffs'sches Prinzip}\label{subsec:kerckhoffs}
 Der niederländische Kryptologe und Linguist \emph{Auguste Kerckhoffs} stellte im Jahr 1883 die folgende Anforderung an die Sicherheit von Kryptosystemen auf, die heute als \textbf{Kerckhoffs'sches Prinzip} bekannt ist:
 
 \begin{myquote}\label{myquote:kerckhoffs}
@@ -445,7 +445,7 @@ Der niederländische Kryptologe und Linguist \emph{Auguste Kerckhoffs} stellte i
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\linewidth]{Grundlagen_Info/03_Kryptologie/Figures/kerckhoffs}
-	\caption{Auguste Kerckhoffs (1835--1903)}
+	\caption[Auguste Kerckhoffs (1835--1903)]{Auguste Kerckhoffs (1835--1903) \\ {\small Foto: unbekannt, gemeinfrei (\href{https://commons.wikimedia.org/wiki/File:Auguste\_Kerckhoffs.jpg}{Wikimedia Commons})}}
 	\label{fig:kerckhoffs}
 \end{figure}
 
@@ -474,8 +474,8 @@ Das Kerckhoffs'sche Prinzip besagt, dass die Sicherheit eines Kryptosystems nich
 \section{Kryptoanalyse von Caesar}\label{sec:kryptoanalyse_caesar}
 Die Caesar-Verschlüsselung ist ein einfaches Kryptosystem, das leicht zu knacken ist. Es gibt zwei Hauptmethoden, um den Schlüssel zu bestimmen und den Klartext zu rekonstruieren:
 \begin{itemize}
-	\item Einerseits reicht es, alle 26 (0 bis 25) möglichen Verschiebungen auszuprobieren. Ein moderner Computer hat dies in einigen Millisekunden erledigt. Natürlich muss ein Angreifer (beziehungsweise sein Computer) auch die Möglichkeit haben, den Klartext zu erkennen, wenn er ihn sieht, z.\,B. durch die Erkennung von sinnvollen Wortteilen (e.g. Abgleich mit einem deutschen Wörterbuch).
-	\item Andererseits kann, wenn der Text genügend lang ist, anhand der Häufigkeit der verschlüsselten Buchstaben mittels einer sogenannten \emph{Häufigkeitsanalyse} in kürzester Zeit bestimmt werden, was der Schlüssel war (vielleicht erinneren Sie sich noch an \cref{myexercise:vorbetrachung_haeufigkeitsanalyse}). \cref{fig:caesar-freq} zeigt die Häufigkeiten der Buchstaben eines langen, mit Caesar verschlüsselten Texts im Kryptotext.
+	\item Einerseits reicht es, alle 26 (0 bis 25) möglichen Verschiebungen auszuprobieren. Ein moderner Computer hat dies in einigen Millisekunden erledigt. Natürlich muss ein Angreifer (beziehungsweise sein Computer) auch die Möglichkeit haben, den Klartext zu erkennen, wenn er ihn sieht, z.\,B. durch die Erkennung von sinnvollen Wortteilen (etwa durch Abgleich mit einem deutschen Wörterbuch).
+	\item Andererseits kann, wenn der Text genügend lang ist, anhand der Häufigkeit der verschlüsselten Buchstaben mittels einer sogenannten \emph{Häufigkeitsanalyse} in kürzester Zeit bestimmt werden, was der Schlüssel war (vielleicht erinnern Sie sich noch an \cref{myexercise:vorbetrachung_haeufigkeitsanalyse}). \cref{fig:caesar-freq} zeigt die Häufigkeiten der Buchstaben eines langen, mit Caesar verschlüsselten Texts im Kryptotext.
 \end{itemize}
 
 \begin{figure}[H]
@@ -485,23 +485,23 @@ Die Caesar-Verschlüsselung ist ein einfaches Kryptosystem, das leicht zu knacke
 	\label{fig:caesar-freq}
 \end{figure}
 
-Die durchschnittlichen Häufigkeiten der häufigsten Buchstaben, Bi- und Tri-Grammen in deutschen Texten ist in \cref{tab:alle-haeufigkeiten} angegeben.
+Die durchschnittlichen Häufigkeiten der häufigsten Buchstaben, Bi- und Tri-Grammen in deutschen Texten sind in \cref{tab:alle-haeufigkeiten} angegeben.
 
 \begin{table}[H]
 	\centering
 	\begin{subtable}[t]{0.3\textwidth}
 		\centering
-		\begin{tabular}{c|p{1.9cm}}
+		\begin{tabular}{cp{1.9cm}}
 			\textbf{Buchstabe} & Relative Häufigkeit (\%) \\ \midrule
-			E                  & 17.40                    \\ \midrule
-			N                  & 9.78                     \\ \midrule
-			I                  & 7.55                     \\ \midrule
-			S                  & 7.27                     \\ \midrule
-			R                  & 7.00                     \\ \midrule
-			A                  & 6.51                     \\ \midrule
-			T                  & 6.15                     \\ \midrule
-			D                  & 5.08                     \\ \midrule
-			H                  & 4.76                     \\ \midrule
+			E                  & 17.40                    \\
+			N                  & 9.78                     \\
+			I                  & 7.55                     \\
+			S                  & 7.27                     \\
+			R                  & 7.00                     \\
+			A                  & 6.51                     \\
+			T                  & 6.15                     \\
+			D                  & 5.08                     \\
+			H                  & 4.76                     \\
 			U                  & 4.35                     \\
 		\end{tabular}
 		\caption{Buchstabenhäufigkeit}
@@ -509,17 +509,17 @@ Die durchschnittlichen Häufigkeiten der häufigsten Buchstaben, Bi- und Tri-Gra
 	\hspace{0.5cm}
 	\begin{subtable}[t]{0.3\textwidth}
 		\centering
-		\begin{tabular}{c|p{1.9cm}}
+		\begin{tabular}{cp{1.9cm}}
 			\textbf{Bigramm} & Relative Häufigkeit (\%) \\ \midrule
-			ER               & 3.94                     \\ \midrule
-			EN               & 3.07                     \\ \midrule
-			CH               & 2.73                     \\ \midrule
-			DE               & 2.41                     \\ \midrule
-			EI               & 2.29                     \\ \midrule
-			ND               & 2.07                     \\ \midrule
-			IE               & 1.97                     \\ \midrule
-			GE               & 1.88                     \\ \midrule
-			TE               & 1.88                     \\ \midrule
+			ER               & 3.94                     \\
+			EN               & 3.07                     \\
+			CH               & 2.73                     \\
+			DE               & 2.41                     \\
+			EI               & 2.29                     \\
+			ND               & 2.07                     \\
+			IE               & 1.97                     \\
+			GE               & 1.88                     \\
+			TE               & 1.88                     \\
 			IN               & 1.82                     \\
 		\end{tabular}
 		\caption{Bigrammhäufigkeit}
@@ -527,17 +527,17 @@ Die durchschnittlichen Häufigkeiten der häufigsten Buchstaben, Bi- und Tri-Gra
 	\hspace{0.5cm}
 	\begin{subtable}[t]{0.3\textwidth}
 		\centering
-		\begin{tabular}{c|p{1.9cm}}
+		\begin{tabular}{cp{1.9cm}}
 			\textbf{Trigramm} & Relative Häufigkeit (\%) \\ \midrule
-			DER               & 1.44                     \\ \midrule
-			SCH               & 1.21                     \\ \midrule
-			ICH               & 1.08                     \\ \midrule
-			DIE               & 0.98                     \\ \midrule
-			UND               & 0.95                     \\ \midrule
-			DEN               & 0.78                     \\ \midrule
-			CHE               & 0.77                     \\ \midrule
-			EIN               & 0.75                     \\ \midrule
-			NDE               & 0.74                     \\ \midrule
+			DER               & 1.44                     \\
+			SCH               & 1.21                     \\
+			ICH               & 1.08                     \\
+			DIE               & 0.98                     \\
+			UND               & 0.95                     \\
+			DEN               & 0.78                     \\
+			CHE               & 0.77                     \\
+			EIN               & 0.75                     \\
+			NDE               & 0.74                     \\
 			GEN               & 0.72                     \\
 		\end{tabular}
 		\caption{Trigrammhäufigkeit}
@@ -577,9 +577,9 @@ Die durchschnittlichen Häufigkeiten der häufigsten Buchstaben, Bi- und Tri-Gra
 
 \section{Allgemeine monoalphabetische Substitution}
 Bei einer \emph{monoalphabetischen Substitution} wird jeder Buchstabe des Klartexts während des gesamten Verschlüsselungsvorgangs nach einer festen Regel durch exakt ein und denselben Kryptotext-Buchstaben ersetzt.
-Caesar ist ein Spezialfall einer monoalphabetischen Substitution, bei der jeder Buchstaben im Klartext um dieselbe feste (durch den Caesar-Schlüssel bestimmte) Anzahl Positionen zu verschieben ist.
+Caesar ist ein Spezialfall einer monoalphabetischen Substitution, bei der jeder Buchstabe im Klartext um dieselbe feste (durch den Caesar-Schlüssel bestimmte) Anzahl Positionen zu verschieben ist.
 
-Im Allgemeinen könnten wir aber auch jede beliebige \emph{Permutation} (Eins-zu-Eins-Zuordnung) von Buchstaben zu erlauben. Eine solche Permutation ist in \cref{fig:monoalph-subst} dargestellt. Wir nennen dieses Kryptosystem \textbf{allgemeine monoalphabetische Substitution}.
+Im Allgemeinen könnten wir aber auch jede beliebige \emph{Permutation} (Eins-zu-Eins-Zuordnung) von Buchstaben erlauben. Eine solche Permutation ist in \cref{fig:monoalph-subst} dargestellt. Wir nennen dieses Kryptosystem \textbf{allgemeine monoalphabetische Substitution}.
 \begin{figure}[H]
 	\centering
 	\multiKey{Z,E,A,B,C,D,Y,X,W,H,I,V,U,T,G,F,J,K,R,Q,L,M,S,N,P,O}
@@ -660,5 +660,5 @@ Das genauere Vorgehen wird in \cref{myexample:monoalph-subst-freq} illustriert.
 \end{myexercise}
 
 \begin{mychallenge}
-	Lösen Sie eine Knobelaufgabe in dem online-Kapitel \emph{\href{https://cryptbreaker.marcwidmer.xyz/problems/substitution}{Substitution}}.
+	Lösen Sie eine Knobelaufgabe im Online-Kapitel \emph{\href{https://cryptbreaker.marcwidmer.xyz/problems/substitution}{Substitution}}.
 \end{mychallenge}

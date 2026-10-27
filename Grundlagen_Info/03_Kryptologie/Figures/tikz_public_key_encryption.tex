@@ -7,10 +7,10 @@
 	% Nodes
 	\node (plaintext) [data] {\emoji{woman-technologist} Alice};
 	\node (ciphertext) [data, right=of plaintext] {Verschlüsselter\\Text};
-	\node (publickey) [keybox, above=of ciphertext] {\emoji{key} Öffentlicher Schlüssel\\von Bob};
+	\node (publickey) [keybox, above=of ciphertext] {\emoji{unlocked} Öffentlicher Schlüssel\\von Bob};
 
 	\node (decryptedtext) [data, below=of ciphertext] {Verschlüsselter\\Text};
-	\node (privatekey) [keybox, below=of decryptedtext] {\emoji{lock} Privater Schlüssel\\von Bob};
+	\node (privatekey) [keybox, below=of decryptedtext] {\emoji{key} Privater Schlüssel\\von Bob};
 	\node (bob) [data, left=of decryptedtext] {\emoji{man-technologist} Bob};
 
 	% Arrows
