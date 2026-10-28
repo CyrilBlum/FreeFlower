@@ -125,7 +125,8 @@
 \begin{frame}
     \begin{table}[H]
         \centering
-        \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
+        % all 6 pairs in two rows so that the frame is not cut off at the bottom
+        \begin{tabular}{c@{\hspace{1cm}}c@{\hspace{1cm}}c}
             \begin{tabular}{c}
                 \texttt{0 0 0 0 0 0} \\
                 \texttt{0 1 0 1 0 1} \\
@@ -148,7 +149,8 @@
                 \hline
                 \texttt{x x x x x x} \\
                 \textcolor{orange}{Abstand 6}
-            \end{tabular} \\
+            \end{tabular}
+             \\
             \begin{tabular}{c}
                 \texttt{0 1 0 1 0 1} \\
                 \texttt{1 0 1 0 1 0} \\
@@ -164,7 +166,7 @@
                 \texttt{x o x o x o} \\
                 \textcolor{orange}{Abstand 3}
             \end{tabular}
-             &                           \\
+             &
             \begin{tabular}{c}
                 \texttt{1 0 1 0 1 0} \\
                 \texttt{1 1 1 1 1 1} \\
@@ -172,22 +174,20 @@
                 \texttt{o x o x o x} \\
                 \textcolor{orange}{Abstand 3}
             \end{tabular}
-             &
-             &                           \\
         \end{tabular}
         \caption{Abstände zwischen allen Codewörtern der Kodierung$_2$}
     \end{table}
     \begin{itemize}
         \item Abstand dieser Kodierung: \textcolor{red}{3}
         \item Abstand = Minimum aller paarweisen Abstände der Codewörter
-        \item Bis zu zwei Bits können geändert werden, ohne dass man von einem Wort zu einem anderen übergeht
+        \item Bis zu zwei Bitfehler ergeben nie ein anderes Codewort
     \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität} auf Moodle}
     \begin{itemize}
-        \item \aufgabebox{1.7--1.9}
+        \item \aufgabebox{1.8, 1.9}
         \item \challengebox{1.10, 1.11}
     \end{itemize}
 \end{frame}

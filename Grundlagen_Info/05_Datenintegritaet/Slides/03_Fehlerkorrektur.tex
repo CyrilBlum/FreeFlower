@@ -58,33 +58,39 @@
 
 
 \begin{frame}
-    \begin{myexercise}
+    % same wording as exercise 1.12 in the script; box without counter, since
+    % the Beamer exercise counter does not match the script numbering
+    \begin{tcolorboxTemplate}[
+            title=\faEdit{} \theexercisename,
+            parbox=false,
+            colback=RoyalBlue!10,
+            colframe=RoyalBlue,
+            colbacktitle=RoyalBlue]
         Finden Sie für die drei Nachrichten \textbf{Rot}, \textbf{Blau} und \textbf{Grün} eine Kodierung aus Bitfolgen der Länge 5, die \textbf{1-fehlerkorrigierend} ist.
 
-        D.h., wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerhaften Bitfolge eindeutig rekonstruieren.
-
-        Der Abstand zwischen \textit{allen} Codewörtern sollte möglichst gross sein!
+        Das bedeutet, wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerbehafteten Bitfolge eindeutig rekonstruieren. Was können Sie über den Abstand einer solchen Kodierung sagen?
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{>{\bfseries}ll}
-                Information & \textbf{Code}  \\ \midrule
-                Rot         & 00000 \\ \midrule
-                Blau        & ??    \\ \midrule
-                Grün        & ??    \\
+            \small % keeps the exercise box above the footline
+            \begin{tabular}{cc}
+                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+                Rot            & \texttt{00000}     \\\midrule
+                Grün           &                    \\\midrule
+                Blau           &                    \\
             \end{tabular}
         \end{table}
-    \end{myexercise}
+    \end{tcolorboxTemplate}
 \end{frame}
 
 \begin{frame}[fragile]{Mögliche Lösung}
     \begin{table}[H]
             \centering
-            \begin{tabular}{>{\bfseries}ll}
-                Information & \textbf{Code}  \\ \midrule
-                Rot         & 00000 \\ \midrule
-                Blau        & 01110  \\ \midrule
-                Grün        & 10101  \\
+            \begin{tabular}{cc}
+                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+                Rot            & \texttt{00000}     \\\midrule
+                Grün           & \texttt{00111}     \\\midrule
+                Blau           & \texttt{11100}     \\
             \end{tabular}
         \end{table}
 \end{frame}
@@ -153,6 +159,7 @@
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
         \item Definition 1.1 lesen
-        \item \aufgabebox{1.14--1.18} (Challenges erst nachher)
+        \item \aufgabebox{1.12, 1.14--1.18}
+        \item \challengebox{1.13} (erst nach den Aufgaben)
     \end{itemize}
 \end{frame}
