@@ -44,7 +44,7 @@ Sport: true
 
 **Schritt 1: Tabu-Kartendatei generieren**
 ```bash
-cd /Users/cyrilblum/LeeTeX/Various/Tabu
+cd Various/Tabu  # vom Repo-Root aus
 python3 generate_tabu.py
 ```
 Dies generiert eine neue `Tabu.tex` mit:
@@ -54,7 +54,7 @@ Dies generiert eine neue `Tabu.tex` mit:
 
 **Schritt 2: LaTeX kompilieren**
 ```bash
-cd /Users/cyrilblum/LeeTeX
+cd ../..
 lualatex -output-directory=build main.tex
 ```
 

@@ -344,3 +344,5 @@ Various/Wahlpflichtmodul\ Statistik/*.csv
 Logos/build/
 
 Private/*
+## Stale root Jekyll build (GitHub Pages builds from docs/)
+/_site/
