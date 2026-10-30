@@ -203,6 +203,26 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
     \end{myanswer}
 \end{mychallenge}
 
+\begin{mychallenge}
+    In dieser Challenge untersuchen Sie zwei Alternativen zum \gls{EAN}-Code. Die Prüfziffer $x_{13}$ wird jeweils wieder so gewählt, dass $s+x_{13}$ durch 10 teilbar ist, nur die Berechnung von $s$ ändert sich:
+    \begin{aenum}
+        \item $s=x_1+x_3+ x_5+ x_7+ x_9+ x_{11}+\textcolor{red}{5}\times( x_2+ x_4+ x_6+ x_8+ x_{10}+ x_{12})$
+
+              Begründen Sie, wieso diese Alternative ein Vertippen nicht zuverlässig erkennt.
+        \item $s=x_1+x_3+ x_5+ x_7+ x_9+ x_{11}+\textcolor{red}{4}\times( x_2+ x_4+ x_6+ x_8+ x_{10}+ x_{12})$
+
+              Erklären Sie, wieso diese Alternative ein Vertippen nicht zuverlässig erkennt, ein Vertauschen benachbarter Ziffern hingegen schon.
+    \end{aenum}
+    \begin{myanswer}
+        \begin{aenum}
+            \item Wenn der Vertipper an einer geraden Position geschieht und sich die Ziffer um eine gerade Zahl ändert, ändert sich $s$ um ein Vielfaches von 10. Das wird in dieser Variante nicht erkannt.
+            \item Wenn der Vertipper an einer geraden Position geschieht und sich die Ziffer um 5 ändert, ändert sich $s$ um $\pm 20$. Das wird in dieser Variante nicht erkannt.
+
+                  Wenn benachbarte Ziffern vertauscht werden, ändert sich die Summe $s$ um das Dreifache der Differenz $d$ der beiden Ziffern. Wenn $d=0$ ist, sind die Ziffern gleich und ein Vertauschen hat keinen Einfluss. Für alle anderen $|d|\in\{1, \dots, 9\}$ ist $3d$ nicht durch 10 teilbar, wodurch sich die Prüfziffer ändern müsste. Vertauschen wird also in jedem Fall erkannt.
+        \end{aenum}
+    \end{myanswer}
+\end{mychallenge}
+
 \begin{myexercise}
     Nehmen wir an, dass an der vierten Position im Code aus \cref{ex:ean} eine 8 statt der 0 getippt wurde. Finden Sie mindestens 5 Möglichkeiten, an anderen Stellen den Fehler so zu machen, dass die fehlerhafte Darstellung einem \gls{EAN}-Code entspricht und somit dieser Doppelfehler unbemerkt bleibt.
     \begin{myanswer}
