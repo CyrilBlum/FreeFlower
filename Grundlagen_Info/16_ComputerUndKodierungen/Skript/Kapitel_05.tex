@@ -13,7 +13,7 @@ Man spricht von einem \tib{Software-Stack}\index{Software-Stack} (Schichtenmodel
 \begin{figure}[H]
     \centering
     \input{Grundlagen_Info/16_ComputerUndKodierungen/Figures/tikz_software_stack.tex}
-    \caption{Der Software-Stack: jede Schicht bietet der darüberliegenden Schicht Dienste an und verbirgt die Komplexität der darunter liegenden Schicht.}
+    \caption{Der Software-Stack: Jede Schicht bietet der darüberliegenden Schicht Dienste an und verbirgt die Komplexität der darunter liegenden Schicht.}
     \label{fig:software_stack}
 \end{figure}
 
@@ -29,7 +29,7 @@ Das Betriebssystem (englisch: \emph{operating system}, OS) übernimmt vier zentr
 
 \subsection{Prozessverwaltung}
 
-Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (Browser, Musik-Player, Textverarbeitung, \ldots). Da aber oft nur ein physischer Prozessorkern vorhanden ist (oder deutlich weniger als die Anzahl laufender Programme), teilt das Betriebssystem die \gls{CPU}-Zeit durch raschen Wechsel auf (siehe \cref{fig:multitasking}):
+Ein moderner Computer führt viele Programme \emph{scheinbar gleichzeitig} aus (Browser, Musik-Player, Textverarbeitung, \ldots). Da häufig mehr Programme gleichzeitig laufen, als Prozessorkerne zur Verfügung stehen, teilt das Betriebssystem die \gls{CPU}-Zeit durch raschen Wechsel auf (siehe \cref{fig:multitasking}):
 
 \begin{figure}[H]
     \centering
@@ -83,7 +83,7 @@ Massenspeicher (\gls{SSD}, \gls{HDD}) speichern Daten als rohe Bitsequenzen (vgl
 
 \subsection{Geräteverwaltung und Treiber}
 
-Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, \gls{USB}-Gerät, \ldots) hat seine eigene Schnittstelle. \tib{Treiber}\index{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit (siehe \cref{fig:software_stack_detailliert}) -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
+Jedes Peripheriegerät (Drucker, Netzwerkkarte, Grafikkarte, \gls{USB}-Gerät, \ldots) hat seine eigene Schnittstelle. \tib{Treiber}\index{Treiber} sind kleine Softwaremodule, die dem Betriebssystem mitteilen, wie es mit einem bestimmten Gerät kommunizieren muss. Viele Treiber liefert das Betriebssystem heute bereits mit, oft direkt als Teil seines Kerns (Kernel). Für spezielle Geräte stammen sie weiterhin vom Hersteller. Das Betriebssystem stellt den Anwendungen dann eine einheitliche Schnittstelle bereit (siehe \cref{fig:software_stack_detailliert}) -- die Anwendung sendet einfach Druckdaten an das Betriebssystem, ohne sich um Druckermodell oder Treiber zu kümmern.
 
 \begin{figure}[H]
     \centering
@@ -138,7 +138,8 @@ Einen Überblick über verbreitete Betriebssysteme und ihre typischen Einsatzgeb
         macOS                   & Apple               & Mac-Computer \\
         GNU+Linux (Ubuntu, Debian \ldots) & Open Source  & Server, PC, Laptop, eingebettete Systeme \\
         Android                 & Google              & Smartphones, Tablets \\
-        iOS                     & Apple               & iPhone, iPad \\
+        iOS                     & Apple               & iPhone \\
+        iPadOS                  & Apple               & iPad \\
     \end{tabular}
     \caption{Auswahl verbreiteter Betriebssysteme.}
     \label{tab:betriebssysteme}

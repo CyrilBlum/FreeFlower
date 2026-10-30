@@ -200,6 +200,8 @@
 
 		\end{center}
 	\end{titlepage}
+	% Titelseite mitzählen, damit gedruckte Seite und PDF-Seite übereinstimmen
+	\setcounter{page}{2}
 }
 
 \NewTotalTCBox{\commandbox}{ s v } {verbatim,colupper=white,colback=black!75!white,colframe=black, breakable} {\IfBooleanT{#1}{\textcolor{red}{\ttfamily\bfseries > }}%
