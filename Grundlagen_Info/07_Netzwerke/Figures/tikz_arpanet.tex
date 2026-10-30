@@ -1,0 +1,81 @@
+% Wachstum des ARPANET 1969 bis 1972 als schematischer Graph.
+% Knoten und Verbindungen nach den historischen ARPANET-Karten, Lage nur grob geografisch (Westen links).
+% Wird im Skript (Kapitel 1) und auf den Folien zur Geschichte verwendet.
+\begin{tikzpicture}[
+        imp/.style={circle, fill=black, inner sep=0pt, minimum size=4pt},
+        tip/.style={circle, draw=black, fill=white, thick, inner sep=0pt, minimum size=5pt},
+        lbl/.style={font=\scriptsize, inner sep=1.5pt},
+        titel/.style={font=\small\bfseries, anchor=west},
+        link/.style={thick, blue!60!black}
+    ]
+    % Dezember 1969: die ersten vier Knoten
+    \begin{scope}[shift={(0,5.3)}]
+        \node[titel] at (0,2) {Dezember 1969};
+        \node[imp, label={[lbl]above:SRI}]     (sri)  at (0.8,1.1) {};
+        \node[imp, label={[lbl]left:UCSB}]     (ucsb) at (0.6,0.4) {};
+        \node[imp, label={[lbl]right:UCLA}]    (ucla) at (1.3,0.2) {};
+        \node[imp, label={[lbl]above:UTAH}]    (utah) at (2.6,1.2) {};
+        \draw[link] (sri) -- (ucsb) (sri) -- (ucla) (ucsb) -- (ucla) (sri) -- (utah);
+    \end{scope}
+
+    % Juni 1970: erste Verbindungen an die Ostküste
+    \begin{scope}[shift={(5.4,5.3)}]
+        \node[titel] at (0,2) {Juni 1970};
+        \node[imp, label={[lbl]above:SRI}]     (sri)  at (0.6,1.2) {};
+        \node[imp, label={[lbl]left:UCSB}]     (ucsb) at (0.4,0.6) {};
+        \node[imp, label={[lbl]right:UCLA}]    (ucla) at (0.9,0.7) {};
+        \node[imp, label={[lbl]below:RAND}]    (rand) at (0.9,0.05) {};
+        \node[imp, label={[lbl]right:SDC}]     (sdc)  at (1.5,0.3) {};
+        \node[imp, label={[lbl]above:UTAH}]    (utah) at (2.1,1.3) {};
+        \node[imp, label={[lbl]above:MIT}]     (mit)  at (6.0,1.5) {};
+        \node[imp, label={[lbl]right:BBN}]     (bbn)  at (5.8,1.0) {};
+        \node[imp, label={[lbl]below:HARVARD}] (harv) at (6.0,0.5) {};
+        \draw[link] (sri) -- (ucsb) (sri) -- (ucla) (ucsb) -- (ucla) (ucla) -- (rand)
+            (rand) -- (sdc) (sdc) -- (utah) (utah) -- (mit) (rand) -- (bbn)
+            (mit) -- (bbn) (bbn) -- (harv);
+    \end{scope}
+
+    % März 1972: Maschen zwischen West- und Ostküste
+    \begin{scope}[shift={(0,0)}, x=1.5cm, y=1.5cm]
+        \node[titel] at (0,3.05) {März 1972};
+        \node[imp, label={[lbl]left:McCLELLAN}] (mcc)   at (1.06,2.34) {};
+        \node[imp, label={[lbl]left:SRI}]       (sri)   at (1.05,1.84) {};
+        \node[tip, label={[lbl]right:AMES}]     (amest) at (1.45,1.76) {};
+        \node[imp, label={[lbl]right:AMES}]     (ames)  at (1.45,1.50) {};
+        \node[imp, label={[lbl]right:STANFORD}] (stan)  at (1.45,1.24) {};
+        \node[imp, label={[lbl]left:UCSB}]      (ucsb)  at (1.01,1.41) {};
+        \node[imp, label={[lbl]left:UCLA}]      (ucla)  at (1.08,1.08) {};
+        \node[imp, label={[lbl]right:RAND}]     (rand)  at (1.40,0.92) {};
+        \node[imp, label={[lbl]left:SDC}]       (sdc)   at (1.44,0.66) {};
+        \node[tip, label={[lbl]left:USC}]       (usc)   at (1.85,0.36) {};
+        \node[imp, label={[lbl]above:UTAH}]     (utah)  at (3.15,1.94) {};
+        \node[tip, label={[lbl]above:AFGWC}]    (afg)   at (4.32,2.05) {};
+        \node[imp, label={[lbl]below left:ILLINOIS}] (ill)   at (5.25,1.60) {};
+        \node[imp, label={[lbl]below:TINKER}]   (tink)  at (4.48,0.87) {};
+        \node[imp, label={[lbl]above:CASE}]     (case)  at (6.10,2.14) {};
+        \node[imp, label={[lbl]below left:CARNEGIE}] (carn)  at (6.30,1.45) {};
+        \node[tip, label={[lbl]above:RADC}]     (radc)  at (6.95,2.60) {};
+        \node[imp, label={[lbl]right:LINCOLN}]  (linc)  at (7.60,2.86) {};
+        \node[imp, label={[lbl]right:MIT}]      (mit)   at (7.60,2.60) {};
+        \node[tip, label={[lbl]right:BBN}]      (bbnt)  at (7.60,2.36) {};
+        \node[imp, label={[lbl]right:BBN}]      (bbn)   at (7.60,2.12) {};
+        \node[imp, label={[lbl]right:HARVARD}]  (harv)  at (7.60,1.88) {};
+        \node[tip, label={[lbl]right:NBS}]      (nbs)   at (7.60,1.64) {};
+        \node[imp, label={[lbl]right:ETAC}]     (etac)  at (7.60,1.40) {};
+        \node[tip, label={[lbl]right:MITRE}]    (mitre) at (7.60,1.16) {};
+        \begin{scope}[on background layer]
+            \draw[link] (mcc) -- (sri) (mcc) -- (utah) (sri) -- (amest) (amest) -- (ames)
+                (ames) -- (stan) (stan) -- (rand) (sri) -- (ucsb) (ucsb) -- (ucla)
+                (ucla) -- (rand) (rand) -- (sdc) (sdc) -- (usc) (usc) -- (utah)
+                (usc) -- (tink) (tink) -- (bbn) (utah) -- (ill) (ill) -- (mit)
+                (afg) -- (case) (case) -- (radc) (radc) -- (linc) (case) -- (carn)
+                (carn) -- (mitre) (linc) -- (mit) (mit) -- (bbnt) (bbnt) -- (bbn)
+                (bbn) -- (harv) (harv) -- (nbs) (nbs) -- (etac) (etac) -- (mitre);
+        \end{scope}
+        % Legende
+        \node[imp] at (3.2,0.30) {};
+        \node[lbl, anchor=west] at (3.28,0.30) {Knoten mit Rechner (IMP)};
+        \node[tip] at (5.9,0.30) {};
+        \node[lbl, anchor=west] at (5.98,0.30) {Terminal-Knoten (TIP)};
+    \end{scope}
+\end{tikzpicture}

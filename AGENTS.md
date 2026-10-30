@@ -185,3 +185,4 @@ Before submitting changes or marking a task complete:
 8. [ ] **Clean Up Aux Files & Ensure Clean Root**: Ensure compilation was run with output directed to `build/` so no auxiliary files (`aux`, `log`, `out`, `toc`, etc.) leak into the repository root directory. If temporary files in `build/` need clearing, remove them (`rm -rf build/*`).
 9. [ ] **Use Glossaries (`\gls{...}`) for Acronyms**: Ensure all acronyms are defined in `Preambles/pre_6_glossaries.tex` and referenced via `\gls{...}` / `\glspl{...}`.
 10. [ ] **Keep `main.tex` Unchanged in Commits**: Ensure session-specific `\input{...}` activations and `\documentToggle` switches in `main.tex` are NOT committed (revert via `git checkout main.tex`), unless a new document was added or paths were restructured.
+11. [ ] **Recalculate Worked Examples**: Recalculate worked examples and solutions, and check that «correct» and «wrong» examples are not swapped.

@@ -49,7 +49,7 @@
 
 \begin{frame}{Verkehrsschilder}
     \begin{center}
-        \includegraphics[height=.88\textheight]{Grundlagen_Info/05_Datenintegritaet/Figures/traffic-signs.png}
+        \resizebox{!}{.82\textheight}{\input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_traffic_signs}}
     \end{center}
 \end{frame}
 
@@ -99,9 +99,9 @@
 
 \begin{frame}{...kann in Realität nicht passieren}
     \begin{itemize}[<+->]
-        \item IBAN enthalten Prüfziffern: \texttt{CH93 0076 2011 6238 5295 7}
+        \item \acrfull{IBAN} enthält Prüfziffern: \texttt{CH93 0076 2011 6238 5295 7}
         \item Berechnen sich aus den restlichen Ziffern mittels festgelegter Formel
-        \item Ändern einer Ziffer $\rightarrow$ IBAN ungültig, da Prüfziffer nicht mehr stimmt
+        \item Ändern einer Ziffer $\rightarrow$ \acrshort{IBAN} ungültig, da Prüfziffer nicht mehr stimmt
         \item Fehler wird \enquote{erkannt}
     \end{itemize}
 \end{frame}
@@ -140,7 +140,9 @@
         \begin{column}{0.6\textwidth}
             \vspace{0.5cm}
             \begin{center}
-                \includegraphics[width=\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/EAN.png}
+                \includegraphics[width=.85\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/EAN.png}
+
+                {\tiny Quelle: GS1, \href{https://de.wikipedia.org/wiki/Datei:Symbologieaufbau_EAN_nach_ISO-IEC_15420.png}{Wikipedia}, CC BY-SA 4.0}
             \end{center}
         \end{column}
     \end{columns}

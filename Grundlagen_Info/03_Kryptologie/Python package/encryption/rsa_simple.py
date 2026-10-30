@@ -1,6 +1,6 @@
 # Primzahlen
-p = 3
-q = 11
+p = 101
+q = 113
 # Berechnung n und phi(n)
 n = p * q
 phi_n = (p - 1) * (q - 1)
@@ -16,7 +16,7 @@ private_key = (d, n)
 print("Öffentlicher Schlüssel:", public_key)
 print("Privater Schlüssel:", private_key)
 # Nachricht verschlüsseln
-m = 12  # Beispielnachricht (muss kleiner als n sein)
+m = 1234  # Beispielnachricht (muss kleiner als n sein)
 c = pow(m, e, n)
 print("Verschlüsselte Nachricht:", c)
 # Nachricht entschlüsseln
