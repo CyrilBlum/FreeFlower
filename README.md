@@ -56,6 +56,8 @@ See [`LICENSE-CC-BY-NC-SA`](LICENSE-CC-BY-NC-SA) for the full license text.
 [GNU General Public License v3.0 or later (GPL-3.0-or-later)](https://www.gnu.org/licenses/gpl-3.0.html).
 See [`LICENSE-GPL`](LICENSE-GPL) for the full license text.
 
+**Third-party images** keep their own license, which is stated in the caption or next to the image. They are not covered by the licenses above.
+
 ## Contact
 - [Thomas Graf](mailto:thomas.grf@edu.zh.ch), Kantonsschule Im Lee (KLW)
 - [Cyril Blum](mailto:cyril.blum@edu.zh.ch), Kantonsschule Im Lee (KLW), Kantonsschule Stadelhofen Filiale Dübendorf (KST FDü)

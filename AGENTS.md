@@ -30,6 +30,7 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **No Commercial or Unlicensed Content**: Never include copyrighted text, images, or assets without explicit permission and proper license compatibility.
 - **Educational Content License**: Licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 - **Code & Tooling License**: Source code, scripts, LaTeX classes/packages, and build scripts are licensed under [GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0.html).
+- **Third-Party Images**: Keep their own license, named with author and source in the caption (slides: a `\tiny` note next to the image). They are not covered by the CC BY-NC-SA license of the materials. Images without a verifiable compatible license must not be used.
 
 ### 2.4 Graphics & Visuals Policy
 - **Avoid Screenshots / Raster Images**: Do **not** use raster graphics (PNG, JPG, GIF) for diagrams, formulas, or UI mockups.
