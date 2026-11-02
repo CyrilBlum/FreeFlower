@@ -1,0 +1,212 @@
+\sisetup{per-mode=symbol}
+\chapter{Sensoren}
+\section{Distanzmessung mit Ultraschall}\label{sec:Ultraschall}
+Sensoren sind technische Bauteile, die es ermöglichen, die physikalische Umgebung eines Roboters zu erfassen. Die Messwerte werden in elektrische Signale umgewandelt, die vom Mikroprozessor des Roboters verarbeitet werden können. In diesem Kapitel werden Sie die Funktionsweise von Ultraschallsensoren kennenlernen.
+
+Der Ultraschallsensor HC-SR04 besitzt einen Sender (Trigger) und einen Empfänger (Echo), die ähnlich wie bei einer Fledermaus funktionieren (Mund = Trigger; Ohren = Echo).
+
+\begin{center}
+    \includegraphics[width = 0.3\textwidth]{Content/media/ultraschallsensorHC-SR04.png}
+\end{center}
+
+Der Ultraschallsensor sendet ein Schallsignal mit ca. \SI{40}{\kilo\hertz}. Damit ist er zu hochfrequent, um von Menschen gehört zu werden --- Katzen und Hunde könnten ihn jedoch hören.
+
+Die Messung wird ausgelöst, indem man den Trigger-Pin für mindestens \SI{10}{\mu\second} auf HIGH setzt und dann auf LOW. Kurze Zeit nach dem Abfall des Triggers werden 8 Schallimpulse gesendet. Sofort danach geht der Echo-Pin auf einen HIGH-Pegel und wartet auf den Empfang des akustischen Echos. Sobald das Echo empfangen wurde, fällt der Ausgang am Echo auf den LOW-Pegel.
+
+\begin{center}
+    \includegraphics[width = 0.5 \textwidth]{Content/media/PinZustandMessung.png}
+\end{center}
+
+Um die Pulslänge am Echo-Eingang zu messen, wird die Funktion \lstinline|pulseIn(ECHO_PIN, HIGH)| verwendet. Diese gibt an, wie lange (in \(\mu\mathrm{s}\)) das Signal am ECHO\_PIN auf HIGH war.
+
+
+Die Distanz \(d\) berechnet sich dann aus der Zeit \(t\) vom Aussenden des Signals bis zu seiner Rückkehr, wobei zu beachten ist, dass das Schallsignal in dieser Zeit den Weg zwischen Sensor und Hindernis zweimal zurücklegt.
+\begin{center}
+    \includegraphics[width = 0.25\textwidth]{Content/media/laufzeitmessung.png}
+\end{center}
+
+Es gilt also :
+\[
+    d = \frac{c \cdot t}{2}.
+\]
+Wenn man nun berücksichtigt, dass Arduino die Zeit \(t\) in \(\mu\mathrm{s}\) misst und mit der Schallgeschwindigkeit \(c\approx \SI{343}{\metre\per\second} = \SI{0.0343}{\centi\metre\per\mu\second}\) erhält man:
+
+\[
+    d = \frac{c \cdot t}{2} \approx \frac{\SI{0.0343}{\centi\metre\per\mu\second}}{2}\cdot t \si{\mu \second} \approx \frac{t}{58} \si{\centi\metre}
+\]
+
+
+
+\begin{myexercise}
+    \begin{enumerate}
+        \item Stecken Sie den Ultraschallsensor auf das Breadbord und verbinden Sie es mit dem Arduino. Verwenden Sie die digitalen Pins 7 und 6 für \lstinline|Trig| und \lstinline|Echo|.
+              \begin{center}
+                  \includegraphics[width = 0.25\textwidth]{Content/media/SchaltkreisUltraschall.png}
+              \end{center}
+
+        \item  Laden Sie das Programm \enquote{Intro\_Ultraschall.ino} von Moodle herunter und testen Sie den Sensor.
+              % \item Die Distanz in Zentimeter wird berechnet, indem man die Zeit in Mikrosekuneden durch 58 teilt. Weisen Sie nach, dass diese Distanzberechnung mit der \Cref{eq:distanzberechnung} übereinstimmt.
+        \item \textbf{Verbesserungen:} Der Ultraschallsensor ist nur im Bereich 2 cm bis 3 m zuverlässig. Verbessern Sie Ihr Programm so, dass die Distanzmessung nur ausgegeben wird, wenn der gemessene Wert in diesem Bereich liegt, andernfalls soll \enquote{nicht im Messbereich} ausgegeben werden. Verwenden sie dazu die \lstinline|if|-Anweisung der Form:
+
+              \begin{lstlisting}
+    if (Bedingung1 && Bedingung2)
+    {
+        Anweisungen, die ausgeführt werden, wenn beide Bedingungen erfüllt sind
+    }
+    else
+    {
+        Anweisungen, die ausgeführt werden, wenn mindestens eine der Bedingungen nicht erfüllt ist 
+    }
+\end{lstlisting}
+    \end{enumerate}
+
+    \begin{myremark}
+        In Arduino (C++) werden logische Verknüpfungen mit speziellen Operatoren geschrieben:
+        \[
+            \begin{array}{c|c|c}
+                \text{Bedeutung} & \text{Operator} & \text{Beispiel}           \\ \hline
+                \text{UND}       & \texttt{\&\&}   & \texttt{a > 0 \&\& b > 0} \\
+                \text{ODER}      & \texttt{||}     & \texttt{a > 0 || b > 0}   \\
+                \text{NICHT}     & \texttt{!}      & \texttt{!(a > 0)}
+            \end{array}
+        \]
+        Der Operator \texttt{!} kehrt den Wahrheitswert einer Bedingung um.
+
+    \end{myremark}
+
+
+
+\end{myexercise}
+
+
+
+
+% \begin{myexercise}\label{ex:UltraschallBetrieb}
+%     Schreiben Sie ein Programm zur Entfernungsmessung.
+%     \begin{enumerate}
+%         \item \textbf{Variablen festlegen:} Wir benötigen vier Variablen:
+%               \begin{lstlisting}
+%                         const int TRIG_PIN = 7;
+%                         const int ECHO_PIN = 6;
+%                         unsigned long duration;
+%                         float distance_cm;
+%                     \end{lstlisting}
+%             %   Die beiden Variablen \lstinline|TRIG_PIN| und \lstinline|ECHO_PIN| bezeichnen die Arduino-Pins, an welchen der Sensor angeschlossen ist. Passen Sie diese an Ihren Aufbau an. \newline
+%               In die Variable \lstinline|duration| soll die gemessene Zeit gespeichert werden. \newline
+%               Die aus der Zeit berechnete Distanz soll in die Variable \lstinline|distance_cm| gespeichert werden.
+%         \item \textbf{Setup:} Trigger muss auf OUTPUT und ECHO auf INPUT initialisiert werden. Ausserdem soll die USB-Verbindung zum Computer verwendet werden \lstinline|Serial.begin(9600).|
+%         \item \textbf{Loop:}
+%               \begin{enumerate}
+%                   \item   In der Schleife soll der Trigger-Pin für 10 Mikrosekunden auf HIGH gesetzt werden und anschliessend wieder auf LOW, um die Messung auszulösen. Da die \lstinline|delay|-Funktion in Millisekunden rechnet, benötigen Sie eine andere Warte-Funktion:
+%                         \begin{lstlisting}
+%             delayMicroseconds(10)
+%         \end{lstlisting}
+%                   \item Verwenden Sie dann den Befehl \lstinline|duration = pulseIn(ECHO_PIN, HIGH)|, um die verstrichenen Mikrosekunden in die Variable \lstinline|duration| zu speichern.
+%                   \item Lassen Sie die gemessenen Werte auf dem Computer anzeigen mit
+%                         \begin{lstlisting}
+%             Serial.print("duration = ");
+%             Serial.print(duration);
+%             Serial.println(" Mikrosekunden");
+%         \end{lstlisting}
+%                   \item Fügen Sie am Schluss des Loops eine Wartezeit von 500 ms ein, damit nur jede halbe Sekunde eine Messung durchgeführt wird. Testen Sie anschliessend Ihr Programm.
+%               \end{enumerate}
+
+%         \item \textbf{Distanzberechnung:}
+%               \begin{enumerate}
+%                   \item Verwenden Sie die Formel und die Schallgeschwindigkeit in der Theorie oben, um die Distanz zu berechnen.
+%                   \item Lassen Sie auch die Werte der Distanz auf dem Computer ausgeben und testen Sie Ihr Programm.
+%               \end{enumerate}
+%         \item \textbf{Verbesserungen:} Der Ultraschallsensor ist nur im Bereich 2 cm bis 3 m zuverlässig. Verbessern Sie Ihr Programm so, dass die Distanzmessung nur ausgegeben wird, wenn der gemessene Wert in diesem Bereich liegt.
+%     \end{enumerate}
+%     \begin{myanswer}
+%         \lstinputlisting{Content/media/Intro_Ultraschall.cc}
+%     \end{myanswer}
+% \end{myexercise}
+
+
+Für die folgenden Aufträge benötigen Sie den Roboter. Dieser hat einen anderen Ultraschallsensor eingebaut, weshalb die folgenden Programme mit dem HC-SR04 nicht funktionieren.
+
+\begin{center}
+    \includegraphics[width = 0.25\textwidth]{Content/media/roboter.jpg}
+\end{center}
+Durch die Verwendung von \enquote{Libraries} kann die Bedienung von Sensoren und die Lesbarkeit von Programmcode vereinfacht werden. Für den Ultraschallsensor gibt es eine Library, mit welcher man den Abstand mit einem einzigen Befehl messen kann. Im Hintergrund werden jedoch genau die gleichen Schritte durchgeführt, wie in der vorherigen Aufgabe.
+
+Die entsprechende Library sollten Sie bereits letzte Woche installiert haben. Falls nicht, können Sie das Zip-File \enquote{LibrariesFuerFreifach2026} von Moodle herunterladen und in Ihrem Ordner Arduino/libraries entpacken.
+\begin{myexercise}
+
+    %     \begin{enumerate}
+    %         \item Laden Sie von Moodle das Zip-File \enquote{LibrariesFuerFreifach2026} herunter.
+    %         \item Entpacken Sie das Zip-File in Ihrem Ordner Arduino/libraries
+    %      \end{enumerate}
+    Laden Sie das Programm \enquote{ultraSonicTest1} von Moodle herunter.
+    \newline
+    Beachten Sie, wie die einzelnen Schritte aus dem vorherigen Programm nun in der Funktion \lstinline|readSensorValue()| zusammengefasst sind.
+    \begin{enumerate}
+        \item Testen Sie das Programm mit dem Roboter (nicht mit dem HC-SR04).
+        \item \emph{Freiwillig:} Am Anfang des Programms wird mit \lstinline|#include <USSensor.h>| die Bibliothek \lstinline|USSensor| geladen. Darin sind alle Befehle aufgeführt, die von der Library zur Verfügung gestellt werden. Deren implementierung findet man in der Datei \enquote{USSensor.cpp}. Öffnen Sie diese Datei auf Ihrem Computer (in der Regel ist sie im Ordner \lstinline|/Documents/Arduino/libraries/|). Suchen Sie darin nach dem Code, der die Messung auslöst (Trigger für 10\si{\mu\second} auf HIGH) und den Abstand berechnet (Zeit / 58).
+    \end{enumerate}
+
+\end{myexercise}
+
+Kombinieren Sie den Ultraschallsensor mit den Motoren des Roboters.
+
+\begin{myexercise}
+    Programmieren Sie den Roboter so, dass er sich jedes Mal um grob \(180^\circ\) dreht, wenn er ein Hindernis erkannt hat, das sich weniger als 10 cm vor ihm befindet. So sollte sich der Roboter im Zimmer bewegen können, ohne dass er in eine Wand fährt.
+
+    Verwenden Sie dazu die Datei \enquote{hinundher\_template.ino} von Moodle. Diese enthält bereits die Funktionen \lstinline|vorwaerts()|, \lstinline|stoppen()| und \lstinline|drehen()|, die Sie verwenden können. Den Drehwinkel können Sie über die Konstante \lstinline|ROTATION_TIME| steuern, die angibt, wie lange in \si{\milli\second} sich der Roboter um die eigene Achse dreht.
+
+    Bemerkung: \newline
+    Damit das Programm nicht unendlich lange läuft, ist die Anweisung im Setup-Block eingefügt. Im Gegensatz zum Loop-Block wird dieser Befehl nur einmal ausgeführt, wenn der Arduino gestartet wird. Die Anweisung ist aber so konzipiert, dass der Roboter erst nach 5 Drehungen stoppt. Sie können die Anzahl Drehungen in der Variable \lstinline|MAX_ANZAHL_DREHUNGEN| anpassen.
+
+\end{myexercise}
+
+\begin{myexercise}
+    Führen Sie den Roboter spazieren!\newline
+    Schreiben Sie ein Programm, das bewirkt, dass der Roboter Ihrer Hand folgt. Wenn der Roboter eine Distanz misst, die grösser oder gleich 20 \si{\centi\metre} ist, soll der er vorwärts fahren. Wenn die gemessene Distanz kleiner ist, soll er rückwärtsfahren.
+
+    Tipp: Ergänzen Sie die Funktionen aus \enquote{hinundher\_template.ino} mit einer Funktion \lstinline|void rueckwaertsFahren(int speed)|
+\end{myexercise}
+\begin{myexercise}
+    Optimieren Sie den Roboter Spaziergang! \newline
+    Wenn der gemessene Abstand grösser als 50 \si{\centi\metre} oder kleiner als 10  \si{\centi\metre} ist, soll der Roboter stehen bleiben.
+
+    Tipp: Sie kennen vermutlich die Python Verzweigung der Form \lstinline|if ... elif ... else|. In C++ lautet die Syntax wie folgt:
+    \begin{lstlisting}
+    if (Bedingung 1) {
+            Anweisungen;
+        }
+    else if (Bedingung 2) {
+            Anweisungen;
+        }
+    else {
+            Anweisungen;
+        }
+     \end{lstlisting}
+
+\end{myexercise}
+\begin{myexercise}
+    Schreiben Sie ein Programm, mit dem der Roboter parallel zu einer Wand in einem Abstand von  20 \si{\centi\metre} fährt. Überlegen Sie sich eine Strategie, wie der Roboter diesen Abstand einhalten kann.
+\end{myexercise}
+
+% Wie genau misst der Ultraschallsensor?
+
+% Für die folgende Aufgabe benötigen Sie zusätzlich
+% \begin{itemize}
+%     \item ein Buch oder ein ähnliches Hindernis
+%     \item ein Massband
+%     \item ein Geodreieck
+%     \item und eine Schachtel.
+% \end{itemize}
+\begin{myexercise}
+    Untersuchen Sie die Messgenauigkeit des Ultraschallsensors.
+    \begin{enumerate}
+        % \item  Stellen Sie ein Hindernis auf und vergleichen Sie den tatsächlichen Abstand (Massband) mit dem Messwert des Ultraschalls. In welchem Bereich misst der Sensor die Distanz korrekt?
+        \item Stellen Sie ein Hindernis in einem bestimmten Abstand vor den Roboter (z.B. 30 cm). Drehen Sie das Hindernis schrittweise um \(10^\circ\), sodass das Schallsignal auf eine schräge Wand trifft. In welchem Winkelbereich wird der Abstand korrekt gemessen?
+        \item Stellen Sie den Roboter in eine Schachtel. Schreiben Sie ein Programm, das den Roboter wiederholt um etwa \(10^\circ\) dreht und nach jeder Drehung eine Distanzmessung durchführt.
+        \item Wie \enquote{sieht} der Roboter die Schachtel? Fügen Sie die gemessenen Distanzen aus der Aufgabe davor in das Python-Programm \enquote{polarkoord-sketch} ein, das Sie auf Moodle finden.
+    \end{enumerate}
+    % \lstinputlisting{Content/media/polarkoord_sketch.py}
+    % \begin{myanswer}
+    %     \lstinputlisting{Content/media/schachtel.ino}
+    % \end{myanswer}
+\end{myexercise}

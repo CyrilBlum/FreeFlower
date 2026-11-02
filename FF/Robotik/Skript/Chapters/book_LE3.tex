@@ -1,0 +1,112 @@
+\setcounter{chapter}{2}
+\chapter{Steuerung von Motoren mit Arduino}\label{ch:book_example}
+
+Man unterscheidet zwischen Servomotoren und Gleichstrom-Motoren. In beinde Fällen benötigen die Motoren \textbf{immer eine externe Spannungsversorgung}. Ansonsten fliesst zu viel Strom durch das Arduino-Board und es nimmt Schaden. 
+
+\section*{Servomotoren}
+Ein Servomotor besteht aus einem Elektromotor, der zusätzlich mit einem Sensor zur Positionsbestimmung ausgestattet ist. Der Begriff Servomotor kommt von seinem früheren Einsatzgebiet als Hilfsantrieb (aus dem Latein \emph{servus} = Diener).
+\\
+Gewöhnliche Elektromotoren dienen dem Antrieb und drehen sich deshalb kontinuierlich schneller oder langsamer. Im Gegensatz dazu kann ein Servomotor Drehungen von bestimmeten Winkeln fahren. Er dient also beispielsweise dazu, ein Steuerruder in verschiedene Positionen zu bringen oder einen Arm auf und ab zu bewegen. Die meisten Servomotoren sind vom 180-Grad-Typ, das heisst, sie können sich nur im Bereich von 0\textdegree~ bis 180\textdegree~ drehen. \\
+Ein Servomotor hat drei Kabel:\\
+\begin{minipage}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{Bilder/Screenshot Tower Pro Micro Servo.png} 
+\end{center}
+\begin{itemize}
+\item Versorgung (VCC) - rot
+\item Masse (GND) - schwarz oder braun
+\item Signalleitung (PWM) - gelb oder orange
+\end{itemize}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\includegraphics[width=1.0\textwidth]{Bilder/Screenshot SG90 Servomotor kurz.png}
+\end{minipage}
+\newline
+\newline
+\newline
+Die Steuerung basiert auf Pulsweitenmodulation (PWM). Unten werden Sie darüber mehr erfahren. \\
+\newline
+Um einen Servomotor zu steuern, verwenden Sie die \textit{Servo.h} Bibliothek, die mit der Arduino IDE installiert werden kann (Tools-Manage Libraries). \\
+\newline
+Das Anschliessen eines Servomotors ist einfach. Sie benutzen hier eine externe Spannungsversorgung von 6 V. Bauen Sie die untere Schaltung auf.  
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Bilder/Screenshot Servomotor mit Batterie.png}
+\end{center}
+
+\begin{myexercise}
+In der Arduino IDE finden Sie den Beispielcode \textit{Sweep} unter File-Examples (siehe auch Bild unten). \\
+Schauen Sie sich den Code an. In diesem Code wurde das Servo-Objekt \enquote{myservo} genannt. Im Setup-Teil des Codes wird das Servo-Objekt mit dem Pin, der den Servo steuert, verknüpft. Im letzten Teil des Codes werden zwei for-Schleifen verwendet, um den Servomotor hin und her zu schwenken. Kompilieren Sie den Code.\\
+Was beobachten Sie, wenn Sie den delay-Wert am Ende der for-Schleife ändern?
+\end{myexercise}
+\begin{center}
+\fbox{\includegraphics[width=\textwidth]{Bilder/Screenshot Code Sweep.png}}
+\end{center}
+\newpage
+\subsection*{Einen Servomotor mit einem Potentiometer und Arduino steuern}
+In der vorherigen Lektion haben Sie gelernt, wie man ein Potentiometer verwendet. Sie kombinieren jetzt einen Servomotor mit einem Potentiometer, um die Motorposition manuell einstellen zu können. \\
+Erweitern Sie Ihre Schaltung. \\
+
+
+\begin{center}
+\includegraphics[width=0.7\textwidth]{Bilder/Screenshot Servomotor Potentiometer mit Batterie.png}
+\end{center}
+\begin{myexercise}
+ \begin{enumerate}
+\item Modifizieren Sie den obigen Code so, dass auch der Wert des Potentiometers abgelesen wird.  \\
+\item Wie muss der Code weiter modifiziert werden, um einen bestimmten Winkel auszuwählen? \\
+\end{enumerate}
+\end{myexercise}
+\begin{myexercise}
+In der Arduino IDE finden Sie auch den zweiten Beispielcode \textit{Knob} unter File-Examples. Schauen Sie sich den Code an, vergleichen ihn mit Ihrem modifizierten Code und kompilieren Sie ihn. \\
+\end{myexercise}
+
+\subsection*{Die Pulsweitenmodulation }
+Was sollten Sie unternehmen, wenn Ihr Servomotor nicht die volle 0\textdegree~ bzw. 180\textdegree~ Drehung ausführt?\\
+Die Winkelsteuerung eines Servomotors basiert auf Pulsweitenmodulation (PWM). Das Spannungssignal wechselt dabei zwischen den Spannungswerte 0 V und 5 V hin und her. Die Breite des Pulses, während dem das Signal auf High (5 V) ist, bestimmt den Winkel, auf den der Servomotor-Arm gestellt werden soll. Die minimale Position (0\textdegree) und maximale Position (180\textdegree) entsprechen jeweils einer bestimmten Pulsbreite in ms. Beachten Sie, dass diese Pulsbreite je nach Typ und Marke des Servos leicht variieren kann: bei einigen Modellen liegt sie z. B. zwischen 1 ms und 2 ms, bei anderen Modellen zwischen 0.5 ms und 2.5 ms. Mit einer Frequenz von 50 Hz, also mit zeitlichen Abständen von $1/50~ \text{s}= 0.02~ \text{s} = 20~ \text{ms}$ wird dem Servo diese Information übermittelt.  \\
+\begin{myexercise}
+Sie können die Breite der verschiedenen Pulse Ihres Servomotors mit einem Oszilloskop beobachten. Drehen Sie das Potentiometer, so dass es sein Grezwert auf beiden Seiten erreicht. Was beobachten Sie? Wie gross ist die Pulbreite für 0\textdegree~ bzw. 180\textdegree ? \\
+\begin{center}
+\includegraphics[width=0.45\textwidth]{Bilder/Winkel max.jpg}
+\end{center}
+\end{myexercise}
+Falls der Servomotor nicht die volle Drehung erreicht, können Sie manuell den minimalen und maximalen Winkel des Servomotors einstellen. Die attach-Funktion im Code kann auch mit zwei optionalen Parametern verwendet werden:\\
+\newline
+\textcolor{red}{myservo}.\textcolor{red}{attach}(9, \emph{2. Parameter}, \emph{3. Parameter})\\
+\newline
+Der zweite Parameter ist die Pulsbreite in Mikrosekunden, die dem minimalen (0\textdegree) Winkel des Servos entspricht. Der dritte Parameter ist die Pulsbreite in Mikrosekunden, die dem maximalen (180\textdegree) Winkel des Servos entspricht. Die minimalen und maximalen Werte dürfen \textbf{nur in kleinen Schritten} (10-20 Mikrosekunden) angepasst werden, um den Servo nicht zu beschädigen.
+
+
+\section*{Gleichstrom-Motoren}
+Gleichstrom-Motoren, oft einfach DC-Motoren genannt, sind Elektromotoren, die beispielsweise für Rad- oder Propeller-Antriebe verwendet werden. Sie drehen sich kontinuierlich, je nach Ansteuerung schneller oder langsamer. \\
+DC-Motoren können aber nicht direkt von einem Arduino-Board angesteuert werden. Dafür benötigt man ein Motor-Shield, das direkt auf das Arduino Board gesteckt ist. Für die Verwendung eines Shields von Adafruit, wie bei unserem Roboter, müssen Libraries importiert werden.  
+\begin{myexercise}
+    \begin{enumerate}
+        \item Laden Sie von Moodle das Zip-File \enquote{LibrariesFuerFreifach2026} herunter.
+        \item Entpacken Sie das Zip-File in Ihrem Ordner Arduino/libraries
+        \item Laden Sie das Programm \textit{DCMotor\_testen} von Moodle herunter (siehe auch Bild unten).
+				\item Bevor Sie den Code kompilieren, überlegen Sie sich, wie sich den Roboter bewegen wird. Danach kompilieren Sie ihn, während Sie den Roboter \textbf{festhalten}. 
+				\item Wie sollte man den Code ändern, so dass der Roboter die Bewegungsschritte wiederholt?
+				
+		\end{enumerate}
+\end{myexercise}
+Verwenden Sie für den Speed-Parameter \textbf{maximal den Wert 100}.
+
+\begin{center}
+\fbox{\includegraphics[width=0.99\textwidth]{Bilder/Screenshot DC Motor nur setup.png}}
+\end{center}
+
+\begin{myexercise}
+
+\begin{center}
+\includegraphics[width=0.4\textwidth]{Bilder/ArduinoRoboter.jpg}
+\end{center}
+
+Der Roboter soll jetzt folgende einzelne Bewegungen und Kombinationen davon durchführen: 
+\begin{itemize}
+\item eine Linkskurve fahren
+\item anhalten
+\item am Ort drehen
+\item um zwei Gegenstände herum eine Acht fahren
+\item ein Quadrat mit Kantenlänge 1 m abfahren
+\end{itemize}
+\end{myexercise}
