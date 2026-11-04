@@ -10,12 +10,12 @@ Dies sind klassische Beispiele für Fehler, die bei der Speicherung und Übertra
 
 \section{Prüfbits}
 
-Buchstaben können auf unterschiedliche Weise kodiert sein -- bei \gls{ASCII} werden beispielsweise sieben Bits pro Zeichen verwendet:
+Buchstaben können auf unterschiedliche Weise codiert sein -- bei \gls{ASCII} werden beispielsweise sieben Bits pro Zeichen verwendet:
 
 \begin{table}[H]
     \centering
     \begin{tabular}{cc}
-        Buchstabe & Kodierung        \\\midrule
+        Buchstabe & Codierung        \\\midrule
         A         & \texttt{1000001} \\\midrule
         B         & \texttt{1000010} \\\midrule
         C         & \texttt{1000011} \\\midrule
@@ -29,7 +29,7 @@ Ein erster, einfacher Ansatz bestünde darin, jedem Code noch ein weiteres Bit a
 \begin{table}[H]
     \centering
     \begin{tabular}{cc}
-        Buchstabe & Kodierung                              \\\midrule
+        Buchstabe & Codierung                              \\\midrule
         A         & \texttt{1000001\underline{\textbf{0}}} \\\midrule
         B         & \texttt{1000010\underline{\textbf{0}}} \\\midrule
         C         & \texttt{1000011\underline{\textbf{1}}} \\\midrule
@@ -60,7 +60,7 @@ Die Idee von Prüfziffern ist, dass jede Prüfziffer nach dem gleichen Prinzip b
     \end{myanswer}
 \end{myexercise}
 
-Die \gls{EAN} ist ein Standard für die Kodierung von Waren. Fast alle käuflich erhältlichen Waren auf dem Markt enthalten einen solchen Code, welcher aus 13 Ziffern besteht. Häufig wird er in Form eines Strichcodes dargestellt, wobei zwei Striche eine Ziffer darstellen. Dazu kommen drei Begrenzungszeichen aus je zwei Strichen: das Start-, das Trenn- und das Stoppzeichen (siehe \cref{fig:ean}).
+Die \gls{EAN} ist ein Standard für die Codierung von Waren. Fast alle käuflich erhältlichen Waren auf dem Markt enthalten einen solchen Code, welcher aus 13 Ziffern besteht. Häufig wird er in Form eines Strichcodes dargestellt, wobei zwei Striche eine Ziffer darstellen. Dazu kommen drei Begrenzungszeichen aus je zwei Strichen: das Start-, das Trenn- und das Stoppzeichen (siehe \cref{fig:ean}).
 
 \begin{figure}[H]
     \centering
@@ -304,19 +304,19 @@ Im gezeigten Beispiel wird ein Tippfehler noch erkannt. Garantiert erkannt wird 
 
 Was können wir aus \cref{ex:word} lernen? Damit ein Fehler automatisch korrigiert werden kann, muss der Unterschied zwischen dem vertippten Wort und allen anderen möglichen Wörtern grösser sein als der Abstand zum ursprünglichen Wort.
 
-Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \textbf{k-fehler\-korrigierenden} Kodierungen. Eine Kodierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, $\cdots$ bis und mit \textbf{k} Bits in der Nachricht als Fehler erkannt wird. Falls bis zu \textbf{k} Fehler nicht nur erkannt, sondern auch behoben werden können, spricht man von \textbf{k-fehlerkorrigierenden Kodierungen}.
+Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \textbf{k-fehler\-korrigierenden} Codierungen. Eine Codierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, $\cdots$ bis und mit \textbf{k} Bits in der Nachricht als Fehler erkannt wird. Falls bis zu \textbf{k} Fehler nicht nur erkannt, sondern auch behoben werden können, spricht man von \textbf{k-fehlerkorrigierenden Codierungen}.
 
 \begin{myexample}\label{ex:code-kerk}
-\cref{tab:codes} zeigt, wie eine Nachricht so kodiert werden kann, dass Fehler erkannt werden:
+\cref{tab:codes} zeigt, wie eine Nachricht so codiert werden kann, dass Fehler erkannt werden:
 \begin{itemize}
-    \item In Kodierung 1 handelt es sich schlicht und einfach um die ursprüngliche Nachricht.
-    \item In Kodierung 2 wird die ursprüngliche Nachricht verdreifacht.
-    \item In Kodierung 3 wird die ursprüngliche Nachricht verdoppelt, dazu kommt ein \textbf{Paritätsbit} (\underline{unterstrichen}) am Ende der Nachricht.
+    \item In Codierung 1 handelt es sich schlicht und einfach um die ursprüngliche Nachricht.
+    \item In Codierung 2 wird die ursprüngliche Nachricht verdreifacht.
+    \item In Codierung 3 wird die ursprüngliche Nachricht verdoppelt, dazu kommt ein \textbf{Paritätsbit} (\underline{unterstrichen}) am Ende der Nachricht.
 \end{itemize}
 \begin{table}[H]
     \centering
     \begin{tabular}{cccc}
-                         & \textbf{Kodierung$_1$} & \textbf{Kodierung$_2$}     & \textbf{Kodierung$_3$}                \\
+                         & \textbf{Codierung$_1$} & \textbf{Codierung$_2$}     & \textbf{Codierung$_3$}                \\
         \midrule
         \textbf{Weiss}   & 00                     & 00\textcolor{orange}{0000} & 00\textcolor{orange}{00\underline{0}} \\
         \midrule
@@ -326,23 +326,23 @@ Im Folgenden unterscheiden wir zwischen \textbf{k-fehler\-erkennenden} sowie \te
         \midrule
         \textbf{Schwarz} & 11                     & 11\textcolor{orange}{1111} & 11\textcolor{orange}{11\underline{0}} \\
     \end{tabular}
-    \caption{Kodierungstabelle}
+    \caption{Codierungstabelle}
     \label{tab:codes}
 \end{table}
 
-Wie viele Fehler werden durch die unterschiedlichen Kodierungen bestimmt erkannt?
+Wie viele Fehler werden durch die unterschiedlichen Codierungen bestimmt erkannt?
 \begin{itemize}
-    \item In der ursprünglichen Kodierung können Fehler nicht erkannt werden. Wird beispielsweise Weiss (\texttt{00}) fälschlicherweise als \texttt{01} versandt, geht der Empfänger davon aus, dass Gelb gesandt wurde und erkennt keine Fehler.
-    \item In der zweiten Kodierung werden bis zu zwei Fehler erkannt, da es mindestens drei \enquote{Mutationen} benötigt, um zu einem anderen Code zu werden.
-    \item Bei der dritten Kodierung verhält es sich ebenso wie bei der zweiten.
+    \item In der ursprünglichen Codierung können Fehler nicht erkannt werden. Wird beispielsweise Weiss (\texttt{00}) fälschlicherweise als \texttt{01} versandt, geht der Empfänger davon aus, dass Gelb gesandt wurde und erkennt keine Fehler.
+    \item In der zweiten Codierung werden bis zu zwei Fehler erkannt, da es mindestens drei \enquote{Mutationen} benötigt, um zu einem anderen Code zu werden.
+    \item Bei der dritten Codierung verhält es sich ebenso wie bei der zweiten.
 \end{itemize}
-Kodierung$_2$ und Kodierung$_3$ sind also betreffend Fehlererkennung gleich gut, allerdings ist Kodierung$_3$ kürzer und daher zu bevorzugen.
+Codierung$_2$ und Codierung$_3$ sind also betreffend Fehlererkennung gleich gut, allerdings ist Codierung$_3$ kürzer und daher zu bevorzugen.
 \end{myexample}
 
-Um zu bestimmen, wie viele Fehler eine bestimmte Kodierung erkennen kann, müssen wir uns die Abstände zwischen allen möglichen Code-Wörtern anschauen.
+Um zu bestimmen, wie viele Fehler eine bestimmte Codierung erkennen kann, müssen wir uns die Abstände zwischen allen möglichen Codewörtern anschauen.
 
 \begin{myexample}\label{ex:abstand}
-Angenommen, wir hätten drei Code-Wörter, \texttt{ANNA}, \texttt{ENZO} und \texttt{HANS}, dann könnten die Abstände zwischen allen Code-Wörtern wie folgt bestimmt werden:
+Angenommen, wir hätten drei Codewörter, \texttt{ANNA}, \texttt{ENZO} und \texttt{HANS}, dann könnten die Abstände zwischen allen Codewörtern wie folgt bestimmt werden:
 
 \begin{table}[H]
     \centering
@@ -374,13 +374,13 @@ Angenommen, wir hätten drei Code-Wörter, \texttt{ANNA}, \texttt{ENZO} und \tex
 
 Die \enquote{\texttt{x}} bezeichnen Stellen, an denen sich die Buchstaben unterscheiden und die \enquote{\texttt{o}} Stellen, an denen die Buchstaben gleich sind. Der Abstand zwischen einem Wort-Paar ergibt sich aus der Summe der \enquote{\texttt{x}}.
 
-Der minimale Abstand in diesem Beispiel ist 3, daher könnten in dieser Kodierung bis zu 2 Fehler, bzw. \enquote{Mutationen} erkannt werden. \texttt{ANNA} $\rightarrow$ \texttt{AN\textcolor{red}{Z}A} würde als Fehler erkannt, \texttt{ANNA} $\rightarrow$ \texttt{\textcolor{red}{E}N\textcolor{red}{ZO}} jedoch nicht, da \texttt{ENZO} ein korrektes Code-Wort ist.
+Der minimale Abstand in diesem Beispiel ist 3, daher könnten in dieser Codierung bis zu 2 Fehler, bzw. \enquote{Mutationen} erkannt werden. \texttt{ANNA} $\rightarrow$ \texttt{AN\textcolor{red}{Z}A} würde als Fehler erkannt, \texttt{ANNA} $\rightarrow$ \texttt{\textcolor{red}{E}N\textcolor{red}{ZO}} jedoch nicht, da \texttt{ENZO} ein korrektes Codewort ist.
 \end{myexample}
 
 Binär funktioniert die Abstandsbestimmung genau gleich wie in \cref{ex:abstand}.
 
 \begin{myexample}\label{ex:bin}
-Basierend auf Kodierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen allen Code-Wörtern wie folgt bestimmt werden:
+Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen allen Codewörtern wie folgt bestimmt werden:
 
 \begin{table}[H]
     \centering
@@ -428,7 +428,7 @@ Basierend auf Kodierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen
          &
          &                            \\
     \end{tabular}
-    \caption{Abstände zwischen allen Codewörtern der Kodierung$_2$ aus \cref{tab:codes}}
+    \caption{Abstände zwischen allen Codewörtern der Codierung$_2$ aus \cref{tab:codes}}
     \label{tab:abst-codes}
 \end{table}
 
@@ -436,63 +436,83 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{myexample}
 
 \begin{myexercise}\label{ex:xavier}
-    Xavier schlägt vor, die Code-Wörter für die Farben aus \cref{ex:code-kerk} anders zu konstruieren. Man soll zu den Darstellungen (zwei Bits, z.B. 11) der Farben das Prüfbit anhängen (z.B. 11\underline{0}), sodass die Anzahl der Einsen gerade wird. Danach sollte man diese drei Bits in zwei Kopien (z.B. 11\underline{0}11\underline{0} für \enquote{Schwarz}) zu einem Code-Wort machen. Konstruieren Sie alle Code-Wörter der Kodierung und bestimmen Sie, wie viele Fehler man damit erkennen kann.
+    Xavier schlägt vor, die Codewörter für die Farben aus \cref{ex:code-kerk} anders zu konstruieren. Man soll zu den Darstellungen (zwei Bits, z.B. 11) der Farben das Prüfbit anhängen (z.B. 11\underline{0}), sodass die Anzahl der Einsen gerade wird. Danach sollte man diese drei Bits in zwei Kopien (z.B. 11\underline{0}11\underline{0} für \enquote{Schwarz}) zu einem Codewort machen. Konstruieren Sie alle Codewörter der Codierung und bestimmen Sie, wie viele Fehler man damit erkennen kann.
     \begin{myanswer}
+        Die vier Codewörter von Xavier lauten wie folgt. Jede farbige Linie verbindet ein Paar, das in \cref{tab:abst-codes-xavier} in derselben Farbe verglichen wird.
+        \begin{center}
+            \begin{tikzpicture}
+                \node[anchor=west, font=\ttfamily] (W) at (0,0) {00\underline{0}00\underline{0}};
+                \node[anchor=west] at (2.2,0) {Weiss};
+                \node[anchor=west, font=\ttfamily] (G) at (0,-0.7) {01\underline{1}01\underline{1}};
+                \node[anchor=west] at (2.2,-0.7) {Gelb};
+                \node[anchor=west, font=\ttfamily] (B) at (0,-1.4) {10\underline{1}10\underline{1}};
+                \node[anchor=west] at (2.2,-1.4) {Blau};
+                \node[anchor=west, font=\ttfamily] (S) at (0,-2.1) {11\underline{0}11\underline{0}};
+                \node[anchor=west] at (2.2,-2.1) {Schwarz};
+                % je Vergleich eine Farbe, gleich wie in der Tabelle darunter
+                \draw[Crimson, very thick] ([yshift=-2pt]W.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]G.west);
+                \draw[RoyalBlue, very thick] ([yshift=0pt]W.west) .. controls +(-1.4,0) and +(-1.4,0) .. ([yshift=0pt]B.west);
+                \draw[ForestGreen, very thick] ([yshift=2pt]W.west) .. controls +(-2.6,0) and +(-2.6,0) .. ([yshift=-2pt]S.west);
+                \draw[DarkOrange, very thick] ([yshift=-2pt]G.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]B.west);
+                \draw[DarkViolet, very thick] ([yshift=0pt]G.west) .. controls +(-1.9,0) and +(-1.9,0) .. ([yshift=0pt]S.west);
+                \draw[Teal, very thick] ([yshift=2pt]B.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=-2pt]S.west);
+            \end{tikzpicture}
+        \end{center}
         \begin{table}[H]
             \centering
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
-                    \texttt{0 1 1 0 1 1} \\ \hline
+                    \texttt{0 1 1 0 1 1} \\ \arrayrulecolor{Crimson}\hline\arrayrulecolor{black}
                     \texttt{o x x o x x} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{Crimson}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
-                    \texttt{1 0 1 1 0 1} \\ \hline
+                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{RoyalBlue}\hline\arrayrulecolor{black}
                     \texttt{x o x x o x} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{RoyalBlue}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
-                    \texttt{1 1 0 1 1 0} \\ \hline
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{ForestGreen}\hline\arrayrulecolor{black}
                     \texttt{x x o x x o} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{ForestGreen}{\textbf{Abstand 4}}
                 \end{tabular} \\
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 0 1 1 0 1} \\ \hline
+                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
                     \texttt{x x o x x o} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{DarkOrange}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \hline
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DarkViolet}\hline\arrayrulecolor{black}
                     \texttt{x o x x o x} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{DarkViolet}{\textbf{Abstand 4}}
                 \end{tabular}
                  &                            \\
                 \begin{tabular}{c}
                     \texttt{1 0 1 1 0 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \hline
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{Teal}\hline\arrayrulecolor{black}
                     \texttt{o x x o x x} \\
-                    \textcolor{orange}{Abstand 4}
+                    \textcolor{Teal}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                  &                            \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der Kodierung von Xavier}
+            \caption{Abstände zwischen allen Codewörtern der Codierung von Xavier}
             \label{tab:abst-codes-xavier}
         \end{table}
-        Da der Mindestabstand zwischen allen Kodewörtern 4 ist, können bis zu 3 Fehler erkannt werden.
+        Da der Mindestabstand zwischen allen Codewörtern 4 ist, können bis zu 3 Fehler erkannt werden.
     \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}\label{ex:fehler-kodierungen}
-    Bestimmen Sie, wie viele Fehler jede der folgenden Kodierungen erkennen kann. Bestimmen Sie dazu als Erstes den Mindest-Abstand innerhalb jeder Kodierung:
+    Bestimmen Sie, wie viele Fehler jede der folgenden Codierungen erkennen kann. Bestimmen Sie dazu als Erstes den Mindest-Abstand innerhalb jeder Codierung:
     \begin{table}[H]
         \centering
         \begin{tabular}{ccccc}
@@ -506,7 +526,7 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
             \midrule
             \textbf{Schwarz} & \texttt{11111111} & \texttt{110110} & \texttt{110}      & \texttt{111}      \\
         \end{tabular}
-        \caption{Kodierungstabelle}
+        \caption{Codierungstabelle}
         \label{tab:kodierung}
     \end{table}
     \begin{myanswer}
@@ -556,12 +576,12 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                  &
                  &                                \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der 4-Kopien-Kodierung}
+            \caption{Abstände zwischen allen Codewörtern der 4-Kopien-Codierung}
             \label{tab:abst-4kopien}
         \end{table}
     \end{myanswer}
     \begin{myanswer}
-        Kodierung von Xavier: s. Lösungen zu \cref{ex:xavier}.
+        Codierung von Xavier: s. Lösungen zu \cref{ex:xavier}.
     \end{myanswer}
     \begin{myanswer}
         \begin{table}[H]
@@ -610,7 +630,7 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                  &
                  &                           \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der 1-Parity-Kodierung}
+            \caption{Abstände zwischen allen Codewörtern der 1-Parity-Codierung}
             \label{tab:abst-1parity}
         \end{table}
     \end{myanswer}
@@ -661,7 +681,7 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                  &
                  &                           \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der 0-Parity-Kodierung}
+            \caption{Abstände zwischen allen Codewörtern der 0-Parity-Codierung}
             \label{tab:abst-0parity}
         \end{table}
     \end{myanswer}
@@ -677,7 +697,7 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{myexercise}
 
 \begin{mychallenge}\label{challenge:3code}
-    Finden Sie eine binäre Kodierung mit 3 Code-Wörtern der Länge 5 und Mindest-Abstand 3.
+    Finden Sie eine binäre Codierung mit 3 Codewörtern der Länge 5 und Mindest-Abstand 3.
     \begin{myanswer}
         Mehrere Lösungen sind möglich, zum Beispiel \texttt{00000}, \texttt{11100} und \texttt{10011}:
         \begin{itemize}
@@ -690,9 +710,9 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{mychallenge}
 
 \begin{mychallenge}
-    Gibt es eine binäre Kodierung mit 3 Code-Wörtern der Länge 5 und Mindest-Abstand 3, welche die Code-Wörter 00000 und 11111 beinhaltet?
+    Gibt es eine binäre Codierung mit 3 Codewörtern der Länge 5 und Mindest-Abstand 3, welche die Codewörter 00000 und 11111 beinhaltet?
     \begin{myanswer}
-        Nein. Ein drittes Code-Wort müsste von \texttt{00000} mindestens Abstand 3 haben, also mindestens drei Einsen enthalten. Gleichzeitig müsste es von \texttt{11111} mindestens Abstand 3 haben, also mindestens drei Nullen enthalten. Dafür bräuchte es mindestens $3 + 3 = 6$ Bits, ein Code-Wort hat aber nur 5 Bits.
+        Nein. Ein drittes Codewort müsste von \texttt{00000} mindestens Abstand 3 haben, also mindestens drei Einsen enthalten. Gleichzeitig müsste es von \texttt{11111} mindestens Abstand 3 haben, also mindestens drei Nullen enthalten. Dafür bräuchte es mindestens $3 + 3 = 6$ Bits, ein Codewort hat aber nur 5 Bits.
     \end{myanswer}
 \end{mychallenge}
 
@@ -700,19 +720,19 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 
 \section{Selbstkorrigierende Codes}
 
-Bisher haben wir gelernt, Kodierungen für gewisse Nachrichten zu finden, so dass ein gewisser Mindestabstand gewährleistet wird. Durch einen Mindestabstand von 2 (Bits) zwischen jedem Nachrichtenpaar wird gewährleistet, dass ein Fehler bestimmt erkannt wird, da es zwei Fehler (ungewollte Bit-Änderungen) bräuchte, damit aus einem gültigen Codewort ein anderes, gültiges Codewort wird.
+Bisher haben wir gelernt, Codierungen für gewisse Nachrichten zu finden, so dass ein gewisser Mindestabstand gewährleistet wird. Durch einen Mindestabstand von 2 (Bits) zwischen jedem Nachrichtenpaar wird gewährleistet, dass ein Fehler bestimmt erkannt wird, da es zwei Fehler (ungewollte Bit-Änderungen) bräuchte, damit aus einem gültigen Codewort ein anderes, gültiges Codewort wird.
 
 Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \textit{korrigieren}: Bei einer einzigen Änderung eines Bits wäre das resultierende Codewort dann immer noch näher am ursprünglichen Codewort als an allen anderen Codewörtern.
 
 \begin{myexercise}\label{ex:fehlerkorrektur}
-    Finden Sie für die drei Nachrichten Rot, Blau und Grün eine Kodierung aus Bitfolgen der Länge 5, die 1-fehlerkorrigierend ist.
+    Finden Sie für die drei Nachrichten Rot, Blau und Grün eine Codierung aus Bitfolgen der Länge 5, die 1-fehlerkorrigierend ist.
 
-    Das bedeutet, wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerbehafteten Bitfolge eindeutig rekonstruieren. Was können Sie über den Abstand einer solchen Kodierung sagen?
+    Das bedeutet, wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerbehafteten Bitfolge eindeutig rekonstruieren. Was können Sie über den Abstand einer solchen Codierung sagen?
 
     \begin{table}[H]
         \centering
         \begin{tabular}{cc}
-            \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+            \textbf{Farbe} & \textbf{Codierung} \\\midrule
             Rot            & \texttt{00000}     \\\midrule
             Grün           &                    \\\midrule
             Blau           &                    \\
@@ -724,15 +744,15 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
         \begin{table}[H]
             \centering
             \begin{tabular}{cc}
-                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+                \textbf{Farbe} & \textbf{Codierung} \\\midrule
                 Rot            & \texttt{00000}     \\\midrule
                 Grün           & \texttt{00111}     \\\midrule
                 Blau           & \texttt{11100}     \\
             \end{tabular}
         \end{table}
-        Weshalb funktioniert die in diesem Beispiel dargestellte Kodierung, um einen Fehler zu korrigieren?
+        Weshalb funktioniert die in diesem Beispiel dargestellte Codierung, um einen Fehler zu korrigieren?
 
-        Wir haben zwischen allen drei Kodierungen mindestens einen Abstand von 3:
+        Wir haben zwischen allen drei Codierungen mindestens einen Abstand von 3:
         \begin{table}[H]
             \centering
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
@@ -757,7 +777,7 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der vorgeschlagenen Kodierung}
+            \caption{Abstände zwischen allen Codewörtern der vorgeschlagenen Codierung}
         \end{table}
 
         Angenommen, rot mutiert spontan zu folgendem Code:
@@ -798,27 +818,27 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
 \begin{mychallenge}\label{challenge:4bits}
     Könnte man \cref{ex:fehlerkorrektur} auch mit nur 4 Bits lösen?
     \begin{myanswer}
-        Nein. Wir dürfen annehmen, dass \texttt{0000} eines der Code-Wörter ist: Flippt man in allen Code-Wörtern dieselben Stellen um, bleiben alle Abstände gleich. Jedes weitere Code-Wort braucht zu \texttt{0000} mindestens Abstand 3, enthält also mindestens drei Einsen. In Frage kommen nur \texttt{0111}, \texttt{1011}, \texttt{1101}, \texttt{1110} und \texttt{1111}. Je zwei dieser Wörter haben jedoch nur Abstand 1 oder 2 zueinander, es kann also höchstens eines davon gewählt werden.
+        Nein. Wir dürfen annehmen, dass \texttt{0000} eines der Codewörter ist: Flippt man in allen Codewörtern dieselben Stellen um, bleiben alle Abstände gleich. Jedes weitere Codewort braucht zu \texttt{0000} mindestens Abstand 3, enthält also mindestens drei Einsen. In Frage kommen nur \texttt{0111}, \texttt{1011}, \texttt{1101}, \texttt{1110} und \texttt{1111}. Je zwei dieser Wörter haben jedoch nur Abstand 1 oder 2 zueinander, es kann also höchstens eines davon gewählt werden.
 
-        Mit 4 Bits gibt es daher höchstens 2 Code-Wörter mit Mindest-Abstand 3. Für 3 Nachrichten braucht es mindestens 5 Bits.
+        Mit 4 Bits gibt es daher höchstens 2 Codewörter mit Mindest-Abstand 3. Für 3 Nachrichten braucht es mindestens 5 Bits.
     \end{myanswer}
 \end{mychallenge}
 
 
-In \cref{challenge:4bits} haben wir versucht, eine binäre Kodierung mit 4 Bits für 3 Nachrichten zu finden. Um die Aufgabe einfacher zu lösen, können wir uns ein Hilfsmittel zunutze machen. Dabei zeichnen wir alle möglichen Codes der Länge 4 auf und verbinden diejenigen Codes, welche Abstand 1 haben, miteinander (siehe \cref{fig:4d}). Wenn wir nun einen Fehler korrigieren wollen, brauchen wir mindestens einen Abstand von 3 zwischen je zwei ausgewählten Codewörtern.
+In \cref{challenge:4bits} haben wir versucht, eine binäre Codierung mit 4 Bits für 3 Nachrichten zu finden. Um die Aufgabe einfacher zu lösen, können wir uns ein Hilfsmittel zunutze machen. Dabei zeichnen wir alle möglichen Codes der Länge 4 auf und verbinden diejenigen Codes, welche Abstand 1 haben, miteinander (siehe \cref{fig:4d}). Wenn wir nun einen Fehler korrigieren wollen, brauchen wir mindestens einen Abstand von 3 zwischen je zwei ausgewählten Codewörtern.
 
 \begin{mydefinition}
-Um möglichst viele 1-fehlerkorrigierende Codewörter für eine gewisse Code-Länge zu finden, gehen wir wie folgt vor:
+Um möglichst viele 1-fehlerkorrigierende Codewörter für eine gewisse Codelänge zu finden, gehen wir wie folgt vor:
 \begin{enumerate}
     \item Ein beliebiges Codewort als erstes Codewort auswählen, z.B. \texttt{0000}.
-    \item Alle Code-Wörter streichen, welche von mindestens einem der bisher ausgewählten Codewörter weniger als Abstand 3 entfernt sind, also alle Codewörter mit Abstand 1 oder 2.
+    \item Alle Codewörter streichen, welche von mindestens einem der bisher ausgewählten Codewörter weniger als Abstand 3 entfernt sind, also alle Codewörter mit Abstand 1 oder 2.
     \item Schritte 1 und 2 mit einem noch nicht gestrichenen Codewort wiederholen, bis alle Codewörter entweder ausgewählt oder durchgestrichen sind.
 \end{enumerate}
-Auf diese Weise erhalten wir eine 1-fehlerkorrigierende Kodierung, die sich nicht mehr um weitere Codewörter erweitern lässt. Je nach Wahl der Codewörter ist dies jedoch nicht unbedingt die grösstmögliche Anzahl an Codewörtern.
+Auf diese Weise erhalten wir eine 1-fehlerkorrigierende Codierung, die sich nicht mehr um weitere Codewörter erweitern lässt. Je nach Wahl der Codewörter ist dies jedoch nicht unbedingt die grösstmögliche Anzahl an Codewörtern.
 
 Soll der Code nur 1-fehlererkennend und nicht 1-fehlerkorrigierend sein, reicht es aus, in Schritt 2 alle Codewörter mit Abstand 1 zu streichen.
 
-Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\cref{fig:2d}), 3 (\cref{fig:3d}) oder 5 (\cref{fig:5d}).
+Dieses Vorgehen funktioniert auch für andere Codelängen, beispielsweise 2 (\cref{fig:2d}), 3 (\cref{fig:3d}) oder 5 (\cref{fig:5d}).
 \end{mydefinition}
 
 \begin{figure}[H]
@@ -859,7 +879,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 \end{figure}
 
 \begin{myexercise}
-    Man verwendet eine Kodierung mit folgenden 4 gültigen Code-Wörtern der Länge 5:
+    Man verwendet eine Codierung mit folgenden 4 gültigen Codewörtern der Länge 5:
     \begin{enumerate}[label=(\Alph*)]
         \item \texttt{00000}
         \item \texttt{00110}
@@ -887,7 +907,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 
 
 \begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Kodierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}. Wie viele Code-Wörter können Sie finden?
+    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}. Wie viele Codewörter können Sie finden?
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
@@ -917,7 +937,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 \end{myexercise}
 
 \begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden} Kodierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}.
+    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}.
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
@@ -951,7 +971,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 \end{myexercise}
 
 \begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Kodierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}.
+    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}.
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
@@ -977,7 +997,7 @@ Dieses Vorgehen funktioniert auch für andere Code-Längen, beispielsweise 2 (\c
 \end{myexercise}
 
 \begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden Kodierungen} im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}. Wie viele 1-Fehler-korrigierenden Codewörter gibt es?
+    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden Codierungen} im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}. Wie viele 1-Fehler-korrigierenden Codewörter gibt es?
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
@@ -1066,7 +1086,7 @@ Die umgedrehte Karte muss sich also genau auf der vierten Zeile und in der dritt
 \textbf{Erklärung}: Die helfende Person hat in Schritt 2 die Karten nicht ganz \enquote{zufällig} hinzugefügt, sondern sie so arrangiert, dass die Anzahl der Karten mit dem Kopf nach oben in jeder Zeile und in jeder Spalte gerade war.
 
 \begin{mydefinition}[Kartentrick]\label{def:kartentrick}
-In der Kartentrick-Kodierung werden Codewörter in eine Tabelle eingefügt, danach werden für jede Spalte und jede Zeile Kontrollbits rechts, bzw. oben angefügt.
+In der Kartentrick-Codierung werden Codewörter in eine Tabelle eingefügt, danach werden für jede Spalte und jede Zeile Kontrollbits rechts, bzw. oben angefügt.
 
 Nehmen wir an, wir wollen folgendes Wort verschicken:
 
@@ -1098,12 +1118,12 @@ Nun fügen wir der Tabelle die \underline{Kontrollbits} oben und rechts hinzu:
 
 Die Kontrollbits sind so gewählt, dass jede Spalte und jede Zeile eine gerade Anzahl Einsen enthält. Wenn nun ein Bit geflippt wird, gibt es genau eine Spalte und eine Zeile, in welcher die Anzahl Einsen \textit{nicht} gerade ist, somit können wir den Ort des abgefälschten Bits lokalisieren und den Fehler automatisch beheben.
 
-Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vorgegangen: Fügen Sie dem ursprünglichen Code-Wort zuerst die erste Zeile, und danach die letzte Spalte \textit{ohne erstes Bit} an.
+Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vorgegangen: Fügen Sie dem ursprünglichen Codewort zuerst die erste Zeile, und danach die letzte Spalte \textit{ohne erstes Bit} an.
 
 \end{mydefinition}
 
 \begin{myexercise}
-    Wir haben $2^{12}$ = 4096 Nachrichten der Länge 12 Bits. Nutzen Sie den Kartentrick, um Code-Wörter für die folgenden Nachrichten zu generieren:
+    Wir haben $2^{12}$ = 4096 Nachrichten der Länge 12 Bits. Nutzen Sie den Kartentrick, um Codewörter für die folgenden Nachrichten zu generieren:
 
     \begin{enumerate}
         \item \texttt{010111101010}
@@ -1120,7 +1140,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
                 1             & 1             & 1             & 0             & \underline{1} \\ \midrule
                 1             & 0             & 1             & 0             & \underline{0} \\
             \end{tabular}
-            \caption{Kartentrick-Kodierung für Nachricht \texttt{010111101010}}
+            \caption{Kartentrick-Codierung für Nachricht \texttt{010111101010}}
             \label{tab:codeword1}
         \end{table}
         \begin{table}[H]
@@ -1131,7 +1151,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
                 0             & 0             & 0             & 0             & \underline{0} \\ \midrule
                 0             & 0             & 0             & 0             & \underline{0} \\
             \end{tabular}
-            \caption{Kartentrick-Kodierung für Nachricht \texttt{000000000000}}
+            \caption{Kartentrick-Codierung für Nachricht \texttt{000000000000}}
             \label{tab:codeword2}
         \end{table}
         \begin{table}[H]
@@ -1142,10 +1162,10 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
                 0             & 0             & 1             & 0             & \underline{1} \\ \midrule
                 1             & 1             & 0             & 0             & \underline{0} \\
             \end{tabular}
-            \caption{Kartentrick-Kodierung für Nachricht \texttt{111100101100}}
+            \caption{Kartentrick-Codierung für Nachricht \texttt{111100101100}}
             \label{tab:codeword3}
         \end{table}
-        Die Code-Wörter (Nachricht, dann die erste Zeile, dann die letzte Spalte ohne erstes Bit) lauten somit:
+        Die Codewörter (Nachricht, dann die erste Zeile, dann die letzte Spalte ohne erstes Bit) lauten somit:
         \begin{enumerate}
             \item \texttt{0 1 0 1 1 1 1 0 1 0 1 0 \underline{0 0 0 1 1 0 1 0}}
             \item \texttt{0 0 0 0 0 0 0 0 0 0 0 0 \underline{0 0 0 0 0 0 0 0}}
@@ -1155,7 +1175,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
 \end{myexercise}
 
 \begin{myexercise}
-    Man verwendet für die Nachrichten $a_1a_2a_3a_4a_5a_6$, der Länge 6 eine $2 \times 3$-Tabelle mit 6 Kontrollbits wie in \cref{def:kartentrick}. Die folgenden Nachrichten sind leider beschädigt worden. Bestimmen Sie die ursprüngliche Nachricht (das gesendete Code-Wort), wenn Sie annehmen, dass genau 1 Bit umgeflippt wurde.
+    Man verwendet für die Nachrichten $a_1a_2a_3a_4a_5a_6$, der Länge 6 eine $2 \times 3$-Tabelle mit 6 Kontrollbits wie in \cref{def:kartentrick}. Die folgenden Nachrichten sind leider beschädigt worden. Bestimmen Sie die ursprüngliche Nachricht (das gesendete Codewort), wenn Sie annehmen, dass genau 1 Bit umgeflippt wurde.
 
     \begin{enumerate}
         \item \texttt{0 1 0 1 0 1 \underline{1 1 0 0 0 0}}
@@ -1190,7 +1210,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
                 \end{tabular}
             \end{tabular}
         \end{table}
-        Korrigierte Code-Wörter und ursprüngliche Nachrichten:
+        Korrigierte Codewörter und ursprüngliche Nachrichten:
         \begin{enumerate}
             \item \texttt{0 1 \textcolor{red}{1} 1 0 1 \underline{1 1 0 0 0 0}}, Nachricht \texttt{011101}
             \item \texttt{0 1 1 1 0 1 \underline{1 1 0 \textcolor{red}{0} 0 0}}, Nachricht \texttt{011101} (nur ein Kontrollbit war falsch)
@@ -1372,7 +1392,7 @@ keine Spalte ausschliesslich aus leeren Feldern bestehen, da
 ein Fehler im entsprechenden Bit sonst von keinem Kontrollbit
 erkannt würde.
 \begin{myremark}
-    Eine Kodierung ist genau dann 1-fehlerkorrigierend,
+    Eine Codierung ist genau dann 1-fehlerkorrigierend,
     wenn die Spalten ihrer Überwachungstabelle paarweise verschieden
     und keine davon leer ist.
 \end{myremark}
@@ -1416,7 +1436,7 @@ Mit fünf Kontrollbits stehen dagegen
 \(2^5-1=31\) verschiedene Spalten zur Verfügung.
 Das genügt für die insgesamt 21 Bits des Codeworts.
 
-Für die 1-fehlerkorrigierende Kodierung einer Nachricht
+Für die 1-fehlerkorrigierende Codierung einer Nachricht
 mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
 
 \begin{myremark}
@@ -1436,7 +1456,7 @@ mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
 
 Wir wissen nun, dass fünf Kontrollbits für eine Nachricht
 mit 16 Bit ausreichen können. Wie lässt sich eine
-entsprechende Kodierung konstruieren?
+entsprechende Codierung konstruieren?
 
 Dazu erstellen wir eine Überwachungstabelle mit fünf Zeilen
 und 21 Spalten. Die ersten 16 Spalten entsprechen den
@@ -1491,7 +1511,7 @@ Die Einträge für die 16 Nachrichtenbits wählen wir
 anschliessend so, dass alle Spalten paarweise verschieden
 und nicht leer sind. Dabei gibt es verschiedene Möglichkeiten.
 Jede solche Wahl führt zu einer 1-fehlerkorrigierenden
-Kodierung mit fünf Kontrollbits.
+Codierung mit fünf Kontrollbits.
 
 
 \begin{center}
@@ -1551,7 +1571,7 @@ Kodierung mit fünf Kontrollbits.
 \end{center}
 
 
-Um eine Nachricht zu kodieren, bestimmen wir die Kontrollbits
+Um eine Nachricht zu codieren, bestimmen wir die Kontrollbits
 nacheinander. Dabei betrachten wir jeweils diejenigen
 Nachrichtenbits, die vom entsprechenden Kontrollbit überwacht
 werden. Das Kontrollbit wird so gewählt, dass die Gesamtzahl
@@ -1723,17 +1743,17 @@ der Einsen gerade ist.
 
 
 \begin{myexercise}
-    Alice möchte eine 1-fehlerkorrigierende Kodierung für
-    8 verschiedene Nachrichten entwerfen. Für die Kodierung
+    Alice möchte eine 1-fehlerkorrigierende Codierung für
+    8 verschiedene Nachrichten entwerfen. Für die Codierung
     dieser Nachrichten (ohne Kontrollbits) verwendet sie
     Bitfolgen der Länge 3
     (\texttt{000}, \texttt{001}, \ldots, \texttt{111}).
 
     \begin{enumerate}
         \item Wie viele Kontrollbits sind für eine
-              1-fehlerkorrigierende Kodierung mindestens notwendig?
+              1-fehlerkorrigierende Codierung mindestens notwendig?
 
-        \item Entwerfen Sie eine solche Kodierung, indem Sie
+        \item Entwerfen Sie eine solche Codierung, indem Sie
               die entsprechende Überwachungstabelle angeben.
     \end{enumerate}
     \begin{myanswer}
@@ -1812,11 +1832,11 @@ der Einsen gerade ist.
 
 
 \begin{myexercise}
-    Bob benötigt eine 1-fehlerkorrigierende Kodierung
+    Bob benötigt eine 1-fehlerkorrigierende Codierung
     für eine Million verschiedene Nachrichten.
 
     \begin{enumerate}
-        \item Wie viele Bits sind für die Kodierung der
+        \item Wie viele Bits sind für die Codierung der
               Nachrichten nötig (ohne Kontrollbits)?
 
         \item Wie viele Kontrollbits werden mindestens benötigt?
@@ -1845,7 +1865,7 @@ der Einsen gerade ist.
 
 \begin{myexercise}
 
-    Entwerfen Sie eine 1-fehlerkorrigierende Kodierung für
+    Entwerfen Sie eine 1-fehlerkorrigierende Codierung für
     30 verschiedene Nachrichten. Geben Sie die entsprechende
     Überwachungstabelle an.
     \begin{myanswer}
@@ -1983,7 +2003,7 @@ der Fehlerkorrektur in digitalen Informationssystemen.
 
 \begin{myexercise}
     Mit unseren Überlegungen konnten wir die minimale Anzahl
-    Kontrollbits für eine 1-fehler-korrigierende Kodierung ermitteln.
+    Kontrollbits für eine 1-fehler-korrigierende Codierung ermitteln.
     Bei der Erstellung der entsprechenden Überwachungstabellen
     haben wir viele Freiheiten. Entscheidend ist lediglich, dass
     alle Spalten paarweise verschieden sind und keine Spalte leer ist.
@@ -2010,7 +2030,7 @@ der Fehlerkorrektur in digitalen Informationssystemen.
               Wie lautet die um die Kontrollbits ergänzte Nachricht?
 
         \item Bob erhält die mit dem erweiterten \((16,11)\)-Hamming-Code
-              kodierte Nachricht \texttt{0001 1011 0010 0011}.
+              codierte Nachricht \texttt{0001 1011 0010 0011}.
               Korrigieren Sie den Fehler in der Nachricht.
     \end{enumerate}
 
@@ -2248,7 +2268,7 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
 
 \gls{RAID} ist eine spannende Technologie, um die Funktionsweise von Paritätsbits in der Praxis zu illustrieren. \gls{RAID} ist ein Standard zur Organisation mehrerer Festplatten zu einem sogenannten logischen Laufwerk. Dabei werden mehrere physische Festplatten zu einer \enquote{virtuellen} Festplatte zusammengefasst. Ziel ist es, die Datensicherheit, die Ausfallsicherheit und/oder die Lese- und Schreib-Leistung zu verbessern. \gls{RAID} wird häufig in Servern und Speichersystemen eingesetzt, um Redundanz zu gewährleisten oder die Geschwindigkeit von Speicherzugriffen zu erhöhen.
 
-Im Kontext der fehlerkorrigierenden und fehlererkennenden Kodierung spielt \gls{RAID} eine wichtige Rolle. Während \gls{RAID} 0 sich auf Performance ohne Redundanz konzentriert, nutzen andere \acrshort{RAID}-Level, insbesondere \gls{RAID} 5 und \gls{RAID} 6, Paritätsdaten zur Fehlerkorrektur. Im Folgenden schauen wir uns nur diejenigen \acrshort{RAID}-Typen an, welche heute am weitesten verbreitet sind.
+Im Kontext der fehlerkorrigierenden und fehlererkennenden Codierung spielt \gls{RAID} eine wichtige Rolle. Während \gls{RAID} 0 sich auf Performance ohne Redundanz konzentriert, nutzen andere \acrshort{RAID}-Level, insbesondere \gls{RAID} 5 und \gls{RAID} 6, Paritätsdaten zur Fehlerkorrektur. Im Folgenden schauen wir uns nur diejenigen \acrshort{RAID}-Typen an, welche heute am weitesten verbreitet sind.
 
 
 

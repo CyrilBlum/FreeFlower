@@ -56,20 +56,20 @@
     \end{center}
 \end{frame}
 
-\begin{frame}{Fehler in binärer Kodierung}
+\begin{frame}{Fehler in binärer Codierung}
     \begin{itemize}
-        \item In Computersystemen werden Informationen durch Bitfolgen kodiert, z.\,B.\ A~$\rightarrow$~01000001
+        \item In Computersystemen werden Informationen durch Bitfolgen codiert, z.\,B.\ A~$\rightarrow$~01000001
         \item Ein häufiger Fehler beim Übertragen von Informationen ist das Umflippen eines Bits (0~$\rightarrow$~1 bzw. 1~$\rightarrow$~0)
-        \item Eine Kodierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, \dots, bis $k$ Bits in der Nachricht als Fehler erkannt wird
+        \item Eine Codierung heisst \textbf{k-fehlererkennend}, wenn das Umflippen von 1, 2, \dots, bis $k$ Bits in der Nachricht als Fehler erkannt wird
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Qualität einer Kodierung}
+\begin{frame}{Qualität einer Codierung}
     \textbf{Qualität}: Wie viele Fehler können garantiert erkannt werden?
     \begin{table}[H]
         \centering
         \begin{tabular}{cccc}
-                             & \textbf{Kodierung$_1$} & \textbf{Kodierung$_2$}     & \textbf{Kodierung$_3$}                \\
+                             & \textbf{Codierung$_1$} & \textbf{Codierung$_2$}     & \textbf{Codierung$_3$}                \\
             \midrule
             \textbf{Weiss}   & 00                     & 00\textcolor{orange}{0000} & 00\textcolor{orange}{00\underline{0}} \\
             \midrule
@@ -80,15 +80,15 @@
             \textbf{Schwarz} & 11                     & 11\textcolor{orange}{1111} & 11\textcolor{orange}{11\underline{0}} \\
         \end{tabular}
     \end{table}
-    Welche Kodierung ist am besten?
+    Welche Codierung ist am besten?
     \begin{itemize}
-        \item Kodierung$_1$: 0 Fehler erkannt
-        \item Kodierung$_2$: 2 Fehler erkannt
-        \item Kodierung$_3$: 2 Fehler erkannt (aber kürzer!)
+        \item Codierung$_1$: 0 Fehler erkannt
+        \item Codierung$_2$: 2 Fehler erkannt
+        \item Codierung$_3$: 2 Fehler erkannt (aber kürzer!)
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Abstand einer Kodierung}{ANNA, ENZO und HANS}
+\begin{frame}{Abstand einer Codierung}{ANNA, ENZO und HANS}
     \begin{table}[H]
         \centering
         \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
@@ -116,7 +116,7 @@
         \caption{Abstände zwischen den Codewörtern ANNA, ENZO und HANS}
     \end{table}
     \begin{itemize}
-        \item Abstand dieser Kodierung: \textcolor{red}{3}
+        \item Abstand dieser Codierung: \textcolor{red}{3}
         \item Abstand = Minimum aller paarweisen Abstände der Codewörter
         \item Bis zu zwei Buchstaben können geändert werden, ohne dass man von einem Wort zu einem anderen übergeht
         \item Beispiel: \enquote{ENZO} mutiert zu \enquote{\red{A}N\red{N}O} $\rightarrow$ kein anderes gültiges Wort, also Fehler erkannt
@@ -175,10 +175,10 @@
                 \textcolor{orange}{Abstand 3}
             \end{tabular}
         \end{tabular}
-        \caption{Abstände zwischen allen Codewörtern der Kodierung$_2$}
+        \caption{Abstände zwischen allen Codewörtern der Codierung$_2$}
     \end{table}
     \begin{itemize}
-        \item Abstand dieser Kodierung: \textcolor{red}{3}
+        \item Abstand dieser Codierung: \textcolor{red}{3}
         \item Abstand = Minimum aller paarweisen Abstände der Codewörter
         \item Bis zu zwei Bitfehler ergeben nie ein anderes Codewort
     \end{itemize}

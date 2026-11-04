@@ -42,18 +42,18 @@
                       \texttt{Grün}      & \texttt{101}      \\
                   \end{tabular}
               \end{table}
-              \only<1>{Wie viele Fehler erkennt diese Kodierung?}
+              \only<1>{Wie viele Fehler erkennt diese Codierung?}
               \only<2>{\textbf{1 Bitfehler} (z.B. \texttt{000} $\to$ \texttt{00\red{1}}, \textbf{ungültig!})}
-              \only<3>{Was ist der \textbf{Abstand} dieser Kodierung?}
-              \only<4>{Der \textbf{Abstand einer Kodierung} ist die minimale Distanz zwischen zwei Codewörtern (in diesem Fall 2).}
+              \only<3>{Was ist der \textbf{Abstand} dieser Codierung?}
+              \only<4>{Der \textbf{Abstand einer Codierung} ist die minimale Distanz zwischen zwei Codewörtern (in diesem Fall 2).}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Wichtige Erkenntnis}
     \begin{center}
-        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlererkennend, wenn die Kodierung mindestens den Mindest-Abstand $k+1$ hat.}}
+        \textcolor{red}{\textbf{Eine Codierung ist $k$-fehlererkennend, wenn die Codierung mindestens den Mindest-Abstand $k+1$ hat.}}
     \end{center}
-    \only<2>{Z.B.: Die Kodierung \texttt{000}, \texttt{011} und \texttt{101} hat den kleinsten Abstand 2, also ist die Kodierung 1-fehlererkennend.}
+    \only<2>{Z.B.: Die Codierung \texttt{000}, \texttt{011} und \texttt{101} hat den kleinsten Abstand 2, also ist die Codierung 1-fehlererkennend.}
 \end{frame}
 
 
@@ -66,15 +66,15 @@
             colback=RoyalBlue!10,
             colframe=RoyalBlue,
             colbacktitle=RoyalBlue]
-        Finden Sie für die drei Nachrichten \textbf{Rot}, \textbf{Blau} und \textbf{Grün} eine Kodierung aus Bitfolgen der Länge 5, die \textbf{1-fehlerkorrigierend} ist.
+        Finden Sie für die drei Nachrichten \textbf{Rot}, \textbf{Blau} und \textbf{Grün} eine Codierung aus Bitfolgen der Länge 5, die \textbf{1-fehlerkorrigierend} ist.
 
-        Das bedeutet, wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerbehafteten Bitfolge eindeutig rekonstruieren. Was können Sie über den Abstand einer solchen Kodierung sagen?
+        Das bedeutet, wenn ein Fehler vorkommt, weiss man nicht nur, dass die Nachricht fehlerhaft ist, sondern man kann das ursprüngliche Codewort aus der fehlerbehafteten Bitfolge eindeutig rekonstruieren. Was können Sie über den Abstand einer solchen Codierung sagen?
 
         \begin{table}[H]
             \centering
             \small % keeps the exercise box above the footline
             \begin{tabular}{cc}
-                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+                \textbf{Farbe} & \textbf{Codierung} \\\midrule
                 Rot            & \texttt{00000}     \\\midrule
                 Grün           &                    \\\midrule
                 Blau           &                    \\
@@ -87,7 +87,7 @@
     \begin{table}[H]
             \centering
             \begin{tabular}{cc}
-                \textbf{Farbe} & \textbf{Kodierung} \\\midrule
+                \textbf{Farbe} & \textbf{Codierung} \\\midrule
                 Rot            & \texttt{00000}     \\\midrule
                 Grün           & \texttt{00111}     \\\midrule
                 Blau           & \texttt{11100}     \\
@@ -95,21 +95,21 @@
         \end{table}
 \end{frame}
 
-\begin{frame}[fragile]{1-fehlerkorrigierende Kodierungen}
+\begin{frame}[fragile]{1-fehlerkorrigierende Codierungen}
     \begin{itemize}
         \item Ziel: Nicht nur Fehler erkennen, sondern auch \textbf{automatisch korrigieren}
-        \item Eine Kodierung ist \textbf{1-fehlerkorrigierend}, wenn sie jeden einzelnen Bitfehler beheben kann
-        \item \textbf{Voraussetzung:} Der Abstand der Kodierung ist mindestens 3
+        \item Eine Codierung ist \textbf{1-fehlerkorrigierend}, wenn sie jeden einzelnen Bitfehler beheben kann
+        \item \textbf{Voraussetzung:} Der Abstand der Codierung ist mindestens 3
     \end{itemize}
     \begin{center}
-        \textcolor{red}{\textbf{Eine Kodierung ist $k$-fehlerkorrigierend, wenn der Mindestabstand mindestens $2k+1$ beträgt.}}
+        \textcolor{red}{\textbf{Eine Codierung ist $k$-fehlerkorrigierend, wenn der Mindestabstand mindestens $2k+1$ beträgt.}}
     \end{center}
 \end{frame}
 
 
 \begin{frame}{Visualisierung}
     \begin{center}
-        Gibt es auch eine 1-fehlerkorrigierende Kodierung mit drei Code-Wörtern der Länge 4?
+        Gibt es auch eine 1-fehlerkorrigierende Codierung mit drei Codewörtern der Länge 4?
     \end{center}
     $\rightarrow$ \textbf{Visualisierung schafft Abhilfe}
 \end{frame}
@@ -128,9 +128,9 @@
         \end{frame}
     }
 
-\begin{frame}{Schritt-für-Schritt-Suche nach 1-fehlerkorrigierender Kodierung (Länge 4)}
+\begin{frame}{Schritt-für-Schritt-Suche nach 1-fehlerkorrigierender Codierung (Länge 4)}
     \begin{center}
-        Eine 1-fehlerkorrigierende Kodierung der Länge 4 muss Mindest-Abstand 3 haben.
+        Eine 1-fehlerkorrigierende Codierung der Länge 4 muss Mindest-Abstand 3 haben.
     \end{center}
     \begin{figure}[H]
         \centering
