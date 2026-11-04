@@ -1,35 +1,52 @@
 import random
-from turtle import *
-
-# Screen()
+from pathlib import Path
 
 
-def waehle_zufaelliges_wort():
-    # wähle ein zufälliges Wort aus der Datei helvetismen_ascii.txt aus
-    datei = open("helvetismen_ascii.txt")
-    woerter = datei.readlines()
-    datei.close()
-    wort = random.choice(woerter)
-    wort.upper()
-    wort = wort[:-1]
-    return wort
+class Hangman:
+    """Ein Hangman-Spiel mit Texteingabe und Turtle- oder ASCII-Galgen."""
 
+    def __init__(self, wort=None, max_falsche=6, galgen="turtle"):
+        """Darstellung und maximale Anzahl falscher Versuche festlegen."""
+        if galgen not in ("turtle", "ascii"):
+            raise ValueError('galgen muss "turtle" oder "ascii" sein.')
+        if (
+            not isinstance(max_falsche, int)
+            or isinstance(max_falsche, bool)
+            or max_falsche < 1
+        ):
+            raise ValueError("max_falsche muss eine positive ganze Zahl sein.")
+        if wort is None:
+            wort = self.waehle_zufaelliges_wort()
+        if not isinstance(wort, str) or not wort.strip().isalpha():
+            raise ValueError("Das Wort muss aus mindestens einem Buchstaben bestehen.")
+        self.wort = wort.strip().upper()
+        self.max_falsche = max_falsche
+        self.galgen = galgen
+        self.erraten = False
+        self.falsche = 0
+        self.geratene_buchstaben = ""
+        self.stift = None
 
-def wort_anzeigen(wort, geratene_buchstaben):
-    # zeige die bereits geratenen Buchstaben an und die noch nicht erratenen durch Unterstriche
-    # der Aufruf print(wort_anzeigen("HANGMAN", "HGA")) printet z.B. HA_G_A_
-    angezeigtes_wort = ""
-    for buchstabe in wort:
-        if buchstabe in geratene_buchstaben:
-            angezeigtes_wort += buchstabe
-        else:
-            angezeigtes_wort += "_"
-    return angezeigtes_wort
+    def waehle_zufaelliges_wort(self):
+        # Die Wortliste liegt neben dieser Datei, unabhängig vom Arbeitsverzeichnis.
+        pfad = Path(__file__).with_name("helvetismen_ascii.txt")
+        with pfad.open(encoding="utf-8") as datei:
+            woerter = datei.read().splitlines()
+        return random.choice(woerter)
 
+    def wort_anzeigen(self):
+        # Bereits geratene Buchstaben anzeigen, die übrigen durch Unterstriche ersetzen.
+        angezeigtes_wort = ""
+        for buchstabe in self.wort:
+            if buchstabe in self.geratene_buchstaben:
+                angezeigtes_wort += buchstabe
+            else:
+                angezeigtes_wort += "_"
+        return angezeigtes_wort
 
-def galgen_ascii(station):
-    ascii = [
-        """
+    def galgen_ascii(self, station):
+        ascii = [
+            """
      +---+
      |   |
          |
@@ -37,7 +54,7 @@ def galgen_ascii(station):
          |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -45,7 +62,7 @@ def galgen_ascii(station):
          |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -53,7 +70,7 @@ def galgen_ascii(station):
          |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -61,7 +78,7 @@ def galgen_ascii(station):
          |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -69,7 +86,7 @@ def galgen_ascii(station):
          |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -77,7 +94,7 @@ def galgen_ascii(station):
     /    |
          |
     =========""",
-        """
+            """
      +---+
      |   |
      O   |
@@ -85,97 +102,119 @@ def galgen_ascii(station):
     / \\  |
          |
     =========""",
-    ]
-    print(ascii[station])
+        ]
+        print(ascii[station])
 
+    def galgen_turtle(self, station):
+        radius = 8
+        torso = 35
+        arm = 0.85 * torso
+        bein = 1.05 * torso
 
-def galgen_turtle(station):
-    radius = 8
-    torso = 35
-    arm = 0.85 * torso
-    bein = 1.05 * torso
+        if station == 0:
+            self.stift.hideturtle()
+            self.stift.pensize(3)
+            # Den 160 Einheiten hohen Galgen vertikal um die Fenstermitte platzieren.
+            self.stift.penup()
+            self.stift.goto(0, -80)
+            self.stift.setheading(0)
+            self.stift.pendown()
+            self.stift.forward(100)
+            self.stift.back(50)
+            self.stift.left(90)
+            self.stift.forward(160)
+            self.stift.left(90)
+            self.stift.forward(50)
+            self.stift.left(90)
+            self.stift.forward(20)
+        if station == 1:
+            self.stift.penup()
+            self.stift.forward(2 * radius)
+            self.stift.left(90)
+            self.stift.pendown()
+            self.stift.circle(radius)
+        if station == 2:
+            self.stift.right(90)
+            self.stift.forward(torso)
+        if station == 3:
+            self.stift.back(torso)
+            self.stift.right(25)
+            self.stift.forward(arm)
+        if station == 4:
+            self.stift.back(arm)
+            self.stift.left(50)
+            self.stift.forward(arm)
+        if station == 5:
+            self.stift.back(arm)
+            self.stift.right(25)
+            self.stift.forward(torso)
+            self.stift.right(25)
+            self.stift.forward(bein)
+        if station == 6:
+            self.stift.back(bein)
+            self.stift.left(50)
+            self.stift.forward(bein)
 
-    if station == 0:
-        hideturtle()
-        pensize(3)
-        forward(100)
-        back(50)
-        left(90)
-        forward(160)
-        left(90)
-        forward(50)
-        left(90)
-        forward(20)
-    if station == 1:
-        penup()
-        forward(2 * radius)
-        left(90)
-        pendown()
-        circle(radius)
-        """
-        right(90)
-        for _ in range(540):
-            forward(0.15)
-            left(1)
-        """
-    if station == 2:
-        right(90)
-        forward(torso)
-    if station == 3:
-        back(torso)
-        right(25)
-        forward(arm)
-    if station == 4:
-        back(arm)
-        left(50)
-        forward(arm)
-    if station == 5:
-        back(arm)
-        right(25)
-        forward(torso)
-        right(25)
-        forward(bein)
-    if station == 6:
-        back(bein)
-        left(50)
-        forward(bein)
+    def spielen(self):
+        # Jeder Aufruf startet eine neue Runde mit dem Wort dieser Instanz.
+        self.erraten = False
+        self.falsche = 0
+        self.geratene_buchstaben = ""
+        if self.galgen == "turtle":
+            # ASCII funktioniert auch ohne installierte Tk-Grafikunterstützung.
+            from turtle import Turtle
 
+            if self.stift is None:
+                self.stift = Turtle()
+            else:
+                self.stift.reset()
 
-def hangman_spielen(wort):
-    # starte das Spiel
-    print("Lass uns Hangman spielen!")
-    erraten = False
-    falsche = 0
-    geratene_buchstaben = ""
-    print("Aktuell gefundene Buchstaben:", wort_anzeigen(wort, geratene_buchstaben))
-    galgen_turtle(falsche)
-
-    while (not erraten) and (falsche < 6):
-        buchstabe = input("Bitte gib einen Buchstaben ein:\n").upper()
-        if buchstabe in geratene_buchstaben:
-            print("Den Buchstaben", buchstabe, "hast du schon ausprobiert.")
-        elif buchstabe not in wort:
-            print(buchstabe, "ist nicht im Wort enthalten.")
-            falsche += 1
-            geratene_buchstaben += buchstabe
-            galgen_turtle(falsche)
+        print("Lass uns Hangman spielen!")
+        print("Aktuell gefundene Buchstaben:", self.wort_anzeigen())
+        if self.galgen == "turtle":
+            self.galgen_turtle(0)
         else:
-            print("Gut gemacht,", buchstabe, "ist im Wort enthalten.")
-            geratene_buchstaben += buchstabe
+            self.galgen_ascii(0)
 
-            # das angezeigte Wort hat keine Lücken "_" mehr => das Wort wurde erraten
-            if "_" not in wort_anzeigen(wort, geratene_buchstaben):
-                erraten = True
+        while (not self.erraten) and (self.falsche < self.max_falsche):
+            buchstabe = input("Bitte gib einen Buchstaben ein:\n").strip().upper()
+            if len(buchstabe) != 1 or not buchstabe.isalpha():
+                print("Bitte gib genau einen Buchstaben ein.")
+                continue
+            if buchstabe in self.geratene_buchstaben:
+                print("Den Buchstaben", buchstabe, "hast du schon ausprobiert.")
+            elif buchstabe not in self.wort:
+                print(buchstabe, "ist nicht im Wort enthalten.")
+                # Die sechs Zeichenstufen auf die erlaubten Fehlversuche verteilen.
+                vorherige_station = self.falsche * 6 // self.max_falsche
+                self.falsche += 1
+                self.geratene_buchstaben += buchstabe
+                station = self.falsche * 6 // self.max_falsche
+                if self.galgen == "turtle":
+                    # Turtle muss jede neue Stufe der Reihe nach zeichnen.
+                    for neue_station in range(vorherige_station + 1, station + 1):
+                        self.galgen_turtle(neue_station)
+                else:
+                    self.galgen_ascii(station)
+            else:
+                print("Gut gemacht,", buchstabe, "ist im Wort enthalten.")
+                self.geratene_buchstaben += buchstabe
 
-        print(wort_anzeigen(wort, geratene_buchstaben))
+                # Ohne Lücken "_" ist das Wort vollständig erraten.
+                if "_" not in self.wort_anzeigen():
+                    self.erraten = True
 
-    if erraten:
-        print("Toll, du hast das Wort erraten!")
-    else:
-        print(
-            "Sorry, du hast alle deine Leben aufgebraucht. Das gesuchte Wort war:", wort
-        )
+            print(self.wort_anzeigen())
+
+        if self.erraten:
+            print("Toll, du hast das Wort erraten!")
+        else:
+            print(
+                "Sorry, du hast alle deine Leben aufgebraucht. Das gesuchte Wort war:",
+                self.wort,
+            )
 
 
-wort = waehle_zufaelliges_wort()
-hangman_spielen(wort)
+if __name__ == "__main__":
+    spiel = Hangman(galgen="ascii", max_falsche=6)
+    spiel.spielen()
