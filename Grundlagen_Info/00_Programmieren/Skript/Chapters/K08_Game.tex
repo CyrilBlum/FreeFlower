@@ -551,6 +551,39 @@ Folgender Code zeigt das Einsammeln mehrerer Münzen-Sprites mit automatischer K
     \end{myanswer}
 \end{myexercise}
 
+\section{Code strukturieren}
+\subsection{Code auf mehrere Dateien aufteilen}\label{sec:K08_mehrere_dateien}
+Wird ein Game grösser, lohnt es sich, Klassen in eigene Dateien auszulagern. Jede \texttt{.py}-Datei ist ein \textbf{Modul}, aus dem Sie mit \lstinline|from <datei> import <name>| Klassen oder Funktionen übernehmen können. Der Dateiname wird dabei ohne \texttt{.py} geschrieben. Beide Dateien müssen im selben Ordner liegen.
+
+\begin{myexample}[Spielfigur in eigener Datei]
+Die Klasse \lstinline|Player| steht in \texttt{player.py}:
+\lstinputlisting[language=Python,caption=\texttt{player.py}]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/zwei_dateien/player.py}
+Das Hauptprogramm \texttt{main.py} importiert die Klasse und enthält nur noch die Game-Schleife. Gestartet wird immer \texttt{main.py}:
+\lstinputlisting[language=Python,caption=\texttt{main.py}]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/zwei_dateien/main.py}
+\end{myexample}
+
+\subsection{Menü und Neustart mit einer Zustandsvariable}
+Ein Startmenü und ein Neustart lassen sich mit einer einzigen Variable umsetzen, die festhält, in welchem Zustand sich das Spiel befindet. Je nach Zustand reagiert die Game-Schleife anders auf Tasten und zeichnet etwas anderes:
+\begin{lstlisting}
+state = "menu"  # "menu", "play" oder "over"
+
+# In der Event-Schleife:
+if event.type == pg.KEYDOWN:
+    if state == "menu" and event.key == pg.K_SPACE:
+        state = "play"
+    elif state == "over" and event.key == pg.K_r:
+        reset_game()  # eigene Funktion: Punkte, Positionen usw. zuruecksetzen
+        state = "play"
+
+# Beim Zeichnen:
+if state == "menu":
+    draw_menu(screen)  # Titel und Erklaerung der Steuerung
+elif state == "play":
+    draw_game(screen)
+else:
+    draw_game_over(screen)  # Punktestand und "R fuer Neustart"
+\end{lstlisting}
+
 \section{Game-Auftrag}
 
 \subsection{Thema}
@@ -569,19 +602,18 @@ Weitere Themen können in Absprache mit der Lehrperson gewählt werden. Wichtig 
 Ihr Projekt sollte folgende, essentielle Python-Konzepte sinnvoll einsetzen
 \begin{todolist}
     \item Verwendung von \texttt{pygame-ce} für Fenster, Game-Schleife, Ereignisse, Zeichnen, Kollisionen und Medien (Bilder, Sound), Steuerung mit Tastatur und/oder Maus
-    \item Verwendung physikalischer Formeln für Bewegungen (z.\,B. Geschwindigkeit, Beschleunigung, Schwerkraft)
     \item Verwendung von \textbf{Variablen} zur Speicherung von Spielzuständen (z.\,B. Spielerposition, Punktestand, verbleibende Zeit)
     \item Verwendung von \textbf{Funktionen} zur Strukturierung des Codes (z.\,B. \lstinline|draw_player()|, \lstinline|update_game()|, \lstinline|handle_input()|), mit sowie ohne \lstinline|return|-Wert
     \item Verwendung von \textbf{logischen Ausdrücken} und \textbf{Schleifen} zur Steuerung des Spielablaufs (z.\,B. Kollisionserkennung, Punkte zählen, Spielzeit)
     \item Verwendung von \textbf{Datenstrukturen} (Listen, Dictionaries) zur Verwaltung von mehreren Spielobjekten (z.\,B. Liste von Items, Liste von Hindernissen)
     \item Verwendung von \textbf{Klassen} zur Modellierung von Spielobjekten (z.\,B. \lstinline|class Player|, \lstinline|class Item|, \lstinline|class Obstacle|)
-    \item Verwendung mehrerer Python-Unterdateien zur besseren Strukturierung des Codes (z.\,B. \lstinline|game.py|, \lstinline|player.py|, \lstinline|item.py|)
+    \item Verwendung mehrerer Python-Unterdateien zur besseren Strukturierung des Codes (z.\,B. \lstinline|game.py|, \lstinline|player.py|, \lstinline|item.py|), s. \cref{sec:K08_mehrere_dateien}
 \end{todolist}
 
 Ihr Game muss \textbf{Kommentare} enthalten, die den Code erklären und die Struktur des Programms verdeutlichen. Verwenden Sie sowohl einzeilige Kommentare (mit \lstinline|#|) als auch mehrzeilige Kommentare (mit \texttt{"""..."""}) für Funktionen und Klassen. \textbf{Schauen Sie sich die detaillierten Bewertungskriterien auf Moodle an, um sicherzustellen, dass Ihr Code den Anforderungen entspricht.}
 
 \subsection{Bonus}
-Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um das Spiel interessanter und komplexer zu gestalten. Folgende Auflistung enthält einige Beispiele für mögliche Boni:
+Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um das Spiel interessanter und komplexer zu gestalten. Sie zählen im Moodle-Kriterium «Erweiterungen» und sind für die volle Punktzahl nötig. Folgende Auflistung enthält einige Beispiele für mögliche Boni:
 \begin{todolist}
     \item Python-spezifisch:
     \begin{todolist}
@@ -592,6 +624,7 @@ Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um
     \begin{todolist}
         \item Wenn Sie ein komplexes Startmenü mit Game-Optionen implementieren.
         \item Wenn Sie Animationen (z.\,B. bewegte Spielfigur, animierte Hindernisse) einbauen.
+        \item Wenn Sie Bewegungen mit physikalischen Formeln (z.\,B. Beschleunigung, Schwerkraft) umsetzen.
         \item Wenn Sie zahlreiche Level oder Schwierigkeitsgrade (z.\,B. zahlreiche Hindernis-Arten etc.) implementieren.
         \item Wenn Sie viele Power-Ups (z.\,B. temporäre Unverwundbarkeit, Doppelte Punkte) einbauen.
         \item Wenn Sie viele eigens erstellte Hintergrundmusik und/oder Soundeffekte (z.\,B. bei Kollision, Item-Sammlung) einbauen.
@@ -609,18 +642,18 @@ Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um
 
 \section{Bewertung}
 \subsection{Projektbewertung}
-Die Bewertung Ihres Projekts erfolgt anhand der auf Moodle aufgelisteten Kriterien.
+Die Bewertung Ihres Projekts erfolgt anhand der auf Moodle aufgelisteten Kriterien. Bei verspäteter Abgabe oder bei übermässiger, offensichtlicher KI-Verwendung werden Abzüge gemacht.
 
 \subsection{Gruppen-Besprechung des Spiels}
 
-Im Anschluss an Ihre Abgabe findet eine Besprechung Ihres Spiels in Gruppen mit der Lehrperson statt (ca. 5 Minuten pro Person). Dabei werden Ihnen Fragen zu Ihrem Spiel gestellt, um Ihr Verständnis und Ihre Reflexion zu überprüfen. Die Besprechung resultiert in einer \textbf{individuellen} Verständnis-Punktzahl von bis zu 16 Punkten, welche mit Ihrer Endnote multipliziert wird:
+Im Anschluss an Ihre Abgabe findet eine Besprechung Ihres Spiels in Gruppen mit der Lehrperson statt (ca. 5 Minuten pro Person). Dabei werden Ihnen Fragen zu Ihrem Spiel gestellt, um Ihr Verständnis und Ihre Reflexion zu überprüfen. Die Besprechung resultiert in einer \textbf{individuellen} Verständnis-Punktzahl von bis zu 16 Punkten, welche Ihre Projekt-Note anpasst.
 
 Ihre Endnote wird wie folgt berechnet:
 \[\text{Endnote} = \text{Projekt-Note} + \Delta_{\text{Verständnis}}\]
 
 Wobei:
 \begin{itemize}
-    \item \textbf{Projekt-Note} die Note ist, die Sie basierend auf der Bewertung Ihres Projekts erhalten (0--100 Punkte, umgerechnet in Notenstufen)
+    \item \textbf{Projekt-Note} die Note ist, die Sie basierend auf der Bewertung Ihres Projekts erhalten (Punkte gemäss Bewertungsrichtlinie auf Moodle, umgerechnet in Notenstufen)
     \item \textbf{Verständnis-Delta} ein Bonus oder Malus ist, abhängig von Ihrer Verständnis-Punktzahl (0--16 Punkte), wie folgt:
     \begin{itemize}
         \item 14 Punkte: $\Delta = 0$ (keine Veränderung)
