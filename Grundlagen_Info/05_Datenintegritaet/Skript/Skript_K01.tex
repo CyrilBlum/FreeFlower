@@ -350,14 +350,14 @@ Angenommen, wir hätten drei Codewörter, \texttt{ANNA}, \texttt{ENZO} und \text
         \begin{tabular}{c}
             \texttt{A N N A} \\
             \texttt{E N Z O} \\ \hline
-            \texttt{x o x x} \\
+            \texttt{x \phantom{x} x x} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &
         \begin{tabular}{c}
             \texttt{A N N A} \\
             \texttt{H A N S} \\ \hline
-            \texttt{x x o x} \\
+            \texttt{x x \phantom{x} x} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &
@@ -372,7 +372,7 @@ Angenommen, wir hätten drei Codewörter, \texttt{ANNA}, \texttt{ENZO} und \text
     \label{tab:hans}
 \end{table}
 
-Die \enquote{\texttt{x}} bezeichnen Stellen, an denen sich die Buchstaben unterscheiden und die \enquote{\texttt{o}} Stellen, an denen die Buchstaben gleich sind. Der Abstand zwischen einem Wort-Paar ergibt sich aus der Summe der \enquote{\texttt{x}}.
+Die \enquote{\texttt{x}} bezeichnen Stellen, an denen sich die Buchstaben unterscheiden. An Stellen mit gleichen Buchstaben bleibt das Feld leer. Der Abstand zwischen einem Wort-Paar ergibt sich aus der Summe der \enquote{\texttt{x}}.
 
 Der minimale Abstand in diesem Beispiel ist 3, daher könnten in dieser Codierung bis zu 2 Fehler, bzw. \enquote{Mutationen} erkannt werden. \texttt{ANNA} $\rightarrow$ \texttt{AN\textcolor{red}{Z}A} würde als Fehler erkannt, \texttt{ANNA} $\rightarrow$ \texttt{\textcolor{red}{E}N\textcolor{red}{ZO}} jedoch nicht, da \texttt{ENZO} ein korrektes Codewort ist.
 \end{myexample}
@@ -388,14 +388,14 @@ Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen
         \begin{tabular}{c}
             \texttt{0 0 0 0 0 0} \\
             \texttt{0 1 0 1 0 1} \\ \hline
-            \texttt{o x o x o x} \\
+            \texttt{\phantom{x} x \phantom{x} x \phantom{x} x} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &
         \begin{tabular}{c}
             \texttt{0 0 0 0 0 0} \\
             \texttt{1 0 1 0 1 0} \\ \hline
-            \texttt{x o x o x o} \\
+            \texttt{x \phantom{x} x \phantom{x} x \phantom{x}} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &
@@ -415,14 +415,14 @@ Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen
         \begin{tabular}{c}
             \texttt{0 1 0 1 0 1} \\
             \texttt{1 1 1 1 1 1} \\ \hline
-            \texttt{x o x o x o} \\
+            \texttt{x \phantom{x} x \phantom{x} x \phantom{x}} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &                            \\
         \begin{tabular}{c}
             \texttt{1 0 1 0 1 0} \\
             \texttt{1 1 1 1 1 1} \\ \hline
-            \texttt{o x o x o x} \\
+            \texttt{\phantom{x} x \phantom{x} x \phantom{x} x} \\
             \textcolor{orange}{Abstand 3}
         \end{tabular}
          &
@@ -469,41 +469,41 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
                     \texttt{0 1 1 0 1 1} \\ \arrayrulecolor{Crimson}\hline\arrayrulecolor{black}
-                    \texttt{o x x o x x} \\
+                    \texttt{\phantom{x} x x \phantom{x} x x} \\
                     \textcolor{Crimson}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
                     \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{RoyalBlue}\hline\arrayrulecolor{black}
-                    \texttt{x o x x o x} \\
+                    \texttt{x \phantom{x} x x \phantom{x} x} \\
                     \textcolor{RoyalBlue}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
                     \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{ForestGreen}\hline\arrayrulecolor{black}
-                    \texttt{x x o x x o} \\
+                    \texttt{x x \phantom{x} x x \phantom{x}} \\
                     \textcolor{ForestGreen}{\textbf{Abstand 4}}
                 \end{tabular} \\
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
                     \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
-                    \texttt{x x o x x o} \\
+                    \texttt{x x \phantom{x} x x \phantom{x}} \\
                     \textcolor{DarkOrange}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
                     \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DarkViolet}\hline\arrayrulecolor{black}
-                    \texttt{x o x x o x} \\
+                    \texttt{x \phantom{x} x x \phantom{x} x} \\
                     \textcolor{DarkViolet}{\textbf{Abstand 4}}
                 \end{tabular}
                  &                            \\
                 \begin{tabular}{c}
                     \texttt{1 0 1 1 0 1} \\
                     \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{Teal}\hline\arrayrulecolor{black}
-                    \texttt{o x x o x x} \\
+                    \texttt{\phantom{x} x x \phantom{x} x x} \\
                     \textcolor{Teal}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
@@ -541,14 +541,14 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0 0 0} \\
                     \texttt{0 1 0 1 0 1 0 1} \\ \hline
-                    \texttt{o x o x o x o x} \\
+                    \texttt{\phantom{x} x \phantom{x} x \phantom{x} x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0 0 0} \\
                     \texttt{1 0 1 0 1 0 1 0} \\ \hline
-                    \texttt{x o x o x o x o} \\
+                    \texttt{x \phantom{x} x \phantom{x} x \phantom{x} x \phantom{x}} \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
                  &
@@ -568,14 +568,14 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \begin{tabular}{c}
                     \texttt{0 1 0 1 0 1 0 1} \\
                     \texttt{1 1 1 1 1 1 1 1} \\ \hline
-                    \texttt{x o x o x o x o} \\
+                    \texttt{x \phantom{x} x \phantom{x} x \phantom{x} x \phantom{x}} \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
                  &                                \\
                 \begin{tabular}{c}
                     \texttt{1 0 1 0 1 0 1 0} \\
                     \texttt{1 1 1 1 1 1 1 1} \\ \hline
-                    \texttt{o x o x o x o x} \\
+                    \texttt{\phantom{x} x \phantom{x} x \phantom{x} x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
                  &
@@ -595,41 +595,41 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \begin{tabular}{c}
                     \texttt{0 0 0} \\
                     \texttt{0 1 1} \\ \hline
-                    \texttt{o x x} \\
+                    \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0} \\
                     \texttt{1 0 1} \\ \hline
-                    \texttt{x o x} \\
+                    \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0} \\
                     \texttt{1 1 0} \\ \hline
-                    \texttt{x x o} \\
+                    \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular} \\
                 \begin{tabular}{c}
                     \texttt{0 1 1} \\
                     \texttt{1 0 1} \\ \hline
-                    \texttt{x x o} \\
+                    \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 1 1} \\
                     \texttt{1 1 0} \\ \hline
-                    \texttt{x o x} \\
+                    \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &                           \\
                 \begin{tabular}{c}
                     \texttt{1 0 1} \\
                     \texttt{1 1 0} \\ \hline
-                    \texttt{o x x} \\
+                    \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
@@ -646,41 +646,41 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \begin{tabular}{c}
                     \texttt{0 0 1} \\
                     \texttt{0 1 0} \\ \hline
-                    \texttt{o x x} \\
+                    \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 1} \\
                     \texttt{1 0 0} \\ \hline
-                    \texttt{x o x} \\
+                    \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 1} \\
                     \texttt{1 1 1} \\ \hline
-                    \texttt{x x o} \\
+                    \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular} \\
                 \begin{tabular}{c}
                     \texttt{0 1 0} \\
                     \texttt{1 0 0} \\ \hline
-                    \texttt{x x o} \\
+                    \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 1 0} \\
                     \texttt{1 1 1} \\ \hline
-                    \texttt{x o x} \\
+                    \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &                           \\
                 \begin{tabular}{c}
                     \texttt{1 0 0} \\
                     \texttt{1 1 1} \\ \hline
-                    \texttt{o x x} \\
+                    \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
@@ -764,21 +764,21 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0}             \\
                     \texttt{\underline{0 0 1 1 1}} \\
-                    \texttt{o o x x x}             \\
+                    \texttt{\phantom{x} \phantom{x} x x x}             \\
                     \textcolor{orange}{Abstand 3}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0}             \\
                     \texttt{\underline{1 1 1 0 0}} \\
-                    \texttt{x x x o o}             \\
+                    \texttt{x x x \phantom{x} \phantom{x}}             \\
                     \textcolor{orange}{Abstand 3}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 1 1 1}             \\
                     \texttt{\underline{1 1 1 0 0}} \\
-                    \texttt{x x o x x}             \\
+                    \texttt{x x \phantom{x} x x}             \\
                     \textcolor{orange}{Abstand 4}
                 \end{tabular}
             \end{tabular}
@@ -796,21 +796,21 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
                 \begin{tabular}{c}
                     \texttt{0 0 0 \textcolor{red}{1} 0} \\
                     \texttt{\underline{0 0 0 0 0}}      \\
-                    \texttt{o o o x o}                  \\
+                    \texttt{\phantom{x} \phantom{x} \phantom{x} x \phantom{x}}                  \\
                     \textcolor{orange}{Rot: Abstand 1}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 \textcolor{red}{1} 0} \\
                     \texttt{\underline{0 0 1 1 1}}      \\
-                    \texttt{o o x o x}                  \\
+                    \texttt{\phantom{x} \phantom{x} x \phantom{x} x}                  \\
                     \textcolor{orange}{Grün: Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 \textcolor{red}{1} 0} \\
                     \texttt{\underline{1 1 1 0 0}}      \\
-                    \texttt{x x x x o}                  \\
+                    \texttt{x x x x \phantom{x}}                  \\
                     \textcolor{orange}{Blau: Abstand 4}
                 \end{tabular}
             \end{tabular}
