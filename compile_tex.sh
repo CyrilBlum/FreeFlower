@@ -205,7 +205,7 @@ class_commands=(
     "\\\\documentclass[a4paper,11pt,svgnames,exerciseonly,oneside]{book}"
     "\\\\documentclass[svgnames,hyphens]{article}"
     # "\\\\documentclass[11pt,addpoints,svgnames]{exam}"
-    "\\\\documentclass[xcolor={table,dvipsnames,svgnames},hyphens]{beamer}"
+    "\\\\documentclass[aspectratio=169,xcolor={table,dvipsnames,svgnames},hyphens]{beamer}"
 )
 
 # Topics and their input files for each document class (as flat arrays: topic:path)
