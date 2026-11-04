@@ -1,0 +1,51 @@
+\chapter{Versicherung im Alltag}\label{chap:franchise}
+
+\einstieg{Wer eine hohe Franchise wählt, spart Prämie, weil er voraussichtlich gesund bleibt. Wer zahlt dann die Rechnung der Kranken, und ist das gerecht?}
+
+\arbeitsblock{Notebook \texttt{06\_Franchise.ipynb}, 35 Minuten. Danach 25 Minuten Projektarbeit mit \texttt{08\_Projektvorlage.ipynb}.}
+
+\section{Welche Franchise passt?}
+In der obligatorischen Krankenversicherung zahlen Erwachsene ihre Kosten bis zur gewählten \tib{Franchise} selbst. Darüber übernehmen sie 10~\% als Selbstbehalt, höchstens 700~CHF pro Jahr. Eine höhere Franchise senkt die Prämie. Sie tauschen also sichere Kosten gegen unsichere.
+
+Im Modell gelten fiktive Annahmen. Mit Franchise 300 beträgt die Jahresprämie 4200~CHF, und jeder zusätzliche Franken Franchise senkt sie um 70~Rappen. Die Behandlungskosten sind zufällig: Die gesunde Person hat einen Median von 600~CHF, die chronisch kranke einen von 6000~CHF. Die Simulation umfasst je eine Million Jahre.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[width=.6\textwidth, height=6.4cm, xlabel={Franchise in CHF}, ylabel={Jahreskosten in CHF}, legend pos=outer north east, grid=major, xtick={300,500,1000,1500,2000,2500}, ymin=3400, ymax=6000, legend style={font=\small}]
+			\addplot[Blue, very thick, mark=*] table[x=franchise, y=gesund] {\figdir/franchise.dat};
+			\addlegendentry{Gesund, Durchschnitt}
+			\addplot[Blue, dashed, mark=o] table[x=franchise, y=gesundp95] {\figdir/franchise.dat};
+			\addlegendentry{Gesund, teure 5 \%}
+			\addplot[Red, very thick, mark=*] table[x=franchise, y=chronisch] {\figdir/franchise.dat};
+			\addlegendentry{Chronisch, Durchschnitt}
+			\addplot[Red, dashed, mark=o] table[x=franchise, y=chronischp95] {\figdir/franchise.dat};
+			\addlegendentry{Chronisch, teure 5 \%}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Prämie plus Selbstbezahltes im Modell}
+\end{figure}
+
+Für die gesunde Person sinken die durchschnittlichen Kosten von 4559~CHF bei Franchise 300 auf 3651~CHF bei Franchise 2500. In 81~\% der Jahre ist Franchise 2500 günstiger. Für die chronisch kranke Person steigen sie von 5004~CHF auf 5426~CHF, Franchise 2500 lohnt sich nur in 9~\% der Jahre.
+
+\begin{myexercise}[Schwelle]
+	Ab welchen Behandlungskosten ist Franchise 300 günstiger als Franchise 2500?
+	\begin{myanswer}
+		Franchise 2500 spart 1540~CHF Prämie. Unter 2500~CHF Kosten zahlt man mit Franchise 2500 die Kosten $K$ selbst, mit Franchise 300 zahlt man $300 + 0.1(K-300) = 270 + 0.1K$. Aus $K - (270 + 0.1K) = 1540$ folgt $K \approx 2011$~CHF.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}[Mit echten Zahlen]
+	Suchen Sie im Prämienrechner des Bundes echte Prämien für Ihre Region und ein gewähltes Modell. Ersetzen Sie die fiktiven Werte. Was fehlt dem Modell trotzdem?
+	\begin{myanswer}
+		Zum Beispiel die Frage, ob eine Person hohe Kosten im Moment bezahlen kann. Dazu kommen Kosten, die über mehrere Jahre zusammenhängen, und die Tatsache, dass die eigene Gesundheit nicht einfach zufällig ist.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Wie gross muss eine Versicherung sein?]
+	Jede Person hat pro Jahr mit 1~\% Wahrscheinlichkeit einen Schaden von 100'000~CHF. Welche Prämie deckt die Schäden in 99~\% der Jahre, wenn die Versicherung 100, 1000, 10'000 oder 100'000 Personen hat?
+	\hilfe{Die Anzahl Schäden ist binomialverteilt, also verwenden Sie \texttt{rng.binomial} mit einer Million Wiederholungen. Nehmen Sie davon das 99-\%-Perzentil und teilen Sie die Schadensumme durch $n$. Der faire Beitrag liegt bei 1000~CHF.}
+	\begin{myanswer}
+		Die Prämie beträgt 4000, 1800, 1240 und 1074~CHF. Der Zuschlag schrumpft ungefähr mit $1/\sqrt{n}$. Das ist der Grund, weshalb Versicherungen gross sein wollen. Die Annahme unabhängiger Schäden fällt aber weg, sobald ein Hochwasser alle gleichzeitig trifft.
+	\end{myanswer}
+\end{mychallenge}

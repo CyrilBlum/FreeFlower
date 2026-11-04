@@ -1,0 +1,40 @@
+\begin{document}
+
+%% Project-specific Preambles
+\settoggle{includelogo}{true}
+
+\newcommand{\thesubject}{Begabtenförderung}
+\newcommand{\thetopic}{Risiko simulieren}
+\newcommand{\thelogo}{Logos/FreeFlower.pdf}
+\newcommand{\logosize}{.5\textwidth}
+\newcommand{\figdir}{FF/Risiko_simulieren/Figures}
+% Hilfestellung bleibt auch in der Version ohne Lösungen sichtbar
+\newcommand{\hilfe}[1]{\par\medskip\noindent\textbf{Hilfestellung:} #1}
+% Einstiegsfrage und Arbeitsblock je Doppellektion
+\newcommand{\einstieg}[1]{\begin{tcolorboxTemplate}[title=Einstiegsfrage, colback=Goldenrod!10, colframe=Goldenrod!80!black, colbacktitle=Goldenrod!80!black]#1\end{tcolorboxTemplate}}
+\newcommand{\arbeitsblock}[1]{\begin{myremark}\textbf{Arbeitsblock:} #1\end{myremark}}
+
+\lhead[ \leftmark ]{\thetopic}
+\rhead[\thesubject]{\textcopyleft{} \href{https://github.com/CyrilBlum/FreeFlower}{FreeFlower}, \the\year}
+
+\settoggle{emoji}{false}
+\def\arrayB{"grinning-face","bar-chart","laptop","technologist","robot","woman-student","hundred-points"}
+\maketitlepage{\thetopic}{Tentativer Kursentwurf}
+\tableofcontents
+\newpage
+
+\input{FF/Risiko_simulieren/Skript/Kapitel_00.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_01.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_02.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_03.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_04.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_05.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_06.tex}
+\input{FF/Risiko_simulieren/Skript/Kapitel_07.tex}
+\newpage
+\appendix
+\input{FF/Risiko_simulieren/Skript/Anhang_Lektionsplanung.tex}
+\newpage
+\printglossaries
+
+\end{document}

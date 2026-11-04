@@ -1,0 +1,120 @@
+\chapter{Projekte und weitere Ideen}
+
+\einstieg{Welche Entscheidung möchten Sie untersuchen, und wem würde ein Fehler in Ihrem Modell schaden?}
+
+\section{Projektauftrag}
+Sie wählen zu zweit eine reale Entscheidung unter Unsicherheit und bauen dazu eine eigene Simulation in \texttt{08\_Projektvorlage.ipynb}. Abzugeben sind ein lauffähiges Notebook, eine Grafik mit Ihrer Kernaussage und eine Präsentation von zehn Minuten. Die Präsentation beantwortet diese Fragen:
+\begin{itemize}
+	\item Welche Entscheidung untersuchen Sie, und für wen ist sie wichtig?
+	\item Welche Annahmen trifft Ihr Modell, und woher stammen die Zahlen?
+	\item Was zeigt die Simulation, auch im schlechten Fall?
+	\item Bei welcher Änderung einer Annahme kippt Ihre Schlussfolgerung?
+\end{itemize}
+
+Die erwarteten Resultate unten stammen aus Referenzsimulationen mit den angegebenen Beispielparametern (\texttt{Code/referenzloesungen.py}). Eigene Parameter führen zu anderen Zahlen. Die Zahlen sind ein Vergleichswert, kein Ziel.
+
+\newcommand{\projekt}[6]{%
+	\subsection{#1}
+	\begin{description}[leftmargin=!,labelwidth=2.6cm,topsep=2pt,itemsep=2pt]
+		\item[Leitfrage] #2
+		\item[Produkt] #3
+		\item[Hilfestellung] #4
+		\item[Erwartet] #5
+		\item[Quellen] #6
+	\end{description}}
+
+\section{Projektideen}
+
+\projekt{Altersvorsorge}
+{Welche Aktienquote passt zu 40 Jahren Sparen, und wie schlimm ist der schlechte Fall?}
+{Tabelle und Fächerdiagramm für Aktienquoten von 0 bis 100~\%.}
+{Sparen Sie 6000~CHF pro Jahr. Mischen Sie pro Jahr \texttt{q * aktien + (1-q) * obligationen} und zinsen Sie jede Einzahlung über die Restjahre auf. Beginnen Sie mit den Parametern aus \cref{tab:anlagen}.}
+{Median rund 372'000~CHF bei 0~\% Aktien und 1.08~Mio.~CHF bei 100~\%. Die schlechten 5~\% bleiben ab 25~\% Aktien fast gleich bei rund 340'000~CHF, die guten 5~\% steigen von rund 490'000~CHF auf 4~Mio.~CHF. Kritisch zu diskutieren ist die Annahme unabhängiger Jahre.}
+{Bengen (1994), Determining Withdrawal Rates Using Historical Data, Journal of Financial Planning 7(4). Daten: \url{https://data.snb.ch/de}}
+
+\projekt{Kelly-Kriterium}
+{Welcher Einsatz maximiert das langfristige Wachstum, und weshalb setzen Profis weniger?}
+{Diagramm mit dem Median und dem Risiko eines Einbruchs von 50~\% für verschiedene Einsätze.}
+{Beginnen Sie mit Trefferquote 60~\%, Quote 1:1 und 1000 Runden. Rechnen Sie mit Logarithmen, sonst läuft die Zahl über. Die Kelly-Formel lautet hier $f^* = 2p - 1$. Testen Sie $f$ von 0.05 bis 0.5.}
+{Das Maximum liegt bei $f = 0.2$, der Median vermehrt das Vermögen dort rund $5.6 \cdot 10^{8}$-fach. Bei $f = 0.4$ endet die mittlere Person unter dem Startwert. Selbst bei $f = 0.2$ brechen 45~\% der Verläufe zwischendurch um die Hälfte ein, bei $f = 0.1$ nur 10~\%. Das erklärt den halben Kelly.}
+{Kelly (1956), A New Interpretation of Information Rate, Bell System Technical Journal 35(4). Peters (2019), The ergodicity problem in economics, Nature Physics 15.}
+
+\projekt{Ruin des Spielers}
+{Wie lange überlebt man mit begrenztem Kapital gegen einen kleinen Vorteil des Casinos?}
+{Diagramm der Erfolgswahrscheinlichkeit gegen die Höhe des Kapitals, dazu die Formel und der Vergleich mit der Simulation.}
+{Start $a$, Ziel $2a$, Einsatz 1 auf Rot. Die Formel lautet $P = (1-q^a)/(1-q^{2a})$ mit $q = \frac{19}{18}$. Simulieren Sie mit einer Schleife, die nur noch aktive Personen weiterspielen lässt.}
+{Bei $a = 10$ verdoppeln rund 37~\%, bei $a = 50$ rund 6~\%, bei $a = 100$ nur noch 0.4~\%. Bei einem fairen Spiel wären es immer 50~\%. Je mehr Spiele es bis zum Ziel braucht, desto sicherer verliert man.}
+{Feller, An Introduction to Probability Theory and Its Applications, Band 1, Kapitel XIV.}
+
+\projekt{Bank Run}
+{Ab wann kippt eine Bank, wenn KundInnen auf das Verhalten anderer reagieren?}
+{Agentenmodell mit Diagramm des Endabzugs gegen den Anfangsschock.}
+{Jede Person hat eine Schwelle: Sie hebt ab, sobald dieser Anteil abgehoben hat. Ziehen Sie die Schwellen \texttt{sw} aus einer Normalverteilung mit Mittelwert 0.4 und Streuung 0.2. Aktualisieren Sie wiederholt den Anteil mit \texttt{max(schock, np.mean(sw <= anteil))}, bis sich nichts mehr ändert. Variieren Sie Schock und Streuung.}
+{Bei einer Streuung von 0.2 bleibt der Abzug bei einem Schock bis 20~\% stehen. Bei 30~\% steigt er im Mittel auf rund 78~\%, bei 35~\% auf fast 100~\%. Bei einer Streuung von 0.25 kippt es schon bei 5~\% Schock oft. Kleine Unterschiede in der Verteilung ändern also das ganze Ergebnis.}
+{Diamond, Dybvig (1983), Bank Runs, Deposit Insurance, and Liquidity, Journal of Political Economy 91(3). Granovetter (1978), Threshold Models of Collective Behavior, American Journal of Sociology 83(6).}
+
+\projekt{Gebäudeversicherung}
+{Wie viel Reserve braucht eine Versicherung für seltene Grossschäden?}
+{Histogramm der Jahresschäden mit Prämie und Reserve.}
+{Modellieren Sie 100'000 Gebäude. Die Anzahl Schäden pro Jahr ist Poisson-verteilt mit Mittelwert 200, die Schadenhöhe Pareto-verteilt: \texttt{(rng.pareto(1.5, k) + 1) * 20\_000}. Die Reserve deckt das 99.5-\%-Perzentil.}
+{Durchschnittlich rund 12~Mio.~CHF Schäden pro Jahr, also rund 120~CHF Prämie pro Gebäude. Das 99.5-\%-Perzentil liegt bei rund 35~Mio.~CHF, die Reserve also bei rund 23~Mio.~CHF. Wenige Grossschäden bestimmen die Reserve.}
+{Klugman, Panjer, Willmot, Loss Models. Daten: Sigma-Studien des Swiss Re Institute, online verfügbar.}
+
+\projekt{Klimarisiko}
+{Wie verändern häufigere Extremereignisse Prämie und Reserve?}
+{Vergleich heute und Zukunft in einer Tabelle, mit einer Begründung der gewählten Häufigkeit.}
+{Bauen Sie auf dem Modell der Gebäudeversicherung auf und erhöhen Sie die Häufigkeit um 50~\%. Belegen Sie Ihre Annahme mit einer Quelle und testen Sie zusätzlich höhere Schäden.}
+{Die Prämie steigt im Modell um 50~\% auf rund 180~CHF, die Reserve nur um rund ein Drittel auf rund 31~Mio.~CHF. Der Vergleich macht sichtbar, dass die Reserve nicht proportional wächst.}
+{IPCC, Sixth Assessment Report, Working Group I, Kapitel 11 (Weather and Climate Extreme Events).}
+
+\projekt{Lawinenrisiko}
+{Wie addieren sich kleine Einzelrisiken über viele Skitouren?}
+{Diagramm des Lebenszeitrisikos gegen die Anzahl Touren, mit und ohne risikoreiche Tage.}
+{Verwenden Sie $1-(1-p)^n$. Die Beispielannahme $p = 1/10'000$ pro Tour ist nicht empirisch. Teilen Sie die Touren anschliessend in normale Tage und Tage mit dreifachem Risiko auf.}
+{Bei 10 Touren pro Jahr während 50 Jahren beträgt das Risiko rund 4.9~\%. Sind 20~\% der Tage dreimal so gefährlich, steigt es auf rund 6.8~\%. Das Resultat hängt am gewählten $p$, deshalb gehört eine Begründung dazu.}
+{WSL-Institut für Schnee- und Lawinenforschung SLF: \url{https://www.slf.ch/de/lawinen/}. Munter, 3x3 Lawinen.}
+
+\projekt{Startup-Investments}
+{Weshalb lebt ein Portfolio oft von sehr wenigen Treffern?}
+{Diagramm der Verteilung der Portfoliorendite und Anteil des besten Treffers.}
+{30 Investments zu je 1~CHF, 65~\% Totalverlust, sonst Vielfaches \texttt{rng.pareto(1.3, k) + 1}. Sortieren Sie die Ergebnisse pro Portfolio mit \texttt{np.sort}.}
+{Das Vielfache beträgt im Durchschnitt rund 1.5, im Median aber nur rund 1.0, und rund 52~\% der Portfolios verlieren Geld. Der beste Treffer bringt im Median rund 30~\% des Ertrags, die besten drei rund 59~\%.}
+{Kerr, Nanda, Rhodes-Kropf (2014), Entrepreneurship as Experimentation, Journal of Economic Perspectives 28(3).}
+
+\projekt{Sportwetten}
+{Lässt sich aus den Quoten die Marge des Anbieters berechnen?}
+{Berechnung der Marge über eine ganze Saison und Simulation einer Wettstrategie.}
+{Für Quoten 2.10, 3.40 und 3.60 ist $\sum 1/q$ grösser als 1. Der Überschuss ist die Marge. Normieren Sie die Kehrwerte, um faire Wahrscheinlichkeiten zu schätzen. Laden Sie danach eine Saison als CSV-Datei.}
+{Im Beispiel beträgt die Summe 1.048, die Auszahlungsquote also rund 95.4~\%. Wer 200-mal 1~CHF setzt, verliert im Mittel rund 9~CHF, liegt aber in rund 25~\% der Fälle im Plus. Das erklärt, weshalb Wetten sich wie Können anfühlt.}
+{Daten: \url{https://www.football-data.co.uk/data.php}}
+
+\projekt{Verlustaversion}
+{Wie entscheiden Menschen im Vergleich zum Erwartungswert?}
+{Eigene Umfrage mit Auswertung und Schätzung des Verlustfaktors.}
+{Fragen Sie: Münzwurf, Sie verlieren 100~CHF oder gewinnen $X$. Ab welchem $X$ spielen Sie? Der Quotient $X/100$ schätzt den Verlustfaktor $\lambda$. Halten Sie die Umfrage anonym und ohne Personendaten, und vergleichen Sie kleine mit grossen Beträgen.}
+{Ein rein am Erwartungswert orientierter Mensch spielt knapp über $X = 100$. Tversky und Kahneman schätzen $\lambda$ auf rund 2.25, Ihre Umfrage dürfte ebenfalls deutlich über 1 liegen. Die Stichprobe ist klein und nicht repräsentativ.}
+{Kahneman, Tversky (1979), Prospect Theory, Econometrica 47(2). Tversky, Kahneman (1992), Advances in Prospect Theory, Journal of Risk and Uncertainty 5(4).}
+
+\projekt{Bootstrapping}
+{Was ändert sich, wenn wir statt der Normalverteilung echte Renditen ziehen?}
+{Vergleich von drei Modellen: Normalverteilung, Einzelziehung und Blockziehung.}
+{Laden Sie Monatsrenditen des Marktes. Einzelziehung: \texttt{x[rng.integers(0, n, n)]}. Blockziehung: Ziehen Sie zusammenhängende Blöcke von 24 Monaten. Messen Sie \texttt{np.corrcoef(r[:-1]**2, r[1:]**2)}.}
+{In einer Testreihe mit ruhigen und unruhigen Phasen beträgt diese Korrelation im Original rund 0.15, nach Einzelziehung rund 0, nach Blockziehung rund 0.11. Einzelziehung erhält die Verteilung und zerstört die Abfolge. Echte Daten dürften ähnlich reagieren, das ist zu prüfen.}
+{Efron (1979), Bootstrap Methods, Annals of Statistics 7(1). Daten: \url{https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html}}
+
+\projekt{Optionspreise}
+{Wie viel ist das Recht wert, eine Aktie später zu einem festen Preis zu kaufen?}
+{Monte-Carlo-Preis mit Konfidenzintervall und Vergleich mit der Black-Scholes-Formel.}
+{Beispiel: Kurs 100, Ausübungspreis 100, Zins 1~\%, Volatilität 20~\%, ein Jahr. Simulieren Sie den Endkurs mit $S_T = S e^{(r-\sigma^2/2)T + \sigma\sqrt{T}Z}$, berechnen Sie $\max(S_T - K, 0)$ und diskontieren Sie mit $e^{-rT}$.}
+{Black-Scholes ergibt 8.43. Die Simulation liegt bei 1000 Läufen noch rund $\pm 0.8$ daneben, bei 10~Mio. Läufen rund $\pm 0.01$. Das bestätigt die Regel aus Kapitel 2 zur Genauigkeit.}
+{Black, Scholes (1973), The Pricing of Options and Corporate Liabilities, Journal of Political Economy 81(3). Hull, Options, Futures, and Other Derivatives.}
+
+\section{Weitere Ideen für den Kurs}
+\begin{itemize}
+	\item \textbf{Klassenbörse:} Die Gruppen handeln über mehrere Wochen in einem simulierten Markt, in dem die Lehrperson Nachrichten einstreut. Danach vergleichen wir Stil und Ergebnis mit reinem Zufall.
+	\item \textbf{Zufall gegen Auswahl:} Wir vergleichen zufällig gezogene Portfolios mit einem bewussten Auswahlverfahren und fragen, wie viel Erfolg Können ist.
+	\item \textbf{Gast aus der Praxis:} Eine Fachperson aus dem Risikomanagement einer Versicherung oder Bank erzählt, wie Modelle dort eingesetzt und kontrolliert werden.
+	\item \textbf{Besuch an einer Hochschule:} Ein Fachbereich für Finanzmathematik oder Versicherungsmathematik stellt ein Thema vor. Das passt zur Vernetzung im Konzept Begabtenförderung.
+	\item \textbf{KI als Prüfobjekt:} Die SchülerInnen lassen ein Sprachmodell eine Simulation schreiben und suchen darin die versteckten Annahmen und Fehler.
+	\item \textbf{Wettbewerbe:} Die Wirtschafts-Olympiade kann als Anschluss für besonders interessierte SchülerInnen dienen.
+\end{itemize}

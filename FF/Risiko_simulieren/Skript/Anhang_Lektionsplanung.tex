@@ -1,0 +1,77 @@
+\chapter{Lektionsplanung}
+
+Jede Doppellektion dauert 90 Minuten. Die Doppellektionen 1 bis 7 folgen demselben Ablauf: 10 Minuten Einstiegsfrage, 5 Minuten Impuls, 60 Minuten Arbeitsblock, 15 Minuten Austausch. Die Doppellektion 8 besteht aus Präsentationen.
+
+% Argumente: Nummer, frei, Thema, Einstiegsfrage, Impuls, Arbeitsblock, Austausch
+\newcommand{\lplan}[7]{%
+	\subsection*{DL #1: #3}
+	\begin{center}
+		\small
+		\begin{tabular}{@{}p{.07\textwidth}p{.19\textwidth}p{.65\textwidth}@{}}
+			\midrule
+			10' & Einstiegsfrage & #4 \\
+			5' & Impuls & #5 \\
+			60' & Arbeitsblock & #6 \\
+			15' & Austausch & #7 \\
+			\midrule
+		\end{tabular}
+	\end{center}}
+
+\lplan{1}{}{Zufall simulieren}
+{Geld mit 80 und Casino: Antworten sammeln, keine Auflösung. Danach Würfelspiel im Raum.}
+{Notebook öffnen, Zelle ausführen, Selbstkontrolle erklären.}
+{Zu zweit \texttt{01\_Zufall.ipynb}: Roulette, Casino-Bilanz, Challenge Genauigkeit.}
+{Weshalb verliert das Casino nie? Was bedeutet Durchschnitt für den Einzelfall?}
+
+\lplan{2}{}{Anlageformen}
+{Was besitzen Sie, wenn das Geld auf der Bank liegt? Kurze schriftliche Antworten.}
+{Forderung, Beteiligung, Risiko.}
+{Steckbrief einer Anlageform zu zweit (30'), dann \texttt{02\_Anlageformen.ipynb} (30').}
+{Galerierundgang: Wer verliert in welcher Anlage zuerst?}
+
+\lplan{3}{}{30 Jahre in die Zukunft}
+{Zwei Personen mit gleichem Plan, zwölffacher Unterschied: War die eine klüger?}
+{Was ein Modellparameter ist und weshalb er keine Prognose ist.}
+{Zu zweit \texttt{03\_30\_Jahre.ipynb}: Verläufe, Perzentile, Challenges Median und Sparplan.}
+{Wie würden Sie das Ergebnis einer Person ohne Mathematik erklären?}
+
+\lplan{4}{}{Der Durchschnitt täuscht}
+{Münzspiel mit der ganzen Gruppe: Wer spielt mit und weshalb?}
+{Mittelwert und Median an einem Beispiel.}
+{Zu zweit \texttt{04\_Durchschnitt.ipynb}: Spiel, bester Einsatz, Reihenfolge der Renditen.}
+{Lässt sich die Frage \enquote{Geld mit 80} nun beantworten? Was fehlt noch?}
+
+\lplan{5}{}{Diversifikation}
+{500 Aktien und trotzdem grosser Verlust: Wie kann das sein?}
+{Korrelation an einem Bild.}
+{\texttt{05\_Diversifikation.ipynb} (35'), danach Projektidee wählen und zu zweit festhalten (25').}
+{Projektideen in je einem Satz vorstellen.}
+
+\subsection*{Zwischen DL 5 und DL 6}
+Die Projektgruppen geben ihre Leitfrage ab.
+
+\lplan{6}{}{Versicherung im Alltag}
+{Wer zahlt die Rechnung der Kranken? Kurze Standpunkte, auch rechtlich.}
+{Franchise, Selbstbehalt, Solidarität.}
+{\texttt{06\_Franchise.ipynb} (35'), danach Projektarbeit in \texttt{08\_Projektvorlage.ipynb} (25').}
+{Ist das Modellergebnis gerecht? Was sagt das Modell nicht?}
+
+\lplan{7}{}{Wenn das Modell versagt}
+{Alle 13'800 Jahre, und dann zweimal in zehn Jahren: Wer haftet?}
+{Dicke Ränder an einer Grafik.}
+{\texttt{07\_Modell.ipynb} (35'), danach Fallbeispiel in Gruppen oder Projektarbeit (25').}
+{Kurzer Fallbericht: Annahme, Ereignis, Geschädigte. Auftrag für die Eigenarbeit.}
+
+\subsection*{Zwischen DL 7 und DL 8}
+Eigenarbeit am Projekt, rund 8 Stunden.
+
+\subsection*{DL 8: Präsentationen}
+\begin{center}
+	\small
+	\begin{tabular}{@{}p{.07\textwidth}p{.19\textwidth}p{.65\textwidth}@{}}
+		\midrule
+		70' & Präsentationen & Bis zu sieben Gruppen mit je 10 Minuten inklusive Rückfrage \\
+		20' & Abschluss & Rückkehr zur Frage \enquote{Geld mit 80}, Rückmeldung zum Kurs \\
+		\midrule
+	\end{tabular}
+\end{center}

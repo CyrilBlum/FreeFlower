@@ -1,0 +1,62 @@
+\chapter{Der Durchschnitt täuscht}
+
+\einstieg{In diesem Spiel wird der Durchschnitt aller Teilnehmenden in jeder Runde reicher. Weshalb sollten Sie trotzdem nicht mitspielen?}
+
+\arbeitsblock{Notebook \texttt{04\_Durchschnitt.ipynb}, 60 Minuten zu zweit.}
+
+\section{Ein Spiel mit positivem Durchschnitt}
+Sie starten mit 100~CHF. In jeder Runde wird eine Münze geworfen. Bei Kopf wächst Ihr Vermögen um 50~\%, bei Zahl sinkt es um 40~\%. Würden Sie 20 Runden spielen?
+
+Pro Runde beträgt der Erwartungswert des Faktors $0.5\cdot 1.5 + 0.5\cdot 0.6 = 1.05$. Das klingt nach 5~\% Gewinn pro Runde. Eine Runde Kopf und eine Runde Zahl ergeben zusammen aber $1.5\cdot 0.6 = 0.9$, also einen Verlust.
+
+\begin{lstlisting}[style=Python]
+faktor = rng.choice([1.5, 0.6], size=(100_000, 20))
+ende = 100 * faktor.prod(axis=1)
+print(ende.mean(), np.median(ende))    # 264.87... 34.86...
+\end{lstlisting}
+
+Mit 200'000 simulierten Personen erhalten wir: Der Durchschnitt liegt bei rund 264~CHF, der theoretische Wert bei 265.30~CHF. Die mittlere Person besitzt am Schluss aber nur 34.87~CHF. Rund 75~\% der Personen haben Geld verloren, und nur rund 13~\% liegen über dem Durchschnitt. Wenige sehr grosse Vermögen ziehen den Durchschnitt nach oben.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[width=.8\textwidth, height=6cm, xlabel={Runde}, ylabel={Vermögen in CHF}, ymode=log, legend pos=north west, grid=major, xmin=0, xmax=20]
+			\addplot[Red, very thick] table[x=runde, y=theorie] {\figdir/muenzspiel.dat};
+			\addlegendentry{Durchschnitt aller Personen}
+			\addplot[Blue, very thick] table[x=runde, y=median] {\figdir/muenzspiel.dat};
+			\addlegendentry{Median}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Durchschnitt und Median laufen auseinander (gerade Runden, logarithmische Achse)}
+\end{figure}
+
+\begin{myexercise}[Warum die Wachstumsrate zählt]
+	\begin{aenum}
+		\item Berechnen Sie die typische Wachstumsrate pro Runde.
+		\item Was ändert sich für eine einzelne Person, wenn sie nur jeweils 40~\% ihres Vermögens einsetzt? Prüfen Sie es in der Simulation.
+	\end{aenum}
+	\begin{myanswer}
+		\begin{aenum}
+			\item $\sqrt{1.5\cdot 0.6} \approx 0.949$, also rund $-5.1$~\% pro Runde.
+			\item Der Faktor ist nun $1.2$ oder $0.84$. Es gilt $\sqrt{1.2\cdot 0.84} \approx 1.004$, die typische Person wächst also leicht. Wer weniger einsetzt, verdient im Durchschnitt weniger und steht im Normalfall besser da.
+		\end{aenum}
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Der beste Einsatz]
+	Sie setzen pro Runde den Anteil $f$ Ihres Vermögens ein. Bei welchem $f$ wächst das typische Vermögen am schnellsten, und ab welchem $f$ schrumpft es?
+	\hilfe{Die typische Wachstumsrate ist $g(f) = \sqrt{(1+0.5f)(1-0.4f)}-1$. Bestimmen Sie das Maximum mit \texttt{np.linspace} und \texttt{argmax}. Wer Ableitungen kennt, leitet $\ln(1+0.5f) + \ln(1-0.4f)$ nach $f$ ab und setzt null.}
+	\begin{myanswer}
+		Das Maximum liegt bei $f = 0.25$ mit rund $+0.62$~\% pro Runde. Ab $f = 0.5$ schrumpft das Vermögen, denn dann gilt $(1+0.25)(1-0.2) = 1$. Das ist das Kelly-Kriterium: Vollen Einsatz bezahlt man mit dem sicheren Abstieg, obwohl jeder Einsatz einen positiven Erwartungswert hat.
+	\end{myanswer}
+\end{mychallenge}
+
+\section{Reihenfolge der Renditen}
+Wer sein Vermögen unberührt lässt, kann die Reihenfolge der Jahresrenditen ignorieren, denn eine Multiplikation lässt sich vertauschen. Sobald Geld entnommen wird, gilt das nicht mehr.
+
+\begin{myexercise}[Rente aus dem Vermögen]
+	Eine Person besitzt 100'000~CHF und entnimmt jedes Jahr zu Beginn 12'000~CHF. Die zehn Jahresrenditen lauten 20, 15, 10, 10, 5, 5, 0, $-5$, $-15$ und $-25$~\%. Simulieren Sie diese Reihenfolge und die umgekehrte.
+	\begin{myanswer}
+		Mit den guten Jahren am Anfang bleiben rund 21'600~CHF übrig. Mit den schlechten Jahren am Anfang reicht das Geld nicht, und der Rechnung fehlen am Schluss rund 75'100~CHF. Ohne Entnahme wäre der Endwert in beiden Fällen gleich.
+	\end{myanswer}
+\end{myexercise}

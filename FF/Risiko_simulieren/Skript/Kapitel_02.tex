@@ -1,0 +1,118 @@
+\chapter{Anlageformen}\label{chap:anlageformen}
+
+\einstieg{Was genau besitzen Sie, wenn Ihr Geld \enquote{auf der Bank} liegt?}
+
+\arbeitsblock{In Doppellektion 2 erstellen Sie einen Steckbrief und arbeiten mit Notebook 2, in Doppellektion 3 mit Notebook 3.}
+
+\section{Was man besitzt und wer das Risiko trägt}
+Wer Geld anlegt, stellt es jemandem zur Verfügung und erhält dafür eine unsichere oder eine vereinbarte Gegenleistung.
+
+\begin{center}
+	\small
+	\begin{tabular}{@{}p{.18\textwidth}p{.27\textwidth}p{.22\textwidth}p{.22\textwidth}@{}}
+		\midrule
+		\textbf{Anlageform} & \textbf{Was man besitzt} & \textbf{Ertrag} & \textbf{Hauptrisiko} \\
+		\midrule
+		Sparkonto & Forderung gegenüber der Bank & Zins & Teuerung, Ausfall der Bank \\
+		Obligation & Forderung gegenüber Staat oder Unternehmen & Zins, Rückzahlung am Ende & Ausfall, steigende Zinsen \\
+		Aktie & Anteil an einem Unternehmen & Dividende, Kursgewinn & Unternehmen und Markt \\
+		Fonds, \acrshort{ETF} & Anteil an einem Korb von Anlagen & wie der Korb & Markt, Kosten \\
+		Immobilie & Grundstück und Gebäude & Miete, Wertsteigerung & Klumpenrisiko, schlechte Handelbarkeit \\
+		Kryptowährung & Einheit in einem Netzwerk & nur Kursgewinn & starke Kursschwankungen, Betrug \\
+		\midrule
+	\end{tabular}
+\end{center}
+
+Ein \gls{ETF} ist ein Fonds, der an der Börse gehandelt wird und meist einen Index abbildet.
+
+\section{Rendite und Volatilität}
+Die \tib{Rendite} misst, um wie viel Prozent eine Anlage in einem Zeitraum gewachsen ist. Die \tib{Volatilität} misst, wie stark die Renditen schwanken, und wird meist als Standardabweichung angegeben. Sie ist das übliche Mass für Risiko, deckt aber nicht alles ab, wie wir in \cref{chap:modell} sehen.
+
+\begin{myexercise}[Zinseszins]
+	\begin{aenum}
+		\item Wie viel werden 1000~CHF in 30 Jahren bei konstant 7~\%?
+		\item Eine Anlage verliert zuerst 50~\% und gewinnt danach 50~\%. Wie viel Prozent liegt sie unter dem Startwert?
+	\end{aenum}
+	\begin{myanswer}
+		\begin{aenum}
+			\item $1000\cdot 1.07^{30} \approx 7612$~CHF.
+			\item $0.5 \cdot 1.5 = 0.75$, also 25~\% unter dem Startwert.
+		\end{aenum}
+	\end{myanswer}
+\end{myexercise}
+
+\section{Nicht eine Zukunft, sondern viele}
+\einstieg{Zwei Personen sparen 40 Jahre lang genau gleich viel in genau denselben Fonds. Im Modell hat die eine am Ende rund zwölfmal so viel wie die andere. War sie klüger?}
+
+Eine feste Rendite ist unrealistisch. Wir ziehen deshalb für jedes Jahr eine zufällige Rendite und wiederholen das für viele mögliche Verläufe.
+
+\begin{lstlisting}[style=Python]
+jahre, pfade = 30, 10_000
+rendite = rng.normal(0.06, 0.16, size=(pfade, jahre))   # eine Zeile pro Verlauf
+vermoegen = 1000 * np.exp(rendite.sum(axis=1))
+
+print(np.median(vermoegen))              # typischer Verlauf
+print(np.percentile(vermoegen, [5, 95])) # schlechte und gute 5 %
+print(np.mean(vermoegen < 1000))         # Anteil mit Verlust
+\end{lstlisting}
+
+Die Parameter in \cref{tab:anlagen} sind Annahmen für den Unterricht und keine Prognosen. Die Ergebnisse stammen aus je 100'000 simulierten Verläufen.
+
+\begin{table}[H]
+	\centering
+	\small
+	\caption{Aus 1000~CHF werden nach 30 Jahren im Modell (Beträge gerundet)}
+	\label{tab:anlagen}
+	\begin{tabular}{@{}lrrrrrr@{}}
+		\midrule
+		\textbf{Anlage} & \textbf{Wachstum} & \textbf{Vola.} & \textbf{Schlechte 5 \%} & \textbf{Median} & \textbf{Gute 5 \%} & \textbf{Verlust} \\
+		\midrule
+		Sparkonto & 0.5 \% & 0 \% & 1160 & 1160 & 1160 & 0 \% \\
+		Obligationen & 2 \% & 4 \% & 1270 & 1820 & 2610 & 0.3 \% \\
+		Aktienfonds & 6 \% & 16 \% & 1430 & 6030 & 25'400 & 2 \% \\
+		Krypto (extrem) & 10 \% & 80 \% & 14 & 20'000 & 26.7 Mio. & 25 \% \\
+		\midrule
+	\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[width=.8\textwidth, height=6cm, xlabel={Jahre}, ylabel={Vermögen in CHF}, ymode=log, legend pos=north west, grid=major, xmin=0, xmax=30]
+			\addplot[Red, thick] table[x=jahr, y=p95] {\figdir/faecher_aktien.dat};
+			\addlegendentry{Gute 5 \%}
+			\addplot[Blue, very thick] table[x=jahr, y=p50] {\figdir/faecher_aktien.dat};
+			\addlegendentry{Median}
+			\addplot[Gray, thick] table[x=jahr, y=p05] {\figdir/faecher_aktien.dat};
+			\addlegendentry{Schlechte 5 \%}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Aktienfonds im Modell: Die Bandbreite wächst mit der Zeit (logarithmische Achse)}
+\end{figure}
+
+\begin{myexercise}[Eigene Parameter]
+	Ändern Sie Wachstum und Volatilität. Was verändert den Median, was die Bandbreite? Begründen Sie, weshalb die Zeile zur Krypto-Anlage mit Vorsicht zu lesen ist.
+	\begin{myanswer}
+		Das Wachstum verschiebt den Median, die Volatilität vergrössert die Bandbreite. Die Krypto-Zeile beruht auf gewählten Parametern und auf der Annahme, dass die Anlage 30 Jahre lang existiert. Ein Totalverlust ist im Modell gar nicht vorgesehen.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Mittelwert gegen Median]
+	Der Median im Aktienmodell liegt bei rund 6050~CHF. Berechnen Sie den Mittelwert aus einer Formel und prüfen Sie ihn in der Simulation. Wie viele Personen liegen unter dem Durchschnitt?
+	\hilfe{Das Endvermögen ist lognormalverteilt. Für $X = e^{Y}$ mit $Y \sim N(\mu, s^2)$ gilt $E[X] = e^{\mu + s^2/2}$. Hier sind $\mu = 30 \cdot 0.06$ und $s^2 = 30 \cdot 0.16^2$. Für den Anteil genügt \texttt{np.mean(vermoegen < vermoegen.mean())}.}
+	\begin{myanswer}
+		$1000 \cdot e^{1.8 + 0.384} \approx 8880$~CHF, die Simulation liefert praktisch denselben Wert. Rund 67~\% der Personen liegen unter dem Durchschnitt. Der Median ist also die ehrlichere Zahl für den Einzelfall.
+	\end{myanswer}
+\end{mychallenge}
+
+\begin{mychallenge}[Sparplan oder alles auf einmal?]
+	Sie haben 12'000~CHF. Entweder investieren Sie alles sofort oder monatlich 100~CHF während 10 Jahren. Vergleichen Sie Median, schlechte 5~\% und Verlustwahrscheinlichkeit bei 6~\% Wachstum und 16~\% Volatilität pro Jahr.
+	\hilfe{Rechnen Sie in Monaten mit $0.06/12$ und $0.16/\sqrt{12}$. Die Rate aus Monat $t$ wächst nur über die verbleibenden Monate. \texttt{np.cumsum(r[:, ::-1], axis=1)[:, ::-1]} liefert diese Restsummen.}
+	\begin{myanswer}
+		Einmalanlage: Median rund 21'900~CHF, schlechte 5~\% rund 9500~CHF, Verlust in 12~\% der Fälle. Sparplan: Median rund 16'700~CHF, schlechte 5~\% rund 10'200~CHF, Verlust in 14~\% der Fälle. Die Einmalanlage gewinnt in 84~\% der Verläufe, weil das Geld länger arbeitet. Der Sparplan senkt also nicht jedes Risiko.
+	\end{myanswer}
+\end{mychallenge}
+
+\begin{myexcursion}
+	In der Simulation addieren wir die Renditen und wenden danach die Exponentialfunktion an. Das entspricht stetig verzinsten Renditen und verhindert, dass ein Vermögen negativ wird.
+\end{myexcursion}

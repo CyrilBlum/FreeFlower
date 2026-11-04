@@ -1,0 +1,44 @@
+\chapter{Zufall simulieren}
+
+\einstieg{Wie gross ist die Wahrscheinlichkeit, dass Sie mit 80 kein Geld mehr haben, und wer ist dann schuld? Heute können Sie das nicht beantworten. In der letzten Doppellektion sollten Sie zeigen können, wie man es abschätzt.\par\medskip Für heute: Ein Casino verliert an rund jedem dritten Abend gegen eine Person, die stur auf Rot setzt. Weshalb gehört es trotzdem nie dem Pech?}
+
+\arbeitsblock{Notebook \texttt{01\_Zufall.ipynb}, 60 Minuten zu zweit. Die Selbstkontrollen im Notebook zeigen, ob Ihr Ergebnis stimmt.}
+
+\section{Spiel zum Einstieg}
+Jede Person startet mit 100 Punkten und setzt vor jedem Wurf einen selbst gewählten Teil davon. Bei einer geraden Zahl gewinnt sie den Einsatz, bei 1 oder 3 verliert sie ihn, bei 5 verliert sie das Doppelte. Nach zehn Runden vergleichen wir die Kontostände und besprechen, wer wie entschieden hat.
+
+\section{Vom einzelnen Wurf zum Erwartungswert}
+Ein einzelner Wurf sagt wenig. Über viele Wiederholungen nähert sich der Durchschnitt aber dem \tib{Erwartungswert}, also der Summe aller möglichen Werte, gewichtet mit ihren Wahrscheinlichkeiten. Eine \tib{Monte-Carlo-Simulation} nutzt genau das: Der Computer spielt eine Situation sehr oft durch, und wir werten die Ergebnisse aus.
+
+\section{Das erste Notebook}
+Ein Jupyter Notebook besteht aus Zellen mit Text oder Code. Sie führen eine Zelle aus und sehen das Ergebnis direkt darunter. Das eignet sich für Simulationen, weil Sie einen Parameter ändern und das Ergebnis sofort vergleichen können.
+
+\begin{lstlisting}[style=Python]
+import numpy as np
+
+rng = np.random.default_rng(1)              # fester Startwert
+wurf = rng.integers(1, 7, size=100_000)     # 100'000 Würfelwürfe
+print(wurf.mean())                          # 3.49739
+\end{lstlisting}
+
+\begin{myexercise}[Roulette]
+	Beim europäischen Roulette gibt es 18 rote, 18 schwarze und eine grüne Zahl. Sie setzen 1~CHF auf Rot und erhalten bei Rot Ihren Einsatz plus 1~CHF zurück.
+	\begin{aenum}
+		\item Berechnen Sie den Erwartungswert Ihres Gewinns pro Spiel.
+		\item Simulieren Sie 1000 Abende mit je 100 Spielen. Wie viele Abende enden im Plus?
+	\end{aenum}
+	\begin{myanswer}
+		\begin{aenum}
+			\item $\frac{18}{37}\cdot 1 + \frac{19}{37}\cdot(-1) = -\frac{1}{37} \approx -0.027$~CHF.
+			\item Exakt sind es 35.5~\% der Abende (Binomialverteilung, mindestens 51 Treffer). Jedes einzelne Spiel kostet im Durchschnitt trotzdem Geld. Summiert über 50'000 Spiele eines Abends im Casino verschwindet das Glück der Einzelnen.
+		\end{aenum}
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Wie genau ist eine Simulation?]
+	Wie viele Würfelwürfe brauchen Sie, damit der Durchschnitt mit 95~\% Sicherheit höchstens 0.01 vom Erwartungswert 3.5 abweicht?
+	\hilfe{Der Durchschnitt von $n$ Werten streut mit dem Standardfehler $\sigma/\sqrt{n}$. Die 95-\%-Grenze liegt bei 1.96 Standardfehlern. Berechnen Sie zuerst $\sigma^2$ eines Würfels aus $E[X^2] - E[X]^2$.}
+	\begin{myanswer}
+		$\sigma^2 = \frac{91}{6} - 3.5^2 = \frac{35}{12}$. Aus $1.96\,\sigma/\sqrt{n} = 0.01$ folgen rund 112'000 Würfe. Für jede zusätzliche Dezimalstelle braucht es hundertmal mehr Simulationen.
+	\end{myanswer}
+\end{mychallenge}

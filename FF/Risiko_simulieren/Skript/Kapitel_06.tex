@@ -1,0 +1,75 @@
+\chapter{Wenn das Modell versagt}\label{chap:modell}
+
+\einstieg{Ein Modell sagt: Ein solcher Tag kommt alle 13'800 Jahre. Dann passiert er zweimal in zehn Jahren. Wer haftet?}
+
+\arbeitsblock{Notebook \texttt{07\_Modell.ipynb}, 35 Minuten. Danach 25 Minuten Projektarbeit.}
+
+\section{Dicke Ränder}
+Bisher haben wir meist normalverteilte Renditen angenommen. Reale Kursbewegungen zeigen aber häufiger extreme Tage, als die Normalverteilung erwartet. Wir vergleichen zwei Modelle mit gleicher Tagesvolatilität von 1~\% über 2520 Handelstage, also rund zehn Jahre. Das zweite Modell verwendet eine t-Verteilung mit 3 Freiheitsgraden.
+
+\begin{table}[H]
+	\centering
+	\small
+	\caption{Durchschnitt aus 2000 simulierten Zehnjahres-Perioden}
+	\label{tab:extrem}
+	\begin{tabular}{@{}lrrrr@{}}
+		\midrule
+		\textbf{Modell} & \textbf{Tage $\leq -3$ \%} & \textbf{Tage $\leq -5$ \%} & \textbf{\acrshort{VaR} 99 \%} & \textbf{Schlechtester Tag} \\
+		\midrule
+		Normalverteilung & 3.5 & 0.0 & $-2.3$ \% & $-3.4$ \% \\
+		t-Verteilung & 17.2 & 4.0 & $-2.6$ \% & $-9.0$ \% \\
+		\midrule
+	\end{tabular}
+\end{table}
+
+Der \gls{VaR} 99~\% gibt den Tagesverlust an, der nur an einem von 100 Tagen überschritten wird. Beide Modelle liegen dabei nahe beieinander, obwohl sich die Extremtage deutlich unterscheiden. Der \acrshort{VaR} sagt nichts darüber, wie schlimm die übrigen Tage ausfallen. Beim schlechtesten Tag ist der Median angegeben.
+
+\begin{myexercise}[Fünf Standardabweichungen]
+	Ein Verlust von 5~\% entspricht hier fünf Standardabweichungen. Die Normalverteilung ordnet dem eine Wahrscheinlichkeit von rund $2.9\cdot 10^{-7}$ zu. Wie oft käme ein solcher Tag bei 252 Handelstagen pro Jahr vor?
+	\begin{myanswer}
+		Etwa einmal in $1/(2.9\cdot 10^{-7}\cdot 252)$, also rund 13'800 Jahren. Wenn reale Märkte solche Tage innerhalb weniger Jahre zeigen, liegt das Problem beim Modell.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Schlimmer als der Value at Risk]
+	Der Expected Shortfall 99~\% ist der Durchschnitt aller Tage, die schlechter sind als der \acrshort{VaR}. Berechnen Sie beide Zahlen für beide Modelle.
+	\hilfe{\texttt{v = np.percentile(r, 1)} liefert den \acrshort{VaR}, \texttt{r[r <= v].mean()} den Expected Shortfall.}
+	\begin{myanswer}
+		Der \acrshort{VaR} liegt bei $-2.3$~\% und $-2.6$~\%, der Expected Shortfall bei $-2.7$~\% und $-4.0$~\%. Der Expected Shortfall trennt die Modelle deutlich besser, weil er in den Rand hineinschaut.
+	\end{myanswer}
+\end{mychallenge}
+
+\begin{mychallenge}[Schulden als Verstärker]
+	Ein Fonds hat eine Tagesvolatilität von 0.5~\%, eine Tagesdrift von 0.04~\% und arbeitet mit Hebel $h$. Wie oft verliert er innerhalb eines Jahres 80~\% seines Eigenkapitals?
+	\hilfe{Die Tagesrendite des Eigenkapitals ist $h \cdot r$. Rechnen Sie mit Logarithmen, denn die lassen sich mit \texttt{np.cumsum} aufsummieren. Im Notebook steht der passende Ansatz. Vergleichen Sie die Summe mit \texttt{np.log(0.2)}.}
+	\begin{myanswer}
+		\begin{center}
+			\small
+			\begin{tabular}{@{}lrrr@{}}
+				\midrule
+				\textbf{Modell} & \textbf{Hebel 5} & \textbf{Hebel 10} & \textbf{Hebel 25} \\
+				\midrule
+				Normalverteilung & 0.0 \% & 0.5 \% & 31 \% \\
+				t-Verteilung & 0.2 \% & 1.9 \% & 34 \% \\
+				\midrule
+			\end{tabular}
+		\end{center}
+		Bei Hebel 10 liegt das Risiko mit dicken Rändern rund viermal höher. Bei Hebel 25 reicht schon die normale Schwankung. Der Hebel wirkt stärker als die Wahl der Verteilung.
+	\end{myanswer}
+\end{mychallenge}
+
+\section{Fallbeispiele}
+Die SchülerInnen wählen in Gruppen einen Fall und klären drei Fragen: Was hat das Modell angenommen, was ist tatsächlich passiert, und wer trug den Schaden?
+
+\begin{itemize}
+	\item \textbf{Frankenschock, Januar 2015:} Die Schweizerische Nationalbank hebt den Mindestkurs zum Euro auf. Ein Kurs, der lange fast fest war, springt innert kurzer Zeit. Was misst eine Volatilität, die vor dem Ereignis geschätzt wurde?
+	\item \textbf{Long-Term Capital Management, 1998:} Ein Hedgefonds mit renommierten Finanzökonomen arbeitet mit hohen Schulden und gerät nach der Russlandkrise in Schieflage. Banken organisieren die Rettung. Weshalb verstärken Schulden Modellfehler?
+	\item \textbf{Finanzkrise 2008:} Hypothekenkredite galten durch Bündelung als gut gestreut. Dann fielen viele gleichzeitig aus. Das schliesst direkt an die Korrelation in Kapitel 5 an: Wie unabhängig waren die Risiken wirklich?
+\end{itemize}
+
+\begin{myexercise}[Modellkritik]
+	Nennen Sie drei Annahmen aus Ihrer bisherigen Simulation, die in der Realität verletzt sein könnten, und testen Sie eine davon im Notebook.
+	\begin{myanswer}
+		Beispiele sind unabhängige Jahre, konstante Volatilität, normalverteilte Renditen, keine Kosten und keine Steuern, oder dass eine Anlage immer weiterbesteht.
+	\end{myanswer}
+\end{myexercise}

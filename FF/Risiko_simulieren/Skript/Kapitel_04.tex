@@ -1,0 +1,49 @@
+\chapter{Diversifikation}
+
+\einstieg{Sie besitzen 500 verschiedene Aktien. Weshalb können Sie trotzdem an einem Tag einen grossen Teil verlieren?}
+
+\arbeitsblock{Notebook \texttt{05\_Diversifikation.ipynb}, 35 Minuten. Danach 25 Minuten Projektidee festlegen.}
+
+\section{Viele Körbe, wenig Schutz im Sturm}
+Wer sein Geld auf viele Anlagen verteilt, gleicht einen Teil der Schwankungen aus. Wie viel das bringt, hängt davon ab, wie stark die Anlagen zusammenhängen. Dieses Mass heisst \tib{Korrelation}.
+
+Für ein gleich gewichtetes Portfolio aus $n$ Aktien mit gleicher Volatilität $\sigma$ und gleicher Korrelation $\rho$ gilt
+\[
+	\sigma_{\text{Portfolio}} = \sigma\sqrt{\frac{1}{n} + \frac{n-1}{n}\rho}.
+\]
+Für grosse $n$ bleibt $\sigma\sqrt{\rho}$ übrig. Dieser Teil lässt sich nicht wegdiversifizieren.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[width=.8\textwidth, height=6cm, xlabel={Anzahl Aktien}, ylabel={Volatilität in \%}, legend pos=north east, grid=major, xmin=1, xmax=50, ymin=0, ymax=32]
+			\addplot[Blue, very thick] table[x=n, y=normal] {\figdir/diversifikation.dat};
+			\addlegendentry{Korrelation 0.2 (ruhige Zeit)}
+			\addplot[Red, very thick] table[x=n, y=krise] {\figdir/diversifikation.dat};
+			\addlegendentry{Korrelation 0.7 (Krise)}
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Volatilität eines Portfolios bei $\sigma = 30$~\%}
+\end{figure}
+
+\begin{myexercise}[Formel und Simulation]
+	Simulieren Sie 20 Aktien mit $\sigma = 30$~\% und vergleichen Sie mit der Formel. Erzeugen Sie die Korrelation mit einem gemeinsamen Marktfaktor.
+	\begin{myanswer}
+		Die Formel ergibt bei $\rho = 0.2$ rund 14.7~\% und bei $\rho = 0.7$ rund 25.4~\%. Die Simulation mit 200'000 Jahren liefert 14.69~\% und 25.40~\%. Die Grenzwerte liegen bei 13.4~\% und 25.1~\%. In einer Krise schützt die Verteilung auf 20 Aktien also deutlich weniger.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}[Diskussion]
+	Viele Korrelationen steigen in Krisen, weil viele AnlegerInnen gleichzeitig verkaufen. Weshalb ist das genau dann ein Problem, wenn man Diversifikation am meisten bräuchte?
+	\begin{myanswer}
+		Der Schutz wird in ruhigen Zeiten gemessen, gebraucht wird er aber in Krisen. Ein Modell mit konstanter Korrelation unterschätzt deshalb die Verluste im schlechten Fall.
+	\end{myanswer}
+\end{myexercise}
+
+\begin{mychallenge}[Das risikoärmste Portfolio]
+	Aktien haben $\sigma_1 = 16$~\%, Obligationen $\sigma_2 = 4$~\%, die Korrelation beträgt 0.1. Bei welchem Aktiengewicht $w$ ist die Volatilität am kleinsten? Weshalb ist die Antwort nicht $w = 0$?
+	\hilfe{Verwenden Sie $\sigma_P^2 = w^2\sigma_1^2 + (1-w)^2\sigma_2^2 + 2w(1-w)\rho\sigma_1\sigma_2$ und testen Sie viele $w$. Prüfen Sie das Ergebnis mit zwei korrelierten Zufallsreihen.}
+	\begin{myanswer}
+		$w \approx 3.7$~\% ergibt eine Volatilität von rund 3.96~\%. Das liegt unter den 4~\% reiner Obligationen. Eine kleine Beimischung einer viel riskanteren Anlage senkt das Risiko also, weil die beiden nicht perfekt zusammenhängen.
+	\end{myanswer}
+\end{mychallenge}
