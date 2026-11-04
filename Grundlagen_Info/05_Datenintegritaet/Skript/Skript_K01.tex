@@ -454,13 +454,13 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                 \node[anchor=west] at (2.2,-1.4) {Blau};
                 \node[anchor=west, font=\ttfamily] (S) at (0,-2.1) {11\underline{0}11\underline{0}};
                 \node[anchor=west] at (2.2,-2.1) {Schwarz};
-                % je Vergleich eine Farbe, gleich wie in der Tabelle darunter
-                \draw[Crimson, very thick] ([yshift=-2pt]W.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]G.west);
+                % je Tabellenzeile ein Farbton (Blau, Grün, Orange), je Vergleich eine Abstufung
+                \draw[Navy, very thick] ([yshift=-2pt]W.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]G.west);
                 \draw[RoyalBlue, very thick] ([yshift=0pt]W.west) .. controls +(-1.4,0) and +(-1.4,0) .. ([yshift=0pt]B.west);
-                \draw[ForestGreen, very thick] ([yshift=2pt]W.west) .. controls +(-2.6,0) and +(-2.6,0) .. ([yshift=-2pt]S.west);
-                \draw[DarkOrange, very thick] ([yshift=-2pt]G.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]B.west);
-                \draw[DarkViolet, very thick] ([yshift=0pt]G.west) .. controls +(-1.9,0) and +(-1.9,0) .. ([yshift=0pt]S.west);
-                \draw[Teal, very thick] ([yshift=2pt]B.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=-2pt]S.west);
+                \draw[DeepSkyBlue, very thick] ([yshift=2pt]W.west) .. controls +(-2.6,0) and +(-2.6,0) .. ([yshift=-2pt]S.west);
+                \draw[DarkGreen, very thick] ([yshift=-2pt]G.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=2pt]B.west);
+                \draw[LimeGreen, very thick] ([yshift=0pt]G.west) .. controls +(-1.9,0) and +(-1.9,0) .. ([yshift=0pt]S.west);
+                \draw[DarkOrange, very thick] ([yshift=2pt]B.west) .. controls +(-0.7,0) and +(-0.7,0) .. ([yshift=-2pt]S.west);
             \end{tikzpicture}
         \end{center}
         \begin{table}[H]
@@ -468,9 +468,9 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
-                    \texttt{0 1 1 0 1 1} \\ \arrayrulecolor{Crimson}\hline\arrayrulecolor{black}
+                    \texttt{0 1 1 0 1 1} \\ \arrayrulecolor{Navy}\hline\arrayrulecolor{black}
                     \texttt{\phantom{x} x x \phantom{x} x x} \\
-                    \textcolor{Crimson}{\textbf{Abstand 4}}
+                    \textcolor{Navy}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
@@ -482,29 +482,29 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
                  &
                 \begin{tabular}{c}
                     \texttt{0 0 0 0 0 0} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{ForestGreen}\hline\arrayrulecolor{black}
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DeepSkyBlue}\hline\arrayrulecolor{black}
                     \texttt{x x \phantom{x} x x \phantom{x}} \\
-                    \textcolor{ForestGreen}{\textbf{Abstand 4}}
+                    \textcolor{DeepSkyBlue}{\textbf{Abstand 4}}
                 \end{tabular} \\
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
+                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{DarkGreen}\hline\arrayrulecolor{black}
                     \texttt{x x \phantom{x} x x \phantom{x}} \\
-                    \textcolor{DarkOrange}{\textbf{Abstand 4}}
+                    \textcolor{DarkGreen}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
                     \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DarkViolet}\hline\arrayrulecolor{black}
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{LimeGreen}\hline\arrayrulecolor{black}
                     \texttt{x \phantom{x} x x \phantom{x} x} \\
-                    \textcolor{DarkViolet}{\textbf{Abstand 4}}
+                    \textcolor{LimeGreen}{\textbf{Abstand 4}}
                 \end{tabular}
                  &                            \\
                 \begin{tabular}{c}
                     \texttt{1 0 1 1 0 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{Teal}\hline\arrayrulecolor{black}
+                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
                     \texttt{\phantom{x} x x \phantom{x} x x} \\
-                    \textcolor{Teal}{\textbf{Abstand 4}}
+                    \textcolor{DarkOrange}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                  &                            \\
