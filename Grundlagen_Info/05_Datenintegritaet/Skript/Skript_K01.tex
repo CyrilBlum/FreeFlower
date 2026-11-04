@@ -435,6 +435,11 @@ Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen
 Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{myexample}
 
+\begin{myremark}
+    In der Praxis haben Codes meist Tausende bis Milliarden Codewörter. Ein Code mit 11 Datenbits hat zum Beispiel $2^{11} = 2048$ Codewörter und damit über zwei Millionen Paare. Niemand bestimmt dort alle Abstände einzeln.
+    Der Mindestabstand bleibt trotzdem die Grösse, die festlegt, wie viele Fehler ein Code erkennen oder korrigieren kann. Man konstruiert den Code aber so, dass sich der Mindestabstand direkt aus dem Aufbau ergibt. Wie das geht, sehen Sie in \cref{sec:optimale-codes} bei den Hamming-Codes. Dort genügt ein Blick auf die Überwachungstabelle, um zu wissen, dass der Code 1-fehlerkorrigierend ist.
+\end{myremark}
+
 \begin{myexercise}\label{ex:xavier}
     Xavier schlägt vor, die Codewörter für die Farben aus \cref{ex:code-kerk} anders zu konstruieren. Man soll zu den Darstellungen (zwei Bits, z.B. 11) der Farben das Prüfbit anhängen (z.B. 11\underline{0}), sodass die Anzahl der Einsen gerade wird. Danach sollte man diese drei Bits in zwei Kopien (z.B. 11\underline{0}11\underline{0} für \enquote{Schwarz}) zu einem Codewort machen. Konstruieren Sie alle Codewörter der Codierung und bestimmen Sie, wie viele Fehler man damit erkennen kann.
     \begin{myanswer}
@@ -1220,7 +1225,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
     \end{myanswer}
 \end{myexercise}
 
-\section{Optimale 1-fehlerkorrigierende Codes}
+\section{Optimale 1-fehlerkorrigierende Codes}\label{sec:optimale-codes}
 
 
 
