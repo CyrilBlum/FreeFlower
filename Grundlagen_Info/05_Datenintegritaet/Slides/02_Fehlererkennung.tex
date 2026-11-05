@@ -88,41 +88,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Abstand einer Codierung}{ANNA, ENZO und HANS}
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
-            \begin{tabular}{c}
-                A N N A             \\
-                \underline{E N Z O} \\
-                x \phantom{x} x x             \\
-                \textcolor{orange}{Abstand 3}
-            \end{tabular}
-             &
-            \begin{tabular}{c}
-                A N N A             \\
-                \underline{H A N S} \\
-                x x \phantom{x} x             \\
-                \textcolor{orange}{Abstand 3}
-            \end{tabular}
-             &
-            \begin{tabular}{c}
-                E N Z O             \\
-                \underline{H A N S} \\
-                x x x x             \\
-                \textcolor{orange}{Abstand 4}
-            \end{tabular}
-        \end{tabular}
-        \caption{Abstände zwischen den Codewörtern ANNA, ENZO und HANS}
-    \end{table}
-    \begin{itemize}
-        \item Abstand dieser Codierung: \textcolor{red}{3}
-        \item Abstand = Minimum aller paarweisen Abstände der Codewörter
-        \item Bis zu zwei Buchstaben können geändert werden, ohne dass man von einem Wort zu einem anderen übergeht
-        \item Beispiel: \enquote{ENZO} mutiert zu \enquote{\red{A}N\red{N}O} $\rightarrow$ kein anderes gültiges Wort, also Fehler erkannt
-    \end{itemize}
-\end{frame}
-\begin{frame}
+\begin{frame}{Abstand einer Codierung}{Codierung$_2$}
     \begin{table}[H]
         \centering
         % all 6 pairs in two rows so that the frame is not cut off at the bottom
@@ -178,8 +144,8 @@
         \caption{Abstände zwischen allen Codewörtern der Codierung$_2$}
     \end{table}
     \begin{itemize}
-        \item Abstand dieser Codierung: \textcolor{red}{3}
-        \item Abstand = Minimum aller paarweisen Abstände der Codewörter
+        \item x: Stelle, an der sich die beiden Codewörter unterscheiden
+        \item Abstand der Codierung = Minimum aller paarweisen Abstände: \textcolor{red}{3}
         \item Bis zu zwei Bitfehler ergeben nie ein anderes Codewort
     \end{itemize}
 \end{frame}

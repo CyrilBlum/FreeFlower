@@ -341,44 +341,6 @@ Codierung$_2$ und Codierung$_3$ sind also betreffend Fehlererkennung gleich gut,
 
 Um zu bestimmen, wie viele Fehler eine bestimmte Codierung erkennen kann, müssen wir uns die Abstände zwischen allen möglichen Codewörtern anschauen.
 
-\begin{myexample}\label{ex:abstand}
-Angenommen, wir hätten drei Codewörter, \texttt{ANNA}, \texttt{ENZO} und \texttt{HANS}, dann könnten die Abstände zwischen allen Codewörtern wie folgt bestimmt werden:
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
-        \begin{tabular}{c}
-            \texttt{A N N A} \\
-            \texttt{E N Z O} \\ \hline
-            \texttt{x \phantom{x} x x} \\
-            \textcolor{orange}{Abstand 3}
-        \end{tabular}
-         &
-        \begin{tabular}{c}
-            \texttt{A N N A} \\
-            \texttt{H A N S} \\ \hline
-            \texttt{x x \phantom{x} x} \\
-            \textcolor{orange}{Abstand 3}
-        \end{tabular}
-         &
-        \begin{tabular}{c}
-            \texttt{E N Z O} \\
-            \texttt{H A N S} \\ \hline
-            \texttt{x x x x} \\
-            \textcolor{orange}{Abstand 4}
-        \end{tabular}
-    \end{tabular}
-    \caption{Abstände zwischen den Codewörtern \texttt{ANNA}, \texttt{ENZO} und \texttt{HANS}}
-    \label{tab:hans}
-\end{table}
-
-Die \enquote{\texttt{x}} bezeichnen Stellen, an denen sich die Buchstaben unterscheiden. An Stellen mit gleichen Buchstaben bleibt das Feld leer. Der Abstand zwischen einem Wort-Paar ergibt sich aus der Summe der \enquote{\texttt{x}}.
-
-Der minimale Abstand in diesem Beispiel ist 3, daher könnten in dieser Codierung bis zu 2 Fehler, bzw. \enquote{Mutationen} erkannt werden. \texttt{ANNA} $\rightarrow$ \texttt{AN\textcolor{red}{Z}A} würde als Fehler erkannt, \texttt{ANNA} $\rightarrow$ \texttt{\textcolor{red}{E}N\textcolor{red}{ZO}} jedoch nicht, da \texttt{ENZO} ein korrektes Codewort ist.
-\end{myexample}
-
-Binär funktioniert die Abstandsbestimmung genau gleich wie in \cref{ex:abstand}.
-
 \begin{myexample}\label{ex:bin}
 Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen allen Codewörtern wie folgt bestimmt werden:
 
@@ -432,7 +394,9 @@ Basierend auf Codierung$_2$ aus \cref{tab:codes} könnten die Abstände zwischen
     \label{tab:abst-codes}
 \end{table}
 
-Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
+Die \enquote{\texttt{x}} bezeichnen Stellen, an denen sich die beiden Codewörter unterscheiden. An Stellen mit gleichen Bits bleibt das Feld leer. Der Abstand zwischen zwei Codewörtern ist die Anzahl der \enquote{\texttt{x}}.
+
+Der kleinste dieser Abstände, der \textbf{Mindest-Abstand} der Codierung, ist 3. Es braucht also mindestens drei umgeflippte Bits, bis aus einem gültigen Codewort ein anderes gültiges Codewort wird. Damit werden bis zu 2 Fehler sicher erkannt.
 \end{myexample}
 
 \begin{myremark}
@@ -467,42 +431,42 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
             \centering
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
                 \begin{tabular}{c}
-                    \texttt{0 0 0 0 0 0} \\
-                    \texttt{0 1 1 0 1 1} \\ \arrayrulecolor{Navy}\hline\arrayrulecolor{black}
+                    \texttt{0 0 \underline{0} 0 0 \underline{0}} \\
+                    \texttt{0 1 \underline{1} 0 1 \underline{1}} \\ \arrayrulecolor{Navy}\hline\arrayrulecolor{black}
                     \texttt{\phantom{x} x x \phantom{x} x x} \\
                     \textcolor{Navy}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 0 0 0 0} \\
-                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{RoyalBlue}\hline\arrayrulecolor{black}
+                    \texttt{0 0 \underline{0} 0 0 \underline{0}} \\
+                    \texttt{1 0 \underline{1} 1 0 \underline{1}} \\ \arrayrulecolor{RoyalBlue}\hline\arrayrulecolor{black}
                     \texttt{x \phantom{x} x x \phantom{x} x} \\
                     \textcolor{RoyalBlue}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 0 0 0 0} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DeepSkyBlue}\hline\arrayrulecolor{black}
+                    \texttt{0 0 \underline{0} 0 0 \underline{0}} \\
+                    \texttt{1 1 \underline{0} 1 1 \underline{0}} \\ \arrayrulecolor{DeepSkyBlue}\hline\arrayrulecolor{black}
                     \texttt{x x \phantom{x} x x \phantom{x}} \\
                     \textcolor{DeepSkyBlue}{\textbf{Abstand 4}}
                 \end{tabular} \\
                 \begin{tabular}{c}
-                    \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 0 1 1 0 1} \\ \arrayrulecolor{DarkGreen}\hline\arrayrulecolor{black}
+                    \texttt{0 1 \underline{1} 0 1 \underline{1}} \\
+                    \texttt{1 0 \underline{1} 1 0 \underline{1}} \\ \arrayrulecolor{DarkGreen}\hline\arrayrulecolor{black}
                     \texttt{x x \phantom{x} x x \phantom{x}} \\
                     \textcolor{DarkGreen}{\textbf{Abstand 4}}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 1 1 0 1 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{LimeGreen}\hline\arrayrulecolor{black}
+                    \texttt{0 1 \underline{1} 0 1 \underline{1}} \\
+                    \texttt{1 1 \underline{0} 1 1 \underline{0}} \\ \arrayrulecolor{LimeGreen}\hline\arrayrulecolor{black}
                     \texttt{x \phantom{x} x x \phantom{x} x} \\
                     \textcolor{LimeGreen}{\textbf{Abstand 4}}
                 \end{tabular}
                  &                            \\
                 \begin{tabular}{c}
-                    \texttt{1 0 1 1 0 1} \\
-                    \texttt{1 1 0 1 1 0} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
+                    \texttt{1 0 \underline{1} 1 0 \underline{1}} \\
+                    \texttt{1 1 \underline{0} 1 1 \underline{0}} \\ \arrayrulecolor{DarkOrange}\hline\arrayrulecolor{black}
                     \texttt{\phantom{x} x x \phantom{x} x x} \\
                     \textcolor{DarkOrange}{\textbf{Abstand 4}}
                 \end{tabular}
@@ -517,19 +481,26 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
 \end{myexercise}
 
 \begin{myexercise}\label{ex:fehler-kodierungen}
-    Bestimmen Sie, wie viele Fehler jede der folgenden Codierungen erkennen kann. Bestimmen Sie dazu als Erstes den Mindest-Abstand innerhalb jeder Codierung:
+    Die Spaltenköpfe in \cref{tab:kodierung} sind nur Namen für vier verschiedene Methoden, dieselben vier Farben zu codieren. Paritätsbits sind unterstrichen.
+    \begin{itemize}
+        \item \textbf{4-Kopien:} Die zwei Bits der Farbe werden viermal hintereinander geschrieben.
+        \item \textbf{Xavier:} die Codierung aus \cref{ex:xavier}.
+        \item \textbf{Gerade Parität:} An die zwei Bits wird ein Paritätsbit angehängt, sodass die Anzahl Einsen im Codewort gerade ist (wie bei Codierung$_3$ in \cref{tab:codes}).
+        \item \textbf{Ungerade Parität:} Das Paritätsbit wird so gewählt, dass die Anzahl Einsen im Codewort ungerade ist. Es ist also immer das Gegenteil des Paritätsbits bei gerader Parität.
+    \end{itemize}
+    Bestimmen Sie, wie viele Fehler jede dieser Codierungen erkennen kann. Bestimmen Sie dazu als Erstes den Mindest-Abstand innerhalb jeder Codierung:
     \begin{table}[H]
         \centering
         \begin{tabular}{ccccc}
-                             & \textbf{4-Kopien} & \textbf{Xavier} & \textbf{1-Parity} & \textbf{0-Parity} \\
+                             & \textbf{4-Kopien} & \textbf{Xavier} & \textbf{Gerade Parität} & \textbf{Ungerade Parität} \\
             \midrule
-            \textbf{Weiss}   & \texttt{00000000} & \texttt{000000} & \texttt{000}      & \texttt{001}      \\
+            \textbf{Weiss}   & \texttt{00000000} & \texttt{00\underline{0}00\underline{0}} & \texttt{00\underline{0}}      & \texttt{00\underline{1}}      \\
             \midrule
-            \textbf{Gelb}    & \texttt{01010101} & \texttt{011011} & \texttt{011}      & \texttt{010}      \\
+            \textbf{Gelb}    & \texttt{01010101} & \texttt{01\underline{1}01\underline{1}} & \texttt{01\underline{1}}      & \texttt{01\underline{0}}      \\
             \midrule
-            \textbf{Blau}    & \texttt{10101010} & \texttt{101101} & \texttt{101}      & \texttt{100}      \\
+            \textbf{Blau}    & \texttt{10101010} & \texttt{10\underline{1}10\underline{1}} & \texttt{10\underline{1}}      & \texttt{10\underline{0}}      \\
             \midrule
-            \textbf{Schwarz} & \texttt{11111111} & \texttt{110110} & \texttt{110}      & \texttt{111}      \\
+            \textbf{Schwarz} & \texttt{11111111} & \texttt{11\underline{0}11\underline{0}} & \texttt{11\underline{0}}      & \texttt{11\underline{1}}      \\
         \end{tabular}
         \caption{Codierungstabelle}
         \label{tab:kodierung}
@@ -593,49 +564,49 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
             \centering
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
                 \begin{tabular}{c}
-                    \texttt{0 0 0} \\
-                    \texttt{0 1 1} \\ \hline
+                    \texttt{0 0 \underline{0}} \\
+                    \texttt{0 1 \underline{1}} \\ \hline
                     \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 0} \\
-                    \texttt{1 0 1} \\ \hline
+                    \texttt{0 0 \underline{0}} \\
+                    \texttt{1 0 \underline{1}} \\ \hline
                     \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 0} \\
-                    \texttt{1 1 0} \\ \hline
+                    \texttt{0 0 \underline{0}} \\
+                    \texttt{1 1 \underline{0}} \\ \hline
                     \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular} \\
                 \begin{tabular}{c}
-                    \texttt{0 1 1} \\
-                    \texttt{1 0 1} \\ \hline
+                    \texttt{0 1 \underline{1}} \\
+                    \texttt{1 0 \underline{1}} \\ \hline
                     \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 1 1} \\
-                    \texttt{1 1 0} \\ \hline
+                    \texttt{0 1 \underline{1}} \\
+                    \texttt{1 1 \underline{0}} \\ \hline
                     \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &                           \\
                 \begin{tabular}{c}
-                    \texttt{1 0 1} \\
-                    \texttt{1 1 0} \\ \hline
+                    \texttt{1 0 \underline{1}} \\
+                    \texttt{1 1 \underline{0}} \\ \hline
                     \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                  &                           \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der 1-Parity-Codierung}
+            \caption{Abstände zwischen allen Codewörtern der Codierung mit gerader Parität}
             \label{tab:abst-1parity}
         \end{table}
     \end{myanswer}
@@ -644,49 +615,49 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
             \centering
             \begin{tabular}{c@{\hspace{1.5cm}}c@{\hspace{1.5cm}}c}
                 \begin{tabular}{c}
-                    \texttt{0 0 1} \\
-                    \texttt{0 1 0} \\ \hline
+                    \texttt{0 0 \underline{1}} \\
+                    \texttt{0 1 \underline{0}} \\ \hline
                     \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 1} \\
-                    \texttt{1 0 0} \\ \hline
+                    \texttt{0 0 \underline{1}} \\
+                    \texttt{1 0 \underline{0}} \\ \hline
                     \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 0 1} \\
-                    \texttt{1 1 1} \\ \hline
+                    \texttt{0 0 \underline{1}} \\
+                    \texttt{1 1 \underline{1}} \\ \hline
                     \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular} \\
                 \begin{tabular}{c}
-                    \texttt{0 1 0} \\
-                    \texttt{1 0 0} \\ \hline
+                    \texttt{0 1 \underline{0}} \\
+                    \texttt{1 0 \underline{0}} \\ \hline
                     \texttt{x x \phantom{x}} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                 \begin{tabular}{c}
-                    \texttt{0 1 0} \\
-                    \texttt{1 1 1} \\ \hline
+                    \texttt{0 1 \underline{0}} \\
+                    \texttt{1 1 \underline{1}} \\ \hline
                     \texttt{x \phantom{x} x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &                           \\
                 \begin{tabular}{c}
-                    \texttt{1 0 0} \\
-                    \texttt{1 1 1} \\ \hline
+                    \texttt{1 0 \underline{0}} \\
+                    \texttt{1 1 \underline{1}} \\ \hline
                     \texttt{\phantom{x} x x} \\
                     \textcolor{orange}{Abstand 2}
                 \end{tabular}
                  &
                  &                           \\
             \end{tabular}
-            \caption{Abstände zwischen allen Codewörtern der 0-Parity-Codierung}
+            \caption{Abstände zwischen allen Codewörtern der Codierung mit ungerader Parität}
             \label{tab:abst-0parity}
         \end{table}
     \end{myanswer}
@@ -695,8 +666,8 @@ Damit können auch in diesem Beispiel bis zu 2 Fehler erkannt werden.
         \begin{itemize}
             \item 4-Kopien: Mindest-Abstand 4 $\rightarrow$ bis zu 3 Fehler werden erkannt
             \item Xavier: Mindest-Abstand 4 $\rightarrow$ bis zu 3 Fehler werden erkannt
-            \item 1-Parity: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
-            \item 0-Parity: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
+            \item Gerade Parität: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
+            \item Ungerade Parität: Mindest-Abstand 2 $\rightarrow$ 1 Fehler wird erkannt
         \end{itemize}
     \end{myanswer}
 \end{myexercise}
