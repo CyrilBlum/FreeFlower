@@ -94,7 +94,7 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
     \begin{myanswer}
         \begin{itemize}
             \item \textbf{Vertippen:} wird immer erkannt. Ändert sich eine Ziffer um $d$ ($1 \leq |d| \leq 9$), ändert sich $s$ um $d$ (Gewicht 1) bzw. um $3d$ (Gewicht 3). Beides ist nie ein Vielfaches von 10, die Prüfziffer passt also nicht mehr.
-            \item \textbf{Vertauschen zweier benachbarter Ziffern:} wird meistens, aber nicht immer erkannt. Unterscheiden sich die beiden Ziffern um 5 (z.B. 0 und 5), ändert sich $s$ um $\pm 10$, und der Fehler bleibt unbemerkt (siehe \cref{ex:ean}).
+            \item \textbf{Vertauschen zweier benachbarter Ziffern:} wird meistens, aber nicht immer erkannt. Unterscheiden sich die beiden Ziffern um 5 (z.B. 0 und 5), ändert sich $s$ um $\pm 10$, und der Fehler bleibt unbemerkt (siehe \cref{chl:ean-vertauschen}).
             \item \textbf{Auslassen:} wird erkannt, da der Code dann nur noch 12 statt 13 Ziffern hat und somit kein gültiger \gls{EAN} mehr ist.
             \item \textbf{2 mal Vertippen:} wird nicht immer erkannt, da sich zwei Fehler gegenseitig aufheben können. Wird z.B. an Position 1 (Gewicht 1) eine Ziffer um 3 zu gross und an Position 3 (Gewicht 1) eine Ziffer um 3 zu klein getippt, bleibt $s$ gleich.
         \end{itemize}
@@ -109,97 +109,75 @@ Das Scannen eines falschen Codes könnte zu falschen Preisen an der Kasse führe
 \end{myexercise}
 
 \begin{myexercise}\label{ex:ean}
-    Bestimmen Sie für den folgenden \gls{EAN}-Code alle Paare von benachbarten Ziffern, deren Austausch in der Reihenfolge nicht erkannt werden kann:
+    Untersuchen Sie am folgenden \gls{EAN}-Code, wann das Vertauschen zweier benachbarter Ziffern erkannt wird:
     \begin{alltt}
         4\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{2}}}}{\texttt{\red{0}}}\)3\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{4}}}}{\texttt{\red{0}}}\)5\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{6}}}}{\texttt{\red{3}}}\)8\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{8}}}}{\texttt{\red{6}}}\)5\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{10}}}}{\texttt{\red{7}}}\)4\(\underset{\makebox[\widthof{\texttt{X}}][c]{\footnotesize\texttt{\red{12}}}}{\texttt{\red{6}}}\)5
     \end{alltt}
     Die kleinen roten Zahlen unter dem Code gehören nicht zum Code. Sie markieren die geraden Positionen 2, 4, \ldots, 12, deren Ziffern gemäss \cref{eq:ean} mit 3 gewichtet werden.
+
+    Ein Vertauschen wird nur dann nicht erkannt, wenn sich $s$ um ein Vielfaches von 10 ändert, denn dann passt die Prüfziffer weiterhin.
+    \begin{aenum}
+        \item Vertauschen Sie die ersten beiden Ziffern (\texttt{40} wird zu \texttt{04}). Berechnen Sie den Beitrag dieser beiden Ziffern zu $s$ vor und nach dem Vertauschen. Wird der Fehler erkannt?
+        \item Gehen Sie gleich vor für die Ziffern an den Positionen 6 und 7 (\texttt{38} wird zu \texttt{83}).
+        \item Vergleichen Sie in (a) und (b) die Änderung von $s$ mit der Differenz der beiden vertauschten Ziffern. Bestimmen Sie damit alle Paare benachbarter Ziffern, deren Vertauschen nicht erkannt wird.
+    \end{aenum}
     \begin{myanswer}
-        Damit ein Austausch zweier benachbarter Ziffern nicht entdeckt würde, müsste sich die Summe $s$ um ein Vielfaches von 10 (oder 0) ändern. Dies wäre beispielsweise der Fall, wenn die zwei Ziffern 3 und 8 (Positionen 6 und 7) vertauscht würden.
+        \begin{aenum}
+            \item Position 1 hat das Gewicht 1, Position 2 das Gewicht 3.
+                  \begin{itemize}
+                      \item vorher: $4 \cdot 1 + 0 \cdot 3 = 4$
+                      \item nachher: $0 \cdot 1 + 4 \cdot 3 = 12$
+                  \end{itemize}
+                  $s$ ändert sich um $12 - 4 = 8$. Das ist kein Vielfaches von 10, die Prüfziffer passt nicht mehr und der Fehler wird erkannt.
+            \item Position 6 hat das Gewicht 3, Position 7 das Gewicht 1.
+                  \begin{itemize}
+                      \item vorher: $3 \cdot 3 + 8 \cdot 1 = 17$
+                      \item nachher: $8 \cdot 3 + 3 \cdot 1 = 27$
+                  \end{itemize}
+                  $s$ ändert sich um $27 - 17 = 10$. Die Prüfziffer bleibt gleich und der Fehler wird nicht erkannt.
+            \item In beiden Fällen ändert sich $s$ um das Doppelte der Differenz der beiden Ziffern: in (a) um $2 \cdot 4 = 8$, in (b) um $2 \cdot 5 = 10$. Ein Vielfaches von 10 entsteht nur bei einer Differenz von 5. Die Prüfziffer an Position 13 zählt dabei wie eine Ziffer mit Gewicht 1, weil $s + x_{13}$ durch 10 teilbar sein muss.
 
-        Der Beitrag der Ziffern zu $s$ im ursprünglichen und im abgeänderten Code sind in folgender Tabelle aufgelistet:
-
-
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{lp{3cm}p{4cm}l}
-                \textbf{Position} & \textbf{Ziffer} & \textbf{Gewichtung\newline (siehe \cref{eq:ean})} & \textbf{Beitrag zu $s$} \\
-                \midrule
-                6                 & 3               & 3                                              & 9                       \\
-                7                 & 8               & 1                                              & 8                       \\
-            \end{tabular}
-        \end{table}
-        \[\Downarrow\]
-        \begin{table}[H]
-            \centering
-            \begin{tabular}{lp{3cm}p{4cm}l}
-                \textbf{Position} & \textbf{Ziffer\newline (vertauscht)} & \textbf{Gewichtung\newline (siehe \cref{eq:ean})} & \textbf{Beitrag zu $s$} \\
-                \midrule
-                6                 & 8                                    & 3                                              & 24                      \\
-                7                 & 3                                    & 1                                              & 3                       \\
-            \end{tabular}
-        \end{table}
-
-        Die Summe $s$ ändert sich also um:
-        \[
-            (24 + 3) - (9 + 8) = 27 - 17 = +10
-        \]
-
-        Da sich $s$ um ein Vielfaches von 10 verändert, bleibt die Prüfziffer gleich, und der Fehler wird nicht entdeckt.
-
-        Dasselbe würde auch mit Positionen 4 und 5 (Ziffern 0 und 5) funktionieren.
+                  \begin{center}
+                      \begin{tabular}{llll}
+                          \textbf{Positionen} & \textbf{Ziffern} & \textbf{Differenz} & \textbf{Änderung von $s$} \\
+                          \midrule
+                          1 und 2             & 4, 0             & 4                  & 8                         \\
+                          2 und 3             & 0, 3             & 3                  & 6                         \\
+                          3 und 4             & 3, 0             & 3                  & 6                         \\
+                          \textbf{4 und 5}    & \textbf{0, 5}    & \textbf{5}         & \textbf{10}               \\
+                          5 und 6             & 5, 3             & 2                  & 4                         \\
+                          \textbf{6 und 7}    & \textbf{3, 8}    & \textbf{5}         & \textbf{10}               \\
+                          7 und 8             & 8, 6             & 2                  & 4                         \\
+                          8 und 9             & 6, 5             & 1                  & 2                         \\
+                          9 und 10            & 5, 7             & 2                  & 4                         \\
+                          10 und 11           & 7, 4             & 3                  & 6                         \\
+                          11 und 12           & 4, 6             & 2                  & 4                         \\
+                          12 und 13           & 6, 5             & 1                  & 2                         \\
+                      \end{tabular}
+                  \end{center}
+                  Die Änderung ist je nach Lage der Gewichte positiv oder negativ, in der Tabelle steht ihr Betrag. Nicht erkannt wird nur das Vertauschen an den Positionen 4 und 5 (Ziffern 0 und 5) sowie 6 und 7 (Ziffern 3 und 8).
+        \end{aenum}
     \end{myanswer}
 
 \end{myexercise}
 
-\begin{mychallenge}
-    Begründen Sie allgemein, für welche Arten von Ziffern ein Vertauschen zweier benachbarter Ziffern in einer \gls{EAN}-Prüfziffer nicht entdeckt wird.
+\begin{mychallenge}\label{chl:ean-vertauschen}
+    Begründen Sie allgemein, für welche Paare von Ziffern ein Vertauschen zweier benachbarter Ziffern in einem \gls{EAN}-Code nicht erkannt wird.
+
+    Tipp: Nennen Sie die beiden Ziffern $a$ und $b$ und vergleichen Sie ihren Beitrag zu $s$ vor und nach dem Vertauschen.
     \begin{myanswer}
-        Damit ein Austausch zweier benachbarter Ziffern nicht entdeckt wird, darf sich die gewichtete Summe $s$ nicht ändern, da die Prüfziffer $x_{13}$ so gewählt ist, dass
+        Die Ziffer $a$ stehe an einer Position mit Gewicht 1, die Ziffer $b$ daneben an einer Position mit Gewicht 3.
+        \begin{itemize}
+            \item vorher: $a + 3b$
+            \item nachher: $b + 3a$
+        \end{itemize}
+        $s$ ändert sich also um
         \[
-            s + x_{13} \equiv 0 \mod 10
+            (b + 3a) - (a + 3b) = 2a - 2b = 2 \cdot (a - b)
         \]
-        gilt.
+        Liegen die Gewichte umgekehrt, ändert sich nur das Vorzeichen.
 
-        Wir bezeichnen die beiden benachbarten Ziffern mit $a$ und $b$ an den Positionen $i$ und $i+1$. Die zugehörigen Gewichte im \gls{EAN}-System sind alternierend 1 und 3, also entweder $(g_i, g_{i+1}) = (1, 3)$ oder $(3, 1)$.
-
-        Der ursprüngliche Beitrag dieser beiden Ziffern zur Summe $s$ ist:
-        \[
-            s_\text{alt} = g_i \cdot a + g_{i+1} \cdot b
-        \]
-
-        Nach dem Vertauschen lautet der Beitrag:
-        \[
-            s_\text{neu} = g_i \cdot b + g_{i+1} \cdot a
-        \]
-
-        Die Änderung der Summe beträgt also:
-        \[
-            \Delta s = s_\text{neu} - s_\text{alt} = g_i \cdot b + g_{i+1} \cdot a - (g_i \cdot a + g_{i+1} \cdot b)
-            = (g_i - g_{i+1})(b - a)
-        \]
-
-        Da $g_i$ und $g_{i+1}$ abwechselnd $1$ und $3$ sind, ist $g_i - g_{i+1} \in \{-2, +2\}$. Es ergibt sich also:
-        \[
-            \Delta s = \pm 2 (b - a)
-        \]
-
-        Diese Änderung bleibt genau dann unbemerkt, wenn $\Delta s \equiv 0 \mod 10$ ist, also:
-        \[
-            \pm 2(b - a) \equiv 0 \mod 10 \quad \Leftrightarrow \quad b - a \equiv 0 \mod 5
-        \]
-
-        Es folgt:
-        \[
-            |b - a| \in \{0, 5\}
-        \]
-
-        Der Fall $b = a$ ist trivial, da keine Vertauschung erfolgt. Für eine echte Vertauschung mit $|b - a| = 5$ wird der Fehler \emph{nicht erkannt}.
-
-        \medskip
-
-        \textbf{Fazit:} Ein Vertauschen zweier benachbarter Ziffern im \gls{EAN}-Code bleibt genau dann unentdeckt, wenn sich ihre Werte um 5 unterscheiden, also $|b - a| = 5$ gilt.
-
+        Der Fehler bleibt unbemerkt, wenn $2 \cdot (a - b)$ ein Vielfaches von 10 ist, also wenn $a - b$ ein Vielfaches von 5 ist. Da die Ziffern zwischen 0 und 9 liegen und verschieden sind, ist das nur bei einer Differenz von genau 5 möglich. Nicht erkannt wird also das Vertauschen der Paare 0 und 5, 1 und 6, 2 und 7, 3 und 8 sowie 4 und 9.
     \end{myanswer}
 \end{mychallenge}
 
