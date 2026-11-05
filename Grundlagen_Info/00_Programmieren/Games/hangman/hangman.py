@@ -216,5 +216,5 @@ class Hangman:
 
 
 if __name__ == "__main__":
-    spiel = Hangman(galgen="ascii", max_falsche=6)
+    spiel = Hangman(galgen="turtle", max_falsche=6)
     spiel.spielen()

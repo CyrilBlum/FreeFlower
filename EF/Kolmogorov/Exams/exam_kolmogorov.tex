@@ -94,7 +94,7 @@
 \end{solution}
 		\part[1] Erkläre, warum die Wahl der Programmiersprache in der Definition der Kolmogorov-Komplexität nicht wesentlich ist. Erkläre auch, was in diesem Zusammenhang mit \enquote{nicht wesentlich} gemeint ist.
 				\begin{solution}
-	Betrachte den Satz zur Sprachinvarianz der Kolmogorov-Komplexität im Skript. Mit \enquote{nicht wesentlich} ist gemeint, dass sich die Formulierungen in verschiedenen Programmiersprachen lediglich um eine Konstante unterscheiden würden.
+	Betrachte den Satz zur Sprachinvarianz der Kolmogorov-Komplexität im Skript. Mit \enquote{nicht wesentlich} ist gemeint, dass sich die Längen kürzester Maschinencodes für dasselbe Wort bei zwei geeigneten universellen Sprachen mit festgelegten Compilern höchstens um eine vom Wort unabhängige Konstante unterscheiden.
 \end{solution}
 		\droptotalpoints
 	\end{parts}
@@ -182,7 +182,7 @@
         }
     }
 \end{lstlisting}
-		Die Maschinencodes dieser Programme $W_n$ sind alle identisch und unabhängig von $w_n$ (und haben somit eine konstante binäre Länge) mit Ausnahme der Darstellung von $n$ in der Zeile Nummer 2. Somit ist die binäre Länge eines Programms $W_n$ gegeben durch
+		Die Maschinencodes dieser Programme $W_n$ sind bis auf die eingebettete Binärdarstellung von $n$ identisch. Der übrige Maschinencode hat eine von $n$ unabhängige Länge. Somit ist die Anzahl der Bits im Maschinencode von $W_n$ gegeben durch
 		\begin{align*}
 			\ceil{\log_2(n+1)} + c
 		\end{align*}
@@ -213,11 +213,11 @@
 	\question[1] Zeige, dass es für jede natürliche Zahl $n$ und jedes natürliche $i$ mit $i<n$ in dem Intervall $\ic{2^n}{2^{n+1} - 1}$ mindestens $2^n - 2^{n-i}$ natürliche Zahlen $x$ gibt mit $C(x) \geq n-i$.
 	\begin{solution}
 		Das Intervall $\ic{2^n}{2^{n+1} - 1}$ enthält genau $2^n$ natürliche Zahlen mit einer kürzesten binären Darstellungslänge von $n + 1$.
-		Die Anzahl aller Maschinencodes der Länge kleiner als $n-i$ ist
+		Die Anzahl der zugelassenen Maschinencodes mit weniger als $n-i$ Bits ist höchstens so gross wie die Anzahl aller binären Wörter dieser Längen, also höchstens
 		\begin{align*}
 			\sum_{k=0}^{n-i-1}2^k=2^{n-i}-1.
 		\end{align*}
-		Jeder Maschinencode generiert höchstens eine Binärdarstellung und damit höchstens eine natürliche Zahl. Somit haben höchstens $2^{n-i}-1$ Zahlen im betrachteten Intervall eine Kolmogorov-Komplexität kleiner als $n-i$. Für die Anzahl $m$ der übrigen Zahlen gilt daher
+		Jedes Programm mit festem Maschinencode generiert höchstens eine Binärdarstellung und damit höchstens eine natürliche Zahl. Somit haben höchstens $2^{n-i}-1$ Zahlen im betrachteten Intervall eine Kolmogorov-Komplexität kleiner als $n-i$. Für die Anzahl $m$ der übrigen Zahlen gilt daher
 		\begin{align*}
 			m\geq2^n-(2^{n-i}-1)>2^n-2^{n-i}.
 		\end{align*}

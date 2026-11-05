@@ -1,4 +1,11 @@
 \chapter{Berechenbarkeit}
+
+Wir nehmen Computer und Software als zunehmend mächtige Werkzeuge dar, deren Fähigkeiten sich in den letzten Jahrzehnten rasant entwickelt haben.
+Heute können Computer in Sekundenbruchteilen Milliarden von Rechenoperationen durchführen. Bereits die ersten Computer waren hinsichtlich ihrer reinen arithmische Rechenleistung (\enquote{number crunching}) den Menschen deutlich überlegen. Bereits 1673, also noch lange vor dem ersten Computer, konnte der Mathematiker und Gottfried Wilhelm Leibniz mit seiner Rechenmaschine (\enquote{Staffelwalze}) mathematische Basisoperationen (Additionen, Subtraktionen, Multiplikationen und Divisionen) in kurzer Zeit korrekt berechnen. In den 1950er Jahren konnte ein Computer in einer Sekunde mehr Additionen durchführen, als ein Mensch in seinem ganzen Leben.
+
+Computer waren vorallem dann nützlich, wenn ihnen sehr präzise Instruktionen gegeben wurden --- weniger wohldefinierte Aufbaben, wie das Erkennen von Gesichtern in einem Foto oder eine natürlich anmutende (nicht einfach nur Wort für Wort) Übersetzung von Texten, konnten Computer lange Zeit nicht zufriedenstellend lösen. Moderne KI-Algorithmen können nun auch solche Aufgaben zunehmend automatisieren.
+
+
 % \section{Turing-Maschinen}
 % \begin{figure}[H]
 % 	\centering
@@ -60,7 +67,10 @@
 % 	\label{fig:xdfdadf}
 % \end{figure}
 
+
 \section{Halteproblem}
+Das Halteproblem beschreibt die Frage, ob die Ausführung eines Algorithmus zu einem Ende gelangt. Obwohl das für viele Algorithmen leicht beantwortet werden kann, konnte der Mathematiker Alan Turing beweisen, dass es keinen Algorithmus gibt, der diese Frage für alle möglichen Algorithmen und beliebige Eingaben beantwortet.
+
 \begin{mydefinition}[Halteproblem]\label{mydefinition:halteproblem}
 Das Problem, für jedes beliebge Programm $M$ und eine dazugehörige Eingabe $x$ zu entscheiden, ob $M$ auf $x$ hält oder nicht, wird \emph{Halteproblem} genannt.
 \end{mydefinition}

@@ -1,0 +1,242 @@
+\chapter{Berechenbarkeit}\label{chapter:berechenbarkeit}
+
+Wir nehmen Computer und Software als zunehmend mächtige Werkzeuge wahr, deren Fähigkeiten sich in den letzten Jahrzehnten rasant entwickelt haben.
+Die Geschichte maschinellen Rechnens reicht jedoch viel weiter zurück: Bereits 1673, also noch lange vor dem ersten Computer, konnte der Mathematiker Gottfried Wilhelm Leibniz mit seiner Rechenmaschine (\enquote{Staffelwalze}) mathematische Basisoperationen (Additionen, Subtraktionen, Multiplikationen und Divisionen) in kurzer Zeit korrekt berechnen.
+Die ersten Computer waren den Menschen dann hinsichtlich ihrer reinen arithmetischen Rechenleistung (\enquote{number crunching}) bereits deutlich überlegen. In den 1950er-Jahren konnte ein Computer in einer Sekunde mehr Additionen durchführen als ein Mensch in seinem ganzen Leben und 
+heute können selbst einfache Laptops in Sekundenbruchteilen Milliarden von Rechenoperationen durchführen.
+
+Computer waren über Jahrzehnte vor allem dann nützlich, wenn ihnen sehr präzise Instruktionen gegeben wurden. Weniger wohldefinierte Aufgaben, wie das Erkennen von Gesichtern in einem Foto oder eine natürlich anmutende (nicht einfach nur Wort für Wort) Übersetzung von Texten, konnten Computer lange Zeit nicht zufriedenstellend (wenn überhaupt)lösen. Moderne \acrshort{KI}-Algorithmen können nun auch solche Aufgaben zunehmend automatisieren.
+
+Spätestens seit \gls{KI} erstmals ein Millenniumsproblem der Mathematik erfolgreich lösen konnte, scheint es, dass Computer und Software auch in der Lage sind, Aufgaben zu lösen, die zuvor als unlösbar galten. Jedes \enquote{Berechnungsproblem\footnote{Für den Moment wollen wir diesen Begriff noch nicht formal definieren.}} scheint inzwischen für Computer lösbar geworden zu sein, vorausgesetzt, man stellt ihnen ausreichende Ressourcen (Zeit und Speicherplatz) zur Verfügung. Dass diese intuitive Vorstellung falsch ist, haben wir bereits in \cref{mytheorem:Knotcomputable} gesehen: Es existiert kein Algorithmus, der die Kolmogorov-Komplexität eines beliebigen binären Wortes berechnet. Das Problem der Berechnung der Kolmogorov-Komplexität ist also nicht berechenbar. Ziel dieses Kapitels ist es, die Grenzen der Berechenbarkeit weiter zu untersuchen und besser zu verstehen.
+
+% \section{Turing-Maschinen}
+% \begin{figure}[H]
+% 	\centering
+% 	\begin{tikzpicture}
+% 		\tikzstyle{every path}=[very thick]
+
+% 		\edef\sizetape{0.7cm}
+% 		\tikzstyle{tmtape}=[draw,minimum size=\sizetape]
+% 		\tikzstyle{tmhead}=[arrow box,draw,minimum size=.5cm,arrow box
+% 		arrows={east:.25cm, west:0.25cm}]
+
+% 		%% Draw TM tape
+% 		\begin{scope}[start chain=1 going right,node distance=-0.15mm]
+% 			\node [on chain=1,tmtape,draw=none] {$\ldots $};
+% 			\node [on chain=1,tmtape] {};
+% 			\node [on chain=1,tmtape] (input) {b};
+% 			\node [on chain=1,tmtape] {b};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {a};
+% 			\node [on chain=1,tmtape] {};
+% 			\node [on chain=1,tmtape,draw=none] {$\ldots $};
+% 			\node [on chain=1] {\textbf{Input/Output Tape}};
+% 		\end{scope}
+
+% 		%% Draw TM Finite Control
+% 		\begin{scope}
+% 			[shift={(3cm,-5cm)},start chain=circle placed {at=(-\tikzchaincount*60:1.5)}]
+% 			\foreach \i in {q_0,q_1,q_2,q_3,\ddots,q_n}
+% 			\node [on chain] {$\i$};
+
+% 			% Arrow to current state
+% 			\node (center) {};
+% 			\draw[->] (center) -- (circle-2);
+
+% 			\node[rounded corners,draw=black,thick,fit=(circle-1) (circle-2) (circle-3)
+% 				(circle-4) (circle-5) (circle-6),
+% 				label=below:\textbf{Finite Control}] (fsbox)
+% 			{};
+% 		\end{scope}
+
+% 		%% Draw TM head below (input) tape cell
+% 		\node [tmhead,yshift=-.3cm] at (input.south) (head) {$q_1$};
+
+% 		%% Link Finite Control with Head
+% 		\path[->,draw] (fsbox.north) .. controls (4.5,-1) and (0,-2) .. node[right]
+% 		(headlinetext)
+% 		{}
+% 		(head.south);
+% 		\node[xshift=3cm] at (headlinetext)
+% 		{\begin{tabular}{c}
+% 				\textbf{Reading and Writing Head} \\
+% 				\textbf{(moves in both directions)}
+% 			\end{tabular}};
+
+% 	\end{tikzpicture}
+% 	\caption{Turing-Maschine}
+% 	\label{fig:xdfdadf}
+% \end{figure}
+
+
+\section{Halteproblem}
+Eines der bekanntesten Probleme der theoretischen Informatik ist das Halteproblem. Es wurde 1936 von Alan Turing formuliert und ist das Paradebeispiel für ein unentscheidbares Berechnungsproblem.
+Das Halteproblem beschreibt die Frage, ob die Ausführung eines Algorithmus zu einem Ende gelangt. Obwohl das für viele Algorithmen leicht beantwortet werden kann, konnte der Mathematiker Alan Turing beweisen, dass es keinen Algorithmus gibt, der diese Frage für alle möglichen Algorithmen und beliebige Eingaben beantwortet. Betrachten wir zunächst das einfache \cref{myexample:haltendesProgramm}.
+
+\begin{myexample}\label{myexample:haltendesProgramm}
+	Betrachten wir das folgende Programm \lstinline{M}:
+	\begin{lstlisting}[language=Python,escapechar=!]
+	def M(n):
+		# n ist eine natürliche Zahl
+		while n > 5:
+			n -= 1
+	\end{lstlisting}
+Es ist leicht zu erkennen, dass \lstinline{M} für jede Eingabe jeder natürlichen Zahl $n$ hält. Das Programm reduziert $n$ solange um $1$, bis $n$ kleiner oder gleich $5$ ist. Sobald dies der Fall ist, verlässt das Programm die Schleife und hält.
+\end{myexample}
+
+Intuitiv könnte man meinen, dass ein Algorithmus (z.\,B. ein KI-Algorithmus) ein gegebenes Programm und seine Eingabe lediglich genau analysieren muss, um zu entscheiden, ob das Programm hält oder nicht. Erfahrungsgemäss können KI-Algorithmen (oder auch Menschne) meist recht zuverlässig erkennen, ob ein Programm hält oder nicht. Es gibt jedoch Programme, bei denen diese Frage nicht so leicht zu beantworten ist. \cref{myexample:pi_halt} illustriert, dass es manchmal anscheinend nicht a priori möglich ist, zu entscheiden, ob ein Programm hält oder nicht. Es scheint so, als müsste man das Programm einfach laufen lassen und abwarten, ob es hält oder nicht.
+
+\begin{myexample}[Suche nach einer Ziffernfolge in $\pi$]\label{myexample:pi_halt}
+	Betrachten Sie das folgende Programm in Python-Schreibweise. Dabei setzen wir voraus, dass die Funktion \lstinline{berechne_naechste_ziffer_von_pi()} bei jedem Aufruf nach endlich vielen Schritten die nächste Nachkommastelle von $\pi$ liefert.
+    \begin{lstlisting}[language=Python, numbers=none]
+    # Beginne mit einem leeren String.
+    bisherige_ziffern_von_pi = ""
+    while "123456789" not in bisherige_ziffern_von_pi:
+        ziffer = berechne_naechste_ziffer_von_pi()
+        bisherige_ziffern_von_pi += str(ziffer)
+    \end{lstlisting}
+	Das Programm berechnet eine Nachkommastelle der Kreiszahl $\pi$ nach der anderen und speichert die Ziffern in einem String. Vor jedem Schleifendurchlauf wird überprüft, ob die Ziffernfolge \lstinline{123456789} bereits irgendwo im bisherigen String vorkommt. Sobald dieses Muster gefunden wird, ist die Bedingung der \lstinline{while}-Schleife nicht mehr erfüllt und das Programm hält.
+
+	\textbf{Aber wird das Programm überhaupt jemals halten?}\\
+    Dazu müssen wir wissen, ob die Ziffernfolge \lstinline{123456789} tatsächlich irgendwo in den unendlich vielen Nachkommastellen von $\pi$ vorkommt. Falls das Muster vorkommt, endet die Schleife nach endlich vielen Durchläufen. Falls es hingegen niemals vorkommt, läuft die Schleife theoretisch unendlich lange weiter. Dabei nehmen wir an, dass dem Programm beliebig viel Speicher zur Verfügung steht.
+
+	Man könnte versuchen, immer mehr Nachkommastellen von $\pi$ zu berechnen. Solange das Muster nicht gefunden wird, lässt sich aus der bisherigen Suche allein aber nicht erkennen, ob es erst viel später auftaucht oder überhaupt nie vorkommt. Selbst eine erfolglose Suche über eine Billion Nachkommastellen würde nicht beweisen, dass das Programm niemals hält.
+
+	Das Beispiel zeigt eine Grenze des blossen Ausprobierens: Ein Fund beweist, dass das Programm hält aber eine bisher erfolglose Suche beweist nicht, dass es endlos läuft. Daraus folgt noch nicht, dass die Haltefrage für dieses konkrete Programm unentscheidbar ist\footnote{Wir haben keine Ahnung, ob dieses konkrete Program hält oder nicht.}. Das allgemeine Halteproblem fragt nach einem Verfahren, das die Haltefrage für \emph{jedes} Programm und jede Eingabe korrekt entscheidet.
+\end{myexample}
+
+\begin{mydefinition}[Halteproblem]\label{mydefinition:halteproblem}
+	Das \emph{Halteproblem} fragt, ob ein gegebenes Programm $M$ auf einer gegebenen Eingabe $y$ hält. Dabei wird $M$ durch seinen binären Maschinencode $p$ beschrieben. Die Eingabe des Halteproblems ist also das Paar $(p,y)$.
+
+	Ein hypothetischer Algorithmus $H$, der das Halteproblem entscheidet, müsste für jeden gültigen Maschinencode $p$ eines Programms $M$ und jedes Eingabewort $y$ nach endlich vielen Schritten die Antwort
+	\[
+		H(p,y)=
+		\begin{cases}
+			1, & \text{falls } M \text{ auf der Eingabe } y \text{ hält},\\
+			0, & \text{falls } M \text{ auf der Eingabe } y \text{ nicht hält}
+		\end{cases}
+	\]
+	liefern. Dabei steht $1$ für \emph{Ja} und $0$ für \emph{Nein}. Insbesondere müsste $H$ selbst auch dann nach endlich vielen Schritten halten und die Antwort $0$ liefern, wenn das untersuchte Programm $M$ auf $y$ nicht hält.
+\end{mydefinition}
+
+Wir werden zeigen, dass kein Algorithmus diese Frage für alle Programme und Eingaben korrekt entscheiden kann. Dazu verwenden wir die bereits bewiesene Unberechenbarkeit der Kolmogorov-Komplexität.
+
+
+\clearpage
+\begin{mytheorem}[Halteproblem]\label{mytheorem:halteproblem}
+	Das Halteproblem ist unentscheidbar.
+	\begin{myproof}
+		Angenommen, es gäbe einen Algorithmus $H$ mit den in \cref{mydefinition:halteproblem} beschriebenen Eigenschaften. Mithilfe von $H$ könnten wir einen Algorithmus $A$ konstruieren, der die Kolmogorov-Komplexität $C(x)$ jedes binären Wortes $x$ berechnen, im Widerspruch zu \cref{mytheorem:Knotcomputable}. Wir konstruieren $A$ wie folgt:\\
+
+		$A$ alle binären Wörter $w_1,w_2,\ldots$ in kanonischer Reihenfolge.
+		Für jedes $w_i$ prüfen wir zunächst, ob es ein zugelassener Maschinencode gemäss \cref{mydefinition:kolmogorov} ist, also die Ausgabe einer erfolgreichen Kompilierung mit \lstinline{g'++}. Auch diese Prüfung ist mithilfe von $H$ möglich.\footnote{Ein festes Suchprogramm $S$ erhält ein Wort $w$ als Eingabe und sucht nach einem Programmcode, dessen Kompilierung genau den Maschinencode $w$ liefert. Dazu zählt es alle möglichen Programmcodes auf. In jeder Runde startet es die nächste Kompilierungssimulation und führt jede noch laufende Simulation um einen Schritt weiter. Es hält genau dann, wenn eine erfolgreiche Kompilierung $w$ liefert. Ist $s$ der Maschinencode von $S$, entscheidet $H(s,w)$ somit, ob $w$ eine zugelassene Compiler-Ausgabe ist. Eine blosse Syntaxprüfung der Maschinenbefehle würde dafür nicht genügen.}
+		Ist $w_i$ zugelassen, bezeichnen wir das dadurch beschriebene Programm mit $M_i$. Falls $H(w_i,\lambda)=1$ gilt, führen wir $M_i$ auf $\lambda$ aus und vergleichen seine vollständige Ausgabe mit $x$. Beim ersten Treffer geben wir die Anzahl der Bits $\abs{w_i}$ im Maschinencode zurück.
+
+		\textbf{Algorithmus $A$ (Pseudocode)}
+		\begin{algorithmic}[1]
+			\Require Ein beliebiges binäres Wort $x$
+			\Ensure Die Kolmogorov-Komplexität $C(x)$
+			\For{$i=1,2,3,\ldots$}
+				\State Erzeuge das nächste Wort $w_i$ der kanonischen Reihenfolge.
+				\If{$w_i$ ein zugelassener Maschinencode ist}
+					\State Bezeichne das durch $w_i$ beschriebene Programm mit $M_i$.
+					\If{$H(w_i,\lambda)=1$}
+						\State Führe $M_i$ auf der Eingabe $\lambda$ aus, bis es hält.
+						\State $u \gets$ die vollständige Ausgabe dieser Ausführung
+						\If{$u=x$}
+							\State \Return $\abs{w_i}$
+						\EndIf
+					\EndIf
+				\EndIf
+			\EndFor
+		\end{algorithmic}
+
+		Der Algorithmus $A$ würde für jedes $x$ halten und $C(x)$ zurückgeben. Dies widerspricht \cref{mytheorem:Knotcomputable} und damit kann der angenommene Haltealgorithmus $H$ nicht existieren.
+	\end{myproof}
+\end{mytheorem}
+
+\begin{myremark}
+	Zum Algorithmus $A$ im Beweis von \cref{mytheorem:halteproblem} erläutern wir die beiden entscheidenden Eigenschaften:
+
+	\textbf{Warum hält $A$ für jedes $x$?}\\
+	Jede Prüfung mithilfe von $H$ endet nach Annahme. Ein Programm $M_i$ wird nur ausgeführt, wenn $H(w_i,\lambda)=1$ gilt; deshalb endet auch diese Ausführung. Ausserdem gibt es für jedes $x$ ein zugelassenes Programm, das $x$ fest im Maschinencode enthält, auf der Eingabe $\lambda$ genau $x$ ausgibt und hält. Sein Maschinencode kommt nach endlich vielen Wörtern in der Aufzählung vor. Spätestens dann findet $A$ einen Treffer und hält.
+
+	\textbf{Warum ist die zurückgegebene Länge gleich $C(x)$?}\\
+	Beim ersten Treffer sind bereits sämtliche kürzeren Wörter geprüft worden. Keines davon ist ein zugelassener Maschinencode eines Programms, das $x$ generiert; sonst hätte $A$ schon dort die Suche beendet. Daher ist $w_i$ ein kürzester solcher Maschinencode und $\abs{w_i}=C(x)$.
+
+	Damit wäre $C$ berechenbar, im Widerspruch zu \cref{mytheorem:Knotcomputable}. Der angenommene Haltealgorithmus $H$ kann also nicht existieren.
+\end{myremark}
+
+\section{Berechenbare Zahlen (Computable Numbers)}
+\begin{mydefinition}[Berechenbare Zahl (informell)]\label{mydefinition:comp_numb}
+	Eine reelle Zahl $x$ heisst berechenbar, wenn ein Algorithmus $A(n)$ existiert, der zu beliebigem natürlichen $n$ die Zahl $x$ auf mindestens $n$ Nachkommastellen genau berechnet.
+\end{mydefinition}
+
+\begin{myexample}[$\sqrt{2}$ ist berechenbar]
+Im Folgenden skizzieren wir einen Algorithmus, der die Berechenbarkeit von $x:=\sqrt{2}$​ belegt. Am Beispiel der Genauigkeitsanforderung $n:=3$ demonstrieren wir das Verfahren der Intervallhalbierung, um die ersten drei Dezimalstellen von $\sqrt{2}$ (abgeschnitten) zu bestimmen.
+
+Startintervall:
+\[
+\sqrt{2} \in \lrs{1,2},
+\qquad
+1^2 = 1 < 2,\quad 2^2 = 4 > 2.
+\]
+
+\textbf{1. Schritt}
+\[
+m=\frac{1+2}{2}=1.5,\qquad 1.5^2=2.25>2 \Rightarrow \sqrt{2}\in\lrs{1,1.5}.
+\]
+
+\textbf{2. Schritt}
+\[
+m=\frac{1+1.5}{2}=1.25,\qquad 1.25^2=1.5625<2 \Rightarrow \sqrt{2}\in\lrs{1.25,1.5}.
+\]
+
+\textbf{3. Schritt}
+\[
+m=\frac{1.25+1.5}{2}=1.375,\qquad 1.375^2=1.890625<2 \Rightarrow \sqrt{2}\in\lrs{1.375,1.5}.
+\]
+
+\textbf{4. Schritt}
+\[
+m=\frac{1.375+1.5}{2}=1.4375,\qquad 1.4375^2>2 \Rightarrow \sqrt{2}\in\lrs{1.375,1.4375}.
+\]
+
+Nach weiteren Halbierungen erhält man beispielsweise
+\[
+\sqrt{2}\in\lrs{1.4140625,\,1.41455078125}.
+\]
+
+Nun betrachten wir die abgeschnittenen Werte auf drei Dezimalstellen:
+\[
+\floor{1000\cdot 1.4140625} = 1414,
+\qquad
+\floor{1000\cdot 1.41455078125} = 1414.
+\]
+
+Da beide Intervallgrenzen denselben abgeschnittenen Wert liefern, folgt
+\[
+\floor{1000\sqrt{2}} = 1414.
+\]
+
+Damit ist
+\[
+\sqrt{2}=1.414\ldots
+\]
+
+und die auf drei Dezimalstellen abgeschnittene Darstellung lautet
+\[
+1.414.
+\]
+Ein entsprechendes Python-Programm ist in \cref{listing:n_digit_sqrt_2} in \cref{ch:Details} zu finden.
+\end{myexample}
+
+\begin{myexample}
+Wir betrachten eine feste, algorithmisch erzeugbare Aufzählung aller Paare $(p_n,y_n)$ aus einem gültigen Maschinencode und einem Eingabewort, beginnend bei $n=1$. Für jedes $n$ setzen wir $f(n)=1$, falls das durch $p_n$ beschriebene Programm auf $y_n$ hält, und $f(n)=0$ sonst. Die reelle Zahl
+\begin{align*}
+	r := \sum_{n=1}^{\infty}f(n)\cdot 2^{-n}
+\end{align*}
+wird \emph{Haltezahl} genannt. Ihre $n$-te Nachkommastelle in der Binärdarstellung beantwortet die Haltefrage für das Paar $(p_n,y_n)$. Es gibt unendlich viele Paare mit haltenden und unendlich viele mit nicht haltenden Berechnungen; die Ziffernfolge enthält daher unendlich viele Einsen und Nullen und ist eindeutig. Aus hinreichend genauen Näherungen an $r$ liesse sich jede einzelne dieser Ziffern bestimmen. Wäre $r$ berechenbar, könnten wir somit für jedes gegebene Paar dessen Stelle in der Aufzählung suchen und die zugehörige Haltefrage entscheiden. Dies widerspricht \cref{mytheorem:halteproblem}; die Haltezahl ist also nicht berechenbar.
+\end{myexample}
