@@ -29,21 +29,11 @@
 
 
 \begin{frame}{Rückblick 1-fehlerkorrigierende Codierung}
-    \begin{figure}[H]
-        \centering
-        \resizebox{\textwidth}{!}{
-            \begin{tikzpicture}
-                \HyperCube{5}
-            \end{tikzpicture}
-        }
-    \end{figure}
-    Nachteil:
     \begin{itemize}[<+->]
-        \item Für Bitfolgen der Länge $n$ $\rightarrow$ $n$-dimensionaler Hyperwürfel
-        \item Anzahl Knoten? $\rightarrow$ $2^n$
-        \item Für längere Nachrichten wird der Hyperwürfel riesig
-        \item Aufwand wächst exponentiell!
-        \item Bessere Methode gesucht!
+        \item Drei Farben, Codewörter der Länge 5 mit Abstand 3: von Hand lösbar
+        \item Nachrichten mit 16 Bit $\rightarrow$ \(2^{16}=65536\) Codewörter
+        \item Von Hand suchen ist hoffnungslos
+        \item Gesucht: ein Verfahren, das Codewörter systematisch erzeugt
     \end{itemize}
 \end{frame}
 
@@ -174,7 +164,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.21, 1.22}
-        \item \challengebox{1.20}
+        \item \aufgabebox{1.17, 1.18}
+        \item \challengebox{1.16}
     \end{itemize}
 \end{frame}

@@ -309,10 +309,74 @@
 \end{frame}
 
 
+\begin{frame}{Geht es mit noch weniger Bits?}
+    \begin{itemize}[<+->]
+        \item \(2^n-1\geq m+n\) gilt für Codes aus Nachrichten- und Kontrollbits
+        \item Gibt es einen ganz anders gebauten Code mit weniger Bits?
+        \item Idee: alle Bitfolgen der Länge \(N\) als Punkte zeichnen
+        \item Verbinden, wenn sie sich in genau einem Bit unterscheiden
+        \item Ein Bitfehler $=$ ein Schritt entlang einer Kante
+    \end{itemize}
+\end{frame}
+
+
+% 3D- und 4D-Hyperwürfel
+\foreach \d in {3,4} {
+        \begin{frame}{\d D-Hyperwürfel}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}
+                    \HyperCube{\d}
+                \end{tikzpicture}
+                \caption*{\(2^{\d}\) Punkte, jeder mit \d{} Nachbarn}
+            \end{figure}
+        \end{frame}
+    }
+
+
+\begin{frame}{Zonen eines 1-fehlerkorrigierenden Codes}
+    \begin{columns}
+        \begin{column}{.45\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \HyperCube{3}
+                    \only<2->{\CircleNodes{hg-011}}
+                    \only<3->{\CircleNodes[orange]{hg-001,hg-010,hg-111}}
+                    \only<4->{
+                        \CircleNodes{hg-100}
+                        \CircleNodes[green]{hg-000,hg-110,hg-101}
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{itemize}
+                \item<2-> Codewort \texttt{011}
+                \item<3-> Zone: Codewort und seine \(N\) Nachbarn, also \(N+1\) Punkte
+                \item<4-> Zonen dürfen sich nicht überlappen
+                \item<5-> Höchstens \(\dfrac{2^N}{N+1}\) Codewörter
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Der Hamming-Code ist perfekt}
+    \begin{itemize}[<+->]
+        \item Für jeden 1-fehlerkorrigierenden Code: \(2^m\cdot(m+n+1)\leq 2^{m+n}\)
+        \item Umgeformt: \(2^n-1\geq m+n\), dieselbe Ungleichung wie bei der Überwachungstabelle
+        \item Hamming-Code ohne Position 0: \(N=15\), \(m=11\), \(n=4\)
+        \item \(2^{11}\cdot 16=2^{15}\): Die Zonen füllen den Hyperwürfel lückenlos
+        \item Kein 1-fehlerkorrigierender Code kommt mit weniger Bits aus
+    \end{itemize}
+\end{frame}
+
+
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
         \item Abschnitt 1.6 lesen
-        \item \aufgabebox{1.23--1.26 (optimale Codes)}
-        \item \aufgabebox{1.27 (Hamming-Code, mit Video)}
+        \item \aufgabebox{1.19--1.22 (optimale Codes)}
+        \item \aufgabebox{1.23 (Hamming-Code, mit Video)}
+        \item \aufgabebox{1.24--1.26 (Hyperwürfel)}
     \end{itemize}
 \end{frame}

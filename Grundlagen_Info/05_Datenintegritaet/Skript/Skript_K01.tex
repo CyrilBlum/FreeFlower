@@ -800,60 +800,6 @@ Falls wir einen Mindestabstand von 3 haben, können wir einen Fehler sogar \text
     \end{myanswer}
 \end{mychallenge}
 
-
-In \cref{challenge:4bits} haben wir versucht, eine binäre Codierung mit 4 Bits für 3 Nachrichten zu finden. Um die Aufgabe einfacher zu lösen, können wir uns ein Hilfsmittel zunutze machen. Dabei zeichnen wir alle möglichen Codes der Länge 4 auf und verbinden diejenigen Codes, welche Abstand 1 haben, miteinander (siehe \cref{fig:4d}). Wenn wir nun einen Fehler korrigieren wollen, brauchen wir mindestens einen Abstand von 3 zwischen je zwei ausgewählten Codewörtern.
-
-\begin{mydefinition}
-Um möglichst viele 1-fehlerkorrigierende Codewörter für eine gewisse Codelänge zu finden, gehen wir wie folgt vor:
-\begin{enumerate}
-    \item Ein beliebiges Codewort als erstes Codewort auswählen, z.B. \texttt{0000}.
-    \item Alle Codewörter streichen, welche von mindestens einem der bisher ausgewählten Codewörter weniger als Abstand 3 entfernt sind, also alle Codewörter mit Abstand 1 oder 2.
-    \item Schritte 1 und 2 mit einem noch nicht gestrichenen Codewort wiederholen, bis alle Codewörter entweder ausgewählt oder durchgestrichen sind.
-\end{enumerate}
-Auf diese Weise erhalten wir eine 1-fehlerkorrigierende Codierung, die sich nicht mehr um weitere Codewörter erweitern lässt. Je nach Wahl der Codewörter ist dies jedoch nicht unbedingt die grösstmögliche Anzahl an Codewörtern.
-
-Soll der Code nur 1-fehlererkennend und nicht 1-fehlerkorrigierend sein, reicht es aus, in Schritt 2 alle Codewörter mit Abstand 1 zu streichen.
-
-Dieses Vorgehen funktioniert auch für andere Codelängen, beispielsweise 2 (\cref{fig:2d}), 3 (\cref{fig:3d}) oder 5 (\cref{fig:5d}).
-\end{mydefinition}
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \HyperCube{2}
-    \end{tikzpicture}
-    \caption{2D-Hyperwürfel}
-    \label{fig:2d}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \HyperCube{3}
-    \end{tikzpicture}
-    \caption{3D-Hyperwürfel}
-    \label{fig:3d}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \HyperCube{4}
-    \end{tikzpicture}
-    \caption{4D-Hyperwürfel}
-    \label{fig:4d}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \resizebox{\textwidth}{!}{
-        \begin{tikzpicture}
-            \HyperCube{5}
-        \end{tikzpicture}}
-    \caption{5D-Hyperwürfel}
-    \label{fig:5d}
-\end{figure}
-
 \begin{myexercise}
     Man verwendet eine Codierung mit folgenden 4 gültigen Codewörtern der Länge 5:
     \begin{enumerate}[label=(\Alph*)]
@@ -881,127 +827,9 @@ Dieses Vorgehen funktioniert auch für andere Codelängen, beispielsweise 2 (\cr
 \end{myexercise}
 
 
-
-\begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}. Wie viele Codewörter können Sie finden?
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \HyperCube{3}
-        \end{tikzpicture}
-        \caption{3D-Hyperwürfel}
-    \end{figure}
-
-    \begin{myanswer}
-
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}
-                \HyperCube{3}
-                \CircleNodes{hg-011}
-
-                % Cross out multiple nodes
-                \CrossOutNodes{hg-001,hg-010,hg-111}
-                \CircleNodes[green]{hg-101,hg-110,hg-000}
-                \CrossOutNodes{hg-100}
-            \end{tikzpicture}
-            \caption{3D-Hyperwürfel}
-        \end{figure}
-        Vier gültige Codewörter: \texttt{011}, \texttt{101}, \texttt{000} und \texttt{110}
-    \end{myanswer}
-
-\end{myexercise}
-
-\begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{011}.
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \HyperCube{3}
-
-        \end{tikzpicture}
-        \caption{3D-Hyperwürfel}
-    \end{figure}
-
-
-    \begin{myanswer}
-
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}
-                \HyperCube{3}
-                \CircleNodes{hg-011}
-
-                % Cross out multiple nodes
-                \CrossOutNodes{hg-001,hg-010,hg-111}
-                \CrossOutNodes{hg-101,hg-000,hg-110}
-                \CircleNodes{hg-100}
-
-                %\CircleNodes[RoyalBlue]{hg-011}
-            \end{tikzpicture}
-            \caption{3D-Hyperwürfel}
-        \end{figure}
-        Zwei gültige Codewörter: \texttt{011} und \texttt{100}.
-    \end{myanswer}
-
-\end{myexercise}
-
-\begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-erkennenden} Codierungen im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}.
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \HyperCube{4}
-        \end{tikzpicture}
-        \caption{4D-Hyperwürfel}
-    \end{figure}
-
-
-    \begin{myanswer}
-
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}
-                \HyperCube{4}
-                \CircleNodes{hg-0000}
-                \CrossOutNodes{hg-1000,hg-0100,hg-0010,hg-0001}
-                \CircleNodes[green]{hg-0011,hg-0101,hg-0110,hg-1001,hg-1010,hg-1100,hg-1111}
-                \CrossOutNodes{hg-0111,hg-1011,hg-1101,hg-1110}
-            \end{tikzpicture}
-        \end{figure}
-    \end{myanswer}
-\end{myexercise}
-
-\begin{myexercise}
-    Zeichnen Sie alle \textbf{1-Fehler-korrigierenden Codierungen} im unten stehenden Hyperwürfel ein, ausgehend vom Code \texttt{0000}. Wie viele 1-Fehler-korrigierenden Codewörter gibt es?
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \HyperCube{4}
-        \end{tikzpicture}
-        \caption{4D-Hyperwürfel}
-    \end{figure}
-
-    \begin{myanswer}
-        Es gibt 2 Codewörter (unterschiedliche Lösungen möglich):
-
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}
-                \HyperCube{4}
-                \CircleNodes{hg-0000}
-                \CrossOutNodes{hg-1000,hg-0100,hg-0010,hg-0001}
-                \CircleNodes[green]{hg-0111}
-                \CrossOutNodes{hg-0011,hg-0101,hg-0110,hg-1001,hg-1010,hg-1100,hg-1111,hg-1011,hg-1101,hg-1110}
-            \end{tikzpicture}
-        \end{figure}
-    \end{myanswer}
-\end{myexercise}
-
-
 \section{Effiziente Codes}
 
-Bisher haben wir primär eine Art kennengelernt, wie Fehler automatisch behoben werden können. Allerdings haben wir uns bisher in allen Beispielen auf sehr wenige gültige Codewörter beschränkt. Stellen Sie sich nur schon vor, Sie möchten alle Zeichen des Alphabets schicken. Die Suche nach geeigneten Codewörtern würde schnell sehr lang und unübersichtlich, der entsprechende Hyperwürfel könnte wohl kaum auf einem A4-Blatt dargestellt werden. Daher schauen wir uns in diesem Kapitel einen anderen Ansatz an, welcher für beliebig lange Codes funktioniert. Dazu schauen wir uns zuerst einen Zaubertrick an.
+Bisher haben wir primär eine Art kennengelernt, wie Fehler automatisch behoben werden können. Allerdings haben wir uns bisher in allen Beispielen auf sehr wenige gültige Codewörter beschränkt. Stellen Sie sich nur schon vor, Sie möchten alle Zeichen des Alphabets schicken. Die Suche nach geeigneten Codewörtern von Hand würde schnell sehr lang und unübersichtlich. Daher schauen wir uns in diesem Kapitel einen anderen Ansatz an, welcher für beliebig lange Codes funktioniert. Dazu schauen wir uns zuerst einen Zaubertrick an.
 
 Dazu braucht es zwei Zauberer. Der erste Zauberer verlässt zu Beginn des Spiels den Raum.
 
@@ -1977,7 +1805,7 @@ fehlerhaften Bits bestimmen.
 Damit bilden die Hamming-Codes eine wichtige Grundlage
 der Fehlerkorrektur in digitalen Informationssystemen.
 
-\begin{myexercise}
+\begin{myexercise}\label{ex:hamming}
     Mit unseren Überlegungen konnten wir die minimale Anzahl
     Kontrollbits für eine 1-fehler-korrigierende Codierung ermitteln.
     Bei der Erstellung der entsprechenden Überwachungstabellen
@@ -2084,6 +1912,191 @@ der Fehlerkorrektur in digitalen Informationssystemen.
 
     \end{myanswer}
 
+\end{myexercise}
+
+\subsection*{Warum es nicht mit weniger Bits geht: der Hyperwürfel}
+
+Die Ungleichung \(2^n-1\geq m+n\) haben wir mit der
+Überwachungstabelle hergeleitet. Sie gilt damit für Codes, die aus
+Nachrichtenbits und Kontrollbits bestehen. Könnte ein ganz anders
+aufgebauter Code mit weniger Bits auskommen? Um diese Frage zu
+beantworten, stellen wir alle Bitfolgen einer bestimmten Länge als
+Bild dar.
+
+Dazu zeichnen wir für jede Bitfolge der Länge \(N\) einen Punkt und
+verbinden zwei Punkte, wenn sich die Bitfolgen in genau einem Bit
+unterscheiden. Das entstehende Bild heisst
+\tib{\(N\)-dimensionaler Hyperwürfel}
+(\cref{fig:2d,fig:3d,fig:4d}). Für \(N=2\) ist es ein Quadrat, für
+\(N=3\) ein Würfel. Der Hyperwürfel hat \(2^N\) Punkte, und jeder
+Punkt hat genau \(N\) Nachbarn, weil man jedes der \(N\) Bits
+umdrehen kann.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \HyperCube{2}
+    \end{tikzpicture}
+    \caption{2D-Hyperwürfel}
+    \label{fig:2d}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \HyperCube{3}
+    \end{tikzpicture}
+    \caption{3D-Hyperwürfel}
+    \label{fig:3d}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \HyperCube{4}
+    \end{tikzpicture}
+    \caption{4D-Hyperwürfel}
+    \label{fig:4d}
+\end{figure}
+
+Ein einzelner Bitfehler entspricht einem Schritt entlang einer
+Kante. Der Abstand zweier Bitfolgen ist die kleinste Anzahl Kanten,
+über die man von der einen zur anderen gelangt.
+
+Bei einem 1-fehlerkorrigierenden Code gehört zu jedem Codewort eine
+\tib{Zone}. Sie besteht aus dem Codewort selbst und seinen \(N\)
+Nachbarn. Empfängt man eine Bitfolge aus dieser Zone, korrigiert man
+sie zu diesem Codewort. Zwei Zonen dürfen deshalb keinen Punkt
+gemeinsam haben, sonst wüsste man bei diesem Punkt nicht, zu welchem
+Codewort er gehört. Jede Zone besteht aus \(N+1\) Punkten, und alle
+Zonen zusammen müssen im Hyperwürfel Platz haben.
+
+\begin{myremark}
+    Ein 1-fehlerkorrigierender Code mit Codewörtern der Länge \(N\)
+    hat höchstens
+    \[
+        \frac{2^N}{N+1}
+    \]
+    Codewörter.
+\end{myremark}
+
+Bei dieser Überlegung spielt es keine Rolle, wie der Code aufgebaut
+ist. Sie gilt für jeden 1-fehlerkorrigierenden Code. Bei einer
+Nachricht mit \(m\) Bits und \(n\) Kontrollbits ist \(N=m+n\), und es
+braucht \(2^m\) Codewörter. Die Bedingung
+\[
+    2^m\cdot(m+n+1)\leq 2^{m+n}
+\]
+wird nach Division durch \(2^m\) zu \(m+n+1\leq 2^n\), also zu
+\(2^n-1\geq m+n\). Das ist dieselbe Ungleichung wie bei der
+Überwachungstabelle. Der Hyperwürfel zeigt, dass auch kein anders
+aufgebauter Code mit weniger Bits auskommt.
+
+Lässt man beim Hamming-Code aus \cref{ex:hamming} die Position 0
+weg, bleiben Codewörter mit \(N=15\) Bits, davon \(m=11\)
+Nachrichtenbits und \(n=4\) Kontrollbits. Es gibt
+\(2^{11}=2048\) Codewörter, und jede Zone umfasst 16 Punkte. Zusammen
+sind das \(2048\cdot 16=32768=2^{15}\) Punkte, also alle Punkte des
+Hyperwürfels. Jede Bitfolge der Länge 15 liegt in genau einer Zone.
+Einen solchen Code nennt man \tib{perfekt}. Für 11 Nachrichtenbits
+gibt es keinen 1-fehlerkorrigierenden Code mit weniger als 15 Bits.
+Das zusätzliche Bit an Position 0 im erweiterten
+\((16,11)\)-Hamming-Code dient dazu, zwei Fehler zu erkennen.
+
+\begin{myexercise}
+    Zeichnen Sie im unten stehenden Hyperwürfel einen
+    1-fehlerkorrigierenden Code mit möglichst vielen Codewörtern ein,
+    ausgehend vom Codewort \texttt{011}. Markieren Sie zu jedem
+    Codewort seine Zone. Wie viele Codewörter finden Sie, und wie
+    viele erlaubt die Schranke \(\frac{2^N}{N+1}\)?
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \HyperCube{3}
+        \end{tikzpicture}
+        \caption{3D-Hyperwürfel}
+    \end{figure}
+
+    \begin{myanswer}
+        \begin{figure}[H]
+            \centering
+            \begin{tikzpicture}
+                \HyperCube{3}
+                % Codewörter blau, Zonen orange bzw. grün
+                \CircleNodes{hg-011,hg-100}
+                \CircleNodes[orange]{hg-001,hg-010,hg-111}
+                \CircleNodes[green]{hg-000,hg-110,hg-101}
+            \end{tikzpicture}
+            \caption{3D-Hyperwürfel mit zwei Zonen}
+        \end{figure}
+        Zwei Codewörter, \texttt{011} und \texttt{100}. Die Schranke
+        ergibt \(\frac{2^3}{4}=2\). Die beiden Zonen füllen den Würfel
+        vollständig aus, der Code ist also perfekt.
+    \end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}
+    Zeichnen Sie im unten stehenden Hyperwürfel einen
+    1-fehlerkorrigierenden Code mit möglichst vielen Codewörtern ein,
+    ausgehend vom Codewort \texttt{0000}. Markieren Sie zu jedem
+    Codewort seine Zone. Wie viele Codewörter finden Sie, und wie
+    viele erlaubt die Schranke \(\frac{2^N}{N+1}\)?
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \HyperCube{4}
+        \end{tikzpicture}
+        \caption{4D-Hyperwürfel}
+    \end{figure}
+
+    \begin{myanswer}
+        Es gibt 2 Codewörter (unterschiedliche Lösungen möglich):
+        \begin{figure}[H]
+            \centering
+            \begin{tikzpicture}
+                \HyperCube{4}
+                % Codewörter blau, Zonen orange bzw. grün
+                \CircleNodes{hg-0000,hg-0111}
+                \CircleNodes[orange]{hg-1000,hg-0100,hg-0010,hg-0001}
+                \CircleNodes[green]{hg-1111,hg-0011,hg-0101,hg-0110}
+            \end{tikzpicture}
+            \caption{4D-Hyperwürfel mit zwei Zonen}
+        \end{figure}
+        Die Schranke ergibt \(\frac{2^4}{5}=3.2\), also höchstens 3
+        Codewörter. Die beiden Zonen belegen 10 der 16 Punkte. Trotzdem
+        passt kein drittes Codewort hinein, wie die Überlegung in
+        \cref{challenge:4bits} zeigt. Die Schranke gibt nur an, wie
+        viele Codewörter höchstens möglich sind. Sie wird nicht immer
+        erreicht.
+    \end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}
+    Ein Code mit Codewörtern der Länge 7 soll 1-fehlerkorrigierend
+    sein.
+    \begin{aenum}
+        \item Wie viele Punkte hat der zugehörige Hyperwürfel, und aus
+              wie vielen Punkten besteht eine Zone?
+        \item Wie viele Codewörter kann der Code höchstens haben?
+        \item Wie viele Nachrichtenbits und wie viele Kontrollbits hat
+              ein solcher Code mit möglichst vielen Codewörtern?
+              Überprüfen Sie Ihr Ergebnis mit der Ungleichung
+              \(2^n-1\geq m+n\).
+    \end{aenum}
+
+    \begin{myanswer}
+        \begin{aenum}
+            \item \(2^7=128\) Punkte. Eine Zone besteht aus dem
+                  Codewort und seinen 7 Nachbarn, also aus 8 Punkten.
+            \item Höchstens \(\frac{128}{8}=16\) Codewörter.
+            \item \(16=2^4\) Codewörter reichen für \(m=4\)
+                  Nachrichtenbits. Es bleiben \(n=3\) Kontrollbits.
+                  Die Ungleichung ergibt \(2^3-1=7\geq 4+3=7\), sie ist
+                  also gerade noch erfüllt. Das ist der
+                  \((7,4)\)-Hamming-Code mit Kontrollbits an den
+                  Positionen 1, 2 und 4. Er ist perfekt.
+        \end{aenum}
+    \end{myanswer}
 \end{myexercise}
 
 \section{Der \glsentryshort{XOR}-Operator}

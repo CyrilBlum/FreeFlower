@@ -107,59 +107,9 @@
 \end{frame}
 
 
-\begin{frame}{Visualisierung}
-    \begin{center}
-        Gibt es auch eine 1-fehlerkorrigierende Codierung mit drei Codewörtern der Länge 4?
-    \end{center}
-    $\rightarrow$ \textbf{Visualisierung schafft Abhilfe}
-\end{frame}
-
-% Loop to generate 2D, 3D, 4D, 5D Hyperwürfel frames
-\foreach \d in {2,3,4} {
-        \begin{frame}{\d D-Hyperwürfel}
-            \begin{figure}[H]
-                \centering
-                \begin{tikzpicture}
-                    \HyperCube{\d}
-                \end{tikzpicture}
-                \caption{\d D-Hyperwürfel}
-                \label{fig:\d d}
-            \end{figure}
-        \end{frame}
-    }
-
-\begin{frame}{Schritt-für-Schritt-Suche nach 1-fehlerkorrigierender Codierung (Länge 4)}
-    \begin{center}
-        Eine 1-fehlerkorrigierende Codierung der Länge 4 muss Mindest-Abstand 3 haben.
-    \end{center}
-    \begin{figure}[H]
-        \centering
-        \begin{tikzpicture}
-            \HyperCube{4}
-            \only<2->{\CircleNodes{hg-0000}}
-            \only<3->{
-                \CrossOutNodes{hg-1000,hg-0100,hg-0010,hg-0001}
-                \CrossOutNodes{hg-0011,hg-0101,hg-0110,hg-1001,hg-1010,hg-1100}
-            }
-            \only<4->{
-                \CircleNodes[green]{hg-0111}
-            }
-            \only<5->{
-                \CrossOutNodes{hg-1111,hg-1011,hg-1101,hg-1110}
-            }
-        \end{tikzpicture}
-    \end{figure}
-    \only<5->{
-        \begin{center}
-        Maximal zwei gültige Codewörter!
-    \end{center}
-    }
-\end{frame}
-
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item Definition 1.1 lesen
-        \item \aufgabebox{1.13, 1.15--1.19}
+        \item \aufgabebox{1.13, 1.15}
         \item \challengebox{1.14} (erst nach den Aufgaben)
     \end{itemize}
 \end{frame}
