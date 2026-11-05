@@ -92,5 +92,5 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    spiel = TicTacToe(n=5)
+    spiel = TicTacToe(n=3)
     spiel.play()

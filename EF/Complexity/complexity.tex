@@ -23,10 +23,6 @@
 
 \frame{\titlepage}
 
-
-\begin{frame}{Grundlagenfach}
-\end{frame}
-
 \begin{frame}{Motivation}
 	\begin{itemize}[<+->]
 		\item Bislang stand für uns hauptsächlich die Frage
@@ -157,7 +153,7 @@
 	\begin{myanswer}
 	Wir beginnen mit \lstinline{i = 1} und \lstinline{i} wird in jedem Durchlauf der \lstinline{while}-Schleife verdoppelt. Wie häufig können wir den Wert von \lstinline{i} verdoppeln, bis die \lstinline{while}-Bedingung \lstinline{i <= n} nicht mehr erfüllt ist? Ungefähr $\log_2(n)$ mal.
 	\pause
-	\vspace{1cm}
+	\vspace{1cm}\\
 	{\small
 	Exakte Analyse: Die Zeile \lstinline{i *= 2} wird $\ceil{\log_2(n)} + 1$ mal ausgeführt.
 	}

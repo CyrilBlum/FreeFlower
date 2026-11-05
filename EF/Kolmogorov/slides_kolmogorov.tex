@@ -27,9 +27,9 @@
 
 \begin{frame}[fragile]{Definition der Kolmogorov-Komplexität}
 \begin{mydefinition}[Kolmogorov-Komplexität]\label{mydefinition:kolmogorov}
-Es sei $w$ ein binäres Wort. Die Kolmogorov-Komplexität $K(w)$ von $w$ ist definiert als das Minimum der \textbf{binären Längen} aller \texttt{C'++} Programme (kompiliert mit \texttt{g'++}), die $w$ generieren.
+Es sei $w$ ein binäres Wort. Die plain Kolmogorov-Komplexität $C(w)$ von $w$ ist definiert als die \textbf{Anzahl der Bits eines kürzesten Maschinencodes}, der durch Kompilierung eines \texttt{C'++}-Programms mit \texttt{g'++} entsteht und dessen Programm auf der Eingabe $\lambda$ (dem leeren Wort) genau $w$ ausgibt und anschliessend hält. Wir sagen dann, dass das Programm $w$ generiert.
 \end{mydefinition}
-Für ein binäres Wort $w$ betrachten wir alle (unendlich vielen) Maschinencodes von \texttt{C'++} Programmen, die $w$ generieren. Die Länge eines kürzesten\footnote{Im Allgemeinen kann es mehrere verschiedene kürzeste Maschinencodes geben, die $w$ generieren.} solcher Maschinencodes ist dann die Zahl $K(w)$.
+Für ein binäres Wort $w$ betrachten wir alle mit \texttt{g'++} erzeugten Maschinencodes von \texttt{C'++}-Programmen, die $w$ generieren. Die Länge eines kürzesten\footnote{Im Allgemeinen kann es mehrere verschiedene kürzeste Maschinencodes geben, deren Programme $w$ generieren.} solchen Maschinencodes ist dann die Zahl $C(w)$.
 \end{frame}
 
 \begin{frame}{Klassen in Python}

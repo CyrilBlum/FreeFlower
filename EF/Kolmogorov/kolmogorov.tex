@@ -1,5 +1,5 @@
 \chapter{Kolmogorov-Komplexität}\label{ch:kolmogorov}
-In der algorithmischen Informationstheorie ist die Kolmogorov\footnote{Andrei Nikolajewitsch Kolmogorow, herausragender sowjetischer Mathematiker des 20. Jahrhunderts und Begründer der algorithmischen Komplexitätstheorie}-Komplexität eines Objekts, wie zum Beispiel eines gegebenen Textes, die Länge eines kürzesten Computerprogramms (in einer festgelegten Programmiersprache), das dieses Objekt als Ausgabe (Output) produziert.
+In der algorithmischen Informationstheorie ist die Kolmogorov\footnote{Andrei Nikolajewitsch Kolmogorow, herausragender sowjetischer Mathematiker des 20. Jahrhunderts und Begründer der algorithmischen Komplexitätstheorie}-Komplexität eines Objekts, wie zum Beispiel eines gegebenen Textes, die Anzahl der Bits eines kürzesten Maschinencodes, dessen Programm dieses Objekt ohne Eingabe vollständig ausgibt und anschliessend hält. Dabei legen wir die Programmiersprache und den Compiler fest.
 \par
 Die Kolmogorov-Komplexität gibt uns eine Möglichkeit, den Informationsinhalt von Objekten zu bestimmen, und erlaubt uns, über kürzeste Darstellungen zu sprechen. Zudem ermöglicht sie eine sinnvolle Definition der Zufälligkeit von Texten und Zahlen. \textit{Zufall} ist ein zentraler Begriff der modernen Wissenschaft.
 
@@ -11,7 +11,7 @@ Betrachte die wunderschöne Illustration eines Teils der Mandelbrotmenge in \cre
 	\caption{Mandelbrotmenge in 16K-Auflösung}
 	\label{fig:mandelbrot_16k}
 \end{figure}
-Eine hochauflösende Rastergrafik muss die Farbinformationen sehr vieler Pixel speichern und kann daher selbst als komprimierte PNG-Datei rund $100$ Millionen Bits Speicherplatz benötigen. Ein recht kurzes Computerprogramm (siehe \cref{listing:mandelbrot}) kann jedoch eine solche Darstellung erzeugen, indem es die Definition der Mandelbrotmenge verwendet. Das Programm ist damit eine deutlich kürzere Beschreibung des Bildmotivs als die Angabe jedes Pixels. Für die Erzeugung der Darstellung benötigt es zahlreiche Rechenoperationen und viel Rechenzeit. Dies ändert aber nichts daran, dass es sich um eine kurze Beschreibung der Mandelbrotgrafik handelt. An dieser Stelle können wir wärmstens empfehlen, einen Blick in das Werk\cite{LowComplexityArt} zu werfen.
+Eine hochauflösende Rastergrafik muss die Farbinformationen sehr vieler Pixel speichern und kann daher selbst als komprimierte PNG-Datei rund $100$ Millionen Bits Speicherplatz benötigen. Ein Computerprogramm mit kurzem Maschinencode (siehe \cref{listing:mandelbrot}) kann jedoch eine solche Darstellung erzeugen, indem es die Definition der Mandelbrotmenge verwendet. Sein Maschinencode ist damit eine deutlich kürzere Beschreibung des Bildmotivs als die Angabe jedes Pixels. Für die Erzeugung der Darstellung benötigt es zahlreiche Rechenoperationen und viel Rechenzeit. Dies ändert aber nichts daran, dass es sich um eine kurze Beschreibung der Mandelbrotgrafik handelt. An dieser Stelle können wir wärmstens empfehlen, einen Blick in das Werk\cite{LowComplexityArt} zu werfen.
 
 \begin{myexercise}
 		Betrachte die folgenden zwei Bilder. \cref{fig:fig1} zeigt ein Muster aus zahlreichen Kreisen, während \cref{fig:fig2} zufälliges Rauschen (White Noise) zeigt.
@@ -35,7 +35,7 @@ Eine hochauflösende Rastergrafik muss die Farbinformationen sehr vieler Pixel s
 
 	Welches dieser beiden Bilder erlaubt vermutlich eine kürzere Beschreibung? Begründe deine Antwort.
 \begin{myanswer}
-	Das Kreismuster in \cref{fig:fig1} erlaubt vermutlich eine deutlich kürzere Beschreibung. Es ist sehr regelmässig und kann durch ein kurzes Computerprogramm beschrieben werden, das in einer Schleife Kreise an bestimmten Positionen zeichnet (wir erinnern uns an die Python-Turtle). Ein tatsächlich gleichverteilt zufällig erzeugtes Rauschbild ist hingegen mit hoher Wahrscheinlichkeit kaum komprimierbar: Ein erzeugendes Programm muss dann im Wesentlichen die Farbinformation (weiss beziehungsweise schwarz) jedes einzelnen Pixels speichern. Vom sichtbaren Eindruck allein lässt sich dies allerdings nicht beweisen, denn ein ähnlich aussehendes Bild könnte auch von einem kurzen Pseudozufallszahlengenerator mit einem kurzen Startwert erzeugt worden sein.
+	Das Kreismuster in \cref{fig:fig1} erlaubt vermutlich eine deutlich kürzere Beschreibung. Es ist sehr regelmässig und kann durch ein Computerprogramm mit kurzem Maschinencode beschrieben werden, das in einer Schleife Kreise an bestimmten Positionen zeichnet (wir erinnern uns an die Python-Turtle). Ein tatsächlich gleichverteilt zufällig erzeugtes Rauschbild ist hingegen mit hoher Wahrscheinlichkeit kaum komprimierbar: Ein erzeugendes Programm muss dann im Wesentlichen die Farbinformation (weiss beziehungsweise schwarz) jedes einzelnen Pixels speichern. Vom sichtbaren Eindruck allein lässt sich dies allerdings nicht beweisen, denn ein ähnlich aussehendes Bild könnte auch von einem Pseudozufallszahlengenerator mit kurzem Maschinencode und einem kurzen Startwert erzeugt worden sein.
 \end{myanswer}
 \end{myexercise}
 
@@ -169,8 +169,10 @@ Die Beispiele illustrieren, dass verschiedene Komprimierungsmethoden unterschied
 Die Definition eines Komplexitätsmasses sollte in dem Sinne robust sein, dass sie nicht auf der willkürlichen Wahl einer Komprimierungsmethode basiert. Ein Komplexitätsmass ohne eine solche willkürliche Wahl ist die Kolmogorov-Komplexität. Um deren Definition zu verstehen, müssen wir zunächst den Begriff der \textit{Generierung} eines Wortes einführen.
 
 \begin{mydefinition}[Generierung eines Wortes]\label{mydefinition:erzeugung}
-Es sei $w$ ein beliebiges Wort. Wir sagen, dass ein Programm (ein Algorithmus) $A$ das Wort $w$ generiert, falls der Aufruf $A()$ genau das Wort $w$ ausgibt.
+Es sei $w$ ein beliebiges Wort. Wir sagen, dass ein Programm (ein Algorithmus) $A$ das Wort $w$ \emph{generiert}, falls $A$ auf der Eingabe $\lambda$ (dem leeren Wort) genau $w$ ausgibt und anschliessend hält. Dabei muss $w$ die vollständige Ausgabe sein.
 \end{mydefinition}
+
+Die Eingabe $\lambda$ bedeutet, dass das Programm keine Eingabedaten erhält. Alle Informationen, die es zur Erzeugung von $w$ benötigt, müssen bereits in seinem Code enthalten sein. In den folgenden Codebeispielen schreiben wir dafür einen Aufruf ohne Argumente, etwa \lstinline[language=C++]{A()}. Dies entspricht in unserem Modell der Ausführung von $A$ auf der leeren Eingabe $\lambda$; ein zusätzliches Argument muss in diesen Beispielen nicht übergeben werden. Ein Programm, das $w$ ausgibt, danach aber endlos weiterläuft, generiert $w$ gemäss dieser Definition nicht.
 
 \begin{myexample}\label{myexample:generateA}
 Das Programm
@@ -195,10 +197,10 @@ void B() {
 \end{lstlisting}
 generiert das Wort $w := 1^{9900507} = \underbrace{11\ldots 111}_{\text{9900507 Einsen}}$.
 \par
-Beachte, dass der Algorithmus \texttt{B} eine kurze Beschreibung von $w$ relativ zur grossen Länge von $w$ darstellt.
+Beachte, dass der Maschinencode des Programms \texttt{B} eine kurze Beschreibung von $w$ relativ zur grossen Länge von $w$ darstellt.
 \end{myexample}
 
-Die Idee von Kolmogorov besteht darin, dass wir uns nicht auf eine willkürlich gewählte Komprimierung einigen müssen. Stattdessen erlaubt er beliebige Programme (in einer fest gewählten Programmiersprache) zur Beschreibung von Texten. Wenn ein Text durch ein kurzes Programm beschrieben werden kann, so besitzt er eine geringe Kolmogorov-Komplexität. Erlaubt ein Text hingegen keine kurze Beschreibung als Programm, so besitzt er eine hohe Kolmogorov-Komplexität.
+Die Idee von Kolmogorov besteht darin, dass wir uns nicht auf eine willkürlich gewählte Komprimierung einigen müssen. Stattdessen erlaubt er beliebige Programme (in einer fest gewählten Programmiersprache) zur Beschreibung von Texten. Wenn ein Text durch ein Programm mit kurzem Maschinencode generiert werden kann, so besitzt er eine geringe Kolmogorov-Komplexität. Gibt es hingegen keinen kurzen Maschinencode eines solchen Programms, so besitzt er eine hohe Kolmogorov-Komplexität. Gezählt wird dabei stets die Anzahl der Bits im Maschinencode.
 
 \section{Definition der Kolmogorov-Komplexität}
 Zunächst möchten wir klären, wie ein binäres Wort in einem Programm gespeichert werden kann, ohne dass jedes seiner Bits als gewöhnliches Textzeichen kodiert werden muss. Betrachten wir dazu nochmals das folgende Standard-\texttt{C++}-Programm aus \cref{myexample:generateA}:
@@ -209,7 +211,7 @@ void A() {
 }
 \end{lstlisting}
 
-Das Problem ist, dass wir typischerweise die Symbole der Tastatur durch Folgen von Nullen und Einsen darstellen müssen (zum Beispiel mittels der ASCII-Kodierung). Wenn wir das gesamte Programm \texttt{A} auf diese Weise kodieren, benötigt jedes als Textzeichen notierte Bit von $w := 00110111$ mehrere Bits im Maschinencode. Diesen konstanten Faktor möchten wir vermeiden. Dazu entwerfen wir eine leicht modifizierte Version des \texttt{g++}-Compilers und der Programmiersprache \texttt{C++}. Wir nennen den modifizierten Compiler \texttt{g'++} und die angepasste Sprache \texttt{C'++}.
+Das Problem ist, dass die Zeichen \texttt{0} und \texttt{1} in einer gewöhnlichen Zeichenkette als Textzeichen gespeichert werden (zum Beispiel mittels der \gls{ASCII}-Kodierung). Wird die Zeichenkette von $w := 00110111$ in dieser Form in den Maschinencode übernommen, benötigt jedes ihrer Zeichen mehrere Bits. Diesen konstanten Faktor möchten wir vermeiden. Dazu entwerfen wir eine leicht modifizierte Version des \texttt{g++}-Compilers und der Programmiersprache \texttt{C++}. Wir nennen den modifizierten Compiler \texttt{g'++} und die angepasste Sprache \texttt{C'++}.
 \par
 Die Sprache \texttt{C'++} unterscheidet sich von Standard-\texttt{C++} darin, dass in einem \texttt{C'++}-Programm binäre Blöcke durch die Escape-Sequenzen \cppinline{***} und \cppinline{+++} markiert werden dürfen. Zwischen diesen Begrenzungszeichen steht stets ein binäres Wort $w$. Der Inhalt des Blocks besitzt für sich allein noch keine numerische Bedeutung. Die Schreibweise rund um den Block legt fest, wie das Programm seine Bits verwendet:
 \begin{itemize}
@@ -220,9 +222,9 @@ Die zweite Schreibweise erweitert die aus Standard-\texttt{C++} bekannte Notatio
 \par
 Ein Block darf nur in einer dieser beiden Formen auftreten. Kommen Escape-Sequenzen in einem Programm mehrfach vor, so muss zwischen ihnen stets dasselbe Wort $w$ stehen; andernfalls meldet \texttt{g'++} einen semantischen Fehler. Derselbe Block darf an einer Stelle als Wort und an einer anderen Stelle als Zahl verwendet werden.
 \par
-Der Compiler \texttt{g'++} speichert diesen gemeinsamen Block $w$ genau einmal und unverändert als binären Rohdatenblock im erzeugten Maschinencode. Alle Vorkommen von \cppinline{***w+++} werden durch Verweise auf diesen einen Block ersetzt. Der Rohdatenblock wird am Ende des Maschinencodes abgelegt; der gewöhnliche Programmteil ist eindeutig kodiert, sodass der gesamte verbleibende Teil des Maschinencodes als $w$ erkannt wird. Die Begrenzungszeichen selbst werden nicht in den Maschinencode übernommen. Somit trägt $w$ unabhängig von der Anzahl seiner Vorkommen im Quelltext genau $\abs{w}$ Bits zur Länge des Maschinencodes bei. Die Verweise und der übrige Programmcode werden bei der Länge des Maschinencodes selbstverständlich mitgezählt.
+Der Compiler \texttt{g'++} speichert diesen gemeinsamen Block $w$ genau einmal und unverändert als binären Rohdatenblock im erzeugten Maschinencode. Alle Vorkommen von \cppinline{***w+++} werden durch Verweise auf diesen einen Block ersetzt. Der Rohdatenblock wird am Ende des Maschinencodes abgelegt; der gewöhnliche Programmteil ist eindeutig kodiert, sodass der gesamte verbleibende Teil des Maschinencodes als $w$ erkannt wird. Die Begrenzungszeichen selbst werden nicht in den Maschinencode übernommen. Somit trägt $w$ unabhängig von der Anzahl seiner Vorkommen im Programmcode genau $\abs{w}$ Bits zur Länge des Maschinencodes bei. Die im Maschinencode kodierten Verweise und Befehle werden bei seiner Länge selbstverständlich mitgezählt.
 \par
-In den folgenden Programmschemata stehen Ausdrücke wie \cppinline{0b***n+++} beziehungsweise \cppinline{0b***n**2+++} dafür, dass für jedes feste $n$ konkret die Binärdarstellung von $n$ beziehungsweise von $n^2$ zwischen den Begrenzungszeichen steht. Natürliche Zahlen werden dabei gemäss \cref{mydefinition:binunddec} ohne führende Nullen dargestellt; die Zahl $0$ wird durch den Block $0$ dargestellt. Die Ausdrücke \cppinline{n} und \cppinline{n**2} selbst sind also keine Bestandteile des kompilierten Programms. Für $n=10$ wird aus dem Schema \cppinline{0b***n+++} beispielsweise der konkrete Ausdruck \cppinline{0b***1010+++}.
+In den folgenden Programmschemata stehen Ausdrücke wie \cppinline{0b***n+++} beziehungsweise \cppinline{0b***n**2+++} dafür, dass für jedes feste $n$ konkret die Binärdarstellung von $n$ beziehungsweise von $n^2$ zwischen den Begrenzungszeichen steht. Natürliche Zahlen werden dabei gemäss \cref{mydefinition:binunddec} ohne führende Nullen dargestellt; die Zahl $0$ wird durch den Block $0$ dargestellt. Die Ausdrücke \cppinline{n} und \cppinline{n**2} selbst werden also nicht als Text in den Maschinencode übernommen. Für $n=10$ wird aus dem Schema \cppinline{0b***n+++} beispielsweise der konkrete Ausdruck \cppinline{0b***1010+++}.
 
 \begin{myexample}
 	Das Programm
@@ -237,15 +239,15 @@ generiert das Wort $w := 00110111$ und ist ein gültiges Programm in der Sprache
 
 Nun können wir endlich die formale Definition der Kolmogorov-Komplexität angeben:
 \begin{mydefinition}[Kolmogorov-Komplexität]\label{mydefinition:kolmogorov}
-Es sei $w$ ein binäres Wort. Die plain Kolmogorov-Komplexität $C(w)$ von $w$ ist definiert als das Minimum der \textbf{binären Längen} aller mit \texttt{g'++} kompilierten \texttt{C'++}-Programme, die $w$ generieren. Im Folgenden nennen wir diese Grösse kurz Kolmogorov-Komplexität.
+Es sei $w$ ein binäres Wort. Die plain Kolmogorov-Komplexität $C(w)$ von $w$ ist definiert als die \textbf{Anzahl der Bits eines kürzesten Maschinencodes}, der durch Kompilierung eines \texttt{C'++}-Programms mit \texttt{g'++} entsteht und dessen Programm $w$ generiert, also auf der Eingabe $\lambda$ genau $w$ ausgibt und anschliessend hält. Im Folgenden nennen wir die Grösse $C(w)$ kurz Kolmogorov-Komplexität von $w$. Beachte, dass $C(w)$ eine natürliche Zahl ist.
 \end{mydefinition}
-Für ein binäres Wort $w$ betrachten wir alle Maschinencodes der \texttt{C'++}-Programme, die $w$ generieren. Die Länge eines kürzesten\footnote{Im Allgemeinen kann es mehrere verschiedene kürzeste Maschinencodes geben, die $w$ generieren.} solchen Maschinencodes ist dann die Zahl $C(w)$. Die Notation $C$ macht deutlich, dass wir die plain Kolmogorov-Komplexität und nicht die präfixfreie Kolmogorov-Komplexität betrachten.
+Für ein binäres Wort $w$ betrachten wir alle mit \texttt{g'++} erzeugten Maschinencodes von \texttt{C'++}-Programmen, die $w$ generieren. Die Länge eines kürzesten\footnote{Im Allgemeinen kann es mehrere verschiedene kürzeste Maschinencodes geben, deren Programme $w$ generieren.} solchen Maschinencodes ist dann die Zahl $C(w)$. Die Notation $C$ macht deutlich, dass wir die plain Kolmogorov-Komplexität und nicht die präfixfreie Kolmogorov-Komplexität betrachten.
 
 \begin{myremark}
 	In \cref{sec:Sprachinvarianz} werden wir sehen, dass die Wahl der Programmiersprache keine wesentliche Rolle spielt.
 \end{myremark}
 \begin{myremark}
-	Ist $C(w)$ ein geeignetes Mass für den Informationsgehalt des binären Wortes $w$? Ja, denn die Kolmogorov-Komplexität berücksichtigt jede berechenbare verlustfreie Komprimierungsmethode. Es sei $x$ ein binäres Wort und $f$ eine solche Komprimierungsmethode, die zu $x$ eine komprimierte Darstellung $x':=f(x)$ erzeugt. Dann existiert ein Dekompressionsalgorithmus $d$ mit $d(f(x))=d(x')=x$. Wir können ein Programm schreiben, das lediglich das kurze Wort $x'$ als Parameter enthält, $x$ mithilfe von $d$ rekonstruiert und anschliessend ausgibt. Der feste Algorithmus $d$ muss zwar ebenfalls im Programm kodiert sein, seine Beschreibungslänge ist jedoch unabhängig von $x$ und $x'$ und kann daher als Konstante betrachtet werden.
+	Ist $C(w)$ ein geeignetes Mass für den Informationsgehalt des binären Wortes $w$? Ja, denn die Kolmogorov-Komplexität berücksichtigt jede berechenbare verlustfreie Komprimierungsmethode. Es sei $x$ ein binäres Wort und $f$ eine solche Komprimierungsmethode, die zu $x$ eine komprimierte Darstellung $x':=f(x)$ erzeugt. Dann existiert ein Dekompressionsalgorithmus $d$ mit $d(f(x))=d(x')=x$. Wir können ein Programm schreiben, das das kurze Wort $x'$ fest in seinem Maschinencode enthält und auf der Eingabe $\lambda$ mithilfe von $d$ das Wort $x$ rekonstruiert, ausgibt und anschliessend hält. Der feste Algorithmus $d$ muss ebenfalls im Maschinencode enthalten sein; die dafür benötigte Anzahl Bits ist jedoch unabhängig von $x$ und $x'$ und kann daher als Konstante betrachtet werden.
 \end{myremark}
 
 \begin{myexercise}[Alle Bitmuster in einem Wort]\label{myexercise:definition_kolmogorov}
@@ -275,36 +277,36 @@ while True:
     bits[i] = 1
 \end{lstlisting}
 			Die Liste beginnt mit $n$ Nullen und wird nach jeder Ausgabe wie ein binärer Zähler um eins erhöht. Nach der Ausgabe von $n$ Einsen endet das Programm. Nur der Wert $n$ muss hinterlegt werden; alle Teilwörter werden daraus berechnet.
-			\item In \texttt{C'++} kann $n$ durch das Schema \cppinline{0b***n+++} hinterlegt werden. Der Rohdatenblock benötigt $\abs{bin(n)}$ Bits. Die Konstante $c$ ist die Länge des übrigen kompilierten Programms einschliesslich des Verweises auf den Block. Dieser Programmteil enthält immer denselben Zähl- und Ausgabealgorithmus und hängt daher nicht von $n$ ab. Somit gilt
+			\item In \texttt{C'++} kann $n$ durch das Schema \cppinline{0b***n+++} hinterlegt werden. Der Rohdatenblock benötigt $\abs{bin(n)}$ Bits. Die Konstante $c$ ist die Anzahl der Bits im übrigen Maschinencode einschliesslich des Verweises auf den Block. Dieser Programmteil enthält immer denselben Zähl- und Ausgabealgorithmus und hängt daher nicht von $n$ ab. Somit gilt
 			\begin{align*}
 				C(w_n)\leq\abs{bin(n)}+c.
 			\end{align*}
-			Für $n=1024$ hat das Wort $1024\cdot 2^{1024}$ Bits, während $bin(1024)=10000000000$ nur $11$ Bits hat. Also ist $C(w_{1024})\leq 11+c$. Der während der Ausführung benötigte Speicher für die Liste gehört nicht zur Programmlänge.
+			Für $n=1024$ hat das Wort $1024\cdot 2^{1024}$ Bits, während $bin(1024)=10000000000$ nur $11$ Bits hat. Also ist $C(w_{1024})\leq 11+c$. Der während der Ausführung benötigte Speicher für die Liste gehört nicht zur Länge des Maschinencodes.
 			\item Nein. Obwohl alle Bitmuster vorkommen, ist ihre Anordnung durch eine kurze Regel festgelegt. Das gesamte Wort lässt sich aus $n$ und einem festen Algorithmus rekonstruieren. Die Vielfalt der enthaltenen Teilwörter allein erzwingt daher keine hohe Kolmogorov-Komplexität.
 		\end{enumerate}
 	\end{myanswer}
 \end{myexercise}
 
 \section{Invarianz der Programmiersprache}\label{sec:Sprachinvarianz}
-Die Länge eines Programms hängt natürlich von der verwendeten Programmiersprache ab. Trotzdem ist die Wahl der Sprache für die Kolmogorov-Komplexität nicht entscheidend. Der Grund dafür lässt sich mit einem Übersetzer erklären.
+Die Länge des Maschinencodes eines Programms hängt von der verwendeten Programmiersprache und dem Compiler ab. Trotzdem ist die Wahl der Sprache für die Kolmogorov-Komplexität nicht entscheidend. Der Grund dafür lässt sich mit einem Interpreter erklären.
 
-Nehmen wir an, ein Programm $p$ ist in einer Sprache $S$ geschrieben. Unsere Sprache $U$ kann dieses Programm ausführen, wenn wir ihr zusätzlich einen Übersetzer für $S$ mitgeben. Diesen festen Übersetzer bezeichnen wir mit $i_S$. Das zusammengesetzte Programm sieht also so aus:
+Nehmen wir an, $p$ ist der Maschinencode eines in der Sprache $S$ geschriebenen Programms. Ein Programm in unserer Sprache $U$ kann dessen Ausführung simulieren, wenn es einen festen Interpreter für die zu $S$ gehörenden Maschinencodes enthält. Den Maschinencode dieses Interpreters einschliesslich der festen Verwaltung des eingebetteten Codes bezeichnen wir mit $i_S$. In unserem Modell kann $p$ unverändert als binärer Datenblock angehängt werden. Der zusammengesetzte Maschinencode sieht also so aus:
 \begin{align*}
-	\underbrace{i_S}_{\text{Übersetzer für }S}\quad
-	\underbrace{p}_{\text{eigentliches Programm}}.
+	\underbrace{i_S}_{\text{Maschinencode des Interpreters}}\quad
+	\underbrace{p}_{\text{eingebetteter Maschinencode}}.
 \end{align*}
-Der Übersetzer $i_S$ muss nur wissen, wie die Sprache $S$ funktioniert. Er ist daher für alle $S$-Programme derselbe. Insbesondere wird er nicht länger, wenn das Programm $p$ oder dessen Ausgabe länger wird.
+Der Interpreter muss nur wissen, wie die zu $S$ gehörenden Maschinencodes ausgeführt werden. Sein Maschinencode $i_S$ ist daher für alle $S$-Programme derselbe. Insbesondere wächst seine Länge nicht mit der Länge von $p$ oder der erzeugten Ausgabe.
 
 Eine Sprache $U$, die auf diese Weise Programme aus allen anderen Programmiersprachen ausführen kann, nennen wir \textit{universell}. Wir nehmen an, dass unsere Sprache \texttt{C'++} eine solche Sprache ist.
 
 \begin{mytheorem}[Invarianzsatz]\label{mytheorem:Sprachinvarianz}
-	Es sei $U$ unsere universelle Sprache und $S$ eine andere Programmiersprache. Mit $C_U(w)$ beziehungsweise $C_S(w)$ bezeichnen wir die Kolmogorov-Komplexität von $w$, gemessen mit der jeweiligen Sprache. Dann gibt es eine feste Zahl $c_S$, sodass
+	Es sei $U$ unsere universelle Sprache und $S$ eine andere Programmiersprache. Mit $C_U(w)$ beziehungsweise $C_S(w)$ bezeichnen wir die Kolmogorov-Komplexität von $w$, gemessen an der Anzahl der Bits eines kürzesten Maschinencodes für die jeweilige Sprache mit festgelegtem Compiler. Dann gibt es eine feste Zahl $c_S$, sodass
 	\begin{align*}
 		C_U(w)\leq C_S(w)+c_S
 	\end{align*}
 	für alle binären Wörter $w$ gilt.
 	\begin{myproof}
-		Sei $p$ ein kürzestes $S$-Programm für $w$. Es hat die Länge $C_S(w)$. Fügen wir den festen Übersetzer $i_S$ hinzu, erhalten wir ein $U$-Programm für dasselbe Wort $w$. Dieses Programm hat die Länge
+		Sei $p$ ein kürzester Maschinencode eines $S$-Programms, das $w$ generiert. Es gilt $\abs{p}=C_S(w)$. Fügen wir den festen Maschinencode $i_S$ des Interpreters hinzu, erhalten wir den Maschinencode eines $U$-Programms, das ebenfalls $w$ generiert. Dieser zusammengesetzte Maschinencode hat die Länge
 		\begin{align*}
 			\abs{i_S}+C_S(w).
 		\end{align*}
@@ -312,15 +314,15 @@ Eine Sprache $U$, die auf diese Weise Programme aus allen anderen Programmierspr
 		\begin{align*}
 			C_U(w)\leq C_S(w)+c_S.
 		\end{align*}
-		Der zusätzliche Platz $c_S$ ist für alle Wörter $w$ gleich, weil der Übersetzer stets derselbe ist.
+		Der zusätzliche Platz $c_S$ ist für alle Wörter $w$ gleich, weil der Maschinencode des Interpreters stets derselbe ist.
 	\end{myproof}
 \end{mytheorem}
-Sind $U$ und $S$ beide solche universellen Sprachen, können sie sich gegenseitig übersetzen. Für die Übersetzung von $S$ nach $U$ benötigen wir wie oben den zusätzlichen Platz $c_S$. Für die umgekehrte Richtung, also von $U$ nach $S$, bezeichnen wir den zusätzlichen Platz mit $c_U$. Damit gilt für alle binären Wörter $w$:
+Sind $U$ und $S$ beide solche universellen Sprachen, können Programme in beiden Sprachen die jeweils anderen Maschinencodes interpretieren. Für die Simulation von $S$ in $U$ benötigen wir wie oben den zusätzlichen Platz $c_S$. Für die umgekehrte Richtung, also von $U$ in $S$, bezeichnen wir den zusätzlichen Platz mit $c_U$. Damit gilt für alle binären Wörter $w$:
 \begin{align*}
 	C_U(w)&\leq C_S(w)+c_S,\\
 	C_S(w)&\leq C_U(w)+c_U.
 \end{align*}
-Die beiden Übersetzer können unterschiedlich lang sein; deshalb müssen $c_S$ und $c_U$ nicht gleich gross sein. Wählen wir das Maximum
+Die Maschinencodes der beiden Interpreter können unterschiedlich lang sein; deshalb müssen $c_S$ und $c_U$ nicht gleich gross sein. Wählen wir das Maximum
 \begin{align*}
 	c_{U,S}:=\max\{c_S,c_U\},
 \end{align*}
@@ -328,25 +330,25 @@ so deckt diese Konstante den zusätzlichen Platz in beiden Richtungen ab. Ihre K
 \begin{align*}
 	\abs{C_U(w)-C_S(w)}\leq c_{U,S}.
 \end{align*}
-Dabei hängt $c_{U,S}$ von den beiden Sprachen und den gewählten Übersetzern, aber nicht von $w$ ab. In diesem Sinne spielt die Wahl der Programmiersprache keine wesentliche Rolle.
+Dabei hängt $c_{U,S}$ von den beiden Sprachen, ihren Compilern und den gewählten Interpretern, aber nicht von $w$ ab. In diesem Sinne spielt die Wahl der Programmiersprache keine wesentliche Rolle.
 
 \section{Triviale obere Schranke für die Kolmogorov-Komplexität}
 Ein beliebiges binäres Wort $w$ kann sicherlich immer beschrieben werden, indem man jedes Bit des Wortes einzeln angibt, $w$ also Bit für Bit diktiert. Diese Beobachtung lässt vermuten, dass die Kolmogorov-Komplexität eines jeden binären Wortes $w$ zumindest nicht (wesentlich) grösser ist als die Anzahl Bits von $w$ (Länge von $w$). Diese Vermutung ist korrekt, wie \cref{mytheorem:upperbound} zeigt.
 
-\begin{mytheorem}[$C(w)$ ist auf keinen Fall wesentlich länger als $\abs{w}$]\label{mytheorem:upperbound}
+\begin{mytheorem}[$C(w)$ ist auf keinen Fall wesentlich grösser als $\abs{w}$]\label{mytheorem:upperbound}
 	Es existiert eine Konstante $c$, sodass für jedes binäre Wort $w$ gilt
 	\begin{align*}
 		C(w) \leq \abs{w} + c.
 	\end{align*}
 	\begin{myproof}
-		Es genügt, ein Programm anzugeben, das ein beliebiges binäres Wort $w$ generiert und dessen binäre Länge höchstens $\abs{w} + c$ beträgt (für eine geeignete Konstante $c$). Das Programm
+		Es genügt, ein Programm anzugeben, das ein beliebiges binäres Wort $w$ generiert und dessen Maschinencode höchstens $\abs{w} + c$ Bits lang ist (für eine geeignete Konstante $c$). Das Programm
 		\begin{lstlisting}[language=C++,escapechar=!] 
         !\colorbox{Yellow}{\#include <iostream>}!
         !\colorbox{Yellow}{void A() \{}!
             !\colorbox{Yellow}{\hspace*{1.5em}std::cout << \texttt{"}***}!!\colorbox{YellowGreen}{w}!!\colorbox{Yellow}{+++\texttt{"};}!
         !\colorbox{Yellow}{\texttt{\}}}!
         \end{lstlisting}
-		generiert $w$. Der \colorbox{Yellow}{gelbe} Teil des Programms ist für jedes Wort $w$ identisch. Das Wort \colorbox{YellowGreen}{\texttt{w}} kommt unverändert (binär) im Maschinencode vor. Der resultierende Maschinencode hat also eine Länge von $\abs{w}$ Bits (für die Darstellung des binären Wortes $w$) und zusätzlich eine konstante Anzahl Bits $c$ für die Kodierung des eigentlichen Programms (gelber Teil). Die Anzahl Bits $c$ ist in dem Sinne konstant, dass sie nicht von $w$ abhängt. Damit haben wir ein Programm angegeben, das $w$ generiert und eine binäre Länge von $\abs{w} + c$ hat. Somit gilt $C(w) \leq \abs{w} + c$ für eine Konstante $c$.
+		generiert $w$. Der \colorbox{Yellow}{gelbe} Teil des Programms ist für jedes Wort $w$ identisch. Das Wort \colorbox{YellowGreen}{\texttt{w}} kommt unverändert (binär) im Maschinencode vor. Der resultierende Maschinencode hat also eine Länge von $\abs{w}$ Bits (für die Darstellung des binären Wortes $w$) und zusätzlich eine konstante Anzahl Bits $c$ für die Kodierung des eigentlichen Programms (gelber Teil). Die Anzahl Bits $c$ ist in dem Sinne konstant, dass sie nicht von $w$ abhängt. Damit haben wir ein Programm angegeben, das $w$ generiert und dessen Maschinencode $\abs{w} + c$ Bits lang ist. Somit gilt $C(w) \leq \abs{w} + c$ für eine Konstante $c$.
 	\end{myproof}
 \end{mytheorem}
 Die Kolmogorov-Komplexität eines Wortes $w$ ist also sicherlich (bis auf eine Konstante) nicht grösser als die Länge von $w$.
@@ -354,9 +356,9 @@ Die Kolmogorov-Komplexität eines Wortes $w$ ist also sicherlich (bis auf eine K
 \begin{myremark}[Denselben binären Block mehrfach verwenden]\label{myremark:bounded-repetitions}
 	Betrachten wir ein festes Programmschema, in dem dasselbe binäre Wort $w$ an $k$ verschiedenen Stellen verwendet wird, wobei beispielsweise $1\leq k\leq 5$ gilt. Die Zahl $5$ ist dabei willkürlich gewählt und besitzt keine besondere Bedeutung. Entscheidend ist lediglich, dass die Anzahl der Vorkommen durch eine im Voraus festgelegte Konstante beschränkt ist. Anstelle von $5$ könnten wir jede andere feste obere Schranke $m$ wählen und $1\leq k\leq m$ voraussetzen.
 
-	Die Vorkommen müssen weder im Quelltext nebeneinanderstehen noch muss die Ausgabe die Form $w^k$ besitzen. Beispielsweise darf das Programm die einzelnen Vorkommen von $w$ in verschiedenen Funktionen oder an verschiedenen Stellen der Ausgabe verwenden.
+	Die Vorkommen müssen weder im Programmcode nebeneinanderstehen noch muss die Ausgabe die Form $w^k$ besitzen. Beispielsweise darf das Programm die einzelnen Vorkommen von $w$ in verschiedenen Funktionen oder an verschiedenen Stellen der Ausgabe verwenden.
 
-	In einem konkreten \texttt{C'++}-Programm werden alle diese Vorkommen durch \cppinline{***w+++} gekennzeichnet. Der Compiler \texttt{g'++} speichert nicht jedes Vorkommen separat. Er legt $w$ genau einmal als binären Rohdatenblock ab und ersetzt jedes der höchstens fünf Vorkommen durch einen Verweis auf diesen gemeinsamen Block. Der für $w$ benötigte Speicherplatz beträgt daher genau $\abs{w}$ Bits und nicht $k\abs{w}$ Bits.
+	In einem konkreten \texttt{C'++}-Programm werden alle diese Vorkommen durch \cppinline{***w+++} gekennzeichnet. Der Compiler \texttt{g'++} speichert nicht jedes Vorkommen separat. Er legt $w$ genau einmal als binären Rohdatenblock ab und ersetzt jedes der höchstens fünf Vorkommen durch einen Verweis auf diesen gemeinsamen Block. Der für $w$ benötigte Platz im Maschinencode beträgt daher genau $\abs{w}$ Bits und nicht $k\abs{w}$ Bits.
 
 	Ein einfaches Beispiel ist das folgende Programmschema:
 	\begin{lstlisting}[language=C++,escapechar=!]
@@ -373,7 +375,7 @@ void use_w() {
 	\begin{align*}
 		C(x_w)\leq \abs{w}+c.
 	\end{align*}
-	Die Konstante $c$ umfasst den festen Programmcode und die höchstens fünf Verweise auf den gemeinsamen Datenblock. Weil deren Anzahl beschränkt ist, hängt $c$ nicht von $w$ ab. Für eine beliebige feste Schranke $m$ erhalten wir entsprechend eine Konstante $c_m$ mit
+	Die Konstante $c$ zählt die Bits des festen Maschinencodeteils einschliesslich der höchstens fünf Verweise auf den gemeinsamen Datenblock. Weil deren Anzahl beschränkt ist, hängt $c$ nicht von $w$ ab. Für eine beliebige feste Schranke $m$ erhalten wir entsprechend eine Konstante $c_m$ mit
 	\begin{align*}
 		C(x_w)\leq \abs{w}+c_m.
 	\end{align*}
@@ -381,7 +383,7 @@ void use_w() {
 
 	Die Voraussetzung einer festen oberen Schranke und eines festen Programmschemas ist wesentlich. Darf $k$ beliebig gross werden, kann der von $k$ abhängige Aufwand nicht ohne Weiteres in eine einzige, von $k$ unabhängige Konstante aufgenommen werden. Wird $k$ beispielsweise binär gespeichert und eine Schleife zur wiederholten Verwendung von $w$ eingesetzt, entsteht zusätzlich ein von der Beschreibungslänge von $k$ abhängiger Term, typischerweise von der Grössenordnung $O\lr{\log (k)}$. Falls weitere Programmteile oder die Positionen der Vorkommen durch zusätzliche, beliebig lange Daten festgelegt werden, müssen auch diese Daten in der Beschreibung gespeichert und zur Schranke addiert werden.
 
-	Dasselbe Prinzip lässt sich mit einer Mehrband-Turingmaschine realisieren: Sie speichert $w$ einmal auf einem Arbeitsband und greift bei jeder benötigten Verwendung erneut auf dieses Band zu. Eine feste Mehrband-Turingmaschine kann in unserer optimalen universellen Beschreibungssprache durch einen festen Simulator beschrieben werden. Dessen Länge geht lediglich als additive Konstante in $c$ ein.
+	Dasselbe Prinzip lässt sich mit einer Mehrband-Turingmaschine realisieren: Sie speichert $w$ einmal auf einem Arbeitsband und greift bei jeder benötigten Verwendung erneut auf dieses Band zu. Eine feste Mehrband-Turingmaschine kann in unserer optimalen universellen Beschreibungssprache durch einen festen Simulator beschrieben werden. Die Länge seines Maschinencodes geht lediglich als additive Konstante in $c$ ein.
 \end{myremark}
 
 \clearpage
@@ -399,7 +401,7 @@ void Cn() {
     std::cout << wort;
 }
 \end{lstlisting}
-Im Programm \texttt{Cn} ist einzig die binäre Kodierung \colorbox{YellowGreen}{\texttt{n}} der Zahl $n$ abhängig von $n$ beziehungsweise von $w_n$. Der Rest des Programms ist unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich). Gemäss \cref{mytheorem:AnzahlZiffern} benötigen wir zur binären Darstellung von $n$ genau $\ceil{\log_2(n+1)}$ viele Bits. Damit existieren Konstanten $c_0$ und $c_1$, sodass
+Im Maschinencode des Programms \texttt{Cn} ist einzig die binäre Kodierung \colorbox{YellowGreen}{\texttt{n}} der Zahl $n$ abhängig von $n$ beziehungsweise von $w_n$. Der übrige Maschinencode ist unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich). Gemäss \cref{mytheorem:AnzahlZiffern} benötigen wir zur binären Darstellung von $n$ genau $\ceil{\log_2(n+1)}$ viele Bits. Damit existieren Konstanten $c_0$ und $c_1$, sodass
 \begin{align*}
 	C(w_n) \leq c_0 + \ceil{\log_2(n+1)} \stackrel{\cref{mytheorem:Estimate}}{\leq} \log_2(n) + c_1 = \log_2(\abs{w_n}) + c_1
 \end{align*}
@@ -425,20 +427,20 @@ void Dn() {
     std::cout << wort;
 }
     \end{lstlisting}
-Analog zu \cref{myexample:wn} ist auch hier einzig die binäre Kodierung \colorbox{YellowGreen}{\texttt{n}} der Zahl $n$ abhängig von $n$ beziehungsweise von $v_n$. Der Rest des Programms ist wieder unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich). Zur binären Darstellung von $n$ benötigen wir genau $\ceil{\log_2(n+1)}$ viele Bits. Damit existieren Konstanten $c_3$ und $c_4$, sodass
+Analog zu \cref{myexample:wn} ist auch im Maschinencode von \texttt{Dn} einzig die binäre Kodierung \colorbox{YellowGreen}{\texttt{n}} der Zahl $n$ abhängig von $n$ beziehungsweise von $v_n$. Der übrige Maschinencode ist wieder unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich). Zur binären Darstellung von $n$ benötigen wir genau $\ceil{\log_2(n+1)}$ viele Bits. Damit existieren Konstanten $c_3$ und $c_4$, sodass
 \begin{align*}
 	C(v_n) \leq c_3 + \ceil{\log_2(n+1)} \stackrel{\cref{mytheorem:Estimate}}{\leq} \log_2(n) + c_4 = \log_2\lr{\sqrt{\abs{v_n}}} + c_4
 \end{align*}
 für beliebiges natürliches $n>0$.
 
-Bei der Bestimmung einer oberen Schranke für die Kolmogorov-Komplexität eines Wortes interessieren wir uns lediglich dafür, wie viele Bits wir für die \textbf{Beschreibung} dieses Wortes benötigen!
+Bei der Bestimmung einer oberen Schranke für die Kolmogorov-Komplexität eines Wortes interessieren wir uns lediglich dafür, wie viele Bits der \textbf{Maschinencode} eines Programms benötigt, das dieses Wort generiert!
 Dass
 \begin{itemize}
 	\item die Inhalte von Variablen wie zum Beispiel von \texttt{M} während der Ausführung des Programms \texttt{Dn} möglicherweise gigantisch gross werden,
 	\item die Programmausführung sehr viel Speicher belegen könnte,
 	\item oder eine Berechnung wie \texttt{M * M} potenziell sehr viel Rechenzeit in Anspruch nehmen könnte
 \end{itemize}
-tut hier nichts zur Sache! Uns interessiert einzig die binäre Länge der \textbf{Beschreibung} eines Wortes. Die Programme in diesem Abschnitt sind Pseudocode; der Typ \cppinline{Natural} kann beliebig grosse natürliche Zahlen speichern. Ausserdem nehmen wir an, dass genügend Arbeitsspeicher vorhanden ist.
+tut hier nichts zur Sache! Uns interessiert einzig die Anzahl der Bits im \textbf{Maschinencode}. Die Programme in diesem Abschnitt sind Pseudocode; der Typ \cppinline{Natural} kann beliebig grosse natürliche Zahlen speichern. Ausserdem nehmen wir an, dass genügend Arbeitsspeicher vorhanden ist.
 \end{myexample}
 
 \begin{myexercise}
@@ -460,7 +462,7 @@ void Fn() {
     \end{lstlisting}
 	Warum beweist dieses Programm sicherlich eine schlechtere obere Schranke für die Kolmogorov-Komplexität von $v_n$ als \cref{myexample:vn}? Tipp: Beachte dazu insbesondere \cref{myremark:bounded-repetitions}.
 	\begin{myanswer}
-		Die beiden Vorkommen von \cppinline{0b***n**2+++} bezeichnen dieselbe Binärdarstellung von $n^2$. Der Compiler \texttt{g'++} speichert den Block zwischen den Escape-Sequenzen deshalb nur einmal (siehe \cref{myremark:bounded-repetitions}). Damit liefert \texttt{Fn} die obere Schranke
+		Die beiden Vorkommen von \cppinline{0b***n**2+++} bezeichnen dieselbe Binärdarstellung von $n^2$. Der Compiler \texttt{g'++} speichert den Block zwischen den Escape-Sequenzen deshalb nur einmal (siehe \cref{myremark:bounded-repetitions}). Die Länge des Maschinencodes von \texttt{Fn} liefert daher die obere Schranke
 		\begin{align*}
 			C(v_n)\leq c + \ceil{\log_2\lr{n^2 + 1}} \leq c' + \log_2\lr{n^2} = c' + \log_2\lr{\abs{v_n}}
 		\end{align*}
@@ -491,11 +493,11 @@ Es existieren Wörter, die nicht komprimierbar sind, die also eine Kolmogorov-Ko
 	\vspace{\baselineskip}
 	Insbesondere ist dadurch für jedes natürliche $n>0$ die Existenz mindestens eines binären Wortes $w$ (wir sagen nichts über die Länge von $w$ aus) mit $C(w)\geq n$ gesichert.
 	\begin{myproof}
-		Unser Beweis verwendet ein einfaches kombinatorisches Argument (Abzählen): Ein Maschinencode kann höchstens ein binäres Wort generieren. Die Anzahl aller Maschinencodes der Länge kleiner als $n$ ist
+		Unser Beweis verwendet ein einfaches kombinatorisches Argument (Abzählen): Ein Programm mit festem Maschinencode kann auf der leeren Eingabe höchstens ein binäres Wort generieren. Die Anzahl der zugelassenen Maschinencodes mit weniger als $n$ Bits ist höchstens so gross wie die Anzahl aller binären Wörter dieser Längen, also höchstens
 		\begin{align*}
 			\sum_{k=0}^{n-1}2^k=2^n-1.
 		\end{align*}
-		Es gibt jedoch genau $2^n$ binäre Wörter der Länge $n$. Somit existiert mindestens ein binäres Wort $x$ der Länge $n$, das von keinem Maschinencode der Länge $<n$ generiert wird. Daher gilt $C(x)\geq n=\abs{x}$.
+		Es gibt jedoch genau $2^n$ binäre Wörter der Länge $n$. Somit existiert mindestens ein binäres Wort $x$ der Länge $n$, das von keinem Programm mit einem Maschinencode von weniger als $n$ Bits generiert wird. Daher gilt $C(x)\geq n=\abs{x}$.
 	\end{myproof}
 \end{mytheorem}
 
@@ -551,7 +553,7 @@ Ein binäres Wort $w$ heisst zufällig, falls $C(w)\geq\abs{w}$ gilt, wenn $w$ a
 				std::cout << x;
 			}
         \end{lstlisting}
-		Alle Programme \cppinline{seeking_alpha_n} sind bis auf die Zahl $n$ identisch. Es sei $c$ die Länge ihres festen Maschinencodeteils. Damit gilt
+		Alle Programme \cppinline{seeking_alpha_n} sind bis auf die Zahl $n$ identisch. Es sei $c$ die Anzahl der Bits ihres festen Maschinencodeteils. Damit gilt
 		\begin{align*}
 			C(\alpha_n)\leq c+\ceil{\log_2(n+1)}.
 		\end{align*}

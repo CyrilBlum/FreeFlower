@@ -177,7 +177,7 @@ Fehler:
 			n = \sqrt[3]{\log_2\lr{\abs{w_n}}}.
 		\end{align*}
 
-		Im Programm \texttt{Wn} ist einzig die binäre Kodierung von \texttt{n} abhängig von $n$ beziehungsweise von $w_n$. Der Rest des Programms ist unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich).
+		Im Maschinencode des Programms \texttt{Wn} ist einzig die binäre Kodierung von \texttt{n} abhängig von $n$ beziehungsweise von $w_n$. Der übrige Maschinencode ist unabhängig von der konkreten Wahl von $n$ (für jede Wahl von $n$ gleich).
 
 		Damit existieren Konstanten $c_0$ und $c_1$, sodass
 \begin{align*}
@@ -195,7 +195,7 @@ für beliebiges natürliches $n>0$.
         \item Wähle $f(n)$ als das mindestens Vierfache dieser Anzahl.
     \end{itemize}
 	\begin{solution}
-		Die Anzahl aller Maschinencodes der Länge kleiner als $2n$ ist
+		Die Anzahl der zugelassenen Maschinencodes mit weniger als $2n$ Bits ist höchstens so gross wie die Anzahl aller binären Wörter dieser Längen, also höchstens
 		\begin{align*}
 			\sum_{k = 0}^{2n-1}\lr{2^k} = 2^{2n} - 1.
 		\end{align*}
@@ -244,7 +244,7 @@ für beliebiges natürliches $n>0$.
         }
     }
 \end{lstlisting}
-		Da alle Programme \texttt{yi} bis auf die Binärdarstellung von $i$ gleich sind, folgt für geeignete Konstanten $c_0,c$:
+		Da die Maschinencodes aller Programme \texttt{yi} bis auf die Binärdarstellung von $i$ gleich sind, folgt für geeignete Konstanten $c_0,c$:
 	\begin{align*}
 		C\lr{y_i} &\leq \ceil{\log_2\lr{i+1}} + c_0\\
 		&\leq \ceil{\log_2\lr{\log_2\lr{\log_2\lr{\sqrt[4]{y_i}}}}} + c.
