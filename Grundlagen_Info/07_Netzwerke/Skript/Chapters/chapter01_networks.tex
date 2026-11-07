@@ -211,15 +211,19 @@ Im Zusammenhang mit dem Internet werden häufig zwei Schichtenmodelle gegenüber
 	\end{itemize}
 	\begin{myanswer}
 		\begin{itemize}
-			\item \gls{IP}-Adresse: Vermittlungsschicht / Internet-Schicht
-			\item Sequenz-Nummer: Transportschicht
 			\item Nachricht: Anwendungsschicht
+			\item Sequenz-Nummer: Transportschicht
+			\item \gls{IP}-Adresse und TTL: Vermittlungsschicht / Internet-Schicht
+			\item \gls{MAC}-Adresse (Ethernet-Frame): Netzzugangsschicht
 			\item Protokolle (Analog zum Spiel):
 			      \begin{itemize}
 				      \item \gls{HTTP}: Anwendungsschicht
 				      \item \gls{TCP}: Transportschicht
 				      \item \gls{IP}: Vermittlungsschicht
+				      \item \gls{ARP} (\gls{IP}- zu \gls{MAC}-Adresse) und Ethernet: Netzzugangsschicht
+				      \item \gls{DHCP} (Vergabe der \gls{IP}-Adressen): läuft auf der Anwendungsschicht, liefert aber die Adressen der Vermittlungsschicht
 			      \end{itemize}
+			\item Geräte: Router (Vermittlungsschicht, wählt den Weg zwischen Netzen), Switch (Netzzugangsschicht, leitet Frames anhand der \gls{MAC}-Adresse im eigenen Netz weiter). Im Spiel übernimmt der Router beide Rollen.
 		\end{itemize}
 	\end{myanswer}
 \end{myexercise}

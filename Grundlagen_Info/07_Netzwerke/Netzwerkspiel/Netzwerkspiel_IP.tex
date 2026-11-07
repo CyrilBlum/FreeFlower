@@ -1,0 +1,15 @@
+% Netzwerk-Spiel: IP-Kärtchen zum Kopieren (12 pro Seite)
+
+\input{Grundlagen_Info/07_Netzwerke/Netzwerkspiel/netzwerkspiel_daten.tex}
+
+\begin{document}
+\pagestyle{empty}
+\nsSeite{
+	\foreach \y in {0,49.5,...,247.5} {
+		\nsIpPaket{0}{\y}
+		\nsIpPaket{105}{\y}
+	}
+	\draw[nsschnitt] (105,0) -- (105,297);
+	\foreach \y in {49.5,99,...,247.5} {\draw[nsschnitt] (0,\y) -- (210,\y);}
+}
+\end{document}

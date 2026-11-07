@@ -1,0 +1,16 @@
+% Netzwerk-Spiel: Nachrichtenzettel zum Kopieren (16 pro Seite)
+
+\input{Grundlagen_Info/07_Netzwerke/Netzwerkspiel/netzwerkspiel_daten.tex}
+
+\begin{document}
+\pagestyle{empty}
+\nsSeite{
+	\foreach \k in {0,...,7} {
+		\pgfmathsetmacro{\y}{\k*37.125}
+		\nsZettel{0}{\y}
+		\nsZettel{105}{\y}
+	}
+	\draw[nsschnitt] (105,0) -- (105,297);
+	\foreach \k in {1,...,7} {\draw[nsschnitt] (0,\k*37.125) -- (210,\k*37.125);}
+}
+\end{document}

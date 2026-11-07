@@ -1,0 +1,197 @@
+% Netzwerk-Spiel: Druckvorlage pro Gruppe (Anleitungen, Router-Tabellen,
+% Gerätekarten, Ethernet-Frames). Kompilieren als article über main.tex.
+% Anzahl Gruppen in netzwerkspiel_daten.tex (\nsAnzahlGruppen).
+
+\input{Grundlagen_Info/07_Netzwerke/Netzwerkspiel/netzwerkspiel_daten.tex}
+
+% Anleitung für die Hosts (eine pro Gruppe). Bewusst ohne Fachbegriffe wie
+% DHCP, ARP, Netzmaske: das Spiel ist der Einstieg ins Thema.
+\newcommand{\nsAnleitungHosts}[1]{%
+	\clearpage\thispagestyle{empty}
+	\section*{Netzwerk-Spiel: Anleitung für die Computer (Gruppe #1)}
+	Sie spielen einen Computer in Ihrer Gruppe. Eine Person spielt den Router, sie verteilt alle Pakete und hat eine eigene Anleitung. Sie senden sich Nachrichten wie im Internet: Jede Nachricht wird mehrfach verpackt, und auf jeder Verpackung steht eine andere Art von Adresse. Lesen Sie diese Anleitung zuerst gemeinsam.
+
+	Jeder Computer hat eine feste Geräte-Nummer, die \textbf{\acrshort{MAC}-Adresse}. Sie steht auf Ihrer Gerätekarte. Eine \textbf{\acrshort{IP}-Adresse} (Adresse im Netz) bekommen Sie erst vom Router.
+
+	\subsection*{Material}
+	\begin{itemize}
+		\item Gerätekarte (eine pro Person),
+		\item Nachrichtenzettel: höchstens 10 Zeichen und eine Nummer (Seq),
+		\item IP-Kärtchen: die Verpackung mit den IP-Adressen,
+		\item die Frames (A4) mit den \acrshort{MAC}-Adressen hat der Router.
+	\end{itemize}
+
+	\subsection*{Runde 1: IP-Adresse holen und Nachrichten senden}
+	\begin{enumerate}
+		\item Schreiben Sie Ihren Namen auf eine Gerätekarte. Gehen Sie damit zum Router und verlangen Sie eine IP-Adresse. Schreiben Sie sie auf die Karte und legen Sie die Karte gut sichtbar vor sich hin. So sehen alle, wer welche IP-Adresse hat.
+		\item Schreiben Sie einer anderen Person Ihrer Gruppe eine Frage mit 20 bis 30 Zeichen. Teilen Sie den Text auf mehrere Nachrichtenzettel auf: ein Zeichen pro Kästchen, Leerzeichen zählen mit. Nummerieren Sie die Zettel: \enquote{Seq 1 von 3}, \enquote{Seq 2 von 3} usw.
+		\item Jeder Zettel bekommt ein eigenes IP-Kärtchen. Schreiben Sie Ihre IP-Adresse bei \enquote{Von} und die IP-Adresse des Empfängers bei \enquote{An}. Legen Sie den Zettel mit der Schrift nach unten unter das Kärtchen. Das ist ein IP-Paket. Geben Sie es dem Router.
+		\item Der Router legt Frames in die Tischmitte. Nehmen Sie nur Frames mit Ihrer \acrshort{MAC}-Adresse. Nehmen Sie das IP-Paket heraus und geben Sie das leere Frame dem Router zurück.
+		\item Ordnen Sie die Zettel nach der Seq-Nummer und lesen Sie die Frage. Fehlt ein Teil, fragen Sie beim Absender nach, ebenfalls mit einem Paket. Beantworten Sie die Frage auf demselben Weg.
+	\end{enumerate}
+	Der Router ist streng. Wenn etwas nicht stimmt, wirft er das Paket weg und sagt Ihnen, weshalb. Schreiben Sie dann ein neues Paket.
+
+	\subsection*{Runde 2: Der Router hat alles vergessen}
+	Ihre IP-Adresse bleibt gleich, aber der Router weiss nicht mehr, welche \acrshort{MAC}-Adresse zu welcher IP-Adresse gehört. Senden Sie wieder eine Frage. Wenn der Router laut fragt \enquote{Wer hat die IP-Adresse \dots?} und es Ihre ist, sagen Sie ihm Ihre \acrshort{MAC}-Adresse.
+
+	\subsection*{Runde 3: Zwei Gruppen werden verbunden}
+	Ihre Gruppe spielt jetzt mit Gruppe \nsPartner{#1}\ifnum\nsHatExtra{#1}=1\ und Gruppe \nsExtra\fi. Senden Sie eine Frage an einen Computer der anderen Gruppe. Seine IP-Adresse steht auf seiner Gerätekarte. Schreiben Sie bei jedem IP-Paket ins Feld TTL die Zahl 4. TTL heisst \enquote{Time to live}: Jeder Router zieht 1 ab, und bei 0 wird das Paket weggeworfen. So kann kein Paket endlos im Netz herumirren.
+
+	\subsection*{Beobachten}
+	Notieren Sie für die Aufgabe \enquote{Netzwerkspiel} im Skript: Wozu dient jede Angabe (Nachricht, Seq, IP-Adresse, \acrshort{MAC}-Adresse)? Was ändert sich in Runde 3 unterwegs, was bleibt gleich?
+	\clearpage
+}
+
+% Anleitung für den Router
+\newcommand{\nsAnleitungRouter}[1]{%
+	\clearpage\thispagestyle{empty}
+	\section*{Netzwerk-Spiel: Anleitung für den Router (Gruppe #1)}
+	Sie sind der Router von Gruppe #1. Sie verteilen die IP-Adressen und bringen alle Pakete zum richtigen Computer. Die Namen der Computer kennen Sie nicht, nur ihre \acrshort{MAC}-Adressen (Geräte-Nummern). Ihre eigene IP-Adresse ist \texttt{192.168.#1.1}.
+
+	\textbf{Seien Sie streng.} Wenn bei einem Paket etwas nicht stimmt, werfen Sie es weg (Stapel \enquote{Papierkorb}) und sagen dem Absender laut, weshalb, zum Beispiel \enquote{Weggeworfen: Empfänger unbekannt.} Sie korrigieren nichts selbst und machen keine Ausnahmen.
+
+	\subsection*{Material}
+	Ihre Gerätekarte, Tabellen 1 bis 3, die Frames (A4, nach \acrshort{MAC}-Adresse sortiert vor sich hinlegen), ein Platz als \enquote{Papierkorb}.
+
+	\subsection*{Werfen Sie ein Paket weg, wenn \dots}
+	\begin{itemize}
+		\item eine IP-Adresse (Von oder An) fehlt, unleserlich ist oder nicht mit \texttt{192.168.} beginnt (\enquote{Adresse ungültig}),
+		\item die Von-Adresse nicht zu der Person gehört, die Ihnen das Paket gibt; vergleichen Sie mit ihrer Gerätekarte (\enquote{falscher Absender}),
+		\item die Nachricht sichtbar ist, weil der Zettel nicht verdeckt unter dem IP-Kärtchen liegt (\enquote{Paket offen}),
+		\item Sie den Empfänger nicht finden (\enquote{Empfänger unbekannt}),
+		\item in Runde 3 beim TTL nichts steht oder es nach dem Abziehen 0 ist (\enquote{TTL abgelaufen}).
+	\end{itemize}
+	Schauen Sie nie unter ein IP-Kärtchen. Sie lesen nur, was darauf steht.
+
+	\subsection*{Runde 1: IP-Adressen verteilen und Pakete zustellen}
+	\begin{enumerate}
+		\item Jeder Computer kommt mit seiner Gerätekarte und verlangt eine IP-Adresse. Geben Sie die nächste freie aus Tabelle 1 (ab \texttt{192.168.#1.2}). Schreiben Sie die \acrshort{MAC}-Adresse daneben und sagen Sie der Person ihre IP-Adresse.
+		\item Sie bekommen ein IP-Paket. Prüfen Sie es mit der Liste oben.
+		\item Suchen Sie die An-Adresse in Tabelle 1. Nehmen Sie das Frame mit der \acrshort{MAC}-Adresse, die daneben steht, und legen Sie das IP-Paket hinein. Legen Sie das Frame in die Tischmitte und sagen Sie: \enquote{Frame für \acrshort{MAC} \dots}.
+		\item Stellen Sie die Pakete nicht immer in der Reihenfolge zu, in der sie kommen. Halten Sie ab und zu eines zurück.
+		\item Der Empfänger gibt Ihnen das leere Frame zurück. Sie brauchen es wieder.
+	\end{enumerate}
+
+	\subsection*{Runde 2: Sie haben alles vergessen}
+	Legen Sie Tabelle 1 umgedreht weg. Die Computer behalten ihre IP-Adressen. Kommt ein Paket an eine IP-Adresse, die noch nicht in Tabelle 2 steht, rufen Sie laut: \enquote{Wer hat die IP-Adresse \texttt{192.168.#1.}\dots?} Die Person nennt ihre \acrshort{MAC}-Adresse. Schreiben Sie beides in Tabelle 2 und fragen Sie für diese Adresse nicht noch einmal. Meldet sich niemand, werfen Sie das Paket weg. Sonst stellen Sie zu wie in Runde 1.
+
+	\subsection*{Runde 3: Zwei Gruppen werden verbunden}
+	Sie sind jetzt mit dem Router von Gruppe \nsPartner{#1}\ifnum\nsHatExtra{#1}=1\ und dem Router von Gruppe \nsExtra\fi\ verbunden. Bei jedem Paket:
+	\begin{enumerate}
+		\item Ziehen Sie beim TTL 1 ab (alte Zahl durchstreichen, neue daneben). Ist es jetzt 0, werfen Sie das Paket weg.
+		\item Beginnt die An-Adresse mit \texttt{192.168.#1.}, ist der Empfänger in Ihrer Gruppe. Stellen Sie zu wie in Runde 2.
+		\item Sonst schauen Sie in Tabelle 3, welcher Router zuständig ist. Legen Sie das IP-Paket in ein Frame mit der \acrshort{MAC}-Adresse dieses Routers und bringen Sie es ihm.
+		\item Bekommen Sie ein Frame von einem anderen Router, nehmen Sie das IP-Paket heraus, geben das leere Frame zurück und machen weiter bei Schritt 1.
+	\end{enumerate}
+	Die IP-Adressen auf dem Paket ändern Sie nie. Nur das Frame wird bei jedem Router ausgetauscht.
+	\clearpage
+}
+
+% Router-Tabellen: #1 Gruppe
+\newcommand{\nsTabellen}[1]{%
+	\clearpage\thispagestyle{empty}
+	\section*{Tabelle 1: Vergebene IP-Adressen (Router Gruppe #1)}
+	Runde 1: Wenn ein Computer eine IP-Adresse verlangt, geben Sie ihm die nächste freie Adresse und schreiben seine \acrshort{MAC}-Adresse daneben. Ab Runde 2 umgedreht weglegen.
+
+	\bigskip
+	{\renewcommand{\arraystretch}{2.6}\Large
+		\begin{tabular}{p{55mm}p{75mm}}
+			\acrshort{MAC}-Adresse & IP-Adresse \\\midrule
+			\nsMac{#1}{0} (Router) & \texttt{192.168.#1.1} \\
+			& \texttt{192.168.#1.2} \\
+			& \texttt{192.168.#1.3} \\
+			& \texttt{192.168.#1.4} \\
+			& \texttt{192.168.#1.5} \\
+		\end{tabular}}
+	\clearpage\thispagestyle{empty}
+	\section*{Tabelle 2: Wer hat welche IP-Adresse? (Router Gruppe #1)}
+	Ab Runde 2: Eintragen, was die Computer auf Ihre Frage \enquote{Wer hat die IP-Adresse \dots?} antworten.
+
+	\bigskip
+	{\renewcommand{\arraystretch}{2.6}\Large
+		\begin{tabular}{p{75mm}p{55mm}}
+			IP-Adresse & \acrshort{MAC}-Adresse \\\midrule
+			\texttt{192.168.#1.} & \\
+			\texttt{192.168.#1.} & \\
+			\texttt{192.168.#1.} & \\
+			\texttt{192.168.#1.} & \\
+		\end{tabular}}
+
+	\section*{Tabelle 3: Wohin mit Paketen? (Router Gruppe #1)}
+	Ab Runde 3. Die ersten drei Zahlen der IP-Adresse zeigen, zu welcher Gruppe ein Computer gehört.
+
+	\bigskip
+	{\renewcommand{\arraystretch}{2}\large
+		\begin{tabular}{p{50mm}p{90mm}}
+			An-Adresse beginnt mit & Was tun? \\\midrule
+			\texttt{192.168.#1.} & eigene Gruppe: selbst zustellen (Tabelle 2) \\
+			\texttt{192.168.\nsPartner{#1}.} & an Router Gruppe \nsPartner{#1}, \acrshort{MAC} \nsMac{\nsPartner{#1}}{0} \\
+			\ifnum\nsHatExtra{#1}=1
+			\texttt{192.168.\nsExtra.} & an Router Gruppe \nsExtra, \acrshort{MAC} \nsMac{\nsExtra}{0} \\
+			\fi
+			etwas anderes & wegwerfen (\enquote{Empfänger unbekannt}) \\
+		\end{tabular}}
+	\clearpage
+}
+
+% Gerätekarten (A7, auf einer Seite): Router und vier Hosts
+\newcommand{\nsKarten}[1]{%
+	\nsSeite{
+		\nsKarte{0}{222.75}{#1}{0}
+		\nsKarte{105}{222.75}{#1}{1}
+		\nsKarte{0}{148.5}{#1}{2}
+		\nsKarte{105}{148.5}{#1}{3}
+		\nsKarte{0}{74.25}{#1}{4}
+		\draw[nsschnitt] (105,74.25) -- (105,297);
+		\foreach \y in {74.25,148.5,222.75} {\draw[nsschnitt] (0,\y) -- (210,\y);}
+	}
+}
+
+\begin{document}
+\newgeometry{margin=18mm}
+\pagestyle{empty}
+
+% Vorbereitung für die Lehrperson
+\section*{Netzwerk-Spiel: Vorbereitung}
+Diese Vorlage enthält das Material für \nsAnzahlGruppen{} Gruppen. Jede Gruppe besteht aus einem Router und drei oder vier Computern (Hosts). Bei $n$ SuS gibt es $\lfloor n/4 \rfloor$ Gruppen, und ($n$ mod 4) davon haben fünf Personen (z.\,B. 25 SuS: fünf Vierergruppen und eine Fünfergruppe). Eine andere Gruppenzahl stellt man in \texttt{netzwerkspiel\_daten.tex} ein (\texttt{\textbackslash nsAnzahlGruppen}).
+
+\subsection*{Pro Gruppe (dieses Dokument, je ein Satz)}
+\begin{itemize}
+	\item Anleitung für die Computer (Hosts) und Anleitung für den Router,
+	\item Tabellen 1 bis 3 für den Router (im echten Netz: DHCP, ARP-Tabelle, Routing-Tabelle),
+	\item Gerätekarten (A7, ausschneiden): Router und vier Computer. Die vierte Computer-Karte und ihre Frames braucht nur eine Fünfergruppe.
+	\item Ethernet-Frames (A4, einmal falten): je zwei pro Computer und je zwei pro Nachbarrouter. Die Frames tragen die Ziel-\acrshort{MAC} schon und werden wiederverwendet.
+\end{itemize}
+
+\subsection*{Verbrauchsmaterial (Netzwerkspiel\_IP.pdf, Netzwerkspiel\_Nachrichten.pdf)}
+Eine Seite ergibt 12 IP-Kärtchen bzw. 16 Nachrichtenzettel. Pro Paket braucht es ein IP-Kärtchen und einen Zettel. Eine Frage mit 30 Zeichen braucht drei Pakete. Wenn jeder Computer pro Runde eine Frage stellt und eine beantwortet, braucht ein Computer in drei Runden 18 Pakete. Mit Reserve für verworfene Pakete reichen pro Gruppe etwa 40 Pakete: 4 Blätter IP-Kärtchen und 3 Blätter Nachrichtenzettel, für 6 Gruppen also 20 bzw. 15 Blätter.
+
+\subsection*{Ablauf}
+Runde 1 (IP-Adressen verteilen, im echten Netz DHCP), Runde 2 (Router fragt \enquote{Wer hat \dots?}, im echten Netz ARP), Runde 3 (zwei Gruppen verbunden: Routing und TTL). Die Anleitungen kommen ohne diese Fachbegriffe aus. Sie lassen sich in der Nachbesprechung an das Erlebte anhängen. Für Runde 3 sitzen die Gruppen \foreach \g in {1,...,\nsAnzahlGruppen} {\ifodd\g\relax\ifnum\g<\nsAnzahlGruppen\relax\g{} und \the\numexpr\g+1\relax, \fi\fi}nebeneinander\ifodd\nsAnzahlGruppen{}, Gruppe \nsAnzahlGruppen{} spielt mit Gruppe \the\numexpr\nsAnzahlGruppen-1\relax\fi. Die Anleitungen genügen, damit die SuS selbständig spielen. Hinweise zur Nachbesprechung und zu den Vereinfachungen stehen im Skript (Anhang Netzwerk-Spiel).
+\clearpage
+
+\foreach \g in {1,...,\nsAnzahlGruppen} {
+	\nsAnleitungHosts{\g}
+	\nsAnleitungRouter{\g}
+	\nsTabellen{\g}
+	\nsKarten{\g}
+	\foreach \h in {1,...,4} {
+		\ifnum\h=4
+			\def\nsBem{Frame für Computer 4 (nur in einer Fünfergruppe nötig)}
+		\else
+			\def\nsBem{Frame für einen Computer der eigenen Gruppe}
+		\fi
+		\nsFrame{\g}{\csuse{nsmac-\g-\h}}{\nsBem}
+		\nsFrame{\g}{\csuse{nsmac-\g-\h}}{\nsBem}
+	}
+	\edef\nsP{\nsPartner{\g}}
+	\nsFrame{\g}{\csuse{nsmac-\nsP-0}}{Frame an den Router von Gruppe \nsP{} (Runde 3)}
+	\nsFrame{\g}{\csuse{nsmac-\nsP-0}}{Frame an den Router von Gruppe \nsP{} (Runde 3)}
+	\ifnum\nsHatExtra{\g}=1
+		\nsFrame{\g}{\csuse{nsmac-\nsExtra-0}}{Frame an den Router von Gruppe \nsExtra{} (Runde 3)}
+		\nsFrame{\g}{\csuse{nsmac-\nsExtra-0}}{Frame an den Router von Gruppe \nsExtra{} (Runde 3)}
+	\fi
+}
+
+\restoregeometry
+\end{document}
