@@ -32,7 +32,7 @@ jobs:
             echo "Pushed by: ${PUSHER}"
             echo "Compare: ${COMPARE}"
             echo
-            echo "$COMMITS" | jq -r '.[] | "\(.id[0:7])  \(.author.name)  \(.timestamp)\n  \(.message | gsub("\n"; "\n  "))\n  added: \(.added | join(", "))\n  modified: \(.modified | join(", "))\n  removed: \(.removed | join(", "))\n"'
+            echo "$COMMITS" | jq -r '.[] | "\(.id[0:7])  \(.author.name)  \(.timestamp)\n  \(.message | gsub("\n"; "\n  "))\n  \(.url)\n"'
             echo "EOF_BODY"
           } >> "$GITHUB_OUTPUT"
 
