@@ -1,0 +1,49 @@
+# Sends an e-mail for every push to main. Replaces GitHub's push e-mail
+# notifications, which were retired on 2026-10-15.
+# Uses the same Gmail secrets as the failure mails in compile.yml.
+
+name: Push mail
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  mail:
+    name: Send push mail
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build mail body
+        id: body
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
+          COMPARE: ${{ github.event.compare }}
+          PUSHER: ${{ github.event.pusher.name }}
+          HEAD_MESSAGE: ${{ github.event.head_commit.message }}
+          HEAD_ID: ${{ github.event.after }}
+        run: |
+          {
+            echo "subject=${HEAD_ID:0:7}: $(printf '%s\n' "$HEAD_MESSAGE" | head -n 1)"
+            echo "text<<EOF_BODY"
+            echo "Branch: ${GITHUB_REF}"
+            echo "Pushed by: ${PUSHER}"
+            echo "Compare: ${COMPARE}"
+            echo
+            echo "$COMMITS" | jq -r '.[] | "\(.id[0:7])  \(.author.name)  \(.timestamp)\n  \(.message | gsub("\n"; "\n  "))\n  added: \(.added | join(", "))\n  modified: \(.modified | join(", "))\n  removed: \(.removed | join(", "))\n"'
+            echo "EOF_BODY"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Send mail
+        uses: dawidd6/action-send-mail@27bf7a883db6de205849f760badd38a1a3ce0dd0 # v24
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "[${{ github.repository }}] ${{ steps.body.outputs.subject }}"
+          to: c@cblum.ch, thomas.graf.numerics@gmail.com
+          from: GitHub Actions <${{ secrets.GMAIL_USERNAME }}>
+          body: ${{ steps.body.outputs.text }}
