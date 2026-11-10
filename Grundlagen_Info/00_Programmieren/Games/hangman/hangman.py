@@ -5,22 +5,11 @@ from pathlib import Path
 class Hangman:
     """Ein Hangman-Spiel mit Texteingabe und Turtle- oder ASCII-Galgen."""
 
-    def __init__(self, wort=None, max_falsche=6, galgen="turtle"):
-        """Darstellung und maximale Anzahl falscher Versuche festlegen."""
-        if galgen not in ("turtle", "ascii"):
-            raise ValueError('galgen muss "turtle" oder "ascii" sein.')
-        if (
-            not isinstance(max_falsche, int)
-            or isinstance(max_falsche, bool)
-            or max_falsche < 1
-        ):
-            raise ValueError("max_falsche muss eine positive ganze Zahl sein.")
+    def __init__(self, wort=None, galgen="turtle"):
+        """Wort und Darstellung für ein Spiel mit sechs Fehlversuchen festlegen."""
         if wort is None:
             wort = self.waehle_zufaelliges_wort()
-        if not isinstance(wort, str) or not wort.strip().isalpha():
-            raise ValueError("Das Wort muss aus mindestens einem Buchstaben bestehen.")
         self.wort = wort.strip().upper()
-        self.max_falsche = max_falsche
         self.galgen = galgen
         self.erraten = False
         self.falsche = 0
@@ -114,7 +103,6 @@ class Hangman:
         if station == 0:
             self.stift.hideturtle()
             self.stift.pensize(3)
-            # Den 160 Einheiten hohen Galgen vertikal um die Fenstermitte platzieren.
             self.stift.penup()
             self.stift.goto(0, -80)
             self.stift.setheading(0)
@@ -127,30 +115,30 @@ class Hangman:
             self.stift.forward(50)
             self.stift.left(90)
             self.stift.forward(20)
-        if station == 1:
+        elif station == 1:
             self.stift.penup()
             self.stift.forward(2 * radius)
             self.stift.left(90)
             self.stift.pendown()
             self.stift.circle(radius)
-        if station == 2:
+        elif station == 2:
             self.stift.right(90)
             self.stift.forward(torso)
-        if station == 3:
+        elif station == 3:
             self.stift.back(torso)
             self.stift.right(25)
             self.stift.forward(arm)
-        if station == 4:
+        elif station == 4:
             self.stift.back(arm)
             self.stift.left(50)
             self.stift.forward(arm)
-        if station == 5:
+        elif station == 5:
             self.stift.back(arm)
             self.stift.right(25)
             self.stift.forward(torso)
             self.stift.right(25)
             self.stift.forward(bein)
-        if station == 6:
+        elif station == 6:
             self.stift.back(bein)
             self.stift.left(50)
             self.stift.forward(bein)
@@ -171,31 +159,27 @@ class Hangman:
 
         print("Lass uns Hangman spielen!")
         print("Aktuell gefundene Buchstaben:", self.wort_anzeigen())
+
+        # Anfänglicher ("leeren") Galgen anzeigen (station 0).
         if self.galgen == "turtle":
             self.galgen_turtle(0)
         else:
             self.galgen_ascii(0)
 
-        while (not self.erraten) and (self.falsche < self.max_falsche):
+        while (not self.erraten) and (self.falsche < 6):
             buchstabe = input("Bitte gib einen Buchstaben ein:\n").strip().upper()
-            if len(buchstabe) != 1 or not buchstabe.isalpha():
-                print("Bitte gib genau einen Buchstaben ein.")
-                continue
             if buchstabe in self.geratene_buchstaben:
                 print("Den Buchstaben", buchstabe, "hast du schon ausprobiert.")
             elif buchstabe not in self.wort:
                 print(buchstabe, "ist nicht im Wort enthalten.")
-                # Die sechs Zeichenstufen auf die erlaubten Fehlversuche verteilen.
-                vorherige_station = self.falsche * 6 // self.max_falsche
                 self.falsche += 1
                 self.geratene_buchstaben += buchstabe
-                station = self.falsche * 6 // self.max_falsche
+
+                # Rufe die galgen-Funktion nur nach einem falschen Versuch erneut auf.
                 if self.galgen == "turtle":
-                    # Turtle muss jede neue Stufe der Reihe nach zeichnen.
-                    for neue_station in range(vorherige_station + 1, station + 1):
-                        self.galgen_turtle(neue_station)
+                    self.galgen_turtle(self.falsche)
                 else:
-                    self.galgen_ascii(station)
+                    self.galgen_ascii(self.falsche)
             else:
                 print("Gut gemacht,", buchstabe, "ist im Wort enthalten.")
                 self.geratene_buchstaben += buchstabe
@@ -213,8 +197,12 @@ class Hangman:
                 "Sorry, du hast alle deine Leben aufgebraucht. Das gesuchte Wort war:",
                 self.wort,
             )
+            if self.galgen == "turtle":
+                print("Klicke ins Turtle-Fenster, um es zu schliessen.")
+                self.stift.getscreen().exitonclick()
+                self.stift = None
 
 
 if __name__ == "__main__":
-    spiel = Hangman(galgen="turtle", max_falsche=6)
+    spiel = Hangman(galgen="turtle")
     spiel.spielen()

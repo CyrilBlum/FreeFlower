@@ -2,8 +2,6 @@ class TicTacToe:
     """Ein Tic-Tac-Toe-Spiel für zwei Personen auf einem n × n grossen Feld."""
 
     def __init__(self, n=4):
-        if not isinstance(n, int) or isinstance(n, bool) or n < 1:
-            raise ValueError("n muss eine positive ganze Zahl sein.")
         self.n = n
         self.empty_token = "-"
         self.A_token = "X"
@@ -12,13 +10,19 @@ class TicTacToe:
         self.token_count = 0
 
     def print_board(self):
-        print((2 * self.n + 1) * "#")
+        width = len(str(self.n * self.n))
+        print(((width + 1) * self.n + 1) * "#")
         for i in range(self.n):
             row = ""
             for j in range(self.n):
-                row += "|" + self.board[i * self.n + j]
+                index = i * self.n + j
+                value = self.board[index]
+                if value == self.empty_token:
+                    # Die angezeigte Nummerierung beginnt bei 1 (nicht bei 0).
+                    value = str(index + 1)
+                row += "|" + value.rjust(width)
             print(row + "|")
-        print((2 * self.n + 1) * "#")
+        print(((width + 1) * self.n + 1) * "#")
 
     def check_win(self, token):
         winning_pattern = self.n * token
@@ -68,17 +72,9 @@ class TicTacToe:
                 player = "B"
                 token = self.B_token
 
-            try:
-                move = int(input(player + " wo möchtest Du Dein Token setzen?\n")) - 1
-            except ValueError:
-                print("Bitte gib eine ganze Zahl ein.")
-                continue
-
-            if move < 0 or move >= self.n * self.n:
-                print("Bitte wähle ein Feld von 1 bis", self.n * self.n)
-                continue
+            move = int(input(player + ", wo möchtest Du Dein Token setzen?\n")) - 1
             if self.board[move] != self.empty_token:
-                print("Das Feld", move + 1, "ist bereits besetzt")
+                print("Das Feld mit Nummer", move + 1, "ist bereits besetzt")
                 continue
 
             self.board[move] = token

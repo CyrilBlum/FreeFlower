@@ -1,17 +1,27 @@
+def wort_anzeigen(loesungswort, erratene_buchstaben):
 
-def wort_anzeigen(loesungwort, erratene_buchstaben):
-    # baue die Ausgabe Buchstabe für Buchstabe auf
-    # beginne mit dem leeren String
-    anzeige = ""
+    # baue die Anzeige Buchstabe für Buchstabe auf, sodass
+    # nur die bereits erratenen Buchstaben als solche
+    # angezeigt werden (sonst Platzhalter: _)
+    anzeige_wort = ""
 
-    for buchstabe in loesungwort:
+    for buchstabe in loesungswort:
         if buchstabe in erratene_buchstaben:
-            # dieser Buchstabe wurde schon erraten
-            anzeige += buchstabe 
+            anzeige_wort += buchstabe
         else:
-            # noch nicht erraten: setze Platzhalter
-            anzeige += "_"
+            anzeige_wort += "_"
 
-    print(anzeige)
+    return anzeige_wort
 
-wort_anzeigen("KROKODIL", "KL")
+
+def spiel():
+    ...
+    ...
+
+    # Game-Loop
+    while True:
+        # Frage den Spieler nach Input
+
+        wort_anzeigen(...)
+
+        break
