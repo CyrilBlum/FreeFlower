@@ -2545,3 +2545,20 @@ Damit ein Backup im Ernstfall auch wirklich hilft, sollte es \textbf{automatisch
         \end{aenum}
     \end{myanswer}
 \end{myexercise}
+
+\subsection{Erweiterung: die 3-2-1-1-0-Regel}\label{sec:backup32110}
+
+Ransomware verschlüsselt oft auch angeschlossene Festplatten, \acrshort{NAS} und verbundene Cloud-Speicher. Deshalb wird die 3-2-1-Regel heute häufig zur \tib{3-2-1-1-0-Regel} erweitert (\cref{fig:backup32110}):
+\begin{itemize}
+    \item \textbf{3}, \textbf{2}, \textbf{1}: wie bei der 3-2-1-Regel,
+    \item \textbf{1} Kopie ist \textbf{offline} oder \textbf{unveränderlich} (\textit{immutable}). Offline heisst, dass die Kopie nur während des Backups mit dem Computer verbunden ist, z.B. eine externe Festplatte, die danach abgehängt wird. Unveränderlich heisst, dass sich die gespeicherten Versionen während einer festgelegten Zeit weder ändern noch löschen lassen, auch nicht mit dem Passwort des Benutzers. Viele Cloud-Speicher und \acrshort{NAS} bieten das an.
+    \item \textbf{0} Fehler: Die Wiederherstellung wird regelmässig getestet, und dabei dürfen keine Fehler auftreten (z.B. beschädigte Dateien, die mit den Prüfsummen auffallen).
+\end{itemize}
+Die Offline-Kopie muss keine vierte Kopie sein. Es genügt, wenn eine der drei Kopien diese Bedingung erfüllt.
+
+\begin{figure}[H]
+    \centering
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_backup_32110.tex}
+    \caption{Die 3-2-1-1-0-Regel für Backups}
+    \label{fig:backup32110}
+\end{figure}

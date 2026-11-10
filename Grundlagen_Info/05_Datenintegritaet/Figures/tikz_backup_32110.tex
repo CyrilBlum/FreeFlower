@@ -1,0 +1,34 @@
+% 3-2-1-1-0-Backup-Regel: Erweiterung der 3-2-1-Regel (tikz_backup_321.tex) um
+% 1 Kopie offline bzw. unveränderlich und 0 Fehler beim Wiederherstellungstest.
+% Wird im Skript (Ende Abschnitt Backup) und auf den RAID-Folien verwendet.
+\begin{tikzpicture}[
+        copy/.style={draw, rounded corners, thick, minimum width=3.2cm, minimum height=1.5cm, align=center, font=\small},
+        zone/.style={draw, dashed, rounded corners, inner sep=8pt},
+        lbl/.style={font=\footnotesize\bfseries, anchor=south west},
+        % Kreis mit Ziffer und Beschriftung für die Zeile der fünf Regeln
+        rule/.style={circle, draw, thick, minimum size=7mm, inner sep=0pt, font=\bfseries}
+    ]
+    % Gleiche Anordnung wie bei der 3-2-1-Regel
+    \node[copy, fill=blue!10]   (orig)  at (0,0)   {\faLaptop\\[2pt] Original\\ \footnotesize Laptop (SSD)};
+    % Kopie 1 ist zusätzlich offline: nur während des Backups angeschlossen
+    \node[copy, fill=green!12, line width=1.6pt] (copy1) at (4,0) {\faHdd\ \faUnlink\\[2pt] Kopie 1 (offline)\\ \footnotesize externe Festplatte, abgehängt};
+    \node[copy, fill=orange!15] (copy2) at (9.8,0) {\faCloud\\[2pt] Kopie 2\\ \footnotesize Cloud / Festplatte bei Verwandten};
+
+    \node[zone, fit=(orig)(copy1)]  (home) {};
+    \node[zone, fit=(copy2)]        (away) {};
+    \node[lbl] at (home.north west) {Zuhause};
+    \node[lbl] at (away.north west) {Ausser Haus};
+
+    \draw[-latex, thick] (orig) -- (copy1);
+    \draw[-latex, thick] (copy1) -- (copy2);
+
+    % Test-Wiederherstellung aus dem Backup zurück aufs Original
+    \draw[-latex, thick, dashed, green!50!black] (copy2.north) to[out=150, in=30]
+        node[above, font=\footnotesize, text=black] {\faCheckCircle\ Wiederherstellung testen: \textbf{0} Fehler} (orig.north);
+
+    % Die fünf Regeln unter der Grafik
+    \foreach \n/\txt [count=\i from 0] in {3/Kopien, 2/Medien, 1/ausser Haus, 1/offline oder\\unveränderlich, 0/Fehler beim\\Test} {
+        \node[rule] (r\i) at (\i*2.45,-2.1) {\n};
+        \node[font=\footnotesize, align=center, anchor=north] at (r\i.south) {\txt};
+    }
+\end{tikzpicture}
