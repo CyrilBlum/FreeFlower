@@ -1783,28 +1783,123 @@ fehlerhaften Bits bestimmen.
 Damit bilden die Hamming-Codes eine wichtige Grundlage
 der Fehlerkorrektur in digitalen Informationssystemen.
 
+Bei unseren Überwachungstabellen hatten wir viele Freiheiten.
+Entscheidend war nur, dass alle Spalten paarweise verschieden und
+nicht leer sind. Hamming legte die Überwachungsbereiche und die
+Positionen der Kontrollbits systematisch fest. Die Kontrollbits
+stehen dabei an festen Stellen mitten im Codewort.
+
+\begin{myprocedure}[Erweiterter \((16,11)\)-Hamming-Code]\label{proc:hamming}
+    Ein Codewort hat 16 Bits. Wir nummerieren sie mit 0 bis 15 und
+    schreiben sie zeilenweise in ein \(4\times 4\)-Raster.
+
+    \begin{center}
+        \begin{tikzpicture}[x=.9cm,y=.6cm,every node/.style={font=\small}]
+            % Positionen 0 bis 15 zeilenweise
+            \foreach \p in {0,...,15} {
+                    \pgfmathtruncatemacro{\col}{mod(\p,4)}
+                    \pgfmathtruncatemacro{\row}{div(\p,4)}
+                    \node at (\col+.5,-\row-.5) {\p};
+                }
+            % Kontrollbits hervorheben
+            \foreach \p in {0,1,2,4,8} {
+                    \pgfmathtruncatemacro{\col}{mod(\p,4)}
+                    \pgfmathtruncatemacro{\row}{div(\p,4)}
+                    \fill[blue!20] (\col,-\row) rectangle (\col+1,-\row-1);
+                    \node at (\col+.5,-\row-.5) {\p};
+                }
+            \draw[step=1,black!65] (0,0) grid (4,-4);
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Codieren}
+    \begin{enumerate}
+        \item Die 11 Nachrichtenbits kommen der Reihe nach auf die
+              Positionen 3, 5, 6, 7, 9, 10, \ldots, 15.
+        \item Die Kontrollbits auf den Positionen 1, 2, 4 und 8
+              überwachen je zwei Spalten oder zwei Zeilen:
+              \begin{itemize}
+                  \item Position 1: 2.\ und 4.\ Spalte
+                  \item Position 2: 3.\ und 4.\ Spalte
+                  \item Position 4: 2.\ und 4.\ Zeile
+                  \item Position 8: 3.\ und 4.\ Zeile
+              \end{itemize}
+              Jedes Kontrollbit wird so gewählt, dass die Anzahl
+              Einsen in seinem Bereich gerade ist.
+        \item Position 0 wird zuletzt so gewählt, dass die Anzahl
+              Einsen im ganzen Codewort gerade ist.
+    \end{enumerate}
+
+    \textbf{Decodieren}
+    \begin{enumerate}
+        \item Für die Kontrollbits 1, 2, 4 und 8 prüfen, ob die Anzahl
+              Einsen in ihrem Bereich gerade ist. Die Summe der
+              Positionen der verletzten Kontrollbits ist die Position
+              des Fehlers.
+        \item Mit Position 0 die Anzahl Einsen im ganzen Codewort
+              prüfen. Ist sie ungerade, ist genau ein Fehler passiert,
+              und man korrigiert ihn. Ist sie gerade, obwohl Kontrollbits
+              verletzt sind, sind zwei Fehler passiert. Diese lassen
+              sich erkennen, aber nicht korrigieren.
+    \end{enumerate}
+\end{myprocedure}
+
+\begin{myexample}
+    Die Nachricht \texttt{0110 1001 101} soll codiert werden. Die
+    Nachrichtenbits kommen auf die Positionen ohne Kontrollbit, danach
+    werden die Kontrollbits (rot) bestimmt:
+
+    \begin{center}
+        \begin{tikzpicture}[x=1.1cm,y=.7cm,every node/.style={font=\normalsize}]
+            \foreach \row/\col/\bit in {
+                    1/1/1, 1/2/0, 1/3/0, 1/4/0,
+                    2/1/1, 2/2/1, 2/3/1, 2/4/0,
+                    3/1/0, 3/2/1, 3/3/0, 3/4/0,
+                    4/1/1, 4/2/1, 4/3/0, 4/4/1
+                } {
+                    \node at (\col-.5,4.5-\row) {\bit};
+                }
+            % Kontrollbits rot hervorheben
+            \foreach \col/\row/\bit in {
+                    1/1/1, 2/1/0, 3/1/0,
+                    1/2/1, 1/3/0
+                } {
+                    \node[red,fill=white,inner sep=1pt]
+                    at (\col-.5,4.5-\row) {\bit};
+                }
+            \draw[step=1,black!70] (0,0) grid (4,4);
+        \end{tikzpicture}
+    \end{center}
+
+    \begin{itemize}
+        \item Position 1: In der 2.\ und 4.\ Spalte stehen vier Einsen,
+              also bleibt das Kontrollbit 0.
+        \item Position 2: In der 3.\ und 4.\ Spalte stehen zwei Einsen,
+              also 0.
+        \item Position 4: In der 2.\ und 4.\ Zeile stehen ohne
+              Kontrollbit fünf Einsen, also 1.
+        \item Position 8: In der 3.\ und 4.\ Zeile stehen vier Einsen,
+              also 0.
+        \item Position 0: Die übrigen 15 Bits enthalten sieben Einsen,
+              also 1.
+    \end{itemize}
+    Das Codewort lautet \texttt{1000 1110 0100 1101}.
+
+    Wird das Bit an Position 10 umgedreht
+    (\texttt{1000 1110 01\textcolor{magenta}{1}0 1101}), sind die
+    Kontrollbits 2 und 8 verletzt, 1 und 4 sind in Ordnung. Der Fehler
+    liegt also an Position \(2+8=10\). Die Anzahl Einsen im ganzen
+    Codewort ist ungerade, es ist also genau ein Fehler passiert.
+\end{myexample}
+
 \begin{myexercise}\label{ex:hamming}
-    Mit unseren Überlegungen konnten wir die minimale Anzahl
-    Kontrollbits für eine 1-fehler-korrigierende Codierung ermitteln.
-    Bei der Erstellung der entsprechenden Überwachungstabellen
-    haben wir viele Freiheiten. Entscheidend ist lediglich, dass
-    alle Spalten paarweise verschieden sind und keine Spalte leer ist.
-
-    Richard Hamming entwickelte eine elegante Methode, mit der
-    sich systematisch festlegen lässt, welche Bits von den einzelnen
-    Kontrollbits überwacht werden und an welchen Positionen die
-    Kontrollbits innerhalb des Codeworts stehen sollen. Schliesslich
-    müssen die Kontrollbits nicht zwingend am Ende der Nachricht
-    angefügt werden.
-
-    Weitere Informationen zur Funktionsweise der Hamming-Codes
-    finden Sie im folgenden Video:
+    Lösen Sie die folgenden Aufgaben mit dem Verfahren aus
+    \cref{proc:hamming}. Zur Vertiefung erklärt das folgende Video die
+    Idee hinter den Hamming-Codes:
 
     \begin{center}
         \url{https://www.youtube.com/watch?v=X8jsijhllIA}
     \end{center}
-
-
 
     \begin{enumerate}
         \item Alice möchte den erweiterten \((16,11)\)-Hamming-Code verwenden,
