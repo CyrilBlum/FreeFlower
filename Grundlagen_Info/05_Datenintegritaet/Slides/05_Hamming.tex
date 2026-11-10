@@ -309,29 +309,24 @@
 \end{frame}
 
 
-\begin{frame}{Geht es mit noch weniger Bits?}
-    \begin{itemize}[<+->]
-        \item \(2^n-1\geq m+n\) gilt für Codes aus Nachrichten- und Kontrollbits
-        \item Gibt es einen ganz anders gebauten Code mit weniger Bits?
-        \item Idee: alle Bitfolgen der Länge \(N\) als Punkte zeichnen
-        \item Verbinden, wenn sie sich in genau einem Bit unterscheiden
-        \item Ein Bitfehler $=$ ein Schritt entlang einer Kante
-    \end{itemize}
-\end{frame}
-
-
-% 3D- und 4D-Hyperwürfel
-\foreach \d in {3,4} {
-        \begin{frame}{\d D-Hyperwürfel}
-            \begin{figure}[H]
-                \centering
+\begin{frame}{Geht es mit noch weniger Bits? Der Hyperwürfel}
+    \begin{columns}
+        \begin{column}{.45\textwidth}
+            \begin{center}
                 \begin{tikzpicture}
-                    \HyperCube{\d}
+                    \HyperCube{3}
                 \end{tikzpicture}
-                \caption*{\(2^{\d}\) Punkte, jeder mit \d{} Nachbarn}
-            \end{figure}
-        \end{frame}
-    }
+            \end{center}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \begin{itemize}[<+->]
+                \item Punkt: Bitfolge der Länge \(N\)
+                \item Kante: Die Bitfolgen unterscheiden sich in genau einem Bit
+                \item Ein Bitfehler $=$ ein Schritt entlang einer Kante
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 
 \begin{frame}{Zonen eines 1-fehlerkorrigierenden Codes}
@@ -340,10 +335,10 @@
             \begin{center}
                 \begin{tikzpicture}
                     \HyperCube{3}
-                    \only<2->{\CircleNodes{hg-011}}
+                    \only<2->{\CircleNodes[orange,double]{hg-011}}
                     \only<3->{\CircleNodes[orange]{hg-001,hg-010,hg-111}}
                     \only<4->{
-                        \CircleNodes{hg-100}
+                        \CircleNodes[green,double]{hg-100}
                         \CircleNodes[green]{hg-000,hg-110,hg-101}
                     }
                 \end{tikzpicture}
@@ -351,23 +346,22 @@
         \end{column}
         \begin{column}{.5\textwidth}
             \begin{itemize}
-                \item<2-> Codewort \texttt{011}
-                \item<3-> Zone: Codewort und seine \(N\) Nachbarn, also \(N+1\) Punkte
-                \item<4-> Zonen dürfen sich nicht überlappen
-                \item<5-> Höchstens \(\dfrac{2^N}{N+1}\) Codewörter
+                \item<2-> Codewort \texttt{011} (doppelter Kreis)
+                \item<3-> Seine \textcolor{orange}{Zone}: Codewort und seine \(N\) Nachbarn
+                \item<4-> Zweites Codewort \texttt{100} mit \textcolor{green!60!black}{Zone}. Zonen dürfen sich nicht überlappen
+                \item<5-> Die Zonen füllen den Würfel lückenlos aus: Der Code ist \tib{perfekt}
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 
-\begin{frame}{Der Hamming-Code ist perfekt}
+\begin{frame}{Hamming-Codes sind perfekt}
     \begin{itemize}[<+->]
-        \item Für jeden 1-fehlerkorrigierenden Code: \(2^m\cdot(m+n+1)\leq 2^{m+n}\)
-        \item Umgeformt: \(2^n-1\geq m+n\), dieselbe Ungleichung wie bei der Überwachungstabelle
-        \item Hamming-Code ohne Position 0: \(N=15\), \(m=11\), \(n=4\)
-        \item \(2^{11}\cdot 16=2^{15}\): Die Zonen füllen den Hyperwürfel lückenlos
-        \item Kein 1-fehlerkorrigierender Code kommt mit weniger Bits aus
+        \item Hamming-Code ohne Position 0: 15 Bit, davon 11 Nachrichtenbits
+        \item \(2^{11}=2048\) Codewörter, jede Zone hat \(15+1=16\) Punkte
+        \item \(2048\cdot 16=2^{15}\): Die Zonen füllen den Hyperwürfel lückenlos aus
+        \item Kein Platz für ein weiteres Codewort, der Code lässt sich nicht verbessern
     \end{itemize}
 \end{frame}
 
@@ -377,6 +371,6 @@
         \item Abschnitt 1.6 lesen
         \item \aufgabebox{1.19--1.22 (optimale Codes)}
         \item \aufgabebox{1.23 (Hamming-Code, mit Video)}
-        \item \aufgabebox{1.24--1.26 (Hyperwürfel)}
+        \item \aufgabebox{1.24--1.25 (Hyperwürfel)}
     \end{itemize}
 \end{frame}
