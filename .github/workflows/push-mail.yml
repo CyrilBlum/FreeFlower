@@ -1,6 +1,9 @@
 # Sends an e-mail for every push to main. Replaces GitHub's push e-mail
 # notifications, which were retired on 2026-10-15.
 # Uses the same Gmail secrets as the failure mails in compile.yml.
+# The push payload has no file lists, so the changed files of each commit
+# are read from the REST API. Each file links to its diff on the commit page
+# (anchor «#diff-» plus the SHA-256 of the path).
 
 name: Push mail
 
@@ -24,6 +27,7 @@ jobs:
           PUSHER: ${{ github.event.pusher.name }}
           HEAD_MESSAGE: ${{ github.event.head_commit.message }}
           HEAD_ID: ${{ github.event.after }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           {
             echo "subject=${HEAD_ID:0:7}: $(printf '%s\n' "$HEAD_MESSAGE" | head -n 1)"
@@ -32,7 +36,23 @@ jobs:
             echo "Pushed by: ${PUSHER}"
             echo "Compare: ${COMPARE}"
             echo
-            echo "$COMMITS" | jq -r '.[] | "\(.id[0:7])  \(.author.name)  \(.timestamp)\n  \(.message | gsub("\n"; "\n  "))\n  \(.url)\n"'
+            echo "$COMMITS" | jq -c '.[]' | while read -r commit; do
+              id=$(jq -r '.id' <<< "$commit")
+              url=$(jq -r '.url' <<< "$commit")
+              jq -r '"\(.id[0:7])  \(.author.name)  \(.timestamp)\n  \(.message | gsub("\n"; "\n  "))\n  \(.url)\n\n  Changed files:"' <<< "$commit"
+              gh api "repos/${GITHUB_REPOSITORY}/commits/${id}" --paginate \
+                --jq '.files[] | [.status, .filename, (.previous_filename // "")] | @tsv' |
+                while IFS=$'\t' read -r status file old; do
+                  hash=$(printf '%s' "$file" | sha256sum | cut -d' ' -f1)
+                  if [ -n "$old" ]; then
+                    echo "  ${status}: ${old} -> ${file}"
+                  else
+                    echo "  ${status}: ${file}"
+                  fi
+                  echo "    ${url}#diff-${hash}"
+                done
+              echo
+            done
             echo "EOF_BODY"
           } >> "$GITHUB_OUTPUT"
 
