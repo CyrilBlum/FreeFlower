@@ -1267,6 +1267,218 @@ mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
 \end{myremark}
 
 
+\begin{myexercise}
+    Alice möchte eine 1-fehlerkorrigierende Codierung für
+    8 verschiedene Nachrichten entwerfen. Für die Codierung
+    dieser Nachrichten (ohne Kontrollbits) verwendet sie
+    Bitfolgen der Länge 3
+    (\texttt{000}, \texttt{001}, \ldots, \texttt{111}).
+
+    \begin{enumerate}
+        \item Wie viele Kontrollbits sind für eine
+              1-fehlerkorrigierende Codierung mindestens notwendig?
+
+        \item Entwerfen Sie eine solche Codierung, indem Sie
+              die entsprechende Überwachungstabelle angeben.
+    \end{enumerate}
+    \begin{myanswer}
+
+        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
+        \[
+            2^n-1 \geq 3+n
+        \]
+        gilt. Daraus folgt \(n\geq 3\). Es werden also mindestens
+        drei Kontrollbits benötigt.
+
+        Eine mögliche Überwachungstabelle ist:
+
+        \begin{center}
+            \begin{tikzpicture}[
+                    x=1.05cm,
+                    y=0.85cm,
+                    every node/.style={font=\small}
+                ]
+
+
+                % Hintergrund
+                \fill[blue!25] (0,0) rectangle (7,1);
+                \fill[blue!15] (0,-3) rectangle (1,0);
+                \fill[blue!8] (1,-3) rectangle (7,0);
+
+                % Spaltenbeschriftungen
+                \foreach \i in {1,...,3} {
+                        \node at (\i+0.5,0.5) {\(a_{\i}\)};
+                    }
+                \foreach \i in {1,...,3} {
+                        \pgfmathtruncatemacro{\col}{3+\i}
+                        \node at (\col+0.5,0.5) {\(c_{\i}\)};
+                    }
+
+                % Zeilenbeschriftungen
+                \foreach \i in {1,...,3} {
+                        \node at (0.5,0.5-\i) {\(c_{\i}\)};
+                    }
+
+                % Überwachungsbereich c1
+                \foreach \col in {1,2,4} {
+                        \node at (\col+0.5,-0.5) {\(\times\)};
+                    }
+
+                % Überwachungsbereich c2
+                \foreach \col in {1,3,5} {
+                        \node at (\col+0.5,-1.5) {\(\times\)};
+                    }
+
+                % Überwachungsbereich c3
+                \foreach \col in {2,3,6} {
+                        \node at (\col+0.5,-2.5) {\(\times\)};
+                    }
+
+                % Gitter
+                \draw[step=1,black!30,thin] (0,-3) grid (7,1);
+
+                % Trennung Nachrichtenbits / Kontrollbits
+                \draw[blue!70!black,very thick] (4,-3) -- (4,1);
+
+
+                % Äusserer Rahmen
+                \draw[black!65]
+                (0,-3) rectangle (7,1);
+
+            \end{tikzpicture}
+        \end{center}
+
+        Die Spalten der Überwachungstabelle sind paarweise verschieden
+        und keine Spalte ist leer. Damit kann jeder einzelne Bitfehler
+        eindeutig lokalisiert und korrigiert werden.
+
+    \end{myanswer}
+\end{myexercise}
+
+
+\begin{myexercise}
+    Bob benötigt eine 1-fehlerkorrigierende Codierung
+    für eine Million verschiedene Nachrichten.
+
+    \begin{enumerate}
+        \item Wie viele Bits sind für die Codierung der
+              Nachrichten nötig (ohne Kontrollbits)?
+
+        \item Wie viele Kontrollbits werden mindestens benötigt?
+    \end{enumerate}
+    \begin{myanswer}
+        Für eine Million verschiedene Nachrichten sind Bitfolgen der
+        Länge 20 nötig, denn es gilt
+        \[
+            2^{19} < 10^6 < 2^{20}.
+        \]
+
+        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
+        \[
+            2^n-1 \geq 20+n
+        \]
+        gilt. Für \(n=4\) ist diese Bedingung nicht erfüllt, für
+        \(n=5\) hingegen schon:
+        \[
+            2^5-1=31\geq 25.
+        \]
+
+        Es werden also mindestens \textbf{5 Kontrollbits} benötigt.
+    \end{myanswer}
+\end{myexercise}
+
+
+\begin{mychallenge}
+
+    Entwerfen Sie eine 1-fehlerkorrigierende Codierung für
+    30 verschiedene Nachrichten. Geben Sie die entsprechende
+    Überwachungstabelle an.
+    \begin{myanswer}
+
+        Für 30 verschiedene Nachrichten benötigt man Bitfolgen der Länge 5,
+        da \(2^4 < 30 \leq 2^5\) gilt.
+
+        Für die Anzahl \(n\) der Kontrollbits muss gelten:
+        \[
+            2^n-1 \geq 5+n.
+        \]
+        Daraus folgt \(n\geq 4\). Es werden also mindestens
+        vier Kontrollbits benötigt.
+
+        Eine mögliche Überwachungstabelle ist:
+
+        \begin{center}
+            \begin{tikzpicture}[
+                    x=1.05cm,
+                    y=0.85cm,
+                    every node/.style={font=\small}
+                ]
+
+
+                % Hintergrund
+                \fill[blue!25] (0,0) rectangle (10,1);
+                \fill[blue!15] (0,-4) rectangle (1,0);
+                \fill[blue!8] (1,-4) rectangle (10,0);
+
+                % Spaltenbeschriftungen: Nachrichtenbits
+                \foreach \i in {1,...,5} {
+                        \node at (\i+0.5,0.5) {\(a_{\i}\)};
+                    }
+
+                % Spaltenbeschriftungen: Kontrollbits
+                \foreach \i in {1,...,4} {
+                        \pgfmathtruncatemacro{\col}{5+\i}
+                        \node at (\col+0.5,0.5) {\(c_{\i}\)};
+                    }
+
+                % Zeilenbeschriftungen
+                \foreach \i in {1,...,4} {
+                        \node at (0.5,0.5-\i) {\(c_{\i}\)};
+                    }
+
+                % Überwachungsbereich c1
+                \foreach \col in {1,2,3,6} {
+                        \node at (\col+0.5,-0.5) {\(\times\)};
+                    }
+
+                % Überwachungsbereich c2
+                \foreach \col in {1,4,5,7} {
+                        \node at (\col+0.5,-1.5) {\(\times\)};
+                    }
+
+                % Überwachungsbereich c3
+                \foreach \col in {2,4,8} {
+                        \node at (\col+0.5,-2.5) {\(\times\)};
+                    }
+
+                % Überwachungsbereich c4
+                \foreach \col in {3,5,9} {
+                        \node at (\col+0.5,-3.5) {\(\times\)};
+                    }
+
+                % Gitter
+                \draw[step=1,black!30,thin] (0,-4) grid (10,1);
+
+                % Trennung Nachrichtenbits / Kontrollbits
+                \draw[blue!70!black,very thick] (6,-4) -- (6,1);
+
+
+                % Äusserer Rahmen
+                \draw[black!65]
+                (0,-4) rectangle (10,1);
+
+
+            \end{tikzpicture}
+        \end{center}
+
+        Da alle Spalten der Überwachungstabelle paarweise verschieden
+        und nicht leer sind, kann jeder einzelne Bitfehler eindeutig
+        lokalisiert und korrigiert werden.
+
+    \end{myanswer}
+\end{mychallenge}
+
+
 
 
 
@@ -1452,66 +1664,12 @@ der Einsen gerade ist.
                 y=0.7cm,
                 every node/.style={font=\small}
             ]
-
-            % Hintergrund
-            \fill[blue!25] (0,0) rectangle (15,1);
-            \fill[blue!15] (0,-4) rectangle (1,0);
-            \fill[gray!8] (1,-4) rectangle (15,0);
-
-
-            % Spaltenbeschriftungen: Nachrichtenbits
-            \foreach \i in {1,...,10} {
-                    \node at (\i+0.5,0.5) {\(a_{\i}\)};
-                }
-
-            % Spaltenbeschriftungen: Kontrollbits
-            \foreach \i in {1,...,4} {
-                    \pgfmathtruncatemacro{\col}{10+\i}
-                    \node[text=orange!80!black]
-                    at (\col+0.5,0.5) {\(c_{\i}\)};
-                }
-
-            % Zeilenbeschriftungen
-            \foreach \i in {1,...,4} {
-                    \node[text=orange!80!black]
-                    at (0.5,0.5-\i) {\(c_{\i}\)};
-                }
-
-            % Überwachungsbereich c1
-            \foreach \col in {1,2,3,5,6,7,11} {
-                    \node at (\col+0.5,-0.5) {\(\times\)};
-                }
-
-            % Überwachungsbereich c2
-            \foreach \col in {1,2,4,5,8,9,12} {
-                    \node at (\col+0.5,-1.5) {\(\times\)};
-                }
-
-            % Überwachungsbereich c3
-            \foreach \col in {1,3,4,6,8,10,13} {
-                    \node at (\col+0.5,-2.5) {\(\times\)};
-                }
-
-            % Überwachungsbereich c4
-            \foreach \col in {2,3,4,7,9,10,14} {
-                    \node at (\col+0.5,-3.5) {\(\times\)};
-                }
-
-
-
-            % Trennung Nachrichtenbits / Kontrollbits
-            \draw[blue!70!black,very thick] (11,-4) -- (11,1);
-
-            % Gitter
-            \draw[step=1,black!30,thin]
-            (0,-4) grid (15,1);
-
-            % Äusserer Rahmen
-            \draw[black!65]
-            (0,-4) rectangle (15,1);
-
+            \ueberwachungZehnVier
         \end{tikzpicture}
     \end{center}
+
+    Tipp: Schreiben Sie die Bits des Codeworts über die Spaltentitel
+    und zählen Sie in jeder Zeile die Einsen unter den Kreuzen.
 
     \begin{enumerate}
         \item Alice möchte die Nachricht
@@ -1534,20 +1692,72 @@ der Einsen gerade ist.
 
     \begin{myanswer}
         \begin{enumerate}
-            \item Die von Alice versendete Nachricht lautet:
+            \item Jedes Kontrollbit wird so gewählt, dass in seiner Zeile
+                  die Anzahl Einsen unter den Kreuzen gerade ist. Man zählt
+                  also die Einsen in den Nachrichtenbits, die das Kontrollbit
+                  überwacht (Kreuze links der dicken Linie). Ist die Anzahl
+                  ungerade, wird das Kontrollbit \texttt{1}, sonst \texttt{0}.
+                  \begin{itemize}
+                      \item \(c_1\) überwacht \(a_1,a_2,a_3,a_5,a_6,a_7\)
+                            \(=\texttt{0,1,0,0,1,0}\): 2 Einsen, also \(c_1=\texttt{0}\).
+                      \item \(c_2\) überwacht \(a_1,a_2,a_4,a_5,a_8,a_9\)
+                            \(=\texttt{0,1,1,0,1,0}\): 3 Einsen, also \(c_2=\texttt{1}\).
+                      \item \(c_3\) überwacht \(a_1,a_3,a_4,a_6,a_8,a_{10}\)
+                            \(=\texttt{0,0,1,1,1,1}\): 4 Einsen, also \(c_3=\texttt{0}\).
+                      \item \(c_4\) überwacht \(a_2,a_3,a_4,a_7,a_9,a_{10}\)
+                            \(=\texttt{1,0,1,0,0,1}\): 3 Einsen, also \(c_4=\texttt{1}\).
+                  \end{itemize}
+                  Mit den Kontrollbits ist die Anzahl Einsen in jeder Zeile gerade:
+                  \begin{center}
+                      \begin{tikzpicture}[x=0.6cm,y=0.48cm,every node/.style={font=\small}]
+                          \ueberwachungZehnVier
+                          \ueberwachungWerte{0,1,0,1,0,1,0,1,0,1,0,1,0,1}{0}
+                          \ueberwachungEinsen{2,4,4,4}
+                      \end{tikzpicture}
+                  \end{center}
+                  Die von Alice versendete Nachricht lautet:
                   \[
                       \texttt{0101 0101 01}\,
                       \textcolor{orange}{\texttt{0101}}
                   \]
 
-            \item Die von Bob erhaltene Nachricht hat einen Fehler
-                  beim Bit \(a_7\). Ursprünglich lautete die Nachricht:
+            \item Man schreibt das empfangene Codewort über die Tabelle und
+                  zählt in jeder Zeile die Einsen unter den Kreuzen, jetzt mit
+                  dem empfangenen Kontrollbit. Ist die Anzahl ungerade, meldet
+                  das Kontrollbit einen Fehler.
+                  \begin{center}
+                      \begin{tikzpicture}[x=0.6cm,y=0.48cm,every node/.style={font=\small}]
+                          \ueberwachungZehnVier
+                          \ueberwachungWerte{1,1,1,1,1,1,1,1,1,1,1,0,0,1}{0}
+                          \ueberwachungEinsen{7,6,6,7}
+                          % Spalte von a7: Signatur c1, c4
+                          \draw[orange,very thick] (7,-4) rectangle (8,1);
+                      \end{tikzpicture}
+                  \end{center}
+                  Die Kontrollbits \(c_1\) und \(c_4\) melden, \(c_2\) und \(c_3\)
+                  nicht. Die Signatur \(c_1,c_4\) gehört zur Spalte von \(a_7\),
+                  denn nur diese Spalte hat Kreuze genau bei \(c_1\) und \(c_4\).
+                  Also ist \(a_7\) gekippt. Dreht man \(a_7\) zurück auf
+                  \texttt{0}, sind alle vier Zeilen wieder gerade
+                  (je 6 Einsen). Ursprünglich lautete die Nachricht:
                   \[
                       \texttt{1111 1101 11}
                   \]
 
-            \item Bei der Nachricht, die Cedric erhält, ist der Fehler
-                  im letzten Kontrollbit \(c_4\) passiert.
+            \item Gleiches Vorgehen wie bei 2.:
+                  \begin{center}
+                      \begin{tikzpicture}[x=0.6cm,y=0.48cm,every node/.style={font=\small}]
+                          \ueberwachungZehnVier
+                          \ueberwachungWerte{1,0,1,0,1,0,1,0,1,1,0,1,1,1}{0}
+                          \ueberwachungEinsen{4,4,4,5}
+                          % Spalte von c4: Signatur nur c4
+                          \draw[orange,very thick] (14,-4) rectangle (15,1);
+                      \end{tikzpicture}
+                  \end{center}
+                  Nur \(c_4\) meldet. Die einzige Spalte mit einem Kreuz nur bei
+                  \(c_4\) ist die Spalte von \(c_4\) selbst. Der Fehler ist also im
+                  letzten Kontrollbit \(c_4\) passiert, die Nachricht
+                  \texttt{1010 1010 11} ist korrekt angekommen.
                   Das korrekte Codewort lautet:
                   \[
                       \texttt{1010 1010 11}\,
@@ -1560,216 +1770,6 @@ der Einsen gerade ist.
 
 
 
-\begin{myexercise}
-    Alice möchte eine 1-fehlerkorrigierende Codierung für
-    8 verschiedene Nachrichten entwerfen. Für die Codierung
-    dieser Nachrichten (ohne Kontrollbits) verwendet sie
-    Bitfolgen der Länge 3
-    (\texttt{000}, \texttt{001}, \ldots, \texttt{111}).
-
-    \begin{enumerate}
-        \item Wie viele Kontrollbits sind für eine
-              1-fehlerkorrigierende Codierung mindestens notwendig?
-
-        \item Entwerfen Sie eine solche Codierung, indem Sie
-              die entsprechende Überwachungstabelle angeben.
-    \end{enumerate}
-    \begin{myanswer}
-
-        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
-        \[
-            2^n-1 \geq 3+n
-        \]
-        gilt. Daraus folgt \(n\geq 3\). Es werden also mindestens
-        drei Kontrollbits benötigt.
-
-        Eine mögliche Überwachungstabelle ist:
-
-        \begin{center}
-            \begin{tikzpicture}[
-                    x=1.05cm,
-                    y=0.85cm,
-                    every node/.style={font=\small}
-                ]
-
-
-                % Hintergrund
-                \fill[blue!25] (0,0) rectangle (7,1);
-                \fill[blue!15] (0,-3) rectangle (1,0);
-                \fill[blue!8] (1,-3) rectangle (7,0);
-
-                % Spaltenbeschriftungen
-                \foreach \i in {1,...,3} {
-                        \node at (\i+0.5,0.5) {\(a_{\i}\)};
-                    }
-                \foreach \i in {1,...,3} {
-                        \pgfmathtruncatemacro{\col}{3+\i}
-                        \node at (\col+0.5,0.5) {\(c_{\i}\)};
-                    }
-
-                % Zeilenbeschriftungen
-                \foreach \i in {1,...,3} {
-                        \node at (0.5,0.5-\i) {\(c_{\i}\)};
-                    }
-
-                % Überwachungsbereich c1
-                \foreach \col in {1,2,4} {
-                        \node at (\col+0.5,-0.5) {\(\times\)};
-                    }
-
-                % Überwachungsbereich c2
-                \foreach \col in {1,3,5} {
-                        \node at (\col+0.5,-1.5) {\(\times\)};
-                    }
-
-                % Überwachungsbereich c3
-                \foreach \col in {2,3,6} {
-                        \node at (\col+0.5,-2.5) {\(\times\)};
-                    }
-
-                % Gitter
-                \draw[step=1,black!30,thin] (0,-3) grid (7,1);
-
-                % Trennung Nachrichtenbits / Kontrollbits
-                \draw[blue!70!black,very thick] (4,-3) -- (4,1);
-
-
-                % Äusserer Rahmen
-                \draw[black!65]
-                (0,-3) rectangle (7,1);
-
-            \end{tikzpicture}
-        \end{center}
-
-        Die Spalten der Überwachungstabelle sind paarweise verschieden
-        und keine Spalte ist leer. Damit kann jeder einzelne Bitfehler
-        eindeutig lokalisiert und korrigiert werden.
-
-    \end{myanswer}
-\end{myexercise}
-
-
-\begin{myexercise}
-    Bob benötigt eine 1-fehlerkorrigierende Codierung
-    für eine Million verschiedene Nachrichten.
-
-    \begin{enumerate}
-        \item Wie viele Bits sind für die Codierung der
-              Nachrichten nötig (ohne Kontrollbits)?
-
-        \item Wie viele Kontrollbits werden mindestens benötigt?
-    \end{enumerate}
-    \begin{myanswer}
-        Für eine Million verschiedene Nachrichten sind Bitfolgen der
-        Länge 20 nötig, denn es gilt
-        \[
-            2^{19} < 10^6 < 2^{20}.
-        \]
-
-        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
-        \[
-            2^n-1 \geq 20+n
-        \]
-        gilt. Für \(n=4\) ist diese Bedingung nicht erfüllt, für
-        \(n=5\) hingegen schon:
-        \[
-            2^5-1=31\geq 25.
-        \]
-
-        Es werden also mindestens \textbf{5 Kontrollbits} benötigt.
-    \end{myanswer}
-\end{myexercise}
-
-
-\begin{myexercise}
-
-    Entwerfen Sie eine 1-fehlerkorrigierende Codierung für
-    30 verschiedene Nachrichten. Geben Sie die entsprechende
-    Überwachungstabelle an.
-    \begin{myanswer}
-
-        Für 30 verschiedene Nachrichten benötigt man Bitfolgen der Länge 5,
-        da \(2^4 < 30 \leq 2^5\) gilt.
-
-        Für die Anzahl \(n\) der Kontrollbits muss gelten:
-        \[
-            2^n-1 \geq 5+n.
-        \]
-        Daraus folgt \(n\geq 4\). Es werden also mindestens
-        vier Kontrollbits benötigt.
-
-        Eine mögliche Überwachungstabelle ist:
-
-        \begin{center}
-            \begin{tikzpicture}[
-                    x=1.05cm,
-                    y=0.85cm,
-                    every node/.style={font=\small}
-                ]
-
-
-                % Hintergrund
-                \fill[blue!25] (0,0) rectangle (10,1);
-                \fill[blue!15] (0,-4) rectangle (1,0);
-                \fill[blue!8] (1,-4) rectangle (10,0);
-
-                % Spaltenbeschriftungen: Nachrichtenbits
-                \foreach \i in {1,...,5} {
-                        \node at (\i+0.5,0.5) {\(a_{\i}\)};
-                    }
-
-                % Spaltenbeschriftungen: Kontrollbits
-                \foreach \i in {1,...,4} {
-                        \pgfmathtruncatemacro{\col}{5+\i}
-                        \node at (\col+0.5,0.5) {\(c_{\i}\)};
-                    }
-
-                % Zeilenbeschriftungen
-                \foreach \i in {1,...,4} {
-                        \node at (0.5,0.5-\i) {\(c_{\i}\)};
-                    }
-
-                % Überwachungsbereich c1
-                \foreach \col in {1,2,3,6} {
-                        \node at (\col+0.5,-0.5) {\(\times\)};
-                    }
-
-                % Überwachungsbereich c2
-                \foreach \col in {1,4,5,7} {
-                        \node at (\col+0.5,-1.5) {\(\times\)};
-                    }
-
-                % Überwachungsbereich c3
-                \foreach \col in {2,4,8} {
-                        \node at (\col+0.5,-2.5) {\(\times\)};
-                    }
-
-                % Überwachungsbereich c4
-                \foreach \col in {3,5,9} {
-                        \node at (\col+0.5,-3.5) {\(\times\)};
-                    }
-
-                % Gitter
-                \draw[step=1,black!30,thin] (0,-4) grid (10,1);
-
-                % Trennung Nachrichtenbits / Kontrollbits
-                \draw[blue!70!black,very thick] (6,-4) -- (6,1);
-
-
-                % Äusserer Rahmen
-                \draw[black!65]
-                (0,-4) rectangle (10,1);
-
-
-            \end{tikzpicture}
-        \end{center}
-
-        Da alle Spalten der Überwachungstabelle paarweise verschieden
-        und nicht leer sind, kann jeder einzelne Bitfehler eindeutig
-        lokalisiert und korrigiert werden.
-
-    \end{myanswer}
-\end{myexercise}
 
 
 
