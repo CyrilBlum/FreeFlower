@@ -341,7 +341,8 @@
                             \node at (.5,.5-\i) {\(c_{\i}\)};
                         }
                     % Muster der Spalten (Zeilen c1, c2, c3): leer, a1 bis a4, c1 bis c3
-                    \foreach \muster [count=\col] in {000,110,101,011,111,100,010,001} {
+                    % führende 1 nur, damit pgfmath z.B. 011 nicht als Oktalzahl liest
+                    \foreach \muster [count=\col] in {1000,1110,1101,1011,1111,1100,1010,1001} {
                             \foreach \z in {1,2,3} {
                                     \pgfmathtruncatemacro{\bit}{mod(floor(\muster/10^(3-\z)),10)}
                                     \ifnum\bit=1
@@ -362,7 +363,7 @@
                         }
                     % die übrigen Spalten bleiben für die Nachrichtenbits
                     \fill<4->[orange!25] (2,-3) rectangle (6,0);
-                    \foreach \muster [count=\i] in {110,101,011,111} {
+                    \foreach \muster [count=\i] in {1110,1101,1011,1111} {
                             \pgfmathtruncatemacro{\col}{1+\i}
                             \node<4-> at (\col+.5,.5) {\(a_{\i}\)};
                             \foreach \z in {1,2,3} {
