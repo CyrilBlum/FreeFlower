@@ -1844,7 +1844,7 @@ stehen dabei an festen Stellen mitten im Codewort.
     \end{enumerate}
 \end{myprocedure}
 
-\begin{myexample}
+\begin{myexample}\label{ex:hamming-codierung}
     Die Nachricht \texttt{0110 1001 101} soll codiert werden. Die
     Nachrichtenbits kommen auf die Positionen ohne Kontrollbit, danach
     werden die Kontrollbits (rot) bestimmt:
@@ -1890,16 +1890,18 @@ stehen dabei an festen Stellen mitten im Codewort.
     Kontrollbits 2 und 8 verletzt, 1 und 4 sind in Ordnung. Der Fehler
     liegt also an Position \(2+8=10\). Die Anzahl Einsen im ganzen
     Codewort ist ungerade, es ist also genau ein Fehler passiert.
-\end{myexample}
 
-\begin{myexercise}\label{ex:hamming}
-    Lösen Sie die folgenden Aufgaben mit dem Verfahren aus
-    \cref{proc:hamming}. Zur Vertiefung erklärt das folgende Video die
-    Idee hinter den Hamming-Codes:
+    Zur Vertiefung erklärt das folgende Video die Idee hinter den
+    Hamming-Codes:
 
     \begin{center}
         \url{https://www.youtube.com/watch?v=X8jsijhllIA}
     \end{center}
+\end{myexample}
+
+\begin{myexercise}\label{ex:hamming}
+    Lösen Sie die folgenden Aufgaben mit dem Verfahren aus
+    \cref{proc:hamming}. Wie das geht, zeigt \cref{ex:hamming-codierung}.
 
     \begin{enumerate}
         \item Alice möchte den erweiterten \((16,11)\)-Hamming-Code verwenden,

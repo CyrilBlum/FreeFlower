@@ -47,6 +47,8 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 ### 2.6 Synchronizing Exercises: Slides vs. Handouts/Scripts
 - **Manual Exercise Sync**: Exercise and task numberings in Beamer slides are **not** updated automatically when corresponding parts in scripts or exercise handouts are changed.
 - **Agent Rule**: Whenever you modify or add exercises in script/book sections, check and manually update the corresponding slide numbers and Beamer presentations in the repository.
+- **Exercises right after their slides**: In a Beamer deck, place an `Auftrag` frame (`\aufgabebox{…}`, `\challengebox{…}`) directly after the slides that cover the content of those exercises, not one collected frame at the end of the deck. Students then work after each short input block instead of sitting through a long frontal part. A deck therefore usually has several `Auftrag` frames; the last one lists only the exercises for the final slides. If exercises need content the deck does not show yet (e.g. XOR before RAID 5), add a short slide for it rather than moving the exercises to the end. Reference example: `Grundlagen_Info/05_Datenintegritaet/Slides/05_Hamming.tex`.
+- **Video links only in the script's example**: When a script example explains a procedure and a video deepens it, mention the video once at the end of that example. Exercises and slides refer to the example (`\cref{…}` in the script, «Beispiel 1.5» on slides), not to the video.
 
 ### 2.7 Cleanup of Temporary Rendered Artifacts
 - **Always Clean Up Rendered Images**: When using tools like `pdftoppm` to generate temporary `.png` files for visual inspection and verification, always delete all agent-generated `.png` files from the repository directory before finishing the task.

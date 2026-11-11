@@ -89,6 +89,45 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
+    \begin{itemize}
+        \item \aufgabebox{1.28, 1.29 (\acrshort{RAID} 0 und 1)}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Parität mit \glsentryshort{XOR}}
+    \begin{columns}
+        \begin{column}{.35\textwidth}
+            \begin{center}
+                \begin{tabular}{ccc}
+                    A & B & A $\oplus$ B \\\midrule
+                    0 & 0 & 0            \\
+                    0 & 1 & 1            \\
+                    1 & 0 & 1            \\
+                    1 & 1 & 0            \\
+                \end{tabular}
+            \end{center}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            \begin{itemize}[<+->]
+                \item \acrshort{XOR} (\enquote{exklusives Oder}): 1, wenn genau ein Bit 1 ist (Addition modulo 2)
+                \item Bitfolgen werden Stelle für Stelle verknüpft
+                \item \(1011_2 \oplus 1100_2 \oplus 0110_2 = 0001_2 = P\) (Parität)
+                \item Fehlt ein Block, ergibt das \acrshort{XOR} der übrigen Blöcke mit \(P\) den fehlenden Block
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
+    \begin{itemize}
+        \item \aufgabebox{1.26, 1.27 (\acrshort{XOR})}
+    \end{itemize}
+\end{frame}
+
+
 \begin{frame}{\glsentryshort{RAID} 5}
     \begin{center}
         \includegraphics[width=.36\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5.pdf}
@@ -118,6 +157,13 @@
         \item \textbf{Kapazität:} $n$ Festplatten $\rightarrow$ $(n-2)$-fache Kapazität
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
+    \begin{itemize}
+        \item \aufgabebox{1.30--1.33 (\acrshort{RAID} 5 und 6)}
+    \end{itemize}
+\end{frame}
+
 
 \begin{frame}{\glsentryshort{RAID} ist kein Backup}
     \begin{columns}[T,onlytextwidth]
@@ -164,8 +210,6 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.26--1.27 (\acrshort{XOR})}
-        \item \aufgabebox{1.28--1.33 (\acrshort{RAID})}
-        \item \aufgabebox{1.34--1.35 (Backup)}
+        \item \aufgabebox{1.34, 1.35 (Backup)}
     \end{itemize}
 \end{frame}
