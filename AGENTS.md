@@ -48,6 +48,7 @@ These rules are strictly enforced and based on the official [FreeFlower Collabor
 - **Manual Exercise Sync**: Exercise and task numberings in Beamer slides are **not** updated automatically when corresponding parts in scripts or exercise handouts are changed.
 - **Agent Rule**: Whenever you modify or add exercises in script/book sections, check and manually update the corresponding slide numbers and Beamer presentations in the repository.
 - **Exercises right after their slides**: In a Beamer deck, place an `Auftrag` frame (`\aufgabebox{…}`, `\challengebox{…}`) directly after the slides that cover the content of those exercises, not one collected frame at the end of the deck. Students then work after each short input block instead of sitting through a long frontal part. A deck therefore usually has several `Auftrag` frames; the last one lists only the exercises for the final slides. If exercises need content the deck does not show yet (e.g. XOR before RAID 5), add a short slide for it rather than moving the exercises to the end. Reference example: `Grundlagen_Info/05_Datenintegritaet/Slides/05_Hamming.tex`.
+- **Every exercise on the slides, in order**: Every exercise and challenge of the script must appear in exactly one `Auftrag` frame of the topic's decks, and the numbers should appear in ascending order across the decks (no `1.20--1.22` frame before `1.19`, where `1.19` is easily overlooked). Deviate only where the slide order deliberately differs from the script (e.g. `06_RAID.tex` shows RAID 0/1 before XOR, so 1.28/1.29 come before 1.26/1.27). After any change to exercises or `Auftrag` frames, compile the script, list all its exercise numbers and compare them with all `\aufgabebox`/`\challengebox` numbers of the decks; fix gaps and order before finishing.
 - **Video links only in the script's example**: When a script example explains a procedure and a video deepens it, mention the video once at the end of that example. Exercises and slides refer to the example (`\cref{…}` in the script, «Beispiel 1.5» on slides), not to the video.
 
 ### 2.7 Cleanup of Temporary Rendered Artifacts
@@ -180,7 +181,7 @@ Before submitting changes or marking a task complete:
 
 1. [ ] **Verify Compilation in `build/` (Only if explicitly requested)**: If the user requested compilation, ensure the edited `.tex` file compiles clean using LuaLaTeX into the `build/` subfolder (`--output-directory=build`) without syntax errors or broken package dependencies.
 2. [ ] **Check Vector/TikZ Graphics**: Ensure new figures use TikZ or `.pdf`/`.svg` vector formats.
-3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`).
+3. [ ] **Check Slide Sync**: If tasks or numbering in scripts were updated, verify and update the corresponding slide deck (`beamer`). Every script exercise/challenge must appear in an `Auftrag` frame, numbers in ascending order unless the deck deliberately follows another order (see 2.6).
 4. [ ] **Respect Licensing**: Verify no unlicensed third-party materials or code were introduced.
 5. [ ] **Preserve Formatting & Comments**: Keep inline comments clean and informative.
 6. [ ] **Keep WIP Chapters Commented Out**: Ensure chapters marked as 'under construction' (e.g. `Kapitel_06.tex` in `Skript.tex`) remain commented out.

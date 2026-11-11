@@ -28,101 +28,263 @@
 \frame{\titlepage}
 
 
+% Beispiel für die ersten Folien: Nachricht 0101 1111 0010 1011 (wie beim Codieren weiter unten)
+% Kartentrick-Codewort: a1..a16, dann c1..c9
+\def\ktWerte{0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,0,1,1,0}
+
+% Kartentrick-Tabelle mit Beispielwerten; #1 = Nummer eines umgedrehten Nachrichtenbits (0 = keines)
+\newcommand{\kartentrickGitter}[1]{%
+    % Nachrichtenbits
+    \foreach \r in {1,...,4} {
+            \foreach \c in {1,...,4} {
+                    \pgfmathtruncatemacro{\nr}{4*(\r-1)+\c}
+                    \fill[gray!12] (\c-1,-\r) rectangle (\c,-\r+1);
+                    \pgfmathtruncatemacro{\wert}{{\ktWerte}[\nr-1]}
+                    \ifnum\nr=#1
+                        \pgfmathtruncatemacro{\wert}{1-\wert}
+                        \node[magenta] at (\c-.5,-\r+.5) {\texttt{\wert}};
+                    \else
+                        \node at (\c-.5,-\r+.5) {\texttt{\wert}};
+                    \fi
+                }
+        }
+    % Kontrollbits der Spalten (c1 bis c4) und der Zeilen (c5 bis c8)
+    \foreach \c in {1,...,4} {
+            \pgfmathtruncatemacro{\wert}{{\ktWerte}[15+\c]}
+            \fill[blue!20] (\c-1,0) rectangle (\c,1);
+            \node at (\c-.5,.5) {\texttt{\wert}};
+        }
+    \foreach \r in {1,...,4} {
+            \pgfmathtruncatemacro{\wert}{{\ktWerte}[19+\r]}
+            \fill[blue!20] (4,-\r) rectangle (5,-\r+1);
+            \node at (4.5,-\r+.5) {\texttt{\wert}};
+        }
+    \fill[blue!20] (4,0) rectangle (5,1);
+    \node at (4.5,.5) {\texttt{0}};
+    \draw[step=1,black!65] (0,-4) grid (5,1);
+}
+
+% Überwachungstabelle der Kartentrick-Methode (16 Nachrichtenbits, 9 Kontrollbits)
+\newcommand{\kartentrickUeberwachung}{%
+    % Tabellenhintergrund
+    \fill[blue!25] (0,0) rectangle (26,1);
+    \fill[blue!15] (0,-9) rectangle (1,0);
+    \fill[gray!8] (1,-9) rectangle (26,0);
+    % Spalten- und Zeilenbeschriftung
+    \foreach \i in {1,...,16} {
+            \node at (\i+.5,.5) {\(a_{\i}\)};
+        }
+    \foreach \i in {1,...,9} {
+            \pgfmathtruncatemacro{\col}{16+\i}
+            \node at (\col+.5,.5) {\(c_{\i}\)};
+            \node at (.5,.5-\i) {\(c_{\i}\)};
+        }
+    % c1 bis c4 überwachen die Spalten der Kartentrick-Tabelle
+    \foreach \j in {1,...,4} {
+            \foreach \r in {0,...,3} {
+                    \pgfmathtruncatemacro{\col}{\j+4*\r}
+                    \node at (\col+.5,.5-\j) {\(\times\)};
+                }
+        }
+    % c5 bis c8 überwachen die Zeilen
+    \foreach \r in {1,...,4} {
+            \pgfmathtruncatemacro{\row}{\r+4}
+            \foreach \j in {1,...,4} {
+                    \pgfmathtruncatemacro{\col}{4*(\r-1)+\j}
+                    \node at (\col+.5,.5-\row) {\(\times\)};
+                }
+        }
+    % jedes Kontrollbit überwacht sich selbst
+    \foreach \i in {1,...,8} {
+            \pgfmathtruncatemacro{\col}{16+\i}
+            \node at (\col+.5,.5-\i) {\(\times\)};
+        }
+    % c9 überwacht sämtliche Bits
+    \foreach \col in {1,...,25} {
+            \node at (\col+.5,-8.5) {\(\times\)};
+        }
+    \draw[step=1,black!30,thin] (0,-9) grid (26,1);
+    \draw[black!65] (0,-9) rectangle (26,1);
+}
+
+% Zeile mit den Werten des Codeworts über der Tabelle; #1 = umgedrehtes Bit (0 = keines)
+\newcommand{\kartentrickWertzeile}[1]{%
+    \node[font=\scriptsize\itshape,anchor=east] at (1,1.5) {Wert};
+    \foreach \col in {1,...,25} {
+            \pgfmathtruncatemacro{\wert}{{\ktWerte}[\col-1]}
+            \ifnum\col=#1
+                \pgfmathtruncatemacro{\wert}{1-\wert}
+                \node[magenta,font=\scriptsize\bfseries\ttfamily] at (\col+.5,1.5) {\wert};
+            \else
+                \node[font=\scriptsize\ttfamily] at (\col+.5,1.5) {\wert};
+            \fi
+        }
+}
+
+
 \begin{frame}{Rückblick: Kartentrick-Methode}
+    Nachricht: \texttt{0101 1111 0010 1011}
     \begin{columns}
-        \begin{column}{.45\textwidth}
+        \begin{column}{.4\textwidth}
             \begin{center}
                 \begin{tikzpicture}[x=.75cm,y=.6cm,every node/.style={font=\small}]
-                    % Nachrichtenbits
-                    \foreach \r in {1,...,4} {
-                            \foreach \c in {1,...,4} {
-                                    \pgfmathtruncatemacro{\nr}{4*(\r-1)+\c}
-                                    \fill[gray!12] (\c-1,-\r) rectangle (\c,-\r+1);
-                                    \node at (\c-.5,-\r+.5) {\(a_{\nr}\)};
-                                }
-                        }
-                    % Kontrollbits der Spalten
+                    \kartentrickGitter{0}
+                    % Namen der Bits am Rand
                     \foreach \c in {1,...,4} {
-                            \fill[blue!20] (\c-1,0) rectangle (\c,1);
-                            \node at (\c-.5,.5) {\(c_{\c}\)};
+                            \node[font=\tiny,blue!60!black] at (\c-.5,1.35) {\(c_{\c}\)};
                         }
-                    % Kontrollbits der Zeilen
                     \foreach \r in {1,...,4} {
                             \pgfmathtruncatemacro{\nr}{\r+4}
-                            \fill[blue!20] (4,-\r) rectangle (5,-\r+1);
-                            \node at (4.5,-\r+.5) {\(c_{\nr}\)};
+                            \node[font=\tiny,blue!60!black] at (5.35,-\r+.5) {\(c_{\nr}\)};
                         }
-                    \fill[blue!20] (4,0) rectangle (5,1);
-                    \node at (4.5,.5) {\(c_9\)};
-                    \draw[step=1,black!65] (0,-4) grid (5,1);
+                    \node[font=\tiny,blue!60!black] at (5.35,.5) {\(c_9\)};
                     % Überwachungsbereich von c1
                     \draw<2->[orange,very thick,rounded corners=2pt] (0,-4) rectangle (1,1);
                 \end{tikzpicture}
             \end{center}
         \end{column}
-        \begin{column}{.5\textwidth}
+        \begin{column}{.55\textwidth}
             \begin{itemize}
-                \item 16 Nachrichtenbits, 9 Kontrollbits
-                \item Codewort: 25 Bit
-                \item<2-> \(c_1\) überwacht \(a_1,a_5,a_9,a_{13}\) (und sich selbst)
-                \item<3-> Geht es mit weniger Kontrollbits?
+                \item 16 Nachrichtenbits \(a_1, \ldots, a_{16}\) (zeilenweise), 9 Kontrollbits \(c_1, \ldots, c_9\)
+                \item<2-> \(c_1\) überwacht die erste Spalte: \(a_1,a_5,a_9,a_{13}\) und sich selbst
+                \item<2-> \(\texttt{0}+\texttt{1}+\texttt{0}+\texttt{1}+\underbrace{\texttt{0}}_{c_1}\): 2 Einsen, gerade
+                \item<3-> Codewort: \(16+9=25\) Bit. Geht es mit weniger Kontrollbits?
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 
-\begin{frame}{Überwachungstabelle}
+\begin{frame}{Überwacht ein Kontrollbit sich selbst?}
+    \begin{columns}
+        \begin{column}{.4\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[x=.75cm,y=.6cm,every node/.style={font=\small}]
+                    \kartentrickGitter{0}
+                    % c1 wird bei der Übertragung umgedreht
+                    \fill<2->[white] (0.1,0.1) rectangle (0.9,0.9);
+                    \node<2->[magenta,font=\small\bfseries\ttfamily] at (.5,.5) {1};
+                    \draw<2->[orange,very thick,rounded corners=2pt] (0,-4) rectangle (1,1);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{.55\textwidth}
+            \begin{itemize}
+                \item Ja: \(c_1\) prüft \(a_1,a_5,a_9,a_{13}\) \underline{und} sich selbst
+                \item<2-> Beispiel: \(c_1\) kippt von \texttt{0} auf \texttt{1}
+                \item<3-> Erste Spalte: \(\texttt{0}+\texttt{1}+\texttt{0}+\texttt{1}+\textcolor{magenta}{\texttt{1}}\), 3 Einsen $\rightarrow$ \(c_1\) meldet
+                \item<3-> Sonst meldet nur \(c_9\) (zählt alle Bits)
+                \item<4-> Kein \(a_i\) hat dieses Muster $\rightarrow$ \(c_1\) selbst ist gekippt
+                \item<4-> Tabelle: Kreuz in Zeile \(c_1\), Spalte \(c_1\)
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Von der Tabelle zur Überwachungstabelle}
     \begin{center}
-        \begin{tikzpicture}[x=.5cm,y=.46cm,every node/.style={font=\scriptsize}]
-            % Tabellenhintergrund
-            \fill[blue!25] (0,0) rectangle (26,1);
-            \fill[blue!15] (0,-9) rectangle (1,0);
-            \fill[gray!8] (1,-9) rectangle (26,0);
-            % Spalten- und Zeilenbeschriftung
-            \foreach \i in {1,...,16} {
-                    \node at (\i+.5,.5) {\(a_{\i}\)};
-                }
-            \foreach \i in {1,...,9} {
-                    \pgfmathtruncatemacro{\col}{16+\i}
-                    \node at (\col+.5,.5) {\(c_{\i}\)};
-                    \node at (.5,.5-\i) {\(c_{\i}\)};
-                }
-            % c1 bis c4 überwachen die Spalten der Kartentrick-Tabelle
-            \foreach \j in {1,...,4} {
-                    \foreach \r in {0,...,3} {
-                            \pgfmathtruncatemacro{\col}{\j+4*\r}
-                            \node at (\col+.5,.5-\j) {\(\times\)};
-                        }
-                }
-            % c5 bis c8 überwachen die Zeilen
-            \foreach \r in {1,...,4} {
-                    \pgfmathtruncatemacro{\row}{\r+4}
-                    \foreach \j in {1,...,4} {
-                            \pgfmathtruncatemacro{\col}{4*(\r-1)+\j}
-                            \node at (\col+.5,.5-\row) {\(\times\)};
-                        }
-                }
-            % jedes Kontrollbit überwacht sich selbst
-            \foreach \i in {1,...,8} {
-                    \pgfmathtruncatemacro{\col}{16+\i}
-                    \node at (\col+.5,.5-\i) {\(\times\)};
-                }
-            % c9 überwacht sämtliche Bits
-            \foreach \col in {1,...,25} {
-                    \node at (\col+.5,-8.5) {\(\times\)};
-                }
-            \draw[step=1,black!30,thin] (0,-9) grid (26,1);
-            \draw[black!65] (0,-9) rectangle (26,1);
-            % Signaturen von a1 und a9
-            \draw<2->[orange,very thick] (1,-9) rectangle (2,0);
-            \draw<2->[orange,very thick] (9,-9) rectangle (10,0);
+        \begin{tikzpicture}[every node/.style={font=\tiny}]
+            % links: Kartentrick-Tabelle mit den Namen der Bits
+            \begin{scope}[x=.5cm,y=.5cm]
+                \foreach \r in {1,...,4} {
+                        \foreach \c in {1,...,4} {
+                                \pgfmathtruncatemacro{\nr}{4*(\r-1)+\c}
+                                \fill[gray!12] (\c-1,-\r) rectangle (\c,-\r+1);
+                                \node at (\c-.5,-\r+.5) {\(a_{\nr}\)};
+                            }
+                    }
+                \foreach \c in {1,...,4} {
+                        \fill[blue!20] (\c-1,0) rectangle (\c,1);
+                        \node at (\c-.5,.5) {\(c_{\c}\)};
+                    }
+                \foreach \r in {1,...,4} {
+                        \pgfmathtruncatemacro{\nr}{\r+4}
+                        \fill[blue!20] (4,-\r) rectangle (5,-\r+1);
+                        \node at (4.5,-\r+.5) {\(c_{\nr}\)};
+                    }
+                \fill[blue!20] (4,0) rectangle (5,1);
+                \node at (4.5,.5) {\(c_9\)};
+                \draw[step=1,black!65] (0,-4) grid (5,1);
+                % a1 liegt in der Spalte von c1 und in der Zeile von c5
+                \draw<2>[magenta,very thick] (0,-1) rectangle (1,0);
+                \draw<2>[magenta,thick,dashed] (0,0) rectangle (1,1);
+                \draw<2>[magenta,thick,dashed] (4,-1) rectangle (5,0);
+                \coordinate (g-a1) at (0,-.5);
+                % Bereich von c1: die erste Spalte
+                \draw<3>[orange,very thick,rounded corners=2pt] (0,-4) rectangle (1,1);
+                \coordinate (g-c1) at (1,.5);
+            \end{scope}
+            % rechts: Überwachungstabelle
+            \begin{scope}[x=.4cm,y=.4cm,shift={(3cm,0)}]
+                \kartentrickUeberwachung
+                % Spalte von a1: Kreuze bei c1, c5, c9
+                \draw<2>[magenta,very thick] (1,-9) rectangle (2,1);
+                \coordinate (t-a1) at (1.5,-9);
+                % Zeile von c1: a1, a5, a9, a13 und c1
+                \draw<3>[orange,very thick] (0,-1) rectangle (26,0);
+                \coordinate (t-c1) at (0,-.5);
+            \end{scope}
+            % Pfeil links um die Kartentrick-Tabelle herum zur Spalte von a1
+            \draw<2>[->,magenta,very thick,rounded corners=4pt] (g-a1) -- (-.3cm,-.25cm) -- (-.3cm,-3.85cm) -| (t-a1);
+            \draw<3>[->,orange,very thick] (g-c1) to[out=0,in=180] (t-c1);
         \end{tikzpicture}
     \end{center}
     \begin{itemize}
-        \item Kreuz: Das Bit (Spalte) wird vom Kontrollbit (Zeile) überwacht
-        \item<2-> Fehler in \(a_1\): \(c_1, c_5, c_9\) melden einen Fehler. Fehler in \(a_9\): \(c_1, c_7, c_9\)
-        \item<3-> Die Spalte ist die \tib{Signatur} des fehlerhaften Bits
+        \item<2-> \(a_1\) liegt in Spalte \(c_1\) und Zeile \(c_5\), \(c_9\) zählt alles $\rightarrow$ Spalte \(a_1\): \(c_1, c_5, c_9\)
+        \item<3-> \(c_1\) prüft die erste Spalte $\rightarrow$ Zeile \(c_1\): \(a_1, a_5, a_9, a_{13}, c_1\)
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Überwachungstabelle}
+    \begin{center}
+        \begin{tikzpicture}[x=.46cm,y=.4cm,every node/.style={font=\scriptsize}]
+            \kartentrickUeberwachung
+            % Beispielcodewort über der Tabelle
+            \uncover<2->{\kartentrickWertzeile{0}}
+            % Anzahl Einsen unter den Kreuzen jeder Zeile
+            \uncover<3->{
+                \node[font=\scriptsize\itshape] at (27.3,.5) {Einsen};
+                \foreach \n [count=\i] in {2,2,4,4,2,4,2,4,14} {
+                        \node[green!50!black] at (27.3,.5-\i) {\n\ \checkmark};
+                    }
+            }
+            % Zeile von c1 als Beispiel
+            \draw<3->[orange,very thick] (0,-1) rectangle (26,0);
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item Zeile: Kontrollbit, Spalte: Bit des Codeworts, Kreuz: wird überwacht
+        \item<3-> Zeile \(c_1\): unter den Kreuzen steht \texttt{0,1,0,1,0} $\rightarrow$ 2 Einsen
+        \item<4-> In jeder Zeile gerade: die \tib{Anzahl Einsen unter den Kreuzen} (die Anzahl Kreuze ist egal)
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Signatur eines Bits}
+    \begin{center}
+        \begin{tikzpicture}[x=.46cm,y=.4cm,every node/.style={font=\scriptsize}]
+            \kartentrickUeberwachung
+            % a6 ist bei der Übertragung umgekippt
+            \kartentrickWertzeile{6}
+            \node[font=\scriptsize\itshape] at (27.3,.5) {Einsen};
+            \foreach \n/\ok [count=\i] in {2/1,1/0,4/1,4/1,2/1,3/0,2/1,4/1,13/0} {
+                    \ifnum\ok=1
+                        \node[green!50!black] at (27.3,.5-\i) {\n\ \checkmark};
+                    \else
+                        \node<2->[magenta] at (27.3,.5-\i) {\textbf{\n}\ \(\boldsymbol{\times}\)};
+                    \fi
+                }
+            % Spalte von a6: genau die meldenden Kontrollbits
+            \draw<3->[orange,very thick] (6,-9) rectangle (7,0);
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item Empfangen: \(a_6\) ist von \texttt{1} auf \textcolor{magenta}{\texttt{0}} gekippt
+        \item<2-> Ungerade, melden also: \(c_2, c_6, c_9\)
+        \item<3-> Spalte \(a_6\): Kreuze genau bei \(c_2, c_6, c_9\)
+        \item<4-> \tib{Signatur} eines Bits: seine Spalte, also wer bei seinem Fehler meldet
     \end{itemize}
 \end{frame}
 
@@ -137,9 +299,11 @@
     \end{myremark}
     \pause
     \begin{itemize}[<+->]
-        \item Gleiche Spalten: Zwei Bits haben dieselbe Signatur $\rightarrow$ Fehler nicht lokalisierbar
+        \item Gleiche Spalten: Zwei Bits haben dieselbe Signatur $\rightarrow$ Fehler nicht lokalisierbar.\\
+              Beispiel: Hätte \(a_2\) wie \(a_6\) die Signatur \(c_2, c_6, c_9\), wüsste man beim obigen Fehler nicht, ob \(a_2\) oder \(a_6\) gekippt ist
         \item Leere Spalte: Ein Fehler in diesem Bit wird nie bemerkt
-        \item Kartentrick: Auch ohne \(c_9\) bleiben alle Spalten verschieden und nicht leer $\rightarrow$ 8 Kontrollbits genügen
+        \item Kartentrick: Auch ohne \(c_9\) bleiben alle Spalten verschieden und nicht leer $\rightarrow$ 8 Kontrollbits genügen.\\
+              Beispiel: \(a_6\) hätte dann die Signatur \(c_2, c_6\)
     \end{itemize}
 \end{frame}
 
@@ -212,14 +376,7 @@
         \item Kontrollbits: je ein Kreuz in der eigenen Zeile
         \item Nachrichtenbits: Kreuze frei wählbar, solange alle Spalten verschieden und nicht leer sind
         \item Codewort: 16 + 5 = 21 Bit
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
-    \begin{itemize}
-        \item Abschnitt 1.6 bis \enquote{Historischer Hintergrund} lesen
-        \item \aufgabebox{1.20--1.22 (optimale Codes)}
+        \item Beispiel: Die Spalte von \(a_6\) hat Kreuze bei \(c_2\) und \(c_4\). Diese Signatur kommt beim Decodieren wieder vor
     \end{itemize}
 \end{frame}
 
@@ -257,7 +414,9 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
+        \item Abschnitt 1.6 bis \enquote{Historischer Hintergrund} lesen
         \item \aufgabebox{1.19 (Codieren und Decodieren)}
+        \item \aufgabebox{1.20--1.22 (optimale Codes)}
     \end{itemize}
 \end{frame}
 
@@ -324,7 +483,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item Beispiel 1.5 (Hamming-Code) im Skript durchgehen
+        \item Beispiel 1.7 (Hamming-Code) im Skript durchgehen
         \item \aufgabebox{1.23 (Hamming-Code)}
     \end{itemize}
 \end{frame}

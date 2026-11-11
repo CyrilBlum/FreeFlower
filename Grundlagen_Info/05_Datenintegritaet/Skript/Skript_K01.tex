@@ -886,6 +886,8 @@ Dieses Wort der Länge 6 liesse sich gut in eine $2\times3$-Tabelle eintragen:
     \label{tab:ex-zauberer}
 \end{table}
 
+Die Nachricht passt auch in eine $3\times2$-Tabelle, und die Anzahl Kontrollbits ist dieselbe. Damit alle dasselbe Codewort erhalten, wählen wir bei zwei möglichen Tabellen immer die breitere, also die mit mehr Spalten als Zeilen. Eine Nachricht mit 12 Bit tragen wir somit in eine $3\times4$-Tabelle ein (3 Zeilen, 4 Spalten) und nicht in eine $4\times3$-Tabelle.
+
 Nun fügen wir der Tabelle die \underline{Kontrollbits} oben und rechts hinzu:
 \begin{table}[H]
     \centering
@@ -905,7 +907,7 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
 \end{mydefinition}
 
 \begin{myexercise}
-    Wir haben $2^{12}$ = 4096 Nachrichten der Länge 12 Bits. Nutzen Sie den Kartentrick, um Codewörter für die folgenden Nachrichten zu generieren:
+    Gegeben sind drei Nachrichten mit je 12 Bit. Nutzen Sie den Kartentrick, um für jede Nachricht das Codewort zu bilden:
 
     \begin{enumerate}
         \item \texttt{010111101010}
@@ -1034,6 +1036,8 @@ die ursprünglichen Nachrichtenbits mit
 Beispielsweise überwacht das Kontrollbit \(c_1\) die vier
 Nachrichtenbits \(a_1,a_5,a_9,a_{13}\). Sein Wert wird so gewählt,
 dass die Anzahl Einsen unter diesen fünf Bits gerade ist.
+Da \(c_1\) selbst zu diesen fünf Bits gehört, sagen wir, dass
+\(c_1\) sich selbst überwacht.
 
 \begin{center}
     \begin{tikzpicture}[
@@ -1085,7 +1089,10 @@ Die Überwachungsbereiche lassen sich in einer sogenannten
 \emph{Überwachungstabelle} darstellen. Jede Spalte entspricht
 einem Bit des Codeworts und jede Zeile einem Kontrollbit.
 Ein Kreuz in der Tabelle bedeutet, dass das entsprechende Bit
-vom jeweiligen Kontrollbit überwacht wird.
+vom jeweiligen Kontrollbit überwacht wird. Die Zeile von \(c_1\)
+enthält also Kreuze bei \(a_1,a_5,a_9,a_{13}\) und \(c_1\), und
+die Spalte von \(a_1\) enthält Kreuze bei \(c_1\) (Spalte der
+Kartentrick-Tabelle), \(c_5\) (Zeile) und \(c_9\) (zählt alle Bits).
 
 
 \begin{center}
@@ -1155,6 +1162,25 @@ vom jeweiligen Kontrollbit überwacht wird.
     \end{tikzpicture}
 \end{center}
 
+\begin{myexample}
+    Für die Nachricht \texttt{0101 1111 0010 1011} liefert die
+    Kartentrick-Methode die Kontrollbits
+    \(c_1,\ldots,c_9 = \texttt{0,0,1,1,0,0,1,1,0}\). In der Zeile von
+    \(c_1\) stehen unter den Kreuzen die Werte
+    \(a_1,a_5,a_9,a_{13},c_1 = \texttt{0,1,0,1,0}\), also 2 Einsen.
+    Ebenso ist in jeder anderen Zeile die Anzahl Einsen unter den
+    Kreuzen gerade (in der Zeile von \(c_9\) sind es 14).
+    Die Anzahl Kreuze spielt dabei keine Rolle, die Zeile von \(c_1\)
+    hat zum Beispiel 5 Kreuze.
+
+    Kippt bei der Übertragung das Kontrollbit \(c_1\) von \texttt{0}
+    auf \texttt{1}, stehen in seiner Zeile 3 Einsen, und \(c_1\) meldet
+    einen Fehler. Ausser \(c_9\) meldet sonst kein Kontrollbit. Kein
+    Nachrichtenbit hat in der Tabelle genau die Kreuze \(c_1\) und
+    \(c_9\), also muss \(c_1\) selbst gekippt sein. Dafür braucht es das
+    Kreuz in Zeile \(c_1\), Spalte \(c_1\).
+\end{myexample}
+
 
 Tritt bei der Übertragung ein einzelner Bitfehler auf, so stimmen
 die Paritätsbedingungen genau jener Kontrollbits nicht mehr,
@@ -1165,11 +1191,21 @@ registriert. Ein Fehler im Bit \(a_9\) wird dagegen von
 
 Die Kombination der Kontrollbits, die einen Fehler registrieren,
 bildet somit eine Art \emph{Signatur des fehlerhaften Bits}.
-Anhand dieser Signatur können wir bestimmen, welches Bit
-umgeflippt wurde.
+Die Signatur eines Bits ist genau seine Spalte in der
+Überwachungstabelle. Anhand dieser Signatur können wir bestimmen,
+welches Bit umgeflippt wurde.
 
-Damit dies eindeutig möglich ist, müssen die Spalten der
-Überwachungstabelle paarweise verschieden sein. Ausserdem darf
+\begin{myexample}
+    Im Codewort aus dem letzten Beispiel kippt \(a_6\) von \texttt{1}
+    auf \texttt{0}. Nun ist die Anzahl Einsen in den Zeilen von
+    \(c_2\) (1 Eins), \(c_6\) (3 Einsen) und \(c_9\) (13 Einsen)
+    ungerade, in allen anderen Zeilen gerade. Die Spalte von \(a_6\)
+    hat Kreuze genau bei \(c_2,c_6\) und \(c_9\). Also ist \(a_6\)
+    gekippt.
+\end{myexample}
+
+Damit sich das gekippte Bit immer eindeutig bestimmen lässt,
+müssen die Spalten der Überwachungstabelle paarweise verschieden sein. Ausserdem darf
 keine Spalte ausschliesslich aus leeren Feldern bestehen, da
 ein Fehler im entsprechenden Bit sonst von keinem Kontrollbit
 erkannt würde.
