@@ -37,42 +37,59 @@
     \end{itemize}
 \end{frame}
 
+% Kartenraster für den Zaubertrick: alle Schritte nutzen dasselbe 5x5-Raster,
+% damit die 4x4-Karten beim Folienwechsel an ihrem Platz bleiben und nur die
+% neue Reihe (oben) und Spalte (rechts) dazukommen.
+\newcommand{\zauberx}{1.05}  % horizontaler Abstand der Kartenmitten (cm)
+\newcommand{\zaubery}{1.35}  % vertikaler Abstand der Kartenmitten (cm)
+% \zauberreihe{Zeile}{Karte § Karte § …}; Zeile 0 ist oben, "null" lässt einen Platz leer
+\newcommand{\zauberreihe}[2]{%
+    \setsepchar{§}\readlist*\zauberkarten{#2}%
+    \foreach \c in {1,...,\zauberkartenlen}{%
+        \itemtomacro\zauberkarten[\c]\zauberkarte
+        \node[inner sep=0pt] at (\c*\zauberx,-#1*\zaubery) {\AffCarteJeu[Hauteur=1.05,StyleJeu=v1]{\zauberkarte}};
+    }%
+}
+% farbige Hinterlegung der neuen Reihe und Spalte (Kontrollkarten)
+\newcommand{\zauberneu}{%
+    \foreach \c in {1,...,5} {\fill[orange!35,rounded corners=2pt] (\c*\zauberx,0) +(-.48,-.65) rectangle +(.48,.65);}
+    \foreach \r in {1,...,4} {\fill[orange!35,rounded corners=2pt] (5*\zauberx,-\r*\zaubery) +(-.48,-.65) rectangle +(.48,.65);}
+}
+
 \begin{frame}{\enquote{Zaubertrick}}
-    \only<1>{
-        \begin{figure}[H]
-            \centering
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{DK § Dos § 10T § Dos}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § AP § AT § VP}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{VT § Dos § 5C § 3T}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § Dos § 5C § VP}\\
-            \caption*{\textbf{Erster Schritt}: Auslegen der ursprünglichen Karten ($n=m=4$)}
-            \label{fig:zauberer-1}
-        \end{figure}
-    }
-    \only<2>{
-        \begin{figure}[H]
-            \centering
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § 8C § Dos § VP § Dos}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{DK § Dos § 10T § Dos § Dos}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § AP § AT § VP § 8T}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{VT § Dos § 5C § 3T § 4P}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § Dos § 5C § VP § Dos}\\
-            \caption*{\textbf{Zweiter Schritt}: Hinzufügen einer Reihe und einer Spalte (Hilfszauberer)}
-            \label{fig:zauberer-2}
-        \end{figure}
-    }
-    \only<3>{
-        \begin{figure}[H]
-            \centering
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § 8C § Dos § VP § Dos}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{DK § Dos § 10T § Dos § Dos}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § AP § AT § VP § 8T}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{VT § Dos § Dos § 3T § 4P}\\
-            \AffCartesJeu[Hauteur=1.3,StyleJeu=v1]{Dos § Dos § 5C § VP § Dos}\\
-            \caption*{\textbf{Dritter Schritt}: Karten, nachdem jemand eine Karte umgedreht hat}
-            \label{fig:zauberer-3}
-        \end{figure}
-    }
+    \begin{center}
+        \begin{tikzpicture}
+            % festes Raster für alle Schritte
+            \useasboundingbox (\zauberx-.48,.65) rectangle (5*\zauberx+.48,-4*\zaubery-.65);
+            \only<1>{
+                \zauberreihe{1}{DK § Dos § 10T § Dos}
+                \zauberreihe{2}{Dos § AP § AT § VP}
+                \zauberreihe{3}{VT § Dos § 5C § 3T}
+                \zauberreihe{4}{Dos § Dos § 5C § VP}
+            }
+            \only<2>{
+                \zauberneu
+                \zauberreihe{0}{Dos § 8C § Dos § VP § Dos}
+                \zauberreihe{1}{DK § Dos § 10T § Dos § Dos}
+                \zauberreihe{2}{Dos § AP § AT § VP § 8T}
+                \zauberreihe{3}{VT § Dos § 5C § 3T § 4P}
+                \zauberreihe{4}{Dos § Dos § 5C § VP § Dos}
+            }
+            \only<3>{
+                \zauberneu
+                \zauberreihe{0}{Dos § 8C § Dos § VP § Dos}
+                \zauberreihe{1}{DK § Dos § 10T § Dos § Dos}
+                \zauberreihe{2}{Dos § AP § AT § VP § 8T}
+                \zauberreihe{3}{VT § Dos § Dos § 3T § 4P}
+                \zauberreihe{4}{Dos § Dos § 5C § VP § Dos}
+            }
+        \end{tikzpicture}
+
+        \vspace{.5em}
+        \only<1>{\textbf{Erster Schritt}: Auslegen der ursprünglichen Karten ($n=m=4$)}%
+        \only<2>{\textbf{Zweiter Schritt}: Hinzufügen einer Reihe und einer Spalte (\colorbox{orange!35}{Hilfszauberer})}%
+        \only<3>{\textbf{Dritter Schritt}: Karten, nachdem jemand eine Karte umgedreht hat}
+    \end{center}
 \end{frame}
 
 \begin{frame}{\enquote{Zaubertrick} (binär als Matrix)}
