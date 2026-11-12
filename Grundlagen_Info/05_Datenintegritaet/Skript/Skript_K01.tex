@@ -1033,11 +1033,21 @@ die ursprünglichen Nachrichtenbits mit
 \(a_1,a_2,\ldots,a_{16}\) und die neun Kontrollbits mit
 \(c_1,c_2,\ldots,c_9\).
 
+\begin{mydefinition}[Überwachen]\label{def:ueberwachen}
+    Ein Kontrollbit \tib{überwacht} eine Gruppe von Bits, seinen
+    \emph{Überwachungsbereich}, wenn sein Wert so gewählt wird, dass
+    die Anzahl Einsen im Bereich \textit{inklusive des Kontrollbits
+    selbst} gerade ist. Jedes Kontrollbit gehört also zu seinem
+    eigenen Bereich und überwacht sich selbst.
+
+    Kippt ein Bit im Bereich, wird die Anzahl Einsen ungerade. Wir
+    sagen dann, das Kontrollbit \emph{meldet} einen Fehler.
+\end{mydefinition}
+
 Beispielsweise überwacht das Kontrollbit \(c_1\) die vier
-Nachrichtenbits \(a_1,a_5,a_9,a_{13}\). Sein Wert wird so gewählt,
-dass die Anzahl Einsen unter diesen fünf Bits gerade ist.
-Da \(c_1\) selbst zu diesen fünf Bits gehört, sagen wir, dass
-\(c_1\) sich selbst überwacht.
+Nachrichtenbits \(a_1,a_5,a_9,a_{13}\) und sich selbst. Sein Wert
+wird so gewählt, dass die Anzahl Einsen unter diesen fünf Bits
+gerade ist.
 
 \begin{center}
     \begin{tikzpicture}[
@@ -1229,23 +1239,23 @@ acht Kontrollbits sämtliche Einzelfehler korrigieren.
 
 Doch wie viele Kontrollbits benötigen wir mindestens?
 
-Mit \(n\) Kontrollbits besitzt die Überwachungstabelle \(n\) Zeilen.
+Mit \(K\) Kontrollbits besitzt die Überwachungstabelle \(K\) Zeilen.
 In jeder Spalte kann ein Kreuz entweder vorhanden sein oder
-fehlen. Somit gibt es insgesamt \(2^n\) verschiedene Möglichkeiten,
+fehlen. Somit gibt es insgesamt \(2^K\) verschiedene Möglichkeiten,
 eine Spalte zu gestalten. Da eine Spalte ohne Kreuze nicht
 verwendet werden darf, bleiben
 
 \[
-    2^n-1
+    2^K-1
 \]
 
 nutzbare Spalten.
 
-Für eine Nachricht mit 16 Bit und \(n\) Kontrollbits benötigen
-wir insgesamt \(16+n\) verschiedene Spalten. Deshalb muss gelten:
+Für eine Nachricht mit 16 Bit und \(K\) Kontrollbits benötigen
+wir insgesamt \(16+K\) verschiedene Spalten. Deshalb muss gelten:
 
 \[
-    2^n-1\geq 16+n.
+    2^K-1\geq 16+K.
 \]
 
 Mit vier Kontrollbits erhalten wir höchstens
@@ -1258,11 +1268,11 @@ Für die 1-fehlerkorrigierende Codierung einer Nachricht
 mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
 
 \begin{myremark}
-    Allgemein gilt für eine Nachricht der Länge \(m\), dass die
-    minimale Anzahl \(n\) der Kontrollbits die folgende Ungleichung
+    Allgemein gilt für eine Nachricht der Länge \(N\), dass die
+    minimale Anzahl \(K\) der Kontrollbits die folgende Ungleichung
     erfüllen muss:
     \[
-        2^n-1\geq m+n
+        2^K-1\geq N+K
     \]
 \end{myremark}
 
@@ -1283,11 +1293,11 @@ mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
     \end{enumerate}
     \begin{myanswer}
 
-        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
+        Die Anzahl \(K\) der Kontrollbits muss so gross sein, dass
         \[
-            2^n-1 \geq 3+n
+            2^K-1 \geq 3+K
         \]
-        gilt. Daraus folgt \(n\geq 3\). Es werden also mindestens
+        gilt. Daraus folgt \(K\geq 3\). Es werden also mindestens
         drei Kontrollbits benötigt.
 
         Eine mögliche Überwachungstabelle ist:
@@ -1373,12 +1383,12 @@ mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
             2^{19} < 10^6 < 2^{20}.
         \]
 
-        Die Anzahl \(n\) der Kontrollbits muss so gross sein, dass
+        Die Anzahl \(K\) der Kontrollbits muss so gross sein, dass
         \[
-            2^n-1 \geq 20+n
+            2^K-1 \geq 20+K
         \]
-        gilt. Für \(n=4\) ist diese Bedingung nicht erfüllt, für
-        \(n=5\) hingegen schon:
+        gilt. Für \(K=4\) ist diese Bedingung nicht erfüllt, für
+        \(K=5\) hingegen schon:
         \[
             2^5-1=31\geq 25.
         \]
@@ -1398,11 +1408,11 @@ mit 16 Bit sind somit mindestens fünf Kontrollbits notwendig.
         Für 30 verschiedene Nachrichten benötigt man Bitfolgen der Länge 5,
         da \(2^4 < 30 \leq 2^5\) gilt.
 
-        Für die Anzahl \(n\) der Kontrollbits muss gelten:
+        Für die Anzahl \(K\) der Kontrollbits muss gelten:
         \[
-            2^n-1 \geq 5+n.
+            2^K-1 \geq 5+K.
         \]
-        Daraus folgt \(n\geq 4\). Es werden also mindestens
+        Daraus folgt \(K\geq 4\). Es werden also mindestens
         vier Kontrollbits benötigt.
 
         Eine mögliche Überwachungstabelle ist:
@@ -1647,7 +1657,78 @@ der Einsen gerade ist.
 
     Bei der Übertragung eines solchen Codeworts kann ein einzelner
     Bitfehler anhand der verletzten Paritätsbedingungen eindeutig
-    lokalisiert und anschliessend korrigiert werden.
+    lokalisiert und anschliessend korrigiert werden. Wie das geht,
+    zeigt \cref{ex:vier-bit} an einer kürzeren Nachricht.
+\end{myexample}
+
+\begin{myexample}\label{ex:vier-bit}
+    % Farben der drei Kontrollbits (wie auf den Folien)
+    \colorlet{ueA}{orange!90!black}
+    \colorlet{ueB}{teal}
+    \colorlet{ueC}{violet}
+    Für eine Nachricht mit \(N=4\) Bit genügen \(K=3\) Kontrollbits,
+    denn \(2^3-1=7\geq 4+3\). Wir verwenden die folgende
+    Überwachungstabelle. Die Kreuze haben die Farbe ihres
+    Kontrollbits, darunter steht das Codewort für die Nachricht
+    \texttt{1011}.
+
+    \begin{center}
+        \begin{tikzpicture}[x=1cm,y=1cm,every node/.style={font=\small}]
+            % Tabellenhintergrund wie bei den anderen Überwachungstabellen
+            \fill[blue!25] (-.5,2.1) rectangle (7.5,2.6);
+            \fill[blue!15] (-.5,.6) rectangle (.5,2.1);
+            \fill[gray!8] (.5,.6) rectangle (7.5,2.1);
+            \foreach \i/\n in {1/a_1,2/a_2,3/a_3,4/a_4,5/c_1,6/c_2,7/c_3} {
+                    \node at (\i,2.35) {\(\n\)};
+                }
+            \node[ueA] at (0,1.85) {\(c_1\)};
+            \node[ueB] at (0,1.35) {\(c_2\)};
+            \node[ueC] at (0,.85) {\(c_3\)};
+            % Überwachungsbereiche: c1 = a1 a2 a4 c1, c2 = a1 a3 a4 c2, c3 = a2 a3 a4 c3
+            \foreach \i in {1,2,4,5} {\node[ueA,font=\bfseries] at (\i,1.85) {\(\times\)};}
+            \foreach \i in {1,3,4,6} {\node[ueB,font=\bfseries] at (\i,1.35) {\(\times\)};}
+            \foreach \i in {2,3,4,7} {\node[ueC,font=\bfseries] at (\i,.85) {\(\times\)};}
+            % Gitter: Spaltenmitten liegen auf ganzen Zahlen
+            \foreach \x in {.5,1.5,...,6.5} {\draw[black!30,thin] (\x,.6) -- (\x,2.6);}
+            \foreach \y in {1.1,1.6,2.1} {\draw[black!30,thin] (-.5,\y) -- (7.5,\y);}
+            \draw[black!65] (-.5,.6) rectangle (7.5,2.6);
+            \draw[blue!70!black,very thick] (4.5,.6) -- (4.5,2.6);
+            % Codewort direkt unter den Spalten
+            \foreach \i/\v in {1/1,2/0,3/1,4/1,5/0,6/1,7/0} {
+                    \ifnum\i>4
+                        \fill[blue!15] (\i-.4,-.4) rectangle (\i+.4,.4);
+                    \else
+                        \fill[gray!12] (\i-.4,-.4) rectangle (\i+.4,.4);
+                    \fi
+                    \draw[black!50] (\i-.4,-.4) rectangle (\i+.4,.4);
+                    \node[font=\ttfamily] at (\i,0) {\v};
+                }
+        \end{tikzpicture}
+    \end{center}
+
+    \textbf{Codieren.} Jedes Kontrollbit ergänzt die Einsen in seinem
+    Bereich auf eine gerade Anzahl:
+    \begin{itemize}
+        \item \textcolor{ueA}{\(c_1\)} überwacht \(a_1,a_2,a_4\):
+              \(\texttt{1}+\texttt{0}+\texttt{1}=2\) Einsen, also \(c_1=\texttt{0}\).
+        \item \textcolor{ueB}{\(c_2\)} überwacht \(a_1,a_3,a_4\):
+              \(\texttt{1}+\texttt{1}+\texttt{1}=3\) Einsen, also \(c_2=\texttt{1}\).
+        \item \textcolor{ueC}{\(c_3\)} überwacht \(a_2,a_3,a_4\):
+              \(\texttt{0}+\texttt{1}+\texttt{1}=2\) Einsen, also \(c_3=\texttt{0}\).
+    \end{itemize}
+    Das Codewort lautet \texttt{1011\,\underline{010}}.
+
+    \textbf{Decodieren.} Bei der Übertragung kippt \(a_3\), empfangen
+    wird \texttt{10\textcolor{magenta}{0}1\,\underline{010}}. Wir zählen
+    die Einsen in jedem Bereich, diesmal samt Kontrollbit:
+    \begin{itemize}
+        \item \textcolor{ueA}{\(c_1\)}: \(\texttt{1}+\texttt{0}+\texttt{1}+\texttt{0}=2\), gerade.
+        \item \textcolor{ueB}{\(c_2\)}: \(\texttt{1}+\texttt{0}+\texttt{1}+\texttt{1}=3\), ungerade, \(c_2\) meldet.
+        \item \textcolor{ueC}{\(c_3\)}: \(\texttt{0}+\texttt{0}+\texttt{1}+\texttt{0}=1\), ungerade, \(c_3\) meldet.
+    \end{itemize}
+    Es melden \(c_2\) und \(c_3\). In der Tabelle hat nur die Spalte
+    von \(a_3\) Kreuze genau in diesen beiden Zeilen. Also ist \(a_3\)
+    gekippt, und wir erhalten wieder \texttt{1011\,\underline{010}}.
 \end{myexample}
 
 
@@ -2027,21 +2108,21 @@ stehen dabei an festen Stellen mitten im Codewort.
 
 \subsection*{Geht es mit noch weniger Bits? Der Hyperwürfel}
 
-Mit der Ungleichung \(2^n-1\geq m+n\) wissen wir, wie viele
+Mit der Ungleichung \(2^K-1\geq N+K\) wissen wir, wie viele
 Kontrollbits mindestens nötig sind. Ob sich ein Code noch verbessern
 lässt, kann man auch an einem Bild ablesen.
 
-Dazu zeichnen wir für jede Bitfolge der Länge \(N\) einen Punkt und
+Dazu zeichnen wir für jede Bitfolge der Länge \(L\) einen Punkt und
 verbinden zwei Punkte, wenn sich die Bitfolgen in genau einem Bit
 unterscheiden. Das entstehende Bild heisst
-\tib{\(N\)-dimensionaler Hyperwürfel}. Für \(N=3\) ist es ein
+\tib{\(L\)-dimensionaler Hyperwürfel}. Für \(L=3\) ist es ein
 gewöhnlicher Würfel mit \(2^3=8\) Punkten (\cref{fig:3d}). Jeder
-Punkt hat \(N\) Nachbarn, weil man jedes der \(N\) Bits umdrehen
+Punkt hat \(L\) Nachbarn, weil man jedes der \(L\) Bits umdrehen
 kann. Ein einzelner Bitfehler ist also ein Schritt entlang einer
 Kante.
 
 Bei einem 1-fehlerkorrigierenden Code gehört zu jedem Codewort eine
-\tib{Zone}. Sie besteht aus dem Codewort und seinen \(N\) Nachbarn.
+\tib{Zone}. Sie besteht aus dem Codewort und seinen \(L\) Nachbarn.
 Empfängt man eine Bitfolge aus dieser Zone, korrigiert man sie zu
 diesem Codewort. Zwei Zonen dürfen sich deshalb nicht überlappen.
 

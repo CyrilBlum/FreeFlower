@@ -155,6 +155,17 @@
 \end{frame}
 
 
+\begin{frame}{Was heisst \enquote{überwachen}?}
+    \begin{mydefinition}
+        Ein Kontrollbit \textbf{überwacht} eine Gruppe von Bits (seinen Überwachungsbereich), wenn es so gewählt wird, dass die Anzahl Einsen im Bereich \underline{inklusive des Kontrollbits selbst} gerade ist.
+    \end{mydefinition}
+    \begin{itemize}
+        \item<2-> Bereich von \(c_1\): \(a_1,a_5,a_9,a_{13}\) und \(c_1\)
+        \item<3-> Kippt ein Bit im Bereich, ist die Anzahl Einsen ungerade $\rightarrow$ \(c_1\) \emph{meldet} einen Fehler
+    \end{itemize}
+\end{frame}
+
+
 \begin{frame}{Überwacht ein Kontrollbit sich selbst?}
     \begin{columns}
         \begin{column}{.4\textwidth}
@@ -181,6 +192,9 @@
     \end{columns}
 \end{frame}
 
+
+% TikZ-Optionen nur auf bestimmten Folien anwenden, z.B. onslide=<1>{opacity=0}
+\tikzset{onslide/.code args={<#1>#2}{\only<#1>{\pgfkeysalso{#2}}}}
 
 \begin{frame}{Von der Tabelle zur Überwachungstabelle}
     \begin{center}
@@ -215,8 +229,8 @@
                 \draw<3>[orange,very thick,rounded corners=2pt] (0,-4) rectangle (1,1);
                 \coordinate (g-c1) at (1,.5);
             \end{scope}
-            % rechts: Überwachungstabelle
-            \begin{scope}[x=.4cm,y=.4cm,shift={(3cm,0)}]
+            % rechts: Überwachungstabelle, erst ab Schritt 2 sichtbar (Platz bleibt reserviert, damit nichts springt)
+            \begin{scope}[x=.4cm,y=.4cm,shift={(3cm,0)},onslide=<1>{opacity=0}]
                 \kartentrickUeberwachung
                 % Spalte von a1: Kreuze bei c1, c5, c9
                 \draw<2>[magenta,very thick] (1,-9) rectangle (2,1);
@@ -382,13 +396,13 @@
         \end{column}
         \begin{column}{.55\textwidth}
             \begin{itemize}[<+->]
-                \item \(n=3\) Kontrollbits $\rightarrow$ 3 Zeilen, jede Zelle mit oder ohne Kreuz $\rightarrow$ \(2^3=8\) mögliche Spalten
+                \item \(K=3\) Kontrollbits $\rightarrow$ 3 Zeilen, jede Zelle mit oder ohne Kreuz $\rightarrow$ \(2^3=8\) mögliche Spalten
                 \item Die leere Spalte ist verboten $\rightarrow$ \(2^3-1=7\) nutzbare Spalten
                 \item Die Kontrollbits brauchen 3 davon
-                \item Bleiben 4 Spalten für Nachrichtenbits: \(m+n = 4+3 \leq 7\)
-                \item Allgemein: \(n\) Kontrollbits, Nachricht der Länge \(m\)
+                \item Bleiben 4 Spalten für Nachrichtenbits: \(N+K = 4+3 \leq 7\)
+                \item Allgemein: \(K\) Kontrollbits, \(N\) Nachrichtenbits
                       \[
-                          2^n-1 \geq m+n
+                          2^K-1 \geq N+K
                       \]
             \end{itemize}
         \end{column}
@@ -399,12 +413,12 @@
 \begin{frame}{Wie viele Kontrollbits braucht eine 16-Bit-Nachricht?}
     \begin{center}
         \begin{tikzpicture}[x=.3cm,y=.45cm,every node/.style={font=\scriptsize}]
-            % je Zeile: verfügbare Spalten (grau umrandet) und benötigte Spalten (16 a + n c)
+            % je Zeile: verfügbare Spalten (grau umrandet) und benötigte Spalten (16 a + K c)
             \foreach \n [count=\z] in {3,4,5} {
                     \pgfmathtruncatemacro{\frei}{2^\n-1}
                     \pgfmathtruncatemacro{\noetig}{16+\n}
                     \begin{scope}[yshift=-\z*.8cm]
-                        \node[anchor=east] at (-.3,.5) {\(n=\n\)};
+                        \node[anchor=east] at (-.3,.5) {\(K=\n\)};
                         \uncover<\z->{
                             % benötigte Spalten: Nachrichtenbits und Kontrollbits
                             \foreach \i in {1,...,\noetig} {
@@ -437,22 +451,13 @@
             \fill[orange!30] (0,-7.1) rectangle (1,-6.6);
             \node[anchor=west] at (1.2,-6.85) {16 Nachrichtenbits};
             \fill[blue!25] (10,-7.1) rectangle (11,-6.6);
-            \node[anchor=west] at (11.2,-6.85) {\(n\) Kontrollbits};
+            \node[anchor=west] at (11.2,-6.85) {\(K\) Kontrollbits};
             \draw[black!65,thick] (19,-7.1) rectangle (20,-6.6);
-            \node[anchor=west] at (20.2,-6.85) {\(2^n-1\) nutzbare Spalten};
+            \node[anchor=west] at (20.2,-6.85) {\(2^K-1\) nutzbare Spalten};
         \end{tikzpicture}
     \end{center}
     \begin{itemize}
         \item<4-> Mindestens \underline{5 Kontrollbits} (statt 9 beim Kartentrick)
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
-    \begin{itemize}
-        \item Abschnitt 1.6 bis \enquote{Konstruktion einer optimalen Überwachungstabelle} lesen
-        \item \aufgabebox{1.19, 1.20 (Anzahl Kontrollbits)}
-        \item \challengebox{1.21 (Codierung entwerfen)}
     \end{itemize}
 \end{frame}
 
@@ -540,10 +545,124 @@
 \end{frame}
 
 
+% Beispiel mit 4 Nachrichtenbits und 3 Kontrollbits (optimale Überwachungstabelle, 2^3 - 1 = 4 + 3)
+% Farben der Kontrollbits
+\colorlet{ueA}{orange!90!black}
+\colorlet{ueB}{teal}
+\colorlet{ueC}{violet}
+% Überwachungsbereiche als Positionen im Codewort a1 a2 a3 a4 c1 c2 c3
+\def\bereichA{1,2,4,5}
+\def\bereichB{1,3,4,6}
+\def\bereichC{2,3,4,7}
+
+% Überwachungstabelle direkt über dem Codewort: jede Tabellenspalte steht über ihrem Bit
+\newcommand{\vierBitGrund}{%
+    % Codewort-Kästchen (Namen stehen in der Kopfzeile der Tabelle)
+    \foreach \i in {1,...,4} {
+            \fill[gray!12] (\i-.4,-.4) rectangle (\i+.4,.4);
+        }
+    \foreach \i in {5,6,7} {
+            \fill[blue!15] (\i-.4,-.4) rectangle (\i+.4,.4);
+        }
+    \foreach \i in {1,...,7} {
+            \draw[black!50] (\i-.4,-.4) rectangle (\i+.4,.4);
+        }
+    % Tabellenhintergrund wie bei den anderen Überwachungstabellen
+    \fill[blue!25] (-.5,2.1) rectangle (7.5,2.6);
+    \fill[blue!15] (-.5,.6) rectangle (.5,2.1);
+    \fill[gray!8] (.5,.6) rectangle (7.5,2.1);
+    % Spalten- und Zeilenbeschriftung
+    \foreach \i/\n in {1/a_1,2/a_2,3/a_3,4/a_4,5/c_1,6/c_2,7/c_3} {
+            \node at (\i,2.35) {\(\n\)};
+        }
+    \node[ueA] at (0,1.85) {\(c_1\)};
+    \node[ueB] at (0,1.35) {\(c_2\)};
+    \node[ueC] at (0,.85) {\(c_3\)};
+    % Kreuze in der Farbe des Kontrollbits
+    \foreach \i in \bereichA {\node[ueA,font=\bfseries] at (\i,1.85) {\(\times\)};}
+    \foreach \i in \bereichB {\node[ueB,font=\bfseries] at (\i,1.35) {\(\times\)};}
+    \foreach \i in \bereichC {\node[ueC,font=\bfseries] at (\i,.85) {\(\times\)};}
+    % Gitter: Spaltenmitten liegen auf ganzen Zahlen, die Linien dazwischen
+    \foreach \x in {.5,1.5,...,6.5} {\draw[black!30,thin] (\x,.6) -- (\x,2.6);}
+    \foreach \y in {1.1,1.6,2.1} {\draw[black!30,thin] (-.5,\y) -- (7.5,\y);}
+    \draw[black!65] (-.5,.6) rectangle (7.5,2.6);
+    % Trennung Nachrichtenbits / Kontrollbits
+    \draw[blue!70!black,very thick] (4.5,.6) -- (4.5,2.6);
+    % feste Grösse, damit die Grafik zwischen den Animationsschritten nicht springt
+    \path[use as bounding box] (-.6,-3.8) rectangle (9.2,2.7);
+}
+
+% #1 = Farbe, #2 = Bereich, #3 = y-Mitte der Tabellenzeile: Zeile einfärben und Kästchen des Bereichs umranden
+\newcommand{\vierBitBereich}[3]{%
+    \fill[#1,opacity=.15] (.5,#3-.25) rectangle (7.5,#3+.25);
+    \foreach \i in #2 {
+            \draw[#1,ultra thick] (\i-.4,-.4) rectangle (\i+.4,.4);
+        }
+}
+
+
+\begin{frame}{Beispiel: Kontrollbits für \texttt{1011} berechnen}
+    \begin{center}
+        \begin{tikzpicture}[x=1.2cm,y=1cm,every node/.style={font=\small}]
+            \vierBitGrund
+            % zuerst der Bereich (Farbe), erst im nächsten Schritt die Zahl
+            \only<2-3>{\vierBitBereich{ueA}{\bereichA}{1.85}}
+            \only<4-5>{\vierBitBereich{ueB}{\bereichB}{1.35}}
+            \only<6-7>{\vierBitBereich{ueC}{\bereichC}{.85}}
+            \foreach \i/\v in {1/1,2/0,3/1,4/1} {
+                    \node[font=\large\ttfamily] at (\i,0) {\v};
+                }
+            \node<1-2>[gray] at (5,0) {?};
+            \node<1-4>[gray] at (6,0) {?};
+            \node<1-6>[gray] at (7,0) {?};
+            \node<3->[ueA,font=\large\ttfamily\bfseries] at (5,0) {0};
+            \node<5->[ueB,font=\large\ttfamily\bfseries] at (6,0) {1};
+            \node<7->[ueC,font=\large\ttfamily\bfseries] at (7,0) {0};
+            % Einsen im Bereich ohne das Kontrollbit, dann auf gerade ergänzen
+            \node<3->[anchor=west,ueA] at (.6,-1.3) {\(c_1\): \texttt{1+0+1} = 2 Einsen \(\rightarrow\) \(c_1 = \texttt{0}\)};
+            \node<5->[anchor=west,ueB] at (.6,-1.85) {\(c_2\): \texttt{1+1+1} = 3 Einsen \(\rightarrow\) \(c_2 = \texttt{1}\)};
+            \node<7->[anchor=west,ueC] at (.6,-2.4) {\(c_3\): \texttt{0+1+1} = 2 Einsen \(\rightarrow\) \(c_3 = \texttt{0}\)};
+            \node<8->[anchor=west] at (.6,-3.1) {Codewort: \texttt{1011\,\underline{010}}};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+
+\begin{frame}{Beispiel: Ein Bit kippt}
+    \begin{center}
+        \begin{tikzpicture}[x=1.2cm,y=1cm,every node/.style={font=\small}]
+            \vierBitGrund
+            % zuerst der Bereich (Farbe), erst im nächsten Schritt das Ergebnis
+            \only<3-4>{\vierBitBereich{ueA}{\bereichA}{1.85}}
+            \only<5-6>{\vierBitBereich{ueB}{\bereichB}{1.35}}
+            \only<7-8>{\vierBitBereich{ueC}{\bereichC}{.85}}
+            \foreach \i/\v in {1/1,2/0,4/1,5/0,6/1,7/0} {
+                    \node[font=\large\ttfamily] at (\i,0) {\v};
+                }
+            % a3 kippt von 1 auf 0 und wird am Schluss zurückgekippt
+            \node<1>[font=\large\ttfamily] at (3,0) {1};
+            \node<2-9>[magenta,font=\large\ttfamily\bfseries] at (3,0) {0};
+            \node<10->[green!50!black,font=\large\ttfamily\bfseries] at (3,0) {1};
+            % meldende Kontrollbits markieren
+            \draw<6->[magenta,thick] (0,1.35) circle (.22);
+            \draw<8->[magenta,thick] (0,.85) circle (.22);
+            % Signatur: die Tabellenspalte von a3 hat Kreuze genau bei c2 und c3
+            \draw<9->[magenta,very thick,rounded corners=2pt] (2.55,.55) rectangle (3.45,2.65);
+            \node<2->[anchor=west,magenta] at (.6,-1.3) {\(a_3\) kippt: \texttt{10\textbf{0}1\,\underline{010}}};
+            \node<4->[anchor=west,ueA] at (.6,-1.85) {\(c_1\): \texttt{1+0+1+0} = 2, gerade \textcolor{green!50!black}{\checkmark}};
+            \node<6->[anchor=west,ueB] at (.6,-2.4) {\(c_2\): \texttt{1+0+1+1} = 3, ungerade \(\rightarrow\) \(c_2\) meldet};
+            \node<8->[anchor=west,ueC] at (.6,-2.95) {\(c_3\): \texttt{0+0+1+0} = 1, ungerade \(\rightarrow\) \(c_3\) meldet};
+            \node<9->[anchor=west] at (.6,-3.6) {Signatur \textcolor{ueB}{\(c_2\)}, \textcolor{ueC}{\(c_3\)}: nur die Spalte von \(a_3\) \(\rightarrow\) \(a_3\) zurückkippen};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item Abschnitt \enquote{Konstruktion einer optimalen Überwachungstabelle} lesen
-        \item \aufgabebox{1.22 (Codieren und Decodieren)}
+        \item Abschnitt 1.6 bis und mit \enquote{Konstruktion einer optimalen Überwachungstabelle} lesen
+        \item \aufgabebox{1.19, 1.20 (Anzahl Kontrollbits), 1.22 (Codieren und Decodieren)}
+        \item \challengebox{1.21 (Codierung entwerfen)}
     \end{itemize}
 \end{frame}
 
@@ -610,7 +729,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item Beispiel 1.7 (Hamming-Code) im Skript durchgehen
+        \item Beispiel 1.8 (Hamming-Code) im Skript durchgehen
         \item \aufgabebox{1.23 (Hamming-Code)}
     \end{itemize}
 \end{frame}
@@ -627,7 +746,7 @@
         \end{column}
         \begin{column}{.5\textwidth}
             \begin{itemize}[<+->]
-                \item Punkt: Bitfolge der Länge \(N\)
+                \item Punkt: Bitfolge der Länge \(L\)
                 \item Kante: Die Bitfolgen unterscheiden sich in genau einem Bit
                 \item Ein Bitfehler $=$ ein Schritt entlang einer Kante
             \end{itemize}
@@ -654,7 +773,7 @@
         \begin{column}{.5\textwidth}
             \begin{itemize}
                 \item<2-> Codewort \texttt{011} (doppelter Kreis)
-                \item<3-> Seine \textcolor{orange}{Zone}: Codewort und seine \(N\) Nachbarn
+                \item<3-> Seine \textcolor{orange}{Zone}: Codewort und seine \(L\) Nachbarn
                 \item<4-> Zweites Codewort \texttt{100} mit \textcolor{green!60!black}{Zone}. Zonen dürfen sich nicht überlappen
                 \item<5-> Die Zonen füllen den Würfel lückenlos aus: Der Code ist \tib{perfekt}
             \end{itemize}
