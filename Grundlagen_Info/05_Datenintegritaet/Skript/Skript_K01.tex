@@ -902,7 +902,7 @@ Nun fügen wir der Tabelle die \underline{Kontrollbits} oben und rechts hinzu:
 
 Die Kontrollbits sind so gewählt, dass jede Spalte und jede Zeile eine gerade Anzahl Einsen enthält. Wenn nun ein Bit geflippt wird, gibt es genau eine Spalte und eine Zeile, in welcher die Anzahl Einsen \textit{nicht} gerade ist, somit können wir den Ort des abgefälschten Bits lokalisieren und den Fehler automatisch beheben.
 
-Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vorgegangen: Fügen Sie dem ursprünglichen Codewort zuerst die erste Zeile, und danach die letzte Spalte \textit{ohne erstes Bit} an.
+Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vorgegangen: Fügen Sie dem ursprünglichen Codewort zuerst die erste Zeile \textit{ohne das Bit oben rechts} an, danach die letzte Spalte \textit{ohne das Bit oben rechts} und ganz am Schluss das Bit oben rechts. Diese Reihenfolge verwenden wir in allen Aufgaben, auch in \cref{sec:optimale-codes}, wo das Bit oben rechts \(c_9\) heisst.
 
 \end{mydefinition}
 
@@ -949,11 +949,11 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
             \caption{Kartentrick-Codierung für Nachricht \texttt{111100101100}}
             \label{tab:codeword3}
         \end{table}
-        Die Codewörter (Nachricht, dann die erste Zeile, dann die letzte Spalte ohne erstes Bit) lauten somit:
+        Die Codewörter (Nachricht, dann die erste Zeile und die letzte Spalte je ohne das Bit oben rechts, zuletzt das Bit oben rechts) lauten somit:
         \begin{enumerate}
-            \item \texttt{0 1 0 1 1 1 1 0 1 0 1 0 \underline{0 0 0 1 1 0 1 0}}
+            \item \texttt{0 1 0 1 1 1 1 0 1 0 1 0 \underline{0 0 0 1 0 1 0 1}}
             \item \texttt{0 0 0 0 0 0 0 0 0 0 0 0 \underline{0 0 0 0 0 0 0 0}}
-            \item \texttt{1 1 1 1 0 0 1 0 1 1 0 0 \underline{0 0 0 1 1 0 1 0}}
+            \item \texttt{1 1 1 1 0 0 1 0 1 1 0 0 \underline{0 0 0 1 0 1 0 1}}
         \end{enumerate}
     \end{myanswer}
 \end{myexercise}
@@ -963,9 +963,9 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
 
     \begin{enumerate}
         \item \texttt{0 1 0 1 0 1 \underline{1 1 0 0 0 0}}
-        \item \texttt{0 1 1 1 0 1 \underline{1 1 0 1 0 0}}
+        \item \texttt{0 1 1 1 0 1 \underline{1 1 0 0 0 1}}
+        \item \texttt{1 1 1 0 1 0 \underline{1 1 1 0 1 1}}
         \item \texttt{1 1 1 0 1 0 \underline{1 1 1 1 0 1}}
-        \item \texttt{1 1 1 0 1 0 \underline{1 1 1 1 1 0}}
     \end{enumerate}
     \begin{myanswer}
         Das rot eingefärbte Bit wurde beschädigt:
@@ -997,9 +997,9 @@ Um das neue Codewort (mit \underline{Kontrollbits}) zu bilden, wird wie folgt vo
         Korrigierte Codewörter und ursprüngliche Nachrichten:
         \begin{enumerate}
             \item \texttt{0 1 \textcolor{red}{1} 1 0 1 \underline{1 1 0 0 0 0}}, Nachricht \texttt{011101}
-            \item \texttt{0 1 1 1 0 1 \underline{1 1 0 \textcolor{red}{0} 0 0}}, Nachricht \texttt{011101} (nur ein Kontrollbit war falsch)
-            \item \texttt{1 \textcolor{red}{0} 1 0 1 0 \underline{1 1 1 1 0 1}}, Nachricht \texttt{101010}
-            \item \texttt{1 1 1 0 \textcolor{red}{0} 0 \underline{1 1 1 1 1 0}}, Nachricht \texttt{111000}
+            \item \texttt{0 1 1 1 0 1 \underline{1 1 0 0 0 \textcolor{red}{0}}}, Nachricht \texttt{011101} (nur ein Kontrollbit war falsch)
+            \item \texttt{1 \textcolor{red}{0} 1 0 1 0 \underline{1 1 1 0 1 1}}, Nachricht \texttt{101010}
+            \item \texttt{1 1 1 0 \textcolor{red}{0} 0 \underline{1 1 1 1 0 1}}, Nachricht \texttt{111000}
         \end{enumerate}
     \end{myanswer}
 \end{myexercise}
