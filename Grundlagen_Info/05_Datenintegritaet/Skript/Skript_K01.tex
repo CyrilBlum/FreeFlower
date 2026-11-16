@@ -22,7 +22,7 @@ Buchstaben können auf unterschiedliche Weise codiert sein -- bei \gls{ASCII} we
         $\cdots$  & $\cdots$
     \end{tabular}
 \end{table}
-Bei der Datenübertragung können aber einzelne Bits spontan von einem \texttt{1} zu einem \texttt{0} werden (oder umgekehrt). Was könnte getan werden, um dieser Gefahr vorzubeugen?
+Bei der Datenübertragung können aber einzelne Bits spontan von einer \texttt{1} zu einer \texttt{0} werden (oder umgekehrt). Was könnte getan werden, um dieser Gefahr vorzubeugen?
 
 Ein erster, einfacher Ansatz bestünde darin, jedem Code noch ein weiteres Bit anzuhängen, so dass die Summe der Bits immer gerade ist:
 
@@ -1630,14 +1630,14 @@ der Einsen gerade ist.
     \[
         \texttt{\textcolor{orange}{0101} 1111 00\textcolor{orange}{10 1}011}
     \]
-    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade, also \(c_1 = 0\).
+    Die Anzahl Einsen in den überwachten Nachrichtenbits ist gerade, also \(c_1 = 0\).
 
 
     Das Kontrollbit \(c_2\) überwacht die Nachrichtenbits \(a_1, a_5, a_6, a_7, a_{11}, a_{12}, a_{13}, a_{14}\) und \(a_{15}\).
     \[
         \texttt{\textcolor{orange}{0}101 \textcolor{orange}{111}1 00\textcolor{orange}{10 101}1}
     \]
-    Die Anzahl Einser in den überwachten Nachrichtenbits ist gerade, also \(c_2 = 0\).
+    Die Anzahl Einsen in den überwachten Nachrichtenbits ist gerade, also \(c_2 = 0\).
 
     usw.
 
