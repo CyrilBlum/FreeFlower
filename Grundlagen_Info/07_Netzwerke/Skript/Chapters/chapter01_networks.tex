@@ -282,15 +282,18 @@ Mit dem Befehl \commandbox*|ping| kann überprüft werden, ob ein Rechner im Net
 	Eine Spezial-Variante des \texttt{ping}-Befehls ist der sogenannte \textcolor{red}{\faSkull{} Ping of Death}, bei dem ein bösartiger Computer ein zu grosses Datenpaket an einen anderen Computer schickte, das beim Zusammensetzen zum Zusammensturz des Zielrechners führte. Dies ist seit Ende der 90er-Jahre auf den meisten Computern nicht mehr möglich: Die Sicherheitslücke wurde behoben, indem beispielsweise die Paketgrösse vor dem Zusammensetzen überprüft wurde.
 \end{mycaution}
 
-\begin{myexercise}[Filius: Installation]
-	Installieren Sie das Programm Filius, welches wir zur Modellierung von Netzwerken verwenden werden. Die Anleitung dazu finden Sie in \cref{subsec:filius-installation}.
+% Videos zu Netzlabor: Playlist, nach dem Hochladen der neuen Videos hier anpassen
+\providecommand{\netzlaborvideos}{https://www.youtube.com/playlist?list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}
+
+\begin{myexercise}[Netzlabor öffnen]
+	Öffnen Sie Netzlabor unter \url{https://netz.cblum.ch}. Damit bauen und simulieren wir Netzwerke direkt im Browser, ohne Installation. Eine kurze Anleitung finden Sie in \cref{subsec:netzlabor}.
 \end{myexercise}
 
-\begin{myexercise}[Filius-Anwendung: \acrshort{ARP} beobachten]
-	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 1} an und führen Sie alle gezeigten Schritte ebenfalls in Filius aus.
+\begin{myexercise}[Netzlabor-Anwendung: \acrshort{ARP} beobachten]
+	Schauen Sie sich das \href{\netzlaborvideos}{Netzlabor-Video 1} an und führen Sie alle gezeigten Schritte ebenfalls in Netzlabor aus.
 \end{myexercise}
 
-Ähnlich wie das Datenaustausch-Tool in Filius kann der Datenaustausch in einem echten Netzwerk mit einem Netzwerk-Analyse-Tool wie beispielsweise \textbf{Wireshark} beobachtet werden. Wireshark ermöglicht es, den gesamten Datenverkehr in einem Netzwerk mitzuschneiden und zu analysieren. So können auch die \gls{ARP}-Anfragen und -Antworten beobachtet werden.
+Ähnlich wie der Datenaustausch in Netzlabor kann der Datenaustausch in einem echten Netzwerk mit einem Netzwerk-Analyse-Tool wie beispielsweise \textbf{Wireshark} beobachtet werden. Wireshark ermöglicht es, den gesamten Datenverkehr in einem Netzwerk mitzuschneiden und zu analysieren. So können auch die \gls{ARP}-Anfragen und -Antworten beobachtet werden.
 
 \begin{myexercise}[Wireshark-Auszug: \acrshort{ARP}]
 	Sie erhalten folgenden Wireshark-Auszug eines \gls{ARP}-Protokolls. Beantworten Sie die Fragen dazu.
@@ -390,8 +393,8 @@ Im unteren Teil von \cref{fig:http-wireshark} ist der Payload des Pakets dargest
 \subsection{Switches}
 Jede Netzwerkkarte kann nur mit genau einem anderen Gerät in einem lokalen Netzwerk kommunizieren. Damit mehrere Geräte in einem lokalen Netzwerk miteinander kommunizieren können, werden sogenannte \textbf{Switches} verwendet. Ein Switch ist ein Gerät, das mehrere Netzwerkkarten miteinander verbindet und es ihnen ermöglicht, Datenpakete direkt aneinander zu senden. Der Switch lernt dabei die \gls{MAC}-Adressen der angeschlossenen Geräte und leitet die Datenpakete nur an das Gerät weiter, für das sie bestimmt sind. Dadurch wird der Datenverkehr im Netzwerk effizienter gestaltet, da nicht alle Geräte jedes Datenpaket empfangen müssen.
 
-\begin{myexercise}[Filius-Anwendung: Switch beobachten]
-	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 2} an und führen Sie alle gezeigten Schritte ebenfalls in Filius aus.
+\begin{myexercise}[Netzlabor-Anwendung: Switch beobachten]
+	Schauen Sie sich das \href{\netzlaborvideos}{Netzlabor-Video 2} an und führen Sie alle gezeigten Schritte ebenfalls in Netzlabor aus.
 \end{myexercise}
 
 \subsection{Topologie}
@@ -1024,10 +1027,10 @@ Ein Beispiel einer minimalen Routing-Tabelle ist in \cref{table:routing} abgebil
 Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, die verwendet wird, wenn keine spezifischere Route für eine Ziel-\gls{IP} in der Routing-Tabelle gefunden werden kann. In der Regel ist das Default Gateway die \gls{IP}-Adresse des nächsten Routers in Richtung Internet: Für die Computer im \gls{LAN} A ist dies \texttt{192.168.1.1}, für unseren Router selbst der Router des \gls{ISP} (\texttt{203.0.113.1}, erreichbar über \texttt{eth2}).
 
 
-\begin{myexercise}[Filius-Anwendung: Router \& Gateway (zwei Netze)]
-	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 3} an. Laden Sie danach die Datei \enquote{\texttt{Filius 3 Routing.fls}} von Moodle herunter und bearbeiten Sie die darin enthaltene Netzwerkkonfiguration:
+\begin{myexercise}[Netzlabor-Anwendung: Router \& Gateway (zwei Netze)]
+	Schauen Sie sich das \href{\netzlaborvideos}{Netzlabor-Video 3} an. Öffnen Sie danach in Netzlabor im Menü (\faBars) unter \enquote{Beispiele und Aufgaben} die Aufgabe \enquote{\texttt{Filius 3 Routing}} und bearbeiten Sie die darin enthaltene Netzwerkkonfiguration:
 	\begin{itemize}
-		\item Notieren Sie zuerst die beiden Netzwerke in \gls{CIDR}-Notation als Text.
+		\item Notieren Sie zuerst die beiden Netzwerke in \gls{CIDR}-Notation in einem Textfeld (Taste \keys{T}).
 		\item Konfigurieren Sie danach den Router korrekt, indem Sie die passenden \glspl{IP} für die beiden Interfaces des Routers vergeben.
 		\item Stellen Sie die Switches als Wolke dar und entfernen Sie die Titel.
 		\item Passen Sie die Gateways aller Clients an.
@@ -1064,10 +1067,10 @@ Beim sogenannten \textit{default gateway} handelt es sich um die Standardroute, 
 Stellen Sie sich vor, Sie möchten mehrere lokale Netzwerke (\glspl{LAN}) zu einem grossen Netzwerk (\gls{WAN}) verbinden, ähnlich wie es im Internet der Fall ist. Jedes \gls{LAN} soll dabei über einen Router mit dem \gls{WAN} verbunden werden. Eine kohärente Auswahl von \gls{IP}-Adressen für jedes Netzwerk und die Router ist dabei entscheidend, um eine übersichtliche und funktionierende Netzwerkinfrastruktur zu gewährleisten.
 
 
-\begin{myexercise}[Filius-Anwendung: Router \& Gateway (Fehlersuche)]
-	Schauen Sie sich (bei Bedarf) das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 4} an. Schauen Sie sich nach dem Video das etwas komplexere Netzwerk \enquote{\texttt{Filius 4 Routing Bugs.fls}} an, welches Sie von Moodle herunterladen können. Leider ist in diesem Netzwerk einiges kaputtgegangen und der Rechner \texttt{192.168.0.12} kann den Rechner \texttt{68.33.1.11} nicht mehr anpingen. Beheben Sie die Netzwerkkonfiguration, so dass die beiden Rechner sich wieder erreichen können.
+\begin{myexercise}[Netzlabor-Anwendung: Router \& Gateway (Fehlersuche)]
+	Schauen Sie sich (bei Bedarf) das \href{\netzlaborvideos}{Netzlabor-Video 4} an. Öffnen Sie nach dem Video in Netzlabor im Menü (\faBars) unter \enquote{Beispiele und Aufgaben} das etwas komplexere Netzwerk \enquote{\texttt{Filius 4 Routing Bugs}}. Leider ist in diesem Netzwerk einiges kaputtgegangen und der Rechner \texttt{192.168.0.12} kann den Rechner \texttt{63.33.1.11} nicht mehr anpingen. Beheben Sie die Netzwerkkonfiguration, so dass die beiden Rechner sich wieder erreichen können.
 	\begin{itemize}
-		\item Führen Sie zuerst einen \commandbox*|ping|-Befehl vom Rechner \texttt{192.168.0.12} zum Rechner \texttt{68.33.1.11} aus und beobachten Sie anhand der grün aufleuchtenden Striche, bis zu welchem Punkt die Pakete gesendet werden können.
+		\item Führen Sie zuerst einen \commandbox*|ping|-Befehl vom Rechner \texttt{192.168.0.12} zum Rechner \texttt{63.33.1.11} aus und beobachten Sie anhand der Pakete auf den Kabeln, bis zu welchem Punkt die Pakete gesendet werden können. Mit \commandbox*|traceroute 63.33.1.11| sehen Sie zudem, bis zu welchem Router ein Paket kommt.
 		\item Setzen Sie bei den Routern korrekte Weiterleitungstabellen ein.
 		\item Setzen Sie bei den Clients korrekte Gateways ein.
 	\end{itemize}
@@ -1213,8 +1216,8 @@ Somit ist die \gls{TCP}-Verbindung nun erstellt und die beiden Maschinen können
 \subsection{Echo-Server}
 Ein einfacher Anwendungsfall eines Servers ist der sogenannte \textbf{Echo-Server}. Ein Echo-Server empfängt Nachrichten von einem Client und sendet diese unverändert zurück. Dies kann nützlich sein, um die Erreichbarkeit eines Servers zu testen oder um die Latenzzeit zwischen Client und Server zu messen. Ein Echo-Server arbeitet typischerweise auf einem bestimmten Port.
 
-\begin{myexercise}[Filius-Anwendung: Echo-Server]\label{ex:filius-echo-server}
-	Schauen Sie sich das \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 5} an. Erstellen Sie selber einen Echo-Server sowie zwei Clients in Filius, die mit dem Echo-Server kommunizieren können. Testen Sie die Konfiguration, indem Sie Nachrichten von den Clients an den Echo-Server senden und überprüfen, ob die Nachrichten korrekt zurückgesendet werden.
+\begin{myexercise}[Netzlabor-Anwendung: Echo-Server]\label{ex:filius-echo-server}
+	Schauen Sie sich das \href{\netzlaborvideos}{Netzlabor-Video 5} an. Erstellen Sie selber einen Echo-Server sowie zwei Clients in Netzlabor, die mit dem Echo-Server kommunizieren können. Testen Sie die Konfiguration, indem Sie Nachrichten von den Clients an den Echo-Server senden und überprüfen, ob die Nachrichten korrekt zurückgesendet werden.
 \end{myexercise}
 
 \begin{myexercise}
@@ -1224,32 +1227,33 @@ Ein einfacher Anwendungsfall eines Servers ist der sogenannte \textbf{Echo-Serve
 		\item Über welche Ports erfolgt die Kommunikation beim Server und beim Client?
 	\end{enumerate}
 
+	\input{Grundlagen_Info/07_Netzwerke/Figures/echoServer_werte.tex}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{Grundlagen_Info/07_Netzwerke/Figures/echoServer.png}
-		\caption{Datenaustausch-Fenster eines Echo-Servers in Filius}
+		\caption{Datenaustausch zwischen einem Client (\texttt{192.168.0.10}) und einem Echo-Server (\texttt{192.168.0.11}) in Netzlabor}
 		\label{fig:filius-echo-server-output}
 	\end{figure}
 
 	\begin{myanswer}
 
 		\begin{enumerate}
-			\item \textbf{Erklärung der Zeilen}:
+			\item \textbf{Erklärung der Zeilen} (die Nummern in der Spalte \enquote{Nr.} zählen alle Ereignisse im Netz, darum fehlen einige):
 			\begin{enumerate}
-			\item \textbf{Zeile 1 (\acrshort{ARP})}: Der Client (\commandbox|192.168.0.10|) sendet eine \gls{ARP}-Anfrage (\textit{Broadcast}) an alle Geräte im Netzwerk, um die \gls{MAC}-Adresse des Servers (\commandbox|192.168.0.11|) zu finden.
-			\item \textbf{Zeile 2 (\acrshort{ARP})}: Der Server (\commandbox|192.168.0.11|) antwortet mit seiner \gls{MAC}-Adresse (\commandbox|86:77:1C:6A:51:D7|) direkt an den Client (\textit{Unicast}).
-			\item \textbf{Zeile 3 (\acrshort{TCP})}: Der Client startet den Drei-Wege-Handschlag mit einem SYN-Paket (Sequenznummer: \texttt{5.000.000}), um eine \gls{TCP}-Verbindung zum Server aufzubauen.
-			\item \textbf{Zeile 4 (\acrshort{TCP})}: Der Server antwortet mit \texttt{SYN+ACK} (eigene Sequenznummer: \texttt{4.000.000}, Bestätigung: \texttt{5.000.001}), um die Verbindung zu bestätigen und seine eigene Sequenznummer mitzuteilen.
-			\item \textbf{Zeile 5 (\acrshort{TCP})}: Der Client schliesst den Drei-Wege-Handschlag mit einem \texttt{ACK}-Paket ab (Sequenznummer: \texttt{5.000.001}, Bestätigung: \texttt{4.000.001}). Die \gls{TCP}-Verbindung ist nun etabliert.
-			\item \textbf{Zeile 6 (Anwendung)}: Der Client sendet die Nachricht \enquote{\texttt{hello!}} über die etablierte \gls{TCP}-Verbindung an den Echo-Server.
-			\item \textbf{Zeile 7 (\acrshort{TCP})}: Der Server bestätigt den Empfang der Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{4.000.001}, Bestätigung: \texttt{5.000.007}). Die Bestätigungsnummer ist um 6 erhöht worden, da eine Nachricht mit 6 Bytes empfangen wurde (jedes Zeichen von \enquote{\texttt{hello!}} ist ein Byte).
-			\item \textbf{Zeile 8 (Anwendung)}: Der Echo-Server sendet die Nachricht \enquote{\texttt{hello!}} unverändert zurück an den Client.
-			\item \textbf{Zeile 9 (\acrshort{TCP})}: Der Client bestätigt den Empfang der Echo-Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer: \texttt{5.000.007}, Bestätigung: \texttt{4.000.007}).
+			\item \textbf{Zeile 1 (\acrshort{ARP})}: Der Client (\commandbox|192.168.0.10|) sendet eine \gls{ARP}-Anfrage (\textit{Broadcast} an \texttt{FF:FF:FF:FF:FF:FF}) an alle Geräte im Netzwerk, um die \gls{MAC}-Adresse des Servers (\commandbox|192.168.0.11|) zu finden.
+			\item \textbf{Zeile 2 (\acrshort{ARP})}: Der Server antwortet mit seiner \gls{MAC}-Adresse (\texttt{\echoServerMac}) direkt an den Client (\textit{Unicast}).
+			\item \textbf{Zeile 3 (\acrshort{TCP})}: Der Client startet den Drei-Wege-Handschlag mit einem \texttt{SYN}-Paket (Sequenznummer \texttt{\echoClientSeq}), um eine \gls{TCP}-Verbindung zum Server aufzubauen.
+			\item \textbf{Zeile 4 (\acrshort{TCP})}: Der Server antwortet mit \texttt{SYN, ACK} (eigene Sequenznummer \texttt{\echoServerSeq}, Bestätigung \texttt{\echoClientSeqA}), um die Verbindung zu bestätigen und seine eigene Sequenznummer mitzuteilen.
+			\item \textbf{Zeile 5 (\acrshort{TCP})}: Der Client schliesst den Drei-Wege-Handschlag mit einem \texttt{ACK}-Paket ab (Sequenznummer \texttt{\echoClientSeqA}, Bestätigung \texttt{\echoServerSeqA}). Die \gls{TCP}-Verbindung ist nun aufgebaut.
+			\item \textbf{Zeile 6 (\acrshort{TCP} mit Daten)}: Der Client sendet die Nachricht \enquote{\texttt{hello!}} über die Verbindung an den Echo-Server. \texttt{PSH} heisst, dass die Daten sofort an die Anwendung weitergegeben werden sollen.
+			\item \textbf{Zeile 7 (\acrshort{TCP})}: Der Server bestätigt den Empfang mit einem \texttt{ACK}-Paket (Bestätigung \texttt{\echoClientSeqB}). Die Bestätigungsnummer ist um 6 grösser geworden, weil die Nachricht 6 Bytes lang war (jedes Zeichen von \enquote{\texttt{hello!}} ist ein Byte).
+			\item \textbf{Zeile 8 (\acrshort{TCP} mit Daten)}: Der Echo-Server sendet die Nachricht \enquote{\texttt{hello!}} unverändert an den Client zurück.
+			\item \textbf{Zeile 9 (\acrshort{TCP})}: Der Client bestätigt den Empfang der Echo-Nachricht mit einem \texttt{ACK}-Paket (Sequenznummer \texttt{\echoClientSeqB}, Bestätigung \texttt{\echoServerSeqB}).
 		\end{enumerate}
 			\item \textbf{Ports der Kommunikation}:
 			\begin{itemize}
-				\item Der Client verwendet den Quellport \texttt{14060} (dynamisch zugewiesener Port) und den Zielport \texttt{55555}, welchen wir in Filius beim Server als Echo-Port eingestellt haben.
-				\item Der Server verwendet den Quellport \texttt{55555} und den Zielport \texttt{14060}.
+				\item Der Client verwendet den Quellport \texttt{\echoClientPort} (dynamisch zugewiesener Port zwischen 49152 und 65535) und den Zielport \texttt{55555}, welchen wir beim Server als Echo-Port eingestellt haben.
+				\item Der Server verwendet den Quellport \texttt{55555} und den Zielport \texttt{\echoClientPort}.
 			\end{itemize}
 		\end{enumerate}
 	\end{myanswer}
@@ -1263,8 +1267,8 @@ Ein Echo-Server ist zugegebenermassen ein sehr einfacher Anwendungsfall. In der 
 	\item \textbf{\gls{IMAP}}: Dieses Protokoll wird ebenfalls zum Abrufen von E-Mails verwendet, bietet jedoch mehr Funktionen als \gls{POP3}. Mit \gls{IMAP} können Clients E-Mails auf dem Server verwalten, ohne sie herunterzuladen. Standardmässig wird \gls{IMAP} über den Port 143 betrieben.
 \end{itemize}
 
-\begin{mychallenge}[Filius-Anwendung: E-Mail-Server]
-	Erstellen Sie in Filius eine Client-Server-Architektur, ähnlich derjenigen aus Video 5. Diesmal soll der Server jedoch als E-Mail-Server fungieren, der sowohl \gls{SMTP} als auch \gls{POP3} unterstützt. Installieren Sie dazu auf dem Server einen \enquote{E-Mail-Server} und auf dem Client einen \enquote{E-Mail-Client}. Indem Sie den E-Mail-Server konfigurieren, richten Sie automatisch sowohl den \gls{SMTP}- wie auch den \gls{POP3}-Dienst ein.
+\begin{mychallenge}[Netzlabor-Anwendung: E-Mail-Server]
+	Erstellen Sie in Netzlabor eine Client-Server-Architektur, ähnlich derjenigen aus Video 5. Diesmal soll der Server jedoch als E-Mail-Server fungieren, der sowohl \gls{SMTP} als auch \gls{POP3} unterstützt. Installieren Sie dazu auf dem Server einen \enquote{E-Mail-Server} und auf dem Client ein \enquote{E-Mail-Programm}. Indem Sie den E-Mail-Server konfigurieren, richten Sie automatisch sowohl den \gls{SMTP}- wie auch den \gls{POP3}-Dienst ein.
 	Zunächst müssen Sie auf dem Server alle Konten anlegen, die es geben soll, und die Maildomain festlegen. Heisst die Maildomain beispielsweise \texttt{filius.ch}, so enden alle E-Mail-Adressen auf \texttt{@filius.ch}. Auf der Client-Seite muss ebenfalls zuerst ein Konto eingerichtet werden. Testen Sie die Konfiguration, indem Sie eine E-Mail von einem Client an einen anderen Client senden und überprüfen, ob die E-Mail korrekt empfangen wird.
 \end{mychallenge}
 
@@ -1377,26 +1381,29 @@ Wir können den Ablauf einer Abfrage etwas detaillierter aufzeigen, indem wir ei
 
 Damit der User die Webseite tatsächlich erhält, müssen die Daten zudem vom Server zum Client transportiert werden. Dies übernehmen die darunterliegenden Schichten, die wir bereits kennengelernt haben: die Transportschicht (\gls{TCP}), die Vermittlungsschicht (\gls{IP}) und die Netzzugangsschicht (\gls{MAC}-Adressen).
 
-\begin{myexercise}[Filius-Anwendung: Web-Server]
-	Erstellen Sie in Filius eine Client-Server-Architektur, ähnlich derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 6}. Diesmal soll der Server als Web-Server fungieren. Installieren Sie dazu auf dem Server einen \enquote{Webserver} und auf dem Client einen \enquote{Webbrowser}. Die Dateien, welche dem Client dargestellt werden sollen, befinden sich bereits auf dem Server. Installieren Sie auf dem Server zusätzlich die Software \enquote{Text-Editor} und öffnen Sie die Datei \texttt{index.html}, im Ordner \texttt{webserver}, um den Inhalt der Webseite anzupassen. Fügen Sie einen neuen Titel und Text hinzu, der auf der Webseite angezeigt werden soll, und testen Sie von einem anderen Client aus, ob die Änderungen korrekt angezeigt werden.
+\begin{myexercise}[Netzlabor-Anwendung: Web-Server]
+	Erstellen Sie in Netzlabor eine Client-Server-Architektur, ähnlich derjenigen aus \href{\netzlaborvideos}{Netzlabor-Video 6}. Diesmal soll der Server als Web-Server fungieren. Installieren Sie dazu auf dem Server einen \enquote{Webserver} und auf dem Client einen \enquote{Webbrowser}. Die Dateien, welche dem Client dargestellt werden sollen, befinden sich bereits auf dem Server. Installieren Sie auf dem Server zusätzlich die Software \enquote{Text-Editor} und öffnen Sie die Datei \texttt{index.html} im Ordner \texttt{/root/webserver}, um den Inhalt der Webseite anzupassen. Fügen Sie einen neuen Titel und Text hinzu, der auf der Webseite angezeigt werden soll, und testen Sie von einem anderen Client aus, ob die Änderungen korrekt angezeigt werden.
 \end{myexercise}
 
 \begin{mychallenge}[\gls{HTML} genauer verstehen]
 	Besuchen Sie folgende Webseite: \url{https://www.w3schools.com/html} und lesen Sie die Grundlagen von \gls{HTML}. Erstellen Sie anschliessend eine einfache \gls{HTML}-Datei mit einem Titel, einer Überschrift und einem Absatz. Speichern Sie die Datei als \texttt{meine\_erste\_webseite.html} und öffnen Sie sie in Ihrem Webbrowser, um das Ergebnis zu sehen.
 \end{mychallenge}
 
-\begin{mychallenge}[Filius-Anwendung: \enquote{Echter} Webserver via Modem (zu zweit)]
-	In Filius können Sie auch einen \enquote{echten} Webserver einrichten, der über ein Modem den anderen Rechnern im gleichen \gls{LAN} zur Verfügung steht.
+\begin{mychallenge}[Netzlabor-Anwendung: Webserver via Modem (zu zweit)]
+	In Netzlabor können Sie Ihr Netz über ein Modem mit dem Netz einer anderen Person verbinden, die Netzlabor auf ihrem eigenen Gerät geöffnet hat. Die beiden Modems sind dann über das Internet verbunden, als ob ein langes Kabel dazwischen läge.
 
-	Diese Aufgabe funktioniert nur, wenn Sie sich im gleichen Subnetz befinden. Sie sollten daher einen persönlichen Hotspot (z.B. via Mobiltelefon) erstellen, mit welchem sich beide Personen verbinden können.
+	\begin{enumerate}
+		\item Einigen Sie sich auf einen \textbf{Raumcode}, zum Beispiel \texttt{klasse-3b-anna-ben} (4 bis 32 Zeichen, nur Buchstaben, Ziffern und Bindestriche).
+		\item Die erste Person baut einen Rechner mit Webserver (\gls{IP}-Adresse \texttt{192.168.0.10}) und verbindet ihn mit einem Modem. Beim Modem trägt sie den Raumcode ein.
+		\item Die zweite Person baut einen Rechner mit Webbrowser (\gls{IP}-Adresse \texttt{192.168.0.20}) und verbindet ihn ebenfalls mit einem Modem mit demselben Raumcode.
+		\item Starten Sie beide die Simulation. Beim Modem steht dann \enquote{verbunden, 1 weiteres Modem im Raum}.
+	\end{enumerate}
 
-	Richten Sie nun in Filius einen Webserver ein, der über ein Modem mit dem \gls{LAN} verbunden ist. Das Modem muss Ihre lokale \gls{IP}-Adresse haben. Belassen Sie den Standard-Port 12345. Richten Sie anschliessend auf einem anderen Rechner im gleichen \gls{LAN} auf Filius ein Netzwerk mit einem Client und einem Modem ein, das mit dem gleichen \gls{LAN} verbunden ist. Verwenden Sie als \gls{IP}-Adresse im Modem die lokale \gls{IP}-Adresse der ersten Person, bei welcher der Webserver läuft.
-
-	Versuchen Sie zunächst, den Webserver der ersten Person von der zweiten Person aus mit einem \commandbox*|ping|-Befehl zu erreichen. Öffnen Sie anschliessend den Webbrowser auf dem Client der zweiten Person und geben Sie die \gls{IP}-Adresse des Webservers der ersten Person ein, um auf die Webseiten der ersten Person zuzugreifen.
+	Versuchen Sie zunächst, den Webserver der ersten Person von der zweiten Person aus mit einem \commandbox*|ping|-Befehl zu erreichen. Öffnen Sie anschliessend den Webbrowser der zweiten Person und geben Sie die \gls{IP}-Adresse des Webservers der ersten Person ein. Beobachten Sie im Datenaustausch beider Geräte, welche Pakete über die Modems gehen.
 \end{mychallenge}
 
 \begin{myremark}[Modem vs. Router]
-	In Filius gibt es sowohl Modems als auch Router. Ein \textbf{Modem} (\textbf{Mo}dulator-\textbf{Dem}odulator) ist ein Gerät, das digitale Signale in analoge Signale umwandelt und umgekehrt, um die Kommunikation über Telefonleitungen oder Kabelverbindungen zu ermöglichen. Ein \textbf{Router} hingegen ist ein Gerät, das Datenpakete zwischen verschiedenen Netzwerken weiterleitet (innerhalb eines lokalen Netzwerks übernimmt dies ein Switch). In Filius wird ein Modem verwendet, um das simulierte Netzwerk mit einem echten Netzwerk (z.B. mit Filius auf einem anderen Rechner) zu verbinden, während ein Router verschiedene simulierte Netzwerke miteinander verbindet. In Wirklichkeit sind viele moderne Geräte eine Kombination aus Modem und Router, die beide Funktionen in einem einzigen Gerät vereinen.
+	In Netzlabor gibt es sowohl Modems als auch Router. Ein \textbf{Modem} (\textbf{Mo}dulator-\textbf{Dem}odulator) ist ein Gerät, das digitale Signale in analoge Signale umwandelt und umgekehrt, um die Kommunikation über Telefonleitungen oder Kabelverbindungen zu ermöglichen. Ein \textbf{Router} hingegen ist ein Gerät, das Datenpakete zwischen verschiedenen Netzwerken weiterleitet (innerhalb eines lokalen Netzwerks übernimmt dies ein Switch). In Netzlabor wird ein Modem verwendet, um das simulierte Netzwerk mit dem Netz einer anderen Person (auf einem anderen Rechner) zu verbinden, während ein Router verschiedene simulierte Netzwerke miteinander verbindet. In Wirklichkeit sind viele moderne Geräte eine Kombination aus Modem und Router, die beide Funktionen in einem einzigen Gerät vereinen.
 \end{myremark}
 
 \begin{myremark}[\acrshort{HTTP} vs \acrshort{HTTPS}]
@@ -1493,8 +1500,8 @@ Mit dem Terminal-Befehl \commandbox*|nslookup [domainname]| erhalten Sie im erst
 	\end{myanswer}
 \end{myexercise}
 
-\begin{myexercise}[Filius-Anwendung: \gls{DNS}-Server]
-	Erstellen Sie in Filius eine Client-Server-Architektur, gemäss derjenigen aus \href{https://www.youtube.com/watch?v=Kn8v_HrckUM&list=PLUfZiVdJui-57k0VcRecHX0JTEhOMgiKP}{Filius-Video Nummer 7}. Ihre Konfiguration sollte aus 2 Servern bestehen, wovon der erste als \gls{DNS}-Server und der zweite als Web-Server fungiert. Der \gls{DNS}-Server soll dem Client die \gls{IP}-Adresse des Web-Servers bereitstellen, damit der Client anschliessend eine Webseite vom Web-Server anfordern kann. Vergessen Sie nicht, den \gls{DNS}-Server zu starten sowie dessen \gls{IP}-Adresse auch bei jedem Client unter \enquote{\gls{DNS}-Server} einzutragen, damit dieser weiss, an welchen Server er die \gls{DNS}-Anfragen schicken muss!
+\begin{myexercise}[Netzlabor-Anwendung: \gls{DNS}-Server]
+	Erstellen Sie in Netzlabor eine Client-Server-Architektur, gemäss derjenigen aus \href{\netzlaborvideos}{Netzlabor-Video 7}. Ihre Konfiguration sollte aus 2 Servern bestehen, wovon der erste als \gls{DNS}-Server und der zweite als Web-Server fungiert. Der \gls{DNS}-Server soll dem Client die \gls{IP}-Adresse des Web-Servers bereitstellen, damit der Client anschliessend eine Webseite vom Web-Server anfordern kann. Vergessen Sie nicht, den \gls{DNS}-Server zu starten (die Anzeige im Programm zeigt \enquote{läuft}) sowie dessen \gls{IP}-Adresse auch bei jedem Client unter \enquote{\gls{DNS}-Server} einzutragen, damit dieser weiss, an welchen Server er die \gls{DNS}-Anfragen schicken muss!
 \end{myexercise}
 
 \section{Zusammenfassung: Ablauf eines Webaufrufs}\label{sec:webaufruf}
@@ -1596,8 +1603,8 @@ Was passiert eigentlich, wenn Sie zuhause im \gls{WLAN} \texttt{https://www.exam
 
 
 
-\begin{mychallenge}[Weitere Filius-Aufgaben (Troubleshooting)]
-	Lösen Sie die Troubleshooting-Aufgaben 2.13 auf folgendem \href{https://informatik.mygymer.ch/base/?book=network}{Link}.
+\begin{mychallenge}[Weitere Aufgaben (Troubleshooting)]
+	Lösen Sie die Troubleshooting-Aufgaben 2.13 auf folgendem \href{https://informatik.mygymer.ch/base/?book=network}{Link}. Die Aufgaben sind für das Programm Filius geschrieben. Die Filius-Dateien (\texttt{.fls}) können Sie in Netzlabor im Menü (\faBars) unter \enquote{Öffnen} direkt öffnen.
 \end{mychallenge}
 
 \begin{mychallenge}[Vertiefung: Schichtenmodell]

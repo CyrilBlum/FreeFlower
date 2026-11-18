@@ -1,0 +1,24 @@
+\chapter{Netzlabor}
+\label{subsec:netzlabor}
+Netzlabor ist ein Simulator für Computernetzwerke, der direkt im Browser läuft: \url{https://netz.cblum.ch}. Eine Installation ist nicht nötig. Netzlabor bildet das Programm Filius der Universität Siegen nach und kann auch Filius-Dateien (\texttt{.fls}) öffnen.
+
+\section{Bauen und Simulieren}
+Oben in der Mitte wechseln Sie zwischen zwei Modi:
+\begin{itemize}
+	\item \textbf{Bauen} (Taste \keys{B}): Geräte hinzufügen, mit Kabeln verbinden und konfigurieren.
+	\item \textbf{Simulieren} (Taste \keys{S}): Die Geräte arbeiten wirklich. Sie können Programme starten, Befehle ausführen und im Datenaustausch jedes Paket ansehen.
+\end{itemize}
+
+\section{Wichtige Bedienschritte}
+\begin{itemize}
+	\item \textbf{Geräte}: Links ein Gerät anklicken oder die Taste drücken (\keys{1} Notebook, \keys{2} Rechner, \keys{3} Switch, \keys{4} Router, \keys{5} Modem) und auf die Fläche klicken. Mit \keys{V} oder \keys{Esc} beenden Sie das Setzen.
+	\item \textbf{Kabel}: Mit dem Kabel-Werkzeug (\keys{C}) von einem Gerät zum anderen ziehen.
+	\item \textbf{Konfigurieren}: Ein Gerät anklicken. Rechts erscheinen Name, \gls{IP}-Adresse, Netzmaske, Gateway und \gls{DNS}-Server.
+	\item \textbf{Programme}: Im Simulationsmodus öffnet ein Doppelklick auf einen Rechner oder ein Notebook den Desktop. Unter \enquote{Software-Installation} schalten Sie Programme wie Webserver oder Webbrowser ein. Ist ein Gerät ausgewählt, öffnet \keys{K} direkt die Befehlszeile.
+	\item \textbf{Datenaustausch}: Unten sehen Sie alle Pakete. Die Schnellfilter (z.\,B. \texttt{ARP}, \texttt{ICMP}, \texttt{TCP}) zeigen nur bestimmte Protokolle. Ein Klick auf eine Zeile zeigt den Aufbau des Pakets Schicht für Schicht.
+	\item \textbf{Rückgängig}: \keys{\cmd + Z} (Windows: \keys{\ctrl + Z}).
+	\item \textbf{Hilfe}: Das Fragezeichen oben rechts zeigt die Kurzanleitung mit allen Tastenkürzeln.
+\end{itemize}
+
+\section{Speichern und Aufgaben öffnen}
+Netzlabor speichert Ihr Netz automatisch im Browser. Über das Menü (\faBars) können Sie das Netz zusätzlich als Datei speichern (\keys{\cmd + S}), eine Datei öffnen (auch Filius-Dateien) und unter \enquote{Beispiele und Aufgaben} die Aufgaben aus diesem Skript laden. Mit \enquote{Teilen} oben rechts erhalten Sie einen Link, der das ganze Netz enthält.
