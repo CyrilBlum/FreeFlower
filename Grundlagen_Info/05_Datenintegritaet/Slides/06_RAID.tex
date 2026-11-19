@@ -91,7 +91,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.28, 1.29 (\acrshort{RAID} 0 und 1)}
+        \item \aufgabebox{1.26, 1.27 (\acrshort{RAID} 0 und 1)}
     \end{itemize}
 \end{frame}
 
@@ -108,12 +108,23 @@
                     1 & 1 & 0            \\
                 \end{tabular}
             \end{center}
+            \uncover<3->{
+                \[
+                    \begin{array}{r@{\;}l@{\quad}l}
+                               & \mathtt{1011} & D_1                \\
+                        \oplus & \mathtt{1100} & D_2                \\ \cline{1-2}
+                               & \mathtt{0111} & D_1 \oplus D_2     \\
+                        \oplus & \mathtt{0110} & D_3                \\ \cline{1-2}
+                               & \mathtt{0001} & P \text{ (Parität)}
+                    \end{array}
+                \]
+            }
         \end{column}
         \begin{column}{.6\textwidth}
             \begin{itemize}[<+->]
                 \item \acrshort{XOR} (\enquote{exklusives Oder}): 1, wenn genau ein Bit 1 ist (Addition modulo 2)
                 \item Bitfolgen werden Stelle für Stelle verknüpft
-                \item \(1011_2 \oplus 1100_2 \oplus 0110_2 = 0001_2 = P\) (Parität)
+                \item Mehrere Blöcke: untereinander schreiben, mit dem Zwischenresultat weiterrechnen
                 \item Fehlt ein Block, ergibt das \acrshort{XOR} der übrigen Blöcke mit \(P\) den fehlenden Block
             \end{itemize}
         \end{column}
@@ -123,7 +134,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.26, 1.27 (\acrshort{XOR})}
+        \item \aufgabebox{1.24, 1.25 (\acrshort{XOR})}
     \end{itemize}
 \end{frame}
 
@@ -160,7 +171,7 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.30--1.33 (\acrshort{RAID} 5 und 6)}
+        \item \aufgabebox{1.28--1.31 (\acrshort{RAID} 5 und 6)}
     \end{itemize}
 \end{frame}
 
@@ -210,6 +221,6 @@
 
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
-        \item \aufgabebox{1.34, 1.35 (Backup)}
+        \item \aufgabebox{1.32, 1.33 (Backup)}
     \end{itemize}
 \end{frame}

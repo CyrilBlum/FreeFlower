@@ -1901,10 +1901,92 @@ Damit bilden die Hamming-Codes eine wichtige Grundlage
 der Fehlerkorrektur in digitalen Informationssystemen.
 
 Bei unseren Überwachungstabellen hatten wir viele Freiheiten.
-Entscheidend war nur, dass alle Spalten paarweise verschieden und
-nicht leer sind. Hamming legte die Überwachungsbereiche und die
-Positionen der Kontrollbits systematisch fest. Die Kontrollbits
-stehen dabei an festen Stellen mitten im Codewort.
+Damit eine Codierung 1-fehler\-kor\-ri\-gie\-rend ist, müssen nur alle
+Spalten paarweise verschieden und nicht leer sein. Bei 16
+Nachrichtenbits und fünf Kontrollbits bleiben neben den fünf
+Spalten der Kontrollbits noch 26 mögliche Spalten. Aus diesen
+wählen wir 16 aus und ordnen sie in beliebiger Reihenfolge den
+Nachrichtenbits zu. Jede dieser Wahlen funktioniert gleich gut.
+Sender und Empfänger müssen aber dieselbe Tabelle verwenden, und
+beim Decodieren muss man die Signatur in der Tabelle suchen.
+
+Hamming wählte die Spalten deshalb nach einer festen Regel. Er
+nummeriert die Bits des Codeworts mit 0 bis 15. Die Spalte von
+Position \(p\) ist die Binärdarstellung von \(p\), die Zeilen
+gehören zu den Kontrollbits an den Positionen 1, 2, 4 und 8.
+Position \(13=8+4+1\) hat also Kreuze in den Zeilen 1, 4 und 8.
+
+\begin{center}
+    \begin{tikzpicture}[
+            x=0.6cm,y=0.6cm,
+            every node/.style={font=\scriptsize}
+        ]
+        % Hintergrund wie bei den anderen Überwachungstabellen
+        \fill[blue!25] (0,0) rectangle (17,1);
+        \fill[blue!15] (0,-5) rectangle (1,0);
+        \fill[gray!8] (1,-5) rectangle (17,0);
+        % Spalten der Kontrollbits im Kopf hervorheben
+        \foreach \p in {0,1,2,4,8} {
+                \fill[blue!45] (\p+1,0) rectangle (\p+2,1);
+            }
+        % Spaltenbeschriftung: Positionen 0 bis 15
+        \foreach \p in {0,...,15} {
+                \node at (\p+1.5,.5) {\p};
+            }
+        % Zeilenbeschriftung: Kontrollbits 1, 2, 4, 8 und 0
+        \foreach \k [count=\r] in {1,2,4,8,0} {
+                \node at (.5,.5-\r) {\k};
+            }
+        % Kreuz, wenn der Stellenwert \k in der Binärdarstellung von \p vorkommt
+        \foreach \k [count=\r] in {1,2,4,8} {
+                \foreach \p in {1,...,15} {
+                        \pgfmathtruncatemacro{\bit}{mod(div(\p,\k),2)}
+                        \ifnum\bit=1
+                            \node at (\p+1.5,.5-\r) {\(\times\)};
+                        \fi
+                    }
+            }
+        % Position 0 überwacht alle Bits (Gesamtparität)
+        \foreach \p in {0,...,15} {
+                \node at (\p+1.5,-4.5) {\(\times\)};
+            }
+        % Gitter
+        \draw[step=1,black!30,thin] (0,-5) grid (17,1);
+        \draw[black!65] (0,-5) rectangle (17,1);
+        % Trennung zur Zeile der Gesamtparität
+        \draw[blue!70!black,very thick] (0,-4) -- (17,-4);
+        % Beispiel: Spalte von Position 13
+        \draw[orange,very thick] (14,-4) rectangle (15,0);
+    \end{tikzpicture}
+\end{center}
+
+Die Kontrollbits stehen an den Positionen 1, 2, 4 und 8, weil
+ihre Spalten genau ein Kreuz haben. Jedes Kontrollbit überwacht
+also sich selbst und kein anderes Kontrollbit, wie bei unserer
+Konstruktion. Die Positionen 1 bis 15 belegen alle
+\(2^4-1=15\) nicht leeren Spalten. Vier Kontrollbits genügen
+deshalb für \(15-4=11\) Nachrichtenbits.
+
+Die Spalte von Position 0 wäre leer. Position 0 wird deshalb ein
+eigenes Kontrollbit, das wie \(c_9\) bei der Kartentrick-Methode
+alle Bits überwacht (unterste Zeile). Damit lassen sich zusätzlich
+zwei Fehler erkennen.
+
+Hamming-Codes werden mit zwei Zahlen in Klammern bezeichnet. Die erste
+Zahl ist die Länge des Codeworts, die zweite die Anzahl Nachrichtenbits,
+die Differenz ist die Anzahl Kontrollbits. Ohne Position 0 erhalten wir
+den \((15,11)\)-Hamming-Code mit 4 Kontrollbits, mit Position 0 den
+erweiterten \((16,11)\)-Hamming-Code mit 5 Kontrollbits. Mit drei
+Kontrollbits an den Positionen 1, 2 und 4 entsteht ebenso der
+\((7,4)\)-Hamming-Code mit Codewörtern der Länge 7, davon
+4 Nachrichtenbits.
+
+Kippt ein Bit, melden genau die Kontrollbits in seiner Spalte.
+Weil diese Spalte die Binärdarstellung der Position ist, ergibt die
+Summe der Positionen der meldenden Kontrollbits direkt die Position
+des Fehlers. Im \(4\times 4\)-Raster des folgenden Verfahrens zeigt
+sich dieselbe Regel: In der 2.\ und 4.\ Spalte des Rasters stehen
+die ungeraden Positionen, also genau die mit einem Kreuz in Zeile 1.
 
 \begin{myprocedure}[Erweiterter \((16,11)\)-Hamming-Code]\label{proc:hamming}
     Ein Codewort hat 16 Bits. Wir nummerieren sie mit 0 bis 15 und
@@ -2106,116 +2188,144 @@ stehen dabei an festen Stellen mitten im Codewort.
 
 \end{myexercise}
 
-\subsection*{Geht es mit noch weniger Bits? Der Hyperwürfel}
+\subsection*{Hamming-Codes sind perfekt}
 
-Mit der Ungleichung \(2^K-1\geq N+K\) wissen wir, wie viele
-Kontrollbits mindestens nötig sind. Ob sich ein Code noch verbessern
-lässt, kann man auch an einem Bild ablesen.
+Beim Hamming-Code ohne Position 0 belegen die 15 Positionen alle
+\(2^4-1=15\) nicht leeren Spalten der Überwachungstabelle. Jede
+mögliche Meldung der vier Kontrollbits gehört deshalb zu genau
+einem Bit. Meldet kein Kontrollbit, ist die empfangene Bitfolge ein
+Codewort. Melden einige, dreht man das Bit mit dieser Spalte um und
+erhält wieder ein Codewort. So wird jede der \(2^{15}\) möglichen
+Bitfolgen zu genau einem Codewort korrigiert. Einen solchen Code
+nennt man \tib{perfekt}. Für ein weiteres Nachrichtenbit bräuchte
+man eine 16.\ Spalte, die es mit vier Zeilen nicht gibt.
 
-Dazu zeichnen wir für jede Bitfolge der Länge \(L\) einen Punkt und
-verbinden zwei Punkte, wenn sich die Bitfolgen in genau einem Bit
-unterscheiden. Das entstehende Bild heisst
-\tib{\(L\)-dimensionaler Hyperwürfel}. Für \(L=3\) ist es ein
-gewöhnlicher Würfel mit \(2^3=8\) Punkten (\cref{fig:3d}). Jeder
-Punkt hat \(L\) Nachbarn, weil man jedes der \(L\) Bits umdrehen
-kann. Ein einzelner Bitfehler ist also ein Schritt entlang einer
-Kante.
-
-Bei einem 1-fehlerkorrigierenden Code gehört zu jedem Codewort eine
-\tib{Zone}. Sie besteht aus dem Codewort und seinen \(L\) Nachbarn.
-Empfängt man eine Bitfolge aus dieser Zone, korrigiert man sie zu
-diesem Codewort. Zwei Zonen dürfen sich deshalb nicht überlappen.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \HyperCube{3}
-        % eine Farbe pro Zone, Codewort doppelt umkreist
-        \CircleNodes[orange,double]{hg-011}
-        \CircleNodes[orange]{hg-001,hg-010,hg-111}
-        \CircleNodes[green,double]{hg-100}
-        \CircleNodes[green]{hg-000,hg-110,hg-101}
-    \end{tikzpicture}
-    \caption{3D-Hyperwürfel mit den Zonen der Codewörter \texttt{011} (orange) und \texttt{100} (grün). Die Codewörter sind doppelt umkreist.}
-    \label{fig:3d}
-\end{figure}
-
-Die Zonen der Codewörter \texttt{011} und \texttt{100} bestehen aus je
-4 Punkten. Zusammen belegen sie alle 8 Punkte des Würfels. Jede
-empfangene Bitfolge lässt sich also korrigieren, und für ein drittes
-Codewort ist kein Platz mehr. Einen Code, dessen Zonen den
-Hyperwürfel lückenlos ausfüllen, nennt man \tib{perfekt}. Er lässt
-sich nicht mehr verbessern.
+Bei unserer Tabelle für 16 Nachrichtenbits ist das anders. Von den
+\(2^5-1=31\) möglichen Spalten werden nur 21 (16 Nachrichtenbits und 5 Kontrollbits) verwendet. Meldet der
+Empfänger eine der 10 übrigen Kombinationen, sind mindestens zwei
+Bits gekippt, und kein einzelnes Bit erklärt die Meldung. Dieser
+Code ist nicht perfekt.
 
 \begin{myremark}
-    Die Hamming-Codes sind perfekt. Beim Hamming-Code aus
-    \cref{ex:hamming} ohne das Bit an Position 0 haben die Codewörter
-    15 Bit, davon 11 Nachrichtenbits. Es gibt \(2^{11}=2048\)
-    Codewörter, und jede Zone umfasst \(15+1=16\) Punkte:
+    Eine Codierung mit Überwachungstabelle ist genau dann perfekt,
+    wenn in der Ungleichung Gleichheit gilt:
     \[
-        2048\cdot 16=32768=2^{15}.
+        2^K-1=N+K
     \]
-    Die Zonen füllen den 15-dimensionalen Hyperwürfel also lückenlos
-    aus.
 \end{myremark}
 
 Das zusätzliche Bit an Position 0 im erweiterten
 \((16,11)\)-Hamming-Code dient dazu, zwei Fehler zu erkennen.
 
-\begin{myexercise}
-    Zeichnen Sie im unten stehenden Hyperwürfel ausgehend vom
-    Codewort \texttt{0000} möglichst viele Codewörter eines
-    1-fehlerkorrigierenden Codes samt ihren Zonen ein. Ist der Code
-    perfekt?
-    \begin{figure}[H]
-        \centering
+\subsection*{Warum gerade Hammings Raster?}
+
+Wir nummerieren die Zeilen und die Spalten des Rasters mit 0 bis 3
+und schreiben diese Nummern als zweistellige Binärzahlen: \texttt{00},
+\texttt{01}, \texttt{10}, \texttt{11}. Die Position eines Feldes ist
+\(4\cdot\text{Zeile}+\text{Spalte}\). Als vierstellige Binärzahl
+geschrieben, besteht sie deshalb aus der Zeilennummer, gefolgt von der
+Spaltennummer. Position 13 steht in Zeile 3 (\texttt{11}) und Spalte 1
+(\texttt{01}) und ist \(\texttt{1101}=8+4+1\).
+
+\begin{center}
+    \begin{tikzpicture}[x=1.3cm,y=.9cm,every node/.style={font=\small}]
+        % Zeilen- und Spaltennummern binär
+        \foreach \i/\b in {0/00,1/01,2/10,3/11} {
+                \node[font=\small\ttfamily,blue!70!black] at (\i+.5,.35) {\b};
+                \node[font=\small\ttfamily,blue!70!black] at (-.4,-\i-.5) {\b};
+            }
+        % Positionen mit ihrer Binärdarstellung
+        \foreach \p/\b in {0/0000,1/0001,2/0010,3/0011,4/0100,5/0101,6/0110,7/0111,
+                8/1000,9/1001,10/1010,11/1011,12/1100,13/1101,14/1110,15/1111} {
+                \pgfmathtruncatemacro{\col}{mod(\p,4)}
+                \pgfmathtruncatemacro{\row}{div(\p,4)}
+                \node at (\col+.5,-\row-.33) {\p};
+                \node[font=\scriptsize\ttfamily,black!60] at (\col+.5,-\row-.72) {\b};
+            }
+        \draw[step=1,black!65] (0,0) grid (4,-4);
+        % Beispiel: Position 13
+        \draw[magenta,very thick] (1,-3) rectangle (2,-4);
+    \end{tikzpicture}
+\end{center}
+
+Die Bereiche der Kontrollbits sind genau die Felder, in denen eine
+bestimmte Stelle dieser Binärzahl 1 ist. Kontrollbit 1 überwacht die
+Felder mit einer 1 an der letzten Stelle, das sind die Spalten
+\texttt{01} und \texttt{11}, also die 2.\ und 4.\ Spalte. Kontrollbit 2
+überwacht die Felder mit einer 1 an der zweitletzten Stelle, also die
+Spalten \texttt{10} und \texttt{11}. Kontrollbit 4 und Kontrollbit 8
+machen dasselbe mit den Zeilen.
+
+Kippt das Bit an Position 13, melden genau die Kontrollbits, in deren
+Bereich die 13 liegt. Schreibt man für jedes meldende Kontrollbit eine
+1 und für die anderen eine 0, in der Reihenfolge 8, 4, 2, 1, erhält man
+die Position des Fehlers als Binärzahl:
+
+\begin{center}
+    \begin{tabular}{lcccc}
+        Kontrollbit & 8  & 4  & 2    & 1  \\
+        \midrule
+        meldet?     & ja & ja & nein & ja \\
+        Ziffer      & 1  & 1  & 0    & 1  \\
+    \end{tabular}
+\end{center}
+
+Bei einer frei gewählten Überwachungstabelle sagt die Meldung nur,
+welche Spalte der Tabelle gemeint ist. In unserer Tabelle für
+16 Nachrichtenbits melden zum Beispiel \(c_2\) und \(c_4\), und der
+Empfänger muss unter den 21 Spalten diejenige mit genau diesen Kreuzen
+suchen (sie gehört zu \(a_6\)). Mit vier Kontrollbits für
+11 Nachrichtenbits verwendet jede gültige Tabelle dieselben 15 Spalten
+wie Hamming. Sie unterscheiden sich nur darin, welches Bit welche
+Spalte bekommt. Hammings Anordnung ist die, bei der die Meldung schon
+die Position ist und man nichts suchen muss.
+
+\begin{myexcursion}[Geht es ohne Überwachungstabelle besser?]
+    Unsere Überlegungen gelten für Codes mit Überwachungstabelle. Der
+    \tib{Hyperwürfel} zeigt, dass auch kein anderes Verfahren mit
+    weniger Kontrollbits auskommt.
+
+    Dazu zeichnen wir für jede Bitfolge der Länge \(L\) einen Punkt und
+    verbinden zwei Punkte, wenn sich die Bitfolgen in genau einem Bit
+    unterscheiden. Das entstehende Bild heisst
+    \tib{\(L\)-dimensionaler Hyperwürfel}. Für \(L=3\) ist es ein
+    gewöhnlicher Würfel mit \(2^3=8\) Punkten. Jeder
+    Punkt hat \(L\) Nachbarn, weil man jedes der \(L\) Bits umdrehen
+    kann. Ein einzelner Bitfehler ist also ein Schritt entlang einer
+    Kante.
+
+    Bei einem 1-fehlerkorrigierenden Code gehört zu jedem Codewort eine
+    \tib{Zone}. Sie besteht aus dem Codewort und seinen \(L\) Nachbarn.
+    Empfängt man eine Bitfolge aus dieser Zone, korrigiert man sie zu
+    diesem Codewort. Zwei Zonen dürfen sich deshalb nicht überlappen.
+
+    \begin{center}
         \begin{tikzpicture}
-            \HyperCube{4}
+            \HyperCube{3}
+            % eine Farbe pro Zone, Codewort doppelt umkreist
+            \CircleNodes[orange,double]{hg-011}
+            \CircleNodes[orange]{hg-001,hg-010,hg-111}
+            \CircleNodes[green,double]{hg-100}
+            \CircleNodes[green]{hg-000,hg-110,hg-101}
         \end{tikzpicture}
-        \caption{4D-Hyperwürfel}
-    \end{figure}
 
-    \begin{myanswer}
-        Es passen nur 2 Codewörter hinein (unterschiedliche Lösungen
-        möglich):
-        \begin{figure}[H]
-            \centering
-            \begin{tikzpicture}
-                \HyperCube{4}
-                % eine Farbe pro Zone, Codewort doppelt umkreist
-                \CircleNodes[orange,double]{hg-0000}
-                \CircleNodes[orange]{hg-1000,hg-0100,hg-0010,hg-0001}
-                \CircleNodes[green,double]{hg-0111}
-                \CircleNodes[green]{hg-1111,hg-0011,hg-0101,hg-0110}
-            \end{tikzpicture}
-            \caption{4D-Hyperwürfel mit den Zonen der Codewörter \texttt{0000} (orange) und \texttt{0111} (grün). Die Codewörter sind doppelt umkreist.}
-        \end{figure}
-        Die beiden Zonen belegen 10 der 16 Punkte. Für eine dritte
-        Zone mit 5 Punkten ist kein Platz, wie \cref{challenge:4bits}
-        zeigt. Die Zonen füllen den Hyperwürfel nicht aus, der Code ist
-        also nicht perfekt.
-    \end{myanswer}
-\end{myexercise}
+        {\small 3D-Hyperwürfel mit den Zonen der Codewörter \texttt{011}
+        (orange) und \texttt{100} (grün). Die Codewörter sind doppelt
+        umkreist.}
+    \end{center}
 
-\begin{myexercise}
-    Der \((7,4)\)-Hamming-Code hat Codewörter der Länge 7, davon
-    4 Nachrichtenbits.
-    \begin{aenum}
-        \item Wie viele Punkte hat der zugehörige Hyperwürfel, und aus
-              wie vielen Punkten besteht eine Zone?
-        \item Zeigen Sie, dass der Code perfekt ist.
-    \end{aenum}
+    Die beiden Zonen belegen zusammen alle 8 Punkte des Würfels. Für ein
+    drittes Codewort ist kein Platz mehr.
 
-    \begin{myanswer}
-        \begin{aenum}
-            \item \(2^7=128\) Punkte. Eine Zone besteht aus dem
-                  Codewort und seinen 7 Nachbarn, also aus 8 Punkten.
-            \item Mit 4 Nachrichtenbits gibt es \(2^4=16\) Codewörter.
-                  Ihre Zonen umfassen zusammen \(16\cdot 8=128\) Punkte,
-                  also den ganzen Hyperwürfel.
-        \end{aenum}
-    \end{myanswer}
-\end{myexercise}
+    Beim \((15,11)\)-Hamming-Code umfasst eine Zone das Codewort und die
+    15 Bitfolgen, die sich in einem Bit davon unterscheiden, also
+    16 Bitfolgen. Es gibt \(2^{11}=2048\) Codewörter, die Zonen brauchen
+    also \(2048\cdot 16=32768\) Bitfolgen. Das sind genau alle \(2^{15}\)
+    Bitfolgen der Länge 15. Dieselbe Abzählung haben wir mit der Tabelle
+    gemacht: 16 Fälle (kein Fehler oder ein Fehler an einer der
+    15 Stellen) und 16 Meldungen der vier Kontrollbits.
+\end{myexcursion}
+
 \section{Der \glsentryshort{XOR}-Operator}
 
 Um das Paritätsbit zweier binärer Codes zu berechnen, wird der \textbf{\acrshort{XOR}-Operator} (\enquote{Exklusives Oder}, $\oplus$) verwendet. Die Addition modulo 2 zweier Bits (\acrshort{XOR}) ist definiert in \cref{tab:mod2}.
@@ -2251,14 +2361,19 @@ Die Parität \( P \) wird durch \acrshort{XOR}-Verknüpfung berechnet:
     P = D_1 \oplus D_2 \oplus D_3
 \]
 
-Wir berechnen schrittweise:
+Wir schreiben die Blöcke wie bei der schriftlichen Addition
+untereinander und verknüpfen Stelle für Stelle, allerdings ohne
+Übertrag. Zuerst berechnen wir \(D_1 \oplus D_2\) und verknüpfen dieses
+Zwischenresultat anschliessend mit \(D_3\):
 
 \[
-    D_1 \oplus D_2 = 1011_2 \oplus 1100_2 = 0111_2
-\]
-
-\[
-    P = 0111_2 \oplus 0110_2 = 0001_2
+    \begin{array}{r@{\;}l@{\qquad}l}
+               & \mathtt{1011} & D_1                         \\
+        \oplus & \mathtt{1100} & D_2                         \\ \cline{1-2}
+               & \mathtt{0111} & \text{Zwischenresultat } D_1 \oplus D_2 \\
+        \oplus & \mathtt{0110} & D_3                         \\ \cline{1-2}
+               & \mathtt{0001} & P = D_1 \oplus D_2 \oplus D_3
+    \end{array}
 \]
 
 Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte aus, kann der fehlende Wert durch Umstellen der \acrshort{XOR}-Operation wiederhergestellt werden.
@@ -2316,55 +2431,23 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
     Berechnen Sie \( A \oplus B \oplus C \oplus D \).
 
     \begin{myanswer}
-        Die \acrshort{XOR}-Berechnung erfolgt schrittweise:
+        Die Codes werden untereinander geschrieben und Stelle für Stelle
+        verknüpft. Jedes Zwischenresultat wird mit dem nächsten Code
+        weiterverknüpft:
 
         \[
-            A \oplus B = 1011_2 \oplus 1100_2
-        \]
-
-        Bitweise Berechnung:
-
-        \[
-            \begin{array}{ccc}
-                A & B & A \oplus B \\\midrule
-                1 & 1 & 0          \\
-                0 & 1 & 1          \\
-                1 & 0 & 1          \\
-                1 & 0 & 1          \\
+            \begin{array}{r@{\;}l@{\qquad}l}
+                       & \mathtt{1011} & A                                           \\
+                \oplus & \mathtt{1100} & B                                           \\ \cline{1-2}
+                       & \mathtt{0111} & \text{Zwischenresultat } A \oplus B         \\
+                \oplus & \mathtt{0110} & C                                           \\ \cline{1-2}
+                       & \mathtt{0001} & \text{Zwischenresultat } A \oplus B \oplus C \\
+                \oplus & \mathtt{1001} & D                                           \\ \cline{1-2}
+                       & \mathtt{1000} & A \oplus B \oplus C \oplus D
             \end{array}
         \]
 
-        Das ergibt:
-
-        \[
-            A \oplus B = 0111_2
-        \]
-
-        Nun \acrshort{XOR} mit \( C \):
-
-        \[
-            0111_2 \oplus 0110_2
-        \]
-
-        \[
-            0111_2 \oplus 0110_2 = 0001_2
-        \]
-
-        Danach \acrshort{XOR} mit \( D \):
-
-        \[
-            0001_2 \oplus 1001_2
-        \]
-
-        \[
-            0001_2 \oplus 1001_2 = 1000_2
-        \]
-
-        Das Endergebnis lautet:
-
-        \[
-            A \oplus B \oplus C \oplus D = 1000_2
-        \]
+        Das Endergebnis lautet \(A \oplus B \oplus C \oplus D = 1000_2\).
 
     \end{myanswer}
 \end{myexercise}
@@ -2482,11 +2565,18 @@ Nehmen wir an, wir berechnen die Parität für folgende Datenblöcke:
     D_4 & = 1001_2
 \end{align*}
 
-Die Paritätsberechnung ergibt:
-\begin{align*}
-    P & = 1101_2 \oplus 1011_2 \oplus 0110_2 \oplus 1001_2 \\
-      & = 1001_2
-\end{align*}
+Die Paritätsberechnung erfolgt Schritt für Schritt mit Zwischenresultaten:
+\[
+    \begin{array}{r@{\;}l@{\qquad}l}
+               & \mathtt{1101} & D_1                                             \\
+        \oplus & \mathtt{1011} & D_2                                             \\ \cline{1-2}
+               & \mathtt{0110} & \text{Zwischenresultat } D_1 \oplus D_2         \\
+        \oplus & \mathtt{0110} & D_3                                             \\ \cline{1-2}
+               & \mathtt{0000} & \text{Zwischenresultat } D_1 \oplus D_2 \oplus D_3 \\
+        \oplus & \mathtt{1001} & D_4                                             \\ \cline{1-2}
+               & \mathtt{1001} & P
+    \end{array}
+\]
 \end{myexample}
 
 Falls ein Datenblock ausfällt, kann er durch Umstellen der \acrshort{XOR}-Operation rekonstruiert werden.
