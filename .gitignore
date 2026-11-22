@@ -346,3 +346,5 @@ Logos/build/
 Private/*
 ## Stale root Jekyll build (GitHub Pages builds from docs/)
 /_site/
+## Huffman-Labor: eigenes privates Repo CyrilBlum/huffman-labor
+Websites/huffman/
