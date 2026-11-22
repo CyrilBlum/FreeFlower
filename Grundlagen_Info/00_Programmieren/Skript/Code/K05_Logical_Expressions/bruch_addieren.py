@@ -16,6 +16,6 @@ while summe < x:
         break
 
 # Ausgabe des Ergebnisses
-print(f"Der Nenner des letzten hinzugefügten Bruchs ist {nenner}.")
+print(f"Der Nenner des letzten hinzugefügten Bruchs ist {nenner - 1}.")
 print(f"Die Gesamtsumme beträgt {summe:.6f}.")
 print(f"Die Anzahl der addierten Brüche beträgt {anzahl_brueche}.")

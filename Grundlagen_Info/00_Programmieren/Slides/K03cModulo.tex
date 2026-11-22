@@ -1,7 +1,7 @@
 \begin{frame}
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=.5\textwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=.5\textwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Programmieren\\
     \emoji{right-arrow-curving-up} Kapitel 3: \textbf{Modulo und Rest von Ganzzahldivision}
@@ -14,7 +14,7 @@
         \item \lstinline|13 // 5| (= 2)
         \item wie viel bleibt übrig?
         \item \lstinline|13 % 5| (= 3)
-        \item \lstinline|x % 5 == 0| zeigt uns also an, ob eine \lstinline|x| durch 5 teilbar ist
+        \item \lstinline|x % 5 == 0| zeigt uns also an, ob \lstinline|x| durch 5 teilbar ist
         \item Wie finden wir heraus, ob \lstinline|x| eine gerade Zahl ist?
         \item \lstinline|x % 2 == 0|
     \end{itemize}
@@ -22,35 +22,35 @@
 
 \begin{frame}[fragile]{Modulo: Beispiel}
     \begin{table}
-        \begin{tabular}{r|l}
-            \textbf{Code}     & \textbf{Resultat} \\\midrule\midrule
-            \lstinline|1 % 3| & \lstinline|?|     \\\midrule
-            \lstinline|2 % 3| & \lstinline|?|     \\\midrule
-            \lstinline|3 % 3| & \lstinline|?|     \\\midrule
-            \lstinline|4 % 3| & \lstinline|?|     \\\midrule
-            \lstinline|5 % 3| & \lstinline|?|     \\\midrule
-            \lstinline|6 % 3| & \lstinline|?|     \\\midrule
+        \begin{tabular}{rl}
+            \textbf{Code}     & \textbf{Resultat} \\\midrule
+            \lstinline|3 % 4| & \lstinline|?|     \\\midrule
+            \lstinline|4 % 4| & \lstinline|?|     \\\midrule
+            \lstinline|5 % 4| & \lstinline|?|     \\\midrule
+            \lstinline|6 % 4| & \lstinline|?|     \\\midrule
+            \lstinline|7 % 4| & \lstinline|?|     \\\midrule
+            \lstinline|8 % 4| & \lstinline|?|     \\\midrule
             \lstinline|...|   & \lstinline|...|
         \end{tabular}
     \end{table}
 \end{frame}
 \begin{frame}[fragile]{Modulo: Beispiel}
     \begin{table}
-        \begin{tabular}{r|l}
-            \textbf{Code}     & \textbf{Resultat} \\\midrule\midrule
-            \lstinline|1 % 3| & \lstinline|1|     \\\midrule
-            \lstinline|2 % 3| & \lstinline|2|     \\\midrule
-            \lstinline|3 % 3| & \lstinline|0|     \\\midrule
-            \lstinline|4 % 3| & \lstinline|1|     \\\midrule
-            \lstinline|5 % 3| & \lstinline|2|     \\\midrule
-            \lstinline|6 % 3| & \lstinline|0|     \\\midrule
+        \begin{tabular}{rl}
+            \textbf{Code}     & \textbf{Resultat} \\\midrule
+            \lstinline|3 % 4| & \lstinline|3|     \\\midrule
+            \lstinline|4 % 4| & \lstinline|0|     \\\midrule
+            \lstinline|5 % 4| & \lstinline|1|     \\\midrule
+            \lstinline|6 % 4| & \lstinline|2|     \\\midrule
+            \lstinline|7 % 4| & \lstinline|3|     \\\midrule
+            \lstinline|8 % 4| & \lstinline|0|     \\\midrule
             \lstinline|...|   & \lstinline|...|
         \end{tabular}
     \end{table}
 
     \begin{itemize}[<+->]
-        \item Wie finden wir heraus, welche Zahlen \lstinline|x| durch 3 teilbar sind?
-        \item \lstinline|x % 3 == 0|
+        \item Wie finden wir heraus, welche Zahlen \lstinline|x| durch 4 teilbar sind?
+        \item \lstinline|x % 4 == 0|
     \end{itemize}
 \end{frame}
 

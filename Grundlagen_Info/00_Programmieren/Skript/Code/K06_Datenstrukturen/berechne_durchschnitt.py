@@ -1,7 +1,7 @@
 def berechne_durchschnitt(liste):
     summe = 0
     for zahl in liste:
-        summe += zahl
+        summe += abs(zahl)  # Betrag der Zahl
     durchschnitt = summe / len(liste)
     print("Der Durchschnittswert der Beträge ist:", durchschnitt)
 

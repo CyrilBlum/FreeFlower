@@ -9,7 +9,7 @@ t.colormode(255)
 # setze die Turtle etwas nach links
 t.teleport(-250, 0)
 
-# Anfangsfarbe grün
+# Anfangsfarbe rot
 r = 255
 g = 0
 b = 0
@@ -28,7 +28,7 @@ for _ in range(50):
 # setze die Turtle etwas nach rechts
 t.teleport(250, 0)
 
-# Anfangsfarbe grün
+# Anfangsfarbe schwarz
 r = 0
 g = 0
 b = 0

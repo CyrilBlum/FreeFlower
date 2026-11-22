@@ -44,10 +44,10 @@ Variablen sind kurz gesagt ein Wort, das auf einen veränderbaren (variablen) We
 \begin{myoverview}[Benennung von Variablen]
 	Bei der Wahl eines Variablennamens gibt es einige Punkte zu beachten:
 	\begin{enumerate}
-		\item Der Name muss mit einem Buchstaben oder Unterstrich beginnen (e.g. nicht \verb|1meinname|).
+		\item Der Name muss mit einem Buchstaben oder Unterstrich beginnen (z.\,B. nicht \verb|1meinname|).
 		\item Der Name darf kein von Python \href{https://www.programiz.com/python-programming/keyword-list}{reserviertes Wort} sein (\lstinline|for|, \lstinline|def|, \lstinline|if|, etc.).
 		\item Der Name sollte \textbf{sinnvoll} und \textbf{beschreibend} (deskriptiv) sein. Wenn Sie beispielsweise die Höhe eines Hauses in einer Variable speichern, ist es sinnvoll, diese \lstinline|h| oder \lstinline|hoehe| zu nennen und nicht etwa \lstinline|x|.
-		\item Variablennamen dürfen nur alphanumerische Symbole (\texttt{a} -- \texttt{z}, \texttt{A} -- \texttt{Z}, \texttt{0} -- \texttt{9}) und Unterstriche enthalten. Insbesondere also weder Leerzeichen noch Umlaute.
+		\item Variablennamen dürfen keine Leerzeichen und keine Sonderzeichen wie \texttt{-}, \texttt{+} oder \texttt{\#} enthalten. Python erlaubt zwar Umlaute (z.\,B. \lstinline|länge|), es ist aber üblich, nur die Zeichen \texttt{a} -- \texttt{z}, \texttt{A} -- \texttt{Z}, \texttt{0} -- \texttt{9} und Unterstriche zu verwenden (also \lstinline|laenge|). Halten Sie sich an diese Konvention.
 		\item Da Variablennamen keine Leerzeichen enthalten dürfen, sollten zusammengesetzte Namen mithilfe von Unterstrichen (\lstinline{_}) gebildet werden:
 		      \begin{lstlisting}
 		laenge_rechteck = 100
@@ -64,8 +64,8 @@ Variablen sind kurz gesagt ein Wort, das auf einen veränderbaren (variablen) We
 	Berechnen Sie die folgenden Ausdrücke in Python und speichern Sie das Resultat jeweils in einer Variable:
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c|c}
-			Berechnung          & Name der Variable \\\midrule\midrule
+		\begin{tabular}{cc}
+			Berechnung          & Name der Variable \\\midrule
 			$17 - 3 \cdot 8$    & \lstinline|res_1| \\\midrule
 			$(5-2) \cdot 4 + 1$ & \lstinline|res_2| \\\midrule
 			$3^6$               & \lstinline|res_3| \\\midrule
@@ -82,7 +82,7 @@ Variablen sind kurz gesagt ein Wort, das auf einen veränderbaren (variablen) We
 	Gegeben sind zwei Variablen \lstinline|x| und \lstinline|y|. Sie möchten die Werte dieser zwei Variablen austauschen, so dass danach \lstinline|x| den ursprünglichen Wert von \lstinline|y| enthält und umgekehrt. Sie experimentieren zunächst mit folgendem Vorgehen:
 	\begin{lstlisting}[numbers=left]
 	# Anfängliche Werte für x und y
-	x = 5 
+	x = 5
 	y = 11
 
 	# Versuch, die Werte von x und y zu tauschen
@@ -103,7 +103,7 @@ Variablen sind kurz gesagt ein Wort, das auf einen veränderbaren (variablen) We
 		Mit einer Hilfsvariable:
 		\begin{lstlisting}
 		# anfängliche Werte für x und y:
-		x = 5 
+		x = 5
 		y = 11
 
 		# Tausche die Werte, so dass danach x den Wert 11 hat und y den Wert 5:
@@ -125,7 +125,7 @@ Variablen sind kurz gesagt ein Wort, das auf einen veränderbaren (variablen) We
 		# anfängliche Werte für x und y:
 		x = 99
 		y = 15
-		
+
 		# Tausche die Werte von x und y:
 		x = x + y
 		y = x - y
@@ -184,8 +184,8 @@ Beispiele für Modulo-Berechnungen (Rest der ganzzahligen Division) in Python:
 	Füllen Sie die zweite Spalte \textbf{von Hand aus}, berechnen Sie danach (zur Kontrolle) die Werte in Python.
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{r|c}
-			\textbf{Code}     & \textbf{Resultat} \\\midrule\midrule
+		\begin{tabular}{rc}
+			\textbf{Code}     & \textbf{Resultat} \\\midrule
 			\lstinline|1 % 3| & \lstinline|?|     \\\midrule
 			\lstinline|2 % 3| & \lstinline|?|     \\\midrule
 			\lstinline|3 % 3| & \lstinline|?|     \\\midrule
@@ -197,8 +197,8 @@ Beispiele für Modulo-Berechnungen (Rest der ganzzahligen Division) in Python:
 	\begin{myanswer}
 		\begin{table}[H]
 			\centering
-			\begin{tabular}{r|c}
-				\textbf{Code}     & \textbf{Resultat} \\\midrule\midrule
+			\begin{tabular}{rc}
+				\textbf{Code}     & \textbf{Resultat} \\\midrule
 				\lstinline|1 % 3| & \lstinline|1|     \\\midrule
 				\lstinline|2 % 3| & \lstinline|2|     \\\midrule
 				\lstinline|3 % 3| & \lstinline|0|     \\\midrule
@@ -234,21 +234,21 @@ Wir haben bislang schon mehrfach Werte von Variablen verändert. In diesem Absch
 \begin{lstlisting}
 	alter = 10
 	print(alter) # alter hat den Wert 10
-	alter = alter + 1 # alter hat neu den Wert 11 
+	alter = alter + 1 # alter hat neu den Wert 11
 	print(alter) # printet 11
 	alter + 5 # berechnet die Summe alter + 5, Inhalt von alter bleibt unverändert
 	print(alter) # printet 11
-	z = alter + 5 # Inhalt von alter bleibt unverändert 
+	z = alter + 5 # Inhalt von alter bleibt unverändert
 	print(alter) # printet 11
 	alter += 7 # alter hat neu den Wert 18
-	print(alter) # printet 18 
+	print(alter) # printet 18
 \end{lstlisting}
 Es existiert ein fundamentaler Unterschied zwischen den beiden Ausdrücken \lstinline|x + 5| (Wert von \lstinline|x| bleibt unverändert) und \lstinline|x += 5| beziehungsweise \lstinline|x = x + 5| (Wert von \lstinline|x| wird überschrieben). Anstelle von \lstinline|x = x + y| werden wir häufig den zusammengesetzten Operator \lstinline|+=| in der Form \lstinline|x += y| verwenden. Analoge zusammengesetzte Operatoren für weitere mathematische Operatoren sind in \cref{tab:zusammengesetzte_operationen} aufgeführt.
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c}
-		\textbf{zusammengesetzte Zuweisungsoperation} & \textbf{Bedeutung}                            \\\midrule\midrule
+	\begin{tabular}{cc}
+		\textbf{zusammengesetzte Zuweisungsoperation} & \textbf{Bedeutung}                            \\\midrule
 		\lstinline|x += y|                            & speichere \lstinline|x + y| in \lstinline|x|  \\\midrule
 		\lstinline|x -= y|                            & speichere \lstinline|x - y| in \lstinline|x|  \\\midrule
 		\lstinline|x *= y|                            & speichere \lstinline|x * y| in \lstinline|x|  \\\midrule
@@ -273,7 +273,7 @@ Es existiert ein fundamentaler Unterschied zwischen den beiden Ausdrücken \lsti
 \end{myexercise}
 
 \begin{myexercise}\label{ex:zahlen_kubik}
-	Die Kubikzahl einer Zahl $x$ ist gleich der Zahl hoch 3, also $x^3$. Verwenden Sie eine Schleife um die 10 Kubikzahlen $1^3, 2^3, \ldots, 10^3$ auszugeben. Beginnen Sie mit einer Variablen \lstinline|x = 1| und erhöhen Sie den Wert von \lstinline|x| in jedem Durchgang der Schleife um 1.
+	Die Kubikzahl einer Zahl $x$ ist gleich der Zahl hoch 3, also $x^3$. Verwenden Sie eine Schleife, um die 10 Kubikzahlen $1^3, 2^3, \ldots, 10^3$ auszugeben. Beginnen Sie mit einer Variablen \lstinline|x = 1| und erhöhen Sie den Wert von \lstinline|x| in jedem Durchgang der Schleife um 1.
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{zahlen\_kubik.py},label=listing:zahlen_kubik]{Grundlagen_Info/00_Programmieren/Skript/Code/K03_Variables_Debugging/zahlen_kubik.py}
 	\end{myanswer}
@@ -292,7 +292,7 @@ In Python kann man nicht nur arithmetische Operationen mit Zahlen durchführen, 
 Folgendes Beispiel speichert den Text \lstinline|"Hello, World!"| in der Variable \texttt{a}, der Wert der Variable wird danach auf dem Terminal ausgegeben:
 \begin{lstlisting}
 a = "Hello, World!"
-print(a)  # printet den String "Hello, World!" im Terminal 
+print(a)  # printet den String "Hello, World!" im Terminal
 
 # anstelle von doppelten Anführungszeichen "..."
 # dürfen auch einfache Anführungszeichen '...' verwendet werden:
@@ -366,8 +366,8 @@ Bei Zahlen gilt es in Python zwischen der Darstellung einer ganzen Zahl (Englisc
 \begin{table}[H]
 	\footnotesize
 	\centering
-	\begin{tabular}{l|l|l}
-		\textbf{Beispiel}                     & \textbf{Datentyp (englische, Abk.)} & \textbf{Datentyp (Deutsch)} \\\midrule\midrule
+	\begin{tabular}{lll}
+		\textbf{Beispiel}                     & \textbf{Datentyp (Englisch, Abk.)} & \textbf{Datentyp (Deutsch)} \\\midrule
 		\lstinline|"Hallo Welt", 'abc', "42"| & string (str)                        & Zeichenkette                \\\midrule
 		\lstinline|15, 45, -5, 0|             & integer (int)                       & ganze Zahl                  \\\midrule
 		\lstinline|12.23, -5.3346, 23.0|      & float (float)                       & Kommazahl
@@ -410,7 +410,7 @@ m = 30
 quot = n / m
 print(f"{n} durch {m} ist {quot:.2f}")
 \end{lstlisting}
-Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungszeichen zu setzen. Sie sollten dabei beobachten, dass der Text \lstinline|{n} durch {m} ist {quot:.2f}| unverändert ausgegeben wird, da die Variablen nicht ausgewertet werden. Durch das kleine \lstinline|f| vor den Anführungszeichen wird Python angewiesen, die Variablen innerhalb der geschweiften Klammern auszuwerten und deren Wert an dieser Stelle einzufügen.
+Führen Sie den Code auch aus, ohne das kleine \lstinline|f| vor den Anführungszeichen zu setzen. Sie sollten dabei beobachten, dass der Text \lstinline|{n} durch {m} ist {quot:.2f}| unverändert ausgegeben wird, da die Variablen nicht ausgewertet werden. Durch das kleine \lstinline|f| vor den Anführungszeichen wird Python angewiesen, die Variablen innerhalb der geschweiften Klammern auszuwerten und deren Wert an dieser Stelle einzufügen.
 \end{myexample}
 
 \begin{myexercise}
@@ -419,7 +419,7 @@ Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungsz
 		\begin{lstlisting}
 			n = 2
 			m = 3
-			
+
 			for _ in range(10):
 				quot = n / m
 				print(f"{n} durch {m} ist {quot:.3f}")
@@ -432,7 +432,7 @@ Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungsz
 	Eine Dame verrät uns die dreistellige Vorwahl $079$ ihrer $10$-stelligen Mobiltelefonnummer. Zudem verrät sie uns auch, dass die letzten drei Ziffern eine gerade Zahl zwischen 0 und 200 darstellen (also einen der Ausdrücke $000, 002, 004, \ldots, 198, 200$).
 
 	Schreiben Sie ein Python-Programm, welches alle gemäss obiger Beschreibung möglichen Nummern auflistet.
-	
+
 	Die erste Nummer sollte $0790000000$ sein, die letzte $0790000200$.
 	Das Programm soll die Telefonnummern als Zeichenkette (eine Nummer pro Zeile) ausgeben.
 
@@ -456,7 +456,7 @@ Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungsz
 	bruch = int(bruch) # explizite Typenumwandlung von float zu int
 	print(bruch) # gibt 3 aus
 
-	x = 5.999999 
+	x = 5.999999
 	x = int(x) # Weglassen von Dezimalstellen
 	print(x) # gibt 5 aus
 	\end{lstlisting}
@@ -467,12 +467,12 @@ Führen Sie dne Code auch aus ohne das kleine \lstinline|f| vor den Anführungsz
 		print("hallo")
 
 	TypeError: 'float' object cannot be interpreted as an integer
-	
+
 	# das ist ok:
 	for _ in range(int(6 / 2)):
 		print("hallo")
 	\end{lstlisting}
-	da eine Schleife nur \enquote{ganzzahlig-viele} Durchgänge durchführen kann, doch \texttt{6 / 3} ist \texttt{2.0}, also vom Typ float und nicht int.
+	da eine Schleife nur \enquote{ganzzahlig-viele} Durchgänge durchführen kann, doch \texttt{6 / 2} ist \texttt{3.0}, also vom Typ float und nicht int.
 \end{myattention}
 
 
@@ -507,17 +507,17 @@ Mithilfe der \lstinline{input}-Funktion kann der User während der Programmausf�
 Mit der Funktion \lstinline|input("Hilfstext...")| können wir eine Variable \emph{während} der Programmausführung erstellen:
 
 \begin{lstlisting}
-""" 
-Folgender Befehl druckt den Hilfstext 
-'Was ist ihr Name?' auf dem Terminal. 
+"""
+Folgender Befehl druckt den Hilfstext
+'Was ist Ihr Name?' auf dem Terminal.
 
-Die Antwort kann auf dem Terminal eingetippt 
-werden und wird danach in der Variable name gespeichert. 
+Die Antwort kann auf dem Terminal eingetippt
+werden und wird danach in der Variable name gespeichert.
 
-Mit der letzten Zeile wird der eingegebene Name 
+Mit der letzten Zeile wird der eingegebene Name
 danach 5-mal gedruckt.
 """
-name = input("Was ist Ihr Name?") 
+name = input("Was ist Ihr Name?")
 print(name * 5)
 \end{lstlisting}
 
@@ -529,7 +529,7 @@ Führen Sie diesen Code in VS Code aus und beobachten Sie das Resultat.
 	\begin{myanswer}
 		\begin{lstlisting}[numbers=none]
 		name = input("Wie heissen Sie?")
-		
+
 		for _ in range(3):
 			print(("Hallo " + name + " ") * 3)
 	  \end{lstlisting}
@@ -540,14 +540,14 @@ Führen Sie diesen Code in VS Code aus und beobachten Sie das Resultat.
 \begin{myremark}[Input erwartet immer einen String]\label{myremark:input_takes_string}
 	Bitte beachten Sie, dass die \lstinline{input("...")}-Funktion in Python den Tastaturinput immer als String auffasst. Falls Ihr Input als Zahl angesehen werden soll, dann müssen Sie den Input \lstinline|x| mit \lstinline|int(x)| beziehungsweise \lstinline|float(x)| konvertieren:
 	\begin{lstlisting}
-	alter = input("Wie alt bist du?") # alter ist vom Typ 'String'
-	print("In einem Jahr wirst du", int(alter) + 1, "Jahre alt sein.")
+	alter = input("Wie alt sind Sie?") # alter ist vom Typ 'String'
+	print("In einem Jahr werden Sie", int(alter) + 1, "Jahre alt sein.")
 		# andere, mögliche Schreibweise mit f"...:
-		# print(f"In einem Jahr wirst du {int(alter) + 1} Jahre alt sein.")
-	
+		# print(f"In einem Jahr werden Sie {int(alter) + 1} Jahre alt sein.")
+
 	# dies würde einen Fehler geben, da wir hier die Summe eines Strings (alter)
 	# und einer ganzen Zahl zu berechnen versuchen:
-	print("In einem Jahr wirst du", alter + 1, "Jahre alt sein.")
+	print("In einem Jahr werden Sie", alter + 1, "Jahre alt sein.")
 	\end{lstlisting}
 \end{myremark}
 
@@ -607,7 +607,7 @@ Semantische Fehler sind Logik-Fehler, also Fehler aufgrund der Tatsache, dass di
 mittelwert = 3 + 13 / 2
 print(mittelwert) # 9.5
 \end{lstlisting}
-Das Resultat sollte 8 sein, denn der Mittelwert von 3 und 13 ist $(3 + 13) / 2 = 8$ und nicht etwa $3 + 13 / 2 = 9.5$. Der Fehler hat damit zu tun, dass der Programmierer vergessen hat, Klammern zu setzen. Korrekt wäre folgendes Beispiel:
+Das Resultat sollte 8 sein, denn der Mittelwert von 3 und 13 ist $(3 + 13) / 2 = 8$ und nicht etwa $3 + 13 / 2 = 9.5$. Der Fehler hat damit zu tun, dass die Programmiererin vergessen hat, Klammern zu setzen. Korrekt wäre folgendes Beispiel:
 \begin{lstlisting}
 mittelwert = (3 + 13) / 2
 print(mittelwert) # 8
@@ -617,9 +617,9 @@ print(mittelwert) # 8
 Einige Strategien, um fehlerhaften Code zu beheben, sind:
 \begin{enumerate}
 	\item Lesen Sie Fehlermeldungen aufmerksam und versuchen Sie diese zu verstehen. Auch die Zeilenangaben in den Fehlermeldungen sind dabei sehr hilfreich.
-	\item Brechen Sie ihren Code in einzelne Teile auf. Geben Sie Zwischenresultate auf dem Terminal aus, indem Sie \lstinline|print|-Befehle verwenden.
+	\item Brechen Sie Ihren Code in einzelne Teile auf. Geben Sie Zwischenresultate auf dem Terminal aus, indem Sie \lstinline|print|-Befehle verwenden.
 	\item Rechnen Sie einige Beispiele von Hand aus, sofern der Code etwas Komplexeres berechnet.
-	\item Testen Sie Ihren Code mit (extremen oder besonderen) Testfällen (e.g. negative Zahlen, der Null, dem leeren String).
+	\item Testen Sie Ihren Code mit (extremen oder besonderen) Testfällen (z.\,B. negativen Zahlen, der Null, dem leeren String).
 \end{enumerate}
 
 \begin{myexercise}\label{myexercise:austausch-debug}

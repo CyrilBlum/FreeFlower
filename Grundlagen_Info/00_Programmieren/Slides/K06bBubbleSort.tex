@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -35,22 +35,23 @@
 		}
 }
 
-\begin{frame}{Einen Wert Suchen}
+\begin{frame}{Einen Wert suchen}
 	\only<1-2>{
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=.9\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}
+				\includegraphics[width=.9\textwidth, height=.5\textheight, keepaspectratio]{Grundlagen_Info/00_Programmieren/Figures/suitcase_messy.jpg}
 			\end{figure}
 			\only<2>{Wie viele Dinge müssen wir im schlimmsten Fall anschauen, um einen Gegenstand im Koffer zu finden (wenn der Koffer $n$ Gegenstände enthält)?}
 		}
 	\only<3->{
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=.9\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}
+				\includegraphics[width=.9\textwidth, height=.5\textheight, keepaspectratio]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}
 			\end{figure}
 			\only<4->{Und hier?}
 		}
 
+	{\tiny Bilder: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:Messy_Suitcase_Packing_for_a_Holiday.jpg}{Wikimedia Commons} und \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
 \end{frame}
 
 \begin{frame}{Warum sind Sortier-Algorithmen wichtig?}
@@ -87,12 +88,13 @@
 		\item \textbf{Ziel:}
 		      \begin{figure}[H]
 			      \centering
-			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}}
+			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_messy.jpg}}
 			      \raisebox{-0.5\height}{\textbf{$\rightarrow$}}
-			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}}
+			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}}
 		      \end{figure}
 		\item Heute: \textbf{Bubble-Sort-Algorithmus}
 	\end{itemize}
+	{\tiny Bilder: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:Messy_Suitcase_Packing_for_a_Holiday.jpg}{Wikimedia Commons} und \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
 \end{frame}
 
 \begin{frame}[fragile]{Bubble-Sort-Algorithmus}{Visualisierung}
@@ -120,7 +122,7 @@
 x = [5, 3, 8, 20, 2, 10]
 
 # Zwischenspeicher-Variable a erstellen *bevor* wir x[0] überschreiben
-a = x[0] 
+a = x[0]
 
 # Das erste Element von x wird überschrieben durch den zweiten Wert von x (wir verlieren also den ersten Wert, haben ihn aber noch in a als "Backup" in a gespeichert)
 x[0] = x[1]
@@ -216,7 +218,7 @@ for _ in range(len(x) - 1):
 \end{frame}
 
 \begin{frame}[fragile]{Laufzeitkomplexität eines Codes analysieren}
-	Betrachten Sie folgenden Codes, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
+	Betrachten Sie folgenden Code, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
 	\lstinputlisting[language=Python, basicstyle=\scriptsize\ttfamily,label=listing:count_common_elements]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/count_common_elements.py}
 \end{frame}
 
@@ -224,7 +226,7 @@ for _ in range(len(x) - 1):
 \begin{frame}[fragile]{Auftrag}
 	\begin{itemize}
 		\item Moodle-Aufgaben \enquote{Bubble Sort}
-		\item \aufgabebox{Aufgabe 6.12}
+		\item \aufgabebox{Aufgabe 6.14}
 	\end{itemize}
 \end{frame}
 

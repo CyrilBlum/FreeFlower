@@ -25,9 +25,10 @@ def dynamisches_schachbrett(anzahl_felder, feld_groesse, upper_left):
         alternative = zeile_1
 
     # 4. Das Schachbrett ausgeben
-    for i in range(anzahl_felder):
+    zeile = 0
+    for _ in range(anzahl_felder):
         # Wähle abwechselnd das start- oder alternative Muster
-        if i % 2 == 0:
+        if zeile % 2 == 0:
             aktuelle_zeile = start
         else:
             aktuelle_zeile = alternative
@@ -35,6 +36,7 @@ def dynamisches_schachbrett(anzahl_felder, feld_groesse, upper_left):
         # Drucke die Zeile so oft, wie die feld_groesse es verlangt
         for _ in range(feld_groesse):
             print(aktuelle_zeile)
+        zeile += 1
 
 
 # Beispielaufruf

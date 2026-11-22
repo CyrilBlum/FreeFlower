@@ -51,7 +51,7 @@ while not (button_a.is_pressed() and button_b.was_pressed()):
 # Neustart im Simulatormodus
 # Im Realmodus ersetzen durch die Zeilen darunter
 stop()
-print("Mit der Hand-Symbol den Roboter an den Anfang ziehen")
+print("Mit dem Hand-Symbol den Roboter an den Anfang ziehen")
 print("Achten Sie darauf, dass er nach oben schaut")
 print("Wenn Sie soweit sind, können Sie mit der Taste B weitermachen")
 while not button_b.was_pressed():

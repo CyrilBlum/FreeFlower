@@ -3,8 +3,8 @@ import turtle as t
 
 t.speed(10000)
 
-# Anzahl zu zeichnender "Viertelkreis"
-anzahl_halbkreise = 8
+# Anzahl zu zeichnender "Viertelkreise"
+anzahl_viertelkreise = 8
 
 # wir stellen einen Viertelkreis durch einen Viertel
 # eines Vielecks dar (je mehr Ecken desto genauer)
@@ -14,7 +14,7 @@ anzahl_ecken_viertel = 40
 f_0 = 0
 f_1 = 1
 
-for _ in range(anzahl_halbkreise):
+for _ in range(anzahl_viertelkreise):
     # f_2 ist die nächste Zahl der Fibonacci-Folge
     f_2 = f_0 + f_1
 

@@ -7,7 +7,7 @@
 \begin{frame}
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Programmieren\\
     \emoji{abacus} Kapitel 03: \textbf{Werte bei der Ausführung mitgeben}
@@ -46,7 +46,7 @@ $\rightarrow$ Einfach, direkt!
 \begin{lstlisting}
 import turtle as t
 
-# Anzahl Ecken und Seitenlänge 
+# Anzahl Ecken und Seitenlänge
 # sind direkt im Code
 ecken = 5
 laenge = 100
@@ -67,16 +67,37 @@ $\rightarrow$ Variablen sind fest!
 \end{frame}
 
 
-\begin{frame}[fragile]{Vieleck mit Variablen, \textit{on-the-fly} \emoji{airplane}}
+\begin{frame}[fragile]{Vieleck mit Variablen, \textit{on-the-fly} \emoji{airplane}}{Was passiert?}
+\begin{lstlisting}
+import turtle as t
+
+# Anzahl Ecken und Seitenlänge
+# mit input('...')
+ecken = input("Wie viele Ecken?")
+laenge = input("Seitenlänge?")
+
+for _ in range(ecken):
+    t.forward(laenge)
+    t.right(360/ecken)
+\end{lstlisting}
+\pause
+\textcolor{red}{\texttt{TypeError: 'str' object cannot be interpreted as an integer}}
+\begin{itemize}
+\item \lstinline|input| gibt immer einen Text (\lstinline|str|) zurück, z.B. \lstinline|"5"| statt \lstinline|5|
+\item Mit einem Text kann Python nicht rechnen und keine Schleife wiederholen
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Vieleck mit Variablen, \textit{on-the-fly} \emoji{airplane}}{Text in Zahl umwandeln mit \lstinline|int(...)|}
 \begin{columns}
 \begin{column}{.7\textwidth}
 \begin{lstlisting}
 import turtle as t
 
-# Anzahl Ecken und Seitenlänge 
-# mit input('...')
-ecken = input("Wie viele Ecken?")
-laenge = input("Seitenlänge?")
+# Anzahl Ecken und Seitenlänge
+# mit input('...') als ganze Zahl
+ecken = int(input("Wie viele Ecken?"))
+laenge = int(input("Seitenlänge?"))
 
 for _ in range(ecken):
     t.forward(laenge)
@@ -97,9 +118,9 @@ for _ in range(ecken):
 import turtle as t
 
 # Drei Vielecke wiederholt mit input
-for wiederholung in range(3):
-    ecken = input("Wie viele Ecken?")
-    laenge = input("Seitenlänge?")
+for _ in range(3):
+    ecken = int(input("Wie viele Ecken?"))
+    laenge = int(input("Seitenlänge?"))
     for _ in range(ecken):
         t.forward(laenge)
         t.right(360/ecken)
@@ -116,6 +137,26 @@ $\rightarrow$ Demo
 
 \begin{frame}[fragile]{Auftrag}
 \begin{itemize}
-\item \abgabebox{Aufgaben 3.16}
+\item \abgabebox{Aufgabe 3.17}
+\end{itemize}
+\end{frame}
+
+% Kurzinput zu Skript Abschnitt «Debugging», damit die Aufgaben 3.18-3.19 hier folgen können
+\begin{frame}[fragile]{Debugging: Arten von Fehlern}
+\begin{itemize}
+\item \textbf{Syntaxfehler}: Schreibweise nicht erlaubt, das Programm startet nicht.\\
+\lstinline|print "Hello World"|
+\item \textbf{Laufzeitfehler}: Fehler erst bei der Ausführung, z.\,B. ein Name, den es nicht gibt.\\
+\lstinline|X = 10 + 5| und danach \lstinline|print(x)|
+\item \textbf{Semantische Fehler}: keine Fehlermeldung, aber ein falsches Resultat.\\
+\lstinline|mittelwert = 3 + 13 / 2| ergibt 9.5 statt 8
+\end{itemize}
+\textbf{Strategien}: Fehlermeldung und Zeilennummer lesen, Zwischenresultate mit \lstinline|print| ausgeben, Beispiele von Hand nachrechnen, mit besonderen Werten testen.
+\end{frame}
+
+\begin{frame}{Auftrag}
+\begin{itemize}
+\item \aufgabebox{Aufgaben 3.18-3.19}
+\item \challengebox{Aufgaben 3.20-3.22}
 \end{itemize}
 \end{frame}

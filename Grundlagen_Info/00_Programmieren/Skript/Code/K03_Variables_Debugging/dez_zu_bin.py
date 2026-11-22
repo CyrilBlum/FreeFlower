@@ -1,18 +1,18 @@
 ﻿"""
-Dieses Programm wandelt Dezimalzahlen in Binärzahlen um
-Die eingegebene Dezimalzahl muss kleiner als 1024 sein.
+Dieses Programm wandelt Dezimalzahlen in Binärzahlen um.
+Die eingegebene Dezimalzahl muss kleiner als 65536 sein.
 """
 
 # die folgende Dezimalzahl soll umgewandelt werden
 zahl = int(input("Welche Zahl soll umgewandelt werden? "))
 
-# Beginnen mit der groessten Basisgroesse
-# für 16 Bit Zahlen ist dies 65535
+# Beginnen mit der grössten Basisgrösse
+# für 16-Bit-Zahlen ist dies 2^15 = 32768
 basisgroesse = 2**15
 
 binaerzahl = ""
 
-# Berechnung der 10 Ziffern der Binärzahl
+# Berechnung der 16 Ziffern der Binärzahl
 for _ in range(16):
     # Ziffer: Wie häufig passt die Basisgrösse in den Betrag?
     ziffer = zahl // basisgroesse

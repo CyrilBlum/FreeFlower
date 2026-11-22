@@ -6,4 +6,4 @@ for _ in range(10):
     summe += kubik
     x += 1
 
-print("Die Summe der ersten 10 Kubikzahlen ist ", summe)
+print("Die Summe der ersten 10 Kubikzahlen ist", summe)

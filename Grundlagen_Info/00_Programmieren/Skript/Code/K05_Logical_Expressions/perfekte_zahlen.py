@@ -15,4 +15,4 @@ def finde_perfekte_zahlen(grenze):
 
         zahl += 1
 
-finde_perfekte_zahlen(100000)
+finde_perfekte_zahlen(10000)

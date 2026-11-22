@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -41,10 +41,11 @@
 		      $\rightarrow$ Wir können nichts anderes machen, als jedes Element durchschauen...
 		      \begin{figure}[H]
 			      \centering
-			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}}
+			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_messy.jpg}}
 			      \raisebox{-0.5\height}{$\rightarrow$}
-			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}}
+			      \raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}}
 		      \end{figure}
+		      {\tiny Bilder: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:Messy_Suitcase_Packing_for_a_Holiday.jpg}{Wikimedia Commons} und \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
 		\item Wie finden wir schnellstmöglich heraus, ob eine bestimmte Zahl in einer \textit{sortierten} Liste enthalten ist? Z.B., ist die Zahl 3 in der Liste \lstinline|x = [2, 3, 5, 8, 10, 20]|?
 		\item \textbf{Suchen}: Vorgang, um ein Element in einer Menge von Daten \textit{effizient} zu finden.
 		\item Heute: \textbf{Binäre Suche}
@@ -73,14 +74,14 @@
 			\caption*{Schritt 2}
 		\end{figure}
 	}
-	% 
+	%
 	% \only<4>{
 	% \begin{figure}[H]
 	% \input{Grundlagen_Info/00_Programmieren/Python/binary_search_step_2-next.tex}
 	% \caption*{Schritt 2}
 	% \end{figure}
 	%  }
-	%  
+	%
 	%  \only<5>{
 	%  \begin{figure}[H]
 	%  \input{Grundlagen_Info/00_Programmieren/Python/binary_search_step_3.tex}
@@ -128,7 +129,8 @@ binaere_suche(meine_liste, ziel)
 \begin{frame}[fragile]{Auftrag}
 	\begin{itemize}
 		\item Moodle-Aufgaben \enquote{Kapitel 6: Binäre Suche}
-		\item \readbox{Beispiel 6.8}
-		\item \aufgabebox{Aufgabe 6.12-6.13}
+		\item \readbox{Beispiel 6.10}
+		\item \challengebox{Aufgaben 6.15 - 6.16}
+		\item \aufgabebox{Aufgaben 6.17 - 6.18}
 	\end{itemize}
 \end{frame}

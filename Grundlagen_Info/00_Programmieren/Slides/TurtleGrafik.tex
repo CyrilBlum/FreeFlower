@@ -1,7 +1,7 @@
 \begin{frame}
 	\centering
 	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
 	\end{figure}
 	Informatik: Programmieren\\
 	Weitere Möglichkeiten mit der Turtle\emoji{turtle}:\\
@@ -24,7 +24,7 @@ star()
 \end{frame}
 
 \begin{frame}[fragile]{\textcolor{ForestGreen}{Neue Farben \faStar}}
-	\begin{lstlisting}[numbers=none,style=python]
+	\begin{lstlisting}[numbers=none,style=python, basicstyle=\ttfamily\footnotesize]
 import turtle as t
 
 def star():
@@ -34,13 +34,15 @@ def star():
         t.forward(30)
         t.left(80)
 
-t.color(0,155,85)        
+t.colormode(255)
+t.color(0, 155, 85)
 star()
+t.done()
 \end{lstlisting}
-	\lstinline[numbers=none,style=python]|setPenColor(...)|:
+	\lstinline[numbers=none,style=python]|t.color(...)|:
 	\begin{itemize}
 		\item Vordefinierte Farbe auf Englisch, z.B. \lstinline[numbers=none,style=python]|t.color("green")|, \textit{mit} Anführungszeichen
-		\item \textcolor{red}{R}\textcolor{green}{G}\textcolor{blue}{B}-Code, z.B. \texttt{t.color(\textcolor{red}{0},\textcolor{green}{155},\textcolor{blue}{85})}, \textit{ohne} Anführungszeichen
+		\item \textcolor{red}{R}\textcolor{green}{G}\textcolor{blue}{B}-Code, z.B. \texttt{t.color(\textcolor{red}{0}, \textcolor{green}{155}, \textcolor{blue}{85})}, \textit{ohne} Anführungszeichen. Dafür braucht es vorher einmal \lstinline[numbers=none,style=python]|t.colormode(255)|.
 	\end{itemize}
 \end{frame}
 
@@ -48,11 +50,12 @@ star()
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}{.49\textwidth}
-			\includegraphics[width=\textwidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/rgb-farbmischung-1.jpg}
+			\includegraphics[width=\textwidth]{Grundlagen_Info/00_Programmieren/Figures/rgb-farbmischung-1.jpg}
 		\end{subfigure}
 		\begin{subfigure}{.49\textwidth}
-			\includegraphics[width=\textwidth]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/rgb-farbmischung-2.png}
+			\includegraphics[width=\textwidth]{Grundlagen_Info/00_Programmieren/Figures/rgb-farbmischung-2.png}
 		\end{subfigure}
+		{\tiny Links: Bb3cxv, \href{https://commons.wikimedia.org/wiki/File:RGB_illumination.jpg}{Wikimedia Commons}, CC BY-SA 3.0 (Ausschnitt). Rechts: SharkD, \href{https://commons.wikimedia.org/wiki/File:RGB_color_solid_cube.png}{Wikimedia Commons}, CC BY-SA 4.0\par}
 	\end{figure}
 	$\rightarrow$ Jede Farbe kodiert zwischen 0 und 255!
 	\only<2->{
@@ -61,9 +64,9 @@ star()
 		\red{10000000}\green{10000000}\blue{10000000} = \#\red{80}\green{80}\blue{80} = \red{128}\green{128}\blue{128} = grau}
 \end{frame}
 
-\begin{frame}[fragile]{\lstinline[style=python]|clear(farbe)|}
+\begin{frame}[fragile]{Hintergrundfarbe mit \lstinline[numbers=none,style=python]|bgcolor(farbe)|}
 	\begin{lstlisting}[style=python]
-import turtle as tabwin
+import turtle as t
 
 def star():
     for _ in range(6):
@@ -72,15 +75,16 @@ def star():
         t.forward(30)
         t.left(80)
 
-t.clear("blue")
+t.bgcolor("blue")
 star()
+t.done()
 \end{lstlisting}
 	\begin{itemize}
-		\item \lstinline[numbers=none,style=python]|t.clear(...)|: Hintergrund auf bestimmte Farbe setzen (Name oder RGB-Code)
+		\item \lstinline[numbers=none,style=python]|t.bgcolor(...)|: Hintergrund auf bestimmte Farbe setzen (Name oder RGB-Code)
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Flächen ausfüllen mit \lstinline[numbers=none,style=python]|fillPath()|}
+\begin{frame}[fragile]{Flächen ausfüllen mit \lstinline[numbers=none,style=python]|begin_fill()| und \lstinline[numbers=none,style=python]|end_fill()|}
 	\begin{lstlisting}[numbers=none,style=python]
 import turtle as t
 
@@ -91,15 +95,16 @@ def star():
         t.forward(30)
         t.left(80)
 
-t.clear("blue")
+t.bgcolor("blue")
 t.fillcolor("yellow")
 t.begin_fill()
 star()
 t.end_fill()
+t.done()
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Flächen ausfüllen mit \lstinline[numbers=none,style=python]|fillPath()|}
+\begin{frame}[fragile]{Flächen ausfüllen mit \lstinline[numbers=none,style=python]|begin_fill()| und \lstinline[numbers=none,style=python]|end_fill()|}
 	\begin{lstlisting}[numbers=none,style=python]
 import turtle as t
 
@@ -110,11 +115,13 @@ def star():
         t.forward(30)
         t.left(80)
 
-t.clear("blue") # blauer Hintergrund
+t.colormode(255)
+t.bgcolor(0, 0, 255) # blauer Hintergrund
 t.fillcolor(255, 255, 0) # gelber Stern
 t.begin_fill()
 star()
 t.end_fill()
+t.done()
 \end{lstlisting}
 \end{frame}
 
@@ -139,7 +146,7 @@ t.end_fill()
 	\end{figure}
 \end{frame}
 \begin{frame}[fragile]{Koordinatengrafik}
-	\begin{lstlisting}[style=python]
+	\begin{lstlisting}[style=python, basicstyle=\ttfamily\scriptsize]
 import turtle as t
 
 def star():
@@ -149,12 +156,15 @@ def star():
         t.forward(30)
         t.left(80)
 
-t.clear("blue")
+t.bgcolor("blue")
 t.fillcolor("yellow")
-t.setpos(20,100)
+t.penup() # ohne Strich zur neuen Position
+t.setpos(20, 100)
+t.pendown()
 t.begin_fill()
 star()
 t.end_fill()
+t.done()
 \end{lstlisting}
 \end{frame}
 %
@@ -170,22 +180,25 @@ def star():
         t.forward(10)
         t.left(80)
 
-t.clear("blue")
+t.bgcolor("blue")
 t.fillcolor("yellow")
+t.speed(0)
 for _ in range(50):
-    x = random.randint (-270, 270)
-    y = random.randint (-270, 270)
-    t.setpos(x,y)
+    x = random.randint(-270, 270)
+    y = random.randint(-270, 270)
+    t.penup()
+    t.setpos(x, y)
+    t.pendown()
     t.begin_fill()
     star()
     t.end_fill()
+t.done()
 \end{lstlisting}
 \end{frame}
 \begin{frame}{Turtle-Dokumentation \emoji{turtle}}
-	$\rightarrow$ Ausführliche Dokumentation: \href{https://jython.ch/index.php?inhalt_links=navigation.inc.php&inhalt_mitte=turtle/turtledoc.html}{Link}
+	$\rightarrow$ Ausführliche Dokumentation: \url{https://docs.python.org/3/library/turtle.html}
 	\begin{mycaution}
-		Nicht alle Befehle funktionieren! Immer zuerst testen auf \url{https://webtigerpython.ethz.ch} ($\rightarrow$ Prüfungs-Plattform!).
-
+		Verwenden Sie nur Befehle, die in dieser Dokumentation des Python-Moduls \lstinline[numbers=none,style=python]|turtle| stehen, und testen Sie Ihren Code immer zuerst in VS Code.
 	\end{mycaution}
 \end{frame}
 
@@ -194,7 +207,7 @@ for _ in range(50):
 		\item \emoji{switzerland} Zeichnen Sie ein Schweizer Kreuz (\textbf{Tipp}: zuerst ohne Farben, danach farbig).
 		\item Zeichnen Sie die Flagge vom Kanton Zürich (quadratisch). \includegraphics[width=0.1\linewidth]{Grundlagen_Info/00_Programmieren/Figures/Flag_of_Canton_of_Zürich}\definecolor{zhblue}{RGB}{0,112,180}
 		      \textcolor{zhblue}{(Farbe \enquote{Züri-Blau}: 0, 112, 180)}
-		\item Zeichnen Sie eine horizontal dreigeteilte Flagge (wie etwa die von Frankreich \emoji{flag-france} oder Italien \emoji{flag-italy}).
+		\item Zeichnen Sie eine senkrecht dreigeteilte Flagge (wie etwa die von Frankreich \emoji{flag-france} oder Italien \emoji{flag-italy}).
 		\item \textbf{Challenge}: Dasselbe wie Aufgabe 3, aber die Breite der Farben soll zufällig sein (bei jeder Ausführung anders).
 		\item \textbf{Challenge}: Dasselbe wie Aufgabe 3, aber die Breite der Farben sowie die Farben sollen zufällig sein (bei jeder Ausführung anders).
 	\end{enumerate}

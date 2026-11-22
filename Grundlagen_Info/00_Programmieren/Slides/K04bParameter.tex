@@ -3,7 +3,7 @@
 \begin{frame}
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Programmieren\\
     \emoji{abacus} Kapitel 04: \textbf{Parameter}
@@ -26,7 +26,7 @@ def quadrat_50():
 	for _ in range(4):
 		t.fd(50)
 		t.rt(90)
-		
+
 def quadrat_100():
 	for _ in range(4):
 		t.fd(100)
@@ -36,7 +36,7 @@ def quadrat_150():
 	for _ in range(4):
 		t.fd(150)
 		t.rt(90)
-		
+
 quadrat_50()
 quadrat_100()
 quadrat_150()
@@ -65,7 +65,7 @@ import turtle as t
 
 def quadrat(!\only<1>{laenge}\only<2->{\colorbox{CarnationPink}{la\tikzmark{arrowTo1}enge}}!):
 	for _ in range(4):
-		t.fd(!\only<1-2>{laenge}\only<3->{\colorbox{CarnationPink}{la\tikzmark{arrowTo2}enge}}!) 
+		t.fd(!\only<1-2>{laenge}\only<3->{\colorbox{CarnationPink}{la\tikzmark{arrowTo2}enge}}!)
 		t.rt(90)
 
 quadrat(!\only<1>{50}\only<2->{\colorbox{CarnationPink}{5\tikzmark{arrow1From}0}}!)
@@ -160,6 +160,12 @@ rechteck_farbig(...)
     \end{columns}
 \end{frame}
 
+\begin{frame}{Auftrag}
+    \begin{itemize}
+        \item \aufgabebox{Aufgaben 4.3-4.4}
+    \end{itemize}
+\end{frame}
+
 
 \begin{frame}[fragile]{Lebensdauer von Variablen (Scope)}
     \begin{columns}
@@ -204,8 +210,9 @@ print(y)  # Fehler!
 
 \begin{frame}[fragile]{Auftrag}%{Programmier-Skript}
     \begin{itemize}
-        % \item \aufgabebox{Aufgaben 4.3 - 4.6}
         % \item \aufgabebox{Moodle-Aufgaben \enquote{Kapitel 4 (Teil 2)}}
+        % Aufgaben 4.5-4.6 (Scope) gehören zur Scope-Folie oben
+        \item \aufgabebox{Aufgaben 4.5-4.6}
         \item Empfehlung: Erstellen und testen Sie den Code direkt in den \texttt{CodeRunner-Aufgaben}
         \item \aufgabebox{\enquote{Aufgaben Funktionen 2} auf Moodle}
         \item Zeit: 30 Minuten
@@ -226,7 +233,7 @@ print(y)  # Fehler!
     \end{lstlisting}
     \pause
     \vspace{0.3cm}
-    Ausgabe: 
+    Ausgabe:
     \begin{lstlisting}
         15
          5

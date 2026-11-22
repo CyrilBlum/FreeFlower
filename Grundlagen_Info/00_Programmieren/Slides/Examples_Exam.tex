@@ -1,7 +1,7 @@
 \begin{frame}
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Programmieren\\
     \textbf{Feedback zu Übungen} \emoji{nerd-face}
@@ -14,8 +14,8 @@
 
 \begin{table}[H]
 \scriptsize
-\begin{tabular}{c|c|c}
-\textbf{Aktion}&\textbf{Windows}&\textbf{MacOS}\\\midrule\midrule
+\begin{tabular}{ccc}
+\textbf{Aktion}&\textbf{Windows}&\textbf{MacOS}\\\midrule
 Ausschneiden &\keys{\ctrl + X}& \keys{\cmd + X}\\\midrule
 Kopieren &\keys{\ctrl + C}& \keys{\cmd + C}\\\midrule
 Einfügen &\keys{\ctrl + V}& \keys{\cmd + V}\\\midrule
@@ -36,38 +36,37 @@ Ausrücken & \keys{\shift + \tabwin}& \keys{\shift + \tab}
 
 \begin{table}[H]
 \scriptsize
-\begin{tabular}{p{3.5cm}|c|c}
-\textbf{Aktion}&\textbf{Windows}&\textbf{MacOS}\\\midrule\midrule
-Fenster wechseln & \keys{\ctrl + \tabwin} & \keys{\cmd + \tab}\\\midrule
+\begin{tabular}{p{3.5cm}cc}
+\textbf{Aktion}&\textbf{Windows}&\textbf{MacOS}\\\midrule
+Fenster wechseln & \keys{\Alt + \tabwin} & \keys{\cmd + \tab}\\\midrule
 Browser: Tab wechseln & \keys{\ctrl + (\shift) + \tabwin}, \keys{\ctrl + zahl} & \keys{\cmd + (\shift) + \tab} \keys{\cmd + zahl}\\\midrule
 Browser: Tab schliessen & \keys{\ctrl + W} & \keys{\cmd + W}\\\midrule
 Browser: Neuen Tab öffnen & \keys{\ctrl + T} & \keys{\cmd + T} \\\midrule
-Browser: Geschlossenen Tab wieder öffnen & \keys{\ctrl + \shift + T} & \keys{\ctrl + \shift + T}\\
+Browser: Geschlossenen Tab wieder öffnen & \keys{\ctrl + \shift + T} & \keys{\cmd + \shift + T}\\
 \end{tabular}
 \end{table}
 \end{frame}
 
-\begin{frame}[fragile]{Lektion 01: \lstinline|repeat|}
+\begin{frame}[fragile]{Lektion 01: Schleifen mit \lstinline|for _ in range(...)|}
 Welcher Code ist Ihnen lieber?
 
 \begin{minipage}[t]{.45\textwidth}
     \begin{lstlisting}
 import turtle as t
 
-for _ in range(1):
-    t.forward(25)
-    t.right(90)
-    t.forward(25)
-    t.left(90)
-    t.forward(25)
-    t.right(90)
-    t.forward(25)
-    t.left(90)
-    t.forward(25)
-    t.right(90)
-    t.forward(25)
-    t.left(90)
-    # ...
+t.forward(25)
+t.right(90)
+t.forward(25)
+t.left(90)
+t.forward(25)
+t.right(90)
+t.forward(25)
+t.left(90)
+t.forward(25)
+t.right(90)
+t.forward(25)
+t.left(90)
+# ...
 \end{lstlisting}
 \end{minipage}
 \begin{minipage}[t]{.45\textwidth}
@@ -103,7 +102,7 @@ for _ in range(6):
     t.right(90)
     t.fd(25)
     t.left(90)
-    
+
 t.hide!\tikzmark{from}!turtle()
 \end{lstlisting}
 
@@ -122,13 +121,13 @@ import turtle as t
 for _ in range(6):
 
     t.fd(25)
-    
+
     t.right(90)
-    
+
     t.fd(25)
-    
+
     t.left(90)
-    
+
 \end{lstlisting}
 
 \end{frame}
@@ -136,16 +135,16 @@ for _ in range(6):
 
 
 \begin{frame}[fragile]{Lektion 08}
-\tib{Aufgabe 3.38} (Reiskörner): Was könnte hier besser gemacht werden?
+\tib{Aufgabe 5.35} (Weizenkornlegende): Was könnte hier besser gemacht werden?
 \begin{lstlisting}
 def summe(anzahl, zahl):
     resultat = 0
-for _ in range(anzahl):
+    for _ in range(anzahl):
         print(zahl, resultat)
         resultat += zahl
         zahl*= 2
     print(resultat)
-    
+
 summe(63, 1)
 \end{lstlisting}
 \begin{itemize}
@@ -155,34 +154,34 @@ summe(63, 1)
 \end{frame}
 
 \begin{frame}[fragile]{Lektion 09}
-\tib{Aufgabe 3.40} (Wort $10\cdot 10$ mal drucken): Was könnte hier besser gemacht werden?
+\tib{Übung} (Wort $10\cdot 10$-mal drucken): Was könnte hier besser gemacht werden?
 \begin{lstlisting}
 import turtle as t
 
-makeTurtle()
 def druckewort(anzahl):
     wort = input("Welche Zahl?")
     for _ in range(anzahl):
         print(wort*10)
-        
+
 druckewort(10)
 \end{lstlisting}
 \begin{itemize}
-    \item Zeilen 1-3: Weshalb \lstinline|import turtle as t| und \lstinline|makeTurtle()|?
-    \item Zeile 4: Weshalb \lstinline|def|?
-    \item Zeile 5: Weshalb \lstinline|input("Welche Zahl")|?
+    \item Zeile 1: Weshalb \lstinline|import turtle as t|?
+    \item Zeile 3: Weshalb \lstinline|def|?
+    \item Zeile 4: Weshalb \lstinline|input("Welche Zahl?")|?
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile]{Lektion 10}
-\tib{Aufgabe 4.11}: Was könnte hier besser gemacht werden?\\[-.5cm]
-\begin{minipage}[t]{.49\textwidth}
-    \begin{lstlisting}
+\tib{Übung \enquote{Vieleck sicher}} (vgl. Aufgabe 5.5): Was könnte hier besser gemacht werden?\\[-.5cm]
+% \tiny-Listings wie auf der Folie \enquote{modularisieren}, damit die Folie nicht überläuft
+\begin{minipage}[t]{.45\textwidth}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 def vieleck(ecken,seite,farbe):
     t.color(farbe)
-for _ in range(ecken):
+    for _ in range(ecken):
         t.forward(seite)
         t.right(360/ecken)
 def vieleck_sicher(zahl):
@@ -190,21 +189,20 @@ def vieleck_sicher(zahl):
         vieleck(4,50,"red")
     if zahl ==2:
         vieleck(3,50,"green")
-    
-        
+
+
     if zahl ==3:
         vieleck(6,50,"blue")
-        
+
     else:
         print("Nur 1/2/3 gehen")
 
-makeTurtle()
-zahl =input("Zahl 1-10")
+zahl =int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 \end{lstlisting}
 \end{minipage}
-\begin{minipage}[t]{.49\textwidth}
-    \begin{lstlisting}
+\begin{minipage}[t]{.45\textwidth}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 
 def vieleck(ecken, seite, farbe):
@@ -223,36 +221,28 @@ def vieleck_sicher(zahl):
     else:
         print("Nur 1/2/3 gehen")
 
-makeTurtle()
-zahl=input("Zahl 1-10")
+zahl=int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 \end{lstlisting}
-\end{minipage}
-\begin{minipage}[c]{.45\textwidth}
     \begin{itemize}
-        \item Finde die 10 Unterschiede...
+        \item Finden Sie die 10 Unterschiede\ldots
+        \item Make it nice! \emoji{sparkles}
     \end{itemize}
-\end{minipage}
-\begin{minipage}[c]{.48\textwidth}
-    \begin{figure}[H]
-    \centering
-    \includegraphics[keepaspectratio, width=.25\paperwidth, height=\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-make_it_nice.jpeg}
-    \end{figure}
 \end{minipage}
 \end{frame}
 
 \begin{frame}[fragile]{Lektion 10}
-\tib{Aufgabe 4.11}: Was könnte hier besser gemacht werden?\\[-.5cm]
+\tib{Übung \enquote{Vieleck sicher}} (vgl. Aufgabe 5.5): Was könnte hier besser gemacht werden?\\[-.5cm]
 \begin{minipage}[t]{.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 
 def vieleck(ecken, seite, farbe):
     t.color(farbe)
-for _ in range(ecken):
+    for _ in range(ecken):
         t.forward(seite)
         t.right(360/ecken)
-        
+
 def vieleck_sicher(zahl):
     if zahl==1:
         vieleck(4,50, "red")
@@ -263,12 +253,12 @@ def vieleck_sicher(zahl):
     else:
         print("Nur 1/2/3 gehen")
 
-zahl=input("Zahl 1-10")
+zahl=int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 \end{lstlisting}
 \end{minipage}
 \begin{minipage}[t]{.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 
 def vieleck(ecken, farbe):
@@ -287,19 +277,11 @@ def vieleck_sicher(zahl):
     else:
         print("Nur 1/2/3 gehen")
 
-zahl=input("Zahl 1-10")
+zahl=int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 \end{lstlisting}
-\end{minipage}
-\begin{minipage}[c]{.3\textwidth}
-    \begin{figure}[H]
-    \centering
-    \includegraphics[keepaspectratio, width=.25\paperwidth, height=\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-make_it_nice.jpeg}
-    \end{figure}
-\end{minipage}
-\begin{minipage}[c]{.66\textwidth}
     \begin{itemize}
-        \item ... \& make it simple!
+        \item Make it nice \ldots{} \& make it simple! \emoji{sparkles}
         \item Ein Parameter, der immer den gleichen Wert annimmt, kann als Konstante geschrieben werden
     \end{itemize}
 \end{minipage}
@@ -307,17 +289,19 @@ vieleck_sicher(zahl)
 
 
 \begin{frame}[fragile]{Lektion 10}
-\tib{Aufgabe 4.11}: Was könnte hier besser gemacht werden?\\[-.5cm]
+% Suchauftrag: der linke Code enthält bewusst Fehler (leere def, turtle.done() statt t.done(), Farben bei zahl 2 und 3);
+% beide Codes verwenden if/if/else statt if/elif/else (bei zahl 1 und 2 erscheint zusätzlich "Nur 1/2/3 gehen")
+\tib{Übung \enquote{Vieleck sicher}} (vgl. Aufgabe 5.5): \textbf{Finden Sie die Fehler im linken Code!}\\[-.5cm]
 \begin{minipage}[t]{.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 
 def vieleck(ecken, seite, farbe):
-        
+
 def vieleck_sicher(zahl):
     if zahl==1:
         t.color("red")
-for _ in range(4):
+        for _ in range(4):
             t.forward(50)
             t.right(360/4)
     if zahl==2:
@@ -333,13 +317,14 @@ for _ in range(4):
     else:
         print("Nur 1/2/3 gehen")
 
-zahl=input("Zahl 1-10")
+zahl=int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 turtle.done()
 \end{lstlisting}
+    {\footnotesize\textbf{Zusatz:} Auch der rechte Code enthält noch einen Fehler. Was gibt er bei der Eingabe 1 aus?\par}
 \end{minipage}
 \begin{minipage}[t]{.45\textwidth}
-    \begin{lstlisting}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
 
 def vieleck(ecken, farbe):
@@ -358,60 +343,29 @@ def vieleck_sicher(zahl):
     else:
         print("Nur 1/2/3 gehen")
 
-zahl=input("Zahl 1-10")
+zahl=int(input("Zahl 1-10"))
 vieleck_sicher(zahl)
 t.done()
 \end{lstlisting}
-\end{minipage}
-\begin{minipage}[c]{.48\textwidth}
     \begin{itemize}
-        \item Code \tib{modularisieren}
+        \item Besser: Code \tib{modularisieren}
     \end{itemize}
-\end{minipage}
-\begin{minipage}[c]{.48\textwidth}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[keepaspectratio, width=.15\paperwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes.jpg}
-    \end{figure}
+    % Bild und Quelle nebeneinander, damit die Folie nicht überläuft
+    \begin{minipage}[c]{.35\linewidth}
+        \includegraphics[width=\linewidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{.6\linewidth}
+        {\tiny\raggedright Bild: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
+    \end{minipage}
 \end{minipage}
 \end{frame}
 
 \begin{frame}[fragile]{Lektion 10}
-\tib{Aufgabe 4.11}: Was könnte hier besser gemacht werden?\\[-.5cm]
+\tib{Übung \enquote{Drehendes Quadrat}}: Was könnte hier besser gemacht werden?\\[-.5cm]
 \begin{minipage}[t]{.49\textwidth}
     \begin{lstlisting}[basicstyle=\tiny\ttfamily]
 import turtle as t
-
-def quadrat():
-for _ in range(4):
-        t.forward(50)
-        t.right(90)
-        
-def drehen():
-    runden =input("Wie viele Runden?")
-for _ in range(runden):
-for _ in range(360):
-            t.width(1)
-            t.color("black")
-            quadrat()
-            delay(1)
-            t.width(10)
-            t.color("white")
-            quadrat()   
-            t.right(1)
-    
-makeTurtle()
-hideTurtle()
-drehen()
-\end{lstlisting}
-\begin{figure}[H]
-        \centering
-        \includegraphics[keepaspectratio, width=.13\paperwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-comment.jpg}
-    \end{figure}
-\end{minipage}
-\begin{minipage}[t]{.49\textwidth}
-    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
-import turtle as t
+import time
 
 def quadrat():
     for _ in range(4):
@@ -419,14 +373,44 @@ def quadrat():
         t.right(90)
 
 def drehen():
-    runden =input("Wie viele Runden?")
+    runden =int(input("Wie viele Runden?"))
+    for _ in range(runden):
+        for _ in range(360):
+            t.width(1)
+            t.color("black")
+            quadrat()
+            time.sleep(0.001)
+            t.width(10)
+            t.color("white")
+            quadrat()
+            t.right(1)
+
+t.hideturtle()
+drehen()
+\end{lstlisting}
+    \begin{center}
+        \emoji{pouting-cat} \textit{Okay, no comment.}
+    \end{center}
+\end{minipage}
+\begin{minipage}[t]{.49\textwidth}
+    \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+import turtle as t
+import time
+
+def quadrat():
+    for _ in range(4):
+        t.forward(50)
+        t.right(90)
+
+def drehen():
+    runden =int(input("Wie viele Runden?"))
     for _ in range(runden):
         for _ in range(360):
             # quadrat malen
             t.width(1)
             t.color("black")
             quadrat()
-            delay(1) # 1 ms warten
+            time.sleep(0.001) # 1 ms warten
             # quadrat auslöschen
             t.width(10)
             t.color("white")
@@ -434,6 +418,7 @@ def drehen():
             # nach rechts drehen
             t.right(1)
 
+t.hideturtle()
 drehen()
 \end{lstlisting}
 \end{minipage}
@@ -448,13 +433,15 @@ drehen()
         \item gut dokumentiert mit \textbf{Kommentaren}
         \item \textbf{verständlich} und enthält \textbf{selbst-erklärende} Variablen- und Funktionen-Namen
     \end{itemize}
+    % Emojis (Noto Color Emoji) statt der früheren Meme-Bilder ohne klare Lizenz
     \begin{figure}[H]
         \centering
-        \includegraphics[keepaspectratio, height=.15\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-make_it_nice.jpeg}
-        \includegraphics[keepaspectratio, height=.15\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes.jpg}
-        \includegraphics[keepaspectratio, height=.15\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-comment.jpg}
-        \includegraphics[keepaspectratio, height=.15\paperheight]{Grundlagen_Info/00_Programmieren/Figures/prog-confused.jpg}
+        \resizebox{!}{.12\paperheight}{\emoji{sparkles}}\quad
+        \includegraphics[keepaspectratio, height=.15\paperheight]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}\quad
+        \resizebox{!}{.12\paperheight}{\emoji{pouting-cat}}\quad
+        \resizebox{!}{.12\paperheight}{\emoji{confused-face}}
     \end{figure}
+    {\tiny Koffer: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
 \end{frame}
 
 

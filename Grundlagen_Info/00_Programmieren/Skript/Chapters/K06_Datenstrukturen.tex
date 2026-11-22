@@ -17,7 +17,7 @@ In der Informatik ist es jedoch oft nötig, mit vielen Werten gleichzeitig arbei
 \begin{myexample}[Listen erstellen]
 	Folgendes Beispiel zeigt, wie eine Liste in Python definiert wird. Wir können dabei, wie auch bei anderen Variablentypen, beliebige Namen verwenden. Die Inhalte der Liste werden in eckigen Klammern \lstinline|[]| geschrieben und die einzelnen Werte werden durch Kommas \lstinline|,| getrennt.
 	\begin{lstlisting}
-# Liste, die nur Zahlen enthält 
+# Liste, die nur Zahlen enthält
 liste_1 = [1, 2, 3, 4, 5]
 # Liste, die nur Strings enthält
 liste_2 = ["Hallo", "Welt", "Python"]
@@ -36,8 +36,8 @@ a = [1, 2, 3, 4, 5]
 print(a[0]) # gibt 1 aus
 # Zugriff auf das zweite Element der Liste
 print(a[1]) # gibt 2 aus
-# Zugriff auf das letzte Element der Liste
-print(a[-1])
+# Zugriff auf das letzte Element der Liste (negativer Index)
+print(a[-1]) # gibt 5 aus
 \end{lstlisting}
 \end{myexample}
 \begin{myexample}[Listen-Werte verändern]
@@ -71,18 +71,18 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 	\end{minipage}
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c|c|c|c}
-			\textbf{Durchlauf}    & \lstinline|i|    & \lstinline|daten[i]| & \lstinline|summe| \\\midrule\midrule
+		\begin{tabular}{cccc}
+			\textbf{Durchlauf}    & \lstinline|i|    & \lstinline|daten[i]| & \lstinline|summe| \\\midrule
 			1. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
-			1. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule\midrule
+			1. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			2. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
-			2. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule\midrule
+			2. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			3. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
-			3. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule\midrule
+			3. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			4. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
-			4. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule\midrule
+			4. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			5. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
-			5. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule\midrule
+			5. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			6. Durchlauf (Anfang) & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\\midrule
 			6. Durchlauf (Ende)   & \smallField{1cm} & \smallField{1cm}     & \smallField{1cm}  \\
 		\end{tabular}
@@ -93,18 +93,18 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 		\begin{table}[H]
 			\centering
 
-			\begin{tabular}{c|c|c|c}
-				\textbf{Durchlauf}    & \lstinline|i| & \lstinline|daten[i]|             & \lstinline|summe| \\\midrule\midrule
+			\begin{tabular}{cccc}
+				\textbf{Durchlauf}    & \lstinline|i| & \lstinline|daten[i]|             & \lstinline|summe| \\\midrule
 				1. Durchlauf (Anfang) & 0             & 4                                & 0                 \\\midrule
-				1. Durchlauf (Ende)   & 1             & 2                                & 4                 \\\midrule\midrule
+				1. Durchlauf (Ende)   & 1             & 2                                & 4                 \\\midrule
 				2. Durchlauf (Anfang) & 1             & 2                                & 4                 \\\midrule
-				2. Durchlauf (Ende)   & 2             & -6                               & 6                 \\\midrule\midrule
+				2. Durchlauf (Ende)   & 2             & -6                               & 6                 \\\midrule
 				3. Durchlauf (Anfang) & 2             & -6                               & 6                 \\\midrule
-				3. Durchlauf (Ende)   & 3             & 17                               & 0                 \\\midrule\midrule
+				3. Durchlauf (Ende)   & 3             & 17                               & 0                 \\\midrule
 				4. Durchlauf (Anfang) & 3             & 17                               & 0                 \\\midrule
-				4. Durchlauf (Ende)   & 4             & 5                                & 17                \\\midrule\midrule
+				4. Durchlauf (Ende)   & 4             & 5                                & 17                \\\midrule
 				5. Durchlauf (Anfang) & 4             & 5                                & 17                \\\midrule
-				5. Durchlauf (Ende)   & 5             & 12                               & 22                \\\midrule\midrule
+				5. Durchlauf (Ende)   & 5             & 12                               & 22                \\\midrule
 				6. Durchlauf (Anfang) & 5             & 12                               & 22                \\\midrule
 				6. Durchlauf (Ende)   & 6             & \textcolor{red}{\texttt{Error!}} & 34                \\
 			\end{tabular}
@@ -113,7 +113,7 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 \end{myexercise}
 
 \begin{myexercise}[Index am Ende der Schleife]
-	Am Ende des Codes in \cref{myexample:summe} hat die Variable \lstinline|i| den Wert 6, obschon die Liste nur 6 Elemente hat. Erklären Sie, weshalb dies so ist. Ist das ein Problem? Warum oder warum nicht?
+	Am Ende des Codes in \cref{myexample:summe} hat die Variable \lstinline|i| den Wert 6, obschon der letzte Index der Liste 5 ist. Erklären Sie, weshalb dies so ist. Ist das ein Problem? Warum oder warum nicht?
 	\begin{myanswer}
 		Die Variable \lstinline|i| wird in der Schleife von 0 bis 5 erhöht, um auf die Indizes der Liste zuzugreifen. Nachdem die Schleife den letzten Index (5) erreicht hat, wird \lstinline|i| erneut um 1 erhöht, wodurch sie den Wert 6 annimmt. Dies ist kein Problem, da die Schleife bereits alle Elemente der Liste durchlaufen hat und der Wert von \lstinline|i| nach der Schleife nicht mehr verwendet wird.
 	\end{myanswer}
@@ -155,8 +155,8 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 	Das Skalarprodukt wird in vielen Lebensbereichen verwendet, z.B. in der Mathematik, Physik und Informatik. Im Alltag begegnen wir dem Skalarprodukt häufig in der Finanzwelt, z.B. bei der Berechnung des Gesamtpreises von Produkten: %
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c||c|c}
-			\textbf{Produkt} & \textbf{Menge} \lstinline|m| & \textbf{Preis} \lstinline|p| \\\midrule\midrule
+		\begin{tabular}{ccc}
+			\textbf{Produkt} & \textbf{Menge} \lstinline|m| & \textbf{Preis} \lstinline|p| \\\midrule
 			\emoji{banana}   & 800 g                        & 2.- / kg                     \\\midrule
 			\emoji{apple}    & 1200 g                       & 2.50 / kg                    \\\midrule
 			\emoji{peach}    & 2300 g                       & 5.- / kg                     \\
@@ -165,7 +165,7 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 
 	Schreiben Sie eine Funktion, die das Skalarprodukt zweier Listen berechnet. Das Skalarprodukt ist die Summe der Produkte der jeweils entsprechenden Elemente beider Listen. Beispiel: Für die Listen \lstinline|m = [0.8, 1.2, 2.3]| (in kg) und \lstinline|p = [2.0, 2.5, 5.0]| (Preis pro kg) berechnet das Skalarprodukt den Gesamtpreis.
 
-	Wie berechnen wir den \textbf{Gesamtpreis?} Dies kann mit dem \textbf{Skalarprodukt} gemacht werden: \lstinline|m[0] * p[0] + m[1] * p[1] + ... + m[-1] * p[-1]|. Zur Erinnerung: \lstinline|m[-1]| gibt uns das letzte (hinterste) Element der Liste \lstinline|m|.\footnote{Alternativ können wir anstelle von \lstinline|m[-1]| auch \lstinline|m[len(m) - 1]|}
+	Wie berechnen wir den \textbf{Gesamtpreis?} Dies kann mit dem \textbf{Skalarprodukt} gemacht werden: \lstinline|m[0] * p[0] + m[1] * p[1] + ... + m[-1] * p[-1]|. Zur Erinnerung: \lstinline|m[-1]| gibt uns das letzte (hinterste) Element der Liste \lstinline|m|.\footnote{Alternativ können wir anstelle von \lstinline|m[-1]| auch \lstinline|m[len(m) - 1]| verwenden.}
 
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{skalarprodukt.py},label=listing:skalarprodukt]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/skalarprodukt.py}
@@ -218,9 +218,9 @@ Listen erfüllen vielfältige Aufgaben in der Informatik. Sie können verwendet 
 
 	\begin{lstlisting}
 # Preise in Franken
-liste_preise = [39.95, 65.95, 66.95, 76.95, 9.95, 10.95, 13.95] 
+liste_preise = [39.95, 65.95, 66.95, 76.95, 9.95, 10.95, 13.95]
 # Rabatte in Prozent
-liste_rabatte = [30, 40, 30, 35, 20, 15, 35] 
+liste_rabatte = [30, 40, 30, 35, 20, 15, 35]
 \end{lstlisting}
 
 	Das Beispiel bedeutet, dass das erste Produkt nicht 39.95, sondern 30 \% weniger als 39.95 kosten sollte, also 70 \% von 39.95 = 27.965.
@@ -242,13 +242,10 @@ preis_rabattiert = preis_ohne_rabatt * (100 - rabatt_prozent) / 100
 		\item \lstinline|l_kcal|: Liste der Kalorien pro 100 Gramm (bzw. 100 Milliliter) für das Sandwich und den Energy-Drink.
 		\item \lstinline|l_gramm|: Liste der Mengen in Gramm, bzw. Milliliter für das Sandwich und den Energy-Drink.
 	\end{itemize}
-	Die Nährwert-Informationen entnehmen Sie dem Bild \cref{fig:lunch-kcal}
+	Die Nährwert-Informationen entnehmen Sie \cref{fig:lunch-kcal}.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[height=0.2\paperheight]{Grundlagen_Info/00_Programmieren/Figures/el-tony-mate-ginger.png}
-		\includegraphics[height=0.2\paperheight]{Grundlagen_Info/00_Programmieren/Figures/el-tony-kcal}
-		\includegraphics[height=0.2\paperheight]{Grundlagen_Info/00_Programmieren/Figures/sandwich}
-		\includegraphics[height=0.2\paperheight]{Grundlagen_Info/00_Programmieren/Figures/sandwich-back}
+		\input{Grundlagen_Info/00_Programmieren/Figures/tikz_mittagessen.tex}
 		\caption{Mittagessen und dazugehörige Kalorien-Informationen}
 		\label{fig:lunch-kcal}
 	\end{figure}
@@ -284,11 +281,17 @@ Eine der häufigsten Anwendungen in der Informatik ist das Sortieren von Daten. 
 				\input{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/tikz/bubble_sort_steps/step_\step}
 			\end{subfigure}
 		}
-	\caption{Bubble-Sort-Algorithmus (erste 8 Schritte)}
+	\caption{Bubble-Sort-Algorithmus (erste 12 Schritte)}
 	\label{fig:bubble-sort}
 \end{figure}
 
 Folgender Code zeigt, wie der Bubble-Sort-Algorithmus in Python implementiert werden kann. Der Algorithmus wird in einer Funktion \lstinline|bubble_sort| definiert, die eine Liste von Zahlen als Eingabe erhält und die sortierte Liste zurückgibt. Die Funktion verwendet eine Schleife, um die Liste zu durchlaufen und benachbarte Werte zu vergleichen. Wenn ein Wert grösser ist als der nächste Wert, werden die beiden Werte vertauscht. Dieser Vorgang wird so lange wiederholt, bis die gesamte Liste sortiert ist.
+
+In der einfachsten (nicht optimierten) Variante vergleicht die innere Schleife bei jedem Durchgang alle $n-1$ Nachbarpaare der Liste:
+
+\lstinputlisting[language=Python,caption=\texttt{bubble\_sort\_einfach.py},label=listing:bubble_sort_einfach]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/bubble_sort_einfach.py}
+
+Nach dem ersten Durchgang der äusseren Schleife steht das grösste Element ganz rechts, nach dem zweiten Durchgang das zweitgrösste an der zweitletzten Stelle und so weiter. Diese Elemente müssen nicht mehr verglichen werden. In der optimierten Variante wird die innere Schleife deshalb nach jedem Durchgang um 1 kürzer (\lstinline|range(len(liste) - 1 - i)|):
 
 \lstinputlisting[language=Python,caption=\texttt{bubble\_sort\_w\_comments.py},label=listing:bubble_sort_w_comments]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/bubble_sort_w_comments.py}
 \begin{myexercise}
@@ -306,15 +309,15 @@ Folgender Code zeigt, wie der Bubble-Sort-Algorithmus in Python implementiert we
 
 \subsubsection{Zeitkomplexität}
 
-Um zu verstehen, wie lange ein Algorithmus benötigt, um eine Aufgabe zu lösen, ist es wichtig, die Zeitkomplexität des Algorithmus zu analysieren. Wenn ein Algorithmus beispielsweise mit grösserwerdender Anzahl Zahlen im Quadrat länger dauert, ist dies viel ungünstiger als ein Algorithmus, der so lange dauert, wie die Anzahl der Zahlen. In der Informatik wird die Zeitkomplexität eines Algorithmus oft in Bezug auf die Eingabegrösse angegeben, um zu verstehen, wie sich die Laufzeit des Algorithmus mit zunehmender Eingabegrösse verändert. Im vorliegenden Fall ist die Eingabegrösse die Anzahl der Werte in der Liste, die sortiert werden soll.
+Um zu verstehen, wie lange ein Algorithmus benötigt, um eine Aufgabe zu lösen, ist es wichtig, die Zeitkomplexität des Algorithmus zu analysieren. Wenn ein Algorithmus beispielsweise mit grösser werdender Anzahl Zahlen im Quadrat länger dauert, ist dies viel ungünstiger als ein Algorithmus, der so lange dauert, wie die Anzahl der Zahlen. In der Informatik wird die Zeitkomplexität eines Algorithmus oft in Bezug auf die Eingabegrösse angegeben, um zu verstehen, wie sich die Laufzeit des Algorithmus mit zunehmender Eingabegrösse verändert. Im vorliegenden Fall ist die Eingabegrösse die Anzahl der Werte in der Liste, die sortiert werden soll.
 
-Der Bubble-Sort-Algorithmus verwendet zwei verschachtelte Schleifen: die äussere Schleife durchläuft die Liste $n-$ Mal, und die innere Schleife durchläuft die Liste ebenfalls $n-1$ Mal, um die benachbarten Werte zu vergleichen und zu vertauschen. Die gesamte Anzahl der Vergleiche, die der Algorithmus durchführt, ist also $(n-1)^2$. Durch Umformung dieser Gleichung erhalten wir:
+Der Bubble-Sort-Algorithmus verwendet zwei verschachtelte Schleifen: die äussere Schleife durchläuft die Liste $n-1$ Mal, und die innere Schleife durchläuft die Liste ebenfalls $n-1$ Mal, um die benachbarten Werte zu vergleichen und zu vertauschen. Die gesamte Anzahl der Vergleiche, die der Algorithmus durchführt, ist also $(n-1)^2$. Durch Umformung dieser Gleichung erhalten wir:
 \[(n-1)^2=\colorbox{yellow}{\ensuremath{n^2}}-2n+1\]
 Wir erkennen, dass bei sehr grossen Werten von $n$ die quadratische Komponente $\colorbox{yellow}{\ensuremath{n^2}}$ dominiert, während die lineare Komponente $-2n$ und die Konstante $1$ im Vergleich vernachlässigbar werden. Daher wird die Zeitkomplexität des Bubble-Sort-Algorithmus als $O(n^2)$ ausgedrückt (s. \cref{mydefinition:big_o_notation}).
 
 \begin{mydefinition}[Big-O-Notation]
 	\label{mydefinition:big_o_notation}
-	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ (\enquote{Big O von f von n}) angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
+	Die Laufzeit eines Algorithmus wird oft mit der sogenannten \textbf{Big-O-Notation} angegeben, die die Wachstumsrate der Laufzeit in Bezug auf die Eingabegrösse beschreibt. Dabei wird die Laufzeit in der Form $O(f(n))$ (\enquote{Big O von f von n}) angegeben, wobei $f(n)$ eine Funktion ist, die die Anzahl der Schritte beschreibt, die der Algorithmus benötigt, um eine Eingabe der Grösse $n$ zu verarbeiten.
 
 	In der Big-O-Notation werden nur die dominanten Terme berücksichtigt, da sie den Hauptfaktor für das Wachstum der Laufzeit darstellen. Im Fall von Bubble Sort dominiert die quadratische Komponente ($n^2$), wenn $n$ sehr gross wird. Daher wird die Laufzeit des Algorithmus als $O(n^2)$ ausgedrückt. Entscheidend ist nur der Term, der das Wachstum der Laufzeit dominiert, und in diesem Fall ist es die quadratische Komponente $n^2$.
 
@@ -323,11 +326,11 @@ Wir erkennen, dass bei sehr grossen Werten von $n$ die quadratische Komponente $
 		\item $O(1)$: konstante Laufzeit, unabhängig von der Eingabegrösse
 		\item $O(\log n)$: logarithmische Laufzeit, z.B. bei binärer Suche
 		\item $O(n)$: lineare Laufzeit, z.B. bei einfacher Iteration durch eine Liste
-		\item $O(n \log n)$: lineare-logarithmische Laufzeit, z.B. bei effizienten Sortieralgorithmen wie Mergesort oder Quicksort
+		\item $O(n \log n)$: linear-logarithmische Laufzeit, z.B. bei effizienten Sortieralgorithmen wie Mergesort oder Quicksort
 		\item $O(n^2)$: quadratische Laufzeit, z.B. bei einfachen Sortieralgorithmen wie Bubble Sort oder Insertion Sort
 		\item $O(n^3)$: kubische Laufzeit, z.B. bei bestimmten Algorithmen für Matrizenmultiplikation
 		\item $O(2^n)$: exponentielle Laufzeit, z.B. bei bestimmten rekursiven Algorithmen
-		\item $O(n!)$: faktoriale Laufzeit, z.B. bei bestimmten Brute-Force-Algorithmen
+		\item $O(n!)$: faktorielle Laufzeit, z.B. bei bestimmten Brute-Force-Algorithmen
 	\end{itemize}
 
 	Einige dieser Laufzeiten sind in \cref{fig:big-o-complexities} grafisch dargestellt, um die Unterschiede in der Wachstumsrate zu verdeutlichen.
@@ -347,7 +350,7 @@ Wir erkennen, dass bei sehr grossen Werten von $n$ die quadratische Komponente $
 		\item \textbf{nicht optimierte Version:} Da wir zwei verschachtelte Schleifen haben, die je $n-1$ Durchläufe machen, beträgt die Anzahl der Vergleiche \[(n-1)^2\]
 		      Das bedeutet: Für eine Liste mit 6 Elementen sind das $5^2 = 25$ Vergleiche.
 		      Die Anzahl der Vergleiche beträgt \[(n-1)^2 = \colorbox{yellow}{\ensuremath{n^2}} - 2n + 1\]
-		      In der Big O-Notation wird dies als $O(n^2)$ ausgedrückt, da die quadratische Komponente $n^2$ dominiert, wenn $n$ sehr gross wird.
+		      In der Big-O-Notation wird dies als $O(n^2)$ ausgedrückt, da die quadratische Komponente $n^2$ dominiert, wenn $n$ sehr gross wird.
 		\item \textbf{optimierte Version:}
 		      In der optimierten Version wird die innere Schleife nach jedem Durchlauf der äusseren Schleife um 1 verkleinert, da das grösste Element nach jedem Durchlauf an die richtige Position verschoben wird. Daher werden im ersten Durchlauf $n-1$ Vergleiche durchgeführt, im zweiten Durchlauf $n-2$ Vergleiche, und so weiter, bis im letzten Durchlauf nur noch 1 Vergleich durchgeführt wird. Die Anzahl der Vergleiche entspricht daher der Summe der Zahlen von 1 bis $n-1$. Für eine Liste mit 6 Elementen ergibt das also beispielsweise $\displaystyle\sum_{m=1}^{5} m = 1 + 2 + 3 + 4 + 5 = 15$ Vergleiche.
 
@@ -390,10 +393,10 @@ Ist die Liste jedoch bereits sortiert, wie zum Beispiel bei \lstinline|x = [2, 3
 
 \begin{figure}[H]
 	\centering
-	\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}}
+	\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_messy.jpg}}
 	\raisebox{-0.5\height}{$\rightarrow$}
-	\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}}
-	\caption{Unordentlich gepackter Koffer vs. ordentlich gepackter Koffer}
+	\raisebox{-0.5\height}{\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/suitcase_packed.jpg}}
+	\caption[Unordentlich gepackter Koffer vs. ordentlich gepackter Koffer]{Unordentlich gepackter Koffer vs. ordentlich gepackter Koffer. \href{https://commons.wikimedia.org/wiki/File:Messy_Suitcase_Packing_for_a_Holiday.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Familydestinationsguide.com Images, CC BY 2.0]}, \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{\color{RoyalBlue}\scriptsize[Quelle: Familydestinationsguide.com Images, CC BY 2.0]}}
 	\label{fig:koffer-suche}
 \end{figure}
 
@@ -428,12 +431,12 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{l|c|c|c}
+	\begin{tabular}{lccc}
 		\diagbox[innerwidth=2.5cm]{\textbf{Code}}{\textbf{Variable}}
 		                              & \texttt{links}
 		                              & \texttt{mitte}
 		                              & \texttt{rechts}      \\
-		\midrule\midrule
+		\midrule
 		\textbf{1. \lstinline|while|} &                 &  & \\\midrule
 		\textbf{2. \lstinline|while|} &                 &  & \\\midrule
 		\textbf{3. \lstinline|while|} &                 &  & \\\midrule
@@ -444,13 +447,13 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 \end{table}
 
 \begin{myexample}
-	Wir können für folgende Liste \lstinline|[4, 8, 9, 11, 15, 23, 42]| die binäre Suche verwenden. Der Code sucht nach der Zahl \lstinline|9| und gibt den Index der Zahl in der Liste zurück. Wir evaluieren jeweils die Werte der Variablen \texttt{links}, \texttt{mitte} und \texttt{rechts} nach Zeile 9, um den Ablauf des Codes zu verstehen. Die Tabelle \cref{tab:binarySearchEx} zeigt die Werte der Variablen nach jedem Schritt der Schleife.
+	Wir können für folgende Liste \lstinline|[4, 8, 9, 11, 15, 23, 42]| die binäre Suche verwenden. Der Code sucht nach der Zahl \lstinline|9| und gibt den Index der Zahl in der Liste zurück. Wir evaluieren jeweils die Werte der Variablen \texttt{links}, \texttt{mitte} und \texttt{rechts} nach Zeile 9, um den Ablauf des Codes zu verstehen. \cref{tab:binarySearchEx} zeigt die Werte der Variablen nach jedem Schritt der Schleife.
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{l|c|c|c}
+		\begin{tabular}{lccc}
 			\diagbox[innerwidth=2.5cm]{\textbf{Code}}{\textbf{Variable}}
 			                              & \texttt{links} & \texttt{mitte} & \texttt{rechts} \\
-			\midrule\midrule
+			\midrule
 			\textbf{1. \lstinline|while|} & 0              & 3              & 6               \\\midrule
 			\textbf{2. \lstinline|while|} & 0              & 1              & 2               \\\midrule
 			\textbf{3. \lstinline|while|} & 2              & 2              & 2               \\\midrule
@@ -469,7 +472,7 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 \end{myremark}
 
 \begin{mychallenge}[Laufzeit der linearen und binären Suche]
-	Wie viele Vergleiche müssen im schlimmsten Fall bei einer linearen Suche durchgeführt werden, um ein Element in einer Liste der Länge $100$ zu finden? Wie viele Vergleiche müssen im schlimmsten Fall bei einer binären Suche durchgeführt werden, um ein Element in einer Liste der Länge $1000$ zu finden? Berechnen Sie die Anzahl der Vergleiche für beide Suchverfahren und vergleichen Sie die Ergebnisse.
+	Wie viele Vergleiche müssen im schlimmsten Fall bei einer linearen Suche durchgeführt werden, um ein Element in einer Liste der Länge $100$ bzw. $1000$ zu finden? Wie viele Vergleiche sind es im schlimmsten Fall bei einer binären Suche für dieselben Listenlängen? Berechnen Sie die Anzahl der Vergleiche für beide Suchverfahren und vergleichen Sie die Ergebnisse.
 	\begin{myanswer}
 		\begin{itemize}
 			\item \textbf{lineare Suche:} Im schlimmsten Fall müssen alle Elemente der Liste überprüft werden, um das gesuchte Element zu finden. Daher beträgt die Anzahl der Vergleiche $100$ für eine Liste der Länge $100$ bzw. $1000$ für eine Liste der Länge $1000$.
@@ -479,7 +482,7 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 \end{mychallenge}
 
 \begin{mychallenge}[Laufzeitkomplexität eines Codes analysieren]
-	Betrachten Sie folgenden Codes, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
+	Betrachten Sie folgenden Code, der eine Liste von Zahlen gegenüber einer anderen Liste von Zahlen überprüft und die Anzahl der gemeinsamen Elemente zählt. Analysieren Sie die Laufzeitkomplexität dieses Codes in Bezug auf die Länge der beiden Listen. Die Länge der ersten Liste wird mit $n$ und die Länge der zweiten Liste mit $m$ bezeichnet.
 	\lstinputlisting[language=Python,caption=\texttt{count\_common\_elements.py},label=listing:count_common_elements]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/count_common_elements.py}
 	\begin{myanswer}
 		Die Laufzeitkomplexität dieses Codes ist $O(n \cdot m)$, wobei $n$ die Länge der ersten Liste (\lstinline|liste1|) und $m$ die Länge der zweiten Liste (\lstinline|liste2|) ist. Dies liegt daran, dass der Code zwei verschachtelte Schleifen verwendet: Die äussere Schleife durchläuft jedes Element in \lstinline|liste1| (was $n$ Schritte erfordert), und für jedes Element in \lstinline|liste1| durchläuft die innere Schleife jedes Element in \lstinline|liste2| (was $m$ Schritte erfordert). Daher multiplizieren sich die Anzahl der Schritte der beiden Schleifen, was zu einer Gesamtzahl von $n \cdot m$ Schritten führt.
@@ -493,6 +496,30 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 		\item 6
 	\end{enumerate}
 	Zeichnen Sie eine Zeit-Tabelle wie in \cref{tab:binarySearch} und überprüfen Sie Ihre Resultate, indem Sie zwischen den Zeilen 9 und 10 \lstinline|print|-Befehle verwenden, um die Werte von \lstinline|links|, \lstinline|mitte| und \lstinline|rechts| auszugeben.
+	\begin{myanswer}
+		Werte jeweils nach Zeile 9:
+		\begin{center}
+			\begin{tabular}{lccc}
+				\multicolumn{4}{c}{\textbf{Gesucht: -20}}                                  \\
+				                              & \texttt{links} & \texttt{mitte} & \texttt{rechts} \\\midrule
+				\textbf{1. \lstinline|while|} & 0              & 4              & 9               \\\midrule
+				\textbf{2. \lstinline|while|} & 0              & 1              & 3               \\\midrule
+				\textbf{3. \lstinline|while|} & 0              & 0              & 0               \\\midrule
+				\multicolumn{4}{c}{Gefunden an Position 0}
+			\end{tabular}
+			\hspace{1cm}
+			\begin{tabular}{lccc}
+				\multicolumn{4}{c}{\textbf{Gesucht: 6}}                                     \\
+				                              & \texttt{links} & \texttt{mitte} & \texttt{rechts} \\\midrule
+				\textbf{1. \lstinline|while|} & 0              & 4              & 9               \\\midrule
+				\textbf{2. \lstinline|while|} & 5              & 7              & 9               \\\midrule
+				\textbf{3. \lstinline|while|} & 5              & 5              & 6               \\\midrule
+				\textbf{4. \lstinline|while|} & 6              & 6              & 6               \\\midrule
+				\multicolumn{4}{c}{Nicht gefunden}
+			\end{tabular}
+		\end{center}
+		Bei der Suche nach 6 ist nach dem 4.~Durchlauf \lstinline|rechts = 5| und \lstinline|links = 6|. Die Bedingung \lstinline|links <= rechts| ist falsch, die Schleife endet und es wird nichts ausgegeben, da 6 nicht in der Liste vorkommt.
+	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
@@ -505,7 +532,7 @@ Bei solchen, etwas komplexeren Codes, kann es nützlich sein, sich die Entwicklu
 
 \subsection{Listen verändern}
 
-Häufig müssen Listen verändert werden, beispielsweise um Elemente hinzuzufügen oder zu entfernen, oder um diese neu zu ordnen. Python bietet hierfür verschiedene Methoden an. Methoden sind Funktionen, die auf bestimmte Variablen angewandt werden. In \ref{sec:classes} werden wir lernen, wie Methoden definiert werden können. Hier lernen wir einige vordefinierte Methoden für Listen kennen.
+Häufig müssen Listen verändert werden, beispielsweise um Elemente hinzuzufügen oder zu entfernen, oder um diese neu zu ordnen. Python bietet hierfür verschiedene Methoden an. Methoden sind Funktionen, die auf bestimmte Variablen angewandt werden. In \cref{sec:classes} werden wir lernen, wie Methoden definiert werden können. Hier lernen wir einige vordefinierte Methoden für Listen kennen.
 
 \begin{mydefinition}[Listen verändern]
 	Listen können in Python dynamisch verändert werden, indem Elemente hinzugefügt oder entfernt werden. Einige der wichtigsten Methoden sind:
@@ -544,7 +571,7 @@ meine_liste = [1, 2, 3]
 
 
 
-print(meine_liste)  # Ausgabe: [1, 2, 3, 4]	
+print(meine_liste)  # Ausgabe: [1, 2, 3, 4]
 	\end{lstlisting}
 		\begin{tikzpicture}[overlay,remember picture]
 			% Wert übergeben
@@ -555,7 +582,7 @@ print(meine_liste)  # Ausgabe: [1, 2, 3, 4]
 	\end{minipage}
 	Eine Methode hat als ersten Parameter immer das Objekt, auf dem sie angewendet wird (in diesem Fall \lstinline|meine_liste|), obschon dieser Parameter in der Methode nicht explizit (in einer Klammer) übergeben wird. Weitere Parameter können zusätzlich übergeben werden, wie zum Beispiel die Zahl \lstinline|4| in diesem Fall. Im obigen Beispiel wären die Parameter der \lstinline|append|-Methode also \lstinline|meine_liste| und \lstinline|4|.
 
-	Speziell an Methoden ist, dass sie das Objekt, auf dem sie angewendet werden, verändern können, ohne dass ein Gleichzeichen benötigt wird.
+	Speziell an Methoden ist, dass sie das Objekt, auf dem sie angewendet werden, verändern können, ohne dass ein Gleichheitszeichen benötigt wird.
 \end{mydefinition}
 
 
@@ -574,7 +601,7 @@ print(meine_liste)  # Ausgabe: [1, 2, 3, 4]
 		\begin{lstlisting}
 zahlen = []
 i = 1
-for _ in range(6):
+for _ in range(5):
     zahlen.append(i)
     i += 1
 zahlen.pop(2)  # entfernt die 3
@@ -623,8 +650,8 @@ print(zahlen)  # [1, 2, 4, 5]
 	\begin{itemize}
 		\item Erstellen Sie eine leere Liste \texttt{B}, in der die Elemente von \texttt{A} ohne Duplikate gespeichert werden sollen.
 		\item Gehen Sie jedes Element von \texttt{A} mit einer Schleife durch.
-		\item Für jedes Element von \texttt{A} überprüfen Sie, ob es bereits in der Liste \texttt{B} enthalten ist. Wenn nicht, fügen Sie es am Ende von \texttt{B} hinzu. Dazu benötigen eine innere Schleife, um die Elemente von \texttt{B} zu überprüfen.
-		\item Verwenden Sie eine bool'sche Variable (\lstinline|True| oder \lstinline|False|), um zu verfolgen, ob ein Element bereits in der Liste \texttt{B} vorhanden ist.
+		\item Für jedes Element von \texttt{A} überprüfen Sie, ob es bereits in der Liste \texttt{B} enthalten ist. Wenn nicht, fügen Sie es am Ende von \texttt{B} hinzu. Dazu benötigen Sie eine innere Schleife, um die Elemente von \texttt{B} zu überprüfen.
+		\item Verwenden Sie eine boolesche Variable (\lstinline|True| oder \lstinline|False|), um zu verfolgen, ob ein Element bereits in der Liste \texttt{B} vorhanden ist.
 	\end{itemize}
 	\begin{minipage}{\textwidth}
 		\begin{lstlisting}
@@ -757,7 +784,7 @@ print(lager)
 
 	\lstinline|"Land nicht gefunden."|
 
-	siehe \cref{ex:keyExists} für Hinweise dazu, wie dies umgesetzt werden kann.
+	Siehe \cref{ex:keyExists} für Hinweise dazu, wie dies umgesetzt werden kann.
 
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{dict\_hauptstaedte.py},label=listing:dict_hauptstaedte]{Grundlagen_Info/00_Programmieren/Skript/Code/K06_Datenstrukturen/dict_hauptstaedte.py}
@@ -765,7 +792,7 @@ print(lager)
 \end{myexercise}
 
 \begin{myexercise}
-	Carlas Englisch ist nicht so gut. Helfen Sie Carla, ein paar Sätze zu übersetzen. Schreiben Sie in einem Dictionary namens \lstinline|deutsch_zu_englisch| die Übersetzung der folgenden Wörter in Englisch: \enquote{Die}, \enquote{Der}, \enquote{Das}, \enquote{Stuhl}, \enquote{Sofa}, \enquote{Lampe}, \enquote{ist}, \enquote{rot}, \enquote{grün}, \enquote{gelb}, \enquote{blau}, \enquote{schwarz}, \enquote{weiss}.
+	Carlas Englisch ist nicht so gut. Helfen Sie Carla, ein paar Sätze zu übersetzen. Schreiben Sie in einem Dictionary namens \lstinline|deutsch_zu_englisch| die Übersetzung der folgenden Wörter ins Englische: \enquote{Die}, \enquote{Der}, \enquote{Das}, \enquote{Stuhl}, \enquote{Sofa}, \enquote{Lampe}, \enquote{ist}, \enquote{rot}, \enquote{grün}, \enquote{gelb}, \enquote{blau}, \enquote{schwarz}, \enquote{weiss}.
 
 	Implementieren Sie eine Funktion \lstinline|uebersetzen(satz)|, die eine Liste erstellt, welche die englische Übersetzung jedes Wortes in der Liste \lstinline|satz| enthält. Die Liste soll Wort für Wort erstellt und am Schluss mit \lstinline|print| ausgegeben werden.
 
@@ -791,7 +818,7 @@ uebersetzen(["Die", "Lampe", "ist", "rot"])
 
 	\begin{enumerate}
 		\item Schreiben Sie nun einen Code, um auf jedes Element (jedes Wort) der Liste \lstinline|satz| zuzugreifen, speichern Sie das Wort in einer Variable \lstinline|wort|.
-		\item Greifen Sie nun auf das entsprechende englische Wort im Dictionary \lstinline|deutsch_zu_englisch| zu.
+		\item Greifen Sie nun auf das entsprechende englische Wort zu. Es steht im Dictionary \lstinline|deutsch_zu_englisch|.
 		\item Fügen Sie das englische Wort der neuen Liste hinzu.
 	\end{enumerate}
 	\begin{myanswer}
@@ -833,9 +860,9 @@ wettervorhersage = {
 
 \clearpage
 \section{Mengen (sets)}
-Mengen (en. \textit{sets}) sind eine weitere wichtige Datenstruktur in der Informatik. Eine Menge ist eine Sammlung von einzigartigen Elementen, die keine bestimmte Reihenfolge haben. In Python werden Mengen mit geschweiften Klammern \lstinline|{| und \lstinline|}| oder mit dem Befehl \lstinline|set()| erstellt.
+Mengen (Englisch: \textit{sets}) sind eine weitere wichtige Datenstruktur in der Informatik. Eine Menge ist eine Sammlung von einzigartigen Elementen, die keine bestimmte Reihenfolge haben. In Python werden Mengen mit geschweiften Klammern \lstinline|{| und \lstinline|}| oder mit dem Befehl \lstinline|set()| erstellt.
 
-In Python stehen die Mengenoperationen, welche Ihnen aus dem Mathematikunterricht wohlvertraut sind, zur Verfügung. Wir werden die drei mengentheoretischen Operationen \textit{Vereinigung}, \textit{Schnittmenge} und \textit{Differenz} einführen und mittels \tib{Venndiagrammen}\footnote{Benannt nach dem englischen Mathematiker \textit{John Venn Junior}.} illustrieren.
+In Python stehen die Mengenoperationen, welche Ihnen aus dem Mathematikunterricht wohlvertraut sind, zur Verfügung. Wir werden die drei mengentheoretischen Operationen \textit{Vereinigung}, \textit{Schnittmenge} und \textit{Differenz} einführen und mittels \tib{Venndiagrammen}\footnote{Benannt nach dem englischen Mathematiker \textit{John Venn}.} illustrieren.
 
 \begin{itemize}
 	\item $\mathbf{A \cup B}$, in Python: \lstinline/A | B/\\
@@ -956,7 +983,7 @@ Tuples in Python haben die folgenden Eigenschaften:
 	\item \textbf{Unveränderlichkeit (Immutability):} Versucht man, ein Element zu ändern, erhält man eine Fehlermeldung. Zum Beispiel würde \lstinline|koordinaten[0] = 5| einen Fehler verursachen.
 	\item \textbf{Geordnetheit:} Die Reihenfolge der Elemente bleibt erhalten.
 	\item \textbf{Heterogenität:} Ein Tuple kann verschiedene Datentypen enthalten, wie ganze Zahlen, Zeichenketten oder sogar andere Tuples. Zum Beispiel: \lstinline|person = ('Anna', 30, True)|.
-	\item \textbf{Anwendungsbereiche:} Tuples werden oft verwendet, wenn man sicherstellen will, dass Daten nicht versehentlich geändert werden, wie z. B. bei Datenbankkoordinaten, Rückgabewerten von Funktionen oder als Schlüssel in einem Wörterbuch.
+	\item \textbf{Anwendungsbereiche:} Tuples werden oft verwendet, wenn man sicherstellen will, dass Daten nicht versehentlich geändert werden, wie z. B. bei Koordinaten, Rückgabewerten von Funktionen oder als Schlüssel in einem Wörterbuch.
 \end{itemize}
 
 Tuples sind besonders nützlich, wenn Sie eine feste Anzahl von Elementen haben, die zusammengehören, wie z. B. die Koordinaten eines Punktes in einem 2D-Raum (x, y). Tuples können auch als Rückgabewerte von Funktionen verwendet werden, um mehrere Werte gleichzeitig zurückzugeben.
@@ -1008,7 +1035,7 @@ print("Produkt:", produkt)   # Produkt: 12
 \begin{myremark}[Nützlichkeit von Tuples und Rückgabewerte]
 	Tuples sind besonders nützlich, wenn Sie eine feste Anzahl von Elementen haben, die zusammengehören, wie z. B. die Koordinaten eines Punktes in einem 2D-Raum (x, y). Tuples können auch als Rückgabewerte von Funktionen verwendet werden, um mehrere Werte gleichzeitig zurückzugeben.
 
-	Weshalb geben Funktionen mit mehreren Rückgabewerten ein Tuple zurück, anstatt eine Liste zu verwenden? In Python gibt es keine speziellen ``mehrfachen Rückgabewerte''. Stattdessen fasst die Sprache mehrere Werte automatisch zu einem Tuple zusammen. Ein Tuple eignet sich dafür besonders gut, weil es eine feste Anzahl von Werten mit einer festen Bedeutung beschreibt (z. B. Breite und Höhe oder Quotient und Rest). Listen hingegen stehen eher für veränderbare Sammlungen von Elementen. Dass Tuples unveränderlich sind, ist dabei ein zusätzlicher Vorteil, aber nicht der Hauptgrund für ihre Verwendung.
+	Weshalb geben Funktionen mit mehreren Rückgabewerten ein Tuple zurück, anstatt eine Liste zu verwenden? In Python gibt es keine speziellen \enquote{mehrfachen Rückgabewerte}. Stattdessen fasst die Sprache mehrere Werte automatisch zu einem Tuple zusammen. Ein Tuple eignet sich dafür besonders gut, weil es eine feste Anzahl von Werten mit einer festen Bedeutung beschreibt (z. B. Breite und Höhe oder Quotient und Rest). Listen hingegen stehen eher für veränderbare Sammlungen von Elementen. Dass Tuples unveränderlich sind, ist dabei ein zusätzlicher Vorteil, aber nicht der Hauptgrund für ihre Verwendung.
 \end{myremark}
 
 \section{Weitere Aufgaben}
@@ -1074,7 +1101,7 @@ print(ziele)     # {"Anna": True, "Ben": False, "Clara": True}
 	Sie möchten ein Programm schreiben, das Ihnen hilft, passende Gerichte aus der Mensa auszuwählen und zu prüfen, ob diese Auswahl in Ihr Budget passt.
 
 	\begin{itemize}
-		\item \textbf{Teilaufgabe 1:} Schreiben Sie die Funktion \lstinline{filter_menue(menue, max_preis, nur_vegi)}.
+		\item \textbf{Teilaufgabe 1:} Schreiben Sie die Funktion\newline \lstinline{filter_menue(menue, max_preis, nur_vegi)}.
 		      \begin{itemize}
 			      \item Der Parameter \lstinline{menue} ist eine Liste von Dictionaries, die jeweils ein Gericht mit Name, Preis und einem Wahrheitswert \lstinline{vegi} enthalten.
 			      \item Der Parameter \lstinline{max_preis} gibt den maximal erlaubten Preis pro Gericht an.
@@ -1084,13 +1111,12 @@ print(ziele)     # {"Anna": True, "Ben": False, "Clara": True}
 			            \newline Rückgabe: \lstinline|[{"name":"Pasta","preis":9.5,"vegi":True}]|
 		      \end{itemize}
 
-		\item \textbf{Teilaufgabe 2:} Schreiben Sie die Funktion \lstinline{budget_check(gerichte, budget, tage)}.
+		\item \textbf{Teilaufgabe 2:} Schreiben Sie die Funktion \lstinline{budget_check(gerichte, budget)}.
 		      \begin{itemize}
 			      \item Der Parameter \lstinline{gerichte} ist eine Liste der gewählten Gerichte (z.B. Rückgabe von \lstinline{filter_menue}).
 			      \item Der Parameter \lstinline{budget} ist das verfügbare Budget für die Woche.
-			      \item Der Parameter \lstinline{tage} ist die Anzahl der Tage, an denen in der Mensa gegessen wird.
 			      \item Die Funktion berechnet die Gesamtkosten und prüft, ob das Budget ausreicht. Sie gibt ein Dictionary zurück mit den Schlüsseln \lstinline{"summe"} und \lstinline{"ok"}.
-			      \item Beispiel: \lstinline|budget_check([{"preis":9.5},{"preis":9.5},{"preis":9.5}], 30.0, 5)|
+			      \item Beispiel:\newline \lstinline|budget_check([{"preis":9.5},{"preis":9.5},{"preis":9.5}], 30.0)|
 			            \newline Rückgabe: \lstinline|{"summe":28.5,"ok":True}|
 		      \end{itemize}
 	\end{itemize}
@@ -1107,15 +1133,14 @@ def filter_menue(menue, max_preis, nur_vegi):
                 result.append(gericht)
     return result
 
-def budget_check(gerichte, budget, tage):
+def budget_check(gerichte, budget):
     summe = 0
     for gericht in gerichte:
         summe = summe + gericht["preis"]
-    gesamt = summe
     ok = False
-    if gesamt <= budget:
+    if summe <= budget:
         ok = True
-    result = {"summe": round(gesamt, 2), "ok": ok}
+    result = {"summe": round(summe, 2), "ok": ok}
     return result
 
 # Beispielaufruf
@@ -1123,12 +1148,12 @@ menue = [{"name":"Pasta","preis":9.5,"vegi":True},
          {"name":"Schnitzel","preis":12.0,"vegi":False}]
 auswahl = filter_menue(menue, 10.0, True)
 print(auswahl)   # [{"name":"Pasta","preis":9.5,"vegi":True}]
-check = budget_check(auswahl*3, 30.0, 5)
+check = budget_check(auswahl*3, 30.0)
 print(check)     # {"summe": 28.5, "ok": True}
 \end{lstlisting}
 	\end{myanswer}
 \end{myexercise}
 
-\begin{myremark}[Weitere Arten, Schleifen durchzulaufen]
-	Weitere Arten, Schleifen über Listen oder Dictionaries durchzulaufen, finden Sie in der offiziellen \href{https://docs.python.org/3/tutorial/datastructures.html#looping-techniques}{Python-Dokumentation}.
+\begin{myremark}[Weitere Arten, Listen und Dictionaries zu durchlaufen]
+	Weitere Arten, Listen oder Dictionaries mit Schleifen zu durchlaufen, finden Sie in der offiziellen \href{https://docs.python.org/3/tutorial/datastructures.html#looping-techniques}{Python-Dokumentation}.
 \end{myremark}

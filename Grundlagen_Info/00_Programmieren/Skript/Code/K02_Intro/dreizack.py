@@ -47,7 +47,7 @@ t.forward(10)
 t.back(10)
 t.right(145)
 
-# Turtle verstecken (damit sie nicht das Haus verdeckt)
+# Turtle verstecken (damit sie nicht den Dreizack verdeckt)
 t.hideturtle()
 
 # Turtle-Zeichnung stehen lassen

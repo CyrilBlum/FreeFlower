@@ -7,14 +7,14 @@ def erraten_zahl():
 
     while True:
         # Benutzereingabe
-        eingabe = int(input("Rate die Zahl: "))
+        eingabe = int(input("Raten Sie die Zahl: "))
 
         if eingabe < ziel_zahl:
             print("Die Zahl ist grösser.")
         elif eingabe > ziel_zahl:
             print("Die Zahl ist kleiner.")
         else:
-            print("Richtig! Du hast die Zahl erraten.")
+            print("Richtig! Sie haben die Zahl erraten.")
             break
 
 

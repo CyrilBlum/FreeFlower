@@ -4,7 +4,7 @@
 \begin{frame}
 	\centering
 	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
 	\end{figure}
 	Informatik: Programmieren\\
 	\emoji{cook} Kapitel 4: \textbf{Funktionen mit \lstinline|return|}
@@ -12,8 +12,9 @@
 
 \begin{frame}
 	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=.6\linewidth]{Grundlagen_Info/00_Programmieren/Figures/cook}
+		\includegraphics[keepaspectratio, width=.55\linewidth]{Grundlagen_Info/00_Programmieren/Figures/cook}
 	\end{figure}
+	{\centering\tiny Eigenes Foto, Cyril Blum, 2024 (Küche des Restaurants Trois Rois, Basel)\par}
 	\begin{center}
 		Woran erinnert Sie dieses Bild?
 	\end{center}
@@ -28,8 +29,8 @@
 			\begin{column}{.5\linewidth}
 				\begin{figure}
 					\centering
-					\includegraphics[width=\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 1"}\\[.6cm]
-					\includegraphics[width=\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 2"}
+					\includegraphics[width=.75\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 1"}\\[.3cm]
+					\includegraphics[width=.75\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 2"}
 				\end{figure}
 
 			\end{column}
@@ -37,11 +38,13 @@
 			\begin{column}{.5\linewidth}
 				\begin{figure}
 					\centering
-					\includegraphics[width=\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 3"}\\[.6cm]
-					\includegraphics[width=\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 4"}
+					\includegraphics[width=.75\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 3"}\\[.3cm]
+					\includegraphics[width=.75\columnwidth]{"Grundlagen_Info/00_Programmieren/Figures/Fine Dining 4"}
 				\end{figure}
 			\end{column}
 		\end{columns}
+		% eigene Fotos der Lehrperson
+		{\tiny Fotos: Cyril Blum\par}
 	}
 \end{frame}
 
@@ -49,7 +52,7 @@
 	\begin{lstlisting}
 def summiere(x1, x2):
     summe = x1 + x2
-    
+
 summiere(3, 5)
 print(summe)
 \end{lstlisting}
@@ -85,7 +88,7 @@ print(summe)
 def summiere(x1, x2):
     summe = x1 + x2
     return (*@\only<1>{summe}\only<2->{\colorbox{RoyalBlue!50}{sum\tikzmark{arrowFromEx01}me}}@*)
-    
+
 
 
 (*@\only<1-2>{res}\only<3->{\colorbox{ForestGreen!50}{re\tikzmark{arrowToEx02}s}}@*) = (*@\only<1>{summiere(3, 5)}\only<2->{\colorbox{RoyalBlue!50}{summie\tikzmark{arrowToEx01}re(3, 5)}}@*)
@@ -121,7 +124,7 @@ print(res)
 		\item \emoji{clipboard} ...die wie ein \textbf{Kochrezept} funktionieren:
 		      \begin{itemize}
 			      \item \emoji{bread} \emoji{cheese} \emoji{poultry-leg} Gewisse Inputs, bzw. \textbf{Parameter} können akzeptiert werden (müssen aber nicht)
-			      \item \emoji{hamburger} Gewisse Outputs, bzw. \textbf{Return-Werte }können zurückgeben werden (müssen aber nicht)
+			      \item \emoji{hamburger} Gewisse Outputs, bzw. \textbf{Return-Werte} können zurückgegeben werden (müssen aber nicht)
 		      \end{itemize}
 		\item \emoji{cook} ...die wie ein \textbf{Koch} funktionieren (\textbf{Modularität}):
 		      \begin{itemize}

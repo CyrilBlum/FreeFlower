@@ -4,7 +4,7 @@
 \begin{frame}
 	\centering
 	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
 	\end{figure}
 	Informatik: Programmieren\\
 	\emoji{cook} Kapitel 4: \textbf{Funktionen mit \lstinline|return|}: Mehrere Funktionen
@@ -15,7 +15,7 @@
 def summiere(x1, x2):
     summe = x1 + x2
     return (*@\only<1>{summe}\only<2->{\colorbox{RoyalBlue!50}{sum\tikzmark{arrowFromEx01}me}}@*)
-    
+
 
 
 (*@\only<1-3>{res}\only<4->{\colorbox{ForestGreen!50}{re\tikzmark{arrowToEx02}s}}@*) = (*@\only<1>{summiere(3, 5)}\only<2->{\colorbox{RoyalBlue!50}{summie\tikzmark{arrowToEx01}re(3, 5)}}@*)
@@ -51,10 +51,10 @@ def berechne_rabatt(preis, rabatt_pct):
 def berechne_gesamtpreis(preis, rabatt_pct, mwst):
     (*@\colorbox{CornflowerBlue}{rabatt\tikzmark{arrowToEx11}preis}@*) = berechne_rabatt(preis, rabatt_pct)
     mwst = rabattpreis * (mwst / 100)
-    return (*@\colorbox{CornflowerBlue}{rabattpre\tikzmark{arrowFromEx12}is + mwst}@*) 
+    return (*@\colorbox{CornflowerBlue}{rabattpre\tikzmark{arrowFromEx12}is + mwst}@*)
 
 
-(*@\colorbox{CornflowerBlue}{endp\tikzmark{arrowToEx12}reis}@*) = berechne_gesamtpreis(100, 15, 7.7)
+(*@\colorbox{CornflowerBlue}{endp\tikzmark{arrowToEx12}reis}@*) = berechne_gesamtpreis(100, 15, 8.1)
 print("Der Preis nach Rabatt und Mwst ist", endpreis)
 \end{lstlisting}
 	\begin{tikzpicture}[overlay,remember picture]

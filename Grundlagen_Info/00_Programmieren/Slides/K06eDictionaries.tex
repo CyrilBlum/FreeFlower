@@ -21,24 +21,15 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
 \begin{frame}{Kontakte-App Programmieren}
 	\begin{figure}[H]
 		\centering
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\includegraphics[width=.3\textwidth]{Grundlagen_Info/00_Programmieren/Figures/Contacts_1.png}
-		\end{minipage}
-		\hfill
-		\begin{minipage}{0.48\textwidth}
-			\centering
-			\fcolorbox{gray}{white}{
-				\includegraphics[width=.5\textwidth]{Grundlagen_Info/00_Programmieren/Figures/Contacts_2.png}
-			}
-		\end{minipage}
+		% selbst erstelltes Mockup statt App-Symbol und Screenshot (Lizenz nicht frei)
+		\resizebox{!}{.6\textheight}{\input{Grundlagen_Info/00_Programmieren/Figures/tikz_kontakte_app.tex}}
 	\end{figure}
 	\begin{center}
 		Womit würden Sie beginnen?\\ \pause
@@ -158,13 +149,13 @@ else:
 	\begin{itemize}
 		\item \readbox{Definition 6.5, Beispiele 6.12-6.16}
 		\item \aufgabebox{6.25-6.31}
-		\item Aufgaben ``Dictionaries'' auf Moodle
+		\item Aufgaben \enquote{Dictionaries} auf Moodle
 	\end{itemize}
 	\begin{table}[H]
 		\footnotesize
 		\centering
-		\begin{tabular}{c||c|c}
-			\textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule\midrule
+		\begin{tabular}{ccc}
+			\textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule
 			$[$              & \keys{\AltGr+ü}               & \keys{\Alt+5}             \\\midrule
 			$]$              & \keys{\AltGr+!}               & \keys{\Alt+6}             \\\midrule
 			\{               & \keys{\AltGr+ä}               & \keys{\Alt+8}             \\\midrule

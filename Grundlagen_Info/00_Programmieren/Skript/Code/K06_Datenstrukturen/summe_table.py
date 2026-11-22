@@ -6,7 +6,7 @@ def summiere(daten):
     for _ in range(len(daten)):
         print(i, daten[i], summe)
         summe += daten[i]  # Wert von daten[i] zu Summe hinzufügen
-        i += 1  # Hilfs-Index um 1 vergrössern (Werte?)
+        i += 1  # Hilfs-Index um 1 vergrössern
         print(i, daten[i], summe)
 
     print(summe)

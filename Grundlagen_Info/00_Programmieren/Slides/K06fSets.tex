@@ -19,7 +19,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -181,13 +181,13 @@ print("Differenz:", differenz)
         \begin{table}[H]
             \tiny
             \centering
-            \begin{tabular}{c||c|c}
-                \textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule\midrule
+            \begin{tabular}{ccc}
+                \textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule
                 $[$              & \keys{\AltGr+ü}               & \keys{\Alt+5}             \\\midrule
                 $]$              & \keys{\AltGr+!}               & \keys{\Alt+6}             \\\midrule
                 \{               & \keys{\AltGr+ä}               & \keys{\Alt+8}             \\\midrule
                 \}               & \keys{\AltGr+\$}              & \keys{\Alt+9}             \\\midrule
-                \textbackslash   & \keys{\AltGr+\textbackslash}  & \keys{\Alt+\shift+7}      \\\midrule
+                \textbackslash   & \keys{\AltGr+<}  & \keys{\Alt+\shift+7}      \\\midrule
                 |                & \keys{\AltGr+7}               & \keys{\Alt+7}             \\\midrule
                 \&               & \keys{\shift+6}               & \keys{\shift+6}           \\
             \end{tabular}

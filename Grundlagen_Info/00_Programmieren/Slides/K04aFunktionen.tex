@@ -6,7 +6,7 @@
 \begin{frame}
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Programmieren\\
     Kapitel 04: \textbf{Eigene Funktionen definieren}
@@ -52,9 +52,9 @@ import turtle as t
 
 # zeichne ein Quadrat
 for _ in range(4):      !\tikzmark{befehlStart}!
-    t.fd(100)  # Funktion  
+    t.fd(100)  # Funktion
     t.rt(90)   # Funktion !\tikzmark{befehlEnde}!
-    
+
 t.done()
 \end{lstlisting}
     \begin{tikzpicture}[overlay, remember picture,
@@ -110,7 +110,7 @@ for _ in range(10):   !\tikzmark{repOuterStart}!
         t.fd(100)
         t.rt(360 / 4) !\tikzmark{repInnerEnd}!
     t.rt(360 / 10)    !\tikzmark{repOuterEnd}!
-    
+
 t.done()
 \end{lstlisting}
             \begin{figure}[H]
@@ -162,7 +162,7 @@ def !\only<1-2>{viereck()}\only<3->{\colorbox{CarnationPink}{viereck()}}!: !\tik
         t.fd(100)
         t.rt(360 / 4)
 
-def !\only<1>{viereck\_blume()}\only<2->{\colorbox{CornflowerBlue}{viereck\_blume()}}!:!\tikzmark{to1ex}! 
+def !\only<1>{viereck\_blume()}\only<2->{\colorbox{CornflowerBlue}{viereck\_blume()}}!:!\tikzmark{to1ex}!
     for _ in range(10):
         !\only<1-2>{viereck()}\only<3->{\colorbox{CarnationPink}{viereck()}}! !\tikzmark{from2ex}!
         t.rt(360 / 10)
@@ -187,7 +187,28 @@ def !\only<1>{viereck\_blume()}\only<2->{\colorbox{CornflowerBlue}{viereck\_blum
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Funktionen \& Schleifen}
+\begin{frame}[fragile]{Zusammenfassung}
+    Nutzen von \textbf{Funktionen}
+    \begin{itemize}[<+->]
+        \item Problem in \textbf{Teilprobleme} gliedern
+        \item \textbf{Übersichtlichkeit} erhöhen
+        \item Im \enquote{Hauptprogramm} Funktionen zusammensetzen
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Auftrag}%{Programmier-Skript}
+    \begin{itemize}
+        % \item Skript immer zuerst durchlesen
+        \item Code in VS Code schreiben und auf Moodle abgeben
+        \item \aufgabebox{Aufgaben 4.1-4.2}
+        \item \aufgabebox{\enquote{Aufgaben Funktionen 1} auf Moodle}
+        \item Zeit: 25 Minuten
+        \item Danach: Gemeinsame Besprechung der Aufgabe mit den Pfeilen
+    \end{itemize}
+\end{frame}
+
+% Besprechung: zeigt die Lösung von Aufgabe 4.1, daher erst nach dem Auftrag
+\begin{frame}[fragile]{Besprechung Aufgabe 4.1: Funktionen \& Schleifen}
     \begin{columns}
         \begin{column}[t]{.5\textwidth}
             \begin{lstlisting}[escapechar=!,basicstyle=\ttfamily\footnotesize]
@@ -198,7 +219,7 @@ for _ in range(4):      !\tikzmark{repOuterStart}!
         t.fd(4)
         t.lt(10)        !\tikzmark{repInnerEnd}!
     t.fd(100)           !\tikzmark{repOuterEnd}!
-    
+
 t.done()
 \end{lstlisting}
             \begin{center}
@@ -218,7 +239,7 @@ t.done()
 import turtle as t
 
 !\tikzmark{repInnerStartTo}!def viertelkreis():
-    # genauer: ein 1 / 4 eines regelmässigen 36-Ecks    
+    # genauer: ein 1 / 4 eines regelmässigen 36-Ecks
     for _ in range(9):
         t.fd(4)
 !\tikzmark{repInnerEndTo}!        t.lt(10)
@@ -250,24 +271,4 @@ t.done()
             \draw[->, style={thick, >=stealth, red!70}] (repOuterStartrepOuterEnd-coord-arrow) to (repOuterStartTorepOuterEndTo-coord-arrow);
         }
     \end{tikzpicture}
-\end{frame}
-
-\begin{frame}[fragile]{Zusammenfassung}
-    Nutzen von \textbf{Funktionen}
-    \begin{itemize}[<+->]
-        \item Problem in \textbf{Teilprobleme} gliedern
-        \item \textbf{Übersichtlichkeit} erhöhen
-        \item Im \enquote{Hauptprogramm} Funktionen zusammensetzen
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Auftrag}%{Programmier-Skript}
-    \begin{itemize}
-        % \item Skript immer zuerst durchlesen
-        \item Code in VS Code schreiben und auf Moodle abgeben
-        % \item \aufgabebox{Aufgaben 4.1, 4.2}
-        \item \aufgabebox{\enquote{Aufgaben Funktionen 1} auf Moodle}
-        \item Zeit: 25 Minuten
-        \item Danach: Gemeinsame Besprechung der Aufgabe mit den Pfeilen
-    \end{itemize}
 \end{frame}

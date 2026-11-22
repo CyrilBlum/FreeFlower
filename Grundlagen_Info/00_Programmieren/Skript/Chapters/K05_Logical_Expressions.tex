@@ -25,7 +25,7 @@ Dabei bezeichnen blaue, rechteckig-abgerundete Boxen eine Zeile Code. Grüne, ra
 Nach jedem \lstinline|if| steht ein logischer Ausdruck oder ein logischer Wert.
 
 \begin{mydefinition}
-\tib{Logische Ausdrücke}, auch \tib{Boolsche Ausdrücke} sind Ausdrücke, die genau zwei verschiedene Werte annehmen können: entweder \textit{wahr} (\lstinline|True|) oder \textit{falsch} (\lstinline|False|). Beispiele sind:
+\tib{Logische Ausdrücke}, auch \tib{boolesche Ausdrücke}, sind Ausdrücke, die genau zwei verschiedene Werte annehmen können: entweder \textit{wahr} (\lstinline|True|) oder \textit{falsch} (\lstinline|False|). Beispiele sind:
 \begin{lstlisting}
 3 == 5 # gibt den Wert False zurück
 (9 + 3) < (2 * 8) # gibt den Wert True zurück
@@ -36,7 +36,7 @@ Wie Sie im obigen Beispiel sehen, wird von einem Wahrheitstest ein \textbf{Wert}
 Mögliche logische Relationen sind in \cref{table:bool} abgebildet.
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c||c}
+	\begin{tabular}{cc}
 		\textbf{Python} & \textbf{Mathematische Bedeutung} \\\midrule
 		\lstinline|==|  & gleich ($=$)                     \\
 		\lstinline|!=|  & ungleich ($\neq$)                \\
@@ -48,12 +48,12 @@ Mögliche logische Relationen sind in \cref{table:bool} abgebildet.
 	\caption{Logische Relationen und Schreibweise in Python}
 	\label{table:bool}
 \end{table}
-Logische (oder auch bool'sche) Ausdrücke wie z.B. \lstinline|3 < 45| führen zu einem \tib{Bool'schen Wert}, also einem Wahrheitswert, welcher entweder den Wert \lstinline|True| (wahr) oder \lstinline|False| (falsch) hat.
+Logische (oder auch boolesche) Ausdrücke wie z.B. \lstinline|3 < 45| führen zu einem \tib{booleschen Wert}, also einem Wahrheitswert, welcher entweder den Wert \lstinline|True| (wahr) oder \lstinline|False| (falsch) hat.
 
 Die typische Verwendungsart logischer Ausdrücke ist in folgendem Code abgebildet:
 \begin{lstlisting}
-	if BOOLSCHER_WERT:
-		# dieser Code wird nur dann ausgeführt, wenn BOOLSCHER_WERT wahr (True) ist.
+	if BOOLESCHER_WERT:
+		# dieser Code wird nur dann ausgeführt, wenn BOOLESCHER_WERT wahr (True) ist.
 \end{lstlisting}
 \end{mydefinition}
 
@@ -75,7 +75,7 @@ Die typische Verwendungsart logischer Ausdrücke ist in folgendem Code abgebilde
 	\textbf{Zur Erinnerung}: \lstinline|input("Frage")| gibt den Text \lstinline|"Frage"| auf dem Bildschirm aus und wartet auf eine Eingabe des Benutzers. Um die Antwort zu speichern, muss der Befehl in eine Variable gespeichert werden. Zum Beispiel:
 
 	\begin{lstlisting}
-		name = input("Wie heisst du?")
+		name = input("Wie heissen Sie?")
 		print("Hallo " + name)
 	\end{lstlisting}
 
@@ -122,7 +122,7 @@ Der Code kann folgendermassen als Fluss-Diagramm aufgezeichnet werden:
 \end{myexample}
 
 \begin{myexercise}
-	Ein Bäcker möchte Kekse backen und gleichmässig in Keksdosen verpacken, so dass jede Dose voll ist. Jede Dose fasst 12 Kekse. Schreibe ein Programm, das berechnet:
+	Ein Bäcker möchte Kekse backen und gleichmässig in Keksdosen verpacken, so dass jede Dose voll ist. Jede Dose fasst 12 Kekse. Schreiben Sie ein Programm, das berechnet:
 
 	\begin{itemize}
 		\item Wie viele Dosen benötigt werden für n Kekse.
@@ -144,7 +144,7 @@ Der Code kann folgendermassen als Fluss-Diagramm aufgezeichnet werden:
 \begin{myexercise}
 	Bei einer Flugreise darf der aufgegebene Koffer üblicherweise nicht schwerer sein als 20 kg. Ansonsten bezahlt man einen Aufschlag von CHF 5.- pro kg Übergewicht.
 
-	Schreiben Sie ein Unterprogramm koffer(gewicht), das einen Parameter Gewicht entgegennimmt und einen Text auf der Konsole druckt, je nach Fall:
+	Schreiben Sie ein Unterprogramm \lstinline|koffer(gewicht)|, das einen Parameter \lstinline|gewicht| entgegennimmt und einen Text auf der Konsole druckt, je nach Fall:
 
 	\begin{itemize}
 		\item Wenn der Koffer über 100 kg wiegt, wird er nicht transportiert (\lstinline|"Der Koffer ist zu schwer"|).
@@ -170,7 +170,7 @@ Der Code kann folgendermassen als Fluss-Diagramm aufgezeichnet werden:
 	Was gibt dieser Code aus? Ist die Ausgabe sinnvoll? Weshalb (nicht)?
 	\lstinputlisting[language=Python,caption=\texttt{ex\_if\_if\_else.py},label=listing:ex_if_if_else]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/ex_if_if_else.py}
 	\begin{myanswer}
-		Der Code gibt sowohl \lstinline|"Es ist heiss"| als auch \lstinline|"Es ist warm"| aus. Dies ist nicht sinnvoll, da die Temperatur 33 Grad beträgt und somit nur eine der beiden Aussagen wahr sein kann.
+		Der Code gibt sowohl \lstinline|"heiss"| als auch \lstinline|"warm"| aus. Dies ist nicht sinnvoll, da die Temperatur 33 Grad beträgt und somit nur eine der beiden Aussagen wahr sein kann.
 
 		Der Grund dafür ist, dass die zweite \lstinline|if|-Bedingung unabhängig von der ersten \lstinline|if|-Bedingung ist. Das \lstinline|else| gehört nur zur zweiten \lstinline|if|-Bedingung. Das bedeutet, dass die zweite \lstinline|if|-Bedingung immer ausgeführt wird, selbst wenn die erste \lstinline|if|-Bedingung bereits wahr war. Aus diesem Grund wäre es sinnvoller, statt einem \lstinline|if|-Befehl eine \lstinline|elif|-Bedingung zu verwenden.
 
@@ -205,7 +205,7 @@ Der Code kann folgendermassen als Fluss-Diagramm aufgezeichnet werden:
 
 
 \begin{myexercise}
-	Gegeben seien zwei Zahlen \lstinline|x1| und \lstinline|x2|. Schreiben Sie eine Funktion \lstinline|maxzahl(x1, x2)|, welche die grössere der beiden Zahlen mit \lstinline|return| zurückgibt. Wenn beide Zahlen gleich gross sind, soll \lstinline|x2| ausgegeben werden.
+	Gegeben seien zwei Zahlen \lstinline|x1| und \lstinline|x2|. Schreiben Sie eine Funktion \lstinline|maxzahl(x1, x2)|, welche die grössere der beiden Zahlen mit \lstinline|return| zurückgibt. Wenn beide Zahlen gleich gross sind, soll \lstinline|x2| zurückgegeben werden.
 
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{maxzahl.py},label=listing:maxzahl]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/maxzahl.py}
@@ -294,7 +294,7 @@ Der logische Operator \lstinline|and| gibt \lstinline|True| zurück, nur wenn be
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c||c}
+	\begin{tabular}{ccc}
 		\textbf{A} & \textbf{B} & \textbf{A and B} \\\midrule
 		\lstinline|False| & \lstinline|False| & \lstinline|False| \\
 		\lstinline|False| & \lstinline|True| & \lstinline|False| \\
@@ -311,7 +311,7 @@ Der logische Operator \lstinline|or| gibt \lstinline|True| zurück, wenn mindest
 
 \begin{table}[H]
 	\centering
-	\begin{tabular}{c|c||c}
+	\begin{tabular}{ccc}
 		\textbf{A} & \textbf{B} & \textbf{A or B} \\\midrule
 		\lstinline|False| & \lstinline|False| & \lstinline|False| \\
 		\lstinline|False| & \lstinline|True| & \lstinline|True| \\
@@ -434,10 +434,10 @@ Der logische Operator \lstinline|or| gibt \lstinline|True| zurück, wenn mindest
 \begin{mychallenge}
 	Schreiben Sie eine Python-Funktion \lstinline|def ist_schaltjahr(jahr)|, welche prüft, ob ein gegebenes Jahr ein Schaltjahr ist oder nicht.
 
-	Ein Jahr ist ein Schaltjahr, genau dann wenn gilt:
+	Ein Jahr ist ein Schaltjahr genau dann, wenn gilt:
 	\begin{enumerate}
 		\item (das Jahr ist durch 400 teilbar) oder
-		\item (das Jahr ist durch 4 teilbar aber nicht durch 100)
+		\item (das Jahr ist durch 4 teilbar, aber nicht durch 100)
 	\end{enumerate}
 	Für die Prüfung auf Teilbarkeit sollen Sie den Modulo-Operator (\lstinline|%|) verwenden.
 	\begin{myanswer}
@@ -451,8 +451,8 @@ Der logische Operator \lstinline|or| gibt \lstinline|True| zurück, wenn mindest
 \begin{myexample} Folgende Tabelle illustriert, was mit der Negation einer Aussage gemeint ist.
 \begin{table}[H]
 	\centering
-	\begin{tabular}{p{7cm}|p{7cm}}
-		\textbf{Aussage}                                  & \textbf{Negation}                                                \\\midrule\midrule
+	\begin{tabular}{p{7cm}p{7cm}}
+		\textbf{Aussage}                                  & \textbf{Negation}                                                \\\midrule
 		\enquote{Das Mädchen heisst Elin}                 & \enquote{Das Mädchen heisst nicht Elin}                          \\\midrule
 		\enquote{Niemand in dieser Klasse ist volljährig} & \enquote{Mindestens eine Person in dieser Klasse ist volljährig} \\\midrule
 		$x > 2$                                           & $x \leq 2$
@@ -475,7 +475,7 @@ Der logische Operator \lstinline|or| gibt \lstinline|True| zurück, wenn mindest
 		\begin{itemize}
 			\item $x < 3$
 			\item $y$ ist eine positive Zahl \textit{oder Null}
-			\item in der Variable \lstinline|test| ist etwas Anderes als der Wert \lstinline|"Franz"| gespeichert.
+			\item in der Variable \lstinline|test| ist etwas anderes als der Wert \lstinline|"Franz"| gespeichert.
 			\item Im Auto sitzen weniger als drei Menschen
 			\item Der Koffer enthält mindestens einen Gegenstand
 			\item Das Programm ist richtig geschrieben
@@ -487,7 +487,7 @@ Der logische Operator \lstinline|or| gibt \lstinline|True| zurück, wenn mindest
 Die Negation einer Aussage kann in Python mit dem Ausdruck \lstinline|not| (englisch für \enquote{nicht}) gemacht werden. Die Negation einer Aussage (mit \lstinline|not|) ist insbesondere praktisch, um die Negation einer Aussage zu machen, ohne die Aussage komplett umschreiben zu müssen.
 
 \begin{myexample}
-Wir können den Code aus \cref{example:fahrrad} einfach mit dem Ausdruck \lstinline|not| umschreiben, um auszugeben, unter welchen Bedingungen wir \textit{nicht} per Fahrrad zu Schule gehen wollen:
+Wir können den Code aus \cref{example:fahrrad} einfach mit dem Ausdruck \lstinline|not| umschreiben, um auszugeben, unter welchen Bedingungen wir \textit{nicht} per Fahrrad zur Schule gehen wollen:
 \begin{lstlisting}
 if not((temperature > 20) and (fitness > 80)):
 	print("Ich gehe nicht per Fahrrad zur Schule!")
@@ -497,11 +497,11 @@ Man könnte dieselbe Aussage auch folgendermassen formulieren: \enquote{Falls ic
 if (temperature <= 20) or (fitness <= 80):
 	print("Ich gehe nicht per Fahrrad zur Schule!")
 \end{lstlisting}
-Weshalb haben wir im ersten Code ein \lstinline|and| und im zweiten Code ein \lstinline|or|? Dank dem \lstinline|not| müssen wir nichts vom ursprünglichen Code in \cref{example:fahrrad} umformulieren, da wir mit dem \lstinline|not| einfach alljene Fälle negieren, welche innerhalb der Klammer stehen. Somit kommen beide Codes zum selben Resultat.
+Weshalb haben wir im ersten Code ein \lstinline|and| und im zweiten Code ein \lstinline|or|? Dank dem \lstinline|not| müssen wir nichts vom ursprünglichen Code in \cref{example:fahrrad} umformulieren, da wir mit dem \lstinline|not| einfach all jene Fälle negieren, welche innerhalb der Klammer stehen. Somit kommen beide Codes zum selben Resultat.
 \end{myexample}
 
 \begin{myexercise}
-	Schreiben Sie Ihren Code aus \cref{ex:posUndGerade} so um, dass getestet wird, ob eine Zahl weder gerade noch positiv ist. Verwenden Sie dazu unter anderem den Ausdruck \lstinline|not|. Testen Sie ihre Funktion für die Werte -3, +3, -4 und +4.
+	Schreiben Sie Ihren Code aus \cref{ex:posUndGerade} so um, dass getestet wird, ob eine Zahl weder gerade noch positiv ist. Verwenden Sie dazu unter anderem den Ausdruck \lstinline|not|. Testen Sie Ihre Funktion für die Werte -3, +3, -4 und +4.
 
 	Schreiben Sie danach dieselbe Funktion nochmals, ohne den Ausdruck \lstinline|not| zu verwenden.
 	\begin{myanswer}
@@ -516,9 +516,9 @@ Weshalb haben wir im ersten Code ein \lstinline|and| und im zweiten Code ein \ls
 	\end{myanswer}
 \end{myexercise}
 
-\section{Fussgesteuerte Schleifen mit \texorpdfstring{\lstinline|break|}{break}}
+\section{Endlosschleifen mit \texorpdfstring{\lstinline|break|}{break}}
 
-Bisher haben wir eine Art von Schleife gesehen: \lstinline|for _ in range(...)|. Dabei gibt die Zahl innerhalb des Befehls \lstinline|range(...)| an, wie viele Mal der Schleifenkörper wiederholt wird. Manchmal wissen wir jedoch nicht im Voraus, wie viele Male eine Schleife wiederholt werden soll, wir kennen jedoch eine Bedingung, bei der die Schleife abgebrochen werden soll. Dies könnte beispielsweise der Fall sein, wenn wir eine Spirale zeichnen wollen, die immer grösser wird, bis die Seitenlänge eine gewisse maximale Länge \lstinline|max_seite| erreicht hat.
+Bisher haben wir eine Art von Schleife gesehen: \lstinline|for _ in range(...)|. Dabei gibt die Zahl innerhalb des Befehls \lstinline|range(...)| an, wie viele Male der Schleifenkörper wiederholt wird. Manchmal wissen wir jedoch nicht im Voraus, wie viele Male eine Schleife wiederholt werden soll, wir kennen jedoch eine Bedingung, bei der die Schleife abgebrochen werden soll. Dies könnte beispielsweise der Fall sein, wenn wir eine Spirale zeichnen wollen, die immer grösser wird, bis die Seitenlänge eine gewisse maximale Länge \lstinline|max_seite| erreicht hat.
 
 
 \begin{figure}[H]
@@ -528,11 +528,11 @@ Bisher haben wir eine Art von Schleife gesehen: \lstinline|for _ in range(...)|.
 \end{figure}
 
 Natürlich könnte man auch hier berechnen, wie viele Male die \lstinline|for|-Schleife ausgeführt werden muss. Die Formel, um dies zu berechnen, wäre:
-\[\floor{\frac{\text{\texttt{maxseite - seite}}}{\text{\texttt{add}}}} + 1\]
+\[\floor{\frac{\text{\texttt{max\_seite - seite}}}{\text{\texttt{increment}}}} + 1\]
 
 Es geht allerdings auch einfacher, indem wir eine \enquote{unendliche} Schleife starten, die wir abbrechen, sobald eine gewisse Kondition wahr ist.
 
-Grundsätzlich können wir auch direkt die Werte \lstinline|True| (Wahr) oder \lstinline|False| (Falsch) in Logischen Ausdrücken verwenden:
+Grundsätzlich können wir auch direkt die Werte \lstinline|True| (Wahr) oder \lstinline|False| (Falsch) in logischen Ausdrücken verwenden:
 
 \begin{myexample}
 Der \lstinline|print|-Befehl in folgendem Beispiel wird immer ausgeführt:
@@ -549,11 +549,11 @@ Den Wert \lstinline|True| könnten wir beispielsweise verwenden, um eine Endloss
 	\begin{figure}[H] % not really a figure, just acts as non-floating container
 		\begin{lstlisting}[escapechar=!]
 		import turtle as t
-		
+
 		# Tempo der Turtle festlegen
 		t.speed(100)
-		
-		# gleichseitiges Dreieck zeichnen
+
+		# Spirale zeichnen
 		seite = 5
 		max_seite = 50
 		increment = 5
@@ -563,7 +563,7 @@ Den Wert \lstinline|True| könnten wir beispielsweise verwenden, um eine Endloss
 			t.fd(seite)
 			t.rt(90)
 			seite += increment
-			
+
 		# Turtle-Zeichnung stehen lassen
 		t.done()
 	\end{lstlisting}
@@ -576,25 +576,25 @@ Den Wert \lstinline|True| könnten wir beispielsweise verwenden, um eine Endloss
 \end{minipage}
 
 \begin{myexercise}
-	Schreiben Sie eine Funktion \lstinline|erraten_zahl()|, die ein einfaches Zahlenratespiel implementiert (siehe Code-Vorlage untenan). Die Funktion soll:
+	Schreiben Sie eine Funktion \lstinline|erraten_zahl()|, die ein einfaches Zahlenratespiel implementiert (siehe Code-Vorlage unten). Die Funktion soll:
 	\begin{enumerate}
 		\item Eine zufällige Zahl zwischen 1 und 100 generieren (dies wird gemacht mit dem Befehl \lstinline|random.randint(1, 100)|, ist im Code bereits gemacht).
-		\item Den Benutzer in einer Schleife auffordern, die Zahl zu erraten (\lstinline|int(input("Rate die Zahl: "))|).
+		\item Den Benutzer in einer Schleife auffordern, die Zahl zu erraten (\lstinline|int(input("Raten Sie die Zahl: "))|).
 		\item Falls die Eingabe kleiner als die gesuchte Zahl ist, soll ausgegeben werden: \enquote{Die Zahl ist grösser.}.
 		\item Falls die Eingabe grösser als die gesuchte Zahl ist, soll ausgegeben werden: \enquote{Die Zahl ist kleiner.}.
-		\item Falls die Eingabe korrekt ist, soll die Nachricht \enquote{Richtig! Du hast die Zahl erraten.} ausgegeben werden und die Schleife mit \lstinline|break| beendet werden.
+		\item Falls die Eingabe korrekt ist, soll die Nachricht \enquote{Richtig! Sie haben die Zahl erraten.} ausgegeben werden und die Schleife mit \lstinline|break| beendet werden.
 	\end{enumerate}
 	Testen Sie die Funktion, indem Sie sie ausführen und versuchen, die Zahl zu erraten.
 	Vervollständigen Sie folgende Code-Vorlage:
 	\begin{lstlisting}
 				import random
-				
+
 				def erraten_zahl():
 					# Zufallszahl generieren
 					ziel_zahl = random.randint(1, 100)
-					
+
 					while True:
-						x = int(input("Errate die Zahl!"))
+						x = int(input("Raten Sie die Zahl: "))
 						# IHR CODE HIER
 		\end{lstlisting}
 	\begin{myanswer}
@@ -644,24 +644,24 @@ Den Wert \lstinline|True| könnten wir beispielsweise verwenden, um eine Endloss
 	\end{myanswer}
 \end{mychallenge}
 
-\section{Kopfgesteuerte Schleifen mit \texorpdfstring{\lstinline|while|}{while}}
+\section{\texorpdfstring{\lstinline|while|}{while}-Schleifen mit Bedingung}
 
 \begin{myexample}
-Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|break|-Befehl zu einem einfachen \lstinline|while| mit Ausführungs-Bedingung vereinfacht werden kann. Beide Codes machen dasselbe. Die Schleife wird solange ausgeführt, wie die Ausführungs-Bedingung wahr ist. Die Abbruchbedingung wird vor jeder neuen Schleifenausführung überprüft und die Schleife wird nur dann ausgeführt, wenn die Ausführungs-Bedingung noch wahr ist. Beim linken Code verwenden wir nicht eine Ausführungs-Bedingung sondern eine Abbruch-Bedingung.
+Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|break|-Befehl zu einem einfachen \lstinline|while| mit Ausführungs-Bedingung vereinfacht werden kann. Beide Codes machen dasselbe. Die Schleife wird solange ausgeführt, wie die Ausführungs-Bedingung wahr ist. Die Abbruchbedingung wird vor jeder neuen Schleifenausführung überprüft und die Schleife wird nur dann ausgeführt, wenn die Ausführungs-Bedingung noch wahr ist. Beim linken Code verwenden wir nicht eine Ausführungs-Bedingung, sondern eine Abbruch-Bedingung.
 
 \begin{center}
 	\begin{minipage}{.48\textwidth}
 		\begin{lstlisting}[escapechar=!]
 				import turtle as t
-				
+
 				def spirale(seite, add, max_seite):
-				while True:               !\tikzmark{fromStart}!
-					if seite > max_seite:
-						break             !\tikzmark{fromEnd}!
-					t.fd(seite)
-					t.rt(90)
-					seite+=add
-					
+					while True:               !\tikzmark{fromStart}!
+						if seite > max_seite:
+							break             !\tikzmark{fromEnd}!
+						t.fd(seite)
+						t.rt(90)
+						seite+=add
+
 				spirale(10, 10, 100)
 			\end{lstlisting}
 	\end{minipage}
@@ -669,13 +669,13 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 		\begin{figure}[H] % not really a figure, just acts as non-floating container
 			\begin{lstlisting}[escapechar=!]
 				import turtle as t
-				
+
 				def spirale(seite, add, max_seite):
-					!\tikzmark{toStart}!!\tikzmark{toEnd}!while seite < max_seite:
+					!\tikzmark{toStart}!!\tikzmark{toEnd}!while seite <= max_seite:
 						t.fd(seite)
 						t.rt(90)
 						seite+=add
-				
+
 				spirale(10, 10, 100)
 			\end{lstlisting}
 			\begin{tikzpicture}[overlay, remember picture,
@@ -696,7 +696,7 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 \begin{myattention}[Endlos-Schleifen]
 	Beachten Sie folgende Punkte:
 	\begin{itemize}
-		\item Passen Sie auf, dass Sie keine unendlichen Schleifen produzieren! In diesem Fall kann das Programm, auf dem Python läuft, hängen bleiben. Vergessen Sie daher nie die Abbruchbedingung klar zu formulieren!
+		\item Passen Sie auf, dass Sie keine unendlichen Schleifen produzieren! In diesem Fall kann das Programm, auf dem Python läuft, hängen bleiben. Vergessen Sie daher nie, die Abbruchbedingung klar zu formulieren!
 		\item Ein \lstinline|while True:| (unendliche Schleife) ohne \lstinline|break| kann zum Absturz des Programms führen \emoji{face-with-spiral-eyes}
 		\item Je nachdem kann das auch in einem \lstinline|while| mit einer Kondition passieren, sofern die Bedingung nach dem \lstinline|while| so geschrieben ist, dass sie immer wahr (\lstinline|True|) ist (siehe \cref{subsec:semantische-fehler} zu semantischen Fehlern).
 		\item \textbf{Speichern Sie regelmässig Ihre Aufgaben!}
@@ -712,7 +712,7 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 \end{myexercise}
 
 \begin{myexercise}
-	Entwickeln Sie eine Funktion, dem eine Zahl $x > 1$ als Parameter übergeben wird. Aus $x$ wird nun eine Folge von Zahlen generiert und ausgegeben. Dabei wird folgende Regel angewendet: Wenn $x$ durch zwei teilbar ist, ist die nächste Zahl $x / 2$ . Wenn $x$ nicht durch zwei teilbar ist, ist die nächste Zahl $3 \cdot x + 1$ . Dieser Prozess wird wiederholt, solange die neu berechnete Zahl grösser als 1 ist.
+	Entwickeln Sie eine Funktion, der eine Zahl $x > 1$ als Parameter übergeben wird. Aus $x$ wird nun eine Folge von Zahlen generiert und ausgegeben. Dabei wird folgende Regel angewendet: Wenn $x$ durch zwei teilbar ist, ist die nächste Zahl $x / 2$. Wenn $x$ nicht durch zwei teilbar ist, ist die nächste Zahl $3 \cdot x + 1$. Dieser Prozess wird wiederholt, solange die neu berechnete Zahl grösser als 1 ist.
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{zahlenfolge.py},label=listing:zahlenfolge]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/zahlenfolge.py}
 	\end{myanswer}
@@ -758,7 +758,7 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 	Wie viele Schleifen durchläuft das folgende Programm?
 	\lstinputlisting[language=Python,caption=\texttt{schleifen\_wiederh.py},label=listing:schleifen_wiederh]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/schleifen_wiederh.py}
 	\begin{myanswer}
-		Das Programm durchläuft theoretisch unendlich viele Schleifen. Es handelt sich hier um eine asymptotische Funktion, welche sich immer weiter der Zahl 2 annähert, diese aber nie erreicht. Es endet jedoch trotzdem, da Python irgendwann an die Grenze der Genauigkeit von Gleitkommazahlen kommt und die Berechnung von \lstinline|summe| nicht mehr korrekt durchgeführt werden kann. Sobald \lstinline|summe| den Wert 2 erreicht oder überschreitet, wird die Schleife mit \lstinline|break| abgebrochen.
+		Mathematisch durchläuft das Programm unendlich viele Schleifen: Die Summe $1 + \frac{1}{2} + \frac{1}{4} + \ldots$ nähert sich immer weiter der Zahl 2 an, erreicht sie aber nie. Das Programm endet jedoch trotzdem, da Python Gleitkommazahlen nur mit begrenzter Genauigkeit speichert: Nach 54 Durchläufen wird \lstinline|summe| auf den Wert \lstinline|2.0| gerundet. Dann ist die Bedingung \lstinline|summe < 2| falsch und die \lstinline|while|-Schleife endet.
 	\end{myanswer}
 \end{mychallenge}
 
@@ -772,7 +772,8 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 \begin{myexercise}[Weizenkornlegende]
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.3\linewidth]{Grundlagen_Info/09_Tabellenkalkulation/Screenshots/Sissa}
+		\includegraphics[width=0.3\linewidth]{Grundlagen_Info/00_Programmieren/Figures/Sissa}
+		\caption[Sissa ibn Dahir]{Sissa ibn Dahir. Zeichnung: Thiago Cruz, \href{https://commons.wikimedia.org/wiki/File:Lahur_Sessa_by_Thiago_Cruz.jpg}{Wikimedia Commons}, gemeinfrei}
 	\end{figure}
 	Sissa ibn Dahir lebte angeblich im dritten oder vierten Jahrhundert in Indien und gilt Legenden zufolge als der Erfinder des Schachspiels.
 
@@ -784,7 +785,7 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 
 	Auf dem ersten Schachfeld liegt 1 Weizenkorn, auf dem zweiten Feld liegen 2 Weizenkörner, auf dem dritten Feld liegen 4 Körner usw.
 
-	Allgemein liegen auf dem \(n+1\)-ten Schachfeld genau doppelt so viele Körner wie auf dem \(n\)-ten Schachfeld. Unser Schachbrett habe \(n\)-Felder, wobei \(n \leq 67\). Wie viele Weizenkörner würden in dieser Situation insgesamt auf dem Schachfeld liegen (angenommen so viel Weizen hätte Platz)?
+	Allgemein liegen auf dem \(n+1\)-ten Schachfeld genau doppelt so viele Körner wie auf dem \(n\)-ten Schachfeld. Unser Schachbrett habe \(n\) Felder, wobei \(n \leq 67\). Wie viele Weizenkörner würden in dieser Situation insgesamt auf dem Schachbrett liegen (angenommen so viel Weizen hätte Platz)?
 
 	Schreiben Sie eine Funktion \lstinline|reis(n)|, welche die gesuchte Anzahl Körner in Abhängigkeit der Anzahl \(n\) der Felder berechnet und per \lstinline|return| zurückgibt.
 
@@ -805,7 +806,7 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 		\item Ein Teiler $d$ einer natürlichen Zahl $n$, heisst \textit{trivial}, falls $d = 1$ oder $d = n$ gilt. Beispiele: Die trivialen Teiler von 8 sind 1 und 8 selbst. Die \textit{nichttrivialen} Teiler von 8 hingegen sind 2 und 4. Die Zahl 24 besitzt genau die sechs nichttrivialen Teiler 2, 3, 4, 6, 8 und 12 und die beiden trivialen Teiler 1 und 24.
 		\item Die \textit{Quersumme} einer Zahl ist die Summe der einzelnen Ziffern ihrer Darstellung im Dezimalsystem. Beispiele: Die Quersumme von 315 ist $3 + 1 + 5 = 9$. Die Quersumme von 1004 ist $1 + 4 = 5$.
 		\item Anstelle der Quersumme können wir auch die \textit{Quersumme der quadrierten Ziffern} berechnen, indem wir die Ziffern jeweils zuerst quadrieren, bevor wir sie summieren. Beispiel: Die Quersumme der quadrierten Ziffern von 52 ist $5^2 + 2^2 = 25 + 4 = 29$. Die Quersumme der quadrierten Ziffern von 134 ist $1^2 + 3^2 + 4^2 = 1 + 9 + 16 = 26$.
-		\item Eine natürliche Zahl $n>1$ heisst \tib{Kanada-Perfekt}, falls die Summe der nichttrivialen Teiler von $n$ der Quersumme der quadrierten Ziffern von $n$ entspricht.
+		\item Eine natürliche Zahl $n>1$ heisst \tib{kanada-perfekt}, falls die Summe der nichttrivialen Teiler von $n$ der Quersumme der quadrierten Ziffern von $n$ entspricht.
 		\item Die kleinste kanada-perfekte Zahl ist 125. Die nichttrivialen Teiler von 125 sind 5 und 25. Somit ist die Summe der nichttrivialen Teiler von 125 gegeben durch $5 + 25 = 30$. Die Quersumme der quadrierten Ziffern von 125 ist ebenfalls 30, denn $1^2 + 2^2 + 5^2 = 30$. Somit ist 125 eine kanada-perfekte Zahl.
 	\end{itemize}
 
@@ -816,68 +817,22 @@ Folgendes Beispiel zeigt, wie ein \lstinline|while True:| mit einem \lstinline|b
 \end{mychallenge}
 
 \begin{mychallenge}[Perfekte Zahlen]
-	Eine natürliche Zahl heisst ``Perfekte Zahl'', falls sie der Summe aller ihrer natürlichen Teiler ausser sich selbst entspricht.
+	Eine natürliche Zahl heisst \enquote{perfekte Zahl}, falls sie der Summe aller ihrer natürlichen Teiler ausser sich selbst entspricht.
 
 	\begin{itemize}
 		\item Die Zahl 6 ist eine perfekte Zahl. Sie besitzt genau die natürlichen Teiler $1, 2$ und $3$ (die Zahl $6$ selbst nicht inbegriffen). Die Summe $1 + 2 + 3 = 6$ dieser Teiler entspricht der Zahl selbst.
 		\item Die Zahl 28 ist ebenfalls perfekt, da $28 = 1 + 2 + 4 + 7 + 14$.
-		\item Die Zahl 10 ist nicht perfekt. Ihre Teiler sind $1, 2$ und $5$ aber $10 \neq 1 + 2 + 5 = 8$.
+		\item Die Zahl 10 ist nicht perfekt. Ihre Teiler sind $1, 2$ und $5$, aber $10 \neq 1 + 2 + 5 = 8$.
 	\end{itemize}
 
-	Schreiben Sie ein Python-Programm, welches genau die perfekten Zahlen $\leq 10^5$ ausgibt.
+	Schreiben Sie ein Python-Programm, welches genau die perfekten Zahlen $\leq 10^4$ ausgibt.
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{perfekte\_zahlen.py}]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/perfekte_zahlen.py}
 	\end{myanswer}
 \end{mychallenge}
 
-\begin{mychallenge}[Schachbrettmuster]
-	Wir möchten ein quadratisches Schachbrettmuster mit $n\times n$ Feldern erzeugen, wobei $n$ eine gerade positive natürliche Zahl ist.
-	Jedes der $n^2$ Felder soll dabei eine Grösse von genau $s\times s$ Zeichen haben ($s\geq 1$). Die Zahl \lstinline|1| repräsentiere die schwarzen Felder, die Zahl \lstinline|0| die weissen Felder.
-
-	Zur Vereinfachung dürfen Sie annehmen, dass das Feld in der linken oberen Ecke stets weiss ist. Die Aufgabe ist noch etwas schwieriger (soweit sind wir in der Theorie zur Zeit noch nicht), falls Sie zusätzlich wählen können, ob das linke obere Feld schwarz oder weiss sein soll (\lstinline|upper_left = 'black'| oder \lstinline|upper_left = 'white'|). Folgende Beispiele zeigen die entsprechenden Schachbrettmuster für verschiedene Wahlen der drei Parameter \lstinline|n|, \lstinline|s| und \lstinline|upper_left|:
-
-	\begin{lstlisting}[language=Python]
-# Schachbrettmuster für n = 2, s = 3, upper_left = 'white'
-000111
-000111
-000111
-111000
-111000
-111000
-\end{lstlisting}
-
-	\begin{lstlisting}[language=Python]
-# Schachbrettmuster für n = 4, s = 1, upper_left = 'black'
-1010
-0101
-1010
-0101
-\end{lstlisting}
-
-	\begin{lstlisting}[language=Python]
-# Schachbrettmuster für n = 6, s = 2, upper_left = 'black'
-110011001100
-110011001100
-001100110011
-001100110011
-110011001100
-110011001100
-001100110011
-001100110011
-110011001100
-110011001100
-001100110011
-001100110011
-\end{lstlisting}
-	Allgemein soll das Muster immer genau $ns$ Zeichen breit und ebenso hoch sein. Schreiben Sie ein TigerJython-Programm, welches die drei oben beschriebenen Parameter akzeptiert und das entsprechende Schachbrettmuster ausgibt.
-
-	\begin{myanswer}
-		\lstinputlisting[language=Python,caption=\texttt{schachbrettmuster.py}]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/schachbrettmuster.py}
-	\end{myanswer}
-\end{mychallenge}
-
 \begin{mychallenge}[Maximale Quersumme von Potenzen]
-	Dies ist eine etwas vereinfachte Version von Problem 56 von Project Euler (\url{https://projecteuler.net/problem=56}). Finden Sie natürliche Zahlen $a, b < 10$, sodass
+	Dies ist eine etwas vereinfachte Version von Problem 56 von Project Euler\footnote{\url{https://projecteuler.net/problem=56}}. Finden Sie natürliche Zahlen $a, b < 10$, sodass
 	\begin{align*}
 		a^b
 	\end{align*}

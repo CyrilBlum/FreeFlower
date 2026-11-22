@@ -76,7 +76,7 @@ die Aufgabe des Mikrocontrollers.
     \end{tikzpicture}
 \end{center}
 
-Die Programme werden in der Regel auf einem Computer geschrieben und anschliessend auf den Microcontroller geladen. Dieser agiert danach autonom als intelligentess System,
+Die Programme werden in der Regel auf einem Computer geschrieben und anschliessend auf den Mikrocontroller geladen. Dieser agiert danach autonom als intelligentes System,
 weil er abhängig von Sensordaten eigene vorprogrammierte Entscheidungen
 trifft und entsprechend handelt.
 
@@ -111,7 +111,8 @@ USB-Kabel auf den micro:bit.
 
 \begin{myremark}
     Für die Programmierung verwenden wir in diesem Kapitel
-    die Webseite \url{https://webtigerpython.ethz.ch}
+    die Webseite
+    \begin{center}\url{https://webtigerpython.ethz.ch}\end{center}
     anstelle von VS Code. Diese stellt die benötigten
     Robotik-Bibliotheken bereits zur Verfügung und bietet
     einen nützlichen Simulator, mit dem viele Programme
@@ -126,16 +127,13 @@ USB-Kabel auf den micro:bit.
 \end{myremark}
 
 
-
-
-
 \begin{enumerate}
     \item Stecken Sie den micro:bit in die dafür vorgesehene
           Steckleiste des Maqueen-Fahrwerks. Achten Sie
           auf die korrekte Ausrichtung.
 
     \item Verbinden Sie den micro:bit über ein USB-Datenkabel
-          mit Ihrem Computer. Achtung: Sobald der micro:bit mit Strom versogt wird, startet, das zuletzt geladen Programm. Halten Sie den Roboter fest, damit er nicht versehentlich vom Tisch fährt!
+          mit Ihrem Computer. Achtung: Sobald der micro:bit mit Strom versorgt wird, startet das zuletzt geladene Programm. Halten Sie den Roboter fest, damit er nicht versehentlich vom Tisch fährt!
 
     \item Öffnen Sie im Browser Google Chrome die Webseite
           \url{https://webtigerpython.ethz.ch}.
@@ -168,7 +166,7 @@ setLED(0)
 \end{enumerate}
 
 \begin{myremark}
-    Mit \texttt{from mbrobot import *} werden sämtliche Befehle aus der Bibliothek für den Micro:bit-Roboter importiert.
+    Mit \texttt{from mbrobot import *} werden sämtliche Befehle aus der Bibliothek für den micro:bit-Roboter importiert.
 
     Der Befehl \texttt{setLED(1)} schaltet die beiden
     LEDs des Maqueen ein, während \texttt{setLED(0)}
@@ -177,7 +175,7 @@ setLED(0)
     Mit \texttt{delay(2000)} wird die Programmausführung
     für 2000 Millisekunden, also zwei Sekunden, unterbrochen.
 
-    Der Micro:bit verfügt neben der USB-Büchse einen reset-Knopf, mit dem man das Programm neu starten kann. Probieren Sie es!
+    Der micro:bit verfügt neben der USB-Buchse über einen Reset-Knopf, mit dem man das Programm neu starten kann. Probieren Sie es!
 \end{myremark}
 
 
@@ -191,7 +189,6 @@ vorwärts bzw. rückwärts. Die Befehle \texttt{left()} und
 \texttt{leftArc(radius)} und \texttt{rightArc(radius)}
 eine Kurvenfahrt mit dem angegebenen Radius ermöglichen.
 Mit \texttt{stop()} werden die Motoren angehalten.
-
 
 
 \begin{myexercise}
@@ -296,8 +293,9 @@ stop()
         Individuelle Lösung. Der Roboter muss zunächst
         geradeaus fahren, sich um \(90^\circ\) nach rechts
         drehen, erneut geradeaus fahren, sich nochmals
-        um \(90^\circ\) nach rechts drehen und schliesslich
-        nach einer weiteren Geradeausfahrt anhalten.
+        um \(90^\circ\) nach rechts drehen, erneut geradeaus
+        fahren, sich um \(90^\circ\) nach links drehen und
+        schliesslich nach einer weiteren Geradeausfahrt anhalten.
         Die Fahr- und Drehzeiten müssen experimentell
         bestimmt werden.
     \end{myanswer}
@@ -351,7 +349,6 @@ setAlarm(0)
         \end{lstlisting}
     \end{myanswer}
 \end{myexercise}
-
 
 
 \begin{myexercise}
@@ -448,10 +445,11 @@ erledigen.
         \begin{lstlisting}[language=Python]
 from mbrobot import *
 
-for i in range(10):
-    radius = 5 + 3 * i
+radius = 5
+for _ in range(10):
     leftArc(radius)
     delay(2000)
+    radius += 3
 
 stop()
     \end{lstlisting}
@@ -461,10 +459,11 @@ stop()
         \begin{lstlisting}[language=Python]
 from mbrobot import *
 
-for i in range(9):
-    radius = 30 - 3 * i
+radius = 30
+for _ in range(9):
     leftArc(radius)
     delay(2000)
+    radius -= 3
 
 left()
     \end{lstlisting}
@@ -500,8 +499,8 @@ left()
             ]
             \node[lager] (L) at (0,0) {L};
             \node[standort] (A) at (0,2.5) {A};
-            \node[standort] (B) at (-2.5,-2.5) {B};
-            \node[standort] (C) at (2.5,-2.5) {C};
+            \node[standort] (B) at (-2.17,-1.25) {B}; % 120 Grad Abstand zu A
+            \node[standort] (C) at (2.17,-1.25) {C};
 
             \draw[<->, thick, cyan!70!black]
             (L.north) -- (A.south);
@@ -522,8 +521,8 @@ left()
     jeweils zwei Sekunden dauert.
 
     \begin{myanswer}
-        Eine mögliche Lösung besteht darin, für die
-        Transportfahrten eine eigene Funktion zu definieren.
+        Eine mögliche Lösung wiederholt in der Schleife
+        jeweils eine Transportfahrt mit anschliessender Drehung.
         Der Roboter startet im Lager und ist zunächst
         in Richtung A ausgerichtet.
 
@@ -544,8 +543,8 @@ while True:
     backward()
     delay(FAHRZEIT)
     stop()
-    
-    ### Auf das naechste Ziel ausrichten            
+
+    ### Auf das naechste Ziel ausrichten
     left()
     delay(DREHZEIT_120)
     stop()
@@ -561,10 +560,7 @@ while True:
 \end{myexercise}
 
 
-
 \subsection*{Eigene Befehle definieren}
-
-
 
 
 Wie bei gewöhnlichen Python-Programmen können auch für
@@ -679,20 +675,6 @@ for _ in range(3):
         \end{lstlisting}
     \end{myanswer}
 \end{myexercise}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \section{Sensoren}
@@ -926,7 +908,7 @@ while True:
         %     delay(100)
         %         \end{lstlisting}
 
-        \textbf{c) Toleranzbereich}
+        \textbf{b) Toleranzbereich}
 
         \begin{lstlisting}[language=Python]
 from mbrobot import *
@@ -953,7 +935,6 @@ while True:
         reduziert.
     \end{myanswer}
 \end{myexercise}
-
 
 
 \begin{myexercise}
@@ -1129,64 +1110,58 @@ while True:
     % verschiedene Richtungen messen. In welcher Richtung
     % könnte sich der Ausgang befinden?
 
-    % \begin{myanswer}
-    %         Eine mögliche Strategie besteht darin, die
-    %         Umgebung schrittweise abzutasten und anschliessend
-    %         in die Richtung mit der grössten gemessenen
-    %         Distanz zu fahren.
+    \begin{myanswer}
+        Eine mögliche Strategie besteht darin, die
+        Umgebung schrittweise abzutasten und anschliessend
+        in die Richtung mit der grössten gemessenen
+        Distanz zu fahren.
 
-    %         \begin{lstlisting}[language=Python]
-    % from mbrobot import *
+        \begin{lstlisting}[language=Python]
+from mbrobot import *
 
-    % setSpeed(20)
+setSpeed(20)
 
-    % beste_distanz = 0
-    % beste_richtung = 0
+# Zeit fuer eine Drehung um 10 Grad (kalibrieren)
+DREHZEIT_10 = 100
 
-    % # Umgebung in 36 Richtungen abtasten
-    % for i in range(36):
-    %     d = getDistance()
+beste_distanz = 0
+beste_richtung = 0
+richtung = 0
 
-    %     if d > beste_distanz:
-    %         beste_distanz = d
-    %         beste_richtung = i
+# Umgebung in 36 Richtungen (je 10 Grad) abtasten
+for _ in range(36):
+    d = getDistance()
+    if d > beste_distanz:
+        beste_distanz = d
+        beste_richtung = richtung
+    left()
+    delay(DREHZEIT_10)
+    stop()
+    delay(100)
+    richtung += 1
 
-    %     left()
-    %     delay(100)
-    %     stop()
-    %     delay(100)
+# Nach 36 Schritten schaut der Roboter wieder
+# in die Startrichtung: in die beste Richtung drehen
+for _ in range(beste_richtung):
+    left()
+    delay(DREHZEIT_10)
+    stop()
 
-    % # In die beste Richtung drehen
-    % for _ in range(beste_richtung):
-    %     left()
-    %     delay(100)
-    %     stop()
+# In Richtung Ausgang fahren
+forward()
+delay(3000)
+stop()
+        \end{lstlisting}
 
-    % # In Richtung Ausgang fahren
-    % forward()
-    % delay(3000)
-    % stop()
-    %         \end{lstlisting}
-
-    %         Die Drehzeiten und die Fahrzeit müssen
-    %         experimentell kalibriert werden. Die Lösung
-    %         funktioniert nur unter geeigneten Bedingungen,
-    %         insbesondere wenn die grösste gemessene Distanz
-    %         tatsächlich in Richtung des Ausgangs zeigt.
-    %         Für komplexere Räume wäre eine zuverlässigere
-    %         Suchstrategie erforderlich.
-    % \end{myanswer}
+        Die Drehzeit und die Fahrzeit müssen
+        experimentell kalibriert werden. Die Lösung
+        funktioniert nur unter geeigneten Bedingungen,
+        insbesondere wenn die grösste gemessene Distanz
+        tatsächlich in Richtung des Ausgangs zeigt.
+        Für komplexere Räume wäre eine zuverlässigere
+        Suchstrategie erforderlich.
+    \end{myanswer}
 \end{myexercise}
-
-
-
-
-
-
-
-
-
-
 
 
 \subsection*{Infrarotsensoren}
@@ -1230,11 +1205,14 @@ while True:
     delay(100)
     \end{lstlisting}
 
-    Die beiden Befehle \texttt{RobotContext.useBackground()}
-    und \texttt{RobotContext.setStartPosition()} dienen
+    \begin{sloppypar}
+    Die beiden Befehle
+    \texttt{RobotContext.useBackground()} und
+    \texttt{RobotContext.setStartPosition()} dienen
     ausschliesslich der Simulation. Sie legen das Hintergrundbild
     und die Startposition des Roboters im Simulator fest.
     Auf dem echten Roboter haben sie keine Wirkung.
+    \end{sloppypar}
 
     Der Befehl \texttt{irLeft.read\_digital()} liest den
     linken Infrarotsensor aus. Erkennt dieser eine dunkle
@@ -1258,7 +1236,6 @@ while True:
 
     \end{enumerate}
 \end{myexample}
-
 
 
 \begin{myexample}
@@ -1291,11 +1268,14 @@ while True:
     delay(100)
     \end{lstlisting}
 
-    Die beiden Befehle \texttt{RobotContext.useBackground()}
-    und \texttt{RobotContext.setStartPosition()} dienen
+    \begin{sloppypar}
+    Die beiden Befehle
+    \texttt{RobotContext.useBackground()} und
+    \texttt{RobotContext.setStartPosition()} dienen
     ausschliesslich der Simulation. Sie legen das Hintergrundbild
     und die Startposition des Roboters im Simulator fest.
     Auf dem echten Roboter haben sie keine Wirkung.
+    \end{sloppypar}
 
     Die Befehle \texttt{irLeft.read\_digital()} und
     \texttt{irRight.read\_digital()} lesen die beiden
@@ -1407,7 +1387,6 @@ while True:
 \end{myexercise}
 
 
-
 \begin{myexercise}
     \textbf{Ein Zielobjekt suchen und anfahren}
 
@@ -1486,35 +1465,6 @@ while True:
 \end{myexercise}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{Lernfähige Roboter}
 
 Ein lernfähiger Roboter soll nicht nur vorgegebene Befehle
@@ -1582,15 +1532,15 @@ def keepOnTrack():
         leftArc(0.1)
     elif vL == 1 and vR == 0:
         rightArc(0.1)
-        
+
 def turnLeft():
     left()
     delay(TURNTIME_90)
 
 def turnRight():
     right()
-    delay(TURNTIME_90)    
- 
+    delay(TURNTIME_90)
+
 
 memory = [0, 1, 0]
 n = 0
@@ -1679,7 +1629,7 @@ verwendet werden kann.
 
 
 \begin{myexercise}
-    Betrachten Sie den Programmcode unten
+    Betrachten Sie den Programmcode unten.
 
     \begin{enumerate}
         \item Besprechen Sie den Programmcode zu zweit.
@@ -1693,6 +1643,16 @@ verwendet werden kann.
 
         \item Testen Sie das Programm auch im Realmodus. Dazu müssen Sie das Laden der Roboterumgebung am Anfang des Codes auskommentieren. Ausserdem müssen Sie den Wechsel vom \enquote{learning}-Zustand zum \enquote{running}-Zustand entsprechend den Programmkommentaren anpassen.
     \end{enumerate}
+
+    \begin{myanswer}
+        Das Programm besteht aus drei Teilen:
+        \begin{itemize}
+            \item \textbf{Vorbereitung:} Die beiden \texttt{RobotContext}-Befehle laden die Bahn im Simulator. Danach folgen die Hilfsfunktionen \texttt{keepOnTrack()}, \texttt{turnLeft()} und \texttt{turnRight()} aus Phase~1.
+            \item \textbf{Lernphase (\enquote{learning}):} Der Roboter folgt der Spur. Erkennen beide Infrarotsensoren eine helle Fläche, hält er an der Kreuzung an. Mit Taste A biegt er links ab und hängt \texttt{0} an \texttt{memory} an, mit Taste B biegt er rechts ab und hängt \texttt{1} an. Die Tastendrücke sind die Ereignisse, die das Abbiegen auslösen. Die Schleife endet mit der Tastenkombination aus Teilaufgabe~2 (Bedingung \texttt{button\_a.is\_pressed() and button\_b.was\_pressed()}).
+            \item \textbf{Fahrphase (\enquote{running}):} Nach dem Neustart liest der Roboter die Liste \texttt{memory} wie in Phase~1 Eintrag für Eintrag aus und biegt an jeder Kreuzung entsprechend ab. Sind alle Einträge verarbeitet, endet das Programm mit \texttt{break}.
+        \end{itemize}
+        Für den Realmodus kommentieren Sie die beiden \texttt{RobotContext}-Zeilen aus und ersetzen den Block \enquote{Neustart im Simulatormodus} durch die auskommentierten Zeilen unter \enquote{Neustart im Realmodus}: Der Roboter hält an, Sie setzen ihn von Hand an den Start und starten die Fahrphase mit Taste B.
+    \end{myanswer}
 \end{myexercise}
 
 
@@ -1744,7 +1704,7 @@ in seiner Wegbeschreibung.
 Anschliessend überprüft er, ob er auf einer
 befahrbaren Spur weiterfahren kann:
 \begin{itemize}
-    \item Kann er während mindestens zwei Sekunden
+    \item Kann er während mindestens 1.5 Sekunden
           weiterfahren, gilt die Entscheidung als
           richtig und wird beibehalten.
     \item Verlässt er die Spur bereits vorher,
@@ -1813,8 +1773,8 @@ while not button_a.was_pressed():
 stop()
     \end{lstlisting}
 
-    Mit \texttt{running\_time()} wird die gemessen, wie lange
-    in Millisekunden das Programm bereits läuf ermittelt. Die Differenz
+    Mit \texttt{running\_time()} wird ermittelt, wie viele
+    Millisekunden das Programm bereits läuft. Die Differenz
 
     \begin{lstlisting}[language=Python]
 running_time() - lastTurnTime
@@ -1868,7 +1828,6 @@ running_time() - lastTurnTime
 % ausgeführt.
 
 
-
 \begin{myexercise}
     \textbf{Der Roboter lernt selbstständig}
 
@@ -1892,12 +1851,18 @@ running_time() - lastTurnTime
               mithilfe der gespeicherten Wegbeschreibung
               abfahren kann.
 
-        \item Testen Sie das Programm im Simulator auch mit den Bahnen \texttt{learntrack2.gif} und \texttt{learntrack3.gif}
+        \item Testen Sie das Programm im Simulator auch mit den Bahnen \texttt{learntrack2.gif} und \texttt{learntrack3.gif}.
 
         \item Testen Sie das Programm auch mit dem
               realen Roboter. Nehmen Sie gegebenenfalls
               notwendige Anpassungen vor.
     \end{enumerate}
+
+    \begin{myanswer}
+        Die Lernphase mit den Tasten A und B (vom Kommentar \texttt{\# learning} bis vor \texttt{\# Neustart im Simulatormodus}) wird durch die Lernschleife aus dem letzten Beispiel ersetzt. Vor der Schleife wird \texttt{lastTurnTime} gesetzt, die Lernphase endet mit Taste A. Alle übrigen Teile des Programms bleiben unverändert. Die neue Lernphase in \texttt{Selbststaendig\_lernen.py}:
+        \lstinputlisting[language=Python,firstline=32,lastline=56,caption={\texttt{Selbststaendig\_lernen.py} (Lernphase)},label=listing:selbststaendig_lernen]{Grundlagen_Info/00_Programmieren/Skript/Code/K09_Robotik/Selbststaendig_lernen.py}
+        Die Zeitgrenze von 1.5 Sekunden und \texttt{TURNTIME\_90} müssen zur Geschwindigkeit des Roboters und zur Bahn passen und gegebenenfalls angepasst werden.
+    \end{myanswer}
 \end{myexercise}
 
 

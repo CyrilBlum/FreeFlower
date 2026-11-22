@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -80,10 +80,10 @@
 		\item Eine Klasse ist ein Bauplan für Objekte.
 		\item Sie definiert Eigenschaften (Attribute) und Verhalten (Methoden) von Objekten.
 		\item Klassen ermöglichen die Erstellung von benutzerdefinierten Datentypen.
-		\item 
+		\item
 		Wir kennen Klassen bereits von anderen Typen: \textbf{Listen, Zahlen, Zeichenketten!}
 	\end{itemize}
-	
+
 
 \end{frame}
 
@@ -161,18 +161,18 @@
 \begin{frame}[fragile]{Beispiel: Personen}
 	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize, escapechar=!, numbers=left,framerule=1pt]
 class Person:
-    def __init__(self, name, alter):!\tikzmark{initStart}!                                
+    def __init__(self, name, alter):!\tikzmark{initStart}!
         self.name = name
         self.alter = alter         !\tikzmark{initEnd}!
-    
+
     def vorstellen(self):!\tikzmark{method1Start}!                !\tikzmark{method1Comment}!
         print(f"Hallo, ich bin {self.name} und {self.alter} Jahre alt.")
-		
+
 	def geburtstag_feiern(self):!\tikzmark{method2Start}!         !\tikzmark{method2Comment}!
         self.alter += 1
         print(f"{self.name} ist jetzt {self.alter} Jahre alt.")
 
-    
+
 
 # Objekte der Klasse Person erstellen
 anna = Person("Anna", 16)
@@ -282,6 +282,7 @@ Produkt.get_anzahl_produkte() # Ausgabe: Anzahl Produkte: 2
 	\begin{itemize}
 		\item \readbox{Kapitel 7.2 \& 7.3: Vordefinierte Klassen \& Klassenattribute}
 		\item \aufgabebox{Aufgabe 7.3} (Klasse \lstinline|Auto| mit Instanzattributen \lstinline|marke|, \lstinline|modell|, \lstinline|baujahr|, Klassenattribut \lstinline|anzahl_autos| und Klassenmethode \lstinline|get_statistik()|)
+		\item \challengebox{Challenge 7.4} (Alternative Konstruktoren mit \lstinline|@classmethod|)
 	\end{itemize}
 \end{frame}
 
@@ -323,8 +324,8 @@ print(e_car.info()) # Tesla Model 3, Kapazitaet: 75 kWh
 \begin{frame}[fragile]{Aufgaben: Vererbung}
 	\begin{itemize}
 		\item \readbox{Kapitel 7.4.1: Vererbung}
-		\item \aufgabebox{Aufgabe 7.4} (Elternklasse \lstinline|Person|, Kindklasse \lstinline|Schueler| mit zusätzlichem Attribut \lstinline|schulklasse|, überschriebener Methode \lstinline|vorstellen()| und Zuweisungsmethode)
-		\item \aufgabebox{Aufgabe 7.5} (Basisklasse \lstinline|Bankkonto|, Unterklasse \lstinline|Sparkonto| mit \lstinline|zinsen_gutschreiben(zinssatz)|)
+		\item \aufgabebox{Aufgabe 7.5} (Elternklasse \lstinline|Person|, Kindklasse \lstinline|Schueler| mit zusätzlichem Attribut \lstinline|schulklasse|, überschriebener Methode \lstinline|vorstellen()| und Zuweisungsmethode)
+		\item \aufgabebox{Aufgabe 7.6} (Basisklasse \lstinline|Bankkonto|, Unterklasse \lstinline|Sparkonto| mit \lstinline|zinsen_gutschreiben(zinssatz)|)
 	\end{itemize}
 \end{frame}
 
@@ -378,8 +379,8 @@ class Bibliothek:
 \begin{frame}[fragile]{Aufgaben: Bibliothekssystem \& Challenge}
 	\begin{itemize}
 		\item \readbox{Kapitel 7.5: Bibliothekssystem}
-		\item \aufgabebox{Aufgabe 7.6} (Klasse \lstinline|Zeitschrift| erbt von \lstinline|Buch| mit zusätzlicher \lstinline|ausgabe| und überschriebener \lstinline|info()|-Methode)
-		\item \aufgabebox{Challenge 7.7} (Vollständiges Lagerverwaltungssystem mit Klassen \lstinline|Produkt|, \lstinline|Elektronikprodukt|, \lstinline|Lebensmittel|, \lstinline|Lager|, \lstinline|Bestellung|)
+		\item \aufgabebox{Aufgabe 7.7} (Klasse \lstinline|Zeitschrift| erbt von \lstinline|Buch| mit zusätzlicher \lstinline|ausgabe| und überschriebener \lstinline|info()|-Methode)
+		\item \challengebox{Challenge 7.8} (Vollständiges Lagerverwaltungssystem mit Klassen \lstinline|Produkt|, \lstinline|Elektronikprodukt|, \lstinline|Lebensmittel|, \lstinline|Lager|, \lstinline|Bestellung|)
 	\end{itemize}
 \end{frame}
 

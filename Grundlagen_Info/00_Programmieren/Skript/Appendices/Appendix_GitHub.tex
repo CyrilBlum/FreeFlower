@@ -1,5 +1,4 @@
-\section*{GitHub-Tutorial}
-\label{ch:GitHub}
+\chapter{GitHub-Tutorial}\label{ch:GitHub}
 
 In diesem Tutorial lernen Sie Schritt für Schritt, wie Sie:
 \begin{itemize}
@@ -17,8 +16,8 @@ Git bietet folgende Haupt-Vorteile gegenüber dem Arbeiten auf dem lokalen Compu
   \item \textbf{Automatisierte Pipelines}: Möglichkeit, bei jeder neuen Version einen automatischen Test- und Deployment-Prozess zu starten, beispielsweise, um eine Dash-App auf einem Server zu aktualisieren.
 \end{itemize}
 
-\subsection*{Git und VS Code vorbereiten}
-Installieren Sie Git mit folgendem Befehl:  
+\section*{Git und VS Code vorbereiten}
+Installieren Sie Git mit folgendem Befehl:
 
 \begin{lstlisting}[style=bash]
 # macOS
@@ -30,10 +29,10 @@ winget install --id Git.Git -e --source winget
 
 Für Windows: Laden Sie Git von \url{https://git-scm.com/download/win} herunter und installieren Sie es.
 
-\subsection*{GitHub-Account erstellen}
-Öffnen Sie \url{https://github.com} und klicken Sie auf \textbf{Sign up}. Folgen Sie den Schritten, um einen Account anzulegen.  
+\section*{GitHub-Account erstellen}
+Öffnen Sie \url{https://github.com} und klicken Sie auf \textbf{Sign up}. Folgen Sie den Schritten, um einen Account anzulegen.
 
-\subsection*{SSH-Schlüssel erstellen und hinterlegen}
+\section*{SSH-Schlüssel erstellen und hinterlegen}
 Erzeugen Sie ein Schlüsselpaar, laden Sie es in den SSH-Agent und fügen Sie den Public Key bei GitHub ein.
 
 Führen Sie folgenden Code auf Ihrem Computer aus (Terminal auf macOS oder Linux, bzw. Git Bash auf Windows):
@@ -41,18 +40,19 @@ Führen Sie folgenden Code auf Ihrem Computer aus (Terminal auf macOS oder Linux
 ssh-keygen -t ed25519 -C "ihre_email@schule.ch"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
-pbcopy < ~/.ssh/id_ed25519.pub  # Public Key in Zwischenablage kopieren
+pbcopy < ~/.ssh/id_ed25519.pub  # macOS: Public Key in Zwischenablage kopieren
+# Windows (Git Bash): clip < ~/.ssh/id_ed25519.pub
 \end{lstlisting}
 
 
-Auf GitHub: \textbf{Settings} $\rightarrow$ \textbf{SSH and GPG keys} $\rightarrow$ \textbf{New SSH key}.  
+Auf GitHub: \textbf{Settings} $\rightarrow$ \textbf{SSH and GPG keys} $\rightarrow$ \textbf{New SSH key}.
 
-Testen Sie die Verbindung:  
+Testen Sie die Verbindung:
 \begin{lstlisting}[style=bash]
 ssh -T git@github.com
 \end{lstlisting}
 
-\subsection*{Git konfigurieren}
+\section*{Git konfigurieren}
 Damit bei jedem commit auf Git die richtigen Angaben verwendet werden, konfigurieren Sie Git mit Ihrem Namen und Ihrer E-Mail-Adresse.
 
 \begin{lstlisting}[style=bash]
@@ -60,13 +60,13 @@ git config --global user.name "Vorname Nachname"
 git config --global user.email "vorname.nachname@stud.edu.zh.ch"
 \end{lstlisting}
 
-\subsection*{Neues Repository auf GitHub}
+\section*{Neues Repository auf GitHub}
 Erstellen Sie über das \enquote{+} oben rechts ein \textbf{New repository}, geben Sie einen Namen (z.\,B. \lstinline|mein-python-projekt|) und wählen Sie \enquote{Public}.
 
 
 
-\subsection*{Projekt vorbereiten}
-Wechseln Sie in den Ordner Ihres Projekts:  
+\section*{Projekt vorbereiten}
+Wechseln Sie in den Ordner Ihres Projekts:
 \begin{lstlisting}[style=bash]
 cd /pfad/zu/projekt
 \end{lstlisting}
@@ -80,21 +80,22 @@ __pycache__/
 .vscode/
 \end{lstlisting}
 
-\subsection*{Initialisieren, Committen, Pushen}
+\section*{Initialisieren, Committen, Pushen}
 \begin{lstlisting}[style=bash]
 git init
 git add .
 git commit -m "Erster commit!"
+git branch -M main  # Hauptzweig "main" nennen
 
 git remote add origin git@github.com:<user>/<repo>.git
 git push -u origin main
 \end{lstlisting}
 
-\subsection*{Arbeiten mit VS Code}
-Öffnen Sie den Projektordner in VS Code.  
+\section*{Arbeiten mit VS Code}
+Öffnen Sie den Projektordner in VS Code.
 Verwenden Sie die \textbf{Source Control}-Ansicht (Git-Symbol links), um Änderungen zu \textbf{stagen}, zu \textbf{committen} und zu \textbf{pushen}.
 
-\subsection*{Nützliche Befehle}
+\section*{Nützliche Befehle}
 \begin{lstlisting}[style=bash]
 # Änderungen abrufen
 git pull

@@ -2,7 +2,7 @@ import turtle as t
 
 
 def zeichne_vieleck():
-    n = int(input("Gib eine Zahl ein"))
+    n = int(input("Geben Sie eine Zahl ein: "))
     if n == 1:
         t.color("blue")
         for _ in range(4):

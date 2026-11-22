@@ -1,7 +1,7 @@
 def bubble_sort(liste):
     # Initialisiere den äusseren Schleifenzähler
     i = 0
-    # Äussere Schleife: Wiederhole den Sortiervorgang n-mal
+    # Äussere Schleife: Wiederhole den Sortiervorgang (n-1)-mal
     for _ in range(len(liste) - 1):
         # Initialisiere den inneren Schleifenzähler
         j = 0

@@ -44,8 +44,8 @@ In Python lassen sich einfache Rechenoperationen ähnlich wie bei einem Taschenr
 \begin{myoverview}[arithmetische Operationen in Python]\label{myoverview:arithm-op}
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c|c}
-			\textbf{mathematische Operation} & \textbf{In Python} \\\midrule\midrule
+		\begin{tabular}{cc}
+			\textbf{mathematische Operation} & \textbf{In Python} \\\midrule
 			Addition                         & \lstinline|+|      \\\midrule
 			Subtraktion                      & \lstinline|-|      \\\midrule
 			Multiplikation                   & \lstinline|*|      \\\midrule
@@ -103,14 +103,14 @@ Mit dem Ausdruck \lstinline|import turtle as t| sagen wir, dass wir das Modul \l
 
 
 \begin{myexercise}\label{myexercise:dreizack}
-	Schreiben Sie ein Programm um einen Dreizack möglichst ähnlich dem in \cref{fig:Dreizack} mithilfe der Turtle zu zeichnen.
+	Schreiben Sie ein Programm, um einen Dreizack möglichst ähnlich dem in \cref{fig:Dreizack} mithilfe der Turtle zu zeichnen.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.2\textwidth]{Grundlagen_Info/00_Programmieren/Skript/Figures/dreizack.png}
 		\caption{Poseidons Dreizack}
 		\label{fig:Dreizack}
 	\end{figure}
-	Tipp: Durchsuchen Sie die Turtle-Dokumentation (siehe \cref{myremak:turtledok}) um zu lernen, wie die Stiftbreite und Stiftfarbe  (hier: \verb|"gold"|) angepasst werden können.
+	Tipp: Durchsuchen Sie die Turtle-Dokumentation (siehe \cref{myremak:turtledok}), um zu lernen, wie die Stiftbreite und Stiftfarbe (hier: \verb|"gold"|) angepasst werden können.
 	\begin{myanswer}
 		Diese Musterlösung finden Sie in \cref{sec:K02_sol}.
 	\end{myanswer}
@@ -140,13 +140,13 @@ Dabei wird folgender Ausdruck:
 \begin{center}
 	\lstinline|for _ in range(15):|
 \end{center}
-der \emph{Schleifenkopf}\index{Schleife!Kopf einer} der Schleife genannt. Die vier Zeilen (6 -- 9) werden \emph{Schleifenkörper}\index{Schleife!Körper einer} der Schleife genannt, wie im unten stehenden Code zu sehen ist.
+der \emph{Schleifenkopf}\index{Schleife!Kopf einer} der Schleife genannt. Die vier Zeilen (5 -- 8) werden \emph{Schleifenkörper}\index{Schleife!Körper einer} der Schleife genannt, wie im unten stehenden Code zu sehen ist.
 
 \begin{figure}[H] % not really a figure, just acts as non-floating container
 	\centering
 	\begin{lstlisting}[escapechar=!]
 for _ in range(15):!\tikzmark{code2}\tikzmark{repeatStart}!              !\tikzmark{comment2}!
-    t.fd(15)!\tikzmark{bodyStart}!                               
+    t.fd(15)!\tikzmark{bodyStart}!
     t.lt(90)
     t.fd(25)
     t.rt(90)!\tikzmark{bodyEnd}!       !\tikzmark{repeatEnd}!
@@ -174,14 +174,14 @@ Der Schleifenkörper ist (in Python) daran erkennbar, dass er (relativ zu dem Sc
 		\item Lassen Sie die Turtle in demselben Bild ein regelmässiges 5-Eck, ein regelmässiges 6-Eck sowie ein regelmässiges 8-Eck zeichnen.
 		\item Die Orientierungen und Grössen der Figuren spielen dabei keine Rolle.
 		\item Die Figuren sollen sich nicht überschneiden.
-		\item Sie wollen die Turtle bewegen, ohne dabei zu zeichen? Schauen Sie sich die Funktionen \lstinline|t.penup()| und \lstinline|t.pendown()| in der \href{https://docs.python.org/3/library/turtle.html}{turtle-Dokumentation} an (suchen Sie nach diesen Befehlen mit dem Shortcut \keys{\ctrl + F} (Windows) oder \keys{\cmd + F} (MacOS)).
+		\item Sie wollen die Turtle bewegen, ohne dabei zu zeichnen? Schauen Sie sich die Funktionen \lstinline|t.penup()| und \lstinline|t.pendown()| in der \href{https://docs.python.org/3/library/turtle.html}{turtle-Dokumentation} an (suchen Sie nach diesen Befehlen mit dem Shortcut \keys{\ctrl + F} (Windows) oder \keys{\cmd + F} (MacOS)).
 	\end{itemize}
 	\begin{myanswer}
 		\lstinputlisting[language=Python,caption=\texttt{regelmaessige\_polygone.py},label=listing:regelmaessige_polygone]{Grundlagen_Info/00_Programmieren/Skript/Code/K02_Intro/regelmaessige_polygone.py}
 	\end{myanswer}
 \end{myexercise}
 
-\subsection{geschachtelte Schleifen}
+\subsection{Geschachtelte Schleifen}
 In der Praxis verwenden wir oft Schleifen innerhalb von Schleifen. Solche Schleifen nennt man \textbf{geschachtelte Schleifen}\index{Schleife!geschachtelte}.
 
 \begin{myexample}\label{myexample:quadrate}
@@ -212,7 +212,7 @@ In diesem Beispiel zeichnen wir, mithilfe geschachtelter Schleifen, drei nebenei
 			      \definecolor{zhblue}{RGB}{0,112,180}\\
 			      \textcolor{zhblue}{Farbe \enquote{Züri-Blau}}: \texttt{(0 / 255, 112 / 255, 180 / 255)}
 		      \end{center}
-		\item Zeichnen Sie eine horizontal dreigeteilte, rechteckige Flagge (wie etwa die Flagge Frankreichs \emoji{flag-france} oder Italiens \emoji{flag-italy}).
+		\item Zeichnen Sie eine senkrecht dreigeteilte, rechteckige Flagge (wie etwa die Flagge Frankreichs \emoji{flag-france} oder Italiens \emoji{flag-italy}).
 	\end{enumerate}
 	\begin{myanswer}
 		Diese Musterlösung finden Sie in \cref{sec:K02_sol}.
@@ -243,7 +243,7 @@ In diesem Beispiel zeichnen wir, mithilfe geschachtelter Schleifen, drei nebenei
 			\lstinline|t.color(c)|       & \lstinline|t.color(c)|       & setzt die Zeichenfarbe auf \lstinline|c| (z.\,B.\ \lstinline|"red"|)                                    \\
 			\lstinline|t.begin_fill()|   & \lstinline|t.begin_fill()|   & Start des Füllbereichs                                                                                  \\
 			\lstinline|t.end_fill()|     & \lstinline|t.end_fill()|     & Ende des Füllbereichs (füllt Fläche)                                                                    \\
-			\lstinline|t.fillcolor(c)|   & \lstinline|t.fillcolor(c)|   & setzt die Füllfarbe auf \lstinline|c| (z.\,B.\ \lstinline|"red"|)                                                                      \\
+			\lstinline|t.fillcolor(c)|   & \lstinline|t.fillcolor(c)|   & setzt die Füllfarbe auf \lstinline|c| (z.\,B.\ \lstinline|"red"|)                                    \\
 			\lstinline|t.pu()|           & \lstinline|t.penup()|        & hebt den Stift (es wird nicht mehr gezeichnet)                                                          \\
 			\lstinline|t.pd()|           & \lstinline|t.pendown()|      & senkt den Stift (es wird wieder gezeichnet)                                                             \\
 			\lstinline|t.ht()|           & \lstinline|t.hideturtle()|   & versteckt die Turtle                                                                                    \\

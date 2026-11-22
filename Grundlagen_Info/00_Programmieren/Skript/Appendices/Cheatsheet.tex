@@ -114,18 +114,18 @@ a, b, c = 1, 2, 3
 		\begin{cheatSheetBox}[title=Eingabe und Ausgabe]
 			\begin{lstlisting}
 # Eingabe vom Benutzer
-name = input("Gib deinen Namen ein: ")
+name = input("Geben Sie Ihren Namen ein: ")
 
 # Umwandlung in Zahl
-alter = int(input("Gib dein Alter ein: "))
+alter = int(input("Geben Sie Ihr Alter ein: "))
 gewicht = float(input("Gewicht in kg: "))
 
 # Ausgabe mit print()
 print("Hallo", name)
-print("Du bist", alter, "Jahre alt")
+print("Sie sind", alter, "Jahre alt")
 
 # Formatierte Ausgabe
-print(f"Hallo {name}, du bist {alter} Jahre alt")
+print(f"Hallo {name}, Sie sind {alter} Jahre alt")
 \end{lstlisting}
 		\end{cheatSheetBox}
 
@@ -150,11 +150,11 @@ zahl //= 4       # zahl ist jetzt 10
 		\begin{cheatSheetBox}[title=Funktionen definieren]
 			\begin{lstlisting}
 # Einfache Funktion ohne Parameter
-def begrüssung():
+def begruessung():
     print("Hallo!")
 
 # Funktion mit Parametern
-def begrüsse_person(name):
+def begruesse_person(name):
     print(f"Hallo {name}!")
 
 # Funktion mit Rückgabewert
@@ -162,8 +162,8 @@ def quadrat(zahl):
     return zahl * zahl
 
 # Funktion mit mehreren Parametern
-def rechteck_fläche(länge, breite):
-    return länge * breite
+def rechteck_flaeche(laenge, breite):
+    return laenge * breite
 
 # Funktion mit Standardwert
 def potenz(basis, exponent=2):
@@ -174,17 +174,17 @@ def potenz(basis, exponent=2):
 		\begin{cheatSheetBox}[title=Funktionen aufrufen]
 			\begin{lstlisting}
 # Funktion aufrufen
-begrüssung()                # Hallo!
+begruessung()                # Hallo!
 
 # Mit Parameter
-begrüsse_person("Lea")      # Hallo Lea!
+begruesse_person("Lea")      # Hallo Lea!
 
 # Rückgabewert verwenden
 ergebnis = quadrat(5)      # ergebnis = 25
 print(ergebnis)
 
 # Mehrere Parameter
-fläche = rechteck_fläche(4, 5)  # 20
+flaeche = rechteck_flaeche(4, 5)  # 20
 
 # Mit Standardwert
 potenz(3)       # 9 (3²)
@@ -254,10 +254,10 @@ if not ist_gesperrt:
 		\begin{cheatSheetBox}[title=while-Schleife]
 			\begin{lstlisting}
 # Zähler mit while
-zähler = 0
-while zähler < 5:
-    print(zähler)
-    zähler += 1
+zaehler = 0
+while zaehler < 5:
+    print(zaehler)
+    zaehler += 1
 
 # Abbruch mit break
 while True:
@@ -358,7 +358,7 @@ person = {
 }
 
 # Verschachtelte Dictionaries
-schüler = {
+schueler = {
     "max": {
         "alter": 16,
         "note": 5.5
@@ -450,13 +450,13 @@ class Person:
     def __init__(self, name, alter):
         self.name = name
         self.alter = alter
-    
+
     # Methode
     def vorstellen(self):
         print(f"Ich bin {self.name}, {self.alter} Jahre alt.")
-    
+
     # Methode mit Rückgabewert
-    def ist_volljährig(self):
+    def ist_volljaehrig(self):
         return self.alter >= 18
 \end{lstlisting}
 		\end{cheatSheetBox}
@@ -476,23 +476,23 @@ print(bob.name)   # Bob
 bob.alter = 18    # Alter ändern
 
 # Methode mit Rückgabewert
-if anna.ist_volljährig():
+if anna.ist_volljaehrig():
     print("Anna ist volljährig")
 \end{lstlisting}
 		\end{cheatSheetBox}
 
 		\begin{cheatSheetBox}[title=Klassenattribute]
 			\begin{lstlisting}
-class Schüler:
+class Schueler:
     # Klassenattribut (für alle Instanzen gleich)
     schule = "Kantonsschule im Lee"
     anzahl = 0
-    
+
     def __init__(self, name, klasse):
         self.name = name
         self.klasse = klasse
-        Schüler.anzahl += 1
-    
+        Schueler.anzahl += 1
+
     # Klassenmethode
     @classmethod
     def get_anzahl(cls):
@@ -506,18 +506,18 @@ class Fahrzeug:
     def __init__(self, marke, modell):
         self.marke = marke
         self.modell = modell
-    
+
     def info(self):
         return f"{self.marke} {self.modell}"
 
 class Auto(Fahrzeug):
-    def __init__(self, marke, modell, türen):
+    def __init__(self, marke, modell, tueren):
         super().__init__(marke, modell)
-        self.türen = türen
-    
+        self.tueren = tueren
+
     def info(self):
         basis_info = super().info()
-        return f"{basis_info} mit {self.türen} Türen"
+        return f"{basis_info} mit {self.tueren} Türen"
 \end{lstlisting}
 		\end{cheatSheetBox}
 

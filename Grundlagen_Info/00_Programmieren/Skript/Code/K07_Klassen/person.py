@@ -4,7 +4,7 @@ class Person:
         self.alter = alter
 
     def vorstellen(self):
-        print(f"Hallo, ich heisse {self.name} und  bin {self.alter} Jahre alt.")
+        print(f"Hallo, ich heisse {self.name} und bin {self.alter} Jahre alt.")
 
     def geburtstag_feiern(self):
         self.alter += 1

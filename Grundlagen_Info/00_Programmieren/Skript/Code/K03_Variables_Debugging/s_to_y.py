@@ -18,8 +18,8 @@ rest = rest % SEK_PRO_TAG
 stunden = rest // SEK_PRO_STUNDE
 rest = rest % SEK_PRO_STUNDE
 
-# Minuten und die uebrig bleibenden Sekunden
+# Minuten und die übrig bleibenden Sekunden
 minuten = rest // SEK_PRO_MINUTE
 sekunden = rest % SEK_PRO_MINUTE
 
-print(f"{sekunden_gesamt} Sekunden sind {jahre} Jahre, {tage} Tage, {stunden} Stunden, {minuten} Minuten und {sekunden} Sekunden.")
+print(f"{sekunden_gesamt} Sekunden sind {jahre} Jahre, {tage} Tage, {stunden} Stunden, {minuten} Minuten, {sekunden} Sekunden!")

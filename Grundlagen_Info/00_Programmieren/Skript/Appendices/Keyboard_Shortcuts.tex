@@ -7,8 +7,8 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 	\begin{threeparttable}[H]
 		\centering
 		\footnotesize
-		\begin{tabular}{p{3.9cm}||c|c}
-			\textbf{Aktion}                                                                                                & \textbf{\faWindows{} Windows}                          & \textbf{\faApple{} MacOS}                   \\\midrule\midrule
+		\begin{tabular}{p{3.9cm}cc}
+			\textbf{Aktion}                                                                                                & \textbf{\faWindows{} Windows}                          & \textbf{\faApple{} MacOS}                   \\\midrule
 			Cursor bew\textcolor{red!30}{\faICursor}\tikzmark{from1}e\tikzmark{to1}\textcolor{red}{\faICursor}gen          & \makecell{\keys{\arrowkeyright}, \keys{\arrowkeyleft}} & \keys{\arrowkeyright}, \keys{\arrowkeyleft} \\\midrule
 			Cursor \textcolor{red!30}{\faICursor}\tikzmark{from2}bewegen\tikzmark{to2}\textcolor{red}{\faICursor} (Wörter) & \makecell{\keys{\ctrl+\arrowkeyright}                                                                \\\keys{\ctrl+\arrowkeyleft}} & \makecell{\keys{\Alt+\arrowkeyright}\\ \keys{\Alt+\arrowkeyleft}}\\\midrule
 			\colorbox{RoyalBlue!50}{Wörter\faICursor} markieren                                                            & \makecell{\keys{\ctrl+\shift+\arrowkeyright}                                                         \\\keys{\ctrl+\shift+\arrowkeyleft}} & \makecell{\keys{\Alt+\shift+\arrowkeyright}\\ \keys{\Alt+\shift+\arrowkeyleft}}\\\midrule
@@ -23,14 +23,14 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 			\faSave{} Datei speichern                                                                                      & \keys{\ctrl + S}                                       & \keys{\cmd + S}                             \\\midrule
 			\faUndo{} Rückgängig (\enquote{undo})                                                                                & \keys{\ctrl + Z}                                       & \keys{\cmd + Z}                             \\\midrule
 			\faRedo{} Vorwärts (\enquote{redo})                                                                                  & \keys{\ctrl +\shift + Z}                               & \keys{\cmd + \shift + Z}                    \\\midrule
-			\makecell[l]{\faArrowRight{} Fenster wechseln                                                                                                                                                                         \\\faArrowLeft{} Fenster zurückwechseln} & \makecell{\keys{\ctrl + \tabwin}\\\keys{\ctrl + \shift + \tabwin}} & \makecell{\keys{\cmd + \tab}\\\keys{\cmd + \shift + \tab}\tnote{b}}\\\midrule
+			\makecell[l]{\faArrowRight{} Fenster wechseln                                                                                                                                                                         \\\faArrowLeft{} Fenster zurückwechseln} & \makecell{\keys{\Alt + \tabwin}\\\keys{\Alt + \shift + \tabwin}} & \makecell{\keys{\cmd + \tab}\\\keys{\cmd + \shift + \tab}\tnote{b}}\\\midrule
 			\faWindowClose{} Programm schliessen                                                                           & \keys{\Alt + F4}                                       & \keys{\cmd + Q}                             \\\midrule
 			\faLock{} Computer sperren                                                                                     & \keys{\faWindows + L}                                  & \keys{\cmd + \ctrl + Q}                     \\\midrule
 			\makecell[l]{\faCaretLeft{} Fenster links anordnen                                                                                                                                                                    \\\faCaretRight{} Fenster rechts anordnen} &\makecell[l]{\keys{\faWindows+\arrowkeyleft}\\ \keys{\faWindows+\arrowkeyright}}& \makecell{\keys{\ctrl+\Alt+\arrowkeyleft}\\\keys{\ctrl+\Alt+\arrowkeyright}}\tnote{c} \\
 		\end{tabular}
 		\begin{tablenotes}
 			\item[a] Um Dateien auf MacOS zu verschieben (nicht kopieren): \keys{\cmd + C}, danach \keys{\cmd+\Alt+V}
-			\item[b] Um auf MacOS zwischen mehreren Fenstern derselben Anwendung wechseln: \keys{\cmd + <}
+			\item[b] Um auf MacOS zwischen mehreren Fenstern derselben Anwendung zu wechseln: \keys{\cmd + <}
 			\item[c] Setzt \href{https://rectangleapp.com/}{Rectangle}-App auf MacOS voraus
 		\end{tablenotes}
 		\caption{Allgemeine Shortcuts}
@@ -41,13 +41,13 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 			\draw[red,-stealth] (from2.south) to[bend right] (to2.south);
 		\end{tikzpicture}
 	\end{threeparttable}
-	
+
 	\begin{center}
 		\begin{threeparttable}[H]
 			\centering
 			\footnotesize
-			\begin{tabular}{c||c|c}
-				\textbf{Aktion}                                     & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule\midrule
+			\begin{tabular}{ccc}
+				\textbf{Aktion}                                     & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule
 				\faCaretRight\faAlignLeft{} Code Einrücken\tnote{a} & \keys{\tabwin}                & \keys{\tab}               \\\midrule
 				\faAlignLeft\faCaretLeft{} Code Ausrücken           & \keys{\shift + \tabwin}       & \keys{\shift + \tab}      \\
 			\end{tabular}
@@ -61,8 +61,8 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 	\begin{table}[H]
 		\footnotesize
 		\centering
-		\begin{tabular}{p{3.4cm}||c|c}
-			\textbf{Aktion}                                    & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule\midrule
+		\begin{tabular}{p{3.4cm}cc}
+			\textbf{Aktion}                                    & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule
 			\makecell[l]{\faArrowRight{} Zu Tab rechts                                                                     \\\faArrowLeft{} Zu Tab links} & \makecell{\keys{\ctrl + \tabwin}\\\keys{\ctrl + \shift + \tabwin}} & \makecell{\keys{\cmd+\Alt+\arrowkeyleft}\\\keys{\cmd+\Alt+\arrowkeyright}} \\\midrule
 			\faArrowsAltH{} Zu Tab 1, 2, ... gehen             & \keys{\ctrl + zahl}           & \keys{\cmd + zahl}        \\\midrule
 			\faWindowClose{} Tab schliessen                    & \keys{\ctrl + W}              & \keys{\cmd + W}           \\\midrule
@@ -76,13 +76,13 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 	\begin{table}[H]
 		\footnotesize
 		\centering
-		\begin{tabular}{c||c|c}
-			\textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule\midrule
+		\begin{tabular}{ccc}
+			\textbf{Zeichen} & \textbf{\faWindows{} Windows} & \textbf{\faApple{} MacOS} \\\midrule
 			$[$              & \keys{\AltGr+ü}               & \keys{\Alt+5}             \\\midrule
 			$]$              & \keys{\AltGr+!}               & \keys{\Alt+6}             \\\midrule
 			\{               & \keys{\AltGr+ä}               & \keys{\Alt+8}             \\\midrule
 			\}               & \keys{\AltGr+\$}               & \keys{\Alt+9}             \\\midrule
-			\textbackslash   & \keys{\AltGr+\textbackslash}  & \keys{\Alt+\shift+7}      \\\midrule
+			\textbackslash   & \keys{\AltGr+<}  & \keys{\Alt+\shift+7}      \\\midrule
 			|   & \keys{\AltGr+7}  & \keys{\Alt+7}      \\\midrule
 			\&               & \keys{\shift+6}               & \keys{\shift+6}           \\\midrule
 			\%               & \keys{\shift+5}               & \keys{\shift+5}           \\
@@ -90,7 +90,7 @@ Mit Shortcuts können Sie Ihre Produktivität in vielen Bereichen boosten, daher
 		\caption{Spezial-Zeichen}
 	\end{table}
 \end{multicols}\hrule\begin{multicols}{2}
-	Viele weitere Shortcuts können durch Ausprobieren erraten werden: Häufig steht der Anfangs-Buchstabe des englischen Wortes für die Aktion. So kann man beispielsweise aus den meisten Programmen drucken (en. \textit{print}), indem man die Abkürzung \keys{\ctrl+P} (Windows) bzw. \keys{\cmd+P} (MacOS) verwendet. Bei MacOS können zudem viele Abkürzungen über das Programm-Menu (Menuleiste oben am Bildschirm) eingesehen werden:
+	Viele weitere Shortcuts können durch Ausprobieren erraten werden: Häufig steht der Anfangs-Buchstabe des englischen Wortes für die Aktion. So kann man beispielsweise aus den meisten Programmen drucken (Englisch: \textit{print}), indem man die Abkürzung \keys{\ctrl+P} (Windows) bzw. \keys{\cmd+P} (MacOS) verwendet. Bei MacOS können zudem viele Abkürzungen über das Programm-Menü (Menüleiste oben am Bildschirm) eingesehen werden:
 	\columnbreak
 	\begin{figure}[H]
 		\centering

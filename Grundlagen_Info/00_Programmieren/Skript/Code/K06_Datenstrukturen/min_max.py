@@ -9,6 +9,6 @@ def min_max(liste):
     return (kleinster, groesster)
 
 
-# Einfache Aufrufe / Beispiele (Sek II)
+# Beispielaufruf
 kleinster, groesster = min_max([3, 1, 4, 1, 5, 9])
-print(f"Kleinster: {kleinster}, Groesster: {groesster}")
+print(f"Kleinster: {kleinster}, Grösster: {groesster}")

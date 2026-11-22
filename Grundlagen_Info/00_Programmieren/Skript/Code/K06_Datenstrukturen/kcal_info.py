@@ -9,5 +9,5 @@ def berechne_kcal_tot(l_kcal, l_gramm):
     return kcal_total
 
 
-kcal = berechne_kcal_tot([229, 26], [230, 33])
+kcal = berechne_kcal_tot([229, 26], [230, 330])  # Dose: 33 cl = 330 ml
 print(kcal)

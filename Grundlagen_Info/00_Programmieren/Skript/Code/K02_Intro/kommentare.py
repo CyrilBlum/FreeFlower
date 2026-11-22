@@ -14,7 +14,7 @@ Nutze machen, um ausgewählte Programmteile temporär zu deaktivieren.
 """
 
 # Wäre die folgende Zeile nicht kommentiert, würden wir
-# einen Fehler erhalten (Divsion durch Null):
+# einen Fehler erhalten (Division durch Null):
 # print(7 / 0)
 
 # Diese Berechnung ist aber ok:

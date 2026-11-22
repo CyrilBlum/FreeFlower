@@ -12,7 +12,7 @@ def finde_min_max_und_index(liste):
         if liste[i] > max_wert:
             max_wert = liste[i]
             max_index = i
-        x
+        i += 1
 
     print(f"Kleinste Zahl: {min_wert}, Index: {min_index}")
     print(f"Grösste Zahl: {max_wert}, Index: {max_index}")

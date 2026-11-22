@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -56,13 +56,13 @@
         \item<1-> Wie gehe ich zur Schule?
               \only<1-2>{\begin{figure}[H]
                       \centering
-                      \includegraphics[width=0.7\linewidth]{Grundlagen_Info/00_Programmieren/Figures/if-elif-else-weather}
+                      \input{Grundlagen_Info/00_Programmieren/Figures/tikz_wetter_schulweg.tex}
                   \end{figure}
                   \only<2->{$\rightarrow$ \textcolor{red}{\textbf{und wenn das Velo funktioniert}}}}
         \item<3-> Medizinische Entscheide
               \only<3-4>{\begin{figure}[H]
                       \centering
-                      \includegraphics[width=0.7\linewidth]{Grundlagen_Info/00_Programmieren/Figures/if-elif-else-cancer}
+                      \input{Grundlagen_Info/00_Programmieren/Figures/tikz_mammografie.tex}
                   \end{figure}
                   \only<4->{$\rightarrow$ \textcolor{red}{\textbf{Und wenn die Fachärzte dies bestätigen}}}}
         \item<5-> Etc.
@@ -136,11 +136,11 @@
         \begin{columns}
             \begin{column}{.46\pagewidth}
                 \begin{lstlisting}[escapechar=!, basicstyle=\footnotesize\ttfamily]
-k = input("Nenne einen italienischsprachigen Kanton")
+k = input("Nennen Sie einen italienischsprachigen Kanton: ")
 
 if k == "Tessin":
     print("Richtig")
-elif k == "Graubünden": 
+elif k == "Graubünden":
     print("Richtig")
 else:
     print("Falsch")
@@ -163,11 +163,11 @@ else:
         \begin{columns}
             \begin{column}{.46\pagewidth}
                 \begin{lstlisting}[escapechar=!, basicstyle=\footnotesize\ttfamily]
-k = input("Nenne einen italienischsprachigen Kanton")
+k = input("Nennen Sie einen italienischsprachigen Kanton: ")
 
 if k == "Tessin":      !\tikzmark{fromStart}!
     print("Richtig")
-elif k == "Graubünden": 
+elif k == "Graubünden":
     print("Richtig")   !\tikzmark{fromEnd}!
 else:
     print("Falsch")
@@ -178,8 +178,8 @@ else:
             \end{column}
             \begin{column}{.5\pagewidth}
                 \begin{lstlisting}[escapechar=!, basicstyle=\footnotesize\ttfamily]
-            k = input("Nenne einen italienischsprachigen Kanton")
-            
+            k = input("Nennen Sie einen italienischsprachigen Kanton: ")
+
             !\tikzmark{toStart}!if k == "Tessin" or k == "Graubünden":
             !\tikzmark{toEnd}!    print("Richtig")
             else:
@@ -245,7 +245,7 @@ else:
             \begin{column}{.5\pagewidth}
                 \begin{lstlisting}[escapechar=!, basicstyle=\footnotesize\ttfamily]
                         temperature = 25 # Aussentemperatur
-                        fit = 80 # Fitness 
+                        fit = 80 # Fitness
                         !\tikzmark{toStart2}!if (temperature > 20) and (fit > 80):
                         !\tikzmark{toEnd2}!   print("Fahrrad")
         \end{lstlisting}
@@ -286,9 +286,9 @@ else:
     Lösen Sie folgende Aufgaben:
     \begin{itemize}
         \item \aufgabebox{5.10 - 5.15} in VS Codium
-        \item \aufgabebox{Aufgaben ``and und or''} auf Moodle
+        \item \aufgabebox{Aufgaben \enquote{and und or}} auf Moodle
     \end{itemize}
-    
+
     Für Schnelle:
     \begin{itemize}
         \item \challengebox{5.16 - 5.20} in VS Codium

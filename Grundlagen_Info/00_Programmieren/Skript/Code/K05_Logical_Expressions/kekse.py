@@ -4,5 +4,5 @@ def kekse(n):
     elif n < 1:
         print("Ungültige Anzahl Kekse!")
     else:
-        print("Es braucht", n // 12, "Kisten für", n, "Kekse.")
+        print("Es braucht", n // 12, "Dosen für", n, "Kekse.")
         print(n % 12, "Kekse bleiben übrig.")

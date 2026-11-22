@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -59,13 +59,13 @@
         \item Wie gehe ich zur Schule?
               \only<2>{\begin{figure}[H]
                       \centering
-                      \includegraphics[width=0.7\linewidth]{Grundlagen_Info/00_Programmieren/Figures/if-elif-else-weather}
+                      \input{Grundlagen_Info/00_Programmieren/Figures/tikz_wetter_schulweg.tex}
                   \end{figure}
                   $\rightarrow$ \textit{und wenn ich gesund bin / mich bewegen kann}}
         \item Medizinische Entscheide
               \only<3>{\begin{figure}[H]
                       \centering
-                      \includegraphics[width=0.7\linewidth]{Grundlagen_Info/00_Programmieren/Figures/if-elif-else-cancer}
+                      \input{Grundlagen_Info/00_Programmieren/Figures/tikz_mammografie.tex}
                   \end{figure}
                   $\rightarrow$ \textit{Und wenn die Fachärzte dies bestätigen}}
         \item Etc.
@@ -96,16 +96,16 @@
 
 \begin{frame}[fragile]{Logische Ausdrücke}
     \begin{itemize}
-        \item \tib{Logische} oder \tib{Boolsche Ausdrücke} sind Ausdrücke, die genau zwei verschiedene Werte annehmen können: entweder \textit{wahr} (\lstinline|True|) oder \textit{falsch} (\lstinline|False|). Beispiele:
+        \item \tib{Logische} oder \tib{boolesche Ausdrücke} sind Ausdrücke, die genau zwei verschiedene Werte annehmen können: entweder \textit{wahr} (\lstinline|True|) oder \textit{falsch} (\lstinline|False|). Beispiele:
               \begin{itemize}
                   \item \lstinline|3 == 5 # False|
                   \item \lstinline|(9 + 3) < (2 * 8) # True|
               \end{itemize}
-        \item Weitere boolsche Relationen:
+        \item Weitere boolesche Relationen:
               \begin{table}[H]
                   \centering
                   \footnotesize
-                  \begin{tabular}{c||p{3.1cm}}
+                  \begin{tabular}{cp{3.1cm}}
                       \textbf{Python} & \textbf{Mathematische\newline Bedeutung} \\\midrule
                       \lstinline|==|  & gleich ($=$)                             \\
                       \lstinline|!=|  & ungleich ($\neq$)                        \\
@@ -117,8 +117,8 @@
               \end{table}
         \item Verwendungsart
               \begin{lstlisting}
-    if BOOLSCHER_AUSDRUCK:
-        # dieser Code wird nur ausgeführt, wenn BOOLSCHER_AUSDRUCK wahr (True) ist.
+    if BOOLESCHER_AUSDRUCK:
+        # dieser Code wird nur ausgeführt, wenn BOOLESCHER_AUSDRUCK wahr (True) ist.
     \end{lstlisting}
     \end{itemize}
 \end{frame}
@@ -181,7 +181,8 @@
 \begin{frame}[fragile]{Konditionale Entscheidungen mit Verzweigungen}
     \begin{columns}
         \begin{column}{0.54\textwidth}
-            \lstinputlisting[language=Python, basicstyle=\footnotesize\ttfamily]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/ex_if_if_else.py}
+            % eigenes Beispiel, da ex_if_if_else.py die Lösung einer Skriptaufgabe zeigt
+            \lstinputlisting[language=Python, basicstyle=\footnotesize\ttfamily]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/ex_if_if_else_note.py}
         \end{column}
         \only<2->{
             \begin{column}{0.05\textwidth}
@@ -189,7 +190,7 @@
                 $\Rightarrow$
             \end{column}
             \begin{column}{0.54\textwidth}
-                \lstinputlisting[language=Python, basicstyle=\footnotesize\ttfamily]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/ex_if_if_else_fixed.py}
+                \lstinputlisting[language=Python, basicstyle=\footnotesize\ttfamily]{Grundlagen_Info/00_Programmieren/Skript/Code/K05_Logical_Expressions/ex_if_if_else_note_fixed.py}
             \end{column}
         }
     \end{columns}

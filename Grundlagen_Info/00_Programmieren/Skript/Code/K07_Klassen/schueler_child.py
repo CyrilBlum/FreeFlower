@@ -18,12 +18,12 @@ class Schueler(Person):
 
     def vorstellen(self):
         print(
-            f"Hallo, ich bin {self.name}, {self.alter} Jahre alt und besuche die schulklasse {self.schulklasse}."
+            f"Hallo, ich bin {self.name}, {self.alter} Jahre alt und besuche die Klasse {self.schulklasse}."
         )
 
     def schulklasse_wechseln(self, neue_schulklasse):
         self.schulklasse = neue_schulklasse
-        print(f"{self.name} besucht jetzt die schulklasse {self.schulklasse}.")
+        print(f"{self.name} besucht jetzt die Klasse {self.schulklasse}.")
 
 
 # Test

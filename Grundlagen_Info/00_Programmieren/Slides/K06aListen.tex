@@ -21,7 +21,7 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
@@ -43,8 +43,8 @@
 		      \only<4->{
 			      \begin{table}[H]
 				      \centering
-				      \begin{tabular}{r|l}
-					      \textbf{Typ}            & \textbf{Beispiel}             \\\midrule\midrule
+				      \begin{tabular}{rl}
+					      \textbf{Typ}            & \textbf{Beispiel}             \\\midrule
 					      Zahl                    & \lstinline|x = 3|             \\\midrule
 					      Text                    & \lstinline|name = "Hallo"|    \\\midrule
 					      Wahrheitswert (Boolean) & \lstinline|ist_fertig = True| \\
@@ -64,7 +64,7 @@
 def summiere(x1, x2):
 	summe = x1 + x2
 	print(summe)
-	
+
 summiere(5, 16)
 \end{lstlisting}
 		\end{column}
@@ -75,7 +75,7 @@ summiere(5, 16)
 def summiere(x1, x2, x3, x4, ...):
 	summe = x1 + x2 + x3 + x4 + ...
 	print(summe)
-	
+
 summiere(3, 18, 2, 4, ...)?
 \end{lstlisting}
 		\end{column}
@@ -93,7 +93,7 @@ summiere(3, 18, 2, 4, ...)?
 \begin{frame}[fragile]{Listen}{Listen erstellen und abfragen}
 	\begin{lstlisting}
 # Neue Variable des Typs Liste erstellen
-daten = [4, 2, -6] 
+daten = [4, 2, -6]
 print(daten[0])   # 4
 print(daten[1])   # 2
 ...               # usw.
@@ -113,7 +113,7 @@ print(daten[1])   # 2
 \begin{frame}[fragile]{Listen}{Listen verändern}
 	\begin{lstlisting}
 # Neue Variable des Typs Liste erstellen
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 print(daten)   # 4, 2, -6, 17, 5, 12
 daten[3] = 20  # Ein Element der Liste wird verändert
 print(daten)   # ?
@@ -123,7 +123,7 @@ print(daten)   # ?
 \begin{frame}[fragile]{Listen}{Listen verändern}
 	\begin{lstlisting}
 # Neue Variable des Typs Liste erstellen
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 print(daten)   # 4, 2, -6, 17, 5, 12
 daten[3] = 20  # Ein Element der Liste wird verändert
 print(daten)   # 4, 2, -6, 20, 5, 12
@@ -134,7 +134,7 @@ print(daten)   # 4, 2, -6, 20, 5, 12
 \begin{frame}[fragile]{Listen}{Index}
 	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
 # Neue Variable des Typs Liste erstellen
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 index = 0
 for _ in range(6):
 	print("Das Element an der Stelle", index, "ist:", daten[index])  # ?
@@ -160,14 +160,14 @@ print(daten)
 	\begin{lstlisting}
 		def summiere(daten):
 			summe = 0       # Variable, um alle Elemente von "daten" zu summieren
-		
+
 			# Durch alle Elemente von Daten durchgehen und zu Summe hinzufügen
 			for d in daten:
 				summe += d   # Wert zu Summe hinzufügen
-		
+
 			print(summe)
-		
-		daten = [4, 2, -6, 17, 5, 12] 
+
+		daten = [4, 2, -6, 17, 5, 12]
 		summiere(daten)
 	\end{lstlisting}
 \end{frame}
@@ -184,7 +184,7 @@ def summiere(daten):
 
 	print(summe)
 
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 summiere(daten)
 		\end{lstlisting}
 	\end{column}
@@ -193,24 +193,24 @@ summiere(daten)
 def summiere(daten):
 	summe = 0
 	index = 0
-	
-for _ in range(len(daten)):
+
+	for _ in range(len(daten)):
 		summe += daten[index]
 		index += 1
 
 	print(summe)
 
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 summiere(daten)
 		\end{lstlisting}
 	\end{column}
 	\end{columns}
 \begin{itemize}[<+->]
-	\item Die beiden obigen Codes sind identisch. Welchen bevorzugen Sie?
+	\item Die beiden obigen Codes bewirken dasselbe. Welchen bevorzugen Sie?
 	\item \lstinline|d| nimmt jeden Wert von \lstinline|daten| genau einmal an
 	\item \lstinline|d| ist eine Variable, man könnte den Namen also auch beliebig anders wählen
 	\item \lstinline|d| ist also zuerst 4, dann 2, dann -6, etc.
-	\item Die Schleife links wird ebenfalls 6 mal ausgeführt
+	\item Die Schleife links wird ebenfalls 6-mal ausgeführt
 \end{itemize}
 \end{frame}
 
@@ -218,12 +218,12 @@ summiere(daten)
 \begin{frame}[fragile]{Auftrag}
 	\begin{itemize}
 		\item \readbox{die Beispiele 6.1-6.6}
-		\item \aufgabebox{Aufgaben 6.1 - 6.11}
+		\item \aufgabebox{Aufgaben 6.1 - 6.13}
 	\end{itemize}
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c||c|c}
-			                 & [               & ]               \\\midrule\midrule
+		\begin{tabular}{ccc}
+			                 & [               & ]               \\\midrule
 			\textbf{Windows} & \keys{\AltGr+ü} & \keys{\AltGr+!} \\\midrule
 			\textbf{MacOS}   & \keys{\Alt+5}   & \keys{\Alt+6}   \\
 		\end{tabular}
@@ -237,11 +237,11 @@ summiere(daten)
 \begin{frame}[fragile]{4 Fehler}
 	Wir wollen jedes Element von \lstinline|daten| um 2 vergrössern
 	\begin{lstlisting}
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 index = 1
 for _ in range(6):
 	index += 1
-	
+
 print(daten)
 \end{lstlisting}
 \end{frame}
@@ -249,12 +249,12 @@ print(daten)
 \begin{frame}[fragile]{4 Fehler}{Korrigiert}
 	Wir wollen jedes Element von \lstinline|daten| um 2 vergrössern
 	\begin{lstlisting}
-daten = [4, 2, -6, 17, 5, 12] 
+daten = [4, 2, -6, 17, 5, 12]
 index = 0
 for _ in range(len(daten)):
 	daten[index] += 2
 	index += 1
-	
+
 print(daten)
 \end{lstlisting}
 \end{frame}
@@ -262,8 +262,8 @@ print(daten)
 \begin{frame}[fragile]{Skalarprodukt}
 	Wo wird das Skalarprodukt verwendet?
 	\begin{table}[H]
-		\begin{tabular}{c||c|c}
-			\textbf{Produkt} & \textbf{Menge} \only<2->{\lstinline|m|} & \textbf{Preis} \only<2->{\lstinline|p|} \\\midrule\midrule
+		\begin{tabular}{ccc}
+			\textbf{Produkt} & \textbf{Menge} \only<2->{\lstinline|m|} & \textbf{Preis} \only<2->{\lstinline|p|} \\\midrule
 			\emoji{banana}   & 800 g                                   & 2.- / kg                                \\\midrule
 			\emoji{apple}    & 1200 g                                  & 2.50 / kg                               \\\midrule
 			\emoji{peach}    & 2300 g                                  & 5.- / kg                                \\

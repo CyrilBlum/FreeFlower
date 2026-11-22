@@ -13,4 +13,4 @@ if frage_3 == 1969:
     richtige_antworten += 1
 
 # Ergebnis ausgeben
-print("Du hast " + str(richtige_antworten) + " von 3 Fragen richtig beantwortet!")
+print("Sie haben " + str(richtige_antworten) + " von 3 Fragen richtig beantwortet!")

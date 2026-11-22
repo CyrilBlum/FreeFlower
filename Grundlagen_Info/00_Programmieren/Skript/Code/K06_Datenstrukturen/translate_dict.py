@@ -11,6 +11,7 @@ deutsch_zu_englisch = {
     "grün": "green",
     "gelb": "yellow",
     "schwarz": "black",
+    "weiss": "white",
 }
 
 

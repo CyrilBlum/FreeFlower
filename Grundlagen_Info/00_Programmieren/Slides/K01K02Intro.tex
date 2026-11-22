@@ -8,7 +8,7 @@
 \begin{frame}
 	\centering
 	\begin{figure}[H]
-		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+		\includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
 	\end{figure}
 	\Large Informatik: Programmieren\\
 	\normalsize \emoji{turtle} Kapitel 01: \textbf{Einführung}
@@ -21,14 +21,14 @@
 
 	\includegraphics[width=0.3\textwidth]{Grundlagen_Info/00_Programmieren/Skript/Figures/Haus.png}
 
-	Mit den Befehlen \texttt{forward(pixelanzahl)}, \texttt{left(winkel)}, \texttt{right(winkel)} etc. können Sie die Turtle steuern, um Linien zu zeichnen. Wie könnte der Code aussehen?	
+	Mit den Befehlen \texttt{forward(pixelanzahl)}, \texttt{left(winkel)}, \texttt{right(winkel)} etc. können Sie die Turtle steuern, um Linien zu zeichnen. Wie könnte der Code aussehen?
 	\end{center}
 \end{frame}
 
 \begin{frame}{Weshalb Programmieren?}
 
 	\begin{myExBox}[title=\Huge\emoji{superhero}]
-		\textbf{Programmieren} = ``Super-Power'', um eigene Ideen umzusetzen und Probleme zu lösen. Es ermöglicht uns, die Welt um uns herum zu gestalten und zu automatisieren.
+		\textbf{Programmieren} = \enquote{Super-Power}, um eigene Ideen umzusetzen und Probleme zu lösen. Es ermöglicht uns, die Welt um uns herum zu gestalten und zu automatisieren.
 	\end{myExBox}
 	\pause
 
@@ -37,7 +37,7 @@
 		\item \textbf{Automatisierung}: Wiederkehrende Aufgaben vereinfachen
 		\item \textbf{Zukunftssicherheit}: Digitale Kompetenzen sind gefragt
 	\end{itemize}
-	
+
 \end{frame}
 
 \begin{frame}{Einführung}
@@ -96,14 +96,14 @@
 	\begin{table}[H]
 		\centering
 		\footnotesize
-		\begin{tabular}{l|l|p{4cm}}
-			\textbf{Befehl}                                      & \textbf{Abkürzung}                          & \textbf{Bedeutung}                        \\\midrule\midrule
-			\lstinline|import turtle as t| &                                             & Alle \lstinline|turtle|-Funktionen ``laden‘‘         \\\midrule
+		\begin{tabular}{llp{4cm}}
+			\textbf{Befehl}                                      & \textbf{Abkürzung}                          & \textbf{Bedeutung}                        \\\midrule
+			\lstinline|import turtle as t| &                                             & Alle \lstinline|turtle|-Funktionen \enquote{laden}        \\\midrule
 %			\lstinline|t.hideturtle()|          &                                             & Turtle verstecken, Resultat direkt zeigen \\\midrule
 			\lstinline|t.forward(100)|          & \lstinline|t.fd(100)|      & Gehe 100 Pixel nach vorne                 \\\midrule
 			\lstinline|t.left(90)|              & \lstinline|t.lt(90)|       & Um 90 Grad nach links drehen              \\\midrule
 			\lstinline|t.right(90)|             & \lstinline|t.rt(90)|       & Um 90 Grad nach rechts drehen             \\\midrule
-			\lstinline|t.color("green")|  &  & Stiftfarbe auf grün setzen                \\\midrule
+			\lstinline|t.color("green")|  &  & Stiftfarbe auf Grün setzen                \\\midrule
 			\lstinline|t.width(2)|        &       & Stift-Dicke auf 2 setzen                  \\
 		\end{tabular}
 	\end{table}
@@ -115,7 +115,7 @@
 \begin{frame}[fragile]{Programmieren: Erste \textbf{Schleifen}}
 	\begin{lstlisting}[escapechar=!]
 	for _ in range(15):!\tikzmark{code2}\tikzmark{repeatStart}!              !\tikzmark{comment2}!
-	    t.fd(15)!\tikzmark{bodyStart}!                               
+	    t.fd(15)!\tikzmark{bodyStart}!
 	    t.lt(90)
 	    t.fd(25)
 	    t.rt(90)!\tikzmark{bodyEnd}!       !\tikzmark{repeatEnd}!
@@ -134,68 +134,35 @@
 \begin{frame}{Zusammenfassung}
 	\begin{itemize}[<+->]
 		\item Mit \textbf{Befehlen} können wir den Computer eine abstrakte Tätigkeit ausführen lassen
-		\item \textbf{Parameter} dienen dazu, die Befehle \textit{parametrisieren} (Analogie: Kochrezept für 2 oder 4 Personen)
+		\item \textbf{Parameter} dienen dazu, die Befehle zu \textit{parametrisieren} (Analogie: Kochrezept für 2 oder 4 Personen)
 		\item \textbf{Schleifen} erlauben es, repetitive Tätigkeiten kompakt zu beschreiben
-		\item Unterschiedliche \textbf{Datentypen} für unterschiedliche Zwecke
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Auftrag}{Skript Programmieren}
-	\begin{itemize}
-		\item \aufgabebox{Kapitel 1 (Installation Python und VS Code)}
-		\item \aufgabebox{Kapitel 2 (Einführung in Python), Aufgaben 2.1-2.5}
-		\item \challengebox{Moodle, Schachbrett-Aufgabe}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Schleifen in Schleifen}{\texttt{blume.py}}
-
-\lstinputlisting[language=Python,label=listing:blume, basicstyle=\ttfamily\small]{Grundlagen_Info/00_Programmieren/Skript/Code/K02_Intro/blume.py}
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.2\pagewidth]{Grundlagen_Info/00_Programmieren/Figures/viereck_blume}
-	\end{figure}
+% Beispiel 2.5 aus dem Skript (keine Aufgabenlösung, die Blume aus Aufgabe 2.4 bleibt den SchülerInnen)
+\begin{frame}[fragile]{Schleifen in Schleifen}{Beispiel 2.5: \texttt{quadrate.py}}
+	\begin{columns}
+		\begin{column}{.74\textwidth}
+			\lstinputlisting[language=Python, basicstyle=\ttfamily\scriptsize]{Grundlagen_Info/00_Programmieren/Skript/Code/K02_Intro/quadrate.py}
+		\end{column}
+		\begin{column}{.24\textwidth}
+			\centering
+			% Ergebnis von quadrate.py: Seite 50, Abstand 20 Pixel (1 Einheit = 50 Pixel)
+			\begin{tikzpicture}[scale=.6]
+				\foreach \x in {0, 1.4, 2.8} {\draw[thick] (\x, 0) rectangle ++(1, 1);}
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 
 \begin{frame}[fragile]{Auftrag}{Skript}
 	\begin{itemize}
-		\item \aufgabebox{\textbf{Kapitel 1}: Installation von Python}
+		\item \aufgabebox{\textbf{Kapitel 1}: Installation von Python und VS Code}
 		\item \aufgabebox{\textbf{Kapitel 2}: Einführung in Python, Aufgaben 2.1-2.5}
-		\item \challengebox{Weitere Aufgaben im Kapitel 2}
+		\item \challengebox{Moodle, Schachbrett-Aufgabe}
 	\end{itemize}
 	\begin{mycaution}
 	Immer zuerst Beispiele und Text lesen, danach Aufgaben lösen!
 	\end{mycaution}
-\end{frame}
-
-\begin{frame}[fragile]{Datentypen}
-	\begin{table}[H]
-		\footnotesize
-		\centering
-		\begin{tabular}{l|p{2cm}|p{2cm}}
-			\textbf{Beispiel}                                        & \textbf{Datentyp (englisch, Abk.)} & \textbf{Datentyp (Deutsch)} \\\midrule\midrule
-			\lstinline|"Hallo Welt", "abc", "42"| & string (str)                       & Zeichenkette                \\\midrule
-			\lstinline|15, 45, -5, 0|             & integer (int)                      & Ganzzahl                    \\\midrule
-			\lstinline|12.23, -5.33, 23.0|        & float (float)                      & Kommazahl
-		\end{tabular}
-	\end{table}
-
-	\textbf{Analogie}:
-	\begin{itemize}
-		\item Name (string)
-		\item Alter in Jahren (integer)
-		\item Grösse in Metern (float)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Auftrag}{Skript}
-	\begin{itemize}
-		\item \aufgabebox{Kapitel 3}
-		\item Tipp: Backslash (\textbackslash)
-		      \begin{itemize}
-			      \item auf MacOS: \keys{\shift+\Alt+7}
-			      \item auf Windows: \keys{\AltGr+\textbackslash}
-		      \end{itemize}
-	\end{itemize}
 \end{frame}

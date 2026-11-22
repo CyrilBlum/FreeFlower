@@ -117,7 +117,7 @@ pg.draw.line(screen, line_color, (start_x, start_y), (end_x, end_y), line_width)
     \begin{itemize}
         \item \lstinline|screen|: die Zeichenfläche
         \item \lstinline|rect_color, circle_color, line_color|: Farbe als RGB-Tuple, z.\,B. \lstinline|(255, 0, 0)| für Rot
-        \item \lstinline|(rect_x, rect_y, rect_width, rect_height)|: Position $(x,y)$ und Grösse $(\text{Breite},\text{Höhe})$ als Tuple (alternativ kann auch ein \lstinline|pg.Rect|-Objekt übergeben werden)
+        \item {\sloppy \lstinline|(rect_x, rect_y, rect_width, rect_height)|: Position $(x,y)$ und Grösse $(\text{Breite},\text{Höhe})$ als Tuple (alternativ kann auch ein \lstinline|pg.Rect|-Objekt übergeben werden)\par}
         \item \lstinline|(circle_x, circle_y)|: Mittelpunkt des Kreises
         \item \lstinline|circle_radius|: Radius des Kreises
         \item \lstinline|(start_x, start_y), (end_x, end_y)|: Start- und Endpunkt der Linie
@@ -141,13 +141,13 @@ for y in range(0, HEIGHT//2):
 \end{lstlisting}
     Optional: Lassen Sie die Sonne langsam sinken (Animation über mehrere Frames).
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myremark}[Tuples vs. \texttt{pg.Rect}-Objekte]
     Zum reinen Zeichnen von statischen Formen (wie in \cref{myexercise:Sonnenuntergang}) genügt die Angabe der Koordinaten und Dimensionen als einfaches Tuple \lstinline|(x, y, width, height)|.
-    
+
     Für bewegliche oder interaktive Spielelemente wird stattdessen ein \lstinline|pg.Rect|-Objekt verwendet:
     \begin{itemize}
         \item Es speichert Position sowie Grösse und erlaubt das direkte Modifizieren der Koordinaten über Attribute (z.\,B. \lstinline|player.x += speed|).
@@ -177,7 +177,7 @@ player.clamp_ip(screen.get_rect())  # Rechteck innerhalb des Fensters halten
 pg.draw.rect(screen, (0,0,0), player) # Spieler (Rechteck) zeichnen
 \end{lstlisting}
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
@@ -197,7 +197,7 @@ if player.colliderect(item):
 pg.draw.rect(screen, (255, 0, 0), item) # Item zeichnen
 \end{lstlisting}
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
@@ -216,17 +216,17 @@ screen.blit(score_text, (10, 10))  # Text oben links zeichnen
 \end{lstlisting}
 Vergessen Sie nicht, die Variable \lstinline|score| zu initialisieren, z.\,B. \lstinline|score = 0| vor der Game-Schleife. Ausserdem müssen Sie bei jeder Kollision den Wert von \lstinline|score| erhöhen, z.\,B. \lstinline|score += 1|.
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}[Ereignisse (Keyboard / Maus)]\label{myexercise:Ereignisse}
-    Reagieren Sie auf Tastatur- und Maus-Events: Bei einem Mausklick liefert das Attribut \lstinline|event.pos| die genauen Klick-Koordinaten \lstinline|(x, y)|. Speichern Sie diese in einer Liste \lstinline|mouse_positions|, um an jeder Klickposition dauerhaft einen Kreis zu zeichnen. Bei Drücken der \keys{ESC}-Taste soll sich das Spiel beenden.
+    \begin{sloppypar}Reagieren Sie auf Tastatur- und Maus-Events: Bei einem Mausklick liefert das Attribut \lstinline|event.pos| die genauen Klick-Koordinaten \lstinline|(x, y)|. Speichern Sie diese in einer Liste \lstinline|mouse_positions|, um an jeder Klickposition dauerhaft einen Kreis zu zeichnen. Bei Drücken der \keys{ESC}-Taste soll sich das Spiel beenden.\end{sloppypar}
 
     Verwenden Sie folgenden Code:
     \begin{lstlisting}
 # Vor der Game-Schleife:
-mouse_positions = []  # Liste fuer Maus-Klick-Positionen
+mouse_positions = []  # Liste für Maus-Klick-Positionen
 
 # In der Game-Schleife, im Event-Abschnitt:
 for event in pg.event.get():
@@ -257,7 +257,7 @@ for pos in mouse_positions:
     \end{myremark}
 
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
@@ -269,7 +269,7 @@ for pos in mouse_positions:
 # Vor der Game-Schleife:
 img = pg.image.load("assets/player.jpeg")  # Bild laden
 img = pg.transform.scale(img, (64, 64))   # optional: skalieren
-img_rect = pg.Rect(100, 100, 64, 64)      # Rechteck (Position/Groesse) fuer das Bild erstellen
+img_rect = pg.Rect(100, 100, 64, 64)      # Rechteck (Position/Grösse) für das Bild erstellen
 
 # In der Game-Schleife, im Render-Abschnitt:
 screen.blit(img, img_rect)  # Bild an der Position von img_rect zeichnen
@@ -282,7 +282,7 @@ screen.blit(img, img_rect)  # Bild an der Position von img_rect zeichnen
     Für Sounds:
     \begin{lstlisting}
 # Vor der Game-Schleife:
-pg.mixer.init()  # Mixer initialisieren (noetig fuer Sound)
+pg.mixer.init()  # Mixer initialisieren (nötig für Sound)
 motor = pg.mixer.Sound("assets/motor.wav")  # Sound laden
 
 # In der Game-Schleife, bei Kollision:
@@ -316,7 +316,7 @@ MeinGame/
 
     \textbf{Tipp:} Viele kostenlose Soundeffekte finden Sie unter \url{https://pixabay.com/sound-effects}.
 	\begin{myanswer}
-		Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+		Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
 	\end{myanswer}
 \end{myexercise}
 
@@ -363,7 +363,7 @@ with open("highscore.txt", "w") as file:
         \item Soundeffekte bei Kollisionen und Punkten
     \end{enumerate}
     \begin{myanswer}
-        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+        Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
     \end{myanswer}
 \end{myexercise}
 
@@ -409,7 +409,7 @@ ball_speed_y = ball_speed * offset
               \begin{tikzpicture}[>=latex, font=\small]
                   % y-Achse (Pygame: nach unten positiv)
                   \draw[->, thick, gray!80] (-4.8, 2.6) -- (-4.8, -2.3)node[below=2pt] {\footnotesize $+y$ (Bildschirm)};
-                  
+
                   % Paddle
                   \draw[fill=Gold!25, draw=Gold!80!black, very thick, rounded corners=2pt] (-0.3, -2.0) rectangle (0.3, 2.0);
                   \node[rotate=90, font=\footnotesize\bfseries, text=Gold!60!black] at (0, 0) {PADDLE};
@@ -481,7 +481,7 @@ def reset_ball(direction):  # direction: -1 nach links, +1 nach rechts
     Nehmen Sie ein kurzes Video (ca. 1-2 Minuten) auf, das das Gameplay Ihres Spiels zeigt. Laden Sie das Video auf eine Plattform (z.\,B. YouTube, Vimeo) hoch und fügen Sie den Link auf Moodle ein. Für die Bildschirmaufnahme können Sie folgende Tools verwenden:
 
     \begin{itemize}
-        \item \textbf{Windows:} Verwenden Sie die Bildschirmaufnahme-Funktion von PowerPoint (unter \enquote{Einfügen} $\rightarrow$ \enquote{Bildschirmaufnahme}) oder die Xbox Game Bar (\keys{\faWindows + G}), beenden Sie die Aufnahme mit \keys{\cmd + \faWindows + R}
+        \item \textbf{Windows:} Verwenden Sie die Bildschirmaufnahme-Funktion von PowerPoint (unter \enquote{Einfügen} $\rightarrow$ \enquote{Bildschirmaufnahme}) oder die Xbox Game Bar (\keys{\faWindows + G}), beenden Sie die Aufnahme mit \keys{\faWindows + \Alt + R}
         \item \textbf{macOS:} Verwenden Sie die integrierte Bildschirmaufnahme (\keys{\shift + \cmd + 5}), beenden Sie die Aufnahme mit \keys{\cmd + \ctrl + Esc}
     \end{itemize}
 \end{myexercise}
@@ -511,7 +511,7 @@ with open("highscores.csv", "r", encoding="utf-8") as file:
 \end{mydefinition}
 
 \begin{myexercise}[Leaderboard-Tabelle mit CSV]\label{myexercise:HighscoreCsv}
-Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-Datei \texttt{highscores.csv} einliest, die Einträge nach Punktestand absteigend sortiert und die Top-3-Spieler auf der Konsole oder im Pygame-Fenster ausgibt.
+\begin{sloppypar}Implementieren Sie eine Funktion \lstinline|load_leaderboard()|, welche die CSV-Datei \texttt{highscores.csv} einliest, die Einträge nach Punktestand absteigend sortiert und die Top-3-Spieler auf der Konsole oder im Pygame-Fenster ausgibt.\end{sloppypar}
 \end{myexercise}
 
 \section{Objektorientierte Spielobjekte mit Pygame-Sprites}
@@ -539,15 +539,18 @@ Folgender Code zeigt das Einsammeln mehrerer Münzen-Sprites mit automatischer K
 \end{myexample}
 
 \begin{myexercise}[Sammelobjekte mit Sprites verwalten]\label{myexercise:Sprites}
-    Bauen Sie ein eigenes Sammelspiel oder erweitern Sie Ihr bestehendes Spiel mit Pygame-Sprites:
+    Erweitern Sie das Sammelspiel aus dem Beispiel (oder Ihr bestehendes Spiel) mit Pygame-Sprites:
     \begin{enumerate}
-        \item Erstellen Sie eine eigene Sprite-Klasse \lstinline|Muenze(pg.sprite.Sprite)| (oder \lstinline|Stern| / \lstinline|Hindernis|). Definieren Sie im Konstruktor \lstinline|__init__()| die Attribute \lstinline|self.image| (z.\,B. ein gelber Kreis oder ein geladenes Bild) und \lstinline|self.rect| an einer zufälligen Position im Fenster.
+        \item {\sloppy Erstellen Sie eine eigene Sprite-Klasse \lstinline|Muenze(pg.sprite.Sprite)| (oder \lstinline|Stern| / \lstinline|Hindernis|). Definieren Sie im Konstruktor \lstinline|__init__()| die Attribute \lstinline|self.image| (z.\,B. ein gelber Kreis oder ein geladenes Bild) und \lstinline|self.rect| an einer zufälligen Position im Fenster.\par}
         \item Erstellen Sie eine Sprite-Gruppe \lstinline|muenzen_gruppe = pg.sprite.Group()| und fügen Sie in einer Schleife 15 bis 20 Münzen mit \lstinline|muenzen_gruppe.add(...)| hinzu.
         \item Erstellen Sie eine Spieler-Klasse \lstinline|Spieler(pg.sprite.Sprite)|, deren \lstinline|update()|-Methode die Tastatureingaben (\lstinline|pg.key.get_pressed()|) verarbeitet.
         \item Aktualisieren Sie in der Game-Schleife alle Sprites mit \lstinline|update()|, prüfen Sie das Einsammeln mit \lstinline|pg.sprite.spritecollide(spieler, muenzen_gruppe, True)| und zeichnen Sie alle Elemente mit \lstinline|draw(screen)|.
+        \item {\sloppy Erstellen Sie eine Sprite-Klasse \lstinline|Hindernis(pg.sprite.Sprite)|, deren \lstinline|update()|-Methode das Hindernis nach unten fallen lässt. Verlässt ein Hindernis das Fenster unten, startet es an einer zufälligen Stelle oberhalb des Fensters neu. Fügen Sie fünf Hindernisse zu einer Gruppe \lstinline|hindernis_gruppe| hinzu.\par}
+        \item Berührt der Spieler ein Hindernis, werden 3 Punkte abgezogen und das Hindernis startet wieder oben.
+        \item Sind alle Münzen eingesammelt, erscheint eine Meldung im Fenster, und Spieler und Hindernisse bewegen sich nicht mehr.
     \end{enumerate}
     \begin{myanswer}
-        Diese Musterlösung finden Sie in \cref{sec:K09_sol}.
+        Diese Musterlösung finden Sie in \cref{sec:K08_sol}.
     \end{myanswer}
 \end{myexercise}
 
@@ -572,22 +575,22 @@ if event.type == pg.KEYDOWN:
     if state == "menu" and event.key == pg.K_SPACE:
         state = "play"
     elif state == "over" and event.key == pg.K_r:
-        reset_game()  # eigene Funktion: Punkte, Positionen usw. zuruecksetzen
+        reset_game()  # eigene Funktion: Punkte, Positionen usw. zurücksetzen
         state = "play"
 
 # Beim Zeichnen:
 if state == "menu":
-    draw_menu(screen)  # Titel und Erklaerung der Steuerung
+    draw_menu(screen)  # Titel und Erklärung der Steuerung
 elif state == "play":
     draw_game(screen)
 else:
-    draw_game_over(screen)  # Punktestand und "R fuer Neustart"
+    draw_game_over(screen)  # Punktestand und "R für Neustart"
 \end{lstlisting}
 
 \section{Game-Auftrag}
 
 \subsection{Thema}
-Im Folgenden wählen Sie in Zweier-Gruppen (bei ungrader Anzahl Personen eine Dreiergruppe möglich) ein Game-Thema aus und entwickeln ein 2D-Game mit \texttt{pygame-ce}. Mögliche Themen sind:
+Im Folgenden wählen Sie in Zweier-Gruppen (bei ungerader Anzahl Personen eine Dreiergruppe möglich) ein Game-Thema aus und entwickeln ein 2D-Game mit \texttt{pygame-ce}. Mögliche Themen sind:
 \begin{itemize}
     \item \textbf{Sammelspiel:} Bewegen Sie eine Spielfigur (z.\,B. Auto, Raumschiff) und sammeln Sie Items ein (z.\,B. Treibstoff, Sterne). Jedes eingesammelte Item gibt Punkte.
     \item \textbf{Endlos-Runner:} Steuern Sie eine Spielfigur (z.\,B. Läufer, Auto) und weichen Sie Hindernissen aus (z.\,B. Mauern, andere Autos). Jedes überstandene Hindernis gibt Punkte.
@@ -603,7 +606,7 @@ Ihr Projekt sollte folgende, essentielle Python-Konzepte sinnvoll einsetzen
 \begin{todolist}
     \item Verwendung von \texttt{pygame-ce} für Fenster, Game-Schleife, Ereignisse, Zeichnen, Kollisionen und Medien (Bilder, Sound), Steuerung mit Tastatur und/oder Maus
     \item Verwendung von \textbf{Variablen} zur Speicherung von Spielzuständen (z.\,B. Spielerposition, Punktestand, verbleibende Zeit)
-    \item Verwendung von \textbf{Funktionen} zur Strukturierung des Codes (z.\,B. \lstinline|draw_player()|, \lstinline|update_game()|, \lstinline|handle_input()|), mit sowie ohne \lstinline|return|-Wert
+    \item {\sloppy Verwendung von \textbf{Funktionen} zur Strukturierung des Codes (z.\,B. \lstinline|draw_player()|, \lstinline|update_game()|, \lstinline|handle_input()|), mit sowie ohne \lstinline|return|-Wert\par}
     \item Verwendung von \textbf{logischen Ausdrücken} und \textbf{Schleifen} zur Steuerung des Spielablaufs (z.\,B. Kollisionserkennung, Punkte zählen, Spielzeit)
     \item Verwendung von \textbf{Datenstrukturen} (Listen, Dictionaries) zur Verwaltung von mehreren Spielobjekten (z.\,B. Liste von Items, Liste von Hindernissen)
     \item Verwendung von \textbf{Klassen} zur Modellierung von Spielobjekten (z.\,B. \lstinline|class Player|, \lstinline|class Item|, \lstinline|class Obstacle|)
@@ -613,7 +616,7 @@ Ihr Projekt sollte folgende, essentielle Python-Konzepte sinnvoll einsetzen
 Ihr Game muss \textbf{Kommentare} enthalten, die den Code erklären und die Struktur des Programms verdeutlichen. Verwenden Sie sowohl einzeilige Kommentare (mit \lstinline|#|) als auch mehrzeilige Kommentare (mit \texttt{"""..."""}) für Funktionen und Klassen. \textbf{Schauen Sie sich die detaillierten Bewertungskriterien auf Moodle an, um sicherzustellen, dass Ihr Code den Anforderungen entspricht.}
 
 \subsection{Bonus}
-Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um das Spiel interessanter und komplexer zu gestalten. Sie zählen im Moodle-Kriterium «Erweiterungen» und sind für die volle Punktzahl nötig. Folgende Auflistung enthält einige Beispiele für mögliche Boni:
+Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um das Spiel interessanter und komplexer zu gestalten. Sie zählen im Moodle-Kriterium \enquote{Erweiterungen} und sind für die volle Punktzahl nötig. Folgende Auflistung enthält einige Beispiele für mögliche Boni:
 \begin{todolist}
     \item Python-spezifisch:
     \begin{todolist}
@@ -626,7 +629,7 @@ Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um
         \item Wenn Sie Animationen (z.\,B. bewegte Spielfigur, animierte Hindernisse) einbauen.
         \item Wenn Sie Bewegungen mit physikalischen Formeln (z.\,B. Beschleunigung, Schwerkraft) umsetzen.
         \item Wenn Sie zahlreiche Level oder Schwierigkeitsgrade (z.\,B. zahlreiche Hindernis-Arten etc.) implementieren.
-        \item Wenn Sie viele Power-Ups (z.\,B. temporäre Unverwundbarkeit, Doppelte Punkte) einbauen.
+        \item Wenn Sie viele Power-Ups (z.\,B. temporäre Unverwundbarkeit, doppelte Punkte) einbauen.
         \item Wenn Sie viele eigens erstellte Hintergrundmusik und/oder Soundeffekte (z.\,B. bei Kollision, Item-Sammlung) einbauen.
         \item Wenn Sie das Spiel mit einem Gamepad/Controller steuern können.
         \item Wenn Sie einen Online-Multiplayer-Modus (z.\,B. über LAN) implementieren.
@@ -640,38 +643,13 @@ Boni können zusätzlich zu den grundlegenden Anforderungen umgesetzt werden, um
     \end{todolist}
 \end{todolist}
 
-\section{Bewertung}
-\subsection{Projektbewertung}
-Die Bewertung Ihres Projekts erfolgt anhand der auf Moodle aufgelisteten Kriterien. Bei verspäteter Abgabe oder bei übermässiger, offensichtlicher KI-Verwendung werden Abzüge gemacht.
-
-\subsection{Gruppen-Besprechung des Spiels}
-
-Im Anschluss an Ihre Abgabe findet eine Besprechung Ihres Spiels in Gruppen mit der Lehrperson statt (ca. 5 Minuten pro Person). Dabei werden Ihnen Fragen zu Ihrem Spiel gestellt, um Ihr Verständnis und Ihre Reflexion zu überprüfen. Die Besprechung resultiert in einer \textbf{individuellen} Verständnis-Punktzahl von bis zu 16 Punkten, welche Ihre Projekt-Note anpasst.
-
-Ihre Endnote wird wie folgt berechnet:
-\[\text{Endnote} = \text{Projekt-Note} + \Delta_{\text{Verständnis}}\]
-
-Wobei:
-\begin{itemize}
-    \item \textbf{Projekt-Note} die Note ist, die Sie basierend auf der Bewertung Ihres Projekts erhalten (Punkte gemäss Bewertungsrichtlinie auf Moodle, umgerechnet in Notenstufen)
-    \item \textbf{Verständnis-Delta} ein Bonus oder Malus ist, abhängig von Ihrer Verständnis-Punktzahl (0--16 Punkte), wie folgt:
-    \begin{itemize}
-        \item 14 Punkte: $\Delta = 0$ (keine Veränderung)
-        \item 15 Punkte: $\Delta = +0.1$
-        \item 16 Punkte: $\Delta = +0.2$
-        \item Unter 14 Punkte: lineare Verschlechterung, maximal $\Delta = -1$ Note
-    \end{itemize}
-\end{itemize}
-
-\begin{myattention}[KI-Tools]
-    Es wird von Ihnen erwartet, dass Sie sich aktiv an der Entwicklung des Spiels beteiligen und die geforderten Python-Konzepte verstehen und anwenden können. ChatGPT oder andere KI-Tools dürfen Sie verwenden, solange Sie Ihren gesamten Code verstehen und erklären können. Wie Sie im obigen Benotungsschema erkennen können, kann Ihre Note durch mangelndes Verständnis stark beeinträchtigt werden. Falls Sie ChatGPT oder andere KI-Tools verwenden, müssen Sie dies im Code klar dokumentieren (z.B. mit Kommentaren oder in einer Begleit-Dokumentation). Jede Zeile Code muss durch Sie erklärbar sein!
-\end{myattention}
+Die Bewertungskriterien und die Regeln zur Verwendung von KI-Tools gibt Ihnen Ihre Lehrperson bekannt.
 
 
 \iftoggle{exerciseonly}{}{%
 	\clearpage
 
-	\section{Längere Lösungen}\label{sec:K09_sol}
+	\section{Längere Lösungen}\label{sec:K08_sol}
 
 	\begin{myanswer}[myexercise:Sonnenuntergang]
 		\leavevmode %
@@ -705,7 +683,7 @@ Wobei:
 
     \begin{myanswer}[myexercise:Sprites]
         \leavevmode %
-        \lstinputlisting[language=Python,caption=\texttt{game\_sprites.py},label=listing:Sprites]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_sprites.py}
+        \lstinputlisting[language=Python,caption=\texttt{game\_sprites\_hindernisse.py},label=listing:Sprites]{Grundlagen_Info/00_Programmieren/Skript/Code/K08_Game/game_sprites_hindernisse.py}
     \end{myanswer}
 
     \begin{myanswer}[myexercise:HighscoreTxt]

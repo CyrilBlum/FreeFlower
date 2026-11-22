@@ -21,15 +21,15 @@
 
 \logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\input{Grundlagen_Info/00_Programmieren/Figures/tikz_title_emojis.tex}}
 
 \frame{\titlepage}
 
 
 \begin{frame}[fragile]{Negation von Aussagen}
     \begin{table}
-        \begin{tabular}{p{5cm}|p{5cm}}
-            \textbf{Aussage} & \textbf{Negation} \\\midrule\midrule
+        \begin{tabular}{p{5cm}p{5cm}}
+            \textbf{Aussage} & \textbf{Negation} \\\midrule
             \visible<+->{\enquote{Das Mädchen heisst Elin}}& \visible<+->{\enquote{Das Mädchen heisst nicht Elin}}\\\midrule
             \visible<+->{\enquote{Niemand in dieser Klasse ist volljährig}}& \visible<+->{\enquote{Mindestens eine Person in dieser Klasse ist volljährig}}\\\midrule
             \visible<+->{$x > 2$} & \visible<+->{$x \leq 2$}
@@ -55,7 +55,7 @@
                 if x != 0:
                     ...
             \end{lstlisting}
-            
+
             Oder:
             \begin{lstlisting}
                 if not x == 0:
