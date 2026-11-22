@@ -346,5 +346,8 @@ Logos/build/
 Private/*
 ## Stale root Jekyll build (GitHub Pages builds from docs/)
 /_site/
+Grundlagen_Info/07_Netzwerke/Film/
+## Third-party book covers for the edu-i-day talk (local only, not redistributable)
+Various/eduiday_2026/Figures/extern/
 ## Huffman-Labor: eigenes privates Repo CyrilBlum/huffman-labor
 Websites/huffman/
