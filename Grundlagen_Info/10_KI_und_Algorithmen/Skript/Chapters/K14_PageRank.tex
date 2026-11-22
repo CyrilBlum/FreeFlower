@@ -53,7 +53,7 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
             C             & 1 & 0 & 0 & 0 & 1             \\
             D             & 0 & 0 & 1 & 0 & 1             \\
             \hline
-            \text{colsum} & 1 & 1 & 3 & 0 & 4             \\
+            \text{colsum} & 1 & 1 & 3 & 0 & 5             \\
         \end{array}
     \]
     Nun können wir die PageRank-Werte iterativ berechnen:
@@ -73,7 +73,7 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
 
     \begin{figure}[H]
         \foreach \step in {00, 01, 02, 03, 04, 05} {
-            \begin{subfigure}[H]{0.32\textwidth}
+            \begin{subfigure}[t]{0.32\textwidth}
                 \centering
                 \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_step_\step.pdf}
                 \caption{Iteration \step}
@@ -83,7 +83,7 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
         \label{fig:pagerank-iterations}
     \end{figure}
 
-    Wie \cref{fig:pagerank-final} zeigt, stabilisieren sich die Werte nach einigen Iterationen, wobei Seite C den höchsten PageRank-Wert von $0.56875$ erreicht, gefolgt von Seite A mit $0.25$, Seite B mit $0.14375$ und Seite D mit $0.0375$. Diese Ergebnisse spiegeln die Struktur des Netzwerks wider, in dem Seite C am meisten verlinkt ist und daher als die wichtigste Seite angesehen wird.
+    Wie \cref{fig:pagerank-final} zeigt, stabilisieren sich die Werte nach einigen Iterationen. Seite C erreicht den höchsten PageRank-Wert von etwa $0.394$, gefolgt von Seite A mit $0.373$, Seite B mit $0.196$ und Seite D mit $0.0375$. Die oben berechneten Werte nach dem ersten Schritt sind also noch nicht die stabilen Werte. Diese Ergebnisse spiegeln die Struktur des Netzwerks wider, in dem Seite C am meisten verlinkt ist und daher als die wichtigste Seite angesehen wird.
 
     \begin{figure}[H]
         \centering
@@ -91,7 +91,7 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
         \caption{Zusammenfassung der finalen PageRank-Werte für die Seiten A, B, C und D.}
         \label{fig:pagerank-final}
     \end{figure}
-    
+
 \end{myexample}
 
 \begin{myexercise}[PageRank selber berechnen]
@@ -102,7 +102,7 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
         \item Carol ist mit Alice befreundet.
         \item Dave ist mit Bob befreundet.
     \end{itemize}
-    Berechnen Sie die PageRank-Werte für jede Person, wenn $d=0.85$ gilt und alle Personen mit einem Startwert von $0.25$ beginnen.
+    Berechnen Sie die PageRank-Werte für jede Person nach einem Iterationsschritt, wenn $d=0.85$ gilt und alle Personen mit einem Startwert von $0.25$ beginnen.
 
     \begin{myanswer}
     Zunächst stellen wir die Freundschaftsstruktur als Matrix dar:
@@ -141,12 +141,12 @@ mit $N$ Seiten und Dämpfungsfaktor $d$ (typisch: $0.85$). Mit outdeg$(q)$ ist d
 \end{mychallenge}
 
 \begin{myremark}[Notebook]
-    Praktische Umsetzung inkl. Übungen:
-    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/06\_Priorisierung\_PageRank.ipynb}}
+    Praktische Umsetzung inkl. Übungen:\newline
+    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 06\_Priorisierung\_PageRank.ipynb}}
 \end{myremark}
 
 \cref{ch:pagerank-markov} zeigt, wie PageRank als stationäre Verteilung einer Markov-Kette interpretiert werden kann, was die mathematische Grundlage für die Berechnung von PageRank bildet. Dort wird auch ein konkretes Beispiel durchgerechnet, um die Verbindung zwischen der Linkstruktur eines Netzwerks und den resultierenden PageRank-Werten zu verdeutlichen.
 
-\begin{mychallenge}[PageRank als Markov-Kette in Pythonumsetzen]
+\begin{mychallenge}[PageRank als Markov-Kette in Python umsetzen]
 Lesen Sie \cref{ch:pagerank-markov} und setzen Sie den PageRank-Algorithmus als Markov-Kette in Python um.
 \end{mychallenge}

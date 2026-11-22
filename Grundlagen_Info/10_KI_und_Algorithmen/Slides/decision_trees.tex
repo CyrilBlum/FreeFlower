@@ -3,7 +3,7 @@
 \newcommand{\namecem}{\textcolor{blue}{Cem}}
 \newcommand{\namedina}{\textcolor{orange}{Dina}}
 
-\title[Daten Vorhersagen]{Daten Vorhersagen}
+\title[Daten vorhersagen]{Daten vorhersagen}
 \date{\today}
 \subtitle{Entscheidungsbäume}
 \logo{\includegraphics[width=.7cm]{Logos/FreeFlower.pdf}}
@@ -24,7 +24,7 @@
 \end{frame}
 
 \begin{frame}{Grundidee}
-    Ein Entscheidungsbaum teilt Daten schrittweise auf. Jede innere Knoten stellt eine Frage, jede Kante führt zu einer Teilmenge und jedes Blatt gibt die vorhergesagte Klasse an. Entscheidungsbäume sind gut interpretierbar und eignen sich für Klassifikationsaufgaben.
+    Ein Entscheidungsbaum teilt Daten schrittweise auf. Jeder innere Knoten stellt eine Frage, jede Kante führt zu einer Teilmenge und jedes Blatt gibt die vorhergesagte Klasse an. Entscheidungsbäume sind gut interpretierbar und eignen sich für Klassifikationsaufgaben.
 \end{frame}
 
 \begin{frame}{Wie lernt ein Baum?}
@@ -32,7 +32,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Gini-Koeffizient}
-    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, boxrule=0.8pt, enhanced, left=2mm, right=2mm, top=1mm, bottom=1mm, box align=base, title=Andrej A. Markov]
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, boxrule=0.8pt, enhanced, left=2mm, right=2mm, top=1mm, bottom=1mm, box align=base, title=Corrado Gini]
         \begin{minipage}{0.25\textwidth}
             \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/Corrado_Gini.jpg}
         \end{minipage}
@@ -40,7 +40,7 @@
         \begin{minipage}{0.7\textwidth}
             \begin{itemize}[<+->]
                 \item Benannt nach Corrado Gini, einem italienischen Statistiker.
-                \item Misst die Unreinheit eines Knotens: 0 = alle Beispiele gehören zur selben Klasse (reiner Knoten), 1 = gleichverteilt über alle Klassen.
+                \item Misst die Unreinheit eines Knotens: 0 = alle Beispiele gehören zur selben Klasse (reiner Knoten), maximal $1 - \frac{1}{K}$ bei Gleichverteilung über $K$ Klassen (z.\,B. 0.5 bei 2 Klassen).
                 \item Bei der Auswahl eines Splits wird die gewichtete Gini-Reduktion berechnet, um den besten Split zu bestimmen.
             \end{itemize}
         \end{minipage}
@@ -53,7 +53,7 @@
     \begin{center}
         \begin{table}[H]
             \centering
-            \begin{tabular}{lcc|c}
+            \begin{tabular}{lccc}
                 \toprule
                 Person     & Einkommen & Alter & Auto \\
                 \midrule
@@ -65,7 +65,7 @@
             \end{tabular}
         \end{table}
     \end{center}
-    
+
     Features \texttt{Einkommen} und \texttt{Alter}. Erste Aufteilung z. B. \texttt{Einkommen $>$ 50k?} führt zu Knoten mit unterschiedlichen Gini-Werten. (Beispiel detailliert im Skript.)
 \end{frame}
 
@@ -95,6 +95,6 @@
 \end{frame}
 
 \begin{frame}{Übungen und Notebook}
-    Für praktische Übungen siehe das Jupyter-Notebook: %10_KI_und_Algorithmen/01_Entscheidungsbaum.ipynb. Bitte alle Code-Zellen ausführen und die Gini-Berechnungen nachrechnen.
+    Für praktische Übungen siehe das Jupyter-Notebook \href{https://cyrilblum.github.io/FreeFlower/jupyter/}{\texttt{01\_Entscheidungsbaum\_Classification.ipynb}}. Bitte alle Code-Zellen ausführen und die Gini-Berechnungen nachrechnen.
 \end{frame}
 

@@ -4,7 +4,7 @@
 % default settings for listings
 \lstset{style=python}
 
-\title[Daten Vorhersagen]{Daten Vorhersagen}
+\title[Daten vorhersagen]{Daten vorhersagen}
 
 \subtitle{Korrelation \& Kausalität}
 
@@ -44,7 +44,7 @@
             \column{0.9\textwidth}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/haarlange_vs_notenschnitt"}
+                \includegraphics[width=\linewidth, height=.72\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/haarlange_vs_notenschnitt"}
             \end{figure}
             \column{0.23\textwidth}
             \only<2->{Positive \textbf{Korrelation}: \\
@@ -71,7 +71,7 @@
         \item \textbf{Ursache-Wirkung}-Beziehung zwischen zwei Variablen A und B.
         \item Ursprung des Begriffs: lat. \textit{causa} = Ursache
         \item Bedarf eines Nachweises (z.B. Experimente oder statistische Analysen).
-        \item Verschiedenen Arten von Kausalität existieren.
+        \item Verschiedene Arten von Kausalität existieren.
     \end{itemize}
     \end{mydefinition}
 \end{frame}
@@ -85,7 +85,7 @@
         \end{tikzpicture}
     \end{center}
     \only<2>{\begin{center}
-            Beispiel: \textit{Im Zeitraum 2000-2009 sind in den USA sowohl der Pro-Kopf-Verbrauch von Mozzarella als auch die Anzahl Ingenieursabschlüsse angestiegen.}
+            Beispiel: \textit{Im Zeitraum 2000-2009 sind in den USA sowohl der Pro-Kopf-Verbrauch von Mozzarella als auch die Anzahl Doktortitel im Bauingenieurwesen angestiegen.}
         \end{center}}
 \end{frame}
 
@@ -190,7 +190,7 @@
 
 \begin{frame}{Hunde und Übergewicht}
     \begin{center}
-        \enquote{Eine Studie hat gezeigt, dass HunderbesitzerInnen weniger Risiko haben, übergewichtig zu werden.}
+        \enquote{Eine Studie hat gezeigt, dass HundebesitzerInnen weniger Risiko haben, übergewichtig zu werden.}
     \end{center}
     \begin{enumerate}
         \item Koinzidenz
@@ -212,7 +212,7 @@
 
 \begin{frame}{Stress und Noten}
     \begin{center}
-        \enquote{Eine Untersuchung von 1000 SchülerInnnen hat gezeigt, dass SchülerInnen, welche gestresster sind, schlechtere Noten erzielen.}
+        \enquote{Eine Untersuchung von 1000 SchülerInnen hat gezeigt, dass SchülerInnen, welche gestresster sind, schlechtere Noten erzielen.}
     \end{center}
     \begin{enumerate}
         \item Koinzidenz
@@ -252,14 +252,14 @@
         \centering
         \foreach \corr in {
                 -1, -0.8, 0, 0.8, 1
-            } {\begin{subfigure}[t]{0.24\pagewidth}
+            } {\begin{subfigure}[t]{0.15\pagewidth}
                     \centering
                     \includegraphics[width=\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/correlation_\corr"}
                     \caption{r=\textbf{\corr}}
                 \end{subfigure}
             }
         \only<2->{
-            \begin{subfigure}[t]{0.24\pagewidth}
+            \begin{subfigure}[t]{0.15\pagewidth}
                 \centering
                 \includegraphics[width=\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/correl_ex_15"}
                 \caption{r$\simeq$\textbf{0}}
@@ -271,9 +271,9 @@
 \begin{frame}{Korrelations-Beispiele}
     \begin{figure}[H]
         \centering
-        \only<1>{\includegraphics[width=.75\pagewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/socialmedia_vs_zufriedenheit.pdf"}}
-        \only<2>{\includegraphics[width=.75\pagewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/haarlange_vs_notenschnitt.pdf"}}
-        \only<3>{\includegraphics[width=.75\pagewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/buecher_vs_schuhgroesse.pdf"}}
+        \only<1>{\includegraphics[height=.72\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/socialmedia_vs_zufriedenheit.pdf"}}
+        \only<2>{\includegraphics[height=.72\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/haarlange_vs_notenschnitt.pdf"}}
+        \only<3>{\includegraphics[height=.72\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/buecher_vs_schuhgroesse.pdf"}}
     \end{figure}
     $\rightarrow$ r-Wert? Positiv / negativ?
 \end{frame}
@@ -283,19 +283,19 @@
         \begin{onlyenv}<1>
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.9\textwidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl"}
+                \includegraphics[height=.7\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl"}
             \end{figure}
         \end{onlyenv}
         \begin{onlyenv}<2>
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.9\textwidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl_mean"}
+                \includegraphics[height=.7\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl_mean"}
             \end{figure}
         \end{onlyenv}
         \begin{onlyenv}<3->
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.9\textwidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl_norm"}
+                \includegraphics[height=.7\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/polizei_vs_kriminalitaet_correl_norm"}
             \end{figure}
         \end{onlyenv}
         \only<2>{\textbf{1. Schritt:} Beide Mittelwerte berechnen ($\overline{x}$ und $\overline{y}$)}
@@ -307,6 +307,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Auftrag: Zu zweit}
+    \small
     \begin{itemize}
         \item Auf Abschnitt \enquote{\textbf{Data Science}} auf Moodle gehen (zuoberst, nach \enquote{Allgemeine Informationen})
         \item Excel-Datei \enquote{\texttt{korrelation.xlsx}} herunterladen und öffnen
@@ -317,15 +318,15 @@
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|l}
-            \textbf{Excel-Befehl}   & \textbf{Bedeutung}             \\\midrule\midrule
-            \verb|=MITTELWERT(...)| & Mittelwert berechnen           \\\midrule
-            \verb|=SUMME(...)|      & Summe berechnen                \\\midrule
-            \verb|=A1*B1|           & Zahlen multiplizieren          \\\midrule
+        \begin{tabular}{ll}
+            \textbf{Excel-Befehl}   & \textbf{Bedeutung}             \\\midrule
+            \verb|=MITTELWERT(...)| & Mittelwert berechnen           \\
+            \verb|=SUMME(...)|      & Summe berechnen                \\
+            \verb|=A1*B1|           & Zahlen multiplizieren          \\
             \verb|=$A$2|            & Referenz auf Zelle A2 fixieren \\
         \end{tabular}
     \end{table}
-    \challengebox{Auftrag 1.6 und 1.7 im Skript}
+    \challengebox{Aufgaben 3.6 und 3.7 im Skript}
 \end{frame}
 
 \begin{frame}{Berufserfahrung und Einladungswahrscheinlichkeit}
@@ -333,7 +334,7 @@
         \column{0.7\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/berufserfahrung_vs_einladung"}
+            \includegraphics[width=\linewidth, height=.68\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/berufserfahrung_vs_einladung"}
         \end{figure}
         \column{0.3\textwidth}
         Z=\textbf{44.66} \\$\rightarrow$ positive Korrelation.\\[.5cm]
@@ -357,7 +358,7 @@
         \column{0.7\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/socialmedia_vs_zufriedenheit"}
+            \includegraphics[width=\linewidth, height=.68\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/socialmedia_vs_zufriedenheit"}
         \end{figure}
         \column{0.3\textwidth}
         Z=\textbf{-30.13} \\$\rightarrow$ negative Korrelation.\\[.5cm]
@@ -395,6 +396,6 @@
 \begin{frame}
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.9\linewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/sales-shaved-heads"}
+        \includegraphics[width=0.9\linewidth, height=.85\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/sales-shaved-heads"}
     \end{figure}
 \end{frame}

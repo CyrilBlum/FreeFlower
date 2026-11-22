@@ -39,13 +39,13 @@
 \begin{mycaution}
     Wenn Merkmale stark voneinander abhängen, können Wahrscheinlichkeiten
     systematisch verzerrt sein. Daher sollten Ergebnisse immer validiert werden
-    (vgl.  \cref{chap:datenvorbereitung} mit Train-Test-Split und Metriken).
+    (vgl. \cref{chap:datenvorbereitung} mit Train-Test-Split und Metriken).
 \end{mycaution}
 
 \section{Mini-Beispiel: Spamfilter}
 
 \begin{myexample}[Posterior vergleichen]
-    Angenommen, wir erhalten in unserem Posteingang 40\% Spam-Emails und 60\% Mails, welche nicht Spam sind. Wir möchten herausfinden, wie wahrscheinlich es ist, dass eine E-Mail Spam ist, wenn diese das Wort \enquote{gratis} enthält. Dazu müssen wir als erstes berechnen, welche der bisher erhaltenen Spam- und Nicht-Spam-Mails jeweils das Wort ``gratis'' enthalten:
+    Angenommen, wir erhalten in unserem Posteingang 40\% Spam-E-Mails und 60\% Mails, welche nicht Spam sind. Wir möchten herausfinden, wie wahrscheinlich es ist, dass eine E-Mail Spam ist, wenn diese das Wort \enquote{gratis} enthält. Dazu müssen wir als erstes berechnen, welche der bisher erhaltenen Spam- und Nicht-Spam-Mails jeweils das Wort \enquote{gratis} enthalten:
 
 
     \begin{table}[H]
@@ -71,7 +71,7 @@
         \end{aligned}
     \]
 
-    Die Wahrscheinlichkeit, dass das Wort \enquote{gratis} in irgend einer Mail (Spam oder nicht-Spam) vorkommt, berechnet sich als:
+    Die Wahrscheinlichkeit, dass das Wort \enquote{gratis} in irgendeiner Mail (Spam oder nicht-Spam) vorkommt, berechnet sich als:
     \[
         P(\text{gratis}) = 5/20 = 0.25
     \]
@@ -110,13 +110,13 @@
     \]
 \end{myremark}
 
-\begin{myexercise}[Übung: Ticket Prioritization mit Naive Bayes]
+\begin{myexercise}[Ticket-Priorisierung mit Naive Bayes]
     \label{ex:ticket-prioritization}
     Das Support-Team einer Firma möchte Support-Tickets automatisch nach Priorität klassifizieren. Sie haben 10 bisherige Tickets und wissen, ob diese eine hohe Priorität (1 = Beschwerde/Eskalation) oder normale Priorität (0 = Standardanfrage) haben:
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c|l}
+        \begin{tabular}{ccl}
             \textbf{Ticket-Nr.} & \textbf{Priorität} & \textbf{Ticket-Text (Schlüsselwort)} \\
             \midrule
             1                   & 1                  & furchtbar                            \\
@@ -166,7 +166,10 @@
 
         Für Normale Priorität:
         \[
-            P(\text{NormalePriorität}\mid\text{furchtbar}) \propto P(\text{furchtbar}\mid\text{NormalePriorität}) \cdot P(\text{NormalePriorität})
+            \begin{aligned}
+                P(\text{NormalePriorität}\mid\text{furchtbar}) \propto & \ P(\text{furchtbar}\mid\text{NormalePriorität}) \\
+                                                                  & \cdot P(\text{NormalePriorität})
+            \end{aligned}
         \]
         \[
             = 0 \cdot 0.4 = 0
@@ -180,21 +183,21 @@
 
     Um dieses Problem zu vermeiden, kann man eine Technik namens \textbf{Smoothing} (z.\,B. Laplace-Glättung) verwenden, um auch unbekannten Wörtern eine kleine Wahrscheinlichkeit zuzuweisen. Dadurch wird verhindert, dass ein einziges unbekanntes Wort die gesamte Klassifikation dominiert.
 
-    Die LaPlace-Glättung berechnet die bedingte Wahrscheinlichkeit für ein Wort $w$ in Klasse $C$ wie folgt:
+    Die Laplace-Glättung berechnet die bedingte Wahrscheinlichkeit für ein Wort $w$ in Klasse $C$ wie folgt:
     \[
         P(w\mid C)=\frac{\text{count}(w,C)+\alpha}{\sum_v \text{count}(v,C)+\alpha\cdot |V|}
     \]
     mit $\alpha>0$ und Vokabulargrösse $|V|$.
 \end{mydefinition}
 
-\begin{mychallenge}[LaPlace-Glättung einführen]
-    Berechnen Sie die Resultate aus \cref{ex:ticket-prioritization} erneut, aber verwenden Sie LaPlace-Glättung mit $\alpha=1$ und einem Vokabular von 5 Wörtern (furchtbar, beschwerde, frage, hilfe, nicht funktioniert).
+\begin{mychallenge}[Laplace-Glättung einführen]
+    Berechnen Sie die Resultate aus \cref{ex:ticket-prioritization} erneut, aber verwenden Sie Laplace-Glättung mit $\alpha=1$ und einem Vokabular von 5 Wörtern (furchtbar, beschwerde, frage, hilfe, nicht funktioniert).
     \begin{myanswer}
         \textbf{Schritt 1: Prior-Wahrscheinlichkeiten bleiben gleich}
         \[
             P(\text{HohePriorität}) = 0.6 \quad ; \quad P(\text{NormalePriorität}) = 0.4
         \]
-        \textbf{Schritt 2: Bedingte Wahrscheinlichkeiten mit LaPlace-Glättung}
+        \textbf{Schritt 2: Bedingte Wahrscheinlichkeiten mit Laplace-Glättung}
         \[
             P(\text{furchtbar}\mid\text{HohePriorität}) = \frac{2 + 1}{6 + 1 \cdot 5} = \frac{3}{11} \approx 0.27
         \]
@@ -210,12 +213,12 @@
         \[
             P(\text{NormalePriorität}\mid\text{furchtbar}) \propto 0.11 \cdot 0.4 = 0.044
         \]
-        \textbf{Ergebnis:} Das Ticket wird weiterhin als \textbf{hohe Priorität} klassifiziert, aber die Wahrscheinlichkeit für Normale Priorität ist jetzt nicht mehr 0, sondern 0.044.
+        \textbf{Ergebnis:} Das Ticket wird weiterhin als \textbf{hohe Priorität} klassifiziert, aber der Score für Normale Priorität ist jetzt nicht mehr 0, sondern 0.044 (normiert: $\frac{0.044}{0.162 + 0.044} \approx 0.21$).
     \end{myanswer}
 \end{mychallenge}
 
 \begin{myexercise}[Warum Glättung?]
-    Erklären Sie anhand einer konkreten Beispiels-Berechnung, weshalb ohne Glättung ein einziges unbekanntes Wort
+    Erklären Sie anhand einer konkreten Beispielrechnung, weshalb ohne Glättung ein einziges unbekanntes Wort
     in einer E-Mail den gesamten Klassen-Score dominieren kann.
     \begin{myanswer}
         Ohne Glättung würde ein unbekanntes Wort $w$ in Klasse $C$ zu $P(w\mid C)=0$ führen. Da Naive Bayes die Wahrscheinlichkeiten multipliziert, würde dies den gesamten Score für Klasse $C$ auf 0 setzen, unabhängig von anderen starken Indikatoren. Mit Glättung wird stattdessen eine kleine Wahrscheinlichkeit zugewiesen, wodurch der Score nicht vollständig eliminiert wird.

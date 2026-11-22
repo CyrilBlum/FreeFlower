@@ -16,7 +16,7 @@
 
         \column{0.5\textwidth}
         \begin{itemize}[<+->]
-            \item \textbf{Rekurrenz:} Wahrscheinlichkeit, wieder in einen Zustand zurückzukehren
+            \item \textbf{Rekurrenz:} Rückkehr in einen Zustand mit Wahrscheinlichkeit 1
             \item \textbf{Transienz:} Zustände, die irgendwann nicht mehr erreicht werden
             \item \textbf{Ergodizität:} Positive Rekurrenz und Aperiodizität
         \end{itemize}
@@ -69,15 +69,15 @@
 \end{frame}
 
 \begin{frame}{App-Nutzung: Stationäre Verteilung}
-    Für die App-Nutzung: $P = \begin{pmatrix} 0.7 & 0.3 \\ 0.3 & 0.7 \end{pmatrix}$
+    Für die App-Nutzung (Instagram, TikTok): $P = \begin{pmatrix} 0.6 & 0.4 \\ 0.1 & 0.9 \end{pmatrix}$
 
     \begin{enumerate}[<+->]
-        \item Aus $\pi_1 = 0.7\pi_1 + 0.3\pi_2$ folgt $0.3\pi_1 = 0.3\pi_2$ $\rightarrow$ $\pi_1 = \pi_2$
-        \item Mit $\pi_1 + \pi_2 = 1$ folgt $\pi_1 = \pi_2 = 0.5$
+        \item Aus $\pi_1 = 0.6\pi_1 + 0.1\pi_2$ folgt $0.4\pi_1 = 0.1\pi_2$ $\rightarrow$ $\pi_2 = 4\pi_1$
+        \item Mit $\pi_1 + \pi_2 = 1$ folgt $\pi_1 = 0.2$ und $\pi_2 = 0.8$
     \end{enumerate}
 
     \only<3->{
-        Langfristig werden beide Apps gleich häufig genutzt.
+        Langfristig wird zu 80\,\% TikTok und zu 20\,\% Instagram genutzt.
     }
 \end{frame}
 
@@ -116,7 +116,7 @@
     \end{itemize}
     \vspace{0.5cm}
     \begin{block}{Beispiel:}
-        \textit{„Ich mag Pizza und ich mag Pasta.“}
+        \textit{\enquote{Ich mag Pizza und ich mag Pasta.}}
     \end{block}
     \vspace{0.3cm}
     \only<3->{
@@ -180,7 +180,7 @@
 \begin{frame}{Lernkontrolle: Markov-Ketten für Text}
     \begin{myexercise}
 
-        \texttt{Hallo Welt Info Hallo Info Welt Hallo Hallo Welt Info Info Welt Hallo}
+        {\footnotesize\texttt{Hallo Welt Info Hallo Info Welt Hallo Hallo Welt Info Info Welt Hallo}}
 
         \begin{enumerate}
             \item Leiten Sie aus dem Text eine Übergangsmatrix für die Wörter \texttt{Hallo}, \texttt{Welt} und \texttt{Info} her.
@@ -192,31 +192,28 @@
 \end{frame}
 
 \begin{frame}
+    \footnotesize
     \begin{enumerate}
-        \item \textbf{Übergangszählung:}
-              \begin{table}[H]
-                  \centering
-                  \begin{tabular}{c|ccc}
+        \item \textbf{Übergangszählung} und \textbf{Übergangsmatrix} (jede Zeile durch die Anzahl Übergänge von diesem Wort teilen):
+              \begin{columns}
+                  \column{.45\textwidth}
+                  \begin{tabular}{cccc}
                                           & \texttt{Hallo} & \texttt{Welt} & \texttt{Info} \\
-                      \hline
+                      \midrule
                       \texttt{Hallo} (5x) & 1              & 2             & 1             \\
                       \texttt{Welt} (4x)  & 2              & 0             & 2             \\
                       \texttt{Info} (4x)  & 1              & 2             & 1             \\
                   \end{tabular}
-              \end{table}
-
-              \textbf{Übergangsmatrix:}
-
-              Für jede Zeile normieren wir auf die Summe der Übergänge von diesem Wort:
-
-              \[
-                  P = \begin{pmatrix}
-                                     & \texttt{Hallo} & \texttt{Welt} & \texttt{Info} \\
-                      \texttt{Hallo} & \frac{1}{4}    & \frac{2}{4}   & \frac{1}{4}   \\
-                      \texttt{Welt}  & \frac{2}{4}    & 0             & \frac{2}{4}   \\
-                      \texttt{Info}  & \frac{1}{4}    & \frac{2}{4}   & \frac{1}{4}   \\
-                  \end{pmatrix}
-              \]
+                  \column{.45\textwidth}
+                  % Reihenfolge der Zeilen und Spalten: Hallo, Welt, Info
+                  \[
+                      P = \begin{pmatrix}
+                          \frac{1}{4} & \frac{2}{4} & \frac{1}{4} \\
+                          \frac{2}{4} & 0           & \frac{2}{4} \\
+                          \frac{1}{4} & \frac{2}{4} & \frac{1}{4} \\
+                      \end{pmatrix}
+                  \]
+              \end{columns}
 
         \item \textbf{Wahrscheinlichster Text mit 3 Wörtern, Start \texttt{Hallo}:}
 
@@ -227,32 +224,6 @@
                         \texttt{Hallo Welt Hallo}
                   \item \texttt{Hallo} $\rightarrow$ \texttt{Welt} ($0.5$), dann \texttt{Welt} $\rightarrow$ \texttt{Info} ($0.5$):\\
                         \texttt{Hallo Welt Info}
-              \end{itemize}
-
-              Beide sind gleich wahrscheinlich und am wahrscheinlichsten.
-
-              \textbf{Übergangsmatrix:}
-
-              Für jede Zeile normieren wir auf die Summe der Übergänge von diesem Wort:
-
-              \[
-                  P = \begin{pmatrix}
-                                     & \texttt{Hallo} & \texttt{Welt} & \texttt{Info} \\
-                      \texttt{Hallo} & 0              & \frac{3}{6}   & \frac{3}{6}   \\
-                      \texttt{Welt}  & \frac{2}{5}    & 0             & \frac{3}{5}   \\
-                      \texttt{Info}  & \frac{3}{5}    & \frac{2}{5}   & 0             \\
-                  \end{pmatrix}
-              \]
-
-        \item \textbf{Wahrscheinlichster Text mit 3 Wörtern, Start \texttt{Hallo}:}
-
-              Von \texttt{Hallo} aus gibt es gleichwahrscheinliche Übergänge zu \texttt{Welt} und \texttt{Info}. Danach ist der wahrscheinlichste nächste Schritt jeweils der Übergang mit der höchsten Wahrscheinlichkeit:
-
-              \begin{itemize}
-                  \item \texttt{Hallo} $\rightarrow$ \texttt{Welt} ($0.5$), dann \texttt{Welt} $\rightarrow$ \texttt{Info} ($0.6$):\\
-                        \texttt{Hallo Welt Info}
-                  \item \texttt{Hallo} $\rightarrow$ \texttt{Info} ($0.5$), dann \texttt{Info} $\rightarrow$ \texttt{Hallo} ($0.6$):\\
-                        \texttt{Hallo Info Hallo}
               \end{itemize}
 
               Beide sind gleich wahrscheinlich und am wahrscheinlichsten.

@@ -1,7 +1,7 @@
 \chapter{Einführung: Von Daten zu Entscheidungen}
 \label{chap:einfuehrung}
 
-In diesem Skript lernen Sie einige zentralen Algorithmen sowie Verfahren des überwachten Maschinellen Lernens kennen.
+In diesem Skript lernen Sie einige zentrale Algorithmen sowie Verfahren des überwachten Maschinellen Lernens kennen.
 
 \begin{mydefinition}[Algorithmus]
 Ein \textbf{Algorithmus} ist eine eindeutige, endliche Abfolge von Anweisungen, die ein Problem lösen oder eine Aufgabe erfüllen. Er nimmt Eingabedaten, verarbeitet sie nach definierten Regeln und liefert eine Ausgabe.
@@ -17,7 +17,7 @@ Einige alltägliche Beispiele und Analogien für Algorithmen:
 \end{myexample}
 
 \begin{mydefinition}[\acrfull{ML}]
-Maschinelles Lernen (\gls{ML}) ist ein Teilgebiet der \glslink{KI}{künstlichen Intelligenz}.
+Maschinelles Lernen (\acrshort{ML}\glsunset{ML}) ist ein Teilgebiet der \glslink{KI}{künstlichen Intelligenz}.
 Anstatt explizite Regeln zu programmieren, \textbf{lernt} ein \gls{ML}-Modell
 Muster direkt aus Daten.
 \end{mydefinition}
@@ -27,7 +27,7 @@ Muster direkt aus Daten.
 \begin{itemize}
     \item Statt zu programmieren \enquote{Wenn Wort \texttt{Gewinn} vorkommt, dann Spam},
           lernt ein Modell selbst aus Tausenden von Beispiel-E-Mails.
-    \item Statt Regeln für Handschrift, lernt ein Modell aus Millionen beschrifteter Ziffernbilder.
+    \item Statt Regeln für Handschrift zu programmieren, lernt ein Modell aus Millionen beschrifteter Ziffernbilder.
 \end{itemize}
 \end{myexample}
 
@@ -70,13 +70,13 @@ Regression: 1, 3, 5 \hspace{1cm} Klassifikation: 2, 4, 6
 \end{myanswer}
 \end{myexercise}
 
-\textbf{Filterung} kann sowohl als Klassifikation (z.\,B. Spamfilter) als auch als Regression (z.\,B. Content-Ranking) auftreten -- die Grenzen sind fliessend. 
+\textbf{Filterung} kann sowohl als Klassifikation (z.\,B. Spamfilter) als auch als Regression (z.\,B. Content-Ranking) auftreten -- die Grenzen sind fliessend.
 
 \textbf{Assoziation} ist eine eigene Kategorie, da sie nicht direkt Vorhersagen trifft, sondern Muster in den Daten entdeckt (z.\,B. \enquote{Kunden kauften auch...}). Dies kann sowohl regelbasiert als auch selbstlernend erfolgen und sowohl für Klassifikation als auch für Regression relevant sein.
 
 \textbf{Priorisierung} ist ebenfalls eine eigene Kategorie, da sie nicht nur klassifiziert oder regrediert, sondern auch eine Rangfolge erstellt (z.\,B. Google-Suchergebnisse). Dies kann sowohl regelbasiert als auch selbstlernend erfolgen und ist oft mit Klassifikation oder Regression kombiniert, aber die Hauptfunktion ist die Erstellung einer Prioritätenliste.
 
-Statt einer strikten Einteilung in Kategorien, ist es oft hilfreicher, Algorithmen entlang von zwei Dimensionen zu betrachten: \textbf{Funktionsart}, also was getan wird (z.\,B. Priorisierung, Klassifikation, Assoziation, Filterung) und \textbf{Umsetzungsart} (regelbasiert vs. selbstlernend). Dies ermöglicht eine flexiblere Einordnung und zeigt, dass viele Algorithmen mehrere Funktionen erfüllen können. 
+Statt einer strikten Einteilung in Kategorien ist es oft hilfreicher, Algorithmen entlang von zwei Dimensionen zu betrachten: \textbf{Funktionsart}, also was getan wird (z.\,B. Priorisierung, Klassifikation, Assoziation, Filterung) und \textbf{Umsetzungsart} (regelbasiert vs. selbstlernend). Dies ermöglicht eine flexiblere Einordnung und zeigt, dass viele Algorithmen mehrere Funktionen erfüllen können.
 
 \begin{landscape}
 \section{Übersicht über die behandelten Algorithmen in diesem Skript}
@@ -85,10 +85,10 @@ Die folgende Tabellenübersicht soll Ihnen helfen, die Vielzahl von Algorithmen 
 
 \begin{table}[H]
 \centering
-\begin{tabular}{l||p{3cm}p{2.7cm}p{2.6cm}p{1.6cm}p{1.7cm}p{3cm}l}
+\begin{tabular}{lp{3cm}p{2.7cm}p{2.6cm}p{1.6cm}p{1.7cm}p{3cm}l}
 \toprule
 \textbf{Funktionsart} & \textbf{Ziel / Frage} & \textbf{Typische\newline Anwendungen} & \textbf{Beispiel-Algorithmus} & \textbf{Regelbasiert möglich} & \textbf{Selbstlernend möglich} & \textbf{Typische\newline Risiken} &\textbf{Kapitel}\\
-\midrule\midrule
+\midrule
 \textbf{Priorisierung} & Was ist am wichtigsten? & Google-Ranking, Social Media Feed & gewichteter Ranking-Algorithmus & ja & ja & Manipulation, Verstärkung von Bias & \ref{chap:weighted-rankings}, \ref{chap:pagerank}, \ref{chap:markov}  \\
 \midrule
 \textbf{Klassifikation} & Zu welcher Kategorie gehört etwas? & Kredit-Scoring, Spam-Erkennung & Random Forest & ja & ja & Diskriminierung, Fehlklassifikation & \ref{chap:entscheidungsbaum}, \ref{chap:randomforest}, \ref{chap:knn}, (\ref{chap:svm})\\
@@ -127,7 +127,7 @@ Auch hier gibt es Mischformen (z.\,B. regelbasierte Vorverarbeitung vor ML-Model
 \begin{table}[H]
 \centering
 \small
-\begin{tabular}{l|p{2.4cm}l}
+\begin{tabular}{lp{2.4cm}l}
 \toprule
 \textbf{Modell} & \textbf{Funktionsart} & \textbf{Kapitel im Skript} \\
 \midrule
@@ -177,7 +177,7 @@ Jede falsche Vorhersage kann eine echte Person negativ beeinflussen.
 \begin{mychallenge}[Reflexion: Verantwortung und Abwägungen]
 Stellen Sie sich vor, Sie entwickeln einen Algorithmus für eine Krankenkasse, welche damit Versicherungskosten bestimmt.
 \begin{enumerate}
-    \item Wem sollte Sie gegenüber verantwortlich sein? Der Versicherung? Den Kundinnen? Der Öffentlichkeit?
+    \item Wem gegenüber sollten Sie verantwortlich sein? Der Versicherung? Den Kundinnen? Der Öffentlichkeit?
     \item Welche Art von Fehler ist schlimmer: False Positive (Mensch wird zu teuer eingestuft) oder False Negative (Risiko wird übersehen)?
     \item Wie würden Sie testen, ob Ihr Modell Geschlecht oder ethnische Herkunft diskriminiert -- auch wenn diese Features nicht explizit im Datensatz sind?
 \end{enumerate}
@@ -185,7 +185,7 @@ Stellen Sie sich vor, Sie entwickeln einen Algorithmus für eine Krankenkasse, w
     \begin{enumerate}
         \item Idealerweise gegenüber allen: aber Interessenskonflikte sind real. Transparenz über Trade-offs ist wichtig.
         \item Je nach Kontext. Versicherung könnte False Positives bevorzugen (höhere Prämien, aber weniger Ausfallrisiko). Menschen bevorzugen False Negatives (günstigere Prämien). Eine \enquote{neutrale} Entscheidung existiert nicht.
-        \item Durch Bias-Audits: Vergleiche Fehlerquoten zwischen Gruppen, prüfe auf Proxy-Variablen (z.~B. Wohnort als Proxy für Ethnizität), teste auf Performance-Unterschiede.
+        \item Durch Bias-Audits: Fehlerquoten zwischen Gruppen vergleichen, auf Proxy-Va\-ri\-ablen prüfen (z.\,B. Wohnort als Proxy für Ethnizität) und Leistungsunterschiede zwischen Gruppen testen.
     \end{enumerate}
 \end{myanswer}
 \end{mychallenge}
@@ -198,4 +198,4 @@ Für dieses Skript stehen zwei Datensätze zur Verfügung:
     \item \texttt{apartment\_prices.csv} (Regression)
 \end{itemize}
 
-Die Jupyter-Notebooks befinden sich im Ordner \texttt{Grundlagen\_Info/15\_KI\_und\_Algorithmen/Code/}.
+Die Jupyter-Notebooks finden Sie unter \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen}}, die Datensätze im Unterordner \texttt{Data}.

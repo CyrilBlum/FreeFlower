@@ -22,7 +22,7 @@
 % default settings for listings
 \lstset{style=python}
 
-\title[Daten Vorhersagen]{Daten Vorhersagen}
+\title[Daten vorhersagen]{Daten vorhersagen}
 
 \date{\today}
 
@@ -136,8 +136,9 @@
 \end{frame}
 
 \begin{frame}{Was sind Markov-Ketten?}
+    \small
     \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, boxrule=0.8pt, enhanced, left=2mm, right=2mm, top=1mm, bottom=1mm, box align=base, title=Andrej A. Markov]
-        \begin{minipage}{0.25\textwidth}
+        \begin{minipage}{0.18\textwidth}
             \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/AAMarkov.png}
         \end{minipage}
         \hfill
@@ -288,9 +289,9 @@
         \onslide<3->{
             \begin{table}[H]
                 \centering
-                \begin{tabular}{c c||c|c|c}
+                \begin{tabular}{ccccc}
                                                                   &            & \multicolumn{3}{c}{\textbf{Nach}}                           \\
-                                                                  &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule\midrule
+                                                                  &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule
                     \multirow{3}{*}{\rotatebox{90}{\textbf{Von}}} & \textbf{F} & 0.1                               & 0.7        & 0.2        \\\cmidrule{2-5}
                                                                   & \textbf{S} & 0.1                               & 0.4        & 0.5        \\\cmidrule{2-5}
                                                                   & \textbf{P} & 0.4                               & 0.3        & 0.3        \\
@@ -329,9 +330,9 @@
         \onslide<3->{
             \begin{table}[H]
                 \centering
-                \begin{tabular}{c c|c|c}
+                \begin{tabular}{cccc}
                                                                   &                  & \multicolumn{2}{c}{\textbf{Nach}}                    \\
-                                                                  &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule\midrule
+                                                                  &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule
                     \multirow{2}{*}{\rotatebox{90}{\textbf{Von}}} & \emoji{sun}      & 0.8                               & 0.2              \\\cmidrule{2-4}
                                                                   & \emoji{umbrella} & 0.4                               & 0.6              \\
                 \end{tabular}
@@ -364,18 +365,17 @@
 \begin{frame}
     \vspace{-.2cm}
     \begin{myexercise}
-        \small
+        \footnotesize
         Ein Tourist kommt in Thailand an und möchte die Sonne und Strände auf zwei beliebten Inseln im Süden (Samui und Phangan) geniessen, sowie das Festland besichtigen. Laut einer Umfrage gilt:
         \begin{itemize}
-            \item Ist der Tourist auf dem (\textbf{F}), so fährt er am nächsten Tag mit Wahrscheinlichkeit $70\%$ nach Samui (\textbf{S}), mit $20\%$ nach Phangan (\textbf{P}) und bleibt mit $10\%$ auf dem Festland.
+            \item Ist der Tourist auf dem Festland (\textbf{F}), so fährt er am nächsten Tag mit Wahrscheinlichkeit $70\%$ nach Samui (\textbf{S}), mit $20\%$ nach Phangan (\textbf{P}) und bleibt mit $10\%$ auf dem Festland.
             \item Ist er auf Samui, bleibt er mit $40\%$ dort, fährt mit $50\%$ nach Phangan und kehrt mit $10\%$ aufs Festland zurück.
             \item Ist er auf Phangan, bleibt er mit $30\%$ dort, fährt mit $30\%$ nach Samui und kehrt mit $40\%$ aufs Festland zurück.
         \end{itemize}
         Erstellen Sie die \textbf{Übergangstabelle}:
-        \small
-        \begin{tabular}{c c||c|c|c}
+        \begin{tabular}{ccccc}
                                                           &            & \multicolumn{3}{c}{\textbf{Nach}}                           \\
-                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule\midrule
+                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule
             \multirow{3}{*}{\rotatebox{90}{\textbf{Von}}} & \textbf{F} &                                   &            &            \\\cmidrule{2-5}
                                                           & \textbf{S} &                                   &            &            \\\cmidrule{2-5}
                                                           & \textbf{P} &                                   &            &            \\
@@ -383,12 +383,12 @@
     \end{myexercise}
 \end{frame}
 
-\begin{frame}{Lösung: Übergangstabelle für den thailändischen Tourist}
+\begin{frame}{Lösung: Übergangstabelle für den Touristen in Thailand}
     \begin{table}[H]
         \centering
-        \begin{tabular}{c c||c|c|c}
+        \begin{tabular}{ccccc}
                                                           &            & \multicolumn{3}{c}{\textbf{Nach}}                           \\
-                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule\midrule
+                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule
             \multirow{3}{*}{\rotatebox{90}{\textbf{Von}}} & \textbf{F} & 0.1                               & 0.7        & 0.2        \\\cmidrule{2-5}
                                                           & \textbf{S} & 0.1                               & 0.4        & 0.5        \\\cmidrule{2-5}
                                                           & \textbf{P} & 0.4                               & 0.3        & 0.3        \\
@@ -411,6 +411,7 @@
 \end{frame}
 
 \begin{frame}{Startvektor und Vorhersage zukünftiger Zustände}
+    \small
     \begin{itemize}
         \item<1-> Startvektor $\pi_0$ gibt den Anfangszustand (=Wahrscheinlichkeit, in einem Zustand zu sein) an
         \item<2-> Beispiel: Heute ist es regnerisch
@@ -436,9 +437,9 @@
                       \begin{table}[H]
                           \footnotesize
                           \centering
-                          \begin{tabular}{c c|c|c}
+                          \begin{tabular}{cccc}
                                                                             &                  & \multicolumn{2}{c}{\textbf{Nach}}                    \\
-                                                                            &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule\midrule
+                                                                            &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule
                               \multirow{2}{*}{\rotatebox{90}{\textbf{Von}}} & \emoji{sun}      & 0.8                               & 0.2              \\\cmidrule{2-4}
                                                                             & \emoji{umbrella} & 0.4                               & 0.6              \\
                           \end{tabular}
@@ -468,6 +469,7 @@
 \end{frame}
 
 \begin{frame}{Matrixmultiplikation}
+    \small
     \only<1-3>{\begin{itemize}[<+->]
             \item Um die Entwicklung einer Markov-Kette zu berechnen, multiplizieren wir einen Zeilenvektor mit einer Matrix.
         \end{itemize}}
@@ -565,6 +567,7 @@
 \end{frame}
 
 \begin{frame}{Wettervorhersage für übermorgen}
+    \footnotesize
     \begin{itemize}[<+->]
         \item Startvektor: \(\pi_0 = \begin{pmatrix} 0 & 1 \end{pmatrix}\) \hspace{0.5em} (heute regnerisch)
         \item Nach einem Tag:

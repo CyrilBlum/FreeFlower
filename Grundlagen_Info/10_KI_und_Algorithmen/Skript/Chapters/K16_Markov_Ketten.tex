@@ -1,5 +1,5 @@
 \lstset{style=python}
-\chapter{Zustände Vorhersagen mit Markov-Ketten}
+\chapter{Zustände vorhersagen mit Markov-Ketten}
 \label{chap:markov}
 \section{Einleitung}
 
@@ -140,9 +140,9 @@ Die Übergangswahrscheinlichkeiten aus \cref{example:graph} lassen sich in einer
     \begin{minipage}{0.25\textwidth}
         \begin{table}[H]
             \centering
-            \begin{tabular}{c c|c|c}
+            \begin{tabular}{cccc}
                                                               &                  & \multicolumn{2}{c}{\textbf{Nach}}                    \\
-                                                              &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule\midrule
+                                                              &                  & \emoji{sun}                       & \emoji{umbrella} \\\midrule
                 \multirow{2}{*}{\rotatebox{90}{\textbf{Von}}} & \emoji{sun}      & 0.8                               & 0.2              \\\cmidrule{2-4}
                                                               & \emoji{umbrella} & 0.4                               & 0.6              \\
             \end{tabular}
@@ -162,13 +162,13 @@ Die Zeilen entsprechen dem aktuellen Zustand (\emoji{sun}, \emoji{umbrella}), di
 \]
 \end{myexample}
 
-\begin{myexercise}[Übergangsmatrix für thailändischen Tourist]\label{ex:tourist}
+\begin{myexercise}[Übergangsmatrix für den Touristen in Thailand]\label{ex:tourist}
     Erstellen Sie die \textbf{Übergangsmatrix} für die Thailand-Aufgabe (\cref{ex:tourist-graph}). Verwenden Sie folgende Vorlage:
     \begin{table}[H]
         \centering
-        \begin{tabular}{c c||c|c|c}
+        \begin{tabular}{ccccc}
                                                           &            & \multicolumn{3}{c}{\textbf{Nach}}                           \\
-                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule\midrule
+                                                          &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule
             \multirow{3}{*}{\rotatebox{90}{\textbf{Von}}} & \textbf{F} &                                   &            &            \\\cmidrule{2-5}
                                                           & \textbf{S} &                                   &            &            \\\cmidrule{2-5}
                                                           & \textbf{P} &                                   &            &            \\
@@ -178,9 +178,9 @@ Die Zeilen entsprechen dem aktuellen Zustand (\emoji{sun}, \emoji{umbrella}), di
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{c c||c|c|c}
+            \begin{tabular}{ccccc}
                                                               &            & \multicolumn{3}{c}{\textbf{Nach}}                           \\
-                                                              &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule\midrule
+                                                              &            & \textbf{F}                        & \textbf{S} & \textbf{P} \\\midrule
                 \multirow{3}{*}{\rotatebox{90}{\textbf{Von}}} & \textbf{F} & 0.1                               & 0.7        & 0.2        \\\cmidrule{2-5}
                                                               & \textbf{S} & 0.1                               & 0.4        & 0.5        \\\cmidrule{2-5}
                                                               & \textbf{P} & 0.4                               & 0.3        & 0.3        \\
@@ -269,7 +269,7 @@ Die Einträge im Vektor $\pi_1$ geben die Wahrscheinlichkeiten für die Zuständ
         0.56 & 0.44 \\
     \end{pmatrix}
 \]
-Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zustände nach zwei Tagen an. Die Wahrscheinlichkeit, dass es in zwei Tagen sonnig ist, beträgt also $0.56$.
+Die Einträge im Vektor $\pi_2$ geben die Wahrscheinlichkeiten für die Zustände nach zwei Tagen an. Die Wahrscheinlichkeit, dass es in zwei Tagen sonnig ist, beträgt also $0.56$.
 \end{myexample}
 
 \begin{myexercise}[App-Nutzung]
@@ -277,9 +277,9 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{c c||c|c}
+        \begin{tabular}{cccc}
                                                           &   & \multicolumn{2}{c}{\textbf{Nach}}       \\
-                                                          &   & I                                 & T   \\\midrule\midrule
+                                                          &   & I                                 & T   \\\midrule
             \multirow{2}{*}{\rotatebox{90}{\textbf{Von}}} & I & 0.6                               & 0.4 \\\cmidrule{2-4}
                                                           & T & 0.1                               & 0.9 \\
         \end{tabular}
@@ -345,9 +345,9 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
         Die Übergangsmatrix lautet:
         \[
             P =
-            \begin{tabular}{c||c|c}
+            \begin{tabular}{ccc}
                         & Fahrrad & Bus \\
-                \midrule\midrule
+                \midrule
                 Fahrrad & 0.9     & 0.1 \\
                 \midrule
                 Bus     & 0.5     & 0.5 \\
@@ -436,7 +436,7 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
     \begin{myanswer}
         Wir berechnen die Verteilung nach 3 Tagen. Startvektor: $\pi_0 = \begin{pmatrix} 1 & 0 & 0 \end{pmatrix}$.
 
-        Berechne $\pi_1 = \pi_0 \cdot P$:
+        Wir berechnen $\pi_1 = \pi_0 \cdot P$:
         \[
             \pi_1 = \begin{pmatrix} 1 & 0 & 0 \end{pmatrix}
             \cdot
@@ -448,7 +448,7 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
             = \begin{pmatrix} 0.1 & 0.7 & 0.2 \end{pmatrix}
         \]
 
-        Berechne $\pi_2 = \pi_1 \cdot P$:
+        Wir berechnen $\pi_2 = \pi_1 \cdot P$:
         \[
             \pi_2 = \begin{pmatrix} 0.1 & 0.7 & 0.2 \end{pmatrix}
             \cdot
@@ -458,7 +458,7 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
                 0.4 & 0.3 & 0.3 \\
             \end{pmatrix}
         \]
-        Berechne jede Komponente:
+        Komponentenweise:
         \begin{align*}
             \text{Festland:} & \quad 0.1 \cdot 0.1 + 0.7 \cdot 0.1 + 0.2 \cdot 0.4 = 0.01 + 0.07 + 0.08 = 0.16 \\
             \text{Samui:}    & \quad 0.1 \cdot 0.7 + 0.7 \cdot 0.4 + 0.2 \cdot 0.3 = 0.07 + 0.28 + 0.06 = 0.41 \\
@@ -469,7 +469,7 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
             \pi_2 = \begin{pmatrix} 0.16 & 0.41 & 0.43 \end{pmatrix}
         \]
 
-        Berechne $\pi_3 = \pi_2 \cdot P$:
+        Wir berechnen $\pi_3 = \pi_2 \cdot P$:
         \[
             \pi_3 = \begin{pmatrix} 0.16 & 0.41 & 0.43 \end{pmatrix}
             \cdot
@@ -479,7 +479,7 @@ Die Einträge in der Matrix $\pi_2$ geben die Wahrscheinlichkeiten für die Zust
                 0.4 & 0.3 & 0.3 \\
             \end{pmatrix}
         \]
-        Berechne jede Komponente:
+        Komponentenweise:
         \begin{align*}
             \text{Festland:} & \quad 0.16 \cdot 0.1 + 0.41 \cdot 0.1 + 0.43 \cdot 0.4 = 0.016 + 0.041 + 0.172 = 0.229 \\
             \text{Samui:}    & \quad 0.16 \cdot 0.7 + 0.41 \cdot 0.4 + 0.43 \cdot 0.3 = 0.112 + 0.164 + 0.129 = 0.405 \\
@@ -503,7 +503,7 @@ Um eine Markov-Kette zu simulieren, gehen Sie wie folgt vor:
 \begin{enumerate}
     \item Wählen Sie einen beliebigen Startzustand und erstellen Sie den dazugehörigen Startvektor.
     \item Erzeugen Sie für jeden Zeitschritt eine Zufallszahl zwischen 0 und 1.
-    \item Wechseln Sie gemäss der Übergangswahrscheinlichkeiten in den nächsten Zustand (siehe Beispiel untenan).
+    \item Wechseln Sie gemäss der Übergangswahrscheinlichkeiten in den nächsten Zustand (siehe Beispiel unten).
     \item Wiederholen Sie die Schritte, um einen Pfad der Kette zu erzeugen.
 \end{enumerate}
 
@@ -529,6 +529,9 @@ Mit Python lässt sich eine solche Simulation einfach umsetzen:
 \begin{lstlisting}[language=Python, caption={Simulation einer Markov-Kette (Wettermodell)}]
 import random
 
+# Übergangsmatrix (Zeile 0: von Sonne, Zeile 1: von Regen)
+P = [[0.8, 0.2], [0.4, 0.6]]
+
 # Anfangszustand
 zustand = "Sonne"
 
@@ -546,10 +549,10 @@ for i in range(schritte):
     else:
         # Übergangswahrscheinlichkeiten vom Zustand "Regen"
         wahrscheinlichkeit = P[1]
-    
+
     # generiere nächsten simulierten Zustand mit Übergangswahrscheinlichkeiten
     zustand = random.choices(["Sonne", "Regen"], weights=wahrscheinlichkeit).pop()
-    
+
     # Füge simulierten Zustand zur Liste hinzu
     history.append(zustand)
 
@@ -557,7 +560,7 @@ print(history)
 \end{lstlisting}
 
 \begin{myexercise}
-    Simulieren Sie das Wettermodell 1000 Schritte lang und bestimmen Sie den Anteil der sonnigen Tage. Sie können dazu das Python-Notebook verwenden: 
-    
-    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/01\_Markov\_Ketten.ipynb}}.
+    Simulieren Sie das Wettermodell 1000 Schritte lang und bestimmen Sie den Anteil der sonnigen Tage. Sie können dazu das Python-Notebook verwenden:
+
+    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 01\_Markov\_Ketten.ipynb}}.
 \end{myexercise}

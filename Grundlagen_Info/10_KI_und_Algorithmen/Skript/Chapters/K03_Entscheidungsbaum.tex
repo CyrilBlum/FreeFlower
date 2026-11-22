@@ -15,7 +15,7 @@
 
 \begin{mydefinition}[Entscheidungsbaum]
     Ein \textbf{Entscheidungsbaum} teilt Daten schrittweise auf.
-    Jede \textbf{innere Knoten} stellt eine Frage (z.\,B. \enquote{Lernzeit > 6\,h?}),
+    Jeder \textbf{innere Knoten} stellt eine Frage (z.\,B. \enquote{Lernzeit > 6\,h?}),
     jede \textbf{Kante} führt zu einer Teilmenge, und jedes \textbf{Blatt} gibt
     die vorhergesagte Klasse an.
 \end{mydefinition}
@@ -32,7 +32,7 @@
 Ein Baum wählt an jedem Knoten jene Frage, die die Daten am besten aufteilt. Dabei sollte die Aufteilung möglichst \textbf{reine} Blätter erzeugen, d.\,h. Blätter, in denen die meisten Datenpunkte zur selben Klasse gehören. Als Gütemass wird häufig der \textbf{Gini-Koeffizient} verwendet:
 \[
     \begin{aligned}
-        \text{Gini}(t) & = 1 - (p_1^2 + p_2^2 + \cdots + p_k^2) \\
+        \text{Gini}(t) & = 1 - (p_1^2 + p_2^2 + \cdots + p_K^2) \\
                        & = 1 - \sum_{k=1}^K p_k^2
     \end{aligned}
 \]
@@ -60,7 +60,7 @@ Ein Gini von 0 bedeutet: alle Datenpunkte gehören zur selben Klasse (\enquote{r
     \begin{center}
         \begin{table}[H]
             \centering
-            \begin{tabular}{lcc|c}
+            \begin{tabular}{lccc}
                 \toprule
                 Person     & Einkommen & Alter & Auto \\
                 \midrule
@@ -73,7 +73,7 @@ Ein Gini von 0 bedeutet: alle Datenpunkte gehören zur selben Klasse (\enquote{r
         \end{table}
     \end{center}
 
-    Dass die 40-jährige Person trotz Ihres geringen Einkommens von 35k ein Auto hat, scheint auf den ersten Blick überraschend. Dies könnte jedoch durch andere Faktoren erklärt werden, die in den Daten nicht erfasst sind (Schenkung des Autos, gemeinsamer Besitz mit einem Partner, etc.). Der Entscheidungsbaum könnte dennoch lernen, dass das Einkommen ein wichtiger Faktor ist, und eine erste Aufteilung bei \texttt{Einkommen > 50k?} vornehmen.
+    Dass die 40-jährige Person trotz ihres geringen Einkommens von 30k ein Auto hat, scheint auf den ersten Blick überraschend. Dies könnte jedoch durch andere Faktoren erklärt werden, die in den Daten nicht erfasst sind (Schenkung des Autos, gemeinsamer Besitz mit einem Partner, etc.). Der Entscheidungsbaum könnte dennoch lernen, dass das Einkommen ein wichtiger Faktor ist, und eine erste Aufteilung bei \texttt{Einkommen > 50k?} vornehmen.
 
     Der Gini-Koeffizient für die Aufteilung bei \texttt{Einkommen > 50k?} wäre:
     \begin{center}
@@ -151,9 +151,9 @@ Ein Gini von 0 bedeutet: alle Datenpunkte gehören zur selben Klasse (\enquote{r
 
 \begin{myexercise}[Erstellung eines Entscheidungsbaums mittels Gini-Koeffizienten]
     \label{ex:tree-15}
-    Angenommen, Sie möchten vorhersagen, ob jemand eine Prüfung besteht anhand der Features \texttt{Lernzeit} und \texttt{Anwesenheit}. Sie haben dazu folgende Daten von eienem Kurs gesammelt:
+    Angenommen, Sie möchten vorhersagen, ob jemand eine Prüfung besteht anhand der Features \texttt{Lernzeit} und \texttt{Anwesenheit}. Sie haben dazu folgende Daten von einem Kurs gesammelt:
     \begin{center}
-        \begin{tabular}{cc|c}
+        \begin{tabular}{ccc}
             \toprule
             Lernzeit (h) & Anwesenheit (\%) & Besteht Prüfung? \\
             \midrule
@@ -166,19 +166,19 @@ Ein Gini von 0 bedeutet: alle Datenpunkte gehören zur selben Klasse (\enquote{r
             \bottomrule
         \end{tabular}
     \end{center}
-    Wählen Sie einen möglichst guten ersten Split aus basierend auf den Gini-Koeffizienten, und fahren Sie danach im gleichen Prinzip weiter, bis Sie einen vollständigen Baum haben. Berechnen Sie die Gini-Koeffizienten für ihre gewählten Aufteilungen bei \texttt{Lernzeit} und \texttt{Anwesenheit} und entscheiden Sie, welcher Split besser ist. Zeichnen Sie den resultierenden Baum (Tiefe 2) und geben Sie die dazugehörigen Gini-Koeffizienten wie in \cref{ex:tree-15-example}.
+    Wählen Sie einen möglichst guten ersten Split aus basierend auf den Gini-Koeffizienten, und fahren Sie danach im gleichen Prinzip weiter, bis Sie einen vollständigen Baum haben. Berechnen Sie die Gini-Koeffizienten für Ihre gewählten Aufteilungen bei \texttt{Lernzeit} und \texttt{Anwesenheit} und entscheiden Sie, welcher Split besser ist. Zeichnen Sie den resultierenden Baum (Tiefe 2) und geben Sie die dazugehörigen Gini-Koeffizienten wie in \cref{ex:tree-15-example} an.
 
     \begin{myanswer}
         \begin{itemize}
             \item Split bei \texttt{Lernzeit > 5h?}:
                   \begin{itemize}
-                      \item Links (Lernzeit $\leq$ 5h): 3 Nein, 0 Ja $\Rightarrow$ Gini = $1 - (1^2) = 0$
+                      \item Links (Lernzeit $\leq$ 5h): 2 Nein, 0 Ja $\Rightarrow$ Gini = $1 - (1^2) = 0$
                       \item Rechts (Lernzeit > 5h): 2 Nein, 2 Ja $\Rightarrow$ Gini = $1 - (2/4)^2 - (2/4)^2 = 1 - 1/4 - 1/4 = 1/2$
                   \end{itemize}
             \item Unter-Split im rechten Knoten bei \texttt{Anwesenheit > 80\%?}:
                   \begin{itemize}
-                      \item Links (Anwesenheit $\leq$ 80\%): 4 Nein, 0 Ja $\Rightarrow$ Gini = $1 - (4/4)^2 = 0$
-                      \item Rechts (Anwesenheit > 80\%): 0 Nein, 4 Ja $\Rightarrow$ Gini = $1 - (4/4)^2 = 0$
+                      \item Links (Anwesenheit $\leq$ 80\%): 2 Nein, 0 Ja $\Rightarrow$ Gini = $1 - (2/2)^2 = 0$
+                      \item Rechts (Anwesenheit > 80\%): 0 Nein, 2 Ja $\Rightarrow$ Gini = $1 - (2/2)^2 = 0$
                   \end{itemize}
         \end{itemize}
         Der erste Split bei \texttt{Lernzeit > 5h?} hat einen Gini von 0.44, während der Split bei \texttt{Anwesenheit > 80\%?} einen Gini von 0 hat. Daher sind zwei Aufteilungen nötig, um einen reinen Baum zu erhalten. Der resultierende Baum könnte so aussehen:
@@ -209,7 +209,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
     er kann jeden einzelnen Punkt korrekt klassifizieren, versagt aber bei neuen Daten.
     Dieses Phänomen heisst \textbf{Overfitting}.
 
-    Overfitting kann dazu führen, dass der Baum sehr tiefe und komplexe Strukturen bildet, die nur auf den Trainingsdaten Sinn ergeben, aber bei neuen Daten völlig unlogisch sind. Dieses Problem ist in Abb. \cref{fig:overfitting_comparison} illustriert.
+    Overfitting kann dazu führen, dass der Baum sehr tiefe und komplexe Strukturen bildet, die nur auf den Trainingsdaten Sinn ergeben, aber bei neuen Daten völlig unlogisch sind. Dieses Problem ist in \cref{fig:overfitting_comparison} illustriert.
 
     \begin{figure}[H]
         \centering
@@ -217,6 +217,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
         \begin{subfigure}{.45\textwidth}
             \includegraphics[width=\textwidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/decision_tree_overfitting_deep_tree.pdf}
             \caption{Tiefer Baum (Baum)}
+            \label{fig:overfitting_deep_tree}
         \end{subfigure}
         \begin{subfigure}{.45\textwidth}
             \includegraphics[width=\textwidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/decision_tree_overfitting_deep.pdf}
@@ -257,7 +258,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
         \item \textbf{Overfitting:} Modell ist zu komplex, lernt Rauschen im Trainingsset (beispielsweise Ausreisser) und generalisiert schlecht auf neue Daten.
         \item \textbf{Underfitting:} Modell ist zu einfach, erkennt echte Muster nicht.
         \item \textbf{Bias:} Fehler durch falsche Annahmen im Modell (z.\,B. zu flacher Baum). Ein hoher Bias führt zu Underfitting. Obschon mit \enquote{Bias} normalerweise Vorurteile oder Verzerrungen assoziiert werden, bezieht sich der Begriff im Kontext von Machine Learning auf die systematische Fehlerquelle, die durch zu einfache Modelle entsteht. Der Begriff stammt daher, dass solche Modelle eine voreingenommene (biased) Sicht auf die Daten haben, da sie nicht in der Lage sind, die zugrundeliegenden Muster vollständig zu erfassen.
-        \item \textbf{Varianz:} Fehler durch Sensitivität gegenüber kleinen Schwankungen im Trainingsset (z.\,B. zu tiefer Baum). Ein hoher Varianz führt zu Overfitting.
+        \item \textbf{Varianz:} Fehler durch Sensitivität gegenüber kleinen Schwankungen im Trainingsset (z.\,B. zu tiefer Baum). Eine hohe Varianz führt zu Overfitting.
     \end{itemize}
 \end{mydefinition}
 
@@ -283,9 +284,9 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
 \end{mydefinition}
 
 \begin{myexercise}[Pruning anwenden]
-    Welche Teile von \cref{fig:overfitting_shallow} könnten durch Pruning entfernt werden, um die Test-Accuracy zu verbessern? Welche Kriterien würden Sie verwenden, um zu entscheiden, welche Knoten entfernt werden sollten?
+    Welche Teile von \cref{fig:overfitting_deep_tree} könnten durch Pruning entfernt werden, um die Test-Accuracy zu verbessern? Welche Kriterien würden Sie verwenden, um zu entscheiden, welche Knoten entfernt werden sollten?
     \begin{myanswer}
-        In \cref{fig:overfitting_shallow} könnte man die Knoten entfernen, die nur wenige Datenpunkte klassifizieren oder die eine hohe Gini-Unreinheit aufweisen. Ein mögliches Kriterium wäre, Knoten zu entfernen, die weniger als eine bestimmte Anzahl von Datenpunkten enthalten oder deren Gini-Koeffizient über einem bestimmten Schwellenwert liegt.
+        In \cref{fig:overfitting_deep_tree} könnte man die Knoten entfernen, die nur wenige Datenpunkte klassifizieren oder die eine hohe Gini-Unreinheit aufweisen. Ein mögliches Kriterium wäre, Knoten zu entfernen, die weniger als eine bestimmte Anzahl von Datenpunkten enthalten oder deren Gini-Koeffizient über einem bestimmten Schwellenwert liegt.
         Zum Beispiel könnte man alle Knoten entfernen, die weniger als 5 Datenpunkte klassifizieren oder deren Gini-Koeffizient über 0.4 liegt. Dies würde dazu führen, dass der Baum weniger komplex wird und möglicherweise besser auf neue Daten generalisiert.
     \end{myanswer}
 \end{myexercise}
@@ -313,15 +314,15 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
     \begin{myanswer}
         \begin{enumerate}
             \item Geschlecht, kultureller Hintergrund, sozioökonomischer Status (indirekt durch Universität, Wohnort, etc.).
-            \item Wenn zu wenige Absolvent*innen von kleineren oder internationalen Universitäten historisch eingestellt wurden, reproduziert das Modell diese Ungleichheit.
+            \item Wenn zu wenige AbsolventInnen von kleineren oder internationalen Universitäten historisch eingestellt wurden, reproduziert das Modell diese Ungleichheit.
             \item Bewusste Datensammlung von unterrepräsentierten Gruppen, regelmässige Bias-Audits, oder explizite Fairness-Constraints beim Trainieren des Baums.
         \end{enumerate}
     \end{myanswer}
 \end{mychallenge}
 
 \begin{myremark}[Notebook]
-    Praktische Umsetzung inkl. Übungen:
-    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/01\_Entscheidungsbaum.ipynb}}
+    Praktische Umsetzung inkl. Übungen:\newline
+    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 01\_Entscheidungsbaum\_Classification.ipynb}}
 \end{myremark}
 
 
@@ -331,7 +332,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
 \end{mydefinition}
 
 \begin{mydefinition}[Feature Importance]
-    Der Entscheidungsbaum kann angeben, wie stark jedes Merkmal zur Klassifikation beiträgt, also wie wichtig jedes Mermal ist, um die Zielvariable vorherzusagen.
+    Der Entscheidungsbaum kann angeben, wie stark jedes Merkmal zur Klassifikation beiträgt, also wie wichtig jedes Merkmal ist, um die Zielvariable vorherzusagen.
 
     Ein Merkmal ist wichtig, wenn Splits auf ihm die Unreinheit, also den Gini-Wert, stark reduzieren. \cref{fig:rf-importance-15} zeigt die Feature-Importances eines Random-Forest-Modells auf einem Datensatz mit 4 Merkmalen. Je höher der Wert, desto wichtiger ist das Merkmal für die Vorhersage.
     \begin{figure}[H]
@@ -366,7 +367,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
         \end{tikzpicture}
     \end{center}
 
-    Die Feature-Importances werden berechnet indem für jedes Feature die Summe der Gini-Reduktionen über alle Splits, die auf diesem Feature basieren, berechnet wird. Diese Wichtigkeiten (\textbf{I}mportances) der \textbf{F}eatures bezeichnen wir als $\text{I}_F = \sum_{\text{Splits auf Feature}} \text{Gini-Reduktion}$.
+    Die Feature-Importances werden berechnet, indem für jedes Feature die Summe der Gini-Reduktionen über alle Splits, die auf diesem Feature basieren, berechnet wird. Diese Wichtigkeiten (\textbf{I}mportances) der \textbf{F}eatures bezeichnen wir als $\text{I}_F = \sum_{\text{Splits auf Feature}} \text{Gini-Reduktion}$.
     \begin{itemize}
         \item Split bei \textcolor{blue}{\texttt{Einkommen > 50k?}} reduziert den Gini von 0.50 auf (0.44 + 0.00) / 2 = 0.22, was eine Reduktion von 0.50 - 0.22 = 0.28 bedeutet. Da alle 4 Datenpunkte an diesem Split beteiligt sind, wird die Reduktion mit 1 gewichtet, also 0.28 * (4/4) = \underline{0.28}.
         \item Split bei \textcolor{blue}{\texttt{Alter > 25?}} reduziert den Gini von 0.44 auf (0.00 + 0.50) / 2 = 0.22, was eine Reduktion von 0.44 - 0.22 = 0.22 bedeutet. Diese Reduktion muss noch mit der Anzahl der Datenpunkte gewichtet werden, die von diesem Split betroffen sind. Hier wären es 3 von 4 Datenpunkte, also würde die gewichtete Reduktion 0.22 * (3/4) = \underline{0.165} betragen.
@@ -393,7 +394,7 @@ Angenommen, wir hätten in \cref{ex:tree-15} 200 weitere Datenpunkte hinzugefüg
                 every node/.style={draw, rounded corners, align=center, font=\small, inner sep=3pt}
             ]
             \node[label={[decisionq]below:Lernzeit > 5h?}] {Ja: 2, Nein: 4\\Gini = 0.44}
-            child { node {Ja: 0, Nein: 3\\Gini = 0.00} edge from parent node[decisionlabelleft] {nein} }
+            child { node {Ja: 0, Nein: 2\\Gini = 0.00} edge from parent node[decisionlabelleft] {nein} }
             child { node[label={[decisionq]below:Anwesenheit > 80\%?}] {Ja: 2, Nein: 2\\Gini = 0.50}
                     child { node {Ja: 0, Nein: 2\\Gini = 0.00} edge from parent node[decisionlabelleft] {nein} }
                     child { node {Ja: 2, Nein: 0\\Gini = 0.00} edge from parent node[decisionlabelright] {ja} }

@@ -18,7 +18,7 @@
 % default settings for listings
 \lstset{style=python}
 
-\title[Daten Vorhersagen]{Daten Vorhersagen}
+\title[Daten vorhersagen]{Daten vorhersagen}
 
 \subtitle{Lineare Regression}
 
@@ -37,9 +37,9 @@
 }
 \date[\today] % (optional)
 
-\logo{\includegraphics[width=.5\textwidth]{Logos/FreeFlower.pdf}}
+\logo{\includegraphics[width=.7cm]{Logos/FreeFlower.pdf}}
 
-\titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
+\titlegraphic{\vspace{-.7cm}\includegraphics[width=.6\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
 \frame{\titlepage}
 
@@ -69,11 +69,11 @@
 	\begin{table}
 		\centering
 		\begin{tabular}{rcl}
-			\only<1->{\textbf{Unabhängige Variable}} & \only<1->{\phantom{$\rightarrow$}} & \only<1->{\textbf{Abhängige Variable}} \\ \midrule\midrule
-			\only<2->{Lernzeit}                      & \only<2->{$\rightarrow$}           & \only<2->{Note in der Prüfung}         \\ \midrule
-			\only<3->{Alter eines Autos}             & \only<3->{$\rightarrow$}           & \only<3->{Wiederverkaufswert}          \\ \midrule
-			\only<4->{Anzahl Schritte pro Tag}       & \only<4->{$\rightarrow$}           & \only<4->{Kalorienverbrauch}           \\ \midrule
-			\only<5->{Aussentemperatur}              & \only<5->{$\rightarrow$}           & \only<5->{Eisverkaufszahlen}           \\ \midrule
+			\only<1->{\textbf{Unabhängige Variable}} & \only<1->{\phantom{$\rightarrow$}} & \only<1->{\textbf{Abhängige Variable}} \\ \midrule
+			\only<2->{Lernzeit}                      & \only<2->{$\rightarrow$}           & \only<2->{Note in der Prüfung}         \\
+			\only<3->{Alter eines Autos}             & \only<3->{$\rightarrow$}           & \only<3->{Wiederverkaufswert}          \\
+			\only<4->{Anzahl Schritte pro Tag}       & \only<4->{$\rightarrow$}           & \only<4->{Kalorienverbrauch}           \\
+			\only<5->{Aussentemperatur}              & \only<5->{$\rightarrow$}           & \only<5->{Eisverkaufszahlen}           \\
 			\only<6->{Anzahl Likes auf Social Media} & \only<6->{$\rightarrow$}           & \only<6->{Reichweite eines Posts}      \\
 		\end{tabular}
 	\end{table}
@@ -82,7 +82,7 @@
 \begin{frame}{\textbf{Unabhängige} und \textbf{abhängige Variablen}}
 	\begin{table}
 		\centering
-		\begin{tabular}{p{3cm}|p{5cm}}
+		\begin{tabular}{p{3cm}p{5cm}}
 			\textbf{Unabhängige Variable} & Kontrollierbare Grösse, beeinflusst andere Variable(n).               \\ \midrule
 			\textbf{Abhängige Variable}   & Messbare Grösse, wird beeinflusst von \textit{unabhängiger} Variable. \\
 		\end{tabular}
@@ -94,7 +94,7 @@
 		\column{0.7\textwidth}
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=\textwidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note.pdf"}
+			\includegraphics[width=\textwidth, height=.75\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note.pdf"}
 		\end{figure}
 		\column{0.3\textwidth}
 		\begin{itemize}[<+->]
@@ -112,7 +112,7 @@
 		\only<1>{
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=\textwidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note.pdf"}
+				\includegraphics[width=\textwidth, height=.75\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note.pdf"}
 			\end{figure}
 		}
 		\only<2>{
@@ -156,7 +156,7 @@
 			\scriptsize
 			\setlength{\tabcolsep}{2pt}
 			\centering
-			\begin{tabular}{c|ccc}
+			\begin{tabular}{cccc}
 				\toprule
 				       & $P_1$ & $P_2$ & $P_3$ \\
 				\midrule
@@ -182,7 +182,7 @@
 \begin{frame}{OLS-Regressionslinie}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\pagewidth]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note_ols.pdf"}
+		\includegraphics[height=.78\textheight, keepaspectratio]{"Grundlagen_Info/10_KI_und_Algorithmen/Figures/schlafdauer_vs_note_ols.pdf"}
 	\end{figure}
 \end{frame}
 
@@ -205,6 +205,7 @@
 \end{frame}
 
 \begin{frame}{Multiple lineare Regression}{Mehrere unabhängige Variablen}
+    \footnotesize
 	\begin{columns}
 		\column{0.5\textwidth}
 		\begin{itemize}
@@ -233,7 +234,7 @@
 		\column{0.65\textwidth}
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=\textwidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/linreg_3d.pdf}
+			\includegraphics[width=\textwidth, height=.7\textheight, keepaspectratio]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/linreg_3d.pdf}
 		\end{figure}
 	\end{columns}
 \end{frame}

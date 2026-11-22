@@ -22,7 +22,7 @@
 \begin{figure}[H]
     \centering
     \foreach \k in {1, 5, 15, 50} {
-            \begin{subfigure}[H]{0.45\textwidth}
+            \begin{subfigure}[t]{0.45\textwidth}
                 \includegraphics[width=\textwidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/knn_boundary_\k.pdf}
                 \caption{$k$ = \k}
             \end{subfigure}
@@ -60,7 +60,7 @@ Die Ähnlichkeit wird über eine \textbf{Distanz} gemessen. Gängig ist die \tex
 \begin{mycaution}
     Wenn Features sehr unterschiedliche Wertebereiche haben (z.\,B. Alter vs.\ Einkommen),
     dominiert das Feature mit grösseren Werten die Distanz.
-    \textbf{Normalisierung} (vgl.  \cref{chap:datenvorbereitung}) ist daher bei KNN besonders wichtig.
+    \textbf{Normalisierung} (vgl. \cref{chap:datenvorbereitung}) ist daher bei KNN besonders wichtig.
 \end{mycaution}
 
 \section{Wahl von \texorpdfstring{$k$}{k}}
@@ -101,9 +101,9 @@ als Vorhersage verwendet.
         \text{Alter normalisiert: } \frac{30-18}{100-18} = 0.146
     \]
     \[
-        \text{Einkommen normalisiert: } \frac{50000-10000}{200000-10000} = 0.235
+        \text{Einkommen normalisiert: } \frac{50000-10000}{200000-10000} = 0.211
     \]
-    Nach Normalisierung haben beide Merkmale gleich \enquote{Gewicht}. Aber ist ein Jahrzehnt Alter wirklich so riskant wie 40'000 CHF Einkommensdifferenz? Diese Entscheidung ist nicht objektiv, sondern Ergebnis von Wertsetzungen.
+    Nach Normalisierung haben beide Merkmale gleich \enquote{Gewicht}. Ein Jahrzehnt Alter entspricht nach der Normalisierung $\frac{10}{82} \approx 0.12$, genau so viel wie rund 23'000 CHF Einkommensdifferenz ($\frac{23'000}{190'000} \approx 0.12$). Aber ist ein Jahrzehnt Alter wirklich so riskant wie 23'000 CHF Einkommensdifferenz? Diese Entscheidung ist nicht objektiv, sondern Ergebnis von Wertsetzungen.
 
     \textbf{Real-World-Risiko:} Wenn Einkommensunterschiede historisch mit Ethnizität oder Geschlecht korrelieren, verstärkt eine naive Normalisierung diese Disparität.
 \end{myexample}
@@ -117,7 +117,7 @@ als Vorhersage verwendet.
     \end{enumerate}
     \begin{myanswer}
         \begin{enumerate}
-            \item Menschen mit höherem Einkommen haben oft besseren Zugang zu Ärzt*innen. Häufige Besuche könnten also Wohlstand abbilden, nicht Krankenheit.
+            \item Menschen mit höherem Einkommen haben oft besseren Zugang zu ÄrztInnen. Häufige Besuche könnten also Wohlstand abbilden, nicht Krankheit.
             \item Wenn dieses Feature normalisiert und gleich gewichtet wird wie medizinische Parameter, wird Wohlstand direkt in eine \enquote{Risikoeinschätzung} übersetzt.
             \item Idealerweise: Datensammlung diversifizieren und Zugangsbarrieren untersuchen. Aber realistisch erfordert das Zeit. Schnelle Lösung: Feature-Wichtigkeitstests durchführen, um zu sehen, ob \enquote{Arztbesuche} auch nach Kontrolle für Wohlstand noch prädiktiv ist.
         \end{enumerate}
@@ -125,10 +125,10 @@ als Vorhersage verwendet.
 \end{mychallenge}
 
 \begin{myexercise}[Praktische Umsetzung in Python]
-    Implementieren Sie eine KNN-Klassifikation mit dem Datensatz \enquote{\texttt{learning\_style\_classifier.csv}} in \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/04\_KNN.ipynb}}. Erstellen Sie danach einen weiteren Versuch mit dem Datensatz \enquote{\texttt{music\_talent\_classifier.csv}} und vergleichen Sie die Ergebnisse für unterschiedliche Werte von $k$.
+    Implementieren Sie im Notebook \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 04\_KNN\_Classification.ipynb}} eine KNN-Klassifikation mit dem Datensatz \texttt{learning\_style\_classifier.csv}. Erstellen Sie danach einen weiteren Versuch mit dem Datensatz \enquote{\texttt{music\_talent\_classifier.csv}} und vergleichen Sie die Ergebnisse für unterschiedliche Werte von $k$.
 
     \begin{myanswer}
-        \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/04\_KNN\_sol.ipynb}}
+        \href{\notebookurl}{\texttt{Musterloesungen/04\_KNN\_Classification\_Solution.ipynb}}
     \end{myanswer}
 \end{myexercise}
 

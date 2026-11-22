@@ -97,7 +97,7 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
     Der Datensatz enthält die folgenden Informationen:
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c}
+        \begin{tabular}{cc}
             \textbf{Transaktion} & \textbf{Produkte}          \\
             \midrule
             1                    & Brot, Butter, Milch        \\
@@ -114,13 +114,13 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
     Zunächst berechnen wir den Support für einzelne Items:
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|c|c|l}
+        \begin{tabular}{lccl}
             \textbf{Item} & \textbf{Support Count} & \textbf{Support} \% &                                                             \\
             \midrule
             Brot          & 100                    & 50\%                & \multirow{4}{*}{\textcolor{ForestGreen}{> Mindest-Support}} \\
             Milch         & 80                     & 40\%                &                                                             \\
             Windeln       & 60                     & 30\%                &                                                             \\
-            Bier          & 50                     & 25\%                &                                                             \\\midrule\midrule
+            Bier          & 50                     & 25\%                &                                                             \\\midrule
             Butter        & 30                     & 15\%                & \multirow{4}{*}{\textcolor{red}{< Mindest-Support}}         \\
             Cola          & 20                     & 10\%                &                                                             \\
             Eier          & 10                     & 5\%                 &                                                             \\
@@ -133,11 +133,11 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
 
     \begin{table}[H]
         \centering
-        \begin{tabular}{l|c|c|l}
+        \begin{tabular}{lccl}
             Itemset            & Support Count & Support \% &                                                             \\
             \midrule
             \{Brot, Milch\}    & 50            & 25\%       & \multirow{2}{*}{\textcolor{ForestGreen}{> Mindest-Support}} \\
-            \{Brot, Windeln\}  & 40            & 20\%       &                                                             \\\midrule\midrule
+            \{Brot, Windeln\}  & 40            & 20\%       &                                                             \\\midrule
             \{Milch, Windeln\} & 30            & 15\%       & \multirow{3}{*}{\textcolor{red}{< Mindest-Support}}         \\
             \{Brot, Bier\}     & 25            & 12.5\%     &                                                             \\
             ...                & ...           & ...        &                                                             \\
@@ -149,7 +149,7 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
 
     Schliesslich können wir aus diesen häufigen Itemsets \textbf{Regeln} ableiten, z.B. \enquote{Wenn Brot, dann Milch}, und die entsprechenden Kennzahlen berechnen, um die Stärke der Regel zu bewerten. Obschon Brot und Windeln häufig zusammen gekauft werden, könnte es sein, dass dies lediglich daran liegt, dass beide Produkte einzeln häufig gekauft werden (und daher zufälligerweise auch recht häufig zusammen), ohne dass eine starke Assoziation zwischen ihnen besteht. Daher ist es wichtig, die Confidence und den Lift zu berechnen, um die Qualität der Regel zu beurteilen.
 
-    Dies wird gemacht, indem wir die \textbf{Confidence} (wie oft Milch gekauft werden, wenn Brot gekauft wird) berechnen. Hierzu legen wir eine \textbf{Schwelle für die Confidence fest, z.B. 70\%}, um zu entscheiden, ob die Regel als stark genug gilt, um weiterverwendet zu werden.
+    Dies wird gemacht, indem wir die \textbf{Confidence} (wie oft Milch gekauft wird, wenn Brot gekauft wird) berechnen. Hierzu legen wir eine \textbf{Schwelle für die Confidence fest, z.B. 70\%}, um zu entscheiden, ob die Regel als stark genug gilt, um weiterverwendet zu werden.
 
     \begin{itemize}
         \item \textbf{Support} von \{Brot, Milch\} = 25\% (50 Transaktionen enthalten beide)
@@ -179,25 +179,25 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
     Sie haben ausgewertet, welche Musik-Stile in Ihrer Klasse gehört werden:
     \begin{table}[H]
         \centering
-        \begin{tabular}{c|c|c|c|c|c|c|c|c||c}
+        \begin{tabular}{cccccccccc}
             \textbf{Person} & \textbf{Pop} & \textbf{Rock} & \textbf{Jazz} & \textbf{HipHop} & \textbf{Elektro} & \textbf{Klassik} & \textbf{Metal} & \textbf{Reggae} & $\Sigma$ \\
-            \midrule\midrule
-            1               & 1            & 1             & 0             & 1               & 0                & 0                & 0              & 1               & 4        \\\midrule
-            2               & 1            & 0             & 0             & 1               & 1                & 0                & 0              & 0               & 3        \\\midrule
-            3               & 0            & 1             & 1             & 0               & 0                & 0                & 1              & 0               & 3        \\\midrule
-            4               & 1            & 1             & 0             & 0               & 1                & 0                & 0              & 0               & 3        \\\midrule
-            5               & 1            & 0             & 1             & 0               & 0                & 1                & 0              & 0               & 3        \\\midrule
-            6               & 0            & 1             & 0             & 1               & 1                & 0                & 0              & 0               & 3        \\\midrule
-            7               & 1            & 0             & 0             & 1               & 0                & 0                & 0              & 1               & 3        \\\midrule
-            8               & 0            & 1             & 1             & 0               & 0                & 1                & 0              & 0               & 3        \\\midrule
-            9               & 1            & 1             & 0             & 1               & 0                & 0                & 1              & 0               & 4        \\\midrule
-            10              & 0            & 0             & 1             & 0               & 1                & 1                & 0              & 0               & 3        \\\midrule
-            11              & 1            & 1             & 0             & 0               & 0                & 0                & 1              & 0               & 3        \\\midrule
-            12              & 0            & 0             & 0             & 1               & 1                & 0                & 0              & 1               & 3        \\\midrule
-            13              & 1            & 0             & 1             & 0               & 0                & 0                & 0              & 1               & 3        \\\midrule
-            14              & 0            & 1             & 0             & 1               & 0                & 1                & 0              & 0               & 3        \\\midrule
-            15              & 1            & 0             & 0             & 0               & 1                & 0                & 1              & 0               & 3        \\\midrule
-            \midrule\midrule
+            \midrule
+            1               & 1            & 1             & 0             & 1               & 0                & 0                & 0              & 1               & 4        \\
+            2               & 1            & 0             & 0             & 1               & 1                & 0                & 0              & 0               & 3        \\
+            3               & 0            & 1             & 1             & 0               & 0                & 0                & 1              & 0               & 3        \\
+            4               & 1            & 1             & 0             & 0               & 1                & 0                & 0              & 0               & 3        \\
+            5               & 1            & 0             & 1             & 0               & 0                & 1                & 0              & 0               & 3        \\
+            6               & 0            & 1             & 0             & 1               & 1                & 0                & 0              & 0               & 3        \\
+            7               & 1            & 0             & 0             & 1               & 0                & 0                & 0              & 1               & 3        \\
+            8               & 0            & 1             & 1             & 0               & 0                & 1                & 0              & 0               & 3        \\
+            9               & 1            & 1             & 0             & 1               & 0                & 0                & 1              & 0               & 4        \\
+            10              & 0            & 0             & 1             & 0               & 1                & 1                & 0              & 0               & 3        \\
+            11              & 1            & 1             & 0             & 0               & 0                & 0                & 1              & 0               & 3        \\
+            12              & 0            & 0             & 0             & 1               & 1                & 0                & 0              & 1               & 3        \\
+            13              & 1            & 0             & 1             & 0               & 0                & 0                & 0              & 1               & 3        \\
+            14              & 0            & 1             & 0             & 1               & 0                & 1                & 0              & 0               & 3        \\
+            15              & 1            & 0             & 0             & 0               & 1                & 0                & 1              & 0               & 3        \\
+            \midrule
             $\Sigma$        & 9            & 8             & 5             & 7               & 6                & 4                & 4              & 4               & 47       \\
         \end{tabular}
         \caption{Musik-Stile der ganzen Klasse (15 Personen, 8 Stile; 1 = hört den Stil)}
@@ -209,7 +209,7 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
         Pop (9), Rock (8), HipHop (7), Elektro (6), Jazz (5). Klassik, Metal und Reggae erfüllen den Schwellenwert nicht.
 
         \textbf{Häufige Itemsets der Grösse 2:} Für die Regel Pop $\Rightarrow$ Elektro:
-        Personen, die beide hören: 2, 4, 15 $\Rightarrow$ 3 Personen. Dies entspricht 20\% und liegt unter dem Mindest-Support von 30\%, daher ist dies kein häufiges Itemset.
+        Personen, die beide hören: 2, 4, 15 $\Rightarrow$ 3 Personen. Dies entspricht 20\% und liegt unter dem Mindest-Support von 30\%, daher ist dies kein häufiges Itemset. Auch kein anderes Paar erreicht 5 Personen (am häufigsten sind Pop/Rock, Pop/HipHop und Rock/HipHop mit je 4 Personen). Es gibt also keine häufigen Itemsets der Grösse 2.
 
         \textbf{Regel Pop $\Rightarrow$ Elektro:}
         \begin{itemize}
@@ -241,8 +241,8 @@ In Realität könnte es sein, dass $P(X \cup Y)$ nicht gleich $P(X) \cdot P(Y)$ 
     Interpretieren Sie die Ergebnisse unter der Annahme, dass Sie einen Mindest-Support von 20\% und eine Mindest-Confidence von 60\% festgelegt haben.
     \begin{myanswer}
         \begin{itemize}
-            \item Support $= \frac{50}{200}=0.25$. \\
-            \item Confidence $= \frac{50}{80}=0.625$. \\
+            \item Support $= \frac{50}{200}=0.25$.
+            \item Confidence $= \frac{50}{80}=0.625$.
             \item Lift $= \frac{0.25}{0.4\cdot0.35}=1.79$ (deutlich über 1).
         \end{itemize}
         Die Regel \enquote{Pasta $\Rightarrow$ Tomatensauce} erfüllt sowohl den Mindest-Support von 20\% als auch die Mindest-Confidence von 60\%. Der Lift von 1.79 zeigt, dass Pasta und Tomatensauce deutlich häufiger zusammen gekauft werden, als wenn sie unabhängig wären, was auf eine starke Assoziation zwischen den beiden Produkten hinweist.

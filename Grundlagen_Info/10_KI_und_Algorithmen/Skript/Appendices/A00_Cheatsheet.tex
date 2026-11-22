@@ -1,4 +1,4 @@
-% Komprehensives Data Science & KI-Algorithmen Cheatsheet (K01-K14)
+% Umfassendes Data Science & KI-Algorithmen Cheatsheet (K01-K14)
 \scriptsize
 \newgeometry{margin=.4cm}
 \lstset{style=python, basicstyle=\ttfamily\tiny}
@@ -35,7 +35,7 @@
 	\begin{multicols*}{4}
 		\textcolor{\cheatSheetColor}{
 			\begin{centering}
-				\section*{KI \& Algorithmen -- Komprehensives Cheatsheet (K01--K14)}
+				\section*{KI \& Algorithmen -- Umfassendes Cheatsheet (K01--K14)}
 			\end{centering}
 			\hrule
 			Das folgende Cheatsheet deckt alle Themen ab: Einführung, Datenvorbereitung, Algorithmen (Baum, RF, SVM, KNN, Regression, NN), Assoziation (Apriori), Filterung (Naive Bayes), Ranking (gewichtet, PageRank), Markov-Ketten und Korrelation/Kausalität.
@@ -44,10 +44,10 @@
 
 		% === K01: EINFÜHRUNG ===
 		\cheatSheetSubtitle{K01: Einführung -- Algorithmen-Arten}{Unterscheidung nach Funktionsart und Einsatzbereich}
-		
+
 		\begin{cheatSheetBox}[title=Algorithmen nach Funktionsart]
-			\textbf{1. Priorisierung} (Ranking): Gewichte, PageRank
-			\textbf{2. Klassifikation} (Kategorien): Baum, RF, KNN, SVM, Markov
+			\textbf{1. Priorisierung} (Ranking): Gewichte, PageRank, Markov
+			\textbf{2. Klassifikation} (Kategorien): Baum, RF, KNN, SVM
 			\textbf{3. Assoziation} (Muster): Apriori
 			\textbf{4. Filterung} (Zuweisung): Naive Bayes
 			\textbf{5. Regression} (Zahlenwerte): Lin. Regression, NN
@@ -90,7 +90,7 @@ y = a0 + a1*x1 + a2*x2  # Lineare Gleichung
 			\[
 				\text{RMSE} = \sqrt{\frac{1}{n}\sum(y_i - \hat{y}_i)^2}
 			\]
-			RMSE bestraft große Fehler stärker (Quadrierung)
+			RMSE bestraft grosse Fehler stärker (Quadrierung)
 		\end{cheatSheetBox}
 
 		% === K03: ENTSCHEIDUNGSBAUM ===
@@ -100,7 +100,7 @@ y = a0 + a1*x1 + a2*x2  # Lineare Gleichung
 			\[
 				\text{Gini}(t) = 1 - \sum_{k=1}^{K} p_k^2
 			\]
-			Gini=0: Rein, Gini=0.5: Maximal unrein. Baum minimiert Gini iterativ.
+			Gini=0: Rein, Gini=0.5: maximal unrein (bei 2 Klassen). Baum minimiert Gini iterativ.
 		\end{cheatSheetBox}
 
 		\begin{cheatSheetBox}[title=Overfitting-Prävention]
@@ -126,7 +126,7 @@ y = a0 + a1*x1 + a2*x2  # Lineare Gleichung
 				y = a_0 + a_1 x_1 + a_2 x_2 + \cdots + a_n x_n
 			\]
 			\begin{lstlisting}
-model = smf.ols('Note ~ Schlaf + Lernaufwand', 
+model = smf.ols('Note ~ Schlaf + Lernaufwand',
                  data=df).fit()
 pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 			\end{lstlisting}
@@ -136,7 +136,7 @@ pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 		\cheatSheetSubtitle{K05: SVM -- Support Vector Machine}{Optimale Trennebene mit maximalem Margin}
 
 		\begin{cheatSheetBox}[title=SVM-Grundkonzept]
-			Findet Hyperebene mit größtem Abstand (Margin) zwischen Klassen
+			Findet Hyperebene mit grösstem Abstand (Margin) zwischen Klassen
 			\begin{itemize}
 				\item \textbf{Linearer Kernel}: Einfach, erklärbar
 				\item \textbf{RBF-Kernel}: Flexibel, nichtlinear
@@ -144,7 +144,7 @@ pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 		\end{cheatSheetBox}
 
 		\begin{cheatSheetBox}[title=Parameter C (Regularisierung)]
-			$C$ groß: Enger Margin, Overfitting-Risiko
+			$C$ gross: Enger Margin, Overfitting-Risiko
 			$C$ klein: Breiter Margin, kann zu Underfitting führen
 		\end{cheatSheetBox}
 
@@ -155,13 +155,13 @@ pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 			\[
 				d(a, b) = \sqrt{\sum_{i=1}^n (a_i - b_i)^2}
 			\]
-			\textbf{Kritisch}: Normalisierung essentiell! Größere Features dominieren sonst.
+			\textbf{Kritisch}: Normalisierung essentiell! Grössere Features dominieren sonst.
 		\end{cheatSheetBox}
 
 		\begin{cheatSheetBox}[title=Hyperparameter k]
 			k=1: Sehr sensitiv, Overfitting
 			k=10--30: Balance
-			k groß: Glatte Grenzen, Underfitting-Risiko
+			k gross: Glatte Grenzen, Underfitting-Risiko
 		\end{cheatSheetBox}
 
 		\columnbreak
@@ -194,10 +194,10 @@ pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 		\cheatSheetSubtitle{K09: Modellvergleich-Übersicht}{Stärken, Grenzen, Einsatzbereiche}
 
 		\begin{cheatSheetBox}[title=Algorithmen-Vergleich]
-			\textbf{Baum}: Interpretierbar, Overfitting, kein Normalisierungsnötig
+			\textbf{Baum}: Interpretierbar, Overfitting, keine Normalisierung nötig
 			\textbf{RF}: Robust, oft beste Accuracy, weniger erklärbar
 			\textbf{SVM}: Effektiv bei klaren Grenzen, Parameterwahl komplex
-			\textbf{KNN}: Einfach, keine Training, skalierungssensitiv
+			\textbf{KNN}: Einfach, kein Training, skalierungssensitiv
 			\textbf{Lin. Reg.}: Schnell, linear, unerklärbar bei Abweichungen
 			\textbf{NN}: Sehr mächtig, Black-Box, viele Daten nötig
 		\end{cheatSheetBox}
@@ -215,7 +215,7 @@ pred = model.predict({'Schlaf': [7], 'Lernaufwand': [3]})
 		\end{cheatSheetBox}
 
 		% === K11: APRIORI ===
-		\cheatSheetSubtitle{K11: Apriori -- Assoziationsregeln}{Häufige Itemsets und Regeln}{K11: Apriori}
+		\cheatSheetSubtitle{K11: Apriori -- Assoziationsregeln}{Häufige Itemsets und Regeln}
 
 		\begin{cheatSheetBox}[title=Zentrale Kennzahlen]
 			\[
@@ -320,11 +320,11 @@ zustand = "Sonne"
 for _ in range(20):
     if zustand == "Sonne":
         zustand = random.choices(
-            ["Sonne", "Regen"], 
+            ["Sonne", "Regen"],
             weights=[0.8, 0.2]).pop()
     else:
         zustand = random.choices(
-            ["Sonne", "Regen"], 
+            ["Sonne", "Regen"],
             weights=[0.4, 0.6]).pop()
     print(zustand)
 			\end{lstlisting}
@@ -459,7 +459,7 @@ X_test_scaled = scaler.transform(X_test)
 
 		\begin{cheatSheetBox}[title=Klassifikations-Metriken]
 			\begin{lstlisting}
-from sklearn.metrics import (accuracy_score, 
+from sklearn.metrics import (accuracy_score,
     precision_score, recall_score, f1_score)
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
@@ -501,13 +501,13 @@ from mlxtend.frequent_patterns import association_rules
 import pandas as pd
 
 # Häufige Itemsets (Support > 0.1)
-freq_itemsets = apriori(data, 
+freq_itemsets = apriori(data,
     min_support=0.1, use_colnames=True)
 
 # Regeln mit Confidence > 0.5
-rules = association_rules(freq_itemsets, 
+rules = association_rules(freq_itemsets,
     metric="confidence", min_threshold=0.5)
-print(rules[['antecedents', 'consequents', 
+print(rules[['antecedents', 'consequents',
              'support', 'confidence', 'lift']])
 			\end{lstlisting}
 		\end{cheatSheetBox}
@@ -533,7 +533,7 @@ pred = model.predict(vectorizer.transform(new_texts))
 
 		\begin{cheatSheetBox}[title=Algorithmus-Wahl nach Szenario]
 			\textbf{Hohe Interpretierbarkeit nötig} $\rightarrow$ Entscheidungsbaum
-			\textbf{Größte Genauigkeit gewünscht} $\rightarrow$ Random Forest
+			\textbf{Grösste Genauigkeit gewünscht} $\rightarrow$ Random Forest
 			\textbf{Wenig Daten, schnell} $\rightarrow$ KNN oder Lin. Reg.
 			\textbf{Klare nichtlineare Grenzen} $\rightarrow$ SVM mit RBF-Kernel
 			\textbf{Text-Klassifikation} $\rightarrow$ Naive Bayes
@@ -548,7 +548,7 @@ pred = model.predict(vectorizer.transform(new_texts))
 
 		\begin{cheatSheetBox}[title=Fehler]
 			1. \textbf{Datenleckage}: Test-Features in Training leaken
-			2. \textbf{Keine Normalisierung}: KNN/SVM leiden unter großen Wertebereichen
+			2. \textbf{Keine Normalisierung}: KNN/SVM leiden unter grossen Wertebereichen
 			3. \textbf{Overfitting}: Zu komplexe Modelle, zu wenig Daten
 			4. \textbf{Korrelation=Kausalität}: Confounder übersehen
 			5. \textbf{Bias-Perpetuierung}: Historische Diskriminierung in Trainingsdaten

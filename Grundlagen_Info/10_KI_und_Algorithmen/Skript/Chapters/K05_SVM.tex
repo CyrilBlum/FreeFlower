@@ -7,7 +7,7 @@ Umsetzungsart: \textbf{selbstlernend}.
 \end{myremark}
 
 \begin{myremark}
-Diese Bonus-Vertiefung ist \textbf{optional}. Sie setzt  \cref{chap:einfuehrung} und  \cref{chap:datenvorbereitung} voraus.
+Diese Bonus-Vertiefung ist \textbf{optional}. Sie setzt \cref{chap:einfuehrung} und \cref{chap:datenvorbereitung} voraus.
 \end{myremark}
 
 \section{Grundidee: Die optimale Trennebene}
@@ -21,9 +21,9 @@ Die Datenpunkte, die am nächsten an der Trennebene liegen, heissen \textbf{Supp
 \begin{figure}[H]
     \centering
     \foreach \margin in {0.1, 1.0, 10.0} {
-            \begin{subfigure}[H]{0.32\textwidth}
+            \begin{subfigure}[t]{0.32\textwidth}
                 \includegraphics[width=\textwidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/svm_boundary_\margin.pdf}
-                \caption{Margin = \margin}
+                \caption{$C$ = \margin}
             \end{subfigure}
         }
     \caption{SVM-Entscheidungsgrenze mit Margin und Support Vectors für unterschiedliche Werte von $C$}
@@ -78,7 +78,7 @@ Begründen Sie Ihre Aussagen mit Notebook-Experimenten.
 \section{Gesellschaftliche Aspekte: Hyperparameter als verborgene Entscheidungen}
 
 \begin{mydefinition}[Hyperparameter sind Wertsetzungen]
-Der Kernel und die Regularisierungsparameter ($C$) sind nicht \enquote{optimal} im neutralen Sinne. Sie werden vom Menschen gewählt und spiegeln Wertsetzungen wider. Ein hoher $C$-Wert begünstigt Trainingsdaten-Accuracy, ein niedriger toleriert Fehler im Trainingsset -- es gibt keinen objektiven \enquote{besten\enquote} Wert.
+Der Kernel und die Regularisierungsparameter ($C$) sind nicht \enquote{optimal} im neutralen Sinne. Sie werden vom Menschen gewählt und spiegeln Wertsetzungen wider. Ein hoher $C$-Wert begünstigt Trainingsdaten-Accuracy, ein niedriger toleriert Fehler im Trainingsset -- es gibt keinen objektiven \enquote{besten} Wert.
 \end{mydefinition}
 
 \begin{myexample}[Kernel-Wahl und Fairness]
@@ -91,6 +91,6 @@ Bei einem Klassifikator für Hiring könnte die Kernel-Wahl entscheidend sein:
 \end{myexample}
 
 \begin{myremark}[Notebook]
-Praktische Umsetzung inkl. Übungen:
-\href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/03\_SVM.ipynb}}
+Praktische Umsetzung inkl. Übungen:\newline
+\href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 03\_SVM\_Classification.ipynb}}
 \end{myremark}

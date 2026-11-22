@@ -1,4 +1,4 @@
-\title[Daten Vorhersagen]{Daten Vorhersagen}
+\title[Daten vorhersagen]{Daten vorhersagen}
 \date{\today}
 \subtitle{PageRank}
 \logo{\includegraphics[width=.7cm]{Logos/FreeFlower.pdf}}
@@ -41,7 +41,7 @@
         \column{0.54\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_step_00.pdf}
+            \includegraphics[width=\linewidth, height=.45\textheight, keepaspectratio]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_step_00.pdf}
             \caption*{Startwerte: alle Seiten gleich wichtig}
         \end{figure}
         \column{0.42\textwidth}
@@ -58,6 +58,7 @@
 \end{frame}
 
 \begin{frame}{Ein Schritt}
+    \small
     \[
         \begin{array}{c|cccc|c}
               & A & B & C & D & \text{outdeg} \\
@@ -85,7 +86,7 @@
         \begin{frame}{Iteration \step}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_step_\step.pdf}
+                \includegraphics[height=.75\textheight, keepaspectratio]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_step_\step.pdf}
                 \caption*{Schritt \step}
             \end{figure}
         \end{frame}
@@ -96,19 +97,19 @@
         \column{0.6\textwidth}
         \begin{figure}[H]
             \centering
-            \includegraphics[width=\linewidth]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_summary.pdf}
+            \includegraphics[width=\linewidth, height=.7\textheight, keepaspectratio]{Grundlagen_Info/10_KI_und_Algorithmen/Figures/pagerank_summary.pdf}
             \caption*{Endstand nach Konvergenz}
         \end{figure}
         \column{0.38\textwidth}
         \begin{table}[H]
             \centering
-            \begin{tabular}{c|c}
+            \begin{tabular}{cc}
                 Seite & PR      \\
-                \hline
-                C     & 0.56875 \\
-                A     & 0.25000 \\
-                B     & 0.14375 \\
-                D     & 0.03750 \\
+                \midrule
+                C     & 0.3941 \\
+                A     & 0.3725 \\
+                B     & 0.1958 \\
+                D     & 0.0375 \\
             \end{tabular}
         \end{table}
         \vspace{0.7em}
@@ -167,7 +168,7 @@
     \begin{columns}
         \column{0.55\textwidth}
         \begin{myremark}[Praktische Umsetzung]
-            \href{https://cyrilblum.github.io/FreeFlower/jupyter/}{\texttt{10\_KI\_und\_Algorithmen/06\_Priorisierung\_PageRank.ipynb}}
+            \footnotesize\href{https://cyrilblum.github.io/FreeFlower/jupyter/}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 06\_Priorisierung\_\allowbreak PageRank.ipynb}}
         \end{myremark}
         \column{0.4\textwidth}
         \begin{figure}[H]

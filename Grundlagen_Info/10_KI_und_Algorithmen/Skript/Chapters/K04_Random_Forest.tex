@@ -8,7 +8,7 @@
 
 \begin{myremark}
     Der \textbf{Random Forest} baut auf dem Entscheidungsbaum auf (s. \cref{chap:entscheidungsbaum}) und macht ihn
-    durch \enquote{Ensembling} deutlich robuster. Diese Methode setzt Kenntnisse aus Kapitel \cref{chap:entscheidungsbaum} voraus.
+    durch \enquote{Ensembling} deutlich robuster. Diese Methode setzt Kenntnisse aus \cref{chap:entscheidungsbaum} voraus.
 \end{myremark}
 
 \section{Grundidee: Viele Bäume, eine Entscheidung}
@@ -54,7 +54,7 @@ Die Wichtigkeit jedes Merkmals kann durch die durchschnittliche Reduktion der Un
 \section{Hyperparameter}
 
 \begin{myexercise}[Hyperparameter verstehen und tunen]
-    Verwenden Sie das Notebook \texttt{02\_Random\_Forest.ipynb} und trainieren Sie einen Random Forest auf einem Datensatz Ihrer Wahl (z.~B. Iris, Wine, Breast Cancer, s. Beispiele im Notebook). Recherchieren Sie die Bedeutung der folgenden Hyperparameter (Link: \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{sklearn RandomForestClassifier}) und testen Sie verschiedene Werte:
+    Verwenden Sie das Notebook \texttt{02\_Random\_Forest\_Classification.ipynb} und trainieren Sie einen Random Forest auf einem Datensatz Ihrer Wahl (z.~B. Iris, Wine, Breast Cancer, s. Beispiele im Notebook). Recherchieren Sie die Bedeutung der folgenden Hyperparameter (Link: \href{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}{sklearn RandomForestClassifier}) und testen Sie verschiedene Werte:
 
     \begin{itemize}
         \item \texttt{n\_estimators} -- Anzahl Bäume
@@ -66,33 +66,33 @@ Die Wichtigkeit jedes Merkmals kann durch die durchschnittliche Reduktion der Un
 
     Füllen Sie folgende Tabelle mit \enquote{+} (positiver Einfluss) oder \enquote{-} (negativer Einfluss) aus:
     \begin{center}
-        \begin{tabular}{l|c|c|c}
+        \begin{tabular}{lccc}
             Hyperparameter & Trainingsgenauigkeit & Testgenauigkeit & Overfitting-Risiko \\
-            \hline
+            \midrule
             $\uparrow$ \texttt{n\_estimators} &  &  &  \\
             $\uparrow$ \texttt{max\_depth} &  &  &  \\
-            $\uparrow$ \texttt{min\_samples\_leaf} &  &  &  
+            $\uparrow$ \texttt{min\_samples\_leaf} &  &  &
         \end{tabular}
     \end{center}
     \begin{myanswer}
         \begin{center}
-            \begin{tabular}{l|c|c|c}
+            \begin{tabular}{lccc}
                 Hyperparameter & Trainingsgenauigkeit & Testgenauigkeit & Overfitting-Risiko \\
-                \hline
+                \midrule
                 $\uparrow$ \texttt{n\_estimators} & + & + & - \\
                 $\uparrow$ \texttt{max\_depth} & + & - & + \\
-                $\uparrow$ \texttt{min\_samples\_leaf} & - & + & - 
+                $\uparrow$ \texttt{min\_samples\_leaf} & - & + & -
             \end{tabular}
         \end{center}
         \begin{itemize}
-            \item \texttt{n\_estimators}: Mehr Bäume erhöhen die Trainingsgenauigkeit, da mehr Modelle kombiniert werden. Sie verbessern auch die Testgenauigkeit, da sie die Varianz reduzieren. Allerdings steigt der Rechenaufwand, was das Overfitting-Risiko indirekt erhöhen könnte, wenn man zu viele Bäume verwendet.
+            \item \texttt{n\_estimators}: Mehr Bäume erhöhen die Trainingsgenauigkeit, da mehr Modelle kombiniert werden. Sie verbessern auch die Testgenauigkeit, da sie die Varianz reduzieren. Mehr Bäume erhöhen das Overfitting-Risiko nicht, sie erhöhen nur den Rechenaufwand.
             \item \texttt{max\_depth}: Eine grössere Tiefe ermöglicht es den Bäumen, komplexere Muster zu lernen, was die Trainingsgenauigkeit erhöht. Allerdings kann dies zu Overfitting führen, wodurch die Testgenauigkeit sinkt.
             \item \texttt{min\_samples\_leaf}: Grössere Werte verhindern, dass Bäume zu spezifisch werden, was die Trainingsgenauigkeit verringern kann. Allerdings verbessert es die Testgenauigkeit, da es das Overfitting-Risiko reduziert.
         \end{itemize}
      \end{myanswer}
 \end{myexercise}
 
-\section{Gesellschaftliche Aspekte: Black-Box-Problem und Bias-Verstärkung}
+\section[Gesellschaftliche Aspekte: Black-Box-Problem und Bias-Verstärkung]{Gesellschaftliche Aspekte:\\ Black-Box-Problem und Bias-Verstärkung}
 
 \begin{mydefinition}[Ensemble-Risiken]
     Obwohl Random Forests durch Ensembling robuster werden, entsteht gleichzeitig ein \enquote{Black-Box}-Problem: Man kann nicht mehr nachvollziehen, warum eine konkrete Entscheidung getroffen wurde. Feature Importance gibt nur einen aggregierten Überblick, sagt aber nichts über einzelne Vorhersagen aus. Um genau zu verstehen, warum ein bestimmter Kandidat abgelehnt wurde, müsste man alle Regeln aller Bäume durchgehen, was bei Hunderten von Bäumen und Tausenden von Regeln praktisch unmöglich ist. Dadurch können Random Forests unverständliche Entscheidungen treffen, was in sensiblen Bereichen (z.~B. Hiring, Kreditvergabe) problematisch sein kann.
@@ -101,9 +101,9 @@ Die Wichtigkeit jedes Merkmals kann durch die durchschnittliche Reduktion der Un
 \begin{myexample}[Hiring-System mit Random Forest]
     Ein Unternehmen trainiert einen Random Forest auf 10 Jahren historischer Einstellungsdaten. Das Modell hat 99\% Accuracy auf den Testdaten und wird veröffentlicht. Feature Importance zeigt: \enquote{Berufserfahrung} und \enquote{Universität} sind am wichtigsten. Eine Kandidatin wird abgelehnt. Das System kann nicht erklären, warum -- es ist eine Kombination von hunderten versteckten Regeln über hunderten Bäumen.
 
-    \textbf{Problem:} Wenn die Trainingsdaten systematisch diskriminierend waren (z.~B. Frauen wurden weniger häufig eingestellt), lernt das Random Forest diese Verzerrung und verstärkt sie durch Skalierung und Black-Box-Natur.
+    \textbf{Problem:} Wenn die Trainingsdaten systematisch diskriminierend waren (z.~B. Frauen wurden weniger häufig eingestellt), lernt der Random Forest diese Verzerrung und verstärkt sie durch Skalierung und Black-Box-Natur.
 
-    \textbf{Real-World-Link:} \href{https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/}{Amazon stoppt KI-Hiring-System wegen Geschlechtsdiskriminierung (2018)}
+    \textbf{Real-World-Link:}\newline \href{https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/}{Amazon stoppt KI-Hiring-System wegen Geschlechtsdiskriminierung (2018)}
 \end{myexample}
 
 \begin{mychallenge}[Interpretierbarkeit vs. Genauigkeit]
@@ -123,6 +123,6 @@ Die Wichtigkeit jedes Merkmals kann durch die durchschnittliche Reduktion der Un
 \end{mychallenge}
 
 \begin{myremark}[Notebook]
-    Praktische Umsetzung inkl. Übungen:
-    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/02\_Random\_Forest.ipynb}}
+    Praktische Umsetzung inkl. Übungen:\newline
+    \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 02\_Random\_Forest\_Classification.ipynb}}
 \end{myremark}

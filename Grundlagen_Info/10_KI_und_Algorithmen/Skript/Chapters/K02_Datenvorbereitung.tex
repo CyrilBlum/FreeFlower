@@ -56,7 +56,7 @@ Im maschinellen Lernen werden die Eingabedaten als \textbf{Features} (Merkmale) 
 \begin{myexample}
     Beim Datensatz \texttt{learning\_style\_classifier.csv}:
     \begin{itemize}
-        \item Features: Lernzeit, Schlafstunden, Anzahl Wiederholungen
+        \item Features: Lernzeit, Fehlzeiten, Hausaufgabenquote, Ergebnis eines Vorwissenstests
         \item Label: Bestanden (1) oder nicht bestanden (0)
     \end{itemize}
 \end{myexample}
@@ -75,11 +75,11 @@ Im maschinellen Lernen werden die Eingabedaten als \textbf{Features} (Merkmale) 
 \begin{myexercise}[Normalisierung berechnen]
     Gegeben: Lernzeiten $\{2, 4, 6, 8, 10\}$ Stunden.
     \begin{enumerate}
-        \item Normalisieren Sie alle Werte mit Min-Max. Sie können dazu das Python-Notebook verwenden: \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/00\_Datenvorbereitung.ipynb}}.
+        \item Normalisieren Sie alle Werte mit Min-Max. Sie können dazu das Python-Notebook verwenden: \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 00\_Datenvorbereitung.ipynb}}.
         \item Welcher Wert entspricht nach der Normalisierung dem Wert 6?
     \end{enumerate}
     \begin{myanswer}
-        Lösungen: \href{\notebookurl}{\texttt{Unterordner \enquote{10\_KI\_und\_Algorithmen/Musterlösungen}}}.\
+        Lösungen: \href{\notebookurl}{\texttt{Unterordner \enquote{10\_KI\_und\_Algorithmen/Musterloesungen}}}.
 
         $x_{\min}=2,\ x_{\max}=10$:
         $\{0,\; 0.25,\; 0.5,\; 0.75,\; 1.0\}$.
@@ -93,10 +93,10 @@ Im maschinellen Lernen werden die Eingabedaten als \textbf{Features} (Merkmale) 
     Die \textbf{Konfusionsmatrix} zeigt, wie oft das Modell richtig und falsch klassifiziert hat:
 
     \begin{center}
-        \begin{tabular}{cc|cc}
+        \begin{tabular}{cccc}
                                                   &         & \multicolumn{2}{c}{\textbf{Vorhergesagt}} \\
                                                   &         & Positiv                                      & Negativ \\
-            \hline
+            \midrule
             \multirow{2}{*}{\textbf{Tatsächlich}} & Positiv & TP                                           & FN \\
                                                   & Negativ & FP                                           & TN \\
         \end{tabular}
@@ -116,35 +116,30 @@ Im maschinellen Lernen werden die Eingabedaten als \textbf{Features} (Merkmale) 
     Die \textbf{Precision} misst, wie viele der als positiv vorhergesagten Fälle tatsächlich positiv sind.
     Der \textbf{Recall} misst, wie viele der tatsächlich positiven Fälle korrekt erkannt wurden.
 
-    Die Begriffe \emph{Sensitivität} und \emph{Spezifizität} werden manchmal synonym zu Recall bzw. Precision verwendet.
+    Der Begriff \emph{Sensitivität} wird synonym zu Recall verwendet. Die \emph{Spezifität} $\frac{\text{TN}}{\text{TN} + \text{FP}}$ misst dagegen, wie viele der tatsächlich negativen Fälle korrekt erkannt wurden, und ist nicht dasselbe wie Precision.
 \end{mydefinition}
 
 \begin{myexercise}[Metriken berechnen]
     Ein Spam-Filter klassifiziert 200 E-Mails.
     Die Konfusionsmatrix ergibt:
     \begin{center}
-        \begin{tabular}{cc|cc}
+        \begin{tabular}{cccc}
                                                   &           & \multicolumn{2}{c}{\textbf{Vorhergesagt}} \\
                                                   &           & Spam                                         & Kein Spam \\
-            \hline
+            \midrule
             \multirow{2}{*}{\textbf{Tatsächlich}} & Spam      & 80                                           & 20 \\
                                                   & Kein Spam & 10                                           & 90 \\
         \end{tabular}
     \end{center}
 
     \begin{enumerate}
-        \item Berechnen Sie Accuracy, Precision und Recall. Sie können dazu das Python-Notebook verwenden: \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/00\_Datenvorbereitung.ipynb}}.
+        \item Berechnen Sie Accuracy, Precision und Recall. Sie können dazu das Python-Notebook verwenden: \href{\notebookurl}{\texttt{10\_KI\_und\_Algorithmen/\allowbreak 00\_Datenvorbereitung.ipynb}}.
         \item Warum ist Recall besonders wichtig, wenn es darum geht, keinen Spam zu verpassen?
     \end{enumerate}
     \begin{myanswer}
-        Lösungen: \href{\notebookurl}{\texttt{Unterordner \enquote{10\_KI\_und\_Algorithmen/Musterlösungen}}}.\
+        Lösungen: \href{\notebookurl}{\texttt{Unterordner \enquote{10\_KI\_und\_Algorithmen/Musterloesungen}}}.
 
-         TP=80, TN=90, FP=10, FN=20:
-         Accuracy = $\frac{80 + 90}{200} = 0.85$,
-         Precision = $\frac{80}{80 + 10} = 0.89$,
-         Recall = $\frac{80}{80 + 20} = 0.80$.
-
-         Ein hoher Recall bedeutet, dass die meisten Spam-E-Mails korrekt erkannt werden. Wenn der Recall niedrig ist, könnte der Filter viele Spam-Nachrichten durchlassen, was unerwünscht ist.
+        TP=80, TN=90, FP=10, FN=20:
         \begin{enumerate}
             \item Berechnungen:
                   \begin{itemize}
