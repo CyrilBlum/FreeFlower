@@ -1,0 +1,29 @@
+% Tabellenkarten für den Werbe-Teil von InstaHub (Spalten gemäss den InstaHub-Migrationen,
+% https://github.com/wi-wissen/InstaHub, database/migrations/create/ads und .../analytics).
+% Jede Tabelle ist eine einspaltige Matrix: Zeile 1 = Tabellenname, danach die Kolonnen.
+% Die Pfeile zeigen, auf welche id die Kolonnen user_id und photo_id verweisen.
+\begin{tikzpicture}[
+    karte/.style={
+        matrix of nodes, draw, thick, inner sep=0pt, row sep=0pt,
+        nodes={anchor=west, font=\scriptsize\ttfamily, inner sep=1.5pt, text height=1.6ex, text depth=.4ex, minimum width=26mm},
+        row 1/.style={nodes={font=\scriptsize\bfseries\ttfamily, fill=RoyalBlue!20}},
+      },
+    verweis/.style={->, >=stealth, thick, RoyalBlue},
+  ]
+  \matrix (ads) [karte] {
+    ads \\ id \\ priority \\ name \\ type \\ url \\ img \\ query \\ created\_at \\ updated\_at \\
+  };
+  \matrix (analytics) [karte, right=8mm of ads.north east, anchor=north west] {
+    analytics \\ id \\ ip \\ device \\ brand\_family \\ brand\_model \\ browser\_family \\ browser\_version \\
+    platform\_family \\ platform\_version \\ user\_id \\ photo\_id \\ created\_at \\ updated\_at \\
+  };
+  \matrix (users) [karte, right=14mm of analytics.north east, anchor=north west] {
+    users \\ id \\ username \\ \ldots \\
+  };
+  \matrix (photos) [karte, right=14mm of analytics.south east, anchor=south west] {
+    photos \\ id \\ user\_id \\ description \\ \ldots \\
+  };
+  % Verweise analytics.user_id -> users.id und analytics.photo_id -> photos.id
+  \draw[verweis] (analytics-11-1.east) -- ++(6mm,0) |- (users-2-1.west);
+  \draw[verweis] (analytics-12-1.east) -- ++(9mm,0) |- (photos-2-1.west);
+\end{tikzpicture}

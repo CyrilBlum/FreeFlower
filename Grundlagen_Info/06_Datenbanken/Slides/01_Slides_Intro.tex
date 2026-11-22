@@ -13,13 +13,23 @@
     \begin{column}{0.6\textwidth}
       \begin{figure}[H]
         \centering
-        \includegraphics[height=4cm]{Grundlagen_Info/06_Datenbanken/Figures/db-ex1}
+        \includegraphics[height=3.2cm]{Grundlagen_Info/06_Datenbanken/Figures/db-ex1}
         \pause
-        \includegraphics[height=4cm]{Grundlagen_Info/06_Datenbanken/Figures/db-ex4}
+        \includegraphics[height=3.2cm]{Grundlagen_Info/06_Datenbanken/Figures/db-ex4}
         \pause
-        \includegraphics[width=.85\columnwidth]{Grundlagen_Info/06_Datenbanken/Figures/db-ex2}
+        % fiktive Profilkarte im Stil eines sozialen Netzwerks (statt Screenshot eines echten Profils)
+        \begin{tikzpicture}
+          \node[draw=black!30, fill=white, drop shadow, inner sep=4pt, align=left, text width=.62\columnwidth, font=\tiny] {
+            {\scriptsize\textbf{Alex Muster}}\\
+            Informatiklehrperson | Datenbanken, Python\\
+            \textcolor{gray}{Zürich, Schweiz \textbullet{} Kontaktinfo}\\
+            \textcolor{RoyalBlue}{\textbf{700 Follower \textbullet{} 500+ Kontakte}}
+          };
+        \end{tikzpicture}
         \pause
-        \includegraphics[width=.85\columnwidth]{Grundlagen_Info/06_Datenbanken/Figures/db-ex3}
+        \includegraphics[width=.7\columnwidth]{Grundlagen_Info/06_Datenbanken/Figures/db-ex3}
+
+        {\tiny Screenshots: galaxus.ch, Apple Music, sbb.ch; Profil: fiktives Beispiel}
       \end{figure}
     \end{column}
     \pause
@@ -42,20 +52,20 @@
   \scriptsize
   Ein \textbf{B}yte = 8 \textbf{b}it
   \begin{table}[H]
-    \begin{tabular}{@{}l|rr|l@{}}
+    \begin{tabular}{@{}lrrl@{}}
       \toprule
-      \textbf{Masseinheit} & \multicolumn{2}{l|}{\textbf{Dezimalsystem}} & Grössenordnung                                   \\ \midrule
-      KB (Kilobyte)        & $10^3$ B(yte)                               & 1'000 B             & Eine Text-Datei            \\
+      \textbf{Masseinheit} & \multicolumn{2}{l}{\textbf{Dezimalsystem}} & Grössenordnung                                   \\ \midrule
+      kB (Kilobyte)        & $10^3$ B(yte)                               & 1'000 B             & Eine Text-Datei            \\
       MB (Megabyte)        & $10^6$ B                                    & 1'000'000 B         & Eine Musik-Datei           \\
       GB (Gigabyte)        & $10^9$ B                                    & 1'000'000'000 B     & Eine Video-Datei           \\
       TB (Terabyte)        & $10^{12}$ B                                 & 1'000'000'000'000 B & Kleiner Firmen-Server      \\
-      PB (Petabyte)        & $10^{15}$ B                                 & ...                 & Facebook-Server            \\
-      EB (Exabyte)         & $10^{18}$ B                                 & ...                 & Alle CERN-Daten            \\
-      ZB (Zettabyte)       & $10^{21}$ B                                 & ...                 & Alle Daten ($\sim$ 100 ZB) \\
-      YB (Yottabyte)       & $10^{24}$ B                                 & ...                 & $\sim$ 2030?               \\ \bottomrule
+      PB (Petabyte)        & $10^{15}$ B                                 & ...                 & CERN-Rechenzentrum pro Tag \\
+      EB (Exabyte)         & $10^{18}$ B                                 & ...                 & Festplatten des CERN (2023) \\
+      ZB (Zettabyte)       & $10^{21}$ B                                 & ...                 & Weltweit pro Jahr (2024: 173 ZB) \\
+      YB (Yottabyte)       & $10^{24}$ B                                 & ...                 & Noch nicht erreicht        \\ \bottomrule
     \end{tabular}
   \end{table}
-
+  {\tiny Quellen: CERN (home.cern, abgerufen am 22.11.2026), IDC via Statista (siehe nächste Folie)}
 \end{frame}
 
 % \begin{frame}{Soziale Netzwerke}
@@ -63,11 +73,18 @@
 %  \url{https://youtu.be/_r97qdyQtIk?t=2m14s}
 % \end{frame}
 
-\begin{frame}{Entwicklung der globalen Datenmenge}
+\begin{frame}{Entwicklung der globalen Datenmenge}{Pro Jahr erzeugte, kopierte und genutzte Daten (2029: Prognose)}
   \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{Grundlagen_Info/06_Datenbanken/Figures/total_data}
+    \adjustbox{max width=\textwidth, max totalheight=.66\textheight}{\input{Grundlagen_Info/06_Datenbanken/Figures/total_data}}
   \end{figure}
+  {\tiny Daten: IDC, veröffentlicht von Western Digital, zusammengestellt von Statista,\\ \url{https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/} (abgerufen am 22.11.2026)}
+\end{frame}
+
+\begin{frame}{Auftrag}{Skript}
+  \begin{itemize}
+    \item \aufgabebox{Aufgabe 1.1: Bits und Bytes}
+  \end{itemize}
 \end{frame}
 
 % \begin{frame}[fragile]{Datenbanken}
@@ -99,7 +116,7 @@
 % \end{frame}
 
 \newcommand{\ciascheme}[1]{
-  % args: horizonatal and vertical resizing (1 for no rescale)
+  % arg: scaling factor (1 for no rescale)
   %
 
   \begin{figure}[H]
@@ -127,18 +144,18 @@
     \tiny
     \begin{tabular}{lcccc}
       \toprule
-      \textbf{Name}    & \textbf{Region} & \textbf{Fläche} & \textbf{Einwohner} & \textbf{BIP} \\
+      \textbf{Name}    & \textbf{Region} & \makecell{\textbf{Fläche}\\(Tsd. km$^2$)} & \makecell{\textbf{Einwohner}\\(Mio.)} & \makecell{\textbf{BIP}\\(Mrd. USD)} \\
       \midrule
-      Afghanistan      & Asien           & 652             & 25.8M              & 21.0B        \\
-      Albanien         & Europa          & 28.7            & 3.49M              & 5.6B         \\
-      Algerien         & Afrika          & 2,381.7         & 31.2M              & 147.6B       \\
-      Amerikanische... & Ozeanien        & 0.199           & 65.4K              & 0.15B        \\
-      Andorra          & Europa          & 0.468           & 66.8K              & 1.2B         \\
-      Angola           & Afrika          & 1,246.7         & 10.1M              & 11.6B        \\
-      Anguilla         & Mittelamerika   & 0.091           & 11.8K              & 0.088B       \\
-      Antarktik        & Antarktis       & 14M             & 0                  & 0            \\
-      Antigua und...   & Mittelamerika   & 0.442           & 66.4K              & 0.524B       \\
-      Argentinien      & Südamerika      & 2,766.9         & 36.9M              & 367B         \\
+      Afghanistan      & Asien           & 652             & 25.8               & 21.0         \\
+      Albanien         & Europa          & 28.7            & 3.49               & 5.6          \\
+      Algerien         & Afrika          & 2381.7          & 31.2               & 147.6        \\
+      Amerikanische... & Ozeanien        & 0.199           & 0.0654             & 0.15         \\
+      Andorra          & Europa          & 0.468           & 0.0668             & 1.2          \\
+      Angola           & Afrika          & 1246.7          & 10.1               & 11.6         \\
+      Anguilla         & Mittelamerika   & 0.091           & 0.0118             & 0.088        \\
+      Antarktik        & Antarktis       & 14000           & 0                  & 0            \\
+      Antigua und...   & Mittelamerika   & 0.442           & 0.0664             & 0.524        \\
+      Argentinien      & Südamerika      & 2766.9          & 36.9               & 367          \\
       \midrule
       ...              & ...             & ...             & ...                & ...          \\
       \bottomrule
@@ -148,12 +165,8 @@
 \end{frame}
 
 
-\newcommand{\highlightTable}[3]{
-  % first argument: number of rows
-  % second argument: number of columns
-  % third argument: names of columns
-  % third argument: list of rows to highlight
-  % fourth argument: list of columns to highlight
+% Schema einer Tabelle mit hervorgehobener Spalte (rot), Zeile (blau) und Schlüsselattribut
+\newcommand{\highlightTable}{
   \begin{tikzpicture}
     % Define style for cell
     \tikzstyle{cell} = [draw, rectangle, minimum width=1.6cm, minimum height=.6cm, fill=gray!10, rounded corners]
@@ -188,7 +201,7 @@
 }
 
 \begin{frame}[fragile]{Typische Tabellenstruktur}
-  \highlightTable{1}{1}{1}
+  \highlightTable
 \end{frame}
 
 \begin{frame}[fragile]{SQL-Befehle}{\lstinline|SELECT [spalten] FROM [tabellenname]|}
@@ -203,18 +216,18 @@ FROM cia;
     \tiny
     \begin{tabular}{lcccc}
       \toprule
-      \textbf{Name}    & \textbf{Region} & \textbf{Fläche} & \textbf{Einwohner} & \textbf{BIP} \\
+      \textbf{Name}    & \textbf{Region} & \makecell{\textbf{Fläche}\\(Tsd. km$^2$)} & \makecell{\textbf{Einwohner}\\(Mio.)} & \makecell{\textbf{BIP}\\(Mrd. USD)} \\
       \midrule
-      Afghanistan      & Asien           & 652             & 25.8M              & 21.0B        \\
-      Albanien         & Europa          & 28.7            & 3.49M              & 5.6B         \\
-      Algerien         & Afrika          & 2,381.7         & 31.2M              & 147.6B       \\
-      Amerikanische... & Ozeanien        & 0.199           & 65.4K              & 0.15B        \\
-      Andorra          & Europa          & 0.468           & 66.8K              & 1.2B         \\
-      Angola           & Afrika          & 1,246.7         & 10.1M              & 11.6B        \\
-      Anguilla         & Mittelamerika   & 0.091           & 11.8K              & 0.088B       \\
-      Antarktik        & Antarktis       & 14M             & 0                  & 0            \\
-      Antigua und...   & Mittelamerika   & 0.442           & 66.4K              & 0.524B       \\
-      Argentinien      & Südamerika      & 2,766.9         & 36.9M              & 367B         \\
+      Afghanistan      & Asien           & 652             & 25.8               & 21.0         \\
+      Albanien         & Europa          & 28.7            & 3.49               & 5.6          \\
+      Algerien         & Afrika          & 2381.7          & 31.2               & 147.6        \\
+      Amerikanische... & Ozeanien        & 0.199           & 0.0654             & 0.15         \\
+      Andorra          & Europa          & 0.468           & 0.0668             & 1.2          \\
+      Angola           & Afrika          & 1246.7          & 10.1               & 11.6         \\
+      Anguilla         & Mittelamerika   & 0.091           & 0.0118             & 0.088        \\
+      Antarktik        & Antarktis       & 14000           & 0                  & 0            \\
+      Antigua und...   & Mittelamerika   & 0.442           & 0.0664             & 0.524        \\
+      Argentinien      & Südamerika      & 2766.9          & 36.9               & 367          \\
       \midrule
       ...              & ...             & ...             & ...                & ...          \\
       \bottomrule
@@ -254,11 +267,11 @@ FROM cia;
 \end{frame}
 
 \begin{frame}[fragile]{SQL-Befehle}{\lstinline|SELECT [spalten] FROM [tabellenname] WHERE [conditions]|}
-  \ciascheme{.7}
+  \ciascheme{.5}
   \begin{lstlisting}
 SELECT Name, Region
 FROM cia
-WHERE Region = "Afrika";
+WHERE Region = 'Afrika';
 \end{lstlisting}
 
   \begin{columns}[c]
@@ -385,21 +398,28 @@ WHERE Region = "Afrika";
 %  \begin{lstlisting}[language=SQL, basicstyle=\ttfamily\scriptsize, escapeinside={(*@}{@*)}]
 %SELECT Name
 %FROM cia
-%WHERE Name (*@\cfbox{red}{\textcolor{green!40!black}{LIKE}}@*) "%Vereinigte%"
+%WHERE Name (*@\cfbox{red}{\textcolor{green!40!black}{LIKE}}@*) '%Vereinigte%'
 %\end{lstlisting}
 %
 %  \begin{lstlisting}[language=SQL, basicstyle=\ttfamily\scriptsize, escapeinside={(*@}{@*)}]
 %SELECT Name, Einwohner
 %FROM cia
-%WHERE Name (*@\cfbox{red}{\textcolor{green!40!black}{IN}}@*) ("Deutschland","Frankreich","Polen")
+%WHERE Name (*@\cfbox{red}{\textcolor{green!40!black}{IN}}@*) ('Deutschland','Frankreich','Polen')
 %\end{lstlisting}
 %  ... weitere SQL-Befehle in Cheat-Sheet und Skript
 %\end{frame}
 
+\begin{frame}{Auftrag}{InstaHub einrichten, erste Abfragen}
+  \begin{itemize}
+    \item \aufgabebox{Aufgaben 1.2--1.4 im Skript: InstaHub einrichten}
+    \item \aufgabebox{Aufgaben 2.1--2.6 im Skript: \texttt{SELECT} und \texttt{WHERE}}
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Lehrmittel: Cheat Sheet}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\textwidth]{Grundlagen_Info/06_Datenbanken/Figures/Cheatsheet}
+		\includegraphics[width=.55\textwidth]{Grundlagen_Info/06_Datenbanken/Figures/Cheatsheet}
 	\end{figure}
 
 	\begin{itemize}[<+->]
@@ -415,7 +435,7 @@ WHERE Region = "Afrika";
 		\begin{column}{.4\linewidth}
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=\columnwidth]{Grundlagen_Info/06_Datenbanken/Figures/titlepage}
+				\includegraphics[width=\columnwidth,height=.55\textheight,keepaspectratio]{Grundlagen_Info/06_Datenbanken/Figures/titlepage}
 			\end{figure}
 		\end{column}
 
@@ -433,9 +453,9 @@ WHERE Region = "Afrika";
 
 \begin{frame}{Auftrag: Eigene Tabellen erstellen \& Abfragen schreiben}{Aufgaben auf Moodle und \textbf{Cheatsheet}}
   \begin{itemize}
-    \item \aufgabebox{1.1: Daten erstellen, verändern und löschen}
-    \item \aufgabebox{1.2: Daten abfragen}
-    \item \aufgabebox{1.3: Lernkontrolle}
-    \item \challengebox{Aufgaben 1.1 - 1.20 im Skript (InstaHub)}
+    \item \aufgabebox{Moodle 1.1: Daten erstellen, verändern und löschen}
+    \item \aufgabebox{Moodle 1.2: Daten abfragen}
+    \item \aufgabebox{Moodle 1.3: Lernkontrolle}
+    \item \challengebox{Aufgaben 2.7--2.17 im Skript: \texttt{DISTINCT}, \texttt{LIKE}, \texttt{ORDER BY}}
   \end{itemize}
 \end{frame}

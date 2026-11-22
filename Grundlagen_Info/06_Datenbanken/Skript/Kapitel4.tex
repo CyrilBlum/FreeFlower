@@ -1,7 +1,7 @@
-\section{Daten bearbeiten mit \texorpdfstring{\gls{SQL}}{SQL}}
-Mit SQL kann man Daten nicht nur abfragen, sondern auch erstellen, verändern und löschen. Im Folgenden schauen wir uns die dafür nötigen Befehle an.
+\chapter{Daten bearbeiten mit \texorpdfstring{\glsentryshort{SQL}}{SQL}}\label{ch:daten-bearbeiten}
+Mit \gls{SQL} kann man Daten nicht nur abfragen, sondern auch erstellen, verändern und löschen. Im Folgenden schauen wir uns die dafür nötigen Befehle an.
 
-\subsection{Eine neue Tabelle erstellen: \texorpdfstring{\lstinline|CREATE TABLE|}{CREATE TABLE}}
+\section{Eine neue Tabelle erstellen: \texorpdfstring{\lstinline|CREATE TABLE|}{CREATE TABLE}}
 \label{subsec:create-table}
 Eine neue Tabelle kann innerhalb einer Datenbank mit dem Befehl \lstinline|CREATE TABLE| angelegt werden:
 
@@ -42,28 +42,29 @@ CREATE TABLE users (
 
 Nach dem Kolonnennamen folgt zuerst der \textbf{Kolonnentyp}, d.h., die Angabe, welche Art von Daten in der Kolonne gespeichert werden. Einige der häufigsten Datentypen sind:
 \begin{itemize}
-  \item \lstinline|INT(laenge)| bezeichnet eine Ganzzahl, für die \texttt{laenge} bytes zur Verfügung stehen. Beispielsweise speichert die Kolonne \texttt{centimeters} eine Zahl von 0 bis $2^{11}$, d.h. 2048.
-  \item \lstinline|TINYINT(1)| speichert den Wert 0 oder 1, wobei 0 typischerweise \enquote{falsch} und 1 \enquote{wahr} bedeuten.
-  \item \lstinline|DATETIME| ist ein Datum mit einer Uhrzeit
-  \item \lstinline|VARCHAR(laenge)| bezeichnet eine Zeichenkette, d.h. ein Text, der mit maximal \texttt{laenge} vielen Bytes oder Zeichen kodiert wird.
-  \item \lstinline|TEXT| bezeichnet eine Zeichenkette mit maximaler Länge von 65'535 bytes.
+  \item \lstinline|INT| bezeichnet eine Ganzzahl. In MySQL (InstaHub) belegt sie immer 4 Bytes und reicht von $-2^{31}$ bis $2^{31}-1$. Die Zahl in Klammern, z.B. \lstinline|INT(11)| bei \texttt{centimeters}, legt nur die Anzeigebreite fest, nicht den Wertebereich.
+  \item \lstinline|DOUBLE| bezeichnet eine Kommazahl, z.B. 3.341.
+  \item \lstinline|TINYINT(1)| ist eine sehr kleine Ganzzahl (1 Byte) und wird typischerweise für Wahrheitswerte verwendet: 0 bedeutet \enquote{falsch}, 1 \enquote{wahr}. In MySQL ist \lstinline|BOOLEAN| ein anderer Name für diesen Typ.
+  \item \lstinline|DATE| ist ein Datum im Format \lstinline|'YYYY-MM-DD'|, \lstinline|DATETIME| ein Datum mit einer Uhrzeit.
+  \item \lstinline|VARCHAR(laenge)| bezeichnet eine Zeichenkette, d.h. einen Text, der mit maximal \texttt{laenge} vielen Bytes oder Zeichen kodiert wird.
+  \item \lstinline|TEXT| bezeichnet eine Zeichenkette mit maximaler Länge von 65'535 Bytes.
   \item \lstinline|ENUM('wert1', 'wert2',...)| bezeichnet eine Auflistung (engl. \textit{enumeration}) möglicher Werte. Beispielsweise können nur \enquote{male} und \enquote{female} im Feld \texttt{gender} eingetragen werden.
 \end{itemize}
 
-Zudem können folgende Eigeschaften für Kolonnen angegeben werden:
+Zudem können folgende Eigenschaften für Kolonnen angegeben werden:
 
 \begin{itemize}
-  \item \lstinline|NOT NULL|: Feld darf nicht leer sein. Falls kein \lstinline|DEFAULT|-Wert angegeben wird, muss, der Wert für diese Kolonne beim Erstellen eines neuen Benutzerkontos immer mitgeliefert werden.
+  \item \lstinline|NOT NULL|: Feld darf nicht leer sein. Falls kein \lstinline|DEFAULT|-Wert angegeben wird, muss der Wert für diese Kolonne beim Erstellen eines neuen Benutzerkontos immer mitgeliefert werden.
   \item \lstinline|DEFAULT wert|: Standard-Wert, falls nichts anderes angegeben wird. Das Attribut \texttt{avatar} nimmt beispielsweise den Wert \texttt{avatar.png} an, falls kein anderes Bild hochgeladen wird.
   \item \lstinline|AUTO_INCREMENT|: Zahl, die bei jedem neuen Eintrag automatisch immer um 1 grösser wird
-  \item \lstinline|PRIMARY KEY|: Primärschlüssel (siehe \cref{table:table-cia}).
-  \item \lstinline|FOREIGN KEY (kolonneID) REFERENCES tabelle2(kolonneID2)|: Fremdschlüssel (siehe \cref{table:table-cia}).
+  \item \lstinline|PRIMARY KEY|: Primärschlüssel (siehe \cref{table:angestellte}).
+  \item \lstinline|FOREIGN KEY (kolonneID) REFERENCES tabelle2(kolonneID2)|: Fremdschlüssel (siehe \cref{table:angestellte2}).
   \item \lstinline|UNIQUE|: Darf keine doppelten Werte enthalten
-  \item \lstinline|UNSIGNED|: Ohne Vorzeichen (+-), also nur positive Zahlen
+  \item \lstinline|UNSIGNED|: Ohne Vorzeichen (+-), also nur Zahlen grösser oder gleich 0
 \end{itemize}
 
 \begin{mycaution}
-	Je nach SQL-Version muss ein Fremdschlüssel erst \textit{nach dem Erstellen einer Tabelle} als Fremdschlüssel deklariert werden. Dies kann mit dem Befehl \lstinline|ALTER TABLE| gemacht werden. 
+	Je nach SQL-Version muss ein Fremdschlüssel erst \textit{nach dem Erstellen einer Tabelle} als Fremdschlüssel deklariert werden. Dies kann mit dem Befehl \lstinline|ALTER TABLE| gemacht werden.
 	\begin{myexample}
 		In folgendem Beispiel wird in Tabelle \lstinline|table2| das Attribut \lstinline|fID| nachträglich als Fremdschlüssel deklariert, indem es auf das Attribut \lstinline|ID| bei \lstinline|table1| zeigt.
 		\begin{lstlisting}
@@ -71,13 +72,13 @@ Zudem können folgende Eigeschaften für Kolonnen angegeben werden:
 				ID int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				...
 			);
-			
+
 			CREATE TABLE table2 (
 				`ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 				`fID` int(10) UNSIGNED NOT NULL
 				...
 			);
-			
+
 			ALTER TABLE table2
 			ADD FOREIGN KEY (fID) REFERENCES table1(ID)
 		\end{lstlisting}
@@ -100,7 +101,7 @@ Auf InstaHub kann immer nur ein Befehl pro Mal ausgeführt werden, das \enquote{
 			\begin{lstlisting}
 			CREATE TABLE angestellte (
 				`mID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				`name` varchar(191) NOT NULL UNIQUE,
+				`name` varchar(191) NOT NULL,
 				`aID` int(10) UNSIGNED NOT NULL
 			)
 			\end{lstlisting}
@@ -111,8 +112,8 @@ Auf InstaHub kann immer nur ein Befehl pro Mal ausgeführt werden, das \enquote{
 	\end{myanswer}
 \end{myexercise}
 
-\subsection{Tabellen verändern: \texorpdfstring{\lstinline|ALTER|}{ALTER}}
-Mit dem Befehl \lstinline|ALTER tabellenname| können Tabellen und deren Attribute nachträglich, d.h. nach der Erstellung der Tabelle, verändert werden.
+\section{Tabellen verändern: \texorpdfstring{\lstinline|ALTER|}{ALTER}}
+Mit dem Befehl \lstinline|ALTER TABLE tabellenname| können Tabellen und deren Attribute nachträglich, d.h. nach der Erstellung der Tabelle, verändert werden.
 
 \begin{myexample}
 Um eine weitere Kolonne hinzuzufügen, kann folgender Befehl verwendet werden:
@@ -133,7 +134,7 @@ RENAME COLUMN alter_name TO neuer_name;
 Beim Umbenennen einer Kolonne können Datenbankschemen (z.B. Fremdschlüssel-Referenzen) zerstört werden, z.B. falls ein Primärschlüssel umbenannt wird, welcher von einer anderen Tabelle per Fremdschlüssel referenziert wird (siehe \cref{subsec:create-table}).
 \end{mycaution}
 
-\subsection{Tabellen löschen: \texorpdfstring{\lstinline|DROP TABLE|}{DROP TABLE}}
+\section{Tabellen löschen: \texorpdfstring{\lstinline|DROP TABLE|}{DROP TABLE}}
 Mit dem Befehl \lstinline|DROP TABLE tabellenname| kann man eine Tabelle komplett löschen.
 
 \begin{mycaution}
@@ -141,7 +142,7 @@ Mit dem Befehl \lstinline|DROP TABLE tabellenname| kann man eine Tabelle komplet
 \end{mycaution}
 
 \begin{myexercise}
-  Erstellen Sie auf InstaHub eine Tabelle \texttt{users2} mit denselben Eigenschaften wie \texttt{users} (siehe Beispiel \ref{ex:sql-create})
+  Erstellen Sie auf InstaHub eine Tabelle \texttt{users2} mit denselben Eigenschaften wie \texttt{users} (siehe \cref{ex:sql-create}).
   \begin{myanswer}
     \begin{lstlisting}
 CREATE TABLE users2 (
@@ -177,7 +178,7 @@ DROP TABLE users2
 \end{myexercise}
 
 
-\subsection{Daten einfügen: \texorpdfstring{\lstinline|INSERT INTO|}{INSERT INTO}}
+\section{Daten einfügen: \texorpdfstring{\lstinline|INSERT INTO|}{INSERT INTO}}
 
 Mit \lstinline|INSERT INTO| können neue Zeilen in eine bestehende Tabelle eingefügt werden.
 
@@ -192,19 +193,20 @@ VALUES (wert1, wert2, wert3, ...)
 \label{ex:sql-insert}
 Folgender Code fügt eine neue Person in die Tabelle \texttt{users} ein:
 \begin{lstlisting}
-INSERT INTO users (username, email, password, name, bio, gender, birthday, city, country, centimeters, avatar, role, is_active, remember_token, created_at, updated_at) 
-VALUES ('guenther37', 'guenther@instahub.test', '12345', 'Günther Müller', 'Günther mag Kartoffelsalat.', 'male', '2006-06-06 00:00:00', 'Leipzig', 'Deutschland', '173', 'avatar.png', 'user', '0', NULL, now(), now())
+INSERT INTO users (username, email, password, name, bio, gender, birthday, city, country, centimeters, avatar, role, is_active, remember_token, created_at, updated_at)
+VALUES ('guenther37', 'guenther@instahub.test', '12345', 'Günther Müller', 'Günther mag Kartoffelsalat.', 'male', '2006-06-06 00:00:00', 'Leipzig', 'Deutschland', 173, 'avatar.png', 'user', 0, NULL, now(), now())
 \end{lstlisting}
 Wie Sie sehen, wird zuerst die Tabelle (\texttt{users}) aufgelistet, danach die Kolonnen und schliesslich die Werte.
 \end{myexample}
 
 \begin{myexercise}
 \label{aufg:sql-insert}
-  Für welche Kolonnen müssen für einen neuen Benutzer immer die Werte mitgegeben werden? S. die Erklärungen zu \lstinline|NOT NULL| und \lstinline|DEFAULT| in \cref{subsec:create-table}.
+  Für welche Kolonnen müssen für einen neuen Benutzer immer die Werte mitgegeben werden? Siehe die Erklärungen zu \lstinline|NOT NULL| und \lstinline|DEFAULT| in \cref{subsec:create-table}.
   \begin{myanswer}
     \begin{verbatim}
-username, email, password, name, role, is_active
+username, email, password, name
 \end{verbatim}
+    Die übrigen \lstinline|NOT NULL|-Kolonnen werden automatisch gefüllt: \texttt{id} durch \lstinline|AUTO_INCREMENT|, \texttt{avatar}, \texttt{role} und \texttt{is\_active} durch ihren \lstinline|DEFAULT|-Wert.
   \end{myanswer}
 \end{myexercise}
 \begin{myexercise}\label{aufg:a-sql-insert}
@@ -222,21 +224,21 @@ username, email, password, name, role, is_active
       \texttt{is\_active} & \texttt{1}                          \\
     \end{tabular}
   \end{table}
-  Überprüfen Sie danach, ob der Eintrag korrekt erstellt worden ist, indem Sie die Daten des users \texttt{testuser} abfragen (alle Attribute).
+  Überprüfen Sie danach, ob der Eintrag korrekt erstellt worden ist, indem Sie die Daten des Users \texttt{testuser} abfragen (alle Attribute).
   \begin{myanswer}
     \begin{lstlisting}
-INSERT INTO users (id, username, email, password, 
-				   name, role, is_active) 
-VALUES (300, 'testuser', 'test@test.com', 'test123', 'Test-Vorname Test-Nachname', 'user', '1')
+INSERT INTO users (id, username, email, password,
+				   name, role, is_active)
+VALUES (300, 'testuser', 'test@test.com', 'test123', 'Test-Vorname Test-Nachname', 'user', 1)
 \end{lstlisting}
 Das Resultat kann mit einer zweiten Abfrage überprüft werden:
 \begin{lstlisting}
-SELECT * FROM users WHERE username="testuser"
+SELECT * FROM users WHERE username='testuser'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
-\subsection{Daten verändern: \texorpdfstring{\lstinline|UPDATE|}{UPDATE}}
+\section{Daten verändern: \texorpdfstring{\lstinline|UPDATE|}{UPDATE}}
 
 Mit \lstinline|UPDATE| können Werte einer Tabelle aktualisiert werden. Die Syntax von \lstinline|UPDATE| sieht wie folgt aus:
 
@@ -252,31 +254,31 @@ WHERE bedingung(en)
   \begin{myanswer}
     \begin{lstlisting}
 UPDATE users
-SET city="Bern"
-WHERE city="Berlin"
+SET city='Bern'
+WHERE city='Berlin'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-  Setzen Sie die Körpergrössen aller männlichen Mitglieder auf 190. Überprüfen Sie danach die Richtigkeit Ihres Befehls, die Kolonnen für die Körpergrösse, das Geschlecht und den Name aller männlichen Mitglieder abfragen.
+  Setzen Sie die Körpergrössen aller männlichen Mitglieder auf 190. Überprüfen Sie danach die Richtigkeit Ihres Befehls, indem Sie die Kolonnen für die Körpergrösse, das Geschlecht und den Namen aller männlichen Mitglieder abfragen.
   \begin{myanswer}
     \begin{lstlisting}
 UPDATE users
 SET centimeters=190
-WHERE gender="male"
+WHERE gender='male'
 \end{lstlisting}
 Um zu überprüfen, ob der Befehl funktioniert hat, können Sie danach einfach die Tabelle nochmals anzeigen:
 \begin{lstlisting}
 SELECT centimeters, gender, name
 FROM users
-WHERE gender="male"
+WHERE gender='male'
 \end{lstlisting}
 
   \end{myanswer}
 \end{myexercise}
 
-\subsection{Einträge löschen: \texorpdfstring{\lstinline|DELETE FROM|}{DELETE FROM}}
+\section{Einträge löschen: \texorpdfstring{\lstinline|DELETE FROM|}{DELETE FROM}}
 Mit dem Befehl \lstinline|DELETE FROM| können Einträge aus einer Tabelle gelöscht werden.
 \begin{lstlisting}
 DELETE FROM tabellenname
@@ -284,10 +286,10 @@ WHERE bedingungen
 \end{lstlisting}
 
 \begin{myexample}
-Folgender Code löscht den Eintrag für user \texttt{guenther37}:
+Folgender Code löscht den Eintrag für den User \texttt{guenther37}:
 \begin{lstlisting}
 DELETE FROM users
-WHERE username="guenther37"
+WHERE username='guenther37'
 \end{lstlisting}
 \end{myexample}
 
@@ -296,7 +298,7 @@ WHERE username="guenther37"
   \begin{myanswer}
     \begin{lstlisting}
 DELETE FROM users
-WHERE username="testuser"
+WHERE username='testuser'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}

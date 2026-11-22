@@ -1,4 +1,3 @@
-\setcounter{chapter}{1}
 \section*{Die Nordwind-Datenbank}
 
 \subsection*{Kurz-Beschreibung}
@@ -70,7 +69,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
             & \texttt{Land} &\\\hline
             & \texttt{...} &\phantom{x}\\
         };
-    
+
         \matrix (Artikel) [table, below=1.5cm of Lieferant.south west, anchor=north west] {
             \phantom{x}& \textbf{Spalte} &\\\hline\hline
             \emoji{key} & \texttt{ArtikelNr}& \\\hline
@@ -80,7 +79,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
             & \texttt{Liefereinheit} &\\\hline
             & \texttt{...} &\phantom{x}\\
         };
-        
+
         \matrix (Bestellung) [table, below=1.5cm of Artikel.south west, anchor=north west]{
                     \phantom{x}& \textbf{Spalte} &\\\hline\hline
                     \emoji{key} & \texttt{BestellNr}& \\\hline
@@ -91,7 +90,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
                     \emoji{up-right-arrow} & \texttt{FirmenNr} &\\\hline
                     & \texttt{...} &\phantom{x}\\
                 };
-                
+
          \matrix (Personal) [table, below=1.5cm of Bestellung.south west, anchor=north west]{
                      \phantom{x}& \textbf{Spalte}& \\\hline\hline
                      \emoji{key} & \texttt{PersonalNr}& \\\hline
@@ -102,7 +101,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
                      & \texttt{Einstellung} &\\\hline
                      & \texttt{...} &\phantom{x}\\
                  };
-                 
+
         \matrix (Kategorie) [table, right=1.5cm of Lieferant] {
                     \phantom{x}& \textbf{Spalte}& \\\hline\hline
                     \emoji{key} & \texttt{KategorieNr} &\\\hline
@@ -110,8 +109,8 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
                     & \texttt{Beschreibung}& \\\hline
                     & \texttt{...}& \phantom{x}\\
                 };
-             
-    
+
+
         \matrix (Kunde) [table, below=1.5cm of Kategorie.south west, anchor=north west]{
             \phantom{x}& \textbf{Spalte}& \\\hline\hline
             \emoji{key} & \texttt{KundenCode} &\\\hline
@@ -122,9 +121,9 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
             & \texttt{Ort} &\\\hline
             & \texttt{...} &\phantom{x}\\
         };
-    
-        
-    
+
+
+
         \matrix (Bestelldetails) [table, below=1.5cm of Kunde.south west, anchor=north west]{
             \phantom{x}& \textbf{Spalte}& \\\hline\hline
             \emoji{up-right-arrow} & \texttt{BestellNr} &\\\hline
@@ -134,8 +133,8 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
             & \texttt{Rabatt} &\\\hline
             & \texttt{...}&\phantom{x}\\
         };
-    
-        
+
+
         \matrix (Versandfirma) [table, below=1.5cm of Bestelldetails.south west, anchor=north west]{
             \phantom{x}& \textbf{Spalte} &\\\hline\hline
             \emoji{key} & \texttt{FirmenNr} &\\\hline
@@ -153,7 +152,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
             \node[fill=gray!10, rounded corners=5pt, fit=(Personal-1-1)(Personal-8-3), inner sep=10pt] (bgPersonal) {};
             \node[fill=gray!10, rounded corners=5pt, fit=(Versandfirma-1-1)(Versandfirma-4-3), inner sep=10pt] (bgVersandfirma) {};
         \end{pgfonlayer}
-    
+
         % Titel
         \node[above=3pt of bgLieferant.north, font=\bfseries] {\texttt{Lieferant}};
         \node[above=3pt of bgKategorie.north, font=\bfseries] {\texttt{Kategorie}};
@@ -163,7 +162,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
         \node[above=3pt of bgBestelldetails.north, font=\bfseries] {\texttt{Bestelldetails}};
         \node[above=3pt of bgPersonal.north, font=\bfseries] {\texttt{Personal}};
         \node[above=3pt of bgVersandfirma.north, font=\bfseries] {\texttt{Versandfirma}};
-        
+
     % Beziehungen mit rechten Winkeln
         \draw[->, >=latex, thick, blue] (Artikel-4-1.west) -- +(-30pt,0) -| ([xshift=-30pt,yshift=2pt]Lieferant-2-1.west) -- ([yshift=2pt]Lieferant-2-1.west);
         \draw[->, >=latex, thick, teal] (Artikel-5-1.west) -- +(-10pt,0) -| ([xshift=-10pt,yshift=20pt]bgArtikel.north west) -| ([xshift=-20pt,yshift=2pt, red]Kategorie-2-1.west) -- ([yshift=2pt]Kategorie-2-1.west);
@@ -172,7 +171,7 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
         \draw[->, >=latex, thick, magenta] (Bestellung-7-2.east) -- +(20pt,0) -| ([xshift=-20pt,yshift=2pt]Versandfirma-2-1.west) -- ([yshift=2pt]Versandfirma-2-1.west);
         \draw[->, >=latex, thick, cyan] (Bestelldetails-2-1.west) -- +(-40pt,0) -| ([xshift=50pt,yshift=2pt]Bestellung-2-2.east) -- ([yshift=2pt]Bestellung-2-2.east);
         \draw[->, >=latex, thick] (Bestelldetails-3-1.west) -- +(-20pt,0) -| ([xshift=70pt,yshift=2pt]Artikel-2-2.east) -- ([yshift=2pt]Artikel-2-2.east);
-        
+
     \end{tikzpicture}
 \end{figure}
 \end{minipage}
@@ -181,4 +180,8 @@ Bestelldetails &	BestellNr \emoji{up-right-arrow}, ArtikelNr \emoji{up-right-arr
 Aus Platzgründen sind nicht alle Spalten aufgelistet! Für eine vollständige Darstellung, s. Rückseite
 \end{myattention}
 \end{minipage}
+
+% Seitenränder und Kopfzeile für die folgenden Seiten zurücksetzen
+\restoregeometry
+\pagestyle{fancy}
 

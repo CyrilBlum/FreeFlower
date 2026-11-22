@@ -23,18 +23,17 @@
 \textcolor{\cheatSheetColor}{\begin{center}
 \section*{Cheatsheet}
 \end{center}\hrule}
-Folgendes Cheatsheet ist basiert auf der Datenbank der Social-Media-Plattform \href{https://wi-wissen.github.io/instahub-doc-de/}{InstaHub}. In den ersten Befehlen wird insbesondere die Tabelle \texttt{users} verwendet. Die Tabelle enthält unter anderem folgende Informationen:
-\begin{table}[H]
-\centering\resizebox{\columnwidth}{!}{
-\begin{tabular}{p{.2cm}|l|p{1.4cm}|l|l|l}
+Folgendes Cheatsheet basiert auf der Datenbank der Social-Media-Plattform \href{https://wi-wissen.github.io/instahub-doc-de/}{InstaHub}. In den ersten Befehlen wird insbesondere die Tabelle \texttt{users} verwendet. Die Tabelle enthält unter anderem folgende Informationen:
+% ohne Gleitumgebung, damit unter der Tabelle kein zusätzlicher Abstand entsteht
+\par\smallskip\noindent\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllll l}
 \textbf{id} & \textbf{username}    & \textbf{name}             & \textbf{birthday}   & \textbf{city}      & \textbf{centimeters} \\\midrule\midrule
 1  & niclas258   & Niclas Schweizer &  2001-01-31 & Wremen    & 182         \\\midrule
 2  & rafael54    & Rafael Probst    &  2004-08-06 & Leipzig   & 187         \\\midrule
 3  & luis52      & Luis Krüger      &  2004-12-15 & Lautertal & 173         \\\midrule
 $\cdots$ &$\cdots$ &$\cdots$ &$\cdots$ &$\cdots$ &$\cdots$  \\
-\end{tabular}
-}
-\end{table}
+\end{tabular}%
+}\par\smallskip
 
 Daneben enthält die Tabelle noch viele weitere Spalten mit Informationen zum Land, Geschlecht usw.
 
@@ -62,10 +61,10 @@ FROM users
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Sortieren: \texorpdfstring{\lstinline|ORDER BY|}{ORDER BY}]
-Mit dem Befehl \lstinline|ORDER BY| können Resultate sortiert werden, nach einer oder mehreren Spalten. Mit folgendem Befehl erhalten wir die Namen aller Users, sortiert nach Stadt und nach Region:
+Mit dem Befehl \lstinline|ORDER BY| können Resultate sortiert werden, nach einer oder mehreren Spalten. Mit folgendem Befehl erhalten wir die Namen aller Users, sortiert nach Stadt und Name:
 \begin{lstlisting}
 SELECT name, city
-FROM users 
+FROM users
 ORDER BY city ASC, name ASC
 \end{lstlisting}
 \begin{itemize}
@@ -75,7 +74,7 @@ ORDER BY city ASC, name ASC
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Erste / Letzte Zeilen: \texorpdfstring{\lstinline|LIMIT|}{LIMIT}]
-Mit dem Befehl \lstinline|LIMIT| können eine Tabelle auf die ersten \textit{n} Zeilen beschränkt werden. Z.B. können die Namen der ersten drei Personen der Tabelle \texttt{users} wie folgt abgefragt werden:
+Mit dem Befehl \lstinline|LIMIT| kann eine Tabelle auf die ersten \textit{n} Zeilen beschränkt werden. Z.B. können die Namen der ersten drei Personen der Tabelle \texttt{users} wie folgt abgefragt werden:
 \begin{lstlisting}
 SELECT name
 FROM users
@@ -84,7 +83,7 @@ LIMIT 3
 \end{cheatSheetBox}
 
 %\subsection*{Filtern}
-\begin{cheatSheetBox}[title=Zeilen Filtern: \texorpdfstring{\lstinline|WHERE|}{WHERE}]
+\begin{cheatSheetBox}[title=Zeilen filtern: \texorpdfstring{\lstinline|WHERE|}{WHERE}]
 Mit dem Befehl \lstinline|WHERE| können die Resultate einer Abfrage nach eigenen Kriterien gefiltert werden:
 \begin{lstlisting}
 SELECT name, city, gender
@@ -95,7 +94,7 @@ WHERE gender='male'
 \begin{table}[H]
   \centering
   \centering\resizebox{\columnwidth}{!}{
-  \begin{tabular}{c|l}
+  \begin{tabular}{cl}
     \textbf{Operatoren} & \textbf{Bedeutung} \\\midrule
     \texttt{=}                                    & gleich ($=$)                                \\
     \texttt{<>}                                   & ungleich ($\neq$)                           \\
@@ -109,13 +108,13 @@ WHERE gender='male'
   \end{tabular}}
 \end{table}
 \end{cheatSheetBox}
-\begin{cheatSheetBox}[title=Filter kombinieren: \texorpdfstring{\lstinline|AND|, \lstinline|OR|}{AND, OR}]
-Mehrere Filter können mit \lstinline|AND| (\enquote{und} $\rightarrow$ beides muss wahr sein) oder \lstinline|OR| (\enquote{oder} $\rightarrow$ eine der beiden Bedingungen muss wahr sein) verbunden werden.
+\begin{cheatSheetBox}[title=Filter kombinieren: \texorpdfstring{\lstinline|AND|, \lstinline|OR|, \lstinline|NOT|}{AND, OR, NOT}]
+Mehrere Filter können mit \lstinline|AND| (\enquote{und} $\rightarrow$ beides muss wahr sein) oder \lstinline|OR| (\enquote{oder} $\rightarrow$ eine der beiden Bedingungen muss wahr sein) verbunden werden. \lstinline|NOT| kehrt eine Bedingung um. Bei \lstinline|AND| und \lstinline|OR| gemischt Klammern setzen.
 
-Users aus Leipzig, Berlin oder Hamburg, welche grösser als 170 sind:
+Users aus Leipzig, Berlin oder Hamburg, welche grösser als 170 cm sind:
 \begin{lstlisting}
 SELECT name, city
-FROM users 
+FROM users
 WHERE city IN ('Leipzig','Berlin','Hamburg')
  AND centimeters > 170
 \end{lstlisting}
@@ -124,48 +123,34 @@ WHERE city IN ('Leipzig','Berlin','Hamburg')
 \begin{cheatSheetBox}[title=Ungefähre Treffer: \texorpdfstring{\lstinline|LIKE|}{LIKE}]
 Mit folgendem Befehl erhalten wir alle Städte, die mit \enquote{Be...} beginnen:
 \begin{lstlisting}
-SELECT DISTINCT city 
-FROM users 
+SELECT DISTINCT city
+FROM users
 WHERE city LIKE 'Be%'
 \end{lstlisting}
-Das Prozentzeichen (\%) ist ein \textit{Platzhalter} und steht für \enquote{irgendetwas kommt hier (oder nicht)}. In diesem Beispiel bedeutet das, dass 0, 1, oder mehr Zeichen auf das \enquote{Be...} folgen können.
+Das Prozentzeichen (\%) ist ein \textit{Platzhalter} und steht für \enquote{irgendetwas kommt hier (oder nicht)}. In diesem Beispiel bedeutet das, dass 0, 1, oder mehr Zeichen auf das \enquote{Be...} folgen können. Der Unterstrich (\_) steht für genau ein beliebiges Zeichen: \lstinline|'H_m%'| findet z.B. Hamburg.
 \end{cheatSheetBox}
-%\begin{cheatSheetBox}[title=Verzweigungen: \texorpdfstring{\lstinline|CASE WHEN|}{CASE WHEN}]
-%Für alle Männer berechnen, ob sie grösser, kleiner oder gleich dem Durchschnitt sind:
-%
-%\begin{lstlisting}
-%SELECT name, centimeters,
-%CASE 
-%	WHEN centimeters > 179 THEN 'Gross'
-%    WHEN centimeters < 179 THEN 'Klein'
-%    ELSE 'Genau im Durchschnitt'
-%END AS Durchschnittlich
-%FROM users
-%WHERE gender='male'
-%\end{lstlisting}
-%\end{cheatSheetBox}
 %\subsection*{Aggregieren (Zusammenfassen)}
-\begin{cheatSheetBox}[title=Aggregatsfunktionen]
-Mit Aggregatsfunktionen werden Daten zusammengefasst, beispielsweise um die Anzahl Zeilen (\lstinline|COUNT(*)|), die Anzahl nicht leerer Zellen in einer Spalte (\lstinline|COUNT(spalte)|) oder die Anzahl unterschiedlicher Werte in einer Spalte (\lstinline|COUNT(DISTINCT spalte)|) zu zählen oder um das Maximum, das Minimum, die Summe oder den Mittelwert einer Spalte zu berechnen (\lstinline|MAX(spalte)| / \lstinline|MIN(spalte)| / \lstinline|SUM(spalte)| / \lstinline|AVG(spalte)|). Z.B. berechnet folgender Ausdruck die Anzahl Users in Leipzig:
-\begin{lstlisting}
-SELECT city, COUNT(*)
-FROM users 
-WHERE city = 'Leipzig'
-\end{lstlisting}
-\end{cheatSheetBox}
-
 \begin{cheatSheetBox}[title=Rechnen und umbenennen: \texorpdfstring{\lstinline|AS|}{AS}]
 Mit Spalten sowie Aggregatsfunktionen kann man rechnen, beispielsweise um ein Resultat durch eine andere Zahl zu dividieren. Zudem können Spalten-Titel mit dem Befehl \lstinline|AS| umbenannt werden:
 \begin{lstlisting}
-SELECT centimeters/100 AS 'Grösse in Metern'
-FROM users 
+SELECT centimeters/100 AS `Grösse in Metern`
+FROM users
+\end{lstlisting}
+\end{cheatSheetBox}
+
+\begin{cheatSheetBox}[title=Aggregatsfunktionen]
+Aggregatsfunktionen fassen viele Zeilen zu einem Wert zusammen: Anzahl Zeilen (\lstinline|COUNT(*)|), nicht leere Zellen (\lstinline|COUNT(spalte)|), verschiedene Werte (\lstinline|COUNT(DISTINCT spalte)|), Maximum, Minimum, Summe und Mittelwert (\lstinline|MAX|, \lstinline|MIN|, \lstinline|SUM|, \lstinline|AVG|). Anzahl Users in Leipzig:
+\begin{lstlisting}
+SELECT city, COUNT(*)
+FROM users
+WHERE city = 'Leipzig'
 \end{lstlisting}
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Gruppieren: \texorpdfstring{\lstinline|GROUP BY|}{GROUP BY}]
 Aggregatsfunktionen können auch pro Gruppe verwendet werden, z.B. um die Anzahl Mitglieder in jeder Stadt zu berechnen:
 \begin{lstlisting}
-SELECT city, COUNT(*) AS 'Users pro Stadt'
+SELECT city, COUNT(*) AS `Users pro Stadt`
 FROM users
 GROUP BY city
 \end{lstlisting}
@@ -174,17 +159,17 @@ GROUP BY city
 \begin{cheatSheetBox}[title=Filtern \textit{nach} Gruppieren: \texorpdfstring{\lstinline|HAVING|}{HAVING}]
 Mit \lstinline|HAVING| können Resultate \textit{nach dem} Gruppieren gefiltert werden. \lstinline|WHERE| filtert \textit{vor} dem Gruppieren und steht demnach immer vor einem \lstinline|GROUP BY|.
 
-Durchschnittliche Körpergrösse aller männlichen Mitglieder in jeder Stadt berechnen, danach auf Städte beschränken, in denen die Menschen durchschnittlich zwischen 150 und 155 gross sind:
+Durchschnittliche Körpergrösse aller männlichen Mitglieder in jeder Stadt berechnen, danach auf Städte beschränken, in denen die Menschen durchschnittlich zwischen 150 cm und 155 cm gross sind:
 
 \begin{lstlisting}
-SELECT city, AVG(centimeters) AS 'Körpergrösse'
+SELECT city, AVG(centimeters) AS `Körpergrösse`
 FROM users
 WHERE gender = 'male'
 GROUP BY city
 HAVING `Körpergrösse` BETWEEN 150 AND 155
 \end{lstlisting}
 \end{cheatSheetBox}
-Texte werden immer innerhalb von Anführungszeichen (\lstinline|''|) geschrieben. Spaltennamen, welche Spezialzeichen oder Abstände enthalten, werden innerhalb von \textit{backticks} (\lstinline|``|) geschrieben.
+Texte werden immer innerhalb von Anführungszeichen (\lstinline|''|) geschrieben. Spaltennamen, welche Spezialzeichen oder Leerzeichen enthalten, werden innerhalb von \textit{backticks} (\lstinline|``|) geschrieben.
 
 %\subsection*{Tabellen erstellen \& verändern}
 \clearpage
@@ -196,24 +181,26 @@ CREATE TABLE meinetabelle(
   name_spalte2 spaltentyp2,
   ... --etc.
 )
-
 \end{lstlisting}
 Gängige Spalten-Typen sind:
 \begin{table}[H]
 \tiny
 \centering
 \begin{tabular}{l|p{.62\linewidth}}
-\lstinline|INTEGER|&Ganzzahl\newline Z.B. 35\\\midrule
-\lstinline|REAL| & Kommazahl\newline Z.B. 3.341\\\midrule
-\lstinline|DATE|&Datum\newline Format: \lstinline|'YYYY-MM-DD'|\\\midrule
-\lstinline|BOOLEAN|& Wahrheitswert\newline Wahr (1) oder Falsch (0)\\\midrule
-\lstinline|VARCHAR(n)|&Text \newline\texttt{n} = maximale Länge\\
+\lstinline|INT|&Ganzzahl, z.B. 35\\\midrule
+\lstinline|DOUBLE| & Kommazahl, z.B. 3.341\\\midrule
+\lstinline|TINYINT(1)|& wahr/falsch (1/0), \lstinline|BOOLEAN|\\\midrule
+\lstinline|DATE|&Datum \lstinline|'YYYY-MM-DD'|\\\midrule
+\lstinline|DATETIME|&Datum mit Uhrzeit\\\midrule
+\lstinline|VARCHAR(n)|&Text, max. \texttt{n} Zeichen\\\midrule
+\lstinline|TEXT|&langer Text\\\midrule
+\lstinline|ENUM(...)|&ein Wert aus einer Liste\\
 \end{tabular}
 \end{table}
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Tabellen ändern: \texorpdfstring{\lstinline|ALTER|}{ALTER}]
-Mit dem Befehl \lstinline|ALTER tabellenname| können Tabellen verändert werden, beispielsweise um eine Spalte hinzuzufügen oder umzubenennen.
+Mit dem Befehl \lstinline|ALTER TABLE tabellenname| können Tabellen verändert werden, beispielsweise um eine Spalte hinzuzufügen oder umzubenennen.
 \begin{lstlisting}
 ALTER TABLE tabellenname
 ADD neue_spalte eigenschaften
@@ -231,46 +218,52 @@ DROP TABLE tabellenname
 \end{lstlisting}
 \end{cheatSheetBox}
 
-\begin{cheatSheetBox}[title={Überprüfen, ob existiert: \texorpdfstring{\lstinline|IF EXISTS|}{IF EXISTS}}]
-Wenn man eine Tabelle erstellen will, welche es bereits gibt, kann eine Fehlermeldung erscheinen. Folgender Befehl wird nur ausgeführt, falls es noch keine Tabelle \texttt{testtabelle} gibt:
-\begin{lstlisting}
-CREATE TABLE IF NOT EXISTS testtabelle(
-  name_spalte1 spaltentyp1,
-  name_spalte2 spaltentyp2,
-  ... --etc.
-)
+\begin{cheatSheetBox}[title=Weitere Befehle \& Feedback]
+Weitere \acrshort{SQL}-Befehle und Erklärungen finden Sie unter \href{https://www.w3schools.com/sql/default.asp}{w3schools.com}.
 
-\end{lstlisting}
-Ähnlich kann vor man den Befehl \lstinline|DROP TABLE| anpassen, so dass er nur ausgeführt wird, wenn es eine solche Tabelle wirklich gibt:
+Verbesserungsvorschläge können gerne an \href{mailto:cyril.blum@edu.zh.ch}{Cyril Blum} geschickt werden.
+\end{cheatSheetBox}
+
+\begin{cheatSheetBox}[title=Mehrere Ausdrücke verbinden]
+Mehrere SQL-Ausdrücke können mit Semikolon (\texttt{;}) verbunden werden:
 \begin{lstlisting}
-DROP TABLE IF EXISTS testtabelle
+-- Tabelle erstellen
+CREATE TABLE test(a INT);
+-- und wieder löschen
+DROP TABLE test
+\end{lstlisting}
+\textbf{Kommentare} beginnen mit zwei Bindestrichen (\lstinline|--|) und werden von SQL ignoriert.
+\end{cheatSheetBox}
+
+\begin{cheatSheetBox}[title={Überprüfen, ob existiert: \texorpdfstring{\lstinline|IF EXISTS|}{IF EXISTS}}]
+Gibt es die Tabelle schon (bzw. noch nicht), wird der Befehl übersprungen statt eine Fehlermeldung auszugeben:
+\begin{lstlisting}
+CREATE TABLE IF NOT EXISTS test(
+  a INT
+)
+DROP TABLE IF EXISTS test
 \end{lstlisting}
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Daten einfügen: \texorpdfstring{\lstinline|INSERT INTO|}{INSERT INTO}]
-Neue Einträge (Zeilen) können mit dem Befehl \lstinline|INSERT INTO| in eine Tabelle eingefügt werden. Beispielsweise können mit folgender Befehlsstruktur drei neue Zeilen eingefügt werden:
+Neue Zeilen einfügen, hier zwei auf einmal:
 \begin{lstlisting}
-INSERT INTO tabellenname 
+INSERT INTO tabellenname
 	(spalte1, spalte2, ...)
-VALUES 
-	(wert1, wert2, ...),
+VALUES
 	(wert1, wert2, ...),
 	(wert1, wert2, ...)
 \end{lstlisting}
-Zuerst werden also die Spalten angegeben, für welche Werte eingefügt werden, danach die Werte für jede neue Zeile. Werte in nicht angegebenen Spalten bleiben leer.
+Nicht angegebene Spalten erhalten ihren Standardwert (\lstinline|DEFAULT|) oder bleiben leer (\lstinline|NULL|).
 \end{cheatSheetBox}
 
 \begin{cheatSheetBox}[title=Daten verändern: \texorpdfstring{\lstinline|UPDATE|}{UPDATE}]
-Existierende Daten können wie folgt geändert werden:
 \begin{lstlisting}
 UPDATE tabelle_name
 SET spalte1 = wert1, ...
 WHERE bedingung(en)
-\end{lstlisting}
 
-Beispielsweise können mit folgendem Befehl alle Users, die zur Stadt Berlin gehören, der Stadt Bern zugeordnet werden:
-
-\begin{lstlisting}
+-- Berlin durch Bern ersetzen
 UPDATE users
 SET city='Bern'
 WHERE city='Berlin'
@@ -299,15 +292,26 @@ ON t1.spalte_id1 = t2.spalte_id2
 Falls Primär- und Fremdschlüssel in beiden Tabellen gleich heissen, kann man \lstinline|USING| verwenden:
 \begin{lstlisting}
 SELECT *
-FROM tabelle1 
+FROM tabelle1
 JOIN tabelle2 USING (spalte_id)
 \end{lstlisting}
 \end{cheatSheetBox}
 
-\begin{cheatSheetBox}[title=Unterabfragen (Subqueries)]
-Unterabfragen (en. \textit{subqueries}) können wie folgt geschrieben werden:
+\begin{cheatSheetBox}[title=Alle Zeilen behalten: \texorpdfstring{\lstinline|LEFT JOIN|}{LEFT JOIN}]
+Ein \lstinline|LEFT JOIN| behält alle Zeilen der ersten Tabelle, auch ohne passende Zeile in der zweiten (dort steht dann \lstinline|NULL|). Mitglieder ohne Fotos:
 \begin{lstlisting}
-SELECT spalte11 
+SELECT users.name
+FROM users
+LEFT JOIN photos
+ON photos.user_id = users.id
+WHERE photos.id IS NULL
+\end{lstlisting}
+\end{cheatSheetBox}
+
+\begin{cheatSheetBox}[title=Unterabfragen (Subqueries)]
+Unterabfragen (engl. \textit{subqueries}) können wie folgt geschrieben werden:
+\begin{lstlisting}
+SELECT spalte1
 FROM tabelle1
 WHERE spaltenname IN
     (SELECT spalte2 FROM tabelle2 WHERE ...);
@@ -315,27 +319,25 @@ WHERE spaltenname IN
 Dabei können alle bekannten Vergleichsoperatoren wie \lstinline|=|, \lstinline|IN|, \lstinline|>|, \lstinline|<|, usw. verwendet werden.
 \end{cheatSheetBox}
 
-\begin{cheatSheetBox}[title=Mehrere Ausdrücke verbinden]
-Mehrere SQL-Ausdrücke können mit Semikolon (\texttt{;}) verbunden werden:
+\begin{cheatSheetBox}[title=Verzweigungen: \texorpdfstring{\lstinline|CASE WHEN|}{CASE WHEN}]
+Neue Kolonne abhängig von Bedingungen berechnen (wie \texttt{if}/\texttt{elif}/\texttt{else} in Python):
 \begin{lstlisting}
--- Tabelle erstellen, danach wieder löschen
-CREATE TABLE IF NOT EXISTS testtabelle(
-  name_spalte1 spaltentyp1,
-  name_spalte2 spaltentyp2,
-  ... --etc.
-);
-DROP TABLE IF EXISTS testtabelle
+SELECT name,
+CASE
+  WHEN gender='male' THEN 'Herr'
+  WHEN gender='female' THEN 'Frau'
+  ELSE '-'
+END AS Anrede
+FROM users
 \end{lstlisting}
 \end{cheatSheetBox}
 
-\begin{cheatSheetBox}[title=Kommentare]
-Kommentare werden von SQL ignoriert und dienen der besseren Leserlichkeit des Codes. Kommentare werden durch zwei Bindestriche gekennzeichnet (siehe Box zu \enquote{Mehrere Ausdrücke verbinden})
-\end{cheatSheetBox}
-
-\begin{cheatSheetBox}[title=Weitere Befehle \& Feedback]
-Weitere \acrshort{SQL}-Befehle und Erklärungen finden Sie unter \href{https://www.w3schools.com/sql/default.asp}{w3schools.com}.
-
-Verbesserungsvorschläge können gerne an \href{mailto:cyril.blum@edu.zh.ch}{Cyril Blum} geschickt werden.
+\begin{cheatSheetBox}[title=Textlänge: \texorpdfstring{\lstinline|LENGTH|}{LENGTH}]
+\lstinline|LENGTH(spalte)| gibt die Anzahl Zeichen pro Zeile zurück (keine Aggregatsfunktion):
+\begin{lstlisting}
+SELECT name, LENGTH(name)
+FROM users
+\end{lstlisting}
 \end{cheatSheetBox}
 
 \end{multicols*}

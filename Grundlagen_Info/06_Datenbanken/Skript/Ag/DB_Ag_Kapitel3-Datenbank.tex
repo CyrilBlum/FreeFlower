@@ -1,14 +1,14 @@
-\section{Daten verwalten in einer Datenbank} 
-Wie wir im vergangenen Kapitel gesehen haben, ist Tabellenkalkulation-Software sehr gut dafür geeignet, Daten zu verwalten und zu untersuchen. Allerdings gibt es auch Einschränkungen. Zum Beispiel:
+\section{Daten verwalten in einer Datenbank}
+Wie wir im vergangenen Kapitel gesehen haben, ist Tabellenkalkulations-Software sehr gut dafür geeignet, Daten zu verwalten und zu untersuchen. Allerdings gibt es auch Einschränkungen. Zum Beispiel:
 \begin{itemize}
-  \item Die Anzahl Datensätze, die von einem Tabellenkalkulation-Programm verwaltet werden können ist limitiert: In Excel 2024 sind es 1'048'576 Zeilen. Das ist zwar viel, für die Verwaltung einer Social Media Plattform aber deutlich zu wenig.
+  \item Die Anzahl Datensätze, die von einem Tabellenkalkulations-Programm verwaltet werden können, ist limitiert: In Excel 2024 sind es 1'048'576 Zeilen. Das ist zwar viel, für die Verwaltung einer Social Media Plattform aber deutlich zu wenig.
   \item Später werden wir für die Social Media Plattform eine neue Tabelle \enquote{photos} einführen. Diese Tabelle wird mit der bereits bekannten Tabelle \enquote{users} verknüpft. Diese Verknüpfung lässt sich in einer Tabellenkalkulation nicht abbilden.
 \end{itemize}
 
-Eine der verbreitetsten Arten, Tabellen und Datenbanken zu erstellen, zu verändern und zu analysieren ist die Programmiersprache \gls{SQL} (\enquote{Strukturierte Abfrage-Sprache}). 
-Im Folgenden verwenden wir die Datenbanken aus der Lern-Plattform InstaHub, um uns mit \gls{SQL}  vertraut zu machen. Dabei richten wir unser Augenmerk vorerst auf die Befehle, mit denen man wie in Excel die Daten filtern und sortieren kann.
+Eine der verbreitetsten Arten, Tabellen und Datenbanken zu erstellen, zu verändern und zu analysieren ist die Programmiersprache \gls{SQL} (\enquote{Strukturierte Abfrage-Sprache}).
+Im Folgenden verwenden wir die Datenbanken aus der Lern-Plattform InstaHub, um uns mit \gls{SQL} vertraut zu machen. Dabei richten wir unser Augenmerk vorerst auf die Befehle, mit denen man wie in Excel die Daten filtern und sortieren kann.
 
-\subsection{Einzelne Tabellen filtern und ordnen mit \texorpdfstring{\gls{SQL}}{SQL}}
+\subsection{Einzelne Tabellen filtern und ordnen mit \texorpdfstring{\glsentryshort{SQL}}{SQL}}
 
 \lstset{style=sql}
 
@@ -34,7 +34,7 @@ Mit dem Befehl \enquote{\lstinline|SELECT col1,col2,... FROM tablename|} können
 
 
 \begin{myexample}
-  Loggen Sie sich als AdministratorIn bei Ihrem Instahub ein. Sie können unter folgendem Menu-Punkt Ihre eigene Datenbank administrieren:
+  Loggen Sie sich als AdministratorIn bei Ihrem InstaHub ein. Sie können unter folgendem Menüpunkt Ihre eigene Datenbank administrieren:
 
   \begin{figure}[H]
     \centering
@@ -95,12 +95,12 @@ Sie sollten nun die gesamte Tabelle \texttt{users} sehen.
 Fügen wir zu einer \gls{SQL}-Abfrage den Befehl \enquote{\lstinline|WHERE conditions|} hinzu, können wir das erhaltene Resultat nach gewissen Bedingungen (\texttt{conditions}) filtern.
 
 \begin{myexample}
-Geben Sie folgendes Beispiel in Instahub ein:
+Geben Sie folgendes Beispiel in InstaHub ein:
 
 \begin{lstlisting}
 SELECT name, city, gender
 FROM users
-WHERE gender="male"
+WHERE gender='male'
 \end{lstlisting}
 \end{myexample}
 
@@ -127,9 +127,9 @@ Um mehrere Bedingungen miteinander zu verknüpfen, können wir die Befehle \lsti
 Folgender Code gibt alle Mitglieder aus, die zwischen 172 cm und 174 cm gross sind. Dabei gehören 172 cm und 174 cm selbst ebenfalls dazu (inklusive).
 
 \begin{lstlisting}
-SELECT name, centimeters, gender 
-FROM users 
-WHERE centimeters BETWEEN 172 AND 174 
+SELECT name, centimeters, gender
+FROM users
+WHERE centimeters BETWEEN 172 AND 174
 \end{lstlisting}
 \end{myexample}
 
@@ -138,41 +138,41 @@ Folgender Code gibt den Namen und die Stadt aller männlichen Mitglieder aus, di
 
 \begin{lstlisting}
 SELECT name, city
-FROM users 
-WHERE gender = "male" AND city IN ("Leipzig", "Berlin", "Hamburg")
+FROM users
+WHERE gender = 'male' AND city IN ('Leipzig', 'Berlin', 'Hamburg')
 \end{lstlisting}
 \end{myexample}
 
 
 \begin{mycaution}
-Wie Sie anhand der \cref{myexample:in,myexample:between} sehen, spielt es in SQL eine Rolle, ob  wir nach Zahlen oder nach
+Wie Sie anhand der \cref{myexample:in,myexample:between} sehen, spielt es in SQL eine Rolle, ob wir nach Zahlen oder nach
   Text filtern: Wenn nach einem Text gefiltert wird, muss dieser in Anführungszeichen stehen (wie z.B.
-  \lstinline|"Berlin"| in \cref{myexample:in}). Bei Zahlen dürfen Sie keine Anführungszeichen schreiben (siehe z.B. die Zahl
+  \lstinline|'Berlin'| in \cref{myexample:in}). Bei Zahlen dürfen Sie keine Anführungszeichen schreiben (siehe z.B. die Zahl
   \lstinline|172| in \cref{myexample:between}).
 \end{mycaution}
 
 \lstinline|NULL| ist ein spezielles \gls{SQL}-Wort, welches bedeutet, dass ein Feld leer ist, bzw. keinen
-Wert hat. \lstinline|NULL| muss von \enquote{0} unterschieden werden: Beispielsweise könnte die Zahl 0 in einer 
-Tabelle über Bankkonten bedeuten, dass jemand 0 Franken auf seinem Konto hat, während der Wert \lstinline|NULL| bedeuten würde, dass keine 
+Wert hat. \lstinline|NULL| muss von \enquote{0} unterschieden werden: Beispielsweise könnte die Zahl 0 in einer
+Tabelle über Bankkonten bedeuten, dass jemand 0 Franken auf seinem Konto hat, während der Wert \lstinline|NULL| bedeuten würde, dass keine
 Informationen zum Kontostand vorhanden sind.
 
 \begin{myexample}
   Folgender Code gibt die Namen aller Mitglieder an, die ihre Grösse nicht angegeben haben.
 \begin{lstlisting}
 SELECT name, centimeters
-FROM users 
+FROM users
 WHERE centimeters IS NULL
 \end{lstlisting}
 \end{myexample}
 
 
 \begin{myexercise}
-  Geben Sie die Namen aller weiblichen Mitglieder aus, die zwischen 150 und 155 gross sind.
+  Geben Sie die Namen aller weiblichen Mitglieder aus, die zwischen 150 cm und 155 cm gross sind.
   \begin{myanswer}
     \begin{lstlisting}
       SELECT name, gender, centimeters
       FROM users
-      WHERE gender="female"
+      WHERE gender='female'
       AND centimeters BETWEEN 150 AND 155
     \end{lstlisting}
   \end{myanswer}
@@ -183,7 +183,7 @@ WHERE centimeters IS NULL
     \begin{lstlisting}
       SELECT name, birthday, centimeters
       FROM users
-      WHERE gender="female"
+      WHERE gender='female'
       AND centimeters <= 160
     \end{lstlisting}
   \end{myanswer}
@@ -191,14 +191,14 @@ WHERE centimeters IS NULL
 
 \subsubsection*{Sortieren: \texorpdfstring{\lstinline|ORDER BY|}{ORDER BY}}
 
-Mit dem Befehl \lstinline|ORDER BY col ASC| oder \lstinline|ORDER BY col DESC| kann das Resultat einer \gls{SQL} -Abfrage nach einer bestimmten Kolonne \lstinline|col| sortiert werden. Mit \lstinline|ASC| wird das Resultat aufsteigend und mit \lstinline|DESC| absteigend sortiert.
+Mit dem Befehl \lstinline|ORDER BY col ASC| oder \lstinline|ORDER BY col DESC| kann das Resultat einer \gls{SQL}-Abfrage nach einer bestimmten Kolonne \lstinline|col| sortiert werden. Mit \lstinline|ASC| wird das Resultat aufsteigend und mit \lstinline|DESC| absteigend sortiert.
 
 \begin{myexample}
 Beobachten Sie das Resultat folgender Abfrage:
 
 \begin{lstlisting}
-SELECT name, centimeters 
-FROM users 
+SELECT name, centimeters
+FROM users
 ORDER BY centimeters DESC
 \end{lstlisting}
 \end{myexample}
@@ -224,7 +224,7 @@ Die Verwaltung der Nutzer Ihrer neuen Social-Media-Plattform ist bereit. Nun sol
 
 Eine erste Idee könnte sein, dass man der Tabelle \enquote{users} ein zusätzliches Attribut \enquote{url} mit der Adresse des Bildes hinzufügt.
 
-Wenn jemand aber mehr als ein Bild hochlädt, sähe die Tabelle wie in \Cref{fig:photoAlsSpalte} (wobei zur besseren Übersicht nur einige wenige Zeilen und Spalten angezeigt werden)
+Wenn jemand aber mehr als ein Bild hochlädt, sähe die Tabelle wie in \Cref{fig:photoAlsSpalte} aus (wobei zur besseren Übersicht nur einige wenige Zeilen und Spalten angezeigt werden).
 \begin{center}
   \begin{figure}[ht!]
     % \includegraphics[width = 0.6 \textwidth]{Grundlagen_Info/06_Datenbanken/Figures/redundanz.png}
@@ -235,12 +235,12 @@ Wenn jemand aber mehr als ein Bild hochlädt, sähe die Tabelle wie in \Cref{fig
 Das ist zwar eine funktionierende Möglichkeit, mit ihr kommen aber zwei wesentliche Probleme:
 \begin{itemize}
   \item Diese Lösung benötigt viel Speicherplatz: Für jedes Bild wird ein neuer Eintrag in der Tabelle users erstellt, bei dem alle Benutzerangaben wie id, username, password, usw. kopiert werden.
-  \item Diese Lösung ist schwer zu verwalten: Stellen Sie sich vor, dass ein Benutzer seine E-Mail-Adresse aktualisiert. Bei dieser Lösung muss die neue Adresse an vielen stellen der Tabelle verändert werden.
+  \item Diese Lösung ist schwer zu verwalten: Stellen Sie sich vor, dass ein Benutzer seine E-Mail-Adresse aktualisiert. Bei dieser Lösung muss die neue Adresse an vielen Stellen der Tabelle verändert werden.
 \end{itemize}
 
 Wenn in einer Tabelle die gleiche Information mehrfach vorkommt, spricht man von \textbf{Redundanzen}. Ein wichtiges Ziel der Verwaltung von Informationen in Datenbanken ist es, Redundanzen zu vermeiden.
 
-Anstatt die Bilder in die bestehende Tabelle einzufügen, wird eine neue Tabelle \enquote{photos} erstellt, die dann mit der Tabelle \enquote{users} verknüpft wird. Die neue Tabelle hat die Attribute \textit{id, user\_id, description, url, created\_at, updated\_at}. 
+Anstatt die Bilder in die bestehende Tabelle einzufügen, wird eine neue Tabelle \enquote{photos} erstellt, die dann mit der Tabelle \enquote{users} verknüpft wird. Die neue Tabelle hat die Attribute \textit{id, user\_id, description, url, created\_at, updated\_at}.
 
 
 Zur besseren Übersicht führen wir sogenannte Tabellenkarten ein. In diesen werden der Tabellenname und die Attribute angegeben. Für die bereits bekannten Tabellen sieht das so aus:
@@ -307,14 +307,14 @@ Das \gls{ERM} unserer Datenbank sieht im Moment wie folgt aus:
     \node[entity] (user) at (0,0) {users};
     \node[entity] (photo) at (5,0) {photos};
     \node[relationship] (owns) at (2.5,0) {owns};
-  
+
 
     % Edges
     \draw (user) -- (owns) node[midway, above] {1};
     \draw (owns) -- (photo) node[midway, above] {n};
-    
+
   \end{tikzpicture}
-  \caption{\gls{ERM} von Instahub - Version 1}
+  \caption{\gls{ERM} von InstaHub - Version 1}
   \label{fig:erm-instahub-v1}
 \end{figure}
 
@@ -344,17 +344,17 @@ Das \gls{ERM} unserer Datenbank sieht im Moment wie folgt aus:
 %   \label{fig:erm-components}
 % \end{figure}
 
-Die Tabellen, werden als Rechtecke angegeben. Beziehungen stellen \enquote{Verknüpfungen} zwischen verschiedenen Tabellen dar und sind meist als Rhombus dargestellt. Manchmal werden auch die Attribute als Ovale angegeben. Weil die Tabelle users viele Attribute umfasst, sind diese in \cref{fig:erm-instahub-v1} einfachheitshalber nicht angegeben.
+Die Tabellen werden als Rechtecke angegeben. Beziehungen stellen \enquote{Verknüpfungen} zwischen verschiedenen Tabellen dar und sind meist als Rhombus dargestellt. Manchmal werden auch die Attribute als Ovale angegeben. Weil die Tabelle users viele Attribute umfasst, sind diese in \cref{fig:erm-instahub-v1} einfachheitshalber nicht angegeben.
 
 \subsubsection*{Wie wird die 1:n-Verknüpfung der Tabellen realisiert?}
 
-Für die Verknüpfung der Tabellen in der Datenbank spielen die \textbf{Primärschlüssel} eine wichtige Rolle. Jede Tabelle in einer Datenbank besitzt einen solchen Primärschlüssel. Dabei handelt es sich um \textbf{einen oder mehreren Attributen, die jeden Datensatz eindeutig identifizieren}.
+Für die Verknüpfung der Tabellen in der Datenbank spielen die \textbf{Primärschlüssel} eine wichtige Rolle. Jede Tabelle in einer Datenbank besitzt einen solchen Primärschlüssel. Dabei handelt es sich um \textbf{ein oder mehrere Attribute, die jeden Datensatz eindeutig identifizieren}.
 
-In der Tabelle \enquote{users} ist der Primärschlüssel das Attribut \emph{id}. 
+In der Tabelle \enquote{users} ist der Primärschlüssel das Attribut \emph{id}.
 
-Wie in \cref{subsec:tables} diskutiert wurde, besitzen Tabellen häufig sogenannte Primärschlüssel (en. \textit{primary keys}). Dabei handelt es sich um \textbf{einen oder mehreren Attributen, die jeden Datensatz eindeutig identifizieren}. 
+Wie in \cref{subsec:tables} diskutiert wurde, besitzen Tabellen häufig sogenannte Primärschlüssel (engl. \textit{primary keys}). Dabei handelt es sich um \textbf{ein oder mehrere Attribute, die jeden Datensatz eindeutig identifizieren}.
 
-Die Tabelle \enquote{users} beispielsweise verwendet den Primärschlüssel \underline{id} (blaue Kolonne, Titel unterstrichen, hervorgehoben mit dem Symbol \emoji{key}). 
+Die Tabelle \enquote{users} beispielsweise verwendet den Primärschlüssel \underline{id} (blaue Kolonne, Titel unterstrichen, hervorgehoben mit dem Symbol \emoji{key}).
 
 \begin{table}[H]
 \centering
@@ -363,13 +363,13 @@ Die Tabelle \enquote{users} beispielsweise verwendet den Primärschlüssel \unde
 1  & Niclas Schweizer  & ...  \\
 2  & Rafael Probst & ...  \\
 3  & Luis Krüger  & ...\\
-... & ... & ... 
+... & ... & ...
 \end{tabular}
 \caption{Beispiel-Tabelle: \enquote{users}}
 \label{table:users-primaryKey}
 \end{table}
 
-Datenbanken sind so programmiert, dass jeder Datensatz in der Primärschlüssel-Spalte(n) einen Eintrag haben muss und sich diese Einträge paarweise unterscheiden. Der Primärschlüssel dient in erster Linie dazu, einen Datensatz (in diesem Fall eine Person) eindeutig zu identifizieren. Weshalb ist das nötig? 
+Datenbanken sind so programmiert, dass jeder Datensatz in der Primärschlüssel-Spalte(n) einen Eintrag haben muss und sich diese Einträge paarweise unterscheiden. Der Primärschlüssel dient in erster Linie dazu, einen Datensatz (in diesem Fall eine Person) eindeutig zu identifizieren. Weshalb ist das nötig?
 
 Zwei Hauptgründe seien angegeben:
 
@@ -378,12 +378,12 @@ Zwei Hauptgründe seien angegeben:
 \item \textbf{Dauerhaftigkeit}: Es könnte sein, dass eine Person den Namen wechselt. In diesem Fall möchte man eine eindeutige Identifikationsnummer haben, damit die Informationen zu den Personen wie etwa Fotos oder Kommentare weiterhin eindeutig zur selben Person gehören (und abgefragt werden können).
 \end{itemize}
 
-Aus eben diesen Gründen hat jede Person in der Schweiz übrigens eine \href{https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ahv/grundlagen-gesetze/ahv-nummer.html}{AHV-Nummer} : \begin{quote}
-  \enquote{Die 13-stellige AHV-Nummer ist völlig anonym, zufallsgeneriert und nicht sprechend. Sie wird nur einmal vergeben und bleibt ein Leben lang unverändert, auch wenn der Zivilstand - etwa durch Heirat - ändert.}
+Aus eben diesen Gründen hat jede Person in der Schweiz übrigens eine \href{https://www.bsv.admin.ch/bsv/de/home/sozialversicherungen/ahv/grundlagen-gesetze/ahv-nummer.html}{AHV-Nummer}: \begin{quote}
+  \enquote{Die 13-stellige AHV-Nummer ist völlig anonym, zufallsgeneriert und nicht sprechend. Sie wird nur einmal vergeben und bleibt ein Leben lang unverändert, auch wenn der Zivilstand -- etwa durch Heirat -- ändert.}
 \end{quote}
 
 
-Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (en. \textit{foreign keys}) besitzen, die sich auf Primärschlüssel von anderen Tabellen beziehen. Dies erlaubt, Informationen aus mehreren Tabellen zu kombinieren. Bei den beiden Tabellen \enquote{users} und \enquote{photos} sieht das so aus: (\cref{table:users-2}, \cref{table:photos-2}).
+Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (engl. \textit{foreign keys}) besitzen, die sich auf Primärschlüssel von anderen Tabellen beziehen. Dies erlaubt, Informationen aus mehreren Tabellen zu kombinieren. Bei den beiden Tabellen \enquote{users} und \enquote{photos} sieht das so aus: (\cref{table:users-2}, \cref{table:photos-2}).
 
 \begin{minipage}{.38\textwidth}
 \centering
@@ -426,9 +426,9 @@ Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (en. \
 \end{table}
 \end{minipage}
 
-Die Tabelle \enquote{photos} hat nicht nur einen Primärschlüssel \texttt{id}, sondern auch einen Fremdschlüssel \texttt{user\_id} (unterbrochen unterstrichen und hervorgehoben mit dem Symbol \faKey), der auf den Primärschlüssel der Tabelle \enquote{users} verweist. 
+Die Tabelle \enquote{photos} hat nicht nur einen Primärschlüssel \texttt{id}, sondern auch einen Fremdschlüssel \texttt{user\_id} (unterbrochen unterstrichen und hervorgehoben mit dem Symbol \faKey), der auf den Primärschlüssel der Tabelle \enquote{users} verweist.
 
-Die Datenbank von Instahub ist ausserdem so konzipiert, dass jedes Foto durch mehrere \enquote{Tags} beschrieben werden kann. Umgekehrt gehört jeder Tag zu genau einem\footnote{Man könnte darüber streiten, es sinnvoll ist, das Tags nicht zu mehreren Fotos gehören können. Bei Instahub ist das aber so festgelegt.} Foto. Das ERM sieht dann so aus:
+Die Datenbank von InstaHub ist ausserdem so konzipiert, dass jedes Foto durch mehrere \enquote{Tags} beschrieben werden kann. Umgekehrt gehört jeder Tag zu genau einem\footnote{Man könnte darüber streiten, ob es sinnvoll ist, dass Tags nicht zu mehreren Fotos gehören können. Bei InstaHub ist das aber so festgelegt.} Foto. Das ERM sieht dann so aus:
 
 \begin{figure}[H]
   \centering
@@ -439,16 +439,16 @@ Die Datenbank von Instahub ist ausserdem so konzipiert, dass jedes Foto durch me
     \node[relationship] (owns) at (2.5,0) {owns};
     \node[entity] (tag) at (10,0) {tags};
     \node[relationship] (has) at (7.5,0) {has};
-  
+
 
     % Edges
     \draw (user) -- (owns) node[midway, above] {1};
     \draw (owns) -- (photo) node[midway, above] {n};
     \draw (photo) -- (has) node[midway, above] {1};
     \draw (has) -- (tag) node[midway, above] {n};
-    
+
   \end{tikzpicture}
-  \caption{\gls{ERM} von Instahub - Version 2}
+  \caption{\gls{ERM} von InstaHub - Version 2}
   \label{fig:erm-instahub-v2}
 \end{figure}
 
@@ -465,7 +465,7 @@ Wobei die Tabelle \enquote{tags} die folgenden Attribute hat (Primärschlüssel 
     \end{tabular}
 \end{center}
 
-In den folgenden Aufgaben wollen wir unsere Social-Media-Plattform um die Tabellen \enquote{photos} und \enquote{users} erweitern. Dazu verwenden wir den SQL-Befehl \lstinline|CREATE TABLE|. Dieser ist wie folgt aufgebaut:
+In den folgenden Aufgaben wollen wir unsere Social-Media-Plattform um die Tabellen \enquote{photos} und \enquote{tags} erweitern. Dazu verwenden wir den SQL-Befehl \lstinline|CREATE TABLE|. Dieser ist wie folgt aufgebaut:
 \begin{lstlisting}
   CREATE TABLE Tabellenname (
     Spalte1   Datentyp1   weitereEigenschaftenSpalte1,
@@ -490,16 +490,16 @@ In den folgenden Aufgaben wollen wir unsere Social-Media-Plattform um die Tabell
   \end{lstlisting}
   \begin{enumerate}
     \item Versuchen Sie den Befehl oben nachzuvollziehen: Welche Spalten wird die neue Tabelle umfassen? Welches ist der Primärschlüssel der neuen Tabelle? Welches der Fremdschlüssel? Mit welcher Spalte welcher Tabelle ist der Fremdschlüssel verbunden?
-    \item    Loggen Sie sich als admin bei Ihrem Instahub ein und navigieren Sie zur Datenbank-Administration.
+    \item    Loggen Sie sich als admin bei Ihrem InstaHub ein und navigieren Sie zur Datenbank-Administration.
     \begin{figure}[H]
       \centering
       \includegraphics[width=.9\textwidth]{Grundlagen_Info/06_Datenbanken/Figures/instahub-SQL}
     \end{figure}
     \item Kopieren Sie den Befehl oben in die Eingabezeile und führen Sie ihn aus. Unter \enquote{Folgende einzelne Tabellen können abgefragt werden} sollte nun die Tabelle \enquote{photos} aufgeführt sein. (Eventuell müssen Sie die Seite zuerst neu laden)
-    \item Testen Sie, ob Sie nun neu ein Foto hochladen können: Klicken Sie auf Ihr Nutzersymbol (rechts oben im Fenster) und wählen Sie \enquote{Hochladen} (Eventuell müssen Sie die Seite zuerst neu laden, damit die Option verfügbar ist). Laden Sie ein Bild hoch (nichts persönliches).
+    \item Testen Sie, ob Sie nun neu ein Foto hochladen können: Klicken Sie auf Ihr Nutzersymbol (rechts oben im Fenster) und wählen Sie \enquote{Hochladen} (Eventuell müssen Sie die Seite zuerst neu laden, damit die Option verfügbar ist). Laden Sie ein Bild hoch (nichts Persönliches).
     \item Für das Bild mussten Sie zwingend eine Beschreibung angeben. Welcher Teil des Befehls oben hatte diese Auswirkung?
-    \item Gehen Sie zurück zur Datenbank-Verwaltung und lassen Sie sich alle Inhalte (\lstinline|SELECT *|) der Tabelle \enquote{photos} anzeigen. 
-    \item Löschen Sie Ihr Bild wieder mit dem Befehl \lstinline|DELETE FROM photos WHERE id = 1|. Kontrollieren Sie, dass die Datenbank leer ist. (Falls noch etwas darin ist, können Sie den gesamten Inhalt der Tabelle löschen mit \lstinline|DELETE FROM photos|).
+    \item Gehen Sie zurück zur Datenbank-Verwaltung und lassen Sie sich alle Inhalte (\lstinline|SELECT *|) der Tabelle \enquote{photos} anzeigen.
+    \item Löschen Sie Ihr Bild wieder mit dem Befehl \lstinline|DELETE FROM photos WHERE id = 1|. Kontrollieren Sie, dass die Tabelle leer ist. (Falls noch etwas darin ist, können Sie den gesamten Inhalt der Tabelle löschen mit \lstinline|DELETE FROM photos|).
   \end{enumerate}
 
   Die Nutzer Ihrer Plattform haben unterdessen auch gemerkt, dass man Fotos hochladen kann, was sie fleissig tun. Simulieren Sie ihre Aktivität, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/photos.sql}{Befehl zum Füllen der Tabelle} \enquote{photos} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
@@ -523,7 +523,7 @@ In den folgenden Aufgaben wollen wir unsere Social-Media-Plattform um die Tabell
   \end{lstlisting}
   \begin{enumerate}
     \item Versuchen Sie den Befehl oben nachzuvollziehen: Welche Spalten wird die neue Tabelle umfassen? Welches ist der Primärschlüssel der neuen Tabelle? Welches der Fremdschlüssel? Mit welcher Spalte welcher Tabelle ist der Fremdschlüssel verbunden?
-    \item  Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres Instahubs und führen Sie ihn aus. 
+    \item  Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres InstaHubs und führen Sie ihn aus.
     \item Um aus den bestehenden Bildbeschreibungen die Tags zu extrahieren, können Sie folgende
     Webadresse aufrufen: \url{https://[meinefarbeXX].instahub.org/dba/updateTags}
     \item Überprüfen Sie, ob die Tabelle \enquote{tags} gefüllt wurde, indem Sie mit einem entsprechenden SQL-Befehl die Inhalte anzeigen lassen.
@@ -533,7 +533,7 @@ In den folgenden Aufgaben wollen wir unsere Social-Media-Plattform um die Tabell
 
 
 \subsubsection{n:m Verknüpfung zwischen Tabellen}
-Die Nutzer Ihrer Social-Media-Plattform sind nun in der Lage, Bilder hochzuladen und mit Tags zu versehen. Damit es zu einer ersten Interaktion zwischen den Nutzern kommt, sollen diese auch Bilder liken konnen.
+Die Nutzer Ihrer Social-Media-Plattform sind nun in der Lage, Bilder hochzuladen und mit Tags zu versehen. Damit es zu einer ersten Interaktion zwischen den Nutzern kommt, sollen diese auch Bilder liken können.
 
 Konkret soll jeder Nutzer mehrere Bilder liken können und jedes Bild soll (möglicherweise) Likes von mehreren unterschiedlichen Usern erhalten können. Diese Art der Beziehung zwischen den beiden Tabellen \enquote{users} und \enquote{photos} bezeichnet man als eine \textbf{n:m Verknüpfung}. (Ein Bild kann mehrere (n) Likes erhalten und ein User kann mehrere (m) Bilder liken.)
 
@@ -548,7 +548,7 @@ Das \gls{ERM} sieht dann wie folgt aus:
     \node[entity] (tag) at (10,0) {tags};
     \node[relationship] (has) at (7.5,0) {has};
     \node[relationship] (likes) at (2.5,-2.5) {likes};
-  
+
 
     % Edges
     \draw (user) -- (owns) node[midway, above] {1};
@@ -557,13 +557,13 @@ Das \gls{ERM} sieht dann wie folgt aus:
     \draw (has) -- (tag) node[midway, above] {n};
     \draw (user) -- (likes) node[midway, left] {n};
     \draw (likes) -- (photo) node[midway, right] {m};
-    
+
   \end{tikzpicture}
-  \caption{\gls{ERM} von Instahub - Version 3}
+  \caption{\gls{ERM} von InstaHub - Version 3}
   \label{fig:erm-instahub-v3}
 \end{figure}
-  
-Eine solche Verknüpfung von zwei Tabellen wird mit einer Zwischentabelle realisiert. Diese enthält zwei Fremdschlüsseln: einen der auf den Primärschlüssel der ersten Tabelle verweist und einen auf jenen der zweiten Tabelle.
+
+Eine solche Verknüpfung von zwei Tabellen wird mit einer Zwischentabelle realisiert. Diese enthält zwei Fremdschlüssel: einen, der auf den Primärschlüssel der ersten Tabelle verweist und einen auf jenen der zweiten Tabelle.
 
 \begin{table}[H]
   \centering
@@ -572,15 +572,15 @@ Eine solche Verknüpfung von zwei Tabellen wird mit einer Zwischentabelle realis
   \midrule
   11  & 32 \\
   11  & 42  \\
-  12  & 42   \\ 
+  12  & 42   \\
   \end{tabular}
   \caption{Beispiel-Tabelle: \enquote{likes}}
   \label{table:likes}
   \end{table}
 
-In diesem Beispiel hat der*die Benutzer*in mit der id 11 die Fotos Nr. 32 und Nr. 42 geliked. Das Bild Nr. 42 hat ausserdem einen Like von User Nr. 12 erhalten.
+In diesem Beispiel hat die Person mit der id 11 die Fotos Nr. 32 und Nr. 42 gelikt. Das Bild Nr. 42 hat ausserdem einen Like von User Nr. 12 erhalten.
 
-Eine solche Tabelle würde im Prinzip schon ausreichen, um die n:m Verknüpfung von \enquote{users} und \enquote{photos} zu verwicklichen. In Instahub wurden in der Tabelle \enquote{likes} allerdings weitere Informationen darüber abgelegt, wann der Like vergeben wurde. Die Tabelle \enquote{likes}, wie sie in Instahub realisiert wurde, hat die folgenden Atribute:
+Eine solche Tabelle würde im Prinzip schon ausreichen, um die n:m Verknüpfung von \enquote{users} und \enquote{photos} zu verwirklichen. In InstaHub wurden in der Tabelle \enquote{likes} allerdings weitere Informationen darüber abgelegt, wann der Like vergeben wurde. Die Tabelle \enquote{likes}, wie sie in InstaHub realisiert wurde, hat die folgenden Attribute:
 
 \begin{center}
   \begin{tabular}{|l|}
@@ -610,15 +610,15 @@ Eine solche Tabelle würde im Prinzip schon ausreichen, um die n:m Verknüpfung 
   \end{lstlisting}
   \begin{enumerate}
     \item Versuchen Sie den Befehl oben nachzuvollziehen.
-    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres Instahubs und führen Sie ihn aus. 
-    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/likes.sql}{Befehl zum Füllen der Tabelle likes} \enquote{photos} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
+    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres InstaHubs und führen Sie ihn aus.
+    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/likes.sql}{Befehl zum Füllen der Tabelle likes} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
   \end{enumerate}
 
 \end{myexercise}
 
 Analog zur Tabelle \enquote{likes} gibt es in InstaHub zwei weitere Hilfstabellen \enquote{comments} und \enquote{follows}, um die n:m Verknüpfung der Tabellen \enquote{users - photos} und \enquote{users - users} abzubilden.
 
-Das vollständige \gls{ERM} von Instahub ist:
+Das vollständige \gls{ERM} von InstaHub ist:
 
 \begin{figure}[H]
   \centering
@@ -628,7 +628,7 @@ Das vollständige \gls{ERM} von Instahub ist:
     \node[relationship] (follows) at (-4,0) {follows};
     \node[relationship] (owns) at (2.5,0) {owns};
     \node[entity] (photo) at (5,0) {photos};
-    \node[relationship] (has) at (7,0) {has};ff
+    \node[relationship] (has) at (7,0) {has};
     \node[entity] (tag) at (9,0) {tags};
     \node[relationship] (comments) at (2.5,2.5) {comments};
     \node[relationship] (likes) at (2.5,-2.5) {likes};
@@ -653,7 +653,7 @@ Das vollständige \gls{ERM} von Instahub ist:
   \label{fig:erm-instahub}
 \end{figure}
 
-\begin{myexercise}[Tabellen \enquote{comments} erstellen]
+\begin{myexercise}[Tabelle \enquote{comments} erstellen]
   \begin{lstlisting}
     CREATE TABLE `comments` (
       `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -668,13 +668,13 @@ Das vollständige \gls{ERM} von Instahub ist:
     )
   \end{lstlisting}
   \begin{enumerate}
-    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres Instahubs und führen Sie ihn aus. 
-    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/comments.sql}{Befehl zum Füllen der Tabelle comments} \enquote{photos} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
+    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres InstaHubs und führen Sie ihn aus.
+    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/comments.sql}{Befehl zum Füllen der Tabelle comments} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
   \end{enumerate}
 
 \end{myexercise}
 
-\begin{myexercise}[Tabellen \enquote{follows} erstellen]
+\begin{myexercise}[Tabelle \enquote{follows} erstellen]
   \begin{lstlisting}
     CREATE TABLE `follows` (
       `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -688,8 +688,8 @@ Das vollständige \gls{ERM} von Instahub ist:
     )
   \end{lstlisting}
   \begin{enumerate}
-    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres Instahubs und führen Sie ihn aus. 
-    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/follows.sql}{Befehl zum Füllen der Tabelle follows} \enquote{photos} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
+    \item Kopieren Sie den Befehl in die SQL-Eingabezeile Ihres InstaHubs und führen Sie ihn aus.
+    \item Simulieren Sie die Aktivität Ihrer Nutzer, indem Sie den folgenden \href{https://wi-wissen.github.io/instahub-doc-de/sql/follows.sql}{Befehl zum Füllen der Tabelle follows} runterladen, mit einem Text-Editor öffnen, per Copy/Paste in die Eingabezeile übertragen und schliesslich ausführen.
   \end{enumerate}
   Gratulation: Ihre Social-Media-Plattform ist nun voll funktionsfähig!
 \end{myexercise}
@@ -699,7 +699,7 @@ Das vollständige \gls{ERM} von Instahub ist:
   Für die Organisation der Skilager führt die Schule eine Liste mit mehreren hundert Einträgen. Der Anfang der Liste sieht wie folgt aus:
 
   \begin{tabular}{l|l|l}
-    Name	& Klasse&	Allergen \\ \hline 
+    Name	& Klasse&	Allergen \\ \hline
     Alice	&1a	&Nüsse \\
     Bob	&1a	&Gluten \\
     Charly	&2b	&Nüsse, Laktose \\
@@ -757,35 +757,35 @@ FROM tabelle1
 INNER JOIN tabelle2
 ON tabelle1.kolonne_id1 = tabelle2.kolonne_id2
 \end{lstlisting}
-Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} und \texttt{kolonne\_id2}, die derselben Information entsprechen (beispielsweise die user-ID), miteinander abgleichen. Beim \lstinline|INNER JOIN| werden nur die Zeilen aus \texttt{tabelle1} retourniert, für die es einen entsprechenden Wert in \texttt{kolonne\_id2} in \texttt{tabelle2} gibt. Alle Werte in \texttt{tabelle1} die mit keinem Wert in \texttt{tabelle2} überschneiden, sowie umgekehrt, tauchen nicht im Resultat auf.
+Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} und \texttt{kolonne\_id2}, die derselben Information entsprechen (beispielsweise die user-ID), miteinander abgleichen. Beim \lstinline|INNER JOIN| werden nur die Zeilen aus \texttt{tabelle1} retourniert, für die es einen entsprechenden Wert in \texttt{kolonne\_id2} in \texttt{tabelle2} gibt. Alle Werte in \texttt{tabelle1}, die sich mit keinem Wert in \texttt{tabelle2} überschneiden, sowie umgekehrt, tauchen nicht im Resultat auf.
 
 \begin{myexample}
-  Folgender Code gibt die ids aller Bilder von user Mika Kaufmann zurück
+  Folgender Code gibt die IDs aller Bilder von User Mika Kaufmann zurück:
   \begin{lstlisting}
   SELECT photos.id
-  FROM photos INNER JOIN users 
-  ON photos.user_id = users.id 
-  WHERE name = "Mika Kaufmann"
+  FROM photos INNER JOIN users
+  ON photos.user_id = users.id
+  WHERE name = 'Mika Kaufmann'
   \end{lstlisting}
-  
-  Wie Sie sehen, kann es hilfreich sein, im \lstinline|SELECT|-Ausdruck explizit die Tabelle zu nennen, von welcher eine bestimmt Kolonne stammt.
+
+  Wie Sie sehen, kann es hilfreich sein, im \lstinline|SELECT|-Ausdruck explizit die Tabelle zu nennen, von welcher eine bestimmte Kolonne stammt.
   \end{myexample}
 
-  Einige Informationen sind sogar über drei Tabellen verteilt. So zum Beispiel die Beschreibung aller Bilder, die von Mika Kaufmann geliked wurden. Dazu muss man die Tabellen \enquote{users, photos} und die Hilfstabelle \enquote{likes} schrittweise verknüpfen:
+  Einige Informationen sind sogar über drei Tabellen verteilt. So zum Beispiel die Beschreibung aller Bilder, die von Mika Kaufmann gelikt wurden. Dazu muss man die Tabellen \enquote{users, photos} und die Hilfstabelle \enquote{likes} schrittweise verknüpfen:
 
   \begin{myexample}
-    Folgender Code gibt die Beschreibung aller Bilder aus, die von Mika Kaufmann geliked werden:
+    Folgender Code gibt die Beschreibung aller Bilder aus, die von Mika Kaufmann gelikt werden:
     \begin{lstlisting}
       SELECT photos.description
       FROM photos INNER JOIN (
         users INNER JOIN likes
         ON likes.user_id = users.id
         )
-      ON likes.photo_id = photos.id 
-      WHERE name = "Mika Kaufmann"
+      ON likes.photo_id = photos.id
+      WHERE name = 'Mika Kaufmann'
     \end{lstlisting}
-    
-    In den Klammern werden zuerst die beiden Tabellen \enquote{users} und \enquote{likes} über den Fremdschlüssel \enquote{likes.user\_id} verschmelzt. Die resultierende Tabelle wird schliesslich mit der tabelle \enquote{photos} über den Fremdschlüssel \enquote{likes.photo\_id} verbunden.
+
+    In den Klammern werden zuerst die beiden Tabellen \enquote{users} und \enquote{likes} über den Fremdschlüssel \enquote{likes.user\_id} verschmolzen. Die resultierende Tabelle wird schliesslich mit der Tabelle \enquote{photos} über den Fremdschlüssel \enquote{likes.photo\_id} verbunden.
     \end{myexample}
 
   % \begin{mysummary}
@@ -802,8 +802,8 @@ Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} 
   \begin{myexercise}
     Bearbeiten Sie auf Moodle die \enquote{Übung 3: SQL-Abfragen über mehrere Tabellen} und geben Sie am Schluss ab.
   \end{myexercise}
-  
-  
-   
+
+
+
 
 

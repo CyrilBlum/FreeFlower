@@ -1,13 +1,13 @@
-\section{Einzelne Tabellen abfragen mit \texorpdfstring{\gls{SQL}}{SQL}}
+\chapter{Einzelne Tabellen abfragen mit \texorpdfstring{\glsentryshort{SQL}}{SQL}}\label{ch:abfragen}
 
-\subsection{Syntax}
+\section{Syntax}
 Die Sprache \acrfull{SQL} besteht, wie wir sehen werden, aus verschiedenen Schlüsselwörtern, wie etwa \lstinline|SELECT|, \lstinline|WHERE|, \lstinline|GROUP BY|, \lstinline|ORDER BY| usw. Dazu gibt es Folgendes zu beachten:
 \begin{itemize}
   \item Ob wir diese Schlüsselwörter gross oder klein schreiben, spielt keine Rolle. Allerdings wird empfohlen, die Schlüsselwörter immer in Grossbuchstaben zu schreiben, um sie von Kolonnen-Namen, Tabellen-Namen usw. abzugrenzen.
   \item Wir können alle \gls{SQL}-Befehle auf einer einzigen Zeile schreiben, dadurch wird der Code aber deutlich weniger lesbar. Stattdessen empfiehlt es sich, vor gewissen Schlüsselwörtern wie \lstinline|SELECT|, \lstinline|WHERE| oder \lstinline|GROUP BY| eine neue Zeile zu erstellen. Dazu lohnt es sich, die Beispiele genau anzuschauen.
 \end{itemize}
 
-\textbf{Kommentare} können in \gls{SQL}  auf zwei Arten geschrieben werden:
+\textbf{Kommentare} können in \gls{SQL} auf zwei Arten geschrieben werden:
 
 \begin{lstlisting}
 -- 1. Kommentar auf einer Zeile
@@ -16,7 +16,7 @@ mehrere Zeilen */
 \end{lstlisting}
 
 % need to add "texorpdfstring" to avoid warnings
-\subsection{Einfache Selektion: \texorpdfstring{\lstinline|SELECT|}{SELECT}}
+\section{Einfache Selektion: \texorpdfstring{\lstinline|SELECT|}{SELECT}}
 
 Mit dem Befehl \enquote{\lstinline|SELECT col1,col2,... FROM tablename|} können wir gewisse Spalten ($=$ Kolonnen) \lstinline|col1,col2,...| aus einer Tabelle mit dem Namen \lstinline|tablename| auswählen. Wir können statt den Spaltennamen auch einfach einen Stern (\texttt{*}) tippen, um alle Kolonnen einer Tabelle zu erhalten, d.h. die gesamte Tabelle.
 
@@ -58,29 +58,29 @@ Sie sollten nun die gesamte Tabelle \texttt{users} sehen.
   Geben Sie die Namen und Wohnorte aller Mitglieder aus.
   \begin{myanswer}
     \begin{lstlisting}
-      SELECT username, city
+      SELECT name, city
       FROM users
     \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
-\subsection{Selektion mit Filter: \texorpdfstring{\lstinline|WHERE|}{WHERE}}
+\section{Selektion mit Filter: \texorpdfstring{\lstinline|WHERE|}{WHERE}}
 Fügen wir zu einer \gls{SQL}-Abfrage den Befehl \enquote{\lstinline|WHERE conditions|} hinzu, können wir das erhaltene Resultat nach gewissen Bedingungen (\texttt{conditions}) filtern.
 
 \begin{myexample}
-Geben Sie folgendes Beispiel in Instahub ein:
+Geben Sie folgendes Beispiel in InstaHub ein:
 
 \begin{lstlisting}
 SELECT name, city, gender
 FROM users
-WHERE gender="male"
+WHERE gender='male'
 \end{lstlisting}
 \end{myexample}
 
 Nebst dem Gleich-Zeichen (im obigen Beispiel) stehen folgende Filter-Operatoren zur Verfügung:
 \begin{table}[H]
   \centering
-  \begin{tabular}{c|l}
+  \begin{tabular}{cl}
     \makecell{\textbf{Operator}                                                                 \\\textbf{in \gls{SQL}}} & \makecell{\textbf{Mathematische}\\\textbf{Bedeutung}} \\\midrule
     \texttt{=}                                    & gleich ($=$)                                \\
     \texttt{<>}                                   & ungleich ($\neq$)                           \\
@@ -94,15 +94,15 @@ Nebst dem Gleich-Zeichen (im obigen Beispiel) stehen folgende Filter-Operatoren 
   \end{tabular}
 \end{table}
 Um mehrere Bedingungen miteinander zu verknüpfen, können wir die Befehle \lstinline|AND|, \lstinline|NOT| sowie \lstinline|OR| verwenden.
-%TODO: braucht es eine Erklärung zu Klammern für die richtige Verknüpfung von mehreren Bedingungen?
+Dabei wird \lstinline|AND| vor \lstinline|OR| ausgewertet (wie Punkt vor Strich). Bei gemischten Bedingungen sollten Sie deshalb Klammern setzen, z.B. \lstinline|WHERE city = 'Berlin' AND (gender = 'male' OR centimeters > 180)|.
 
 \begin{myexample}\label{myexample:between}
 Folgender Code gibt alle Mitglieder aus, die zwischen 172 cm und 174 cm gross sind. Dabei gehören 172 cm und 174 cm selbst ebenfalls dazu (inklusive).
 
 \begin{lstlisting}
-SELECT name, centimeters, gender 
-FROM users 
-WHERE centimeters BETWEEN 172 AND 174 
+SELECT name, centimeters, gender
+FROM users
+WHERE centimeters BETWEEN 172 AND 174
 \end{lstlisting}
 \end{myexample}
 
@@ -111,41 +111,41 @@ Folgender Code gibt den Namen und die Stadt aller Mitglieder aus, die entweder i
 
 \begin{lstlisting}
 SELECT name, city
-FROM users 
-WHERE city IN ("Leipzig", "Berlin", "Hamburg")
+FROM users
+WHERE city IN ('Leipzig', 'Berlin', 'Hamburg')
 \end{lstlisting}
 \end{myexample}
 
 
 \begin{mycaution}
-Wie Sie anhand der \cref{myexample:in,myexample:between} sehen, spielt es in SQL eine Rolle, ob  wir nach Zahlen oder nach
+Wie Sie anhand der \cref{myexample:in,myexample:between} sehen, spielt es in SQL eine Rolle, ob wir nach Zahlen oder nach
   Text filtern: Wenn nach einem Text gefiltert wird, muss dieser in Anführungszeichen stehen (wie z.B.
-  \lstinline|"Berlin"| in \cref{myexample:in}). Bei Zahlen dürfen Sie keine Anführungszeichen schreiben (siehe z.B. die Zahl
+  \lstinline|'Berlin'| in \cref{myexample:in}). Verwenden Sie dafür einfache Anführungszeichen \lstinline|'...'|. Bei Zahlen dürfen Sie keine Anführungszeichen schreiben (siehe z.B. die Zahl
   \lstinline|172| in \cref{myexample:between}).
 \end{mycaution}
 
 \lstinline|NULL| ist ein spezielles \gls{SQL}-Wort, welches bedeutet, dass ein Feld leer ist, bzw. keinen
-Wert hat. \lstinline|NULL| muss von \enquote{0} unterschieden werden: Beispielsweise könnte die Zahl 0 in einer 
-Tabelle über Bankkonten bedeuten, dass jemand 0 Franken auf seinem Konto hat, während der Wert \lstinline|NULL| bedeuten würde, dass keine 
+Wert hat. \lstinline|NULL| muss von \enquote{0} unterschieden werden: Beispielsweise könnte die Zahl 0 in einer
+Tabelle über Bankkonten bedeuten, dass jemand 0 Franken auf seinem Konto hat, während der Wert \lstinline|NULL| bedeuten würde, dass keine
 Informationen zum Kontostand vorhanden sind.
 
 \begin{myexample}
   Folgender Code gibt die Namen aller Mitglieder an, die ihre Grösse nicht angegeben haben.
 \begin{lstlisting}
 SELECT name, centimeters
-FROM users 
+FROM users
 WHERE centimeters IS NULL
 \end{lstlisting}
 \end{myexample}
 
 
 \begin{myexercise}
-  Geben Sie die Namen aller weiblichen Mitglieder aus, die zwischen 150 und 155 gross sind.
+  Geben Sie die Namen aller weiblichen Mitglieder aus, die zwischen 150 cm und 155 cm gross sind.
   \begin{myanswer}
     \begin{lstlisting}
       SELECT name, gender, centimeters
       FROM users
-      WHERE gender="female"
+      WHERE gender='female'
       AND centimeters BETWEEN 150 AND 155
     \end{lstlisting}
   \end{myanswer}
@@ -156,25 +156,25 @@ WHERE centimeters IS NULL
     \begin{lstlisting}
       SELECT name, birthday, centimeters
       FROM users
-      WHERE gender="female"
+      WHERE gender='female'
       AND centimeters <= 160
     \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-  Verwenden Sie die Tabelle \texttt{comments} und geben Sie alle Kommentare aus, die vom user mit der ID 10 oder vom user mit der ID 38 stammen.
+  Verwenden Sie die Tabelle \texttt{comments} und geben Sie alle Kommentare aus, die vom User mit der ID 10 oder vom User mit der ID 38 stammen.
   \begin{myanswer}
     \begin{lstlisting}
-      SELECT user_id, body 
-      FROM comments 
+      SELECT user_id, body
+      FROM comments
       WHERE user_id IN (38, 10)
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 
-\subsection{Eindeutige Selektion: \texorpdfstring{\lstinline|SELECT DISTINCT|}{SELECT DISTINCT}}
+\section{Eindeutige Selektion: \texorpdfstring{\lstinline|SELECT DISTINCT|}{SELECT DISTINCT}}
 
 Der Befehl \lstinline|DISTINCT| nach einem \lstinline|SELECT| führt dazu, dass jeder mögliche Wert
 nur höchstens einmal ausgegeben wird, d.h. Duplikate werden entfernt.
@@ -191,13 +191,16 @@ FROM users
 SELECT DISTINCT gender
 FROM users
 \end{lstlisting}
+  \begin{myanswer}
+    Der erste Befehl gibt für jedes Mitglied eine Zeile aus, die Werte \texttt{male} und \texttt{female} kommen also sehr oft vor. Mit \lstinline|DISTINCT| erscheint jeder vorkommende Wert nur einmal, also z.B. nur \texttt{male} und \texttt{female}.
+  \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
   Geben Sie jeden Wohnort nur einmal aus.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT DISTINCT city 
+SELECT DISTINCT city
 FROM users
 \end{lstlisting}
   \end{myanswer}
@@ -213,7 +216,7 @@ FROM users
 \end{myexercise}
 
 
-\subsection{Ungefähre Treffer: \texorpdfstring{\lstinline|LIKE|}{LIKE}}
+\section{Ungefähre Treffer: \texorpdfstring{\lstinline|LIKE|}{LIKE}}
 
 Mit dem Befehl \lstinline|LIKE| können wir die Tabelle nach Zeilen filtern, welche in einer gewissen Spalte ein bestimmtes Wort enthalten.
 
@@ -221,9 +224,9 @@ Mit dem Befehl \lstinline|LIKE| können wir die Tabelle nach Zeilen filtern, wel
 Mit folgendem Befehl erhalten wir alle Städte, die mit \enquote{Be} beginnen:
 
 \begin{lstlisting}
-SELECT DISTINCT city 
-FROM users 
-WHERE city LIKE "Be%"
+SELECT DISTINCT city
+FROM users
+WHERE city LIKE 'Be%'
 \end{lstlisting}
 \end{myexample}
 
@@ -231,10 +234,10 @@ Das \enquote{\%}-Zeichen ist eine sogenannte \textit{wildcard} und dient hier al
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{c|l}
+  \begin{tabular}{cl}
     \textbf{Symbol}            & \textbf{Bedeutung}                              \\ \midrule
-    \lstinline|"%"| & Stellt null oder mehrere, beliebige Zeichen dar \\ \hline
-    \lstinline|"_"| & Stellt ein einzelnes, beliebiges Zeichen dar    \\
+    \lstinline|%| & Stellt null oder mehrere, beliebige Zeichen dar \\
+    \lstinline|_| & Stellt ein einzelnes, beliebiges Zeichen dar    \\
   \end{tabular}
   \caption{\textit{wildcards} in \gls{SQL}}
   \label{table:wildcards}
@@ -244,55 +247,62 @@ Das \enquote{\%}-Zeichen ist eine sogenannte \textit{wildcard} und dient hier al
 Mit folgendem Befehl erhalten wir alle Städte, die mit \enquote{H} beginnen und ein \enquote{m} an dritter Stelle haben:
 
 \begin{lstlisting}
-SELECT DISTINCT city 
-FROM users 
-WHERE city LIKE "H_m%"
+SELECT DISTINCT city
+FROM users
+WHERE city LIKE 'H_m%'
 \end{lstlisting}
 \end{myexample}
 
 
 
 \begin{myexercise}
-  Vergleichen Sie folgende drei Befehle. Überlegen Sie sich zuerst, was der Code ausgeben sollte, bevor sie die Befehle in InstaHub ausführen.
+  Vergleichen Sie folgende drei Befehle. Überlegen Sie sich zuerst, was der Code ausgeben sollte, bevor Sie die Befehle in InstaHub ausführen.
 
   \begin{lstlisting}
-SELECT username, city 
-FROM users 
-WHERE city = "Berlin" AND name LIKE "Fabian%"
+SELECT username, city
+FROM users
+WHERE city = 'Berlin' AND name LIKE 'Fabian%'
 \end{lstlisting}
 
   \begin{lstlisting}
-SELECT username, city 
-FROM users 
-WHERE city = "Berlin" OR name LIKE "Fabian%"
+SELECT username, city
+FROM users
+WHERE city = 'Berlin' OR name LIKE 'Fabian%'
 \end{lstlisting}
 
   \begin{lstlisting}
-SELECT username, city 
-FROM users 
-WHERE city = "Berlin" AND NOT name LIKE "Fabian%"
+SELECT username, city
+FROM users
+WHERE city = 'Berlin' AND NOT name LIKE 'Fabian%'
 \end{lstlisting}
+  \begin{myanswer}
+    \begin{itemize}
+      \item \lstinline|AND|: nur Mitglieder, die in Berlin wohnen \textit{und} deren Name mit \enquote{Fabian} beginnt.
+      \item \lstinline|OR|: alle Mitglieder aus Berlin und zusätzlich alle Mitglieder namens Fabian aus anderen Städten. Es reicht, wenn eine der beiden Bedingungen erfüllt ist.
+      \item \lstinline|AND NOT|: alle Mitglieder aus Berlin ausser denjenigen, deren Name mit \enquote{Fabian} beginnt.
+    \end{itemize}
+  \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-  Finden Sie alle Berliner, die \textit{Marc} heissen.
+  Finden Sie alle Mitglieder aus Berlin mit dem Vornamen \textit{Marc} (aber nicht z.B. Marco).
   \begin{myanswer}
     \begin{lstlisting}
 SELECT name, city
 FROM users
-WHERE city="Berlin" AND name LIKE "Marc%"
+WHERE city='Berlin' AND name LIKE 'Marc %'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 \begin{myexercise}
-  Finden Sie alle Person mit dem Vornamen \textit{Lina} oder \textit{Lorena}.
+  Finden Sie alle Personen mit dem Vornamen \textit{Lina} oder \textit{Lorena}.
   \begin{myanswer}
     \begin{lstlisting}
       SELECT name, city
       FROM users
-      WHERE name LIKE "Lina%"
-      OR name LIKE "Lorena%"
+      WHERE name LIKE 'Lina %'
+      OR name LIKE 'Lorena %'
     \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
@@ -303,45 +313,44 @@ WHERE city="Berlin" AND name LIKE "Marc%"
     \begin{lstlisting}
 SELECT name, birthday
 FROM users
-WHERE birthday LIKE "2001%"
+WHERE birthday LIKE '2001%'
 \end{lstlisting}
   \end{myanswer}
 \end{mychallenge}
 
-% TODO: soll das eine Abgabe sein?
 \begin{myexercise}
   Wählen Sie alle Personen mit dem Namen \textit{Naomi} aus, die nicht aus Berlin kommen.
   \begin{myanswer}
     \begin{lstlisting}
 SELECT name, city
 FROM users
-WHERE name LIKE "Naomi%"
-AND city <> "Berlin"
+WHERE name LIKE 'Naomi%'
+AND city <> 'Berlin'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 \begin{mychallenge}
-  Geben Sie die Grösse und den Wohnort von Juliette Amsel sowie Juliette Unger aus. Sie sollten das Zeichen \lstinline|"%"| nicht verwenden.
+  Geben Sie die Grösse und den Wohnort von Juliette Amsel sowie Juliette Unger aus. Sie sollten das Zeichen \lstinline|%| nicht verwenden.
   \begin{myanswer}
     \begin{lstlisting}
 SELECT name, centimeters, city
 FROM users
-WHERE name LIKE "Juliette ___e_"
+WHERE name LIKE 'Juliette ___e_'
 \end{lstlisting}
   \end{myanswer}
 \end{mychallenge}
 
-\subsection{Sortieren: \texorpdfstring{\lstinline|ORDER BY|}{ORDER BY}}
+\section{Sortieren: \texorpdfstring{\lstinline|ORDER BY|}{ORDER BY}}
 
-Mit dem Befehl \lstinline|ORDER BY col ASC| oder \lstinline|ORDER BY col DESC| kann das Resultat einer \gls{SQL} -Abfrage nach einer bestimmten Kolonne \lstinline|col| sortiert werden. Mit \lstinline|ASC| wird das Resultat aufsteigend und mit \lstinline|DESC| absteigend sortiert.
+Mit dem Befehl \lstinline|ORDER BY col ASC| oder \lstinline|ORDER BY col DESC| kann das Resultat einer \gls{SQL}-Abfrage nach einer bestimmten Kolonne \lstinline|col| sortiert werden. Mit \lstinline|ASC| wird das Resultat aufsteigend und mit \lstinline|DESC| absteigend sortiert.
 
 \begin{myexample}
 Beobachten Sie das Resultat folgender Abfrage:
 
 \begin{lstlisting}
-SELECT DISTINCT city 
-FROM users 
+SELECT DISTINCT city
+FROM users
 ORDER BY city DESC
 \end{lstlisting}
 \end{myexample}
@@ -365,9 +374,9 @@ ORDER BY username ASC
   \end{itemize}
 \end{myexercise}
 
-\subsection{Aggregatsfunktionen}
+\section{Aggregatsfunktionen}
 
-\subsubsection{\texorpdfstring{\lstinline|COUNT|}{COUNT}}
+\subsection{\texorpdfstring{\lstinline|COUNT|}{COUNT}}
 
 Mit dem Befehl \lstinline|COUNT| kann man die Anzahl Resultate zählen.
 
@@ -379,30 +388,34 @@ FROM users
 Wir können den berechneten Wert zudem zur besseren Lesbarkeit umbenennen, indem wir den Befehl \lstinline|AS| verwenden:
 
 \begin{lstlisting}
-SELECT COUNT(*) AS "Registrierte Mitglieder" 
+SELECT COUNT(*) AS `Registrierte Mitglieder`
 FROM users
 \end{lstlisting}
 
+\begin{mycaution}\label{mycaution:backticks}
+  In \gls{SQL} stehen \textbf{Texte} (Werte wie \lstinline|'Berlin'|) in einfachen Anführungszeichen \lstinline|'...'|. \textbf{Namen} von Kolonnen, die Leerzeichen oder Umlaute enthalten, stehen dagegen in sogenannten \textit{backticks} \lstinline|`...`|. Dies gilt beim Umbenennen mit \lstinline|AS| und auch später, wenn der neue Name wiederverwendet wird, z.B. in \lstinline|ORDER BY `Registrierte Mitglieder`|.
+\end{mycaution}
+
 \begin{myexercise}
-  Geben Sie die Anzahl registrierten Mitglieder in Berlin aus. Die resultierende Spalte soll \enquote{Registrierte Mitglieder in Berlin} heissen.
+  Geben Sie die Anzahl registrierter Mitglieder in Berlin aus. Die resultierende Spalte soll \enquote{Registrierte Mitglieder in Berlin} heissen.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT COUNT(*) AS "Registrierte Mitglieder in Berlin" 
+SELECT COUNT(*) AS `Registrierte Mitglieder in Berlin`
 FROM users
-WHERE city="Berlin"
+WHERE city='Berlin'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
-\subsubsection{\texorpdfstring{\lstinline|MAX, MIN|}{MAX, MIN}}
+\subsection{\texorpdfstring{\lstinline|MAX, MIN|}{MAX, MIN}}
 
-Um die höchsten, bzw. tiefsten Werte einer Kolonne zu erhalten, können die Befehle \lstinline|MIN| und \lstinline|MAX| verwendet werden:
+Um den höchsten bzw. tiefsten Wert einer Kolonne zu erhalten, können die Befehle \lstinline|MAX| und \lstinline|MIN| verwendet werden:
 
 \begin{myexample}
 Beobachten Sie das Resultat folgender Abfrage:
 
 \begin{lstlisting}
-SELECT MAX(centimeters) AS "Maximale Körpergrösse" 
+SELECT MAX(centimeters) AS `Maximale Körpergrösse`
 FROM users
 \end{lstlisting}
 \end{myexample}
@@ -411,7 +424,7 @@ FROM users
   Zeigen Sie, wie gross das kleinste Mitglied ist.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT MIN(centimeters) AS "Kleinste Körpergrösse"
+SELECT MIN(centimeters) AS `Kleinste Körpergrösse`
 FROM users
 \end{lstlisting}
   \end{myanswer}
@@ -420,14 +433,14 @@ FROM users
   Zeigen Sie, wann sich zuletzt ein Mitglied registriert hat.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT max(created_at) AS "Zuletzt Registriert"
+SELECT max(created_at) AS `Zuletzt Registriert`
 FROM users
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 
 
-\subsubsection{\texorpdfstring{\lstinline|SUM|}{SUM}}
+\subsection{\texorpdfstring{\lstinline|SUM|}{SUM}}
 
 Mit \lstinline|SUM| kann die Summe einer Datenserie ausgegeben werden.
 
@@ -435,13 +448,13 @@ Mit \lstinline|SUM| kann die Summe einer Datenserie ausgegeben werden.
 Folgender Code berechnet die Summe der Körpergrössen aller Personen, die Felix heissen:
 
 \begin{lstlisting}
-SELECT SUM(centimeters) 
-FROM users 
-WHERE name LIKE "Felix%"
+SELECT SUM(centimeters)
+FROM users
+WHERE name LIKE 'Felix%'
 \end{lstlisting}
 \end{myexample}
 
-\subsubsection{\texorpdfstring{\lstinline|AVG|}{AVG}}
+\subsection{\texorpdfstring{\lstinline|AVG|}{AVG}}
 
 Mit \lstinline|AVG| kann der Durchschnitt einer Datenserie ausgegeben werden.
 
@@ -449,40 +462,27 @@ Mit \lstinline|AVG| kann der Durchschnitt einer Datenserie ausgegeben werden.
 Folgender Code berechnet die durchschnittliche Körpergrösse aller Personen, die Felix heissen:
 
 \begin{lstlisting}
-SELECT AVG(centimeters) 
-FROM users 
-WHERE name LIKE "Felix%"
-\end{lstlisting}
-\end{myexample}
-
-\subsubsection{\texorpdfstring{\lstinline|LENGTH|}{LENGTH}}
-
-\lstinline|LENGTH| gibt die Anzahl Zeichen eines Texts zurück.
-
-\begin{myexample}
-Folgender Code berechnet die Länge aller Namen:
-
-\begin{lstlisting}
-SELECT name, LENGTH(name) 
+SELECT AVG(centimeters)
 FROM users
+WHERE name LIKE 'Felix%'
 \end{lstlisting}
 \end{myexample}
 
 \begin{myexercise}
   \begin{itemize}
-    \item Lösen Sie Aufgaben 1--6 unter diesem folgendem \href{https://sql-tutorial.de/home/uebungen.php?lektion=2}{Link} (keine Abgabe notwendig / möglich)
+    \item Lösen Sie Aufgaben 1--6 unter folgendem \href{https://sql-tutorial.de/home/uebungen.php?lektion=2}{Link} (keine Abgabe notwendig / möglich)
     \item Geben Sie danach auf Moodle die \enquote{Übungen 2 (Aggregatsfunktionen)} ab.
   \end{itemize}
 \end{myexercise}
 
-\subsection{Gruppieren: \texorpdfstring{\lstinline|GROUP BY|}{GROUP BY}}
-Um die Resultate einer Anfrage pro Untergruppen zu sehen, kann der Befehl \lstinline|GROUP BY| verwendet werden.
+\section{Gruppieren: \texorpdfstring{\lstinline|GROUP BY|}{GROUP BY}}
+Um die Resultate einer Anfrage pro Untergruppe zu sehen, kann der Befehl \lstinline|GROUP BY| verwendet werden.
 
 \begin{myexample}
 Folgender Code gibt die Anzahl Mitglieder pro Stadt aus:
 \begin{lstlisting}
-SELECT city, COUNT(*) AS "Mitglieder pro Stadt" 
-FROM users 
+SELECT city, COUNT(*) AS `Mitglieder pro Stadt`
+FROM users
 GROUP BY city
 \end{lstlisting}
 \end{myexample}
@@ -492,20 +492,31 @@ Zudem ist es möglich, Daten auch in Untergruppen zusammenzufassen.
 \begin{myexample}
 Folgender Code gibt die Anzahl männlicher und weiblicher Mitglieder pro Stadt aus:
 \begin{lstlisting}
-SELECT city, gender, COUNT(*) 
-FROM users 
+SELECT city, gender, COUNT(*)
+FROM users
 GROUP BY city, gender
 \end{lstlisting}
 \end{myexample}
 
-\subsection{Filtern nach Gruppieren: \texorpdfstring{\lstinline|HAVING|}{HAVING}}
+\section{Filtern nach Gruppieren: \texorpdfstring{\lstinline|HAVING|}{HAVING}}
 Falls nach einem \lstinline|GROUP BY| die Resultate noch weiter eingegrenzt werden sollen, muss statt \lstinline|WHERE| der Befehl \lstinline|HAVING| verwendet werden. Der Befehl \lstinline|WHERE| wird verwendet, um die ursprünglichen Daten \textit{vor} einem \lstinline|GROUP BY| zu filtern, der Befehl \lstinline|HAVING| wird verwendet, um die Resultate \textit{nach} einem \lstinline|GROUP BY| zu filtern.
 
-\begin{mychallenge}
-  Geben Sie die durchschnittliche Körpergrösse aller Mitglieder in jeder Stadt aus. Zeigen Sie nur die Städte, in denen die Menschen im Durchschnitt zwischen 150 und 155 gross sind.
+\begin{myexample}\label{myexample:having}
+Folgender Code gibt nur die Städte aus, in denen mehr als 10 Mitglieder wohnen:
+\begin{lstlisting}
+SELECT city, COUNT(*) AS `Anzahl Mitglieder`
+FROM users
+GROUP BY city
+HAVING COUNT(*) > 10
+\end{lstlisting}
+Mit \lstinline|WHERE COUNT(*) > 10| funktioniert dies nicht, weil \lstinline|WHERE| die einzelnen Zeilen filtert, bevor sie gezählt werden.
+\end{myexample}
+
+\begin{mychallenge}\label{mychallenge:having}
+  Geben Sie die durchschnittliche Körpergrösse aller Mitglieder in jeder Stadt aus. Zeigen Sie nur die Städte, in denen die Menschen im Durchschnitt zwischen 150 cm und 155 cm gross sind.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT city, AVG(centimeters) AS "Durchschnittliche Körpergrösse"
+SELECT city, AVG(centimeters) AS `Durchschnittliche Körpergrösse`
 FROM users
 GROUP BY city
 HAVING `Durchschnittliche Körpergrösse` BETWEEN 150 AND 155
@@ -514,21 +525,20 @@ HAVING `Durchschnittliche Körpergrösse` BETWEEN 150 AND 155
 \end{mychallenge}
 
 \begin{mychallenge}
-  Geben Sie die maximale Körpergrösse aus, gruppiert nach Stadt und Geschlecht, für alle Städte, die mit dem Buchstaben "B" beginnen
+  Geben Sie die maximale Körpergrösse aus, gruppiert nach Stadt und Geschlecht, für alle Städte, die mit dem Buchstaben \enquote{B} beginnen. Überlegen Sie im Vergleich zu \cref{mychallenge:having}: Braucht es hier \lstinline|HAVING| oder genügt \lstinline|WHERE|?
   \begin{myanswer}
     \begin{lstlisting}
-SELECT city, gender, MAX(centimeters) AS "Grösste Körpergrösse"
+SELECT city, gender, MAX(centimeters) AS `Grösste Körpergrösse`
 FROM users
-WHERE city LIKE "B%"
+WHERE city LIKE 'B%'
 GROUP BY city, gender
 \end{lstlisting}
+    Hier genügt \lstinline|WHERE|: Die Bedingung betrifft die Stadt jedes einzelnen Mitglieds und kann deshalb schon \textit{vor} dem Gruppieren geprüft werden. \lstinline|HAVING| braucht es nur, wenn eine Bedingung von einem Gruppenresultat wie \lstinline|AVG| oder \lstinline|COUNT| abhängt.
   \end{myanswer}
 \end{mychallenge}
 
-\subsection{Erste / Letzte Zeilen: \texorpdfstring{\lstinline|LIMIT|}{LIMIT}}
+\section{Erste / Letzte Zeilen: \texorpdfstring{\lstinline|LIMIT|}{LIMIT}}
 Mit dem Befehl \lstinline|LIMIT n| kann das Resultat einer beliebigen \gls{SQL}-Abfrage auf eine gewisse Anzahl Zeilen beschränkt werden. Dies bedeutet, dass das Resultat nach den ersten \texttt{n} Zeilen abgeschnitten wird. Der Befehl steht immer am Ende einer SQL-Abfrage.
-
-Beobachten Sie das Resultat folgender Abfrage:
 
 \begin{myexercise}
   Zeigen Sie nur 3 Mitglieder (nur deren Namen) an.
@@ -545,7 +555,7 @@ LIMIT 3
   Geben Sie die drei Städte mit den meisten Mitgliedern an.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT city, COUNT(*) AS "Anzahl Mitglieder"
+SELECT city, COUNT(*) AS `Anzahl Mitglieder`
 FROM users
 GROUP BY city
 ORDER BY `Anzahl Mitglieder` DESC
@@ -571,7 +581,7 @@ LIMIT 5
 
   \textbf{Tipps:}
   \begin{itemize}
-    \item Berechnen Sie zuerst mit einem \lstinline|GROUP BY|-Befehl die Anzahl Einwohner pro Stadt
+    \item Berechnen Sie zuerst mit einem \lstinline|GROUP BY|-Befehl die Anzahl Mitglieder pro Stadt
     \item Beschränken Sie danach Ihre Abfrage mit dem \lstinline|WHERE|-Befehl auf Benutzer, die ein \enquote{b} im Namen haben
     \item Sortieren Sie dann nach der Anzahl Mitglieder
     \item Verwenden Sie den \lstinline|LIMIT|-Befehl erst am Schluss
@@ -579,10 +589,10 @@ LIMIT 5
 
   \begin{myanswer}
     \begin{lstlisting}
-SELECT city, COUNT(*) AS "Mitglieder"
-FROM users 
-WHERE name LIKE "%b%" 
-GROUP BY city 
+SELECT city, COUNT(*) AS `Mitglieder`
+FROM users
+WHERE name LIKE '%b%'
+GROUP BY city
 ORDER BY Mitglieder DESC
 LIMIT 3
 \end{lstlisting}
@@ -596,34 +606,48 @@ LIMIT 3
   \end{itemize}
 \end{myexercise}
 
-\subsection{Verzweigungen: \texorpdfstring{\lstinline|CASE WHEN|}{CASE WHEN}}
+\section{Weitere Funktionen: \texorpdfstring{\lstinline|LENGTH|}{LENGTH}}
+
+\lstinline|LENGTH| gibt die Anzahl Zeichen eines Texts zurück. Im Unterschied zu den Aggregatsfunktionen fasst \lstinline|LENGTH| nicht mehrere Zeilen zu einem Wert zusammen, sondern berechnet für jede Zeile einen eigenen Wert.
+
+\begin{myexample}
+Folgender Code berechnet die Länge aller Namen:
+
+\begin{lstlisting}
+SELECT name, LENGTH(name)
+FROM users
+\end{lstlisting}
+\end{myexample}
+
+\section{Verzweigungen: \texorpdfstring{\lstinline|CASE WHEN|}{CASE WHEN}}
 
 Der SQL-Befehl \lstinline|CASE WHEN| kann helfen, Ausdrücke basierend auf Bedingungen zu schreiben, also ähnlich wie if-elif-else-Verzweigungen in Python.
 
 \begin{myexample}
-Die durchschnittliche Körpergrösse in Deutschland beträgt 179 cm für Männer. Folgender Code berechnet für alle Männer, ob sie grösser, kleiner oder gleich dem Durchschnitt sind, und gibt das Resultat in einer neuen Kolonne aus.
+Die durchschnittliche Körpergrösse in Deutschland beträgt 179 cm für Männer. Folgender Code berechnet für alle Männer, ob sie grösser, kleiner oder gleich dem Durchschnitt sind, und gibt das Resultat in einer neuen Kolonne aus. Mitglieder ohne Grössenangabe (\lstinline|NULL|) erfüllen keine der drei Bedingungen und landen deshalb im \lstinline|ELSE|-Zweig.
 
 \begin{lstlisting}
 SELECT name, centimeters,
-CASE 
+CASE
 	WHEN centimeters > 179 THEN 'Gross'
     WHEN centimeters < 179 THEN 'Klein'
-    ELSE 'Genau im Durchschnitt'
+    WHEN centimeters = 179 THEN 'Genau im Durchschnitt'
+    ELSE 'unbekannt'
 END AS Durchschnittlich
 FROM users
-WHERE gender="male"
+WHERE gender='male'
 \end{lstlisting}
 \end{myexample}
 
 \begin{myexercise}
-  Berechnen Sie eine neue Kolonne, die den Text \enquote{langer Name} enthält, falls ein Name länger als 20 Zeichen lang ist, und ansonsten \enquote{kurzer Name}. BenutzerInnen mit langem Namen sollen zuoberst stehen. Zeigen Sie nur die ersten 5 Zeilen.
+  Berechnen Sie eine neue Kolonne, die den Text \enquote{langer Name} enthält, falls ein Name länger als 20 Zeichen ist, und ansonsten \enquote{kurzer Name}. BenutzerInnen mit langem Namen sollen zuoberst stehen. Zeigen Sie nur die ersten 5 Zeilen.
   \begin{myanswer}
     \begin{lstlisting}
 SELECT name, LENGTH(name),
 CASE
-	WHEN LENGTH(name)>20 THEN "Langer Name"
-    ELSE "Kurzer Name"
-END AS "Langer oder kurzer Name"
+    WHEN LENGTH(name) > 20 THEN 'langer Name'
+    ELSE 'kurzer Name'
+END AS `Langer oder kurzer Name`
 FROM users
 ORDER BY `Langer oder kurzer Name` DESC
 LIMIT 5
@@ -631,80 +655,48 @@ LIMIT 5
   \end{myanswer}
 \end{myexercise}
 
-\subsection{Anwendung: Personalisierte Werbung auf InstaHub}
+\section{Anwendung: Personalisierte Werbung auf InstaHub}
 
-Auf InstaHub können Werbungen an verschiedene User angepasst werden. Dafür sind auf InstaHub noch einige weitere Tabellen angelegt, deren \gls{ERM} in \cref{fig:erm-ads} abgebildet ist.
+Auf InstaHub können Werbungen an verschiedene User angepasst werden. Dafür gibt es auf InstaHub zwei weitere Tabellen: \texttt{ads} enthält die Werbekampagnen, \texttt{analytics} speichert jeden Besuch eines Fotos. \cref{fig:tabellen-werbung} zeigt diese Tabellen mit ihren Kolonnen. Die Kolonnen \texttt{user\_id} und \texttt{photo\_id} enthalten die \texttt{id} eines Mitglieds bzw. eines Fotos (Pfeile).
 
 \begin{figure}[H]
   \centering
-  \begin{tikzpicture}[auto]
-    % Style for the entities
-    \tikzstyle{entity} = [rectangle, draw, thick, minimum width=1cm, minimum height=0.5cm]
-
-    % Style for the relationships
-    \tikzstyle{relationship} = [diamond, draw, thick, aspect=2, minimum width=1.5cm, minimum height=0.5cm]
-
-    % Nodes
-    \node[entity] (ads) at (0,0) {ads};
-    \node[entity] (users) at (4,0) {users};
-    \node[entity] (photos) at (10,0) {photos};
-    \node[relationship] (analytics) at (7,0) {analytics};
-
-    % Edges
-    \draw (users) -- (analytics) node[midway, above] {n};
-    \draw (analytics) -- (photos) node[midway, above] {m};
-
-    % There are no visible connections to the 'ads' entity in the provided diagram.
-    % If 'ads' is supposed to be connected to 'users' or another entity, the code should be modified accordingly.
-
-  \end{tikzpicture}
-  \caption{\gls{ERM} für den Werbe-Teil von InstaHub}
-  \label{fig:erm-ads}
+  \input{Grundlagen_Info/06_Datenbanken/Figures/tabellenkarte_werbung}
+  \caption{Tabellen für den Werbe-Teil von InstaHub (\texttt{users} und \texttt{photos} gekürzt)}
+  \label{fig:tabellen-werbung}
 \end{figure}
 
-Mit der Tabelle \texttt{analytics} beginnt InstaHub das Verhalten der Besucher zu überwachen. Dabei wird der Besuch von Photo-Detailansichten mit folgenden Werten dokumentiert:
+Mit der Tabelle \texttt{analytics} beginnt InstaHub das Verhalten der Besucher zu überwachen. Dabei wird der Besuch von Foto-Detailansichten mit folgenden Werten dokumentiert:
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{r|l}
+  \begin{tabular}{rl}
     \textbf{Feld}                 & \textbf{Beschreibung}                                                 \\\midrule
     \commandbox|id|               & Primärschlüssel, fortlaufende Nummer                                  \\
-    \hline
     \commandbox|ip|               & Die ersten drei Blöcke der IPv4-Adresse                               \\
-    \hline
     \commandbox|device|           & desktop, mobile, tablet oder bot                                      \\
-    \hline
     \commandbox|brand_family|     & wird oft nur bei Smartphones mitgesendet, etwa Apple oder Samsung     \\
-    \hline
     \commandbox|brand_model|      & wird oft nur bei Smartphones mitgesendet, etwa GALAXY S5              \\
-    \hline
     \commandbox|browser_family|   & Browser (Firefox, Chrome, Safari...)                                       \\
-    \hline
     \commandbox|browser_version|  & Versionsnummer des Browsers                                       \\
-    \hline
     \commandbox|platform_family|  & Betriebssystem (Windows, Mac, GNU/Linux, iOS, Android...) \\
-    \hline
     \commandbox|platform_version| & Die Versionsnummer der Plattform                                      \\
-    \hline
     \commandbox|user_id|          & Benutzer, der sich das Foto angesehen hat                              \\
-    \hline
     \commandbox|photo_id|         & Angesehenes Foto                                                      \\
-    \hline
     \commandbox|created_at|       & Zeitpunkt, als das Foto angesehen wurde                          \\
-    \hline
     \commandbox|updated_at|       & i.d.R. wie \commandbox|created_at|, nur anders, wenn manuell geändert \\
   \end{tabular}
   \caption{Kolonnen der Tabelle \texttt{analytics}}
 \end{table}
 
-Mit diesen Informationen, sowie weiteren Informationen (Hashtags, Geschlecht, Wohnort etc.) kann InstaHub gezielt personalisierte Werbung schalten. Nach diesem Prinzip funktionieren auch andere soziale Medien wie TikTok, Instagram oder Snapchat.
+Mit diesen Informationen sowie weiteren Informationen (Hashtags, Geschlecht, Wohnort etc.) kann InstaHub gezielt personalisierte Werbung schalten. Nach diesem Prinzip funktionieren auch andere soziale Medien wie TikTok, Instagram oder Snapchat.
 
 \begin{mycaution}
-Für die nachfolgenden Teile müssen Sie, sofern Sie Adblockers in Ihrem Browser verwenden, diese deaktivieren (oder zumindest eine Ausnahme für InstaHub erstellen), da Ihnen die Werbungen ansonsten nicht angezeigt werden.
+Für die nachfolgenden Teile müssen Sie, sofern Sie Adblocker in Ihrem Browser verwenden, diese deaktivieren (oder zumindest eine Ausnahme für InstaHub erstellen), da Ihnen die Werbungen ansonsten nicht angezeigt werden.
 \end{mycaution}
 
 \clearpage
-Auf InstaHub können Werbeanzeigen mit \gls{SQL} personalisiert werden. Dafür geht man zunächst auf die Werbungs-Seite (siehe \cref{fig:screenshot-ads1})
+Auf InstaHub können Werbeanzeigen mit \gls{SQL} personalisiert werden. Dafür geht man zunächst auf die Werbungs-Seite (siehe \cref{fig:screenshot-ads1}).
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.7\linewidth]{Grundlagen_Info/06_Datenbanken/Figures/screenshot-ads1}
@@ -712,7 +704,7 @@ Auf InstaHub können Werbeanzeigen mit \gls{SQL} personalisiert werden. Dafür g
   \label{fig:screenshot-ads1}
 \end{figure}
 
-Von dort aus kann man auf eine Werbekampagne klicken, um mehr Details zu sehen. Die Detail-Ansicht der ersten Kampagne ist abgebildet auf \cref{fig:screenshot-ads2}.
+Von dort aus kann man auf eine Werbekampagne klicken, um mehr Details zu sehen. Die Detail-Ansicht der ersten Kampagne ist in \cref{fig:screenshot-ads2} abgebildet.
 
 \begin{figure}[H]
   \centering
@@ -721,17 +713,17 @@ Von dort aus kann man auf eine Werbekampagne klicken, um mehr Details zu sehen. 
   \label{fig:screenshot-ads2}
 \end{figure}
 
-Als erstes sehen wir den (frei wählbaren) Kampagnen-Namen \texttt{bergalm}. Wir sehen auch dass die Werbung vom Typ \enquote{banner} ist, sie wird also bei Fotos angezeigt. Nebst weiteren Informationen sehen wir insbesondere zuunterst die \enquote{SQL-Query}, also die SQL-Abfrage, mit der eine Werbung personalisiert wird.
+Als Erstes sehen wir den (frei wählbaren) Kampagnen-Namen \texttt{bergalm}. Wir sehen auch, dass die Werbung vom Typ \enquote{banner} ist, sie wird also bei Fotos angezeigt. Nebst weiteren Informationen sehen wir insbesondere zuunterst die \enquote{SQL-Query}, also die SQL-Abfrage, mit der eine Werbung personalisiert wird.
 Für diese Natur-Werbung haben wir folgende Abfrage:
 
 \begin{lstlisting}
-SELECT CASE 
-	WHEN description LIKE '%natur%' 
-	OR   description LIKE '%landschaft%' 
-	OR   description LIKE '%berg%' THEN true 
-	ELSE false 
-END 
-FROM photos 
+SELECT CASE
+	WHEN description LIKE '%natur%'
+	OR   description LIKE '%landschaft%'
+	OR   description LIKE '%berg%' THEN true
+	ELSE false
+END
+FROM photos
 WHERE id=$photo
 \end{lstlisting}
 
@@ -740,20 +732,20 @@ Diese Abfrage wird nun auf der Webseite für jedes Foto ausgeführt, um zu sehen
 Wir sehen zuerst, dass die Kolonne \texttt{description} der Tabelle \texttt{photos}, also die Kolonne, die Hashtags speichert, auf Texte wie \enquote{Natur}, \enquote{Landschaft} und \enquote{Berg} abgesucht wird. Falls so ein Text vorhanden ist in den Hashtags des Fotos, wird der Wert \texttt{true} zurückgegeben, und somit wird die Werbung potentiell angezeigt, andernfalls wird der Wert \texttt{false} zurückgegeben. Auf der letzten Zeile sehen wir eine Variable \lstinline|$photo|, mit welcher jedes Foto der gesamten Webseite nach den genannten Kriterien abgesucht werden kann.
 
 \begin{myexercise}
-  Verändern Sie den SQL-Befehl so, dass die Werbung auch für Fotos mit dem Hashtag \enquote{\texttt{\#Wasser}} angezeigt werden. Testen Sie danach, ob es geklappt hat, indem Sie Fotos mit diesem Hashtag suchen. Sie können auf Ihrer Instahub-Webseite überprüfen, ob es geklappt hat:
+  Verändern Sie den SQL-Befehl so, dass die Werbung auch für Fotos mit dem Hashtag \enquote{\texttt{\#Wasser}} angezeigt wird. Testen Sie danach, ob es geklappt hat, indem Sie Fotos mit diesem Hashtag suchen. Sie können auf Ihrer InstaHub-Webseite überprüfen, ob es geklappt hat:
 
-  \url{[ihrefarbe].instahub.org/p/1517}
+  \url{https://[meinefarbeXX].instahub.org/p/1517}
 
   \begin{myanswer}
     \begin{lstlisting}
-SELECT CASE 
-	WHEN description LIKE '%natur%' 
-	OR   description LIKE '%landschaft%' 
-	OR   description LIKE '%wasser%' 
-	OR   description LIKE '%berg%' THEN true 
-	ELSE false 
-END 
-FROM photos 
+SELECT CASE
+	WHEN description LIKE '%natur%'
+	OR   description LIKE '%landschaft%'
+	OR   description LIKE '%wasser%'
+	OR   description LIKE '%berg%' THEN true
+	ELSE false
+END
+FROM photos
 WHERE id=$photo
 \end{lstlisting}
   \end{myanswer}
@@ -775,10 +767,55 @@ WHERE id=$photo
 
   Um sich ein Konto auf einer Seite einer anderen Person zu erstellen:
   \begin{itemize}
-    \item Bestimmen Sie jemanden als \textcolor{RoyalBlue}{AdministratorIn} und verwenden Sie nur die Webseite dieser Person, also z.B. \url{https://purpurrot21.instahub.org}. Die anderen Personen sind  \textcolor{ForestGreen}{BenutzerInnen}.
+    \item Bestimmen Sie jemanden als \textcolor{RoyalBlue}{AdministratorIn} und verwenden Sie nur die Webseite dieser Person, also z.B. \url{https://purpurrot21.instahub.org}. Die anderen Personen sind \textcolor{ForestGreen}{BenutzerInnen}.
     \item \textcolor{ForestGreen}{BenutzerInnen}: Gehen Sie auf die von der Administratorin erstellte Webseite (\url{https://namedesnetzwerks.instahub.org}, wobei \enquote{\texttt{namedesnetzwerks}} ersetzt werden muss) und erstellen Sie ein neues Konto für sich.
-    \item \textcolor{RoyalBlue}{AdministratorIn}: Die neuen Accounts der \textcolor{ForestGreen}{BenutzerInnen} muss dann von Ihnen als \textcolor{RoyalBlue}{AdministratorIn} aktiviert werden, indem Sie den User suchen, auf \enquote{Bearbeiten} und dann ganz unten auf \enquote{Account ist freigeschaltet} klicken.
-    \item \textcolor{RoyalBlue}{AdministratorIn} und \textcolor{ForestGreen}{BenutzerIn}: Posten Sie nun falls Sie möchten Bilder in den sozialen Netzwerken Ihrer Kollegen, vergeben Sie Likes, folgen Sie anderen und kommentieren Sie fleissig in den anderen Netzwerken (max. 5 Minuten).
+    \item \textcolor{RoyalBlue}{AdministratorIn}: Die neuen Accounts der \textcolor{ForestGreen}{BenutzerInnen} müssen dann von Ihnen als \textcolor{RoyalBlue}{AdministratorIn} aktiviert werden, indem Sie den User suchen, auf \enquote{Bearbeiten} und dann ganz unten auf \enquote{Account ist freigeschaltet} klicken.
+    \item \textcolor{RoyalBlue}{AdministratorIn} und \textcolor{ForestGreen}{BenutzerIn}: Posten Sie nun, falls Sie möchten, Bilder in den sozialen Netzwerken Ihrer KollegInnen, vergeben Sie Likes, folgen Sie anderen und kommentieren Sie fleissig in den anderen Netzwerken (max. 5 Minuten).
     \item Erstellen Sie nun personalisierte Werbungen für Ihre KlassenkameradInnen (siehe \cref{fig:screenshot-ads1}).
   \end{itemize}
 \end{mychallenge}
+
+\section{Abfragen in Abfragen: Unterabfragen}\label{sec:unterabfragen}
+Eine Unterabfrage (engl. \textit{subquery}) ist eine \lstinline|SELECT|-Abfrage, die in Klammern innerhalb einer anderen Abfrage steht. Die Datenbank führt zuerst die innere Abfrage aus und verwendet deren Resultat in der äusseren Abfrage. So lassen sich Fragen beantworten, für die man sonst zwei Abfragen nacheinander bräuchte.
+
+\begin{myexample}\label{myexample:subquery-avg}
+Folgender Code gibt alle Mitglieder aus, die grösser sind als der Durchschnitt aller Mitglieder:
+\begin{lstlisting}
+SELECT name, centimeters
+FROM users
+WHERE centimeters > (SELECT AVG(centimeters) FROM users)
+\end{lstlisting}
+Die innere Abfrage liefert genau einen Wert (die durchschnittliche Grösse). Deshalb kann sie mit \lstinline|>|, \lstinline|<| oder \lstinline|=| verglichen werden.
+\end{myexample}
+
+\begin{myexample}\label{myexample:subquery-in}
+Liefert die innere Abfrage mehrere Werte, wird sie mit \lstinline|IN| verwendet. Folgender Code gibt alle Kommentare von Mitgliedern aus Hamburg aus:
+\begin{lstlisting}
+SELECT user_id, body
+FROM comments
+WHERE user_id IN (SELECT id FROM users WHERE city = 'Hamburg')
+\end{lstlisting}
+Die innere Abfrage liefert die \texttt{id} aller Mitglieder aus Hamburg, die äussere Abfrage sucht in \texttt{comments} alle Kommentare dieser Mitglieder.
+\end{myexample}
+
+\begin{myexercise}
+  Geben Sie Namen und Grösse aller Mitglieder aus, die gleich gross sind wie das grösste Mitglied.
+  \begin{myanswer}
+    \begin{lstlisting}
+SELECT name, centimeters
+FROM users
+WHERE centimeters = (SELECT MAX(centimeters) FROM users)
+\end{lstlisting}
+  \end{myanswer}
+\end{myexercise}
+
+\begin{myexercise}
+  Geben Sie die Beschreibungen (\texttt{description}) aller Fotos aus, die von Mitgliedern aus Leipzig hochgeladen wurden.
+  \begin{myanswer}
+    \begin{lstlisting}
+SELECT description
+FROM photos
+WHERE user_id IN (SELECT id FROM users WHERE city = 'Leipzig')
+\end{lstlisting}
+  \end{myanswer}
+\end{myexercise}

@@ -1,6 +1,9 @@
 \newgeometry{margin=.5cm}
+% \centering nur innerhalb dieses Anhangs
+\begingroup
 \centering
-\section*{Flowchart: SQL-Abfrageprozess}
+\section*{Flowchart: Aufbau einer SQL-Abfrage (Reihenfolge beim Schreiben)}
+{\small Die Nummern zeigen die Reihenfolge, in der die Teile einer Abfrage geschrieben werden. Die Datenbank wertet sie in einer anderen Reihenfolge aus: \lstinline|FROM|/\lstinline|JOIN| $\rightarrow$ \lstinline|WHERE| $\rightarrow$ \lstinline|GROUP BY| $\rightarrow$ \lstinline|HAVING| $\rightarrow$ \lstinline|SELECT| $\rightarrow$ \lstinline|ORDER BY| $\rightarrow$ \lstinline|LIMIT|. Deshalb kennt \lstinline|WHERE| z.B. in MySQL die mit \lstinline|AS| vergebenen Namen noch nicht.\par}
 \pagestyle{empty}
 \begin{figure}[H]
   \centering
@@ -153,5 +156,8 @@
 
   \end{tikzpicture}
 \end{figure}
+\endgroup
 
+% Seitenränder und Kopfzeile für die folgenden Seiten (Glossar) zurücksetzen
 \restoregeometry
+\pagestyle{fancy}

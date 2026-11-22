@@ -4,7 +4,7 @@
 
 Damit ein Game auch einen Highscore speichern kann, welcher beim nächsten Spielstart angezeigt wird, muss es an eine Datenbank angeschlossen werden, in der die Daten permanent gespeichert werden können. Dies kann in Python mithilfe der Library \lstinline|sqlite3| geschehen, welche die Interaktion mit einer SQLite-Datenbank ermöglicht. SQLite ist eine leichtgewichtige, serverlose Datenbank, welche sich hervorragend für lokale Anwendungen wie unser Python-Game eignet.
 
-In diesem Kapitel werden wir ein unser Python-Game an eine Datenbank anschliessen, um neue Funktionalitäten wie ein Login-Fenster, einen Highscore und weitere Dinge zu ermöglichen. Hierzu möchten wir als erstes folgende Tabellen erstellen:
+In diesem Kapitel werden wir unser Python-Game an eine Datenbank anschliessen, um neue Funktionalitäten wie ein Login-Fenster, einen Highscore und weitere Dinge zu ermöglichen. Hierzu möchten wir als Erstes folgende Tabellen erstellen:
 
 
 \begin{figure}[H]
@@ -59,13 +59,13 @@ from prettytable import *   # Befehle zur Ausgabe von Tabellen
 with connect("game.db") as con:
     # Datenbank-Cursor (=Lese/Schreibestift) holen
     cursor = con.cursor()
-    
+
     #TODO Mehrzeiliger SQL-Code zur Erstellung einer Tabelle
     sql = """
         CREATE TABLE IF NOT EXISTS users (
            ...
     """
-    
+
     # SQL ausführen
     cursor.execute(sql)
 
@@ -92,26 +92,26 @@ CREATE TABLE IF NOT EXISTS users(
     \begin{enumerate}
         \item Einzelne Werte ausgeben:
               \begin{lstlisting}
-cursor.execute("SELECT * FROM games")
+cursor.execute("SELECT * FROM scores")
 resultset = cursor.fetchall()
 # gib die dritte Spalte (2) der ersten Zeile (0) aus
-print(resultset[0][2]) 
+print(resultset[0][2])
 \end{lstlisting}
 
         \item Um eine ganze Tabelle, schön dargestellt auszugeben, muss die Library \lstinline|prettytable| geladen und wie folgt verwendet werden:
               \begin{lstlisting}
 from prettytable import *
 
-# ... 
+# ...
 
-cursor.execute("SELECT * FROM games")
+cursor.execute("SELECT * FROM scores")
 printTable(cursor)
 \end{lstlisting}
     \end{enumerate}
 \end{myexample}
 
 \begin{myexercise}[Benutzer-Registrierung]
-    Schreiben Sie ein Programm, um Sie mittels \lstinline|input("...")| nach einem Benutzernamen und Passwort zu fragen. Beides sollte danach mit Insert in der Tabelle \texttt{users} abgespeichert werden. Überprüfen Sie am Ende das Resultat mit folgendem Code:
+    Schreiben Sie ein Programm, um Sie mittels \lstinline|input("...")| nach einem Benutzernamen und Passwort zu fragen. Beides sollte danach mit \lstinline[style=sql]|INSERT| in der Tabelle \texttt{users} abgespeichert werden. Überprüfen Sie am Ende das Resultat mit folgendem Code:
     \begin{lstlisting}
 sql = "SELECT * FROM users"
 cursor.execute(sql)
@@ -120,7 +120,7 @@ printTable(cursor)
     \textbf{Tipp}: Mit dem Text-Befehl \lstinline|.format()| lassen sich die Variablen-Werte innerhalb der Platzhalter \lstinline|{}| in einen Text einfügen.
 
     \begin{lstlisting}
-sql = """INSERT INTO users (name, password)
+sql = """INSERT INTO users (user, password)
         VALUES('{}', '{}')""".format(username, password)
 \end{lstlisting}
     Die drei Anführungszeichen ermöglichen es, Texte über mehrere Zeilen zu schreiben.
@@ -133,23 +133,23 @@ from prettytable import * # Befehle zur Ausgabe von Tabellen
 with connect("game.db") as con:
     # Datenbank-Cursor (=Lese/Schreibestift) holen
     cursor = con.cursor()
-    
+
     # Benutzername und Passwort abfragen
     username = input("Enter username")
     password = input("Enter password")
-    
+
     # SQL-Code zum Einfügen eines neuen Datensatzes
     sql = """
         INSERT INTO users (user, password)
         VALUES
             ('{}', '{}')
     """.format(username, password)
-    
+
     # SQL ausführen
     cursor.execute(sql)
-    
+
     # Tabelle ausgeben
-    sql = "SELECT * FROM users"    
+    sql = "SELECT * FROM users"
     cursor.execute(sql)
     printTable(cursor)
 
@@ -158,18 +158,21 @@ with connect("game.db") as con:
 \end{myexercise}
 
 \begin{mychallenge}[SQL-Injection verhindern]
-    Das obige Programm ist anfällig für sogenannte SQL-Injections, d.h., böswillige BenutzerInnen könnten als Benutzernamen oder Passwort einen SQL-Befehl eingeben, welcher dann von der Datenbank ausgeführt wird. Zum Beispiel könnte jemand als Benutzernamen folgenden Text eingeben:
-\begin{lstlisting}'); DROP TABLE users; --
-\end{lstlisting}
-    Der SQL-Befehl, welcher dann von der Datenbank ausgeführt wird, lautet dann:
+    Das obige Programm fügt die Benutzereingaben mit \lstinline|.format()| direkt in den SQL-Befehl ein. Es ist dadurch anfällig für sogenannte SQL-Injections: Böswillige BenutzerInnen können ihre Eingabe so wählen, dass sich der SQL-Befehl selbst verändert. Besonders gefährlich ist dies bei einem Login, der Benutzername und Passwort in einer einzigen Abfrage prüft:
 \begin{lstlisting}
-INSERT INTO users (user, password)
-VALUES
-    (''); DROP TABLE users; --', '...')
+sql = """
+    SELECT * FROM users
+    WHERE user = '{}' AND password = '{}'
+""".format(username, password)
 \end{lstlisting}
-    Dieser Befehl würde die Tabelle \texttt{users} löschen, was natürlich nicht erwünscht ist.    
-    
-    Verhindern Sie dies, indem Sie die Benutzereingaben mit einem sogenannten \textit{Prepared Statement} in den SQL-Befehl einfügen:
+    Gibt jemand einen bestehenden Benutzernamen, z.B. \texttt{alice}, und als Passwort den Text \lstinline|' OR '1'='1| ein, führt die Datenbank folgenden Befehl aus:
+\begin{lstlisting}[style=sql]
+SELECT * FROM users
+WHERE user = 'alice' AND password = '' OR '1'='1'
+\end{lstlisting}
+    Weil \lstinline[style=sql]|AND| vor \lstinline[style=sql]|OR| ausgewertet wird und \lstinline[style=sql]|'1'='1'| immer wahr ist, liefert die Abfrage alle Benutzer zurück. Ein Programm, das bei einem Treffer den Login erlaubt, lässt die Person also ohne Passwort herein. Angriffe mit einem zweiten Befehl wie \lstinline[style=sql]|'); DROP TABLE users; --| scheitern in Python an \lstinline|cursor.execute()|, weil diese Methode nur einen einzigen SQL-Befehl ausführt. Mit \lstinline|cursor.executescript()| oder in anderen Programmiersprachen funktionieren auch sie.
+
+    Verhindern Sie SQL-Injections, indem Sie die Benutzereingaben mit einem sogenannten \textit{Prepared Statement} in den SQL-Befehl einfügen:
     \begin{lstlisting}
 sql = """
     INSERT INTO users (user, password)
@@ -178,7 +181,7 @@ sql = """
 """
 cursor.execute(sql, (username, password))
 \end{lstlisting}
-Die Fragezeichen \lstinline|?| dienen als Platzhalter für die Werte, welche in der zweiten Zeile als tuple übergeben werden. Auf diese Weise wird sichergestellt, dass die Benutzereingaben nicht als SQL-Befehle interpretiert werden können, sondern nur als Werte in die Tabelle eingefügt werden.
+Die Fragezeichen \lstinline|?| dienen als Platzhalter für die Werte, welche in der zweiten Zeile als Tupel übergeben werden. Auf diese Weise wird sichergestellt, dass die Benutzereingaben nicht als SQL-Befehle interpretiert werden können, sondern nur als Werte in die Tabelle eingefügt werden.
     \begin{myanswer}
         \begin{lstlisting}
 from sqlite3 import *
@@ -224,18 +227,18 @@ with connect("game.db") as con:
     while True:
         username = input("Enter username")
         sql = """
-            SELECT * 
+            SELECT *
             FROM users
-            WHERE user = '{}'
-        """.format(username)
-        cursor.execute(sql)
+            WHERE user = ?
+        """
+        cursor.execute(sql, (username,))
         resultset = cursor.fetchall()
         if len(resultset) == 0:
-            # Noch unbenutzer Benutzernamen --> alles OK
+            # Noch unbenutzter Benutzername --> alles OK
             break
         else:
             print("This username is already taken. Choose a different one!")
-    
+
     password = input("Enter password")
 
     # Restlicher Code
@@ -244,8 +247,8 @@ with connect("game.db") as con:
     \end{myanswer}
 \end{mychallenge}
 
-\begin{mychallenge}[Passwort verschlüsseln]
-    In der Praxis werden Passwörter nicht im Klartext in Datenbanken gespeichert, sondern mit einer kryptografischen Einwegfunktion, einem sogenannten \textit{hash}, verschlüsselt. Dies dient dazu, dass nicht einmal der Administrator einer Webseite, welcher Zugriff auf die Datenbank hat, die Passwörter der BenutzerInnen lesen kann. Sie können anstelle des Passworts die Ausgabe der SHA1-Hashfunktion des Passworts wie folgt speichern:
+\begin{mychallenge}[Passwort hashen]
+    In der Praxis werden Passwörter nicht im Klartext in Datenbanken gespeichert, sondern als \textit{Hashwert}. Eine Hashfunktion ist eine kryptografische Einwegfunktion: Sie berechnet aus dem Passwort einen Wert fester Länge, aus dem sich das Passwort nicht zurückrechnen lässt. Im Unterschied zu einer Verschlüsselung gibt es keinen Schlüssel und keine Entschlüsselung. Beim Login wird das eingegebene Passwort erneut gehasht und mit dem gespeicherten Hashwert verglichen. So kann nicht einmal der Administrator einer Webseite, welcher Zugriff auf die Datenbank hat, die Passwörter der BenutzerInnen lesen. Sie können anstelle des Passworts die Ausgabe der SHA-1-Hashfunktion des Passworts wie folgt speichern:
     \begin{lstlisting}
 import hashlib
 password = 'helloworld!'              # Ihr Klartext-Passwort zum "hashen"
@@ -253,8 +256,8 @@ hash_object = hashlib.sha1()          # SHA-1-Hash-Objekt erstellen
 hash_object.update(password.encode()) # Hash-Objekt updaten mit der Byte-Darstellung des Passworts
 hex_dig = hash_object.hexdigest()     # Hexadezimale Darstellung erhalten
 print("SHA-1 Hash:", hex_dig)         # Hash ausgeben
-
 \end{lstlisting}
+    \textbf{Hinweis}: SHA-1 eignet sich für diese Übung, ist für echte Passwörter aber zu schnell berechnet. Angreifer können damit Milliarden von Passwörtern pro Sekunde durchprobieren. In der Praxis verwendet man deshalb absichtlich langsame Verfahren wie bcrypt oder Argon2 und ergänzt jedes Passwort vor dem Hashen mit einem zufälligen Wert (\textit{Salt}), damit gleiche Passwörter unterschiedliche Hashwerte erhalten. InstaHub speichert seine Passwörter zum Beispiel mit bcrypt.
     \begin{myanswer}
         \begin{lstlisting}
 from sqlite3 import *
@@ -279,7 +282,7 @@ while True:
     username = input("Enter username")
 
     # TODO Den User mit diesem Benutzernamen in der Tabelle users suchen
-    
+
     if True: # TODO Bedingung anpassen: Wenn der User gefunden wurde…
         break
     else:
@@ -299,32 +302,32 @@ from sqlite3 import *
 
 with connect("game.db") as con:
     cursor = con.cursor()
-    
+
     while True:
         username = input("Enter username")
-    
+
         # Den User mit diesem Benutzernamen in der Tabelle users suchen
         sql = """
-            SELECT * 
+            SELECT *
             FROM users
-            WHERE user = '{}'
-        """.format(username)
-        cursor.execute(sql)
+            WHERE user = ?
+        """
+        cursor.execute(sql, (username,))
         resultset = cursor.fetchall()
-        
+
         if len(resultset) > 0: # Wenn der User gefunden wurde...
             break
         else:
             print("Unknown user. Try again.")
-    
+
     while True:
         password = input("Enter password")
-    
+
         if resultset[0][2] == password: # Wenn das eingegebene Passwort stimmt
             break
         else:
             print("Incorrect password. Try again.")
-            
+
     print("Welcome", username)
 
 \end{lstlisting}
@@ -332,9 +335,9 @@ with connect("game.db") as con:
 \end{myexercise}
 
 \begin{myexercise}[\texttt{scores}-Tabelle mit Game verknüpfen]
-    Schreiben Sie ein Programm zur Erstellung der \texttt{scores}-Tabelle und erweitern Sie ihr Game so, dass am Ende jedes Spiels die Punktzahl darin abgespeichert wird.
+    Schreiben Sie ein Programm zur Erstellung der \texttt{scores}-Tabelle und erweitern Sie Ihr Game so, dass am Ende jedes Spiels die Punktzahl darin abgespeichert wird.
 
-    \texttt{Tipp}: Verwenden Sie den SQL-Befehl \lstinline[style=sql]|DATETIME('NOW')|, um die aktuelle Datums- und Zeit-Angabe zu erhalten.
+    \textbf{Tipp}: Verwenden Sie den SQL-Befehl \lstinline[style=sql]|DATETIME('NOW')|, um die aktuelle Datums- und Zeit-Angabe zu erhalten.
     \begin{myanswer}
         \begin{lstlisting}
 # ...
@@ -343,13 +346,13 @@ with connect("game.db") as con:
     # Datenbank-Cursor (=Lese/Schreibestift) holen
     cursor = con.cursor()
 
-   # Benutzername abfragen
+    # Punktzahl speichern
     sql = """
-        INSERT INTO scores (user_id, achieved_score, achieved_date)
+        INSERT INTO scores (user_id, score, date_score)
         VALUES
-            ({}, {}, DATETIME('NOW'))
-    """.format(user_id, score)
- 
+            (?, ?, DATETIME('NOW'))
+    """
+    cursor.execute(sql, (user_id, score))
 
 \end{lstlisting}
     \end{myanswer}
@@ -363,19 +366,19 @@ from sqlite3 import *
 
 with connect("game.db") as con:
     cursor = con.cursor()
-    
+
     #TODO TOP 10 scores inkl. Userdaten auslesen
     sql = """
         SELECT *
         FROM scores s
         JOIN users u ON u.id = s.user_id
-        ORDER BY s.achieved_score DESC
+        ORDER BY s.score DESC
         LIMIT 10
     """
-    
+
     cursor.execute(sql)
     resultset = cursor.fetchall()
-    
+
     for i in range(len(resultset)):
         hs = resultset[i]
         print(i+1, " User:", hs[5], "    Points:", hs[2])
@@ -386,7 +389,7 @@ with connect("game.db") as con:
 \end{myexercise}
 
 \begin{mychallenge}
-    Erstellen Sie einen Super-User und verändern Sie ihr Spiel so, dass die Grafik verändert wird, wenn der Super-User eingeloggt ist (z.B. wird ein goldener Ball statt einem normalen Ball angezeigt). Lassen Sie Ihrer Kreativität freien Lauf!
+    Erstellen Sie einen Super-User und verändern Sie Ihr Spiel so, dass die Grafik verändert wird, wenn der Super-User eingeloggt ist (z.B. wird ein goldener Ball statt einem normalen Ball angezeigt). Lassen Sie Ihrer Kreativität freien Lauf!
 \end{mychallenge}
 
 \begin{mychallenge}

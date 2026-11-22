@@ -1,7 +1,8 @@
-\section{ERM}
+\chapter{Mehrere Tabellen}\label{ch:mehrere-tabellen}
+\section{\texorpdfstring{\glsentryshort{ERM}}{ERM}}\label{sec:erm}
 
 
-Ein \acrfull{ERM} ist eine abstrakte Darstellung der Tabellen (Entities), die in einer Datenbank angelegt sind, sowie der Beziehungen (Relationships) zwischen den Tabellen. Jede Tabelle kann mehrere Kolonnen (=Attribute) haben.
+Ein \gls{ERM} ist eine abstrakte Darstellung der Tabellen (Entities), die in einer Datenbank angelegt sind, sowie der Beziehungen (Relationships) zwischen den Tabellen. Jede Tabelle kann mehrere Kolonnen (=Attribute) haben.
 
 Wenn man eine Datenbank erstellt, kann es nützlich sein, zuerst ein \gls{ERM} aufzuzeichnen, um sich zu überlegen, welche Tabellen es braucht.
 
@@ -23,12 +24,13 @@ Das \gls{ERM} des sozialen Netzwerks InstaHub ist in \cref{fig:erm-instahub} abg
     \node[entity] (pwreset) at (-4,-2) {password\_resets};
 
     % Edges
-    \draw (user) -- (follows) node[midway, above] {m};
-    \draw (follows) -- (user) node[midway, below] {n};
+    % Selbstbezug users-users: zwei getrennte Linien
+    \draw (user) to[bend right=25] node[midway, above] {m} (follows);
+    \draw (follows) to[bend right=25] node[midway, below] {n} (user);
     \draw (user) -- (owns) node[midway, above] {1};
     \draw (owns) -- (photo) node[midway, above] {n};
-    \draw (photo) -- (has) node[midway, above] {n};
-    \draw (has) -- (tag) node[midway, above] {m};
+    \draw (photo) -- (has) node[midway, above] {1};
+    \draw (has) -- (tag) node[midway, above] {n};
     \draw (user) -- (comments) node[midway, above] {n};
     \draw (comments) -- (photo) node[midway, above] {m};
     \draw (user) -- (likes) node[midway, left] {n};
@@ -71,17 +73,18 @@ Die \textit{entities}, die meistens einer Tabelle entsprechen, werden als Rechte
 Die Zahlen über den Strichen bezeichnen die \textbf{Kardinalität} der Beziehungen: Mit der Kardinalität wird ausgedrückt, wie viele Entitäten mit einer anderen Entität in Verbindung stehen können oder müssen:
 \begin{itemize}
   \item \textbf{Eins-zu-Eins (1:1)}: Dies wird normalerweise angezeigt, indem eine \enquote{1} in der Nähe beider Entitäten platziert wird, die durch eine Beziehung verbunden sind. Es bedeutet, dass eine Instanz einer Entität mit genau einer Instanz einer anderen Entität assoziiert ist.
-  \item \textbf{Eins-zu-Viele (1:n)}: Dies wird dargestellt, indem eine \enquote{1} in der Nähe der Entität auf der 'eins'-Seite der Beziehung und ein \enquote{n} oder \enquote{m} (für \enquote{\textit{many}}=viele) in der Nähe der Entität auf der \enquote{viele}-Seite der Beziehung platziert wird. Es zeigt an, dass eine Instanz der ersten Entität mit null, einer oder mehreren Instanzen der zweiten Entität assoziiert sein kann, aber eine Instanz der zweiten Entität nur mit einer Instanz der ersten Entität assoziiert sein kann.
+  \item \textbf{Eins-zu-Viele (1:n)}: Dies wird dargestellt, indem eine \enquote{1} in der Nähe der Entität auf der \enquote{eins}-Seite der Beziehung und ein \enquote{n} oder \enquote{m} (für \enquote{\textit{many}}=viele) in der Nähe der Entität auf der \enquote{viele}-Seite der Beziehung platziert wird. Es zeigt an, dass eine Instanz der ersten Entität mit null, einer oder mehreren Instanzen der zweiten Entität assoziiert sein kann, aber eine Instanz der zweiten Entität nur mit einer Instanz der ersten Entität assoziiert sein kann.
   \item \textbf{Viele-zu-Viele (m:n)}: Dies wird gezeigt, indem ein \enquote{m} oder \enquote{n} in der Nähe beider Entitäten platziert wird. Es zeigt an, dass Instanzen der ersten Entität mit null, einer oder mehreren Instanzen der zweiten Entität assoziiert sein können und umgekehrt.
 \end{itemize}
+Manchmal wird zusätzlich angegeben, ob eine Beziehung optional ist. Die Angabe \enquote{0:1} bedeutet dann \enquote{keine oder eine}, während \enquote{1} für \enquote{genau eine} steht.
 
 Folgende Fakten können beispielsweise am \gls{ERM} in \cref{fig:erm-instahub} abgelesen werden:
 \begin{itemize}
   \item Jeder \texttt{user} kann beliebig viele (oder 0) \texttt{comments} schreiben.
-  \item Jeder \texttt{user} kann beliebig vielen (oder 0) anderen Usern followen und kann von beliebig vielen (oder 0) andern usern gefollowt werden.
-  \item Jedes Foto kann beliebig viele (oder 0) Tags haben. Jeder Tag kann auf \texttt{n} Fotos angewandt werden.
-  \item Jedes Fotos gehört genau zu einem Benutzerprofil (\texttt{owns}). Jedes Benutzerprofil kann beliebig viele (oder 0) Fotos veröffentlichen.
-  \item Jeder \texttt{user} kann sein Passwort beliebig viele male (oder 0 mal) zurückgesetzt haben. Jedes des \texttt{password\_resets} kann aber nur einen \texttt{user} betreffen.
+  \item Jeder \texttt{user} kann beliebig vielen (oder 0) anderen Usern followen und kann von beliebig vielen (oder 0) anderen Usern gefollowt werden.
+  \item Jedes Foto kann beliebig viele (oder 0) Tags haben. Jeder Eintrag in \texttt{tags} gehört aber zu genau einem Foto (die Tabelle \texttt{tags} enthält dafür die Kolonne \texttt{photo\_id}).
+  \item Jedes Foto gehört zu genau einem Benutzerprofil (\texttt{owns}). Jedes Benutzerprofil kann beliebig viele (oder 0) Fotos veröffentlichen.
+  \item Jeder \texttt{user} kann sein Passwort beliebig oft (oder nie) zurückgesetzt haben. Jeder Eintrag in \texttt{password\_resets} betrifft aber genau einen \texttt{user}.
 \end{itemize}
 
 
@@ -129,16 +132,18 @@ Folgende Fakten können beispielsweise am \gls{ERM} in \cref{fig:erm-instahub} a
     \begin{tikzpicture}
       % Entitäten
       \node[entity] (aerzte) at (0,0) {Ärzte};
-      \node[entity] (patienten) at (0,-3) {Patienten};
-      \node[entity] (behandlungen) at (7,-1.5) {Behandlungen};
+      \node[entity] (behandlungen) at (6,0) {Behandlungen};
+      \node[entity] (patienten) at (12,0) {Patienten};
 
-      % Beziehungen
-      \node[relationship] (behandelt) at (2.5,-1.5) {behandelt};
+      % Beziehungen (zwei binäre Beziehungen)
+      \node[relationship] (fuehrtdurch) at (3,0) {führt durch};
+      \node[relationship] (erhaelt) at (9,0) {erhält};
 
       % Kanten
-      \draw (aerzte) -- (behandelt) node[midway,above]{n};
-      \draw (behandelt) -- (behandlungen) node[midway,above]{m};
-      \draw (patienten) -- (behandelt) node[midway,below]{1};
+      \draw (aerzte) -- (fuehrtdurch) node[midway,above]{1};
+      \draw (fuehrtdurch) -- (behandlungen) node[midway,above]{n};
+      \draw (behandlungen) -- (erhaelt) node[midway,above]{1};
+      \draw (erhaelt) -- (patienten) node[midway,above]{1};
 
     \end{tikzpicture}
     \caption{ERM eines Krankenhaus-Datenbanksystems}
@@ -146,7 +151,7 @@ Folgende Fakten können beispielsweise am \gls{ERM} in \cref{fig:erm-instahub} a
   \end{figure}
   Bewerten Sie das dargestellte ERM. Sind die Kardinalitäten korrekt angegeben?
   \begin{myanswer}
-    In dem dargestellten ERM wird angenommen, dass ein Arzt mehrere Behandlungen durchführen kann (n:m-Beziehung) und dass jeder Patient genau eine Behandlung erhält (1:m-Beziehung). Diese Annahme ist jedoch nicht ganz realistisch, da ein Patient mehrere Behandlungen erhalten könnte. Die Kardinalität zwischen \enquote{Patienten} und \enquote{behandelt} sollte daher m sein, um anzugeben, dass ein Patient mehrere Behandlungen erhalten kann.
+    Die Beziehung \enquote{führt durch} ist plausibel: Ein Arzt führt beliebig viele Behandlungen durch, und jede Behandlung wird von genau einem Arzt durchgeführt (1:n). Die Beziehung \enquote{erhält} ist dagegen als 1:1 angegeben, d.h. jeder Patient erhält genau eine Behandlung. Das ist nicht realistisch, da ein Patient mehrere Behandlungen erhalten kann. Zwischen \enquote{erhält} und \enquote{Behandlungen} sollte deshalb \texttt{n} stehen (1:n: ein Patient, viele Behandlungen, jede Behandlung betrifft genau einen Patienten).
   \end{myanswer}
 \end{myexercise}
 
@@ -154,9 +159,9 @@ Folgende Fakten können beispielsweise am \gls{ERM} in \cref{fig:erm-instahub} a
 \clearpage
 
 
-\section{Informationen aus mehrere Tabellen kombinieren}
+\section{Informationen aus mehreren Tabellen kombinieren}
 \subsection{Primärschlüssel}
-Wie in \cref{subsec:tables} diskutiert wurde, besitzen Tabellen häufig sogenannte Primärschlüssel (en. \textit{primary keys}). \cref{table:angestellte} beispielsweise verwendet einen Primärschlüssel \underline{mID} (blaue Kolonne, hervorgehoben mit dem Symbol \emoji{key}).
+Wie in \cref{subsec:tables} diskutiert wurde, besitzen Tabellen häufig sogenannte Primärschlüssel (engl. \textit{primary keys}). \cref{table:angestellte} beispielsweise verwendet einen Primärschlüssel \underline{mID} (blaue Kolonne, hervorgehoben mit dem Symbol \emoji{key}).
 
 \begin{table}[H]
   \centering
@@ -173,15 +178,15 @@ Wie in \cref{subsec:tables} diskutiert wurde, besitzen Tabellen häufig sogenann
 
 Dieser dient in erster Linie dazu, einen Eintrag (in diesem Fall eine Person) eindeutig zu identifizieren. Weshalb ist das nötig?
 
-Zwei Hauptgründe seine angegeben:
+Zwei Hauptgründe seien angegeben:
 
 \begin{itemize}
   \item \textbf{Eindeutigkeit}: Es könnte sein, dass zwei Personen gleich heissen. In diesem Fall ist es hilfreich, eine eindeutige Identifikationsnummer (oder einen eindeutigen Text) zu haben, um Information zu genau \textit{einer} der beiden Personen abfragen zu können.
-  \item \textbf{Dauerhaftigkeit}: Es könnte sein, dass eine Person den Namen wechselt. In diesem Fall möchte man eine eindeutige Identifikationsnummer haben, damit die Informationen zu den Personen wie etwa der Gehalt oder die Abteilung weiterhin eindeutig zur selben Person gehören (und abgefragt werden können).
+  \item \textbf{Dauerhaftigkeit}: Es könnte sein, dass eine Person den Namen wechselt. In diesem Fall möchte man eine eindeutige Identifikationsnummer haben, damit die Informationen zu den Personen wie etwa das Gehalt oder die Abteilung weiterhin eindeutig zur selben Person gehören (und abgefragt werden können).
 \end{itemize}
 
 \subsection{Fremdschlüssel}
-Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (en. \textit{foreign keys}) besitzen, die sich auf Primärschlüssel von anderen Tabellen beziehen. Dies erlaubt, Informationen aus mehreren Tabellen zu kombinieren. Gegeben sei folgendes Beispiel mit je einer Tabellen zu Angestellten und Abteilungen (\cref{table:angestellte2}, \cref{table:abteilungen}).
+Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (engl. \textit{foreign keys}) besitzen, die sich auf Primärschlüssel von anderen Tabellen beziehen. Dies erlaubt, Informationen aus mehreren Tabellen zu kombinieren. Gegeben sei folgendes Beispiel mit je einer Tabelle zu Angestellten und Abteilungen (\cref{table:angestellte2}, \cref{table:abteilungen}).
 
 \begin{minipage}{.48\textwidth}
   \centering
@@ -223,23 +228,49 @@ Nebst Primärschlüsseln können Tabellen auch sogenannte Fremdschlüssel (en. \
   \end{table}
 \end{minipage}
 
-In diesem Beispiel hat die Tabelle \enquote{Angestellte} nicht nur einen Primärschlüssel \texttt{mID}, sondern auch einen Fremdschlüssel \texttt{aID} (hervorgehoben mit dem Symbol \faKey), der auf den Primärschlüssel mit demselben Name der Tabelle \enquote{Abteilungen} verweist. Angenommen wir möchten nun (mit SQL, nicht mit manuellem Nachschauen) herausfinden, in welcher Abteilung die Person \enquote{Kaufmann} arbeitet, wie lassen sich nun die Informationen aus beiden Tabellen kombinieren?
+In diesem Beispiel hat die Tabelle \enquote{Angestellte} nicht nur einen Primärschlüssel \texttt{mID}, sondern auch einen Fremdschlüssel \texttt{aID} (hervorgehoben mit dem Symbol \faKey), der auf den Primärschlüssel mit demselben Namen in der Tabelle \enquote{Abteilungen} verweist. Angenommen, wir möchten nun (mit SQL, nicht mit manuellem Nachschauen) herausfinden, in welcher Abteilung die Person \enquote{Kaufmann} arbeitet, wie lassen sich nun die Informationen aus beiden Tabellen kombinieren?
+
+\subsection{Redundanz vermeiden: 1:n- und n:m-Beziehungen}\label{subsec:redundanz}
+Weshalb verteilt man die Daten überhaupt auf mehrere Tabellen? Angenommen, InstaHub würde die Fotos direkt in der Tabelle \texttt{users} speichern, z.B. mit einer zusätzlichen Kolonne \texttt{url}. Lädt ein Mitglied mehrere Fotos hoch, bräuchte es für jedes Foto eine eigene Zeile, in der alle Angaben zum Mitglied (\texttt{username}, \texttt{email}, \texttt{password} usw.) wiederholt werden. Das hat zwei Nachteile:
+\begin{itemize}
+  \item Es braucht viel mehr Speicherplatz.
+  \item Ändert ein Mitglied z.B. seine E-Mail-Adresse, muss diese an vielen Stellen angepasst werden. Wird eine Stelle vergessen, widersprechen sich die Daten.
+\end{itemize}
+Kommt dieselbe Information in einer Datenbank mehrfach vor, spricht man von \textbf{Redundanz}. Ein wichtiges Ziel beim Aufbau einer Datenbank ist es, Redundanz zu vermeiden.
+
+\textbf{1:n-Beziehung}: InstaHub speichert die Fotos deshalb in einer eigenen Tabelle \texttt{photos}. Jedes Foto enthält im Fremdschlüssel \texttt{user\_id} die \texttt{id} des Mitglieds, dem es gehört. Ein Mitglied kann so beliebig viele Fotos haben, jedes Foto gehört aber zu genau einem Mitglied.
+
+\textbf{n:m-Beziehung}: Bei Likes kann ein Mitglied viele Fotos liken, und ein Foto kann von vielen Mitgliedern geliked werden. Eine solche Beziehung lässt sich nicht mit einem einzigen Fremdschlüssel abbilden. Man verwendet dafür eine \textbf{Zwischentabelle} mit zwei Fremdschlüsseln, einem für jede beteiligte Tabelle (siehe \cref{table:likes}).
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|l}
+    \faKey{} \texttt{user\_id} & \faKey{} \texttt{photo\_id} \\\midrule
+    11                         & 32                          \\
+    11                         & 42                          \\
+    12                         & 42                          \\
+  \end{tabular}
+  \caption{Vereinfachte Zwischentabelle \enquote{likes}}
+  \label{table:likes}
+\end{table}
+
+In diesem Beispiel hat das Mitglied mit der \texttt{id} 11 die Fotos 32 und 42 geliked, das Foto 42 hat zudem einen Like von Mitglied 12 erhalten. Die Tabelle \texttt{likes} von InstaHub enthält zusätzlich eine eigene \texttt{id} sowie den Zeitpunkt des Likes. Nach demselben Prinzip bilden die Zwischentabellen \texttt{comments} (Mitglieder kommentieren Fotos) und \texttt{follows} (Mitglieder folgen Mitgliedern) n:m-Beziehungen ab.
 
 
 
-\subsection{\texorpdfstring{Tabellen verbinden mit oder ohne \lstinline|JOIN|}{Tabellen verbinden mit oder ohne JOIN}}
+\subsection{\texorpdfstring{Tabellen verbinden mit oder ohne \lstinline|JOIN|}{Tabellen verbinden mit oder ohne JOIN}}\label{subsec:join-using}
 
 \begin{myexample}
 Eine erste Möglichkeit, \cref{table:angestellte2} mit \cref{table:abteilungen} zu verbinden, besteht darin, einfach beide Tabellen \enquote{aufzurufen}:
 \begin{lstlisting}
 SELECT *
-FROM Angestellte, Abteilung
+FROM Angestellte, Abteilungen
 \end{lstlisting}
 
 \begin{table}[H]
   \centering
   \begin{tabular}{l|l|a|a|l}
-    mID & Name     & \rot{Angestellte.aID} & \rot{Abteilung.aID} & Abteilung \\\midrule
+    mID & Name     & \rot{Angestellte.aID} & \rot{Abteilungen.aID} & Abteilung \\\midrule
     1   & Müller   & 31                    & 31                  & Verkauf   \\
     1   & Müller   & 31                    & 32                  & Technik   \\
     1   & Müller   & 31                    & 33                  & Marketing \\
@@ -248,7 +279,7 @@ FROM Angestellte, Abteilung
     2   & Schmidt  & 32                    & 32                  & Technik   \\
     2   & Schmidt  & 32                    & 33                  & Marketing \\
     2   & Schmidt  & 32                    & ...                 & ...       \\
-    3   & Kaufmann & 31                    & ...                 & ...       \\
+    3   & Kaufmann & 32                    & ...                 & ...       \\
     ... & ...      & ...                   & ...                 & ...
   \end{tabular}
 \end{table}
@@ -261,15 +292,15 @@ Wir könnten nun die Auswahl einfach eingrenzen, indem wir zwei Filter einfügen
 
 \begin{lstlisting}
 SELECT *
-FROM Angestellte, Abteilung
-WHERE Angestellte.aID = Abteilung.aID
-AND Name = "Kaufmann"
+FROM Angestellte, Abteilungen
+WHERE Angestellte.aID = Abteilungen.aID
+AND Name = 'Kaufmann'
 \end{lstlisting}
 
 \begin{table}[H]
   \centering
   \begin{tabular}{l|l|a|a|l}
-    mID & Name     & \rot{Angestellte.aID} & \rot{Abteilung.aID} & Abteilung \\\midrule
+    mID & Name     & \rot{Angestellte.aID} & \rot{Abteilungen.aID} & Abteilung \\\midrule
     3   & Kaufmann & 32                    & 32                  & Technik   \\
   \end{tabular}
 \end{table}
@@ -284,8 +315,8 @@ Die Tatsache, dass unsere Abfrage mehrere Kolonnen \texttt{aID} zurückgibt, mag
 
 \begin{lstlisting}
 SELECT *
-FROM Angestellte JOIN Abteilung USING (aID)
-WHERE Name = "Kaufmann"
+FROM Angestellte JOIN Abteilungen USING (aID)
+WHERE Name = 'Kaufmann'
 \end{lstlisting}
 
 \begin{mycaution}
@@ -308,7 +339,7 @@ WHERE Name = "Kaufmann"
 
   \begin{lstlisting}
 SELECT kolonne1, kolonne2, ...
-FROM tabelle1 
+FROM tabelle1
 JOIN tabelle2 USING (kolonne_id1)
 JOIN tabelle3 USING (kolonne_id2)
 ...
@@ -415,7 +446,7 @@ FROM tabelle1
 INNER JOIN tabelle2
 ON tabelle1.kolonne_id1 = tabelle2.kolonne_id2
 \end{lstlisting}
-Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} und \texttt{kolonne\_id2}, die derselben Information entsprechen (beispielsweise die user-ID), miteinander abgleichen. Beim \lstinline|INNER JOIN| werden nur die Zeilen aus \texttt{tabelle1} retourniert, für die es einen entsprechenden Wert in \texttt{kolonne\_id2} in \texttt{tabelle2} gibt. Alle Werte in \texttt{tabelle1} die sich mit keinem Wert in \texttt{tabelle2} überschneiden, sowie umgekehrt, tauchen nicht im Resultat auf (siehe \cref{fig:venn-join}).
+Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} und \texttt{kolonne\_id2}, die derselben Information entsprechen (beispielsweise die user-ID), miteinander abgleichen. Beim \lstinline|INNER JOIN| werden nur die Zeilen aus \texttt{tabelle1} retourniert, für die es einen entsprechenden Wert in \texttt{kolonne\_id2} in \texttt{tabelle2} gibt. Alle Werte in \texttt{tabelle1}, die sich mit keinem Wert in \texttt{tabelle2} überschneiden, sowie umgekehrt, tauchen nicht im Resultat auf (siehe \cref{fig:venn-join}).
 
 \begin{figure}[H]
   \centering
@@ -435,23 +466,42 @@ Hier verbinden wir zwei Tabellen, indem wir zwei Kolonnen \texttt{kolonne\_id1} 
 Wichtig zu wissen ist zudem, dass \texttt{kolonne1, kolonne2} usw. auf der ersten Zeile nun sowohl von \texttt{tabelle1} wie auch \texttt{tabelle2} stammen können.
 
 \begin{myexample}
-Folgender Code gibt die ids aller user zurück, denen der user Mika Kaufmann folgt:
+Folgender Code gibt die IDs aller User zurück, denen der User Mika Kaufmann folgt:
 \begin{lstlisting}
-SELECT follows.following_id, follows.follower_id, users.name 
-FROM follows JOIN users 
-ON follows.follower_id = users.id 
-WHERE name="Mika Kaufmann"
+SELECT follows.following_id, follows.follower_id, users.name
+FROM follows JOIN users
+ON follows.follower_id = users.id
+WHERE name='Mika Kaufmann'
 \end{lstlisting}
 
 Wie Sie sehen, kann es hilfreich sein, im \lstinline|SELECT|-Ausdruck explizit die Tabelle zu nennen, von welcher eine bestimmte Kolonne stammt.
 \end{myexample}
+
+\begin{myexercise}[\texorpdfstring{\lstinline|ON|}{ON} oder \texorpdfstring{\lstinline|USING|}{USING}?]
+  \begin{aenum}
+    \item Schreiben Sie die Abfrage mit \lstinline|USING (aID)| aus \cref{subsec:join-using} so um, dass sie \lstinline|ON| statt \lstinline|USING| verwendet.
+    \item Weshalb kann im Beispiel oben (\texttt{follows} und \texttt{users}) nicht \lstinline|USING| verwendet werden?
+  \end{aenum}
+  \begin{myanswer}
+    \begin{aenum}
+      \item \begin{lstlisting}
+SELECT *
+FROM Angestellte JOIN Abteilungen
+ON Angestellte.aID = Abteilungen.aID
+WHERE Name = 'Kaufmann'
+\end{lstlisting}
+      Im Resultat erscheint die Kolonne \texttt{aID} nun zweimal.
+      \item \lstinline|USING| funktioniert nur, wenn die verbundenen Kolonnen in beiden Tabellen gleich heissen. Hier heissen sie \texttt{follower\_id} und \texttt{id}, deshalb braucht es \lstinline|ON|.
+    \end{aenum}
+  \end{myanswer}
+\end{myexercise}
 
 Auch alle anderen SQL-Befehle wie beispielsweise \lstinline|GROUP BY| können nach einem \lstinline|JOIN|-Befehl verwendet werden.
 
 \begin{myexample}\label{myexample:join-group}
 Folgender Code gibt die Anzahl Fotos für alle Benutzer aus (und sortiert die Resultate absteigend):
 \begin{lstlisting}
-SELECT name, COUNT(*) AS "Anzahl Fotos"
+SELECT name, COUNT(*) AS `Anzahl Fotos`
 FROM users
 JOIN photos ON users.id = photos.user_id
 GROUP BY user_id
@@ -460,43 +510,43 @@ ORDER BY `Anzahl Fotos` DESC
 \end{myexample}
 
 \begin{mycaution}
-  Wie Sie in \cref{myexample:join-group} sehen, können Kolonnen jederzeit mit dem Befehl \lstinline|AS "Neuer Name"| umbenannt werden. Allerdings gilt es zu beachten, dass Abstände im Namen eher ungünstig sind: Falls der Name später wiederverwendet wird, wie etwa in einem \lstinline|ORDER BY|-Ausdruck, müssen sogenannte \textit{backticks} (\lstinline|`|) vor und nach dem Namen gesetzt werden.
+  Wie Sie in \cref{myexample:join-group} sehen, können Kolonnen auch nach einem \lstinline|JOIN| mit \lstinline|AS| umbenannt werden. Enthält der neue Name Leerzeichen, steht er in \textit{backticks} (siehe \cref{mycaution:backticks}). Einfacher sind Namen ohne Leerzeichen, z.B. \lstinline|AS Anzahl_Fotos|.
 \end{mycaution}
 
 \begin{myexercise}
-  Geben Sie die \texttt{id} aller Fotos in der Tabelle \texttt{likes} an, die der user Mika Kaufmann gelikt hat.
+  Geben Sie die \texttt{id} aller Fotos in der Tabelle \texttt{likes} an, die der User Mika Kaufmann gelikt hat.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT photo_id, user_id, name 
-FROM likes 
-INNER JOIN users 
-ON likes.user_id=users.id 
-WHERE name="Mika Kaufmann"
+SELECT photo_id, user_id, name
+FROM likes
+INNER JOIN users
+ON likes.user_id=users.id
+WHERE name='Mika Kaufmann'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
 \begin{mychallenge}
-  Challenge: Erstellen Sie eine Liste, wo für jedes Hamburger Mitglied die Anzahl seiner Fotos aufgeführt ist. Die Liste soll in absteigender Reihenfolge die Anzahl Fotos pro Mitglieder auflisten.
+  Erstellen Sie eine Liste, in der für jedes Hamburger Mitglied die Anzahl seiner Fotos aufgeführt ist. Die Liste soll in absteigender Reihenfolge die Anzahl Fotos pro Mitglied auflisten.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT city, username, COUNT(*) AS "Anzahl Fotos" 
-FROM photos 
-JOIN users ON photos.user_id = users.id 
-WHERE city="Hamburg" 
-GROUP BY username 
+SELECT city, username, COUNT(*) AS `Anzahl Fotos`
+FROM photos
+JOIN users ON photos.user_id = users.id
+WHERE city='Hamburg'
+GROUP BY username
 ORDER BY `Anzahl Fotos` DESC
 \end{lstlisting}
   \end{myanswer}
 \end{mychallenge}
 
 \begin{myexercise}
-  Es soll Werbung an alle Strandurlauber verschickt werden. Finden Sie alle Photos die den Hashtag \texttt{meer} enthalten. Geben Sie den Namen, die Emailadresse, den Geburtstag und die Stadt der zugehörigen Benutzer aus.
+  Es soll Werbung an alle Strandurlauber verschickt werden. Finden Sie alle Fotos, die den Hashtag \texttt{meer} enthalten. Geben Sie den Namen, die E-Mail-Adresse, den Geburtstag und die Stadt der zugehörigen Benutzer aus.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT description, name, email, birthday, city  
-FROM photos 
-JOIN users on photos.user_id = users.id 
-WHERE description LIKE "%#meer%"
+SELECT description, name, email, birthday, city
+FROM photos
+JOIN users on photos.user_id = users.id
+WHERE description LIKE '%#meer%'
 \end{lstlisting}
   \end{myanswer}
 \end{myexercise}
@@ -505,8 +555,8 @@ WHERE description LIKE "%#meer%"
   Geben Sie die 5 User mit den meisten Followern aus.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT name, COUNT(*) AS "Followers"
-FROM users JOIN follows on follows.following_id = users.id 
+SELECT name, COUNT(*) AS `Followers`
+FROM users JOIN follows on follows.following_id = users.id
 GROUP BY name
 ORDER BY Followers DESC
 LIMIT 5
@@ -518,7 +568,7 @@ LIMIT 5
   Finden Sie heraus, welche 5 Fotos am meisten Likes erhalten haben. Geben Sie den Benutzernamen und Namen der Ersteller der Fotos an, die id der Fotos sowie die Anzahl Likes.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT users.username, users.name AS "Name", photos.id AS "Photo id", COUNT(likes.photo_id) AS "Likes"
+SELECT users.username, users.name AS `Name`, photos.id AS `Photo id`, COUNT(likes.photo_id) AS `Likes`
 FROM users
 JOIN photos ON photos.user_id = users.id
 JOIN likes ON photos.id = likes.photo_id
@@ -531,7 +581,7 @@ LIMIT 5
 \end{mychallenge}
 
 \subsection{\texorpdfstring{\lstinline|LEFT JOIN| (=\lstinline|LEFT OUTER JOIN|)}{LEFT JOIN (=LEFT OUTER JOIN)}}
-Ein \lstinline|LEFT JOIN|, oder \lstinline|LEFT OUTER JOIN| unterscheidet sich von einem \lstinline|INNER JOIN| dadurch, dass \textbf{alle} Einträge der ersten Tabelle (nach dem \lstinline|SELECT|-Befehl) in der neuen Tabelle erscheinen. Werte aus der zweiten Tabelle, die nicht in der ersten sind, werden jedoch nicht angezeigt (siehe \cref{fig:venn-left-join}).
+Ein \lstinline|LEFT JOIN|, oder \lstinline|LEFT OUTER JOIN| unterscheidet sich von einem \lstinline|INNER JOIN| dadurch, dass \textbf{alle} Einträge der ersten Tabelle (nach dem \lstinline|FROM|-Befehl) in der neuen Tabelle erscheinen. Werte aus der zweiten Tabelle, die nicht in der ersten sind, werden jedoch nicht angezeigt (siehe \cref{fig:venn-left-join}).
 
 \begin{figure}[H]
   \centering
@@ -553,10 +603,10 @@ Ein \lstinline|LEFT JOIN|, oder \lstinline|LEFT OUTER JOIN| unterscheidet sich v
 \end{figure}
 
 \begin{myexercise}
-  Diejenigen BenutzerInnen, die noch keine Fotos hochgeladen haben, sollen per Email dazu aufgefordert werden, Fotos hochzuladen. Finden Sie alle users, die noch keine Fotos hochgeladen haben. Geben Sie deren Name und Email-Adresse aus. Verwenden Sie statt \lstinline|WHERE| den Befehl \lstinline|HAVING|.
+  Diejenigen BenutzerInnen, die noch keine Fotos hochgeladen haben, sollen per E-Mail dazu aufgefordert werden, Fotos hochzuladen. Finden Sie alle User, die noch keine Fotos hochgeladen haben. Geben Sie deren Namen und E-Mail-Adresse aus. Verwenden Sie statt \lstinline|WHERE| den Befehl \lstinline|HAVING|.
   \begin{myanswer}
     \begin{lstlisting}
-SELECT users.name, users.email, COUNT(photos.id) AS "Anzahl Fotos"
+SELECT users.name, users.email, COUNT(photos.id) AS `Anzahl Fotos`
 FROM users
 LEFT JOIN photos ON photos.user_id = users.id
 GROUP BY users.name

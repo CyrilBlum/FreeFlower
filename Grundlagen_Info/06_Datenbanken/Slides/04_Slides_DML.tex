@@ -3,7 +3,7 @@
 \begin{frame}[label=title]
   \centering
   \begin{figure}[H]
-    \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+    \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
   \end{figure}
   Informatik: Data Science und Sicherheit\\
   \emoji{floppy-disk} \textbf{\gls{SQL}\\ Daten einfügen und löschen}
@@ -30,11 +30,18 @@ CREATE TABLE tabellenname(
 \end{frame}
 
 \begin{frame}[fragile]{Tabellen löschen: \texorpdfstring{\lstinline|DROP table|}{DROP table}}
-Mit dem Befehl \lstinline|DROP TABLE tabellenname| kann eine Tabelle komplett löschen.
+Mit dem Befehl \lstinline|DROP TABLE tabellenname| kann man eine Tabelle komplett löschen.
 
 \begin{mycaution}
   Dieser Schritt ist irreversibel. Falls Sie eine Tabelle irrtümlich löschen, geben Sie mir Bescheid, damit ich Ihre Datenbank zurücksetzen kann.
 \end{mycaution}
+\end{frame}
+
+\begin{frame}{Auftrag}{Tabellen erstellen und löschen}
+\begin{itemize}
+	\item \readbox{Skript, Beispiel 4.1}
+	\item \aufgabebox{Aufgaben 4.1--4.3}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Daten einfügen: \texorpdfstring{\lstinline|INSERT|}{INSERT}}
@@ -49,10 +56,17 @@ VALUES (wert1, wert2, wert3, ...)
 \begin{frame}[fragile]{Daten einfügen: \texorpdfstring{\lstinline|INSERT|}{INSERT}}
 Folgender Code fügt eine neue Person in die Tabelle \texttt{users} ein:
 \begin{lstlisting}
-INSERT INTO users (username, email, password, name, bio, gender, birthday, city, country, centimeters, avatar, role, is_active, remember_token, created_at, updated_at) 
-VALUES ('guenther37', 'guenther@instahub.test', '12345', 'Günther Müller', 'Günther mag Kartoffelsalat.', 'male', '2006-06-06 00:00:00', 'Leipzig', 'Deutschland', '173', 'avatar.png', 'user', '0', NULL, now(), now())
+INSERT INTO users (username, email, password, name, bio, gender, birthday, city, country, centimeters, avatar, role, is_active, remember_token, created_at, updated_at)
+VALUES ('guenther37', 'guenther@instahub.test', '12345', 'Günther Müller', 'Günther mag Kartoffelsalat.', 'male', '2006-06-06 00:00:00', 'Leipzig', 'Deutschland', 173, 'avatar.png', 'user', 0, NULL, now(), now())
 \end{lstlisting}
 Wie Sie sehen, wird zuerst die Tabelle (\texttt{users}) aufgelistet, danach die Kolonnen und schliesslich die Werte.
+\end{frame}
+
+\begin{frame}{Auftrag}{Daten einfügen}
+\begin{itemize}
+	\item \aufgabebox{Aufgabe 4.4}
+	\item \abgabebox{Aufgabe 4.5}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Daten verändern: \texorpdfstring{\lstinline|UPDATE|}{UPDATE}}
@@ -63,6 +77,13 @@ UPDATE tabelle_name
 SET kolonne1 = wert1, kolonne2=wert2, ...
 WHERE bedingung(en)
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Auftrag}{Daten verändern}
+\begin{itemize}
+	\item \aufgabebox{Aufgabe 4.6}
+	\item \abgabebox{Aufgabe 4.7}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Einträge löschen: \texorpdfstring{\lstinline|DELETE FROM|}{DELETE FROM}}
@@ -76,26 +97,19 @@ WHERE bedingungen
 
 \begin{frame}[fragile]{Einträge löschen: \texorpdfstring{\lstinline|DELETE FROM|}{DELETE FROM}}
 
-Folgender Code löscht den Eintrag für user \texttt{guenther37}:
+Folgender Code löscht den Eintrag für den User \texttt{guenther37}:
 \begin{lstlisting}
 DELETE FROM users
-WHERE username="guenther37"
+WHERE username='guenther37'
 \end{lstlisting}
 \end{frame}
 
 
-\begin{frame}[fragile]{Auftrag}{Skript (Moodle)}
+\begin{frame}{Auftrag}{Einträge löschen}
+Skript / InstaHub
 \begin{itemize}
-	\item Skript / InstaHub
-	\begin{itemize}
-		\item \readbox{Beispiel 1.21}
-		\item \aufgabebox{Aufgaben 1.45-1.48}
-		\item \abgabebox{Aufgabe 1.49}
-		\item \aufgabebox{Aufgabe 1.50}
-		\item \abgabebox{Aufgabe 1.51}
-		\item \aufgabebox{Aufgabe 1.52}
-		\item \challengebox{Eigene Tabelle(n) erstellen (auf InstaHub)}	
-	\end{itemize}
+	\item \aufgabebox{Aufgabe 4.8}
+	\item \challengebox{Eigene Tabelle(n) erstellen (auf InstaHub)}
 	\item SQL-Tutorial: Lektion 6
 \end{itemize}
 \end{frame}

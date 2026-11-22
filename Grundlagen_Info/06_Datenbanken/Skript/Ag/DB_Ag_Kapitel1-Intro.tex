@@ -1,4 +1,4 @@
-%Damit die Nummerierung für Ag passt :)  
+%Damit die Nummerierung für Ag passt :)
 \setcounter{chapter}{4}
 
 %%%
@@ -7,7 +7,7 @@
 
 \subsection{Was sind Daten?}
 
-Der Begriff \enquote{Daten} ist der Plural von \textit{Datum} und kommt aus dem Latenischen (\textit{datum} $=$ gegeben,
+Der Begriff \enquote{Daten} ist der Plural von \textit{Datum} und kommt aus dem Lateinischen (\textit{datum} $=$ gegeben,
 bzw. \textit{dare} $=$ geben). \enquote{Daten} bedeuten also im weitesten Sinne etwas \enquote{\textbf{Gegebenes}}, bzw. ein Faktum. Dies wiederum wirft die philosophische Frage auf, was ein Faktum ist. Beispiele von Fakten sind:
 \begin{itemize}
   \item \enquote{Mein Nachbar heisst Marco Odermatt.}
@@ -31,28 +31,31 @@ Seit etwa einem guten halben Jahrhundert nehmen die Datenmengen stets zu. \cref{
 
 \begin{table}[H]
   \centering
-  \begin{tabular}{@{}l|rr|l@{}}
+  \begin{tabular}{@{}lrrl@{}}
     \toprule
-    \textbf{Masseinheit} & \multicolumn{2}{l|}{\textbf{Dezimalsystem}} & Grössenordnung                                   \\ \midrule
-    KB (Kilobyte)        & $10^3$ B(yte)                               & 1'000 B             & eine Text-Datei            \\
+    \textbf{Masseinheit} & \multicolumn{2}{l}{\textbf{Dezimalsystem}} & Grössenordnung                                   \\ \midrule
+    kB (Kilobyte)        & $10^3$ B(yte)                               & 1'000 B             & eine Text-Datei            \\
     MB (Megabyte)        & $10^6$ B                                    & 1'000'000 B         & eine Musik-Datei           \\
     GB (Gigabyte)        & $10^9$ B                                    & 1'000'000'000 B     & eine Video-Datei           \\
     TB (Terabyte)        & $10^{12}$ B                                 & 1'000'000'000'000 B & kleiner Firmen-Server      \\
-    PB (Petabyte)        & $10^{15}$ B                                 & ...                 & Facebook-Server            \\
-    EB (Exabyte)         & $10^{18}$ B                                 & ...                 & alle CERN-Daten            \\
-    ZB (Zettabyte)       & $10^{21}$ B                                 & ...                 & alle Daten ($\sim$ 100 ZB) \\
-    YB (Yottabyte)       & $10^{24}$ B                                 & ...                 & $\sim$ 2030?               \\ \bottomrule
+    PB (Petabyte)        & $10^{15}$ B                                 & ...                 & CERN-Rechenzentrum pro Tag\footnotemark \\
+    EB (Exabyte)         & $10^{18}$ B                                 & ...                 & Festplatten des CERN (2023)\footnotemark \\
+    ZB (Zettabyte)       & $10^{21}$ B                                 & ...                 & weltweit pro Jahr (2024: 173 ZB) \\
+    YB (Yottabyte)       & $10^{24}$ B                                 & ...                 & noch nicht erreicht        \\ \bottomrule
   \end{tabular}
   \caption{Gängige Daten-Grössenordnungen in der Informatik (ein \textbf{B}yte = 8 \textbf{b}it)}
   \label{table:groessenordnungen}
 \end{table}
+% Quellen zu den CERN-Beispielen in der Tabelle
+\addtocounter{footnote}{-1}\footnotetext{Während des LHC Run 2 verarbeitete das CERN-Rechenzentrum im Schnitt rund ein Petabyte pro Tag, \url{https://home.cern/science/computing/storage} (abgerufen am 22.11.2026).}
+\stepcounter{footnote}\footnotetext{CERN, \enquote{An exabyte of disk storage at CERN}, 29.09.2023, \url{https://home.cern/news/news/computing/exabyte-disk-storage-cern} (abgerufen am 22.11.2026).}
 
-Die gesamten weltweit vorhandenen Daten machen aktuell ca. 100 Zettabyte aus. Es wird erwartet, dass das erste Yottabyte gegen 2030 erreicht wird (siehe \cref{fig:daten-global}).
+Gemäss dem Marktforschungsunternehmen IDC wurden im Jahr 2024 weltweit rund 173 Zettabyte an Daten erzeugt, kopiert oder genutzt. Für 2029 rechnet IDC mit rund 527 Zettabyte, also etwa dreimal so viel (siehe \cref{fig:daten-global}).
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{Grundlagen_Info/06_Datenbanken/Figures/total_data}
-  \caption{Entwicklung der globalen Datenmenge}
+  \input{Grundlagen_Info/06_Datenbanken/Figures/total_data}
+  \caption[Entwicklung der weltweiten Datenmenge]{Jährlich weltweit erzeugte, kopierte und genutzte Datenmenge in Zettabyte (2029: Prognose, Werte vor 2024 aus älteren Veröffentlichungen). Daten: IDC, veröffentlicht von Western Digital, zusammengestellt von Statista, \url{https://de.statista.com/statistik/daten/studie/267974/umfrage/prognose-zum-weltweit-generierten-datenvolumen/} (abgerufen am 22.11.2026).}
   \label{fig:daten-global}
 \end{figure}
 
@@ -71,12 +74,12 @@ verdeutlicht: \href{https://www.nanoo.tv/link/v/KjMdjjgC}{Microsoft Data Center}
 
 \subsection{Die Verwaltung grosser Datenmengen}\label{subsec:Verwaltung}
 
-Wenn Sie sich auf einer Social Media Plattform wie beispielsweise Instagram anmelden, muss der Dienst in kürzester Zeit diejenigen Inhalte bereitstellen, die für Sie relevant sind. Dazu muss es die riesigen Datenmengen effizient durchforsten können. Gleichzeitig müssen die Daten so abgespeichert sein, dass der sie möglichst wenig Speicherplatz beanspruchen. Und schliesslich soll es einfach sein, Daten zu bearbeiten.
+Wenn Sie sich auf einer Social Media Plattform wie beispielsweise Instagram anmelden, muss der Dienst in kürzester Zeit diejenigen Inhalte bereitstellen, die für Sie relevant sind. Dazu muss er die riesigen Datenmengen effizient durchforsten können. Gleichzeitig müssen die Daten so abgespeichert sein, dass sie möglichst wenig Speicherplatz beanspruchen. Und schliesslich soll es einfach sein, Daten zu bearbeiten.
 
-Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folgenden werden Sie Schritt für Schritt mit den grundlegenden Konzepte solcher Datenbanksysteme vertraut gemacht. Dazu schlüpfen Sie in die Rolle der Administrator*in einer neuen Social Media Plattform und helfen dabei, die nötige Datenbank für den Betrieb der Plattform zu erstellen und zu verwalten.
+Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folgenden werden Sie Schritt für Schritt mit den grundlegenden Konzepten solcher Datenbanksysteme vertraut gemacht. Dazu schlüpfen Sie in die Rolle der AdministratorIn einer neuen Social Media Plattform und helfen dabei, die nötige Datenbank für den Betrieb der Plattform zu erstellen und zu verwalten.
 
 
-\begin{myexercise}[Einrichtung von Instahub \emoji{camera-with-flash}]\label{myexercise:instahub-setup}
+\begin{myexercise}[Einrichtung von InstaHub \emoji{camera-with-flash}]\label{myexercise:instahub-setup}
   % \begin{table}[H]
   %   \centering
   %   \begin{tabular}{r|l}
@@ -100,8 +103,8 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
           \begin{itemize}
             \item Name der Lehrperson \texttt{AndereggKLW}
             \item Der Username lautet \texttt{admin} und kann nicht geändert werden.
-            \item Ihren Namen und Ihr Passwort können Sie frei setzen. Wählen Sie ein Passwort, das Sie sonst nicht verwenden, damit Sie es mir mitteilen können. 
-            \item Sie können entweder eine echte E-Mail-Adresse angeben oder die generierte E-Mail-Adresse so lassen. 
+            \item Ihren Namen und Ihr Passwort können Sie frei setzen. Wählen Sie ein Passwort, das Sie sonst nicht verwenden, damit Sie es mir mitteilen können.
+            \item Sie können entweder eine echte E-Mail-Adresse angeben oder die generierte E-Mail-Adresse so lassen.
               Im zweiten Fall können Sie jedoch Ihr Passwort nicht mehr per Mail zurücksetzen, falls Sie dieses je verlieren sollten.
             \item Geben Sie mir mündlich Bescheid, dass Sie die Seite erstellt haben. Wir müssen Ihren persönlichen Hub ($=$ Ihre Webseite) manuell aktivieren. Dies dauert nur wenige Sekunden.
           \end{itemize}
@@ -111,19 +114,19 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
           % \end{figure}
     \item Merken oder notieren Sie sich Ihr Passwort an einem sicheren Ort.
     \item Sie haben nun eine eigene Webseite unter \url{https://[meinefarbeXX].instahub.org}, wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss.
-    \item Sie können sich jetzt auf Ihrer individuellen Webseite mit dem Benutzername \texttt{admin} (\textit{nicht} Ihrer Email) und dem von Ihnen zuvor gewählten Passwort anmelden. 
-      Sie sind nun als \textcolor{RoyalBlue}{Administrator*in} Ihres eigenen sozialen Netzwerks eingeloggt.
+    \item Sie können sich jetzt auf Ihrer individuellen Webseite mit dem Benutzernamen \texttt{admin} (\textit{nicht} Ihrer E-Mail-Adresse) und dem von Ihnen zuvor gewählten Passwort anmelden.
+      Sie sind nun als \textcolor{RoyalBlue}{AdministratorIn} Ihres eigenen sozialen Netzwerks eingeloggt.
       \item Ihre Plattform hat bereits einige Nutzer. Hat sich Sophia Küfer auch registriert?
-      \item Wie würden Sie vorgehen, um herauszufinden, ob es mehr männliche oder mehr weibliche Nutzer*innen gibt?
+      \item Wie würden Sie vorgehen, um herauszufinden, ob es mehr männliche oder mehr weibliche NutzerInnen gibt?
   \end{enumerate}
 \end{myexercise}
 
 \begin{myexercise}
-  Notieren Sie den Namen Ihrer InstaHub-Seite, also z.B. 
+  Notieren Sie den Namen Ihrer InstaHub-Seite, also z.B.
   \begin{center}
     \url{https://[meinefarbeXX].instahub.org},
   \end{center}
-  wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss! 
+  wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss!
   Laden Sie diesen auf Moodle unter \enquote{Name InstaHub} hoch, so dass Sie den Link auf Ihr InstaHub später einfach wieder finden. Merken oder notieren Sie sich Ihr Passwort an einem sicheren Ort.
 \end{myexercise}
 
@@ -203,10 +206,10 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
 %   \label{table:table-cia}
 % \end{table}
 % In \cref{table:table-cia} enthält jede \textcolor{blue}{Zeile} Informationen zu einem Land: dessen Name, die Region (=Kontinent), Fläche, die Einwohnerzahl und das Bruttoinlandprodukt (BIP).
-% Jede \textcolor{red}{Spalte} enthält Informationen eines selben Typs, beispielsweise die Regionen aller Länder, die Flächen oder die Einwohnerzahlen. 
+% Jede \textcolor{red}{Spalte} enthält Informationen eines selben Typs, beispielsweise die Regionen aller Länder, die Flächen oder die Einwohnerzahlen.
 % In einer Spalte sollten also alle Werte denselben Typ haben, beispielsweise \enquote{Zahl} (Fläche, Einwohner, BIP) oder
-% \enquote{Text} (Name, Region). 
-% Nicht zuletzt gibt es in gewissen Tabellen (genau) ein Schlüsselattribut, dessen Werte eindeutig sein müssen. 
+% \enquote{Text} (Name, Region).
+% Nicht zuletzt gibt es in gewissen Tabellen (genau) ein Schlüsselattribut, dessen Werte eindeutig sein müssen.
 % Dies bedeutet in \cref{table:table-cia} beispielsweise, dass kein Ländername zweimal oder mehr vorkommen darf. Weshalb dies wichtig ist, werden wir später sehen.
 
 % Eine Datenbank ist vereinfacht gesagt eine Sammlung aus mehreren Tabellen, auf die mehrere Geräte zugreifen können (lesen und schreiben), wie in \cref{fig:db-schema} gezeigt.
@@ -257,7 +260,7 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
 % % TODO: Ist dies nach wie vor aktuell? Verwenden wir nicht diese andere Webseite?
 
 % \clearpage
-% \begin{myexercise}[Einrichtung von Instahub \emoji{camera-with-flash}]\label{myexercise:instahub-setup}
+% \begin{myexercise}[Einrichtung von InstaHub \emoji{camera-with-flash}]\label{myexercise:instahub-setup}
 %   \begin{table}[H]
 %     \centering
 %     \begin{tabular}{r|l}
@@ -282,7 +285,7 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
 %             \item Name der Lehrperson (klein geschrieben und ohne Abstände): \texttt{cyrilblum} oder \texttt{thomasgraf}
 %             \item Der Username lautet \texttt{admin} und kann nicht geändert werden.
 %             \item Ihren Namen und Ihr Passwort können Sie frei setzen. Das Passwort sollten Sie sich irgendwo notieren.
-%             \item Sie können entweder eine echte E-Mail-Adresse angeben oder die generierte E-Mail-Adresse so lassen. 
+%             \item Sie können entweder eine echte E-Mail-Adresse angeben oder die generierte E-Mail-Adresse so lassen.
 %               Im zweiten Fall können Sie jedoch Ihr Passwort nicht mehr per Mail zurücksetzen, falls Sie dieses je verlieren sollten.
 %             \item Geben Sie mir mündlich Bescheid, dass Sie die Seite erstellt haben. Wir müssen Ihren persönlichen Hub ($=$ Ihre Webseite) manuell aktivieren. Dies dauert nur wenige Sekunden.
 %           \end{itemize}
@@ -292,17 +295,17 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
 %           \end{figure}
 %     \item Merken oder notieren Sie sich Ihr Passwort an einem sicheren Ort.
 %     \item Sie haben nun eine eigene Webseite unter \url{https://[meinefarbeXX].instahub.org}, wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss (siehe Bild oben).
-%     \item Sie können sich jetzt auf Ihrer individuellen Webseite mit dem Benutzername \texttt{admin} (\textit{nicht} Ihrer Email) und dem von Ihnen zuvor gewählten Passwort anmelden. 
+%     \item Sie können sich jetzt auf Ihrer individuellen Webseite mit dem Benutzername \texttt{admin} (\textit{nicht} Ihrer Email) und dem von Ihnen zuvor gewählten Passwort anmelden.
 %       Sie sind nun als \textcolor{RoyalBlue}{AdministratorIn} Ihres eigenen sozialen Netzwerks eingeloggt.
 %   \end{enumerate}
 % \end{myexercise}
 
 % \begin{myexercise}
-%   Schreiben Sie sich den Namen Ihrer InstaHub-Seite auf, also z.B. 
+%   Schreiben Sie sich den Namen Ihrer InstaHub-Seite auf, also z.B.
 %   \begin{center}
 %     \url{https://[meinefarbeXX].instahub.org},
 %   \end{center}
-%   wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss! 
+%   wobei \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss!
 %   Laden Sie diesen auf Moodle unter \enquote{Name InstaHub} hoch, so dass Sie den Link auf Ihr InstaHub später einfach wieder finden. Merken oder notieren Sie sich Ihr Passwort an einem sicheren Ort.
 % \end{myexercise}
 
@@ -317,7 +320,7 @@ Zu diesem Zweck wurden sogenannte \textbf{Datenbanksysteme} entwickelt. Im Folge
 %   \end{table}
 % Bestimmen Sie eine Person pro Gruppe, die sich auf der eigenen Webseite (\url{https://meinefarbeXX.instahub.org}, wobei
 % \texttt{[meinefarbeXX]} durch Ihre Farbe ersetzt werden muss) mit dem Benutzername \texttt{admin} und dem von Ihnen
-% gewählten Passwort anmeldet. 
+% gewählten Passwort anmeldet.
 % Die zwei anderen Personen sollen das folgende Kapitel aus diesem Skript lesen und der
 % ersten Person dabei helfen, die \gls{SQL}-Befehle zu schreiben. % TODO: welches Kapitel?
 

@@ -30,9 +30,9 @@
 \begin{frame}[fragile]{Letztes Mal: Murder Mystery}{Abfrage 1}
 \begin{lstlisting}
 SELECT * FROM crime_scene_report
-WHERE city = "SQL City"
-AND date = "20180115"
-and type = "murder"
+WHERE city = 'SQL City'
+AND date = '20180115'
+and type = 'murder'
 \end{lstlisting}
 \Wider{\begin{figure}[H]
 \centering
@@ -43,22 +43,44 @@ and type = "murder"
 \begin{frame}[fragile]{Letztes Mal: Murder Mystery}{Abfrage(n) 2}
 \begin{lstlisting}
 SELECT *
-FROM person JOIN interview 
+FROM person JOIN interview
 ON interview.person_id = person.id
-WHERE address_street_name LIKE "Franklin%" 
-AND name like "Annabel%"
+WHERE address_street_name LIKE 'Franklin%'
+AND name like 'Annabel%'
 \end{lstlisting}
 
 \begin{lstlisting}
 SELECT *
-FROM person JOIN interview 
+FROM person JOIN interview
 ON interview.person_id = person.id
-WHERE address_street_name LIKE "Northwestern Dr" 
-ORDER BY address_number DESC 
+WHERE address_street_name LIKE 'Northwestern Dr'
+ORDER BY address_number DESC
 LIMIT 1
 \end{lstlisting}
 
 \begin{center}
 \textbf{Geht es auch in einer Abfrage? $\rightarrow$ Moodle-Aufgaben!}
 \end{center}
+\end{frame}
+\begin{frame}[fragile]{Unterabfragen}{Eine Abfrage in einer Abfrage}
+  Die innere Abfrage (in Klammern) wird zuerst ausgeführt, die äussere verwendet ihr Resultat:
+\begin{lstlisting}
+SELECT name, centimeters
+FROM users
+WHERE centimeters > (SELECT AVG(centimeters) FROM users)
+\end{lstlisting}
+  Liefert die innere Abfrage mehrere Werte, verwendet man \lstinline|IN|:
+\begin{lstlisting}
+SELECT user_id, body
+FROM comments
+WHERE user_id IN (SELECT id FROM users WHERE city = 'Hamburg')
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Auftrag}{Unterabfragen}
+  \begin{itemize}
+    \item \readbox{Skript, Abschnitt 2.14}
+    \item \aufgabebox{Aufgaben 2.33, 2.34 im Skript}
+    \item \aufgabebox{Moodle-Aufgaben zu Unterabfragen}
+  \end{itemize}
 \end{frame}

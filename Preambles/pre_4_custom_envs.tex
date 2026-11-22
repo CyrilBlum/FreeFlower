@@ -157,7 +157,8 @@
 \setcounter{SharedCounter}{0}
 
 \iftoggle{book} {%
-	\renewcommand{\theSharedCounter}{\arabic{chapter}.\arabic{SharedCounter}}
+	% \thechapter statt \arabic{chapter}: im Anhang erscheinen die Aufgaben als A.1, A.2, ...
+	\renewcommand{\theSharedCounter}{\thechapter.\arabic{SharedCounter}}
 }{%
 	\renewcommand{\theSharedCounter}{\arabic{section}.\arabic{SharedCounter}}
 }
