@@ -1,31 +1,32 @@
 \begin{frame}[label=title]
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Data Science und Sicherheit\\
     \emoji{clamp}\textbf{Kompression}: Maximale Balance
 \end{frame}
 
-\begin{frame}{Kodierung der \textbf{maximalen Häufigkeit}}
-	\only<1->{	\textbf{Idee}: Summe der Buchstabenhäufigkeiten im linken und rechten Teilbaum ausbalancieren\\[.5cm]}
-	
+\begin{frame}{Kodierung der \textbf{maximalen Balance}}
+	\only<1->{	\textbf{Idee}: Summe der Buchstabenhäufigkeiten im linken und rechten Teilbaum ausbalancieren\\[.3cm]}
+	\only<1->{\textbf{Regel}: beliebige Buchstaben in zwei Gruppen teilen, Teilung mit der kleinsten Differenz wählen (bei Gleichstand frei), links 0, rechts 1\\[.3cm]}
+
 	\only<2>{\textbf{Beispiel}:
 		\begin{table}[H]
 			\centering
-			\begin{tabular}{c|c|c|c|c|c|c}
-				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule\midrule
+			\begin{tabular}{ccccccc}
+				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule
 				Relative Häufigkeit & 25\% & 25\% & 13\% & 13\%& 12\%& 12\%
 			\end{tabular}
 		\end{table}}
 \end{frame}
 
-\begin{frame}{Kodierung der \textbf{maximalen Häufigkeit}: Beispiel}
+\begin{frame}{Kodierung der \textbf{maximalen Balance}: Beispiel}
 	\scriptsize{
 	\begin{table}[H]
 		\centering
-		\begin{tabular}{c|c|c|c|c|c|c}
-			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule\midrule
+		\begin{tabular}{ccccccc}
+			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule
 			Relative Häufigkeit & 25\% & 25\% & 13\% & 13\%& 12\%& 12\%
 		\end{tabular}
 		\end{table}}
@@ -39,13 +40,13 @@
 		level 4/.style={sibling distance=8mm},
 		leaf/.style={circle, draw},
 		label/.style={red},
-		edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}] 
-		
-		
+		edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}]
+
+
 		\usetikzlibrary{shapes}
-		\tikzstyle{n} = [text width=1cm,align=center]
+		\tikzstyle{n} = [align=center]
 		\tikzstyle{r} = [text=red]
-		
+
 		\node[n]{\textcolor{BlueGreen}{A,B,C,D,E,F}\\ 100\%}[edge from parent]
 		child {node[n] {\textcolor{BlueGreen}{A,B}\\ 50\%}
 			child {node[n, visible on=<2->] {\textcolor{BlueGreen}{A}\\ 25\%\\\textcolor{red}{00}}
@@ -79,31 +80,38 @@
 		};
 	\end{tikzpicture}
 \end{frame}
- 
-\begin{frame}{Kodierung der \textbf{maximalen Häufigkeit}}
+
+\begin{frame}{Kodierung der \textbf{maximalen Balance}}
 	\textbf{Problem}: Was passiert bei folgender Verteilung?
 		\begin{table}[H]
 			\centering
-			\begin{tabular}{c|c|c|c|c|c|c}
-				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule\midrule
+			\begin{tabular}{ccccccc}
+				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule
 				Relative Häufigkeit & 49\% & 1\% & 25\% & 8\%& 9\%& 8\%
 			\end{tabular}
 	\end{table}
 \end{frame}
 
-\begin{frame}{Kodierung der \textbf{maximalen Häufigkeit}: Problem}
+\begin{frame}[label=auftrag]{Auftrag}
+	\begin{itemize}
+		\item \aufgabebox{Aufgaben 1.8, 1.10}
+		\item \challengebox{Aufgabe 1.9}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kodierung der \textbf{maximalen Balance}: Problem}
 	\scriptsize{
 		\begin{table}[H]
 			\centering
-						\begin{tabular}{c|c|c|c|c|c|c}
-				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule\midrule
+						\begin{tabular}{ccccccc}
+				\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}& \textbf{E}& \textbf{F} \\\midrule
 				Relative Häufigkeit & 49\% & 1\% & 25\% & 8\%& 9\%& 8\%
 			\end{tabular}
 	\end{table}}
 	\centering
 	\begin{tikzpicture}
 		[-,>=stealth',
-		level distance=15mm,
+		level distance=13mm,
 		level 1/.style={sibling distance=60mm},
 		level 2/.style={sibling distance=30mm},
 		level 3/.style={sibling distance=15mm},
@@ -111,13 +119,13 @@
 		level 5/.style={sibling distance=15mm},
 		leaf/.style={circle, draw},
 		label/.style={red},
-		edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}] 
-		
-		
+		edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}]
+
+
 		\usetikzlibrary{shapes}
-		\tikzstyle{n} = [text width=1cm,align=center]
+		\tikzstyle{n} = [align=center]
 		\tikzstyle{r} = [text=red]
-		
+
 		\node[n]{\textcolor{BlueGreen}{A,B,C,D,E,F}\\ 100\%}[edge from parent]
 		child {node[n] {\textcolor{BlueGreen}{A,B}\\ 50\%}
 			child {node[n, visible on=<2->] {\textcolor{BlueGreen}{A}\\ 49\%\\\textcolor{red}{00}}
@@ -150,11 +158,4 @@
 			edge from parent node[r,right]{1};
 		};
 	\end{tikzpicture}
-\end{frame}
-
-\begin{frame}[label=auftrag]{Auftrag}
-	\begin{itemize}
-		\item \aufgabebox{Aufgabe 1.3, 1.5}
-		\item \challengebox{Aufgaben 1.4}
-	\end{itemize}
 \end{frame}

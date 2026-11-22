@@ -1,7 +1,7 @@
 \begin{frame}[label=title]
     \centering
     \begin{figure}[H]
-        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=\paperheight]{Logos/FreeFlower.pdf}
+        \includegraphics[keepaspectratio, width=0.7\paperwidth, height=.6\paperheight]{Logos/FreeFlower.pdf}
     \end{figure}
     Informatik: Data Science und Sicherheit\\
     \emoji{clamp}\textbf{Kompression}: Intro
@@ -29,22 +29,11 @@
 	\end{itemize}
 	\begin{figure}[H]
 		\centering
-		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}}
+		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/04_Kompression/Figures/suitcase_messy.jpg}}
 		\raisebox{-0.5\height}{$\rightarrow$}
-		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}}
+		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/04_Kompression/Figures/suitcase_packed.jpg}}
 	\end{figure}
-\end{frame}
-
-\begin{frame}{Weshalb Kompression? \emoji{clamp}}
-	\begin{itemize}
-		\item Speicherplatz optimieren
-	\end{itemize}
-	\begin{figure}[H]
-		\centering
-		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/04_Kompression/Figures/messy_suitcase.jpg}}
-		\raisebox{-0.5\height}{$\rightarrow$}
-		\raisebox{-0.5\height}{\includegraphics[width=.45\textwidth]{Grundlagen_Info/00_Programmieren/Figures/prog-packing-cubes}}
-	\end{figure}
+	{\tiny Bilder: Familydestinationsguide.com Images, \href{https://commons.wikimedia.org/wiki/File:Messy_Suitcase_Packing_for_a_Holiday.jpg}{Wikimedia Commons} und \href{https://commons.wikimedia.org/wiki/File:A_Neatly_Packed_Suitcase_for_a_Holiday.jpg}{Wikimedia Commons}, CC BY 2.0\par}
 \end{frame}
 
 \begin{frame}{Weshalb Kompression? \emoji{clamp}}
@@ -63,7 +52,7 @@
 			child { node[concept] {Computer} }
 			child { node[concept] {Computer} }
 			child { node[concept] {Computer} }
-		}  
+		}
 		child[concept color=blue] {
 			node[concept] {Computer}
 			[clockwise from=-30]
@@ -75,107 +64,150 @@
 	\end{tikzpicture}}
 \end{frame}
 
+\begin{frame}{Kompression: Beispiel}{Römer \emoji{amphora}}
+	\begin{itemize}
+		\item Pergament und Stein: teure Materialien, deshalb Abkürzungen (z.\,B. SPQR für \textit{Senatus Populusque Romanus})
+		\item Römische Zahlendarstellung: z.\,B. Zahl \textbf{999}
+		      \begin{center}
+			      \texttt{CCCCCCCCCXXXXXXXXXIIIIIIIII}\\
+			      $\downarrow$ mit D (500), L (50), V (5)\\
+			      \texttt{DCCCCLXXXXVIIII}\\
+			      $\downarrow$ Subtraktionsschreibweise: IX, XC, CM\\
+			      \texttt{CMXCIX}
+		      \end{center}
+		\item \texttt{IM} ist keine gültige römische Zahl: I steht nur vor V und X
+	\end{itemize}
+\end{frame}
+
 \begin{frame}{Verlustfreie vs. verlustbehaftete Kompression}
-	Einige Beispiele:
+	\begin{itemize}
+		\item \textbf{Verlustfrei}: Original Bit für Bit wiederherstellbar (Texte, Programme, Tabellen)
+		\item \textbf{Verlustbehaftet}: lässt weg, was man kaum sieht oder hört (Fotos, Musik, Videos)
+	\end{itemize}
 	\begin{table}[H]
-		\begin{tabular}{c||c|c}
-			\textbf{Anwendung} & \textbf{Verlustfrei} & \textbf{Verlustbehaftet} \\\midrule
-			\textbf{Audio} & \texttt{.flac, .aac} & \texttt{.mp3}\\\hline
-			\textbf{Dateien} & \texttt{.zip}, \texttt{.rar} & \texttt{-}\\\hline
-			\textbf{Video} & \texttt{.raw} & \texttt{.mp4}, \texttt{.avi}, \texttt{.mov} \\\hline
-			\textbf{Fotografie} & \texttt{.raw}, \texttt{.psd}, \texttt{.gif} & \texttt{.jpg}, \texttt{.png}\\\hline
-			\textbf{Grafik} & \texttt{.svg}, \texttt{.pdf}
+		\footnotesize
+		\begin{tabular}{llll}
+			\textbf{Anwendung}  & \textbf{Unkomprimiert}               & \textbf{Verlustfrei}                          & \textbf{Verlustbehaftet}                    \\\midrule
+			\textbf{Audio}      & \texttt{.wav} (meist)                & \texttt{.flac}                                & \texttt{.mp3}, \texttt{.aac}                \\
+			\textbf{Dateien}    & --                                   & \texttt{.zip}, \texttt{.rar}                  & --                                          \\
+			\textbf{Video}      & --                                   & selten                                        & \texttt{.mp4}, \texttt{.mov}, \texttt{.avi} \\
+			\textbf{Fotografie} & \texttt{.bmp}, \texttt{.raw} (meist) & \texttt{.png}, \texttt{.psd}, \texttt{.webp}  & \texttt{.jpg}, \texttt{.webp}               \\
+			\textbf{Grafik}     & --                                   & \texttt{.svg}, \texttt{.pdf} (Vektorgrafik)   & --
 		\end{tabular}
 	\end{table}
-
-
-\end{frame}
-\begin{frame}{Bilder: Beispiel}
-	\begin{figure}
-		\centering
-		\begin{subfigure}{.45\linewidth}
-			\begin{tikzpicture}[boximg]
-				\node[anchor=south west] (img) {\includegraphics[width=\linewidth]{{Grundlagen_Info/04_Kompression/Figures/LeeLogo 300 dpi.jpg}}};
-				\begin{scope}[x=(img.south east),y=(img.north west)]
-					\node[draw,minimum height=.3cm,minimum width=.75cm] (B1) at (0.48,0.47) {};
-				\end{scope}
-			\end{tikzpicture}
-			\caption{}
-		\end{subfigure}\\[0.5\baselineskip]
-		\begin{subfigure}{\linewidth}
-			\begin{tikzpicture}[boximg]
-				\node (img1) {\includegraphics[width=0.9\linewidth]{Grundlagen_Info/04_Kompression/Figures/LeeLogo 300 dpi zoom}};
-				\draw (img1.south west) rectangle (img1.north east);
-			\end{tikzpicture}\hfill%
-			\caption{}
-		\end{subfigure}
-		\begin{tikzpicture}[overlay,boximg]
-			\draw (B1) -- (img1);
-		\end{tikzpicture}
-		\caption{\texttt{LeeLogo\textbf{.jpg} (48 KB, 300 dots per inch)}}
-	\end{figure}
+	{\footnotesize \texttt{.mp4}, \texttt{.mov}, \texttt{.avi} sind Container: Das Video darin komprimiert ein Codec (z.\,B. H.264), meist verlustbehaftet.\par}
 \end{frame}
 
 \begin{frame}{Bilder: Beispiel}
-	\begin{figure}
-		\centering
-		\begin{subfigure}{.45\linewidth}
-			\begin{tikzpicture}[boximg]
-				\node[anchor=south west] (img) {\includegraphics[width=\linewidth]{{Grundlagen_Info/04_Kompression/Figures/LeeLogo.pdf}}};
-				\begin{scope}[x=(img.south east),y=(img.north west)]
-					\node[draw,minimum height=.3cm,minimum width=.75cm] (B1) at (0.48,0.47) {};
-				\end{scope}
-			\end{tikzpicture}
-			\caption{}
-		\end{subfigure}\\[0.5\baselineskip]
-		\begin{subfigure}{\linewidth}
-			\begin{tikzpicture}[boximg]
-				\node (img1) {\includegraphics[width=0.9\linewidth, clip, trim=115 30 130 30]{Grundlagen_Info/04_Kompression/Figures/LeeLogo.pdf}};
-				\draw (img1.south west) rectangle (img1.north east);
-			\end{tikzpicture}\hfill%
-			\caption{}
-		\end{subfigure}
-		\begin{tikzpicture}[overlay,boximg]
-			\draw (B1) -- (img1);
-		\end{tikzpicture}
-		\caption{\texttt{LeeLogo\textbf{.pdf}, (28 KB)}}
-	\end{figure}
+	\centering
+	\begin{tikzpicture}
+		\node[anchor=south west, inner sep=0] (img) {\includegraphics[width=.4\linewidth]{Grundlagen_Info/04_Kompression/Figures/FreeFlowerLogo.jpg}};
+		% roter Rahmen = Ausschnitt der Vergrösserung
+		\begin{scope}[x=(img.south east), y=(img.north west)]
+			\draw[red, thick] (0.538,0.602) rectangle (0.606,0.675);
+		\end{scope}
+	\end{tikzpicture}\hfill
+	\fbox{\includegraphics[height=.4\textheight]{Grundlagen_Info/04_Kompression/Figures/FreeFlowerLogo_zoom.png}}\\[.5cm]
+	\texttt{FreeFlowerLogo\textbf{.jpg}} (21 KB, 300 dpi, starke Kompression)
 \end{frame}
 
+\begin{frame}{Bilder: Beispiel}
+	\centering
+	\begin{tikzpicture}
+		\node[anchor=south west, inner sep=0] (img) {\includegraphics[width=.4\linewidth]{Logos/FreeFlower.pdf}};
+		\begin{scope}[x=(img.south east), y=(img.north west)]
+			\draw[red, thick] (0.538,0.602) rectangle (0.606,0.675);
+		\end{scope}
+	\end{tikzpicture}\hfill
+	% trim in bp: gleicher Ausschnitt wie in FreeFlowerLogo_zoom.png
+	\fbox{\includegraphics[height=.4\textheight, clip, trim=153.6 117.8 112.33 63.6]{Logos/FreeFlower.pdf}}\\[.5cm]
+	\texttt{FreeFlower\textbf{.pdf}} (9 KB, Vektorgrafik)
+\end{frame}
 
+\begin{frame}{Auftrag}
+	\begin{itemize}
+		\item \aufgabebox{Aufgabe 1.1}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Kompression: Beispiel}
+	\centering
+	WENN \emoji{blush} HINTER \emoji{blush} $\triangle$, $\triangle$ EINIGE \emoji{blush} ANDEREN \emoji{blush} NACH.
+
+	\only<2>{
+		\rule{\linewidth}{.5pt}\\
+		\textbf{Auflösung (beispielsweise)}:\\
+		WENN GRIECHEN HINTER GRIECHEN RENNEN, RENNEN EINIGE GRIECHEN ANDEREN GRIECHEN NACH.
+	}
+\end{frame}
+
+\begin{frame}{Kompression: Beispiel}
+	\centering
+	WENN KLEINE BIENEN HINTER GROSSEN \#3 FLIEGEN, \#1 \#7 \#4 \#6 \#2 NACH.
+	\only<2>{
+		\rule{\linewidth}{.5pt}\\
+		\textbf{Auflösung}:\\
+		WENN KLEINE BIENEN HINTER GROSSEN BIENEN FLIEGEN, FLIEGEN KLEINE BIENEN GROSSEN BIENEN NACH.\\[.5cm]
+		\#$n$ $=$ dasselbe Wort wie $n$ Wörter weiter vorne\\
+		\textbf{Wörterbuchkompression}: Verweise auf Früheres statt Wiederholung (z.\,B. ZIP)
+	}
+\end{frame}
+
+\begin{frame}{Kompression: LZ77}
+	\begin{itemize}
+		\item \textbf{LZ77} (Lempel und Ziv, 1977): Verweise auf beliebige Zeichenfolgen statt auf ganze Wörter
+		\item Paar (Abstand, Länge): \enquote{Gehen Sie so viele Zeichen zurück und kopieren Sie so viele.}
+		\item Kein Wörterbuch nötig: Der bereits dekodierte Text ist das Wörterbuch
+	\end{itemize}
+	\vspace{.3cm}
+	\centering
+	\texttt{ANNA UND HANNA} (14 Zeichen)\\[.3cm]
+	\only<2>{
+		$\downarrow$ ab dem 11.~Zeichen wiederholt sich \texttt{ANNA}, das 10 Zeichen weiter vorne steht\\[.3cm]
+		\texttt{A N N A \textvisiblespace{} U N D \textvisiblespace{} H (10,4)}\\[.3cm]
+		11 Bausteine statt 14 Zeichen. Verweise lohnen sich erst ab etwa 3 Zeichen.
+	}
+\end{frame}
+
+\begin{frame}{Auftrag}
+	\begin{itemize}
+		\item \aufgabebox{Aufgaben 1.2, 1.3}
+		\item \challengebox{Aufgabe 1.4}
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{Kompression: Beispiel}
 	\centering
 	Wie können wir folgenden Text effizient kodieren?\\[.5cm]
 	AACABAAACBACAACADAAD
-	
+
 	\begin{table}[H]
-		\begin{tabular}{c|c|c|c|c}
-			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\\midrule\midrule
-			Häufigkeit & 12 &  2 & 4 & 2 \\\hline
-			Relative Häufigkeit & 60\% & 10\% & 20\% & 10\% \\\hline
-			\enquote{Naive} Kodierung: & 00 & 01 & 10 & 11 \\\hline
+		\begin{tabular}{ccccc}
+			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\\midrule
+			Absolute Häufigkeit & 12 &  2 & 4 & 2 \\
+			Relative Häufigkeit & 60\% & 10\% & 20\% & 10\% \\
+			\enquote{Naive} Kodierung: & 00 & 01 & 10 & 11 \\
 			\enquote{Effiziente} Kodierung: & 0 & 110  & 10&  111\\
 		\end{tabular}
 		\only<2>{
 		\begin{itemize}
-			\item \enquote{Naive} Codierung (40 Zeichen):\\ \texttt{0000100001000000100100100000100011000011} 
-			\item \enquote{Effiziente} Codierung (32 Zeichen, -20\% Ersparnis):\\ \texttt{0010110000101100100010011100111}\\
-		
+			\item \enquote{Naive} Kodierung (40 Bits):\\ \texttt{0000100001000000100100100000100011000011}
+			\item \enquote{Effiziente} Kodierung (32 Bits, 20\% Ersparnis):\\ \texttt{00100110000101100100010011100111}
+
 		\end{itemize}
 		}
 
 		\only<3>{
-		Beide Codierungen sind \textbf{präfixfrei}: Kein Codewort ist Anfangsstück (Präfix) eines anderen Codeworts}
+		Beide Kodierungen sind \textbf{präfixfrei}: Kein Codewort ist Anfangsstück (Präfix) eines anderen Codeworts}
 	\end{table}
 \end{frame}
 
 \begin{frame}[fragile]{Codierung als Baumdiagramm}
 	\begin{table}[H]
 		\centering
-			\begin{tabular}{c|c|c|c|c}
-			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\\midrule\midrule
-			Relative Häufigkeit & 60\% & 10\% & 20\% & 10\% \\\hline
+			\begin{tabular}{ccccc}
+			\textbf{Buchstabe} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\\midrule
+			Relative Häufigkeit & 60\% & 10\% & 20\% & 10\% \\
 			\enquote{Effiziente} Kodierung: & 0 & 110  & 10&  111\\
 		\end{tabular}
 	\end{table}
@@ -184,20 +216,20 @@
 		level 1/.style={sibling distance=60mm},
 		level 2/.style={sibling distance=30mm},
 		level 3/.style={sibling distance=15mm},
-		level 4/.style={sibling distance=15mm}, leaf/.style={circle, draw}, label/.style={red},edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}] 
-		
-		
+		level 4/.style={sibling distance=15mm}, leaf/.style={circle, draw}, label/.style={red},edge from parent path={(\tikzparentnode.south) -- (\tikzchildnode)}]
+
+
 		\usetikzlibrary{shapes}
 		\tikzstyle{c} = [draw, shape=circle]
-		\tikzstyle{n} = [text width=1cm,align=center]
+		\tikzstyle{n} = [align=center]
 		\tikzstyle{r} = [text=red]
-		
+
 		\node[]{}[edge from parent]
 		child {node[n] {A\\ \textcolor{red}{0}}
 			edge from parent coordinate (ea);
 		}
 		child {node[]{}
-			child {node[text width=1cm,align=center]{C\\ \textcolor{red}{10}}
+			child {node[n]{C\\ \textcolor{red}{10}}
 				edge from parent coordinate (e25);
 			}
 			child {node[]{}
@@ -221,53 +253,18 @@
 	\end{tikzpicture}
 \end{frame}
 
+\begin{frame}{Nicht präfixfrei}
+	\begin{itemize}
+		\item Kodierung: A $=$ \texttt{0}, B $=$ \texttt{01}, C $=$ \texttt{1}
+		\item \texttt{0} ist Präfix von \texttt{01}
+		\item Bitfolge \texttt{01}: AC oder B?
+	\end{itemize}
+	\vspace{.5cm}
+	Im Baumdiagramm stehen Buchstaben nur an Blättern: links 0, rechts 1. Der Weg zu einem Buchstaben führt nie über einen anderen Buchstaben, deshalb ist jede Kodierung aus einem Baum präfixfrei.
+\end{frame}
+
 \begin{frame}[label=auftrag]{Auftrag}
 	\begin{itemize}
-		\item \aufgabebox{Aufgabe 1.1, 1.2}
+		\item \aufgabebox{Aufgaben 1.5--1.7}
 	\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Appendix}
-\end{frame}
-
-\begin{frame}{Kompression: Beispiel}
-	\centering
-	WENN \emoji{blush} HINTER \emoji{blush} $\triangle$, $\triangle$ EINIGE \emoji{blush} ANDEREN \emoji{blush} NACH.
-	
-	\only<2>{
-		\rule{\linewidth}{.5pt}\\
-		\textbf{Auflösung (beispielsweise)}:\\
-		WENN GRIECHEN HINTER GRIECHEN RENNEN, RENNEN EINIGE GRIECHEN ANDEREN GRIECHEN NACH.
-	}
-\end{frame}
-
-
-\begin{frame}{Kompression: Beispiel}
-	\centering
-	WENN KLEINE BIENEN HINTER GROSSEN \#3 FLIEGEN, \#1 \#7 \#4 \#6 \#2 NACH.
-	\only<2>{
-		\rule{\linewidth}{.5pt}\\
-		\textbf{Auflösung}:\\
-		WENN KLEINE BIENEN HINTER GROSSEN BIENE FLIEGEN, FLIEGEN KLEINE BIENEN GROSSEN BIENEN NACH.
-	}
-\end{frame}
-
-
-\begin{frame}{Kompression: Beispiel}{Römer \emoji{amphora}}
-\begin{itemize}
-	\item Leder und Stein: Teure Materialien
-	\item Römische Zahlendarstellung: z.B. Zahl \textbf{999}
-	\begin{center}
-		\texttt{CCCCCCCCCXXXXXXXXXIIIIIIIII}\\
-		$\downarrow$\\
-		Erfindung der Ziffern D (500), L (50), V(5)\\
-		$\downarrow$\\
-		\texttt{DCCCCLXXXXVIIII} \\
-		$\downarrow$\\
-		Effizientere Schreibweise\\
-		$\downarrow$\\
-		IM
-	\end{center}
-\end{itemize}
 \end{frame}
