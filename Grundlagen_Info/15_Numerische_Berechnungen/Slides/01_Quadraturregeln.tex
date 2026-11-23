@@ -1,0 +1,108 @@
+\begin{frame}{Quadraturregeln: Flächen näherungsweise berechnen}
+    Gesucht ist die Fläche unter einem Funktionsgraphen zwischen $a$ und $b$.
+    Der Graph liegt dabei auf oder oberhalb der $x$-Achse.
+    \begin{itemize}
+        \item Wir teilen den Bereich in $n$ gleich breite Teilintervalle.
+        \item Jedes Teilintervall hat die Breite $h=(b-a)/n$.
+        \item Wir ersetzen die Fläche durch Rechtecke oder Trapeze und addieren deren Flächeninhalte.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Vorgestelltes Beispiel: linke Riemannsumme}
+    Die Höhe jedes Rechtecks ist der Funktionswert am linken Endpunkt.
+    \begin{lstlisting}[language=Python, basicstyle=\ttfamily\small]
+def linke_riemannsumme(f, a, b, n):
+    summe = 0
+    breite = (b - a) / n
+
+    for i in range(n):
+        x = a + i * breite
+        hoehe = f(x)
+        summe += breite * hoehe
+
+    return summe
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Neue Idee: Mittelpunktsregel}
+    \begin{itemize}
+        \item Die Breite der Rechtecke bleibt gleich.
+        \item Für die Höhe verwenden wir den Funktionswert in der Mitte des Teilintervalls.
+        \item Der Mittelpunkt liegt eine halbe Rechteckbreite rechts vom linken Endpunkt.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Auftrag}{Mittelpunktsregel selbst implementieren}
+    \aufgabebox{1.1}
+    \begin{itemize}
+        \item Ergänzen Sie das Codegerüst im Skript.
+        \item Vergleichen Sie für $f(x)=x^2$ auf $[0,1]$ mit $n=4$ die Mittelpunktsregel mit der linken Riemannsumme.
+        \item Prüfen Sie auch $g(x)=x+1$ auf $[1,3]$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Neue Idee: Trapezregel}
+    \begin{itemize}
+        \item Wir verbinden die Funktionswerte an den beiden Endpunkten durch eine gerade Strecke.
+        \item Darunter entsteht ein Trapez.
+        \item Sein Flächeninhalt ist die Breite multipliziert mit dem Mittelwert der beiden Höhen.
+    \end{itemize}
+    \[
+        A_{\text{Trapez}} = h\cdot\frac{f(\text{links})+f(\text{rechts})}{2}
+    \]
+\end{frame}
+
+\begin{frame}{Auftrag}{Trapezregel selbst implementieren}
+    \aufgabebox{1.2}
+    \begin{itemize}
+        \item Ergänzen Sie das Codegerüst im Skript.
+        \item Vergleichen Sie für $f(x)=x^2$ auf $[0,1]$ mit $n=4$ die Trapezregel mit der Mittelpunktsregel.
+        \item Prüfen Sie auch $g(x)=x+1$ auf $[1,3]$ und begründen Sie das Ergebnis.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Monte Carlo: Zufällige Höhen mitteln}
+    \textbf{Flächeninhalt = Intervallbreite mal mittlere Höhe}
+    \begin{itemize}
+        \item Wählen Sie $n$ Stellen $X_i$ unabhängig und gleichverteilt aus $[a,b]$.
+        \item Berechnen Sie die Höhen $f(X_i)$ und deren Mittelwert.
+        \item Multiplizieren Sie die mittlere Höhe mit der Breite $b-a$.
+    \end{itemize}
+    \[
+        A\approx (b-a)\cdot\frac{1}{n}\sum_{i=1}^{n}f(X_i)
+    \]
+    Auf $[0,1]$ genügt der Mittelwert. Zufällige $y$-Koordinaten sind nicht nötig.
+\end{frame}
+
+\begin{frame}{Monte Carlo: Treffer zählen}
+    \begin{itemize}
+        \item Erzeugen Sie $n$ gleichverteilte Zufallspunkte im Einheitsquadrat.
+        \item Zählen Sie, wie viele Punkte in der gesuchten Fläche liegen.
+        \item Treffer zählen als $1$, alle anderen Punkte als $0$. Ihr Mittelwert ist der Trefferanteil und schätzt die Fläche im Einheitsquadrat.
+    \end{itemize}
+    \[
+        A\approx\frac{\text{Anzahl Treffer}}{n}\cdot 1
+    \]
+    Mehr Punkte verringern typische Zufallsschwankungen, garantieren aber nicht in jedem Durchlauf ein genaueres Ergebnis.
+\end{frame}
+
+\begin{frame}{Fläche zwischen zwei sich kreuzenden Graphen}
+    \[
+        f(x)=0.5+0.4\sin(4\pi x),\qquad
+        g(x)=0.5+0.4\cos(4\pi x)
+    \]
+    \begin{center}
+        \input{Grundlagen_Info/15_Numerische_Berechnungen/Figures/Flaeche_zwischen_Graphen.tex}
+    \end{center}
+    Gesucht ist die Summe aller schattierten Teilflächen auf $[0,1]$.
+\end{frame}
+
+\begin{frame}{Auftrag}{Fläche zwischen zwei Graphen}
+    \aufgabebox{1.3}
+    \begin{itemize}
+        \item Monte Carlo: Zählen Sie Punkte zwischen den Graphen. Alternativ mitteln Sie die Abstände $|f(X_i)-g(X_i)|$ an zufälligen Stellen.
+        \item Trapezregel: Verwenden Sie den senkrechten Abstand der Graphen als Höhe.
+        \item Vergleichen Sie die Näherungen mit $A\approx 0.3601265265$.
+        \item Warum genügt es nicht, die beiden Flächen unter den Graphen voneinander abzuziehen?
+    \end{itemize}
+\end{frame}
