@@ -17,7 +17,7 @@
 
 \date[\today] % (optional)
 
-\logo{\includegraphics[width=2cm]{Logos/FreeFlower.pdf}}
+\logo{}
 
 \titlegraphic{\vspace{-.7cm}\includegraphics[width=\textwidth]{"Grundlagen_Info/06_Datenbanken/Figures/title-emojis"}}
 
@@ -118,12 +118,10 @@
 \begin{frame}
 \begin{myanswer}
 	Die genaue Anzahl hängt von der konkreten \textbf{Probleminstanz} --- in diesem Fall von der gegebenen Liste \lstinline{L} --- ab. Wir unterscheiden zwei extreme Fälle:
-	\pause
-	\begin{description}[<+->]
+	\begin{description}
 		\item[Günstigster Fall (Best-Case):] Das erste Element (\lstinline{L[0]}) ist bereits das gesuchte Element \lstinline{x} $\Rightarrow$ das \lstinline{if}-Statement wird nur einmal ausgeführt.
 		\item[Teuerster Fall (Worst-Case):] Das gesuchte Element \lstinline{x} ist entweder das letzte Element der Liste oder kommt in der Liste gar nicht vor $\Rightarrow$ das \lstinline{if}-Statement wird \lstinline{n = len(L)} mal ausgeführt (jedes Element von \lstinline{L} muss überprüft werden).
 	\end{description}
-	\pause
 	Natürlich können auch alle Fälle zwischen diesen beiden Extremfällen (1 bis \lstinline{len(L)} Ausführungen) auftreten.
 \end{myanswer}
 \end{frame}
@@ -152,7 +150,6 @@
 \begin{frame}
 	\begin{myanswer}
 	Wir beginnen mit \lstinline{i = 1} und \lstinline{i} wird in jedem Durchlauf der \lstinline{while}-Schleife verdoppelt. Wie häufig können wir den Wert von \lstinline{i} verdoppeln, bis die \lstinline{while}-Bedingung \lstinline{i <= n} nicht mehr erfüllt ist? Ungefähr $\log_2(n)$ mal.
-	\pause
 	\vspace{1cm}\\
 	{\small
 	Exakte Analyse: Die Zeile \lstinline{i *= 2} wird $\ceil{\log_2(n)} + 1$ mal ausgeführt.
@@ -292,7 +289,7 @@ Wie gross darf $n$ maximal sein, damit die Berechnung in 24 Stunden fertig sein 
 
 \begin{frame}
 \begin{myanswer}
-\begin{itemize}[<+->]
+\begin{itemize}
 	\item Algorithmus \(A\): Wir müssen die Ungleichung \(2^n \leq 24 \cdot 60 \cdot 60 \cdot 10^6\) lösen, da es $24 \cdot 60 \cdot 60 \cdot 10^6$ Mikrosekunden in 24 Stunden gibt. Das ergibt \(n \leq \log_2\lr{24 \cdot 60 \cdot 60 \cdot 10^6} \approx 36.33\Rightarrow \text{gesuchte Problemgrösse: } 36 \).
 	\item Algorithmus \(B\): Wir müssen die Ungleichung \(n^2 \leq 24 \cdot 60 \cdot 60 \cdot 10^6\) lösen. Das ergibt \(n \leq \sqrt{24 \cdot 60 \cdot 60 \cdot 10^6} \approx 293938.77 \Rightarrow \text{gesuchte Problemgrösse: } 293938\).
 \end{itemize}
@@ -331,22 +328,19 @@ Wir müssen die Ungleichung \(4.5n + 15 < 0.5n^2 + n\) lösen. Das ergibt \(n^2 
 \begin{myanswer}
 {\scriptsize
     Die Funktion \lstinline{print} wird
-    \begin{itemize}[<+->]
+    \begin{itemize}
         \item im ersten Durchlauf der äusseren Schleife (Fall \lstinline{i = 0}) genau \textcolor{orange}{$n-1$} mal,
         \item im zweiten Durchlauf der äusseren Schleife (Fall \lstinline{i = 1}) genau \textcolor{cyan}{$n-2$} mal,
         \item $\vdots$
         \item im letzten Durchlauf der äusseren Schleife (Fall \lstinline{i = n - 2}) genau \textcolor{magenta}{$1$} mal
     \end{itemize}
-    \pause
     aufgerufen.
 
-    \pause
     Total haben wir also
     \begin{align*}
 		&\textcolor{magenta}{1} + 2 + 3 + \ldots + \textcolor{cyan}{(n-2)} + \textcolor{orange}{(n-1)} \stackrel{\text{Gausssche Summenformel}}{=} \frac{n(n-1)}{2} =\\
 		&= \frac{1}{2}\cdot\textcolor{Red}{n^2} - \frac{n}{2}
 	\end{align*}
-	\pause
     Aufrufe von \lstinline{print}.
 }%
 \end{myanswer}
@@ -527,17 +521,17 @@ def insertion_sort(A): !\tikzmark{c1end}! 						!\tikzmark{c1start}!
 \end{lstlisting}
 \begin{tikzpicture}[overlay, remember picture,
         every node/.style={draw=green!50,fill=green!35!white,text=black,rounded corners}]
-    % Each arrow will appear one after another on mouse click
-    \only<2->{\drawArrow{c1end}{c1start}{\tiny $w_1(n) = 1$}{green!35!white};}
-    \only<3->{\drawArrow{c2end}{c2start}{\tiny $w_2(n) = 1$}{green!35!white};}
-    \only<4->{\drawArrow{c3end}{c3start}{\tiny $w_3(n) = n$}{green!35!white};}
-    \only<5->{\drawArrow{c4end}{c4start}{\tiny $w_4(n) = n-1$}{green!35!white};}
-    \only<6->{\drawArrow{c5end}{c5start}{\tiny $w_5(n) = n-1$}{green!35!white};}
-    \only<11->{\drawArrow{c6end}{c6start}{\tiny $w_6(n) = w_7(n) + (n-1)$}{green!35!white};}
-    \only<7->{\drawArrow{c7end}{c7start}{\tiny $w_7(n)$}{green!35!white};}
-    \only<8->{\drawArrow{c8end}{c8start}{\tiny $w_8(n) = w_7(n)$}{green!35!white};}
-    \only<9->{\drawArrow{c9end}{c9start}{\tiny $w_9(n) = n-1$}{green!35!white};}
-    \only<10->{\drawArrow{c10end}{c10start}{\tiny $w_{10}(n) = 1$}{green!35!white};}
+    % Alle Zeilenhäufigkeiten gemeinsam auf der Lösungsfolie anzeigen.
+    {\drawArrow{c1end}{c1start}{\tiny $w_1(n) = 1$}{green!35!white};}
+    {\drawArrow{c2end}{c2start}{\tiny $w_2(n) = 1$}{green!35!white};}
+    {\drawArrow{c3end}{c3start}{\tiny $w_3(n) = n$}{green!35!white};}
+    {\drawArrow{c4end}{c4start}{\tiny $w_4(n) = n-1$}{green!35!white};}
+    {\drawArrow{c5end}{c5start}{\tiny $w_5(n) = n-1$}{green!35!white};}
+    {\drawArrow{c6end}{c6start}{\tiny $w_6(n) = w_7(n) + (n-1)$}{green!35!white};}
+    {\drawArrow{c7end}{c7start}{\tiny $w_7(n)$}{green!35!white};}
+    {\drawArrow{c8end}{c8start}{\tiny $w_8(n) = w_7(n)$}{green!35!white};}
+    {\drawArrow{c9end}{c9start}{\tiny $w_9(n) = n-1$}{green!35!white};}
+    {\drawArrow{c10end}{c10start}{\tiny $w_{10}(n) = 1$}{green!35!white};}
 \end{tikzpicture}
 \end{myanswer}
 \end{frame}
@@ -623,33 +617,6 @@ Wir vereinfachen die Terme und gruppieren nach den Potenzen von $n$, um den folg
 
 
 \begin{frame}{Ergänzungsfach}
-\end{frame}
-
-\begin{frame}{Das Modell der Random Access Machine (RAM)}
-	\begin{itemize}[<+->]
-		\item Um die Laufzeit von Algorithmen präzise und unabhängig von konkreter Hardware zu analysieren, verwenden wir ein abstraktes Computermodell: die \textbf{Random Access Machine (RAM)}.
-		\item Bisher war unsere Analyse mit Kosten $c_k$ pro Zeile zwar exakt, aber auch aufwendig. Das RAM-Modell vereinfacht die Analyse erheblich.
-		\item Die RAM ist ein idealisierter Computer (ähnlich der Von-Neumann-Architektur) mit folgenden Eigenschaften:
-		\begin{itemize}
-			\item \textbf{Speicher:} Genügend viele Speicherzellen, auf die direkt zugegriffen werden kann (Random Access).
-			\item \textbf{Programm:} Eine Folge von einfachen Befehlen (elementare Operationen), die sequentiell abgearbeitet werden.
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Kostenmodell der RAM}
-	\begin{itemize}[<+->]
-		\item Wie messen wir die \enquote{Zeit} in diesem Modell?
-		\item Wir verwenden das \textbf{Einheitskostenmodell (Uniform Cost Model):}
-		\begin{itemize}
-			\item Jede elementare Operation (Addition, Subtraktion, Vergleich, Zuweisung, Speicherzugriff) benötigt genau \textbf{einen Zeitschritt}.
-			\item Die Grösse der Operanden spielt dabei (vereinfachend) keine Rolle.
-		\end{itemize}
-		\item \textbf{Bedeutung für die Analyse:}
-		\begin{itemize}
-			\item Die Laufzeit eines Algorithmus entspricht der Anzahl der ausgeführten elementaren Operationen. Wir müssen also nur noch die Operationen zählen.
-		\end{itemize}
-	\end{itemize}
 \end{frame}
 
 \begin{frame}{Motivation für die asymptotische Analyse}
@@ -1062,7 +1029,7 @@ Man beachte, dass $f(n)\in\Theta(g(n))$ genau dann gilt, wenn sowohl $f(n)\in O(
 \node at (axis cs:15.0,14.1) {{\tiny \textcolor{ForestGreen}{$c_2g(n)$}}};
 \end{axis}
 \end{tikzpicture}
-\caption{$f(n)\in\Theta(g(n))$. Hier ist der kleinste mögliche Wert für $n_0$ gezeigt; jeder grössere Wert würde auch funktionieren.}
+\caption{$f(n)\in\Theta(g(n))$. Hier ist der kleinste mögliche Wert für $n_0$ gezeigt. Jeder grössere Wert würde auch funktionieren.}
 \label{fig:Theta}
 \end{figure}
 \end{frame}
@@ -1077,13 +1044,179 @@ Man beachte, dass $f(n)\in\Theta(g(n))$ genau dann gilt, wenn sowohl $f(n)\in O(
 	\end{myanswer}
 \end{frame}
 
-\begin{frame}{äquivalente Definitionen durch Grezwerte}
-Man kann zeigen\footnote{Dies folgt (vereinfacht gesagt) aus der Definition der Landau-Symbole und der Tatsache, dass die Grenzwerte existieren, wenn die Funktionen asymptotisch gleich wachsen.}, dass die Definitionen von $O$, $\Omega$ und $\Theta$ (in den Gleichungen \ref{eq:grossO}, \ref{eq:Omega} und \ref{eq:Theta}) äquivalent sind zu den folgenden Grenzwertdefinitionen (wir haben noch weitere Symbole definiert):
+\begin{frame}{Von Vielfachen zum Quotienten}
+	Für den folgenden Übergang gelte $f(n)\geq 0$ und $g(n)>0$ für alle genügend grossen $n$. Wir betrachten den \textbf{Quotienten}
+	\[
+		r(n):=\frac{f(n)}{g(n)}.
+	\]
+	Division durch $g(n)>0$ übersetzt die bisherigen Definitionen:
+	\begin{align*}
+		f\in O(g) &\iff r(n)\leq c &&\text{für alle }n\geq n_0,\\
+		f\in\Omega(g) &\iff r(n)\geq c &&\text{für alle }n\geq n_0,\\
+		f\in\Theta(g) &\iff c_1\leq r(n)\leq c_2 &&\text{für alle }n\geq n_0.
+	\end{align*}
+	Dabei müssen jeweils \textbf{passende positive Konstanten} existieren.
+	\begin{block}{Die Idee}
+		Aus Schranken durch Vielfache von $g$ werden \textbf{konstante Schranken für $r$}. Der Startpunkt $n_0$ erlaubt uns, endlich viele Anfangswerte zu ignorieren.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Wenn der Quotient einen Grenzwert hat}
+	Für das bekannte Beispiel gilt
+	\[
+		r(n)=\frac{3n^2+2n+5}{n^2}=3+\frac{2}{n}+\frac{5}{n^2}\longrightarrow 3.
+	\]
+	\pause
+	Konvergenz bedeutet: Für jedes $\varepsilon>0$ gibt es ein $n_0$, sodass
+	\[
+		\abs{r(n)-3}<\varepsilon\quad\text{für alle }n\geq n_0.
+	\]
+	Mit $\varepsilon=1$ folgt $2<r(n)<4$. Hier genügt $n_0=4$:
+	\[
+		2n^2\leq 3n^2+2n+5\leq 4n^2\quad(n\geq 4).
+	\]
+	Damit haben wir $c_1=2$, $c_2=4$ und also $f\in\Theta(n^2)$ gefunden.
+	\begin{alertblock}{Gilt auch die Umkehrung?}
+		Zwischen zwei positiven Konstanten zu bleiben bedeutet noch nicht, sich einem einzigen Wert anzunähern.
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Ein beschränkter Quotient muss nicht konvergieren}
+	Seien $g(n)=n^2$ und $f(n)=(2+(-1)^n)n^2+n$ für $n\geq 1$. Dann ist
+	\[
+		r(n)=2+(-1)^n+\frac{1}{n}
+		=\begin{cases}1+\frac{1}{n},&n\text{ ungerade},\\3+\frac{1}{n},&n\text{ gerade}.\end{cases}
+	\]
+	\begin{columns}[c]
+		\begin{column}{0.53\textwidth}
+			\centering
+			\begin{tikzpicture}
+				\begin{axis}[
+					width=\linewidth, height=3.8cm,
+					axis lines=left, xlabel={$n$}, ylabel={$r(n)$},
+					xmin=0, xmax=17, ymin=0, ymax=4,
+					xtick={1,4,8,12,16}, ytick={1,2,3},
+					tick label style={font=\scriptsize}, label style={font=\small}
+				]
+					\addplot[Blue, dashed, domain=0:17] {1};
+					\addplot[Red, dashed, domain=0:17] {3};
+					% Nur diskrete Folgenglieder zeichnen; keine interpolierte Kurve.
+					\addplot[Blue, only marks, mark=*, samples at={1,3,5,7,9,11,13,15}] {1+1/x};
+					\addplot[Red, only marks, mark=square*, samples at={2,4,6,8,10,12,14,16}] {3+1/x};
+				\end{axis}
+			\end{tikzpicture}
+		\end{column}
+		\begin{column}{0.44\textwidth}
+			\small
+			\textcolor{Blue}{Ungerade Indizes:} $r(n)\to 1$.\\[0.4em]
+			\textcolor{Red}{Gerade Indizes:} $r(n)\to 3$.\\[0.6em]
+			Es gibt \textbf{keinen gemeinsamen Grenzwert}. Dennoch gilt $1\leq r(n)\leq 4$, also $f\in\Theta(g)$.
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Limes superior und inferior: den Anfang abschneiden}
+	Wir schneiden die ersten $N-1$ Werte ab und betrachten den \textbf{gesamten unendlichen Rest} $r(N),r(N+1),\ldots$:
+	\[
+		U_N:=\sup\{r(n):n\geq N\},\qquad
+		V_N:=\inf\{r(n):n\geq N\}.
+	\]
+	\begin{itemize}
+		\item Das \textbf{Supremum} $U_N$ ist die kleinste obere Schranke des Rests.
+		\item Das \textbf{Infimum} $V_N$ ist die grösste untere Schranke des Rests.
+		\item Anders als Maximum und Minimum müssen diese Schranken \textbf{nicht als Folgenglieder vorkommen}, z.\,B. $\inf\{1+1/n:n\geq 1\}=1$.
+	\end{itemize}
+	\pause
+	Wenn $N$ wächst, fallen Werte weg: $U_N$ kann nur sinken, $V_N$ nur steigen.
+	\[
+		\boxed{\limsup_{n\to\infty}r(n):=\lim_{N\to\infty}U_N}\qquad
+		\boxed{\liminf_{n\to\infty}r(n):=\lim_{N\to\infty}V_N}
+	\]
+	\small Diese Grenzwerte existieren im erweiterten Sinn: Auch $+\infty$ oder $-\infty$ sind möglich. Sie beschreiben die langfristige obere bzw. untere Grenze.
+\end{frame}
+
+\begin{frame}{Die langfristigen Grenzen am Beispiel}
+	Für $r(n)=2+(-1)^n+1/n$ ergibt sich:
+	\begin{center}
+		\begin{tabular}{c|c|c}
+			Startpunkt $N$ & $U_N=\sup_{n\geq N}r(n)$ & $V_N=\inf_{n\geq N}r(n)$\\
+			\hline
+			$1$ & $3+1/2$ & $1$\\
+			$3$ & $3+1/4$ & $1$\\
+			$9$ & $3+1/10$ & $1$\\
+			$N\to\infty$ & $\longrightarrow 3$ & $\longrightarrow 1$
+		\end{tabular}
+	\end{center}
+	\smallskip
+	Die grössten verbleibenden Werte liegen bei geraden Indizes und nähern sich $3$. Die ungeraden Werte kommen $1$ beliebig nahe, erreichen $1$ aber nie.
+	\[
+		\limsup_{n\to\infty}r(n)=3,\qquad \liminf_{n\to\infty}r(n)=1.
+	\]
+	\begin{block}{Einordnung}
+		Ein einzelner Ausreisser am Anfang verschwindet irgendwann aus dem Rest und ändert diese Grenzen nicht. Gilt $\liminf r=\limsup r=L\in\mathbb{R}$, dann gilt auch $r(n)\to L$. Ebenso gilt die Umkehrung.
+	\end{block}
+\end{frame}
+
+\begin{frame}{Die äquivalenten Grenzwertkriterien}
+	Weiterhin sei $r(n)=f(n)/g(n)$ mit $f(n)\geq 0$ und $g(n)>0$ für genügend grosse $n$.
+	\begin{align*}
+		f\in O(g) &\iff \limsup_{n\to\infty}r(n)<\infty,\\[0.5em]
+		f\in\Omega(g) &\iff \liminf_{n\to\infty}r(n)>0,\\[0.5em]
+		f\in\Theta(g) &\iff 0<\liminf_{n\to\infty}r(n)
+		\leq\limsup_{n\to\infty}r(n)<\infty.
+	\end{align*}
+	\begin{itemize}
+		\item $O$: Der Quotient ist ab einem Startpunkt nach oben beschränkt.
+		\item $\Omega$: Er bleibt ab einem Startpunkt oberhalb einer positiven Schranke.
+		\item $\Theta$: Beide Bedingungen gelten. Der Quotient darf dabei schwanken.
+	\end{itemize}
+	Wir beweisen nun das Kriterium für $O$ in \textbf{beiden Richtungen}.
+\end{frame}
+
+\begin{frame}{Beweis für $O$: von der Konstanten zum Limes superior}
+	\textbf{Voraussetzung:} $f\in O(g)$. Nach Definition gibt es $c>0$ und $n_0$ mit
+	\[
+		0\leq f(n)\leq c\,g(n)\quad\text{für alle }n\geq n_0.
+	\]
+	Den Startpunkt können wir so gross wählen, dass auch $g(n)>0$ gilt.
+	\pause
+	\begin{enumerate}
+		\item Division durch $g(n)$ ergibt $0\leq r(n)\leq c$ für alle $n\geq n_0$.
+		\item Für jeden Rest ab $N\geq n_0$ ist damit auch die kleinste obere Schranke höchstens $c$:
+		\[
+			0\leq U_N=\sup_{n\geq N}r(n)\leq c.
+		\]
+		\item Beim Grenzübergang bleibt diese Schranke erhalten:
+		\[
+			\limsup_{n\to\infty}r(n)=\lim_{N\to\infty}U_N\leq c<\infty.
+		\]
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Beweis für $O$: vom Limes superior zur Konstanten}
+	\textbf{Voraussetzung:} $L:=\limsup_{n\to\infty}r(n)<\infty$.
+	Wegen $r(n)\geq 0$ für genügend grosse $n$ gilt $L\geq 0$.
+	\pause
+	\begin{enumerate}
+		\item Wir wählen die positive Konstante $c:=L+1$. Die Zugabe $1$ schafft Abstand zum Grenzwert.
+		\item Weil $U_N\to L$, gibt es einen genügend grossen Startpunkt $n_0$ mit
+		\[
+			U_{n_0}<L+1=c.
+		\]
+		\item $U_{n_0}$ beschränkt \textbf{alle} Werte des Rests. Daher gilt
+		\[
+			0\leq r(n)\leq U_{n_0}<c\quad\text{für alle }n\geq n_0.
+		\]
+		Multiplikation mit $g(n)>0$ liefert $0\leq f(n)\leq c\,g(n)$, also $f\in O(g)$.
+	\end{enumerate}
+	\begin{alertblock}{Warum nicht einfach $c=L$?}
+		Für $r(n)=3+1/n$ ist $L=3$, aber jeder Wert ist grösser als $3$. Eine Schranke $c>L$ gilt hingegen ab einem passenden $n_0$.
+	\end{alertblock}
 \end{frame}
 
 \begin{frame}{Landau-Symbole (allgemein)}
-	Es seien $f$ und $g$ Folgen reeller Zahlen.\\
-	\vspace{0.5cm}
+	Für reelle Folgen mit $g(n)\neq 0$ für genügend grosse $n$ verwendet man Beträge. Bei $O$, $\Omega$ und $\Theta$ sind dies die obigen Kriterien für $\abs{f}$ und $\abs{g}$. Die Symbole $o$ und $\omega$ ergänzen die Übersicht.\\
+	\vspace{0.2cm}
 	\centering
 	\small
 	\begin{tabular}{|c|c|c|}
@@ -1103,30 +1236,24 @@ Man kann zeigen\footnote{Dies folgt (vereinfacht gesagt) aus der Definition der 
 	\end{tabular}
 \end{frame}
 
-\begin{frame}{Landau-Symbole (Komplexitätstheorie)}
-	Im Kontext der Komplexitätstheorie seien $f$ und $g$ Folgen natürlicher Zahlen (sie beschreiben jeweils eine Anzahl von Rechenoperationen).
-	\begin{center}
-	\small
-	\begin{tabular}{|c|c|c|}
-		\hline
-		\textbf{Notation} & \textbf{Definition}                                              & \textbf{Bedeutung}                                  \\
-		\hline
-		$f \in o(g)$      & $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = 0$         & $f$ wächst langsamer als $g$                        \\
-		\hline
-		$f \in O(g)$      & $\limsup\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty$ & $f$ wächst höchstens so schnell wie $g$             \\
-		\hline
-		$f \in \Omega(g)$ & $\liminf\limits_{n \to \infty} \frac{f(n)}{g(n)} > 0$      & \makecell{$f$ wächst mindestens so schnell wie $g$, \\$g\in O(f)$}                          \\
-		\hline
-		$f \in \Theta(g)$ & \makecell{$f \in O(g)\cap \Omega(g)$,                                                                                  \\ $0 < \lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty$} & \makecell{$f$ wächst gleich schnell wie $g$,        \\sowohl $f\in O(g)$ als auch $f\in\Omega(g)$} \\
-		\hline
-		$f \in \omega(g)$ & $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty$    & \makecell{$f$ wächst schneller als $g$,             \\$g\in o(f)$}                                      \\
-		\hline
-	\end{tabular}
-	\end{center}
-	Wir gehen davon aus, dass die von uns untersuchten Folgen $h(n)$ stets gilt:
+\begin{frame}{Abkürzung: wenn der gewöhnliche Grenzwert existiert}
+	Für $f(n)\geq 0$ und $g(n)>0$ für genügend grosse $n$ gelte
 	\[
-	\limsup\limits_{n \to \infty} h(n) = \liminf\limits_{n \to \infty} h(n) = \lim\limits_{n \to \infty} h(n).
+		\lim_{n\to\infty}\frac{f(n)}{g(n)}=L\in[0,\infty].
 	\]
+	\textbf{Unter dieser Voraussetzung} sind $\liminf r=\limsup r=L$.
+	\begin{center}
+		\begin{tabular}{c|l}
+			Grenzwert & Folgerung\\
+			\hline
+			$L=0$ & $f\in o(g)$ und $f\in O(g)$, aber $f\notin\Omega(g)$\\[0.4em]
+			$0<L<\infty$ & $f\in\Theta(g)$, also auch $f\in O(g)$ und $f\in\Omega(g)$\\[0.4em]
+			$L=\infty$ & $f\in\omega(g)$ und $f\in\Omega(g)$, aber $f\notin O(g)$
+		\end{tabular}
+	\end{center}
+	\begin{block}{Vorgehen bei den folgenden Aufgaben}
+		Bilden Sie $f(n)/g(n)$ und bestimmen Sie nach Möglichkeit dessen Grenzwert. Existiert dieser auch im erweiterten Sinn nicht, verwenden Sie $\limsup$ und $\liminf$ oder direkt die Konstantenschranken.
+	\end{block}
 \end{frame}
 
 \begin{frame}
@@ -1138,6 +1265,46 @@ Man kann zeigen\footnote{Dies folgt (vereinfacht gesagt) aus der Definition der 
 		\end{enumerate}
 	\end{myexercise}
 \end{frame}
+
+\begin{frame}{Lösungen: Insertion Sort und Logarithmen (1/2)}
+	{\small
+	\begin{myanswer}
+		\textbf{1. Insertion Sort: Die Aussage trifft zu.}
+
+		Im Worst-Case wird jedes neu einzufügende Element mit allen vorherigen Elementen verglichen. Die Anzahl dieser Vergleiche ist
+		\[
+			1+2+\ldots+(n-1)=\frac{n(n-1)}{2}.
+		\]
+		Mit den zusätzlichen Operationen ergibt die vorherige Analyse
+		\[
+			T(n)=An^2+Bn+C\qquad\text{mit }A>0.
+		\]
+		Damit gilt
+		\[
+			\lim_{n\to\infty}\frac{T(n)}{n^2}
+			=\lim_{n\to\infty}\left(A+\frac{B}{n}+\frac{C}{n^2}\right)=A\in(0,\infty).
+		\]
+		Also ist $T\in\Theta(n^2)$.
+	\end{myanswer}}
+\end{frame}
+
+\begin{frame}{Lösungen: Insertion Sort und Logarithmen (2/2)}
+	\begin{myanswer}
+		\textbf{2. Logarithmen: Die Aussage trifft mit der Betragsdefinition zu.}
+
+		Mit dem Basiswechsel $\log_a(n)=\ln(n)/\ln(a)$ erhalten wir für $n>1$:
+		\[
+			\left|\frac{\log_a(n)}{\log_b(n)}\right|
+			=\left|\frac{\ln(n)/\ln(a)}{\ln(n)/\ln(b)}\right|
+			=\left|\frac{\ln(b)}{\ln(a)}\right|.
+		\]
+		Wegen $a,b>0$ und $a,b\neq 1$ ist dies eine \textbf{positive, endliche Konstante}. Also gilt $\log_a\in\Theta(\log_b)$.
+
+		\medskip
+		Für $a,b>1$ sind beide Logarithmen positiv, sodass die Beträge unnötig sind. Bei einer Basis zwischen $0$ und $1$ ist der entsprechende Logarithmus für $n>1$ negativ. Dann verwenden wir die allgemeine Definition mit Beträgen, nicht die Definition für nichtnegative Laufzeiten.
+	\end{myanswer}
+\end{frame}
+
 \begin{frame}
 	\begin{myexercise}\label{myexercise:complexity01}
 		Entscheide, ob die folgenden Aussagen zutreffen:
@@ -1148,6 +1315,41 @@ Man kann zeigen\footnote{Dies folgt (vereinfacht gesagt) aus der Definition der 
 			\item $2^{bn} \in \Theta\lr{2^n}$ für jede positive Konstante $b\in\N$
 		\end{enumerate}
 	\end{myexercise}
+\end{frame}
+
+\begin{frame}{Lösungen: Polynome und Exponentialfunktionen (1/2)}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item \textbf{Wahr:} $25n^3\in O(n^4)$, denn
+			\[
+				\frac{25n^3}{n^4}=\frac{25}{n}\longrightarrow 0.
+			\]
+			Der Quotient ist schliesslich nach oben beschränkt. Es gilt sogar $25n^3\in o(n^4)$.
+			\item \textbf{Wahr:} $5n^3\in O(n^3)$, denn
+			\[
+				\frac{5n^3}{n^3}=5.
+			\]
+			Der Quotient ist konstant. Es gilt sogar $5n^3\in\Theta(n^3)$.
+		\end{enumerate}
+	\end{myanswer}
+\end{frame}
+
+\begin{frame}{Lösungen: Polynome und Exponentialfunktionen (2/2)}
+	\begin{myanswer}
+		\begin{enumerate}
+			\setcounter{enumi}{2}
+			\item \textbf{Wahr:} Für jede feste positive Konstante $a$ gilt
+			\[
+				\frac{2^n}{2^{n+a}}=2^{-a}\in(0,\infty).
+			\]
+			Also ist $2^n\in\Theta(2^{n+a})$. Die Konstante darf von $a$, aber nicht von $n$ abhängen.
+			\item \textbf{Falsch:} Für $b=1$ gilt die Aussage, für jedes feste $b\geq 2$ hingegen
+			\[
+				\frac{2^{bn}}{2^n}=2^{(b-1)n}\longrightarrow\infty.
+			\]
+			Damit ist $2^{bn}\notin O(2^n)$ und folglich auch $2^{bn}\notin\Theta(2^n)$. Schon $b=2$ ist ein Gegenbeispiel.
+		\end{enumerate}
+	\end{myanswer}
 \end{frame}
 
 \begin{frame}
@@ -1163,6 +1365,63 @@ Man kann zeigen\footnote{Dies folgt (vereinfacht gesagt) aus der Definition der 
 		\end{enumerate}
 	\end{myexercise}
 \end{frame}
+
+\begin{frame}{Lösungen: weitere Wachstumsvergleiche (1/3)}
+	\begin{myanswer}
+		\begin{enumerate}
+			\item \textbf{Wahr:} Mit dem Basiswechsel gilt für $n>1$
+			\[
+				\frac{\ln(n)}{\log_2(n)}
+				=\frac{\ln(n)}{\ln(n)/\ln(2)}=\ln(2)>0.
+			\]
+			Also ist $\ln(n)\in\Theta(\log_2(n))$.
+			\item \textbf{Falsch:} Der Quotient $n/\log_2(n)$ ist nicht nach oben beschränkt. Bereits für $n=2^k$ gilt
+			\[
+				\frac{n}{\log_2(n)}=\frac{2^k}{k}\longrightarrow\infty.
+			\]
+			Keine feste Konstante $c$ kann also $n\leq c\log_2(n)$ für alle genügend grossen $n$ erfüllen.
+		\end{enumerate}
+	\end{myanswer}
+\end{frame}
+
+\begin{frame}{Lösungen: weitere Wachstumsvergleiche (2/3)}
+	\begin{myanswer}
+		\begin{enumerate}
+			\setcounter{enumi}{2}
+			\item \textbf{Wahr:} Jeder der $n$ Faktoren von $n!$ ist höchstens $n$:
+			\[
+				n!=1\cdot2\cdots n\leq n\cdot n\cdots n=n^n.
+			\]
+			Somit gilt $n!\in O(n^n)$ mit $c=1$ und $n_0=1$.
+			\item \textbf{Falsch:} Im Quotienten sind die ersten $\lfloor n/2\rfloor$ Faktoren höchstens $1/2$, alle übrigen höchstens $1$:
+			\[
+				0\leq\frac{n!}{n^n}
+				=\prod_{k=1}^n\frac{k}{n}
+				\leq\left(\frac12\right)^{\lfloor n/2\rfloor}\longrightarrow 0.
+			\]
+			Es fehlt eine positive untere Schranke für den Quotienten. Also ist $n!\notin\Theta(n^n)$. Es gilt sogar $n!\in o(n^n)$.
+		\end{enumerate}
+	\end{myanswer}
+\end{frame}
+
+\begin{frame}{Lösungen: weitere Wachstumsvergleiche (3/3)}
+	\begin{myanswer}
+		\begin{enumerate}
+			\setcounter{enumi}{4}
+			\item \textbf{Falsch:} Es gilt
+			\[
+				\frac{2^{2n}}{2^n}=2^n\longrightarrow\infty.
+			\]
+			Der Quotient ist unbeschränkt, also ist $2^{2n}\notin O(2^n)$.
+			\item \textbf{Wahr:} Es gilt
+			\[
+				\frac{1/n}{1}=\frac1n\longrightarrow 0.
+			\]
+			Also ist $1/n\in O(1)$, sogar $1/n\in o(1)$. $O(1)$ bedeutet nach oben durch eine Konstante beschränkt. Die Funktion muss nicht selbst konstant sein.
+		\end{enumerate}
+	\end{myanswer}
+\end{frame}
+
 \begin{frame}{Algorithmus präsentieren}
 	\begin{enumerate}
 		\item Bildet 3er-Gruppen.
