@@ -2376,7 +2376,7 @@ Zwischenresultat anschliessend mit \(D_3\):
     \end{array}
 \]
 
-Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte aus, kann der fehlende Wert durch Umstellen der \acrshort{XOR}-Operation wiederhergestellt werden.
+Die Parität $P$ wird zusammen mit den Daten gespeichert. Fällt eine Festplatte aus, kann der fehlende Wert durch Umstellen der \acrshort{XOR}-Operation wiederhergestellt werden.
 \end{myexample}
 
 
@@ -2425,10 +2425,10 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
     Gegeben sind vier binäre Codes:
 
     \[
-        A = 1011_2, \quad B = 1100_2, \quad C = 0110_2, \quad D = 1001_2
+        D_1 = 1011_2, \quad D_2 = 1100_2, \quad D_3 = 0110_2, \quad D_4 = 1001_2
     \]
 
-    Berechnen Sie \( A \oplus B \oplus C \oplus D \).
+    Berechnen Sie \( D_1 \oplus D_2 \oplus D_3 \oplus D_4 \).
 
     \begin{myanswer}
         Die Codes werden untereinander geschrieben und Stelle für Stelle
@@ -2437,17 +2437,17 @@ Das Paritätsbit wird zusammen mit den Daten gespeichert. Fällt eine Festplatte
 
         \[
             \begin{array}{r@{\;}l@{\qquad}l}
-                       & \mathtt{1011} & A                                           \\
-                \oplus & \mathtt{1100} & B                                           \\ \cline{1-2}
-                       & \mathtt{0111} & \text{Zwischenresultat } A \oplus B         \\
-                \oplus & \mathtt{0110} & C                                           \\ \cline{1-2}
-                       & \mathtt{0001} & \text{Zwischenresultat } A \oplus B \oplus C \\
-                \oplus & \mathtt{1001} & D                                           \\ \cline{1-2}
-                       & \mathtt{1000} & A \oplus B \oplus C \oplus D
+                       & \mathtt{1011} & D_1                                           \\
+                \oplus & \mathtt{1100} & D_2                                           \\ \cline{1-2}
+                       & \mathtt{0111} & \text{Zwischenresultat } D_1 \oplus D_2         \\
+                \oplus & \mathtt{0110} & D_3                                           \\ \cline{1-2}
+                       & \mathtt{0001} & \text{Zwischenresultat } D_1 \oplus D_2 \oplus D_3 \\
+                \oplus & \mathtt{1001} & D_4                                           \\ \cline{1-2}
+                       & \mathtt{1000} & D_1 \oplus D_2 \oplus D_3 \oplus D_4
             \end{array}
         \]
 
-        Das Endergebnis lautet \(A \oplus B \oplus C \oplus D = 1000_2\).
+        Das Endergebnis lautet \(D_1 \oplus D_2 \oplus D_3 \oplus D_4 = 1000_2\).
 
     \end{myanswer}
 \end{myexercise}
@@ -2471,29 +2471,30 @@ Im Kontext der fehlerkorrigierenden und fehlererkennenden Codierung spielt \gls{
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_0}
-    \caption[\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_0.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
+\input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \raidschema{2}{4}{{d/A_1, d/A_2}, {d/B_1, d/B_2}, {d/C_1, d/C_2}, {d/D_1, d/D_2}}
+    \caption[\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-0-Architektur mit zwei physischen Festplatten. Jede Zeile ist ein Streifen (A, B, C, D), die Zahl gibt die Position des Blocks im Streifen an.}
     \label{fig:raid0}
 \end{figure}
 
 \begin{myexercise}
-    Ein System verwendet \gls{RAID} 0 mit zwei Festplatten, wobei die Daten in 4-Byte-Blöcken verteilt werden. Gegeben ist die folgende Datei:
+    Ein System verwendet \gls{RAID} 0 mit zwei Festplatten, wobei die Daten in 1-Byte-Blöcken verteilt werden. Gegeben ist die folgende Datei, in der jedes Zeichen ein Byte ist:
 
     \begin{verbatim}
-ABCDEFGH
+computer
 \end{verbatim}
 
     Wie werden die Daten auf den beiden Festplatten gespeichert?
 
     \begin{myanswer}
-        \gls{RAID} 0 nutzt Striping ohne Redundanz. Die Daten werden in Blöcken zu je 4 Byte abwechselnd auf die beiden Festplatten geschrieben:
+        \gls{RAID} 0 nutzt Striping ohne Redundanz. Jedes Byte bildet einen eigenen Block, und die Blöcke werden abwechselnd auf die beiden Festplatten geschrieben:
 
         \begin{verbatim}
-Festplatte 1: ABCD
-Festplatte 2: EFGH
+Festplatte 1: cmue
+Festplatte 2: optr
 \end{verbatim}
 
-        Dieses Verfahren erhöht die Geschwindigkeit, bietet jedoch keine Ausfallsicherheit.
+        Bei 4-Byte-Blöcken stünde \texttt{comp} auf Festplatte 1 und \texttt{uter} auf Festplatte 2. Dieses Verfahren erhöht die Geschwindigkeit, bietet jedoch keine Ausfallsicherheit.
     \end{myanswer}
 \end{myexercise}
 
@@ -2507,8 +2508,9 @@ Festplatte 2: EFGH
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_1}
-    \caption[\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_1.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
+\input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \raidschema{2}{4}{{d/A_1, d/A_1}, {d/B_1, d/B_1}, {d/C_1, d/C_1}, {d/D_1, d/D_1}}
+    \caption[\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten]{\glsentryshort{RAID}-1-Architektur mit zwei physischen Festplatten. Jeder Block liegt auf beiden Festplatten.}
     \label{fig:raid1}
 \end{figure}
 
@@ -2522,102 +2524,110 @@ Absicherung gegen Datenverlust kann mit lediglich 2 Festplatten nicht Speicherpl
     \end{myanswer}
 \end{myexercise}
 
-\subsection{\glsentryshort{RAID} 4: Paritätsbits}
-\gls{RAID} 4, 5 und 6 nutzen für die Datensicherheit statt \textit{mirroring} (Spiegelung der Daten) einen effizienteren Ansatz, um Daten über mehrere Laufwerke zu verteilen, indem sie Paritätsbits verwenden. Bei \gls{RAID} 4 werden die Daten wie bei \gls{RAID} 0 blockweise auf mehrere Festplatten verteilt. Zusätzlich gibt es eine eigene Paritäts-Festplatte, die für jeden \enquote{Striping-Block} $A_1A_2A_3\cdots$ genau ein Paritätsbit $A_p$ speichert (\cref{fig:raid4}).
+\subsection{\glsentryshort{RAID} 4: Paritäts-Festplatte}
+\gls{RAID} 4, 5 und 6 nutzen für die Datensicherheit statt \textit{mirroring} (Spiegelung der Daten) einen effizienteren Ansatz: Sie speichern Paritätsblöcke. Bei \gls{RAID} 4 werden die Daten wie bei \gls{RAID} 0 blockweise auf mehrere Festplatten verteilt. Die Blöcke einer Zeile bilden einen \tib{Streifen}. Zusätzlich gibt es eine eigene Paritäts-Festplatte, die für jeden Streifen einen \tib{Paritätsblock} speichert, für den Streifen A mit den Blöcken $A_1, A_2, A_3$ also den Block $A_p$ (\cref{fig:raid4}).
+
+Der Paritätsblock ist das \acrshort{XOR} aller Datenblöcke desselben Streifens. Jedes seiner Bits ist das Paritätsbit der Bits an derselben Stelle. In den Beispielen ist ein Block nur 4 Bit lang. In der Praxis umfasst ein Block typischerweise einige Dutzend bis einige Hundert KiB, gerechnet wird aber gleich, Stelle für Stelle mit \acrshort{XOR}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_4}
-    \caption[\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten und einem Paritätsbit]{\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten und einem Paritätsbit (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_4.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \raidschema{4}{4}{{d/A_1, d/A_2, d/A_3, p/A_p}, {d/B_1, d/B_2, d/B_3, p/B_p}, {d/C_1, d/C_2, d/C_3, p/C_p}, {d/D_1, d/D_2, d/D_3, p/D_p}}
+    \caption[\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten und einer Paritäts-Festplatte]{\glsentryshort{RAID}-4-Architektur mit vier physischen Festplatten. Festplatte 4 speichert die Paritätsblöcke aller Streifen.}
     \label{fig:raid4}
 \end{figure}
 
-\subsection{\glsentryshort{RAID} 5: Verteilte Paritätsbits}
-Da das Paritätsbit bei jedem Schreibvorgang neu geschrieben werden muss (auch bei kleinen Dateien), wird bei \gls{RAID} 4 die Paritäts-Festplatte übermässig stark beansprucht. Daher werden die Paritätsbits bei \gls{RAID} 5 im Gegensatz zu \gls{RAID} 4 auf alle Festplatten verteilt. Ansonsten funktioniert \gls{RAID} 5 identisch wie \gls{RAID} 4 (siehe \cref{fig:raid5}).
+\subsection{\glsentryshort{RAID} 5: Verteilte Paritätsblöcke}
+Da der Paritätsblock bei jedem Schreibvorgang neu geschrieben werden muss (auch bei kleinen Dateien), wird bei \gls{RAID} 4 die Paritäts-Festplatte übermässig stark beansprucht. Daher werden die Paritätsblöcke bei \gls{RAID} 5 im Gegensatz zu \gls{RAID} 4 auf alle Festplatten verteilt: Von Streifen zu Streifen liegt der Paritätsblock eine Festplatte weiter links. Ansonsten funktioniert \gls{RAID} 5 identisch wie \gls{RAID} 4 (siehe \cref{fig:raid5}).
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5}
-    \caption[\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und einem \textit{verteilten} Paritätsbit]{\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und einem \textit{verteilten} Paritätsbit (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_5.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \raidschema{4}{4}{{d/A_1, d/A_2, d/A_3, p/A_p}, {d/B_1, d/B_2, p/B_p, d/B_3}, {d/C_1, p/C_p, d/C_2, d/C_3}, {p/D_p, d/D_1, d/D_2, d/D_3}}
+    \caption[\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und \textit{verteilten} Paritätsblöcken]{\glsentryshort{RAID}-5-Architektur mit vier physischen Festplatten und \textit{verteilten} Paritätsblöcken}
     \label{fig:raid5}
 \end{figure}
 
 
-Falls nun eine Festplatte ausfällt, können die verlorengegangenen Daten einfach rekonstruiert werden, indem das \textit{parity bit} über die verbliebenen Datenblöcke erneut berechnet wird. Somit ist ein Speicher-System bei \gls{RAID} 5 gegen den Ausfall einer Festplatte gesichert.
+Falls nun eine Festplatte ausfällt, können die verlorengegangenen Blöcke rekonstruiert werden, indem jeder fehlende Block aus den übrigen Blöcken seines Streifens berechnet wird. Somit ist ein Speicher-System bei \gls{RAID} 5 gegen den Ausfall einer Festplatte gesichert.
 
-Bei \gls{RAID} 5 ist das Paritätsbit für jeden Block auf einer anderen Festplatte gespeichert, wodurch die Performance beim Schreiben von Daten erhöht wird, da die Schreiblast so auf alle Festplatten gleichmässig verteilt werden kann.
-
-Im Folgenden wird aufgezeigt, wie diese berechnet werden.
-
-\gls{RAID} 5 verteilt die Paritätsinformationen über alle Festplatten. Die Berechnung erfolgt mit einer \acrshort{XOR}-Operation. Beispiel mit vier Datenblöcken $D_1, D_2, D_3, D_4$:
-
-\begin{equation}
-    P = D_1 \oplus D_2 \oplus D_3 \oplus D_4
-\end{equation}
+Bei \gls{RAID} 5 liegt der Paritätsblock für jeden Streifen auf einer anderen Festplatte, wodurch die Performance beim Schreiben von Daten erhöht wird, da die Schreiblast so auf alle Festplatten gleichmässig verteilt werden kann.
 
 \begin{myexample}
-Nehmen wir an, wir berechnen die Parität für folgende Datenblöcke:
+Wir berechnen den Paritätsblock des Streifens A aus \cref{fig:raid5}. Die Datenblöcke auf den Festplatten 1 bis 3 lauten:
 \begin{align*}
-    D_1 & = 1101_2 \\
-    D_2 & = 1011_2 \\
-    D_3 & = 0110_2 \\
-    D_4 & = 1001_2
+    A_1 & = 1101_2 \\
+    A_2 & = 0110_2 \\
+    A_3 & = 1001_2
 \end{align*}
-
-Die Paritätsberechnung erfolgt Schritt für Schritt mit Zwischenresultaten:
+Der Paritätsblock $A_p$ auf Festplatte 4 ist das \acrshort{XOR} der drei Datenblöcke:
+\begin{equation}
+    A_p = A_1 \oplus A_2 \oplus A_3
+\end{equation}
+Die Berechnung erfolgt Schritt für Schritt mit Zwischenresultaten:
 \[
     \begin{array}{r@{\;}l@{\qquad}l}
-               & \mathtt{1101} & D_1                                             \\
-        \oplus & \mathtt{1011} & D_2                                             \\ \cline{1-2}
-               & \mathtt{0110} & \text{Zwischenresultat } D_1 \oplus D_2         \\
-        \oplus & \mathtt{0110} & D_3                                             \\ \cline{1-2}
-               & \mathtt{0000} & \text{Zwischenresultat } D_1 \oplus D_2 \oplus D_3 \\
-        \oplus & \mathtt{1001} & D_4                                             \\ \cline{1-2}
-               & \mathtt{1001} & P
+               & \mathtt{1101} & A_1                                \\
+        \oplus & \mathtt{0110} & A_2                                \\ \cline{1-2}
+               & \mathtt{1011} & \text{Zwischenresultat } A_1 \oplus A_2 \\
+        \oplus & \mathtt{1001} & A_3                                \\ \cline{1-2}
+               & \mathtt{0010} & A_p
     \end{array}
+\]
+Fällt Festplatte 2 aus, fehlt der Block $A_2$. Er ergibt sich als \acrshort{XOR} der übrigen Blöcke des Streifens:
+\[
+    A_2 = A_1 \oplus A_3 \oplus A_p = 1101_2 \oplus 1001_2 \oplus 0010_2 = 0110_2
 \]
 \end{myexample}
 
-Falls ein Datenblock ausfällt, kann er durch Umstellen der \acrshort{XOR}-Operation rekonstruiert werden.
-
 \begin{myexercise}
-    Ein \acrshort{RAID}-5-System besteht aus drei Festplatten. Die gespeicherten Datenblöcke lauten:
-
+    Ein \acrshort{RAID}-5-System besteht aus drei Festplatten. Es speichert drei Streifen A, B und C mit je zwei Datenblöcken:
     \begin{align*}
-        D_1 & = 1011_2 \\
-        D_2 & = 1100_2
+        A_1 & = 1011_2 & B_1 & = 0101_2 & C_1 & = 1001_2 \\
+        A_2 & = 1100_2 & B_2 & = 1110_2 & C_2 & = 0011_2
     \end{align*}
 
-    Berechnen Sie das Paritätsbit $P$ für \gls{RAID} 5.
+    Die Paritätsblöcke werden wie in \cref{fig:raid5} verteilt: $A_p$ liegt auf Festplatte 3, $B_p$ auf Festplatte 2 und $C_p$ auf Festplatte 1. Berechnen Sie die Paritätsblöcke und geben Sie an, welche Blöcke auf den Festplatten 1, 2 und 3 stehen.
 
     \begin{myanswer}
-        Das Paritätsbit wird durch die \acrshort{XOR}-Operation berechnet:
-
+        Die Paritätsblöcke werden mit der \acrshort{XOR}-Operation berechnet:
         \begin{align*}
-            P & = D_1 \oplus D_2       \\
-              & = 1011_2 \oplus 1100_2 \\
-              & = 0111_2
+            A_p & = A_1 \oplus A_2 = 1011_2 \oplus 1100_2 = 0111_2 \\
+            B_p & = B_1 \oplus B_2 = 0101_2 \oplus 1110_2 = 1011_2 \\
+            C_p & = C_1 \oplus C_2 = 1001_2 \oplus 0011_2 = 1010_2
         \end{align*}
 
-        Das Paritätsbit $P$ wird auf der dritten Festplatte gespeichert, während die Daten auf den ersten beiden Festplatten liegen.
+        Damit ergibt sich folgende Belegung der Festplatten:
+
+        \begin{center}
+            \begin{tabular}{lccc}
+                           & \textbf{Festplatte 1} & \textbf{Festplatte 2} & \textbf{Festplatte 3} \\\midrule
+                Streifen A & $A_1 = 1011$          & $A_2 = 1100$          & $A_p = 0111$          \\
+                Streifen B & $B_1 = 0101$          & $B_p = 1011$          & $B_2 = 1110$          \\
+                Streifen C & $C_p = 1010$          & $C_1 = 1001$          & $C_2 = 0011$          \\
+            \end{tabular}
+        \end{center}
+
+        Jede Festplatte enthält einen Paritätsblock, die Schreiblast für die Parität ist also gleichmässig verteilt. Fällt eine Festplatte aus, lässt sich jeder ihrer Blöcke als \acrshort{XOR} der beiden anderen Blöcke desselben Streifens berechnen.
     \end{myanswer}
 \end{myexercise}
 
 Je mehr Festplatten verfügbar sind, desto mehr Speicherplatz ist prozentual für die Speicherung von Daten verfügbar. Da immer eine Festplatte für die Datensicherheit verwendet wird, stehen bei 3 Festplatten 2 für die Speicherung von Daten zur Verfügung, bei 4 Festplatten 3, bei 5 Festplatten 4 usw.
 
-\subsection{\glsentryshort{RAID} 6: Zwei Paritätsbits}
+\subsection{\glsentryshort{RAID} 6: Zwei Paritätsblöcke}
 
-Bei \gls{RAID} 6 werden sogar zwei Paritätsbits verwendet, womit diese Konfiguration Schutz vor zwei Festplatten-Ausfällen bietet (\cref{fig:raid6}). Dadurch fallen jedoch auch zwei Festplatten als mögliche Speichermedien weg, da diese für die Datensicherheit benötigt werden.
+Bei \gls{RAID} 6 werden pro Streifen sogar zwei Paritätsblöcke ($P$ und $Q$) verwendet, womit diese Konfiguration Schutz vor zwei Festplatten-Ausfällen bietet (\cref{fig:raid6}). Dadurch fallen jedoch auch zwei Festplatten als mögliche Speichermedien weg, da diese für die Datensicherheit benötigt werden.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_6}
-    \caption[\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsbits]{\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsbits (Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_6.svg}{Wikimedia Commons}, CC BY-SA 3.0)}
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \raidschema{5}{5}{{d/A_1, d/A_2, d/A_3, p/A_p, q/A_q}, {d/B_1, d/B_2, p/B_p, q/B_q, d/B_3}, {d/C_1, p/C_p, q/C_q, d/C_2, d/C_3}, {p/D_p, q/D_q, d/D_1, d/D_2, d/D_3}, {q/E_q, d/E_1, d/E_2, d/E_3, p/E_p}}
+    \caption[\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsblöcken pro Streifen]{\glsentryshort{RAID}-6-Architektur mit fünf physischen Festplatten und zwei Paritätsblöcken pro Streifen}
     \label{fig:raid6}
 \end{figure}
 
-\gls{RAID} 6 verwendet zwei Paritätswerte: eine \acrshort{XOR}-basierte Parität ($P$) wie in \gls{RAID} 5 und eine zweite Parität $Q$, die durch eine Galois-Feld-Multiplikation berechnet wird. Für Beispiele einer Berechnung des zweiten Paritätsbits sei auf die Webseite von \href{https://blogs.oracle.com/solaris/post/understanding-raid-6-with-junior-high-math}{Oracle} hingewiesen.
+\gls{RAID} 6 verwendet zwei Paritätswerte: eine \acrshort{XOR}-basierte Parität ($P$) wie in \gls{RAID} 5 und eine zweite Parität $Q$, die durch eine Galois-Feld-Multiplikation berechnet wird. Für Beispiele einer Berechnung des zweiten Paritätsblocks sei auf die Webseite von \href{https://blogs.oracle.com/solaris/post/understanding-raid-6-with-junior-high-math}{Oracle} hingewiesen.
 
 \begin{myexercise}
     Marina gründet eine IT-Firma und kauft sich 8 Festplatten für die Speicherung ihrer Daten. Da sie viele Daten hat, möchte sie möglichst viel nutzbaren Speicherplatz haben, gleichzeitig möchte sie gegen den Ausfall von \textit{einer} Festplatte geschützt sein. Welche \acrshort{RAID}-Konfiguration empfehlen Sie Marina (0, 1, 5 oder 6)? Begründen Sie Ihre Antwort.

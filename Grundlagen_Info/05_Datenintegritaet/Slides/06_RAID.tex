@@ -61,9 +61,8 @@
 
 \begin{frame}{\glsentryshort{RAID} 0}
     \begin{center}
-        \includegraphics[width=.17\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_0.pdf}
-
-        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_0.svg}{Wikimedia Commons}, CC BY-SA 3.0}
+        \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+        \resizebox{!}{.36\textheight}{\raidschema{2}{4}{{d/A_1, d/A_2}, {d/B_1, d/B_2}, {d/C_1, d/C_2}, {d/D_1, d/D_2}}}
     \end{center}
     \begin{itemize}
         \item \textbf{Prinzip:} Striping (Daten werden in Blöcke aufgeteilt und auf die Festplatten verteilt)
@@ -76,9 +75,8 @@
 
 \begin{frame}{\glsentryshort{RAID} 1}
     \begin{center}
-        \includegraphics[width=.17\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_1.pdf}
-
-        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_1.svg}{Wikimedia Commons}, CC BY-SA 3.0}
+        \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+        \resizebox{!}{.36\textheight}{\raidschema{2}{4}{{d/A_1, d/A_1}, {d/B_1, d/B_1}, {d/C_1, d/C_1}, {d/D_1, d/D_1}}}
     \end{center}
     \begin{itemize}
         \item \textbf{Prinzip:} Mirroring (je zwei Festplatten bilden ein identisches Spiegelpaar)
@@ -141,12 +139,11 @@
 
 \begin{frame}{\glsentryshort{RAID} 5}
     \begin{center}
-        \includegraphics[width=.36\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_5.pdf}
-
-        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_5.svg}{Wikimedia Commons}, CC BY-SA 3.0}
+        \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+        \resizebox{!}{.36\textheight}{\raidschema{4}{4}{{d/A_1, d/A_2, d/A_3, p/A_p}, {d/B_1, d/B_2, p/B_p, d/B_3}, {d/C_1, p/C_p, d/C_2, d/C_3}, {p/D_p, d/D_1, d/D_2, d/D_3}}}
     \end{center}
     \begin{itemize}
-        \item \textbf{Prinzip:} Striping mit verteilter Parität (Paritätsinformationen werden auf alle Festplatten verteilt)
+        \item \textbf{Prinzip:} Striping mit verteilter Parität (ein Paritätsblock pro Streifen, von Streifen zu Streifen auf einer anderen Festplatte)
         \item \textbf{Vorteil:} Gute Geschwindigkeit, Schutz bei Ausfall einer Festplatte
         \item \textbf{Nachteil:} Wiederherstellung bei Ausfall dauert lange
         \item \textbf{Anwendung:} Dateiserver, \gls{NAS}
@@ -156,12 +153,11 @@
 
 \begin{frame}{\glsentryshort{RAID} 6}
     \begin{center}
-        \includegraphics[width=.5\textwidth]{Grundlagen_Info/05_Datenintegritaet/Figures/RAID_6.pdf}
-
-        {\tiny Grafik: Cburnett, \href{https://commons.wikimedia.org/wiki/File:RAID_6.svg}{Wikimedia Commons}, CC BY-SA 3.0}
+        \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+        \resizebox{!}{.4\textheight}{\raidschema{5}{5}{{d/A_1, d/A_2, d/A_3, p/A_p, q/A_q}, {d/B_1, d/B_2, p/B_p, q/B_q, d/B_3}, {d/C_1, p/C_p, q/C_q, d/C_2, d/C_3}, {p/D_p, q/D_q, d/D_1, d/D_2, d/D_3}, {q/E_q, d/E_1, d/E_2, d/E_3, p/E_p}}}
     \end{center}
     \begin{itemize}
-        \item \textbf{Prinzip:} Striping mit doppelter Parität (zwei Paritätsblöcke pro Stripe)
+        \item \textbf{Prinzip:} Striping mit doppelter Parität (zwei Paritätsblöcke pro Streifen)
         \item \textbf{Vorteil:} Schutz bei Ausfall von zwei Festplatten
         \item \textbf{Nachteil:} Noch geringere nutzbare Kapazität, langsamere Schreibgeschwindigkeit
         \item \textbf{Anwendung:} Grosse Speicherlösungen mit hoher Sicherheit
