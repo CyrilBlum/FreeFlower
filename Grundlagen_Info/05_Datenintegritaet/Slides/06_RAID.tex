@@ -165,6 +165,27 @@
     \end{itemize}
 \end{frame}
 
+% Übersicht: alle RAID-Arten aus dem Skript mit je drei Streifen nebeneinander
+% \raidbox{Breite}{Titel}{Schema}{Text}, ausserhalb des Frames definiert (# im Frame-Körper)
+\providecommand{\raidbox}[4]{%
+    \begin{minipage}[t]{#1}
+        \centering
+        \textbf{#2}\\[1mm]
+        \resizebox{!}{.2\textheight}{#3}\\[1mm]
+        \footnotesize #4
+    \end{minipage}}
+\begin{frame}{\glsentryshort{RAID}-Arten im Vergleich}
+    \input{Grundlagen_Info/05_Datenintegritaet/Figures/tikz_raid.tex}
+    \centering
+    \raidbox{.22\textwidth}{\acrshort{RAID} 0}{\raidschema{2}{3}{{d/A_1, d/A_2}, {d/B_1, d/B_2}, {d/C_1, d/C_2}}}{Kapazität $n$\\kein Schutz}\hfill
+    \raidbox{.22\textwidth}{\acrshort{RAID} 1}{\raidschema{2}{3}{{d/A_1, d/A_1}, {d/B_1, d/B_1}, {d/C_1, d/C_1}}}{Kapazität $n/2$\\Spiegelung}\hfill
+    \raidbox{.4\textwidth}{\acrshort{RAID} 4}{\raidschema{4}{3}{{d/A_1, d/A_2, d/A_3, p/A_p}, {d/B_1, d/B_2, d/B_3, p/B_p}, {d/C_1, d/C_2, d/C_3, p/C_p}}}{Kapazität $n-1$\\1 Platte darf ausfallen}
+
+    \vspace{4mm}
+    \raidbox{.4\textwidth}{\acrshort{RAID} 5}{\raidschema{4}{3}{{d/A_1, d/A_2, d/A_3, p/A_p}, {d/B_1, d/B_2, p/B_p, d/B_3}, {d/C_1, p/C_p, d/C_2, d/C_3}}}{Kapazität $n-1$\\1 Platte darf ausfallen}\hfill
+    \raidbox{.45\textwidth}{\acrshort{RAID} 6}{\raidschema{5}{3}{{d/A_1, d/A_2, d/A_3, p/A_p, q/A_q}, {d/B_1, d/B_2, p/B_p, q/B_q, d/B_3}, {d/C_1, p/C_p, q/C_q, d/C_2, d/C_3}}}{Kapazität $n-2$\\2 Platten dürfen ausfallen}
+\end{frame}
+
 \begin{frame}{Auftrag}{Skript \enquote{Datenintegrität}}
     \begin{itemize}
         \item \aufgabebox{1.28--1.31 (\acrshort{RAID} 5 und 6)}
