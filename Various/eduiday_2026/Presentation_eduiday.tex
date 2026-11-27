@@ -28,15 +28,16 @@
 	tile/.default=ffblue,
 	thema/.style={rounded corners=2pt, fill=#1!12, draw=#1!60, font=\scriptsize, inner sep=2.5pt, minimum height=4.6mm, text depth=.4ex},
 	gruppe/.style={font=\small\bfseries, text=#1},
+	quelle/.style={rounded corners=2pt, fill=#1!12, draw=#1!60, align=center, inner sep=2.5pt, fill opacity=.92, text opacity=1},
 	personbox/.style={box=#1, font=\scriptsize, text width=3.1cm, minimum height=1.2cm},
 }
 
 % Buchcover mit Platzhalter, falls die Datei lokal fehlt
 \newcommand{\buchcover}[2]{%
 	\IfFileExists{\edupath/Figures/extern/#1}{%
-		\includegraphics[width=.3\linewidth]{\edupath/Figures/extern/#1}%
+		\includegraphics[height=1.9cm]{\edupath/Figures/extern/#1}%
 	}{%
-		\tikz\node[draw=gray, fill=gray!10, minimum width=.3\linewidth, minimum height=2.7cm, text width=.26\linewidth, align=center, font=\tiny]{INFORMATIK\\[1mm]#2};%
+		\tikz\node[draw=gray, fill=gray!10, minimum width=.235\linewidth, minimum height=1.8cm, text width=.2\linewidth, align=center, font=\tiny]{INFORMATIK\\[1mm]#2};%
 	}%
 }
 
@@ -90,24 +91,26 @@
 % 2 Anekdote: Rückmeldungen zur Klett-Reihe der ETH
 % -----------------------------------------------------------------------
 \begin{frame}{Wie alles anfing: Rückmeldungen an den Verlag}
-	\zeit{00:30}{02:00}
+	\zeit{00:30}{01:45}
 	\begin{columns}[T, onlytextwidth]
 		\begin{column}{.49\textwidth}
 			\centering
 			\buchcover{klett_programmieren_robotik.jpg}{Programmieren und Robotik}\hfill%
 			\buchcover{klett_data_science_sicherheit.jpg}{Data Science und Sicherheit}\hfill%
-			\buchcover{klett_algorithmen_ki.jpg}{Algorithmen und Künstliche Intelligenz}\\[2mm]
-			{\scriptsize Hromkovi\v{c} et al., \emph{Grundlagen der Informatik für Schweizer Maturitätsschulen}, Klett und Balmer}\\[.5mm]
-			{\tiny\color{gray} Cover: \copyright{} Klett und Balmer Verlag, Baar (Abbildung aus dem Verlagsprospekt 2022)}
+			\buchcover{klett_algorithmen_ki.jpg}{Algorithmen und Künstliche Intelligenz}\hfill%
+			\buchcover{westermann_informatik.jpg}{Informatik für Schweizer Maturitätsschulen}\\[2mm]
+			{\scriptsize Hromkovi\v{c} et al., \emph{Grundlagen der Informatik für Schweizer Maturitätsschulen}, Klett und Balmer\\
+			\emph{Informatik für Schweizer Maturitätsschulen}, Westermann}\\[.5mm]
+			{\tiny\color{gray} Cover: \copyright{} Klett und Balmer Verlag, Baar (Verlagsprospekt 2022), \copyright{} Westermann Verlag}
 		\end{column}
 		\begin{column}{.48\textwidth}
 			\begin{tikzpicture}[node distance=2.5mm]
 				\draw[gray!50, line width=1.2pt] (0,0) -- (0,-5.3);
 				\foreach \y/\datum/\txt [count=\i from 2] in {
-						0/18.09.2023/{18 Rückmeldungen zu zwei Bänden an Klett geschickt: Fehler in Lösungen, Notation, Beispiele},
+						0/18.09.2023/{18 Rückmeldungen zu zwei Bänden an Klett (Lösungen, Notation, Beispiele)},
 						-1.45/21.09.2023/{Antwort: Korrektur \enquote{beim nächsten Nachdruck (das Datum ist offen)}},
-						-2.9/19.10.2023/{Erster Commit unseres eigenen Repositorys an der KLW},
-						-4.25/24.10.2023/{Mittagessen mit Juraj Hromkovi\v{c} und Regula Lacher in Zürich}} {
+						-2.9/19.10.2023/{Erster Commit im eigenen Repository (KLW)},
+						-4.25/24.10.2023/{Mittagessen mit Juraj Hromkovi\v{c} und Regula Lacher}} {
 						\fill[ffblue, visible on=<\i->] (0,\y) circle (1.3mm);
 						\node[anchor=north west, font=\scriptsize\bfseries, text=ffblue, visible on=<\i->] at (.25,\y+.17) {\datum};
 						\node[anchor=north west, font=\scriptsize, text width=5.1cm, visible on=<\i->] at (.25,\y-.2) {\txt};
@@ -118,16 +121,117 @@
 	\vspace{1mm}
 	\begin{center}
 		\begin{tikzpicture}
-			\node[box=fforange, font=\small, text width=11.5cm, visible on=<6->] {Ich habe mit diesen Büchern gerne gearbeitet. Ein gedrucktes Buch kann aber erst mit der nächsten Auflage korrigiert werden, und die Informatik ändert sich laufend.};
+			\node[box=fforange, font=\small, text width=11.5cm, visible on=<6->] {Gute Bücher. Korrigiert wird aber erst in der nächsten Auflage, und die Informatik ändert sich laufend.};
 		\end{tikzpicture}
 	\end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------
+% 2b Bewusst unübersichtliche Sammlung von Informatikquellen in der Schweiz
+% Nur Namen als Text, keine Logos (Markenrechte). URLs am 25.11.2026 geprüft.
+% -----------------------------------------------------------------------
+\begin{frame}{Alle erfinden das Rad neu}
+	\zeit{01:45}{02:15}
+	\centering
+	\resizebox{\textwidth}{!}{%
+	\begin{tikzpicture}
+		% Schritt/x/y/Drehung/Farbe/Schrift/Text, absichtlich durcheinander und teils überlappend
+		\foreach \s/\x/\y/\r/\c/\f/\t in {
+				1/0/0/-4/ffblue/\small/{Klett: Grundlagen der Informatik\\{\tiny ETH, 3 Bände}},
+				1/5.2/.75/6/ffblue/\small/{Westermann: Informatik für\\Schweizer Maturitätsschulen},
+				1/8.4/-.2/-8/ffblue/\footnotesize/{ABZ ETH\\{\tiny abz.inf.ethz.ch}},
+				2/1.6/-1.3/9/ffgreen/\normalsize/{oinf.ch},
+				2/5.4/-1.1/-3/ffgreen/\footnotesize/{informatikgarten.ch},
+				2/9.6/-1.5/12/ffgreen/\footnotesize/{eduskript.org},
+				2/-.6/-2.5/5/ffgreen/\footnotesize/{informatik.mygymer.ch},
+				2/3.3/-2.7/-10/fforange/\small/{SVIA-Moodle},
+				2/7.4/-2.6/4/ffgreen/\scriptsize/{Coding Labs\\{\tiny GitHub KMI-KPZ}},
+				2/10.6/-3.1/-6/gray/\scriptsize/{inf-schule.de},
+				2/.9/-3.9/-7/Purple/\footnotesize/{TigerJython},
+				2/4.8/-3.8/8/Purple/\scriptsize/{jython.ch},
+				2/8.3/-4.0/-2/fforange/\footnotesize/{Informatik-Biber},
+				2/-.4/-5.1/10/gray/\scriptsize/{swisseduc.ch},
+				2/2.9/-5.0/-5/fforange/\scriptsize/{iLearnIT.ch},
+				2/6.1/-5.2/3/fforange/\scriptsize/{fit-in-IT},
+				2/9.9/-5.0/9/gray/\scriptsize/{code.org},
+				3/5.9/-.1/14/Red/\tiny/{Word-Dossier\\Kollegin A},
+				3/10.9/.4/-12/Red/\tiny/{OneNote\\Kollege B},
+				3/3.0/-.75/-14/Red/\tiny/{eigener Moodle-Kurs},
+				3/7.0/-3.2/-15/Red/\tiny/{Skript als PDF\\von 2014},
+				3/1.0/-4.6/18/Red/\tiny/{Jupyter-Notebooks\\Fachschaft C},
+				3/11.0/-2.2/16/Red/\tiny/{Folien vom\\Vorgänger},
+				4/4.1/-1.9/-18/ffblue/\tiny/{FreeFlower}} {
+				\node[quelle=\c, font=\f, rotate=\r, visible on=<\s->] at (\x,\y) {\t};
+			}
+	\end{tikzpicture}}%
+
+	\vspace{2mm}
+	\visible<5->{\footnotesize Aus guten Gründen: kantonale Lehrpläne, eigene Schwerpunkte, Lizenzen ohne Anpassungsrecht.}
+\end{frame}
+
+% -----------------------------------------------------------------------
+% 3 Einstieg: Früher war das Web offen (MySpace-Profil mit eigenem CSS)
+% Anstoss: Brandon Thomas, How I cloned Adobe with AI, CODE Summit 2026
+% Das Profil ist ein selbst gezeichnetes Mockup, kein Screenshot.
+% Schritt 1 zeigt ein Standbild aus dem Talk (Figures/extern/, nicht im Repo).
+% -----------------------------------------------------------------------
+\begin{frame}[fragile]{Früher war vieles offen}
+	\zeit{02:15}{03:00}
+	\begin{columns}[c, onlytextwidth]
+		\begin{column}{.5\textwidth}
+			\centering
+			\only<1>{%
+				\IfFileExists{\edupath/Figures/extern/talk_brandon_thomas.jpg}{\bild{width=\linewidth}{\edupath/Figures/extern/talk_brandon_thomas.jpg}}{\tikz\node[draw=gray, fill=gray!10, minimum width=\linewidth, minimum height=3.6cm, font=\tiny]{Standbild Talk};}\\[1mm]
+				{\tiny\color{gray} Standbild: Brandon Thomas, \emph{How I cloned Adobe with AI}, AI Engineer CODE Summit 2026 (YouTube)}}%
+			\only<2->{%
+			\begin{tikzpicture}[font=\tiny]
+				% Browserfenster
+				\draw[gray!60, fill=gray!15, rounded corners=2pt] (0,0) rectangle (6,4.6);
+				\foreach \x/\c in {.2/red!60, .4/orange!70, .6/green!50!black} \fill[\c] (\x,4.42) circle (.06);
+				\node[anchor=west, fill=white, draw=gray!40, rounded corners=1pt, inner sep=1.5pt, text width=4.8cm] at (.85,4.42) {\texttt{www.myspace.com/cyril}};
+				% Profil mit eigenem CSS: Hintergrund, Farben, Schrift
+				\fill[Purple!80!black] (.1,.1) rectangle (5.9,4.25);
+				\foreach \x/\y in {.4/3.9, 1.3/1.0, 2.6/3.6, 3.9/.5, 5.3/2.9, 4.6/3.95, .8/2.1, 5.6/1.3, 2.2/.35} \node[text=yellow!80] at (\x,\y) {$\ast$};
+				\node[draw=HotPink, line width=1pt, fill=black, minimum width=1.3cm, minimum height=1.3cm, text=white] at (1.05,3.15) {\faUser};
+				\node[anchor=north west, text=HotPink, font=\scriptsize\bfseries] at (1.85,3.85) {Cyril};
+				\node[anchor=north west, text=white, text width=2.6cm] at (1.85,3.45) {:-) \enquote{Online now!}\\Mood: kreativ};
+				\node[anchor=north west, fill=black!70, text=Cyan, text width=2.3cm, inner sep=2pt] at (1.85,2.55) {\faMusic~Profilsong läuft \dots};
+				\node[anchor=north west, text=yellow!80, font=\tiny\bfseries] at (.3,1.9) {Cyril's Top 8};
+				\foreach \i in {0,...,3} \node[draw=HotPink, fill=black, text=white, minimum size=.55cm, inner sep=0] at (.6+\i*.7,1.25) {\faUser};
+				% Feld \enquote{Über mich} mit eingefügtem CSS
+				\node[anchor=north west, draw=gray!60, fill=white, text width=2.1cm, inner sep=2pt, font=\fontsize{4.5}{5.5}\selectfont\ttfamily, visible on=<3->] at (3.55,1.95) {%
+					\textless{}style\textgreater\\
+					body \{ background:\\
+					~~url(sterne.gif); \}\\
+					.name \{ color: hotpink; \}\\
+					\textless{}/style\textgreater};
+			\end{tikzpicture}\\[1mm]
+			{\tiny\color{gray} Skizze eines MySpace-Profils um 2006, kein Screenshot}}
+		\end{column}
+		\begin{column}{.47\textwidth}
+			\only<1>{{\small\bfseries \enquote{The Internet was once open and awesome}}\\[1mm]
+				{\scriptsize Napster, GeoCities, Wikipedia, Flash: Alle konnten mitmachen und den Code anschauen.}\\[3mm]}
+			\begin{itemize}\small
+				\item<3-> Eigenes HTML und CSS im Feld \enquote{Über mich}
+				\item<4-> Gefiel ein Profil, übernahm man den Code.
+				\item<5-> \enquote{Quelltext anzeigen} zeigte jede Website.
+			\end{itemize}
+			\vspace{3mm}
+			\visible<6->{\begin{tikzpicture}
+				\node[box=fforange, font=\small, text width=5.4cm] {Das ginge auch bei Lehrmitteln.};
+			\end{tikzpicture}}
+			\vspace{3mm}
+
+			\visible<1->{\tiny\color{gray} Anstoss: Brandon Thomas, \emph{How I cloned Adobe with AI}, AI Engineer CODE Summit 2026, \url{https://www.youtube.com/watch?v=UCL4K36SHp0}}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 3 Klassischer Weg vs. Open-Source-Weg
 % -----------------------------------------------------------------------
 \begin{frame}{Was passiert, wenn jemand einen Fehler findet?}
-	\zeit{02:00}{03:15}
+	\zeit{03:00}{04:15}
 	\centering
 	\begin{tikzpicture}[node distance=3mm, every node/.append style={minimum height=1.05cm, text width=1.95cm}]
 		% klassischer Weg
@@ -142,25 +246,25 @@
 
 		% FreeFlower
 		\node[gruppe=ffgreen, anchor=west, text width=4cm, minimum height=0, visible on=<7->] at (-.2,-1.55) {FreeFlower};
-		\node[box=ffgreen, below=1.6cm of k1, visible on=<7->] (f1) {SuS meldet Fehler im Moodle-Forum};
-		\node[box=ffgreen, right=of f1, visible on=<8->] (f2) {Korrektur in der \texttt{.tex}-Datei};
+		\node[box=ffgreen, below=1.6cm of k1, visible on=<7->] (f1) {SuS meldet Fehler im Forum};
+		\node[box=ffgreen, right=of f1, visible on=<8->] (f2) {Korrektur in \texttt{.tex}};
 		\node[box=ffgreen, right=of f2, visible on=<9->] (f3) {\texttt{git push}};
-		\node[box=ffgreen, right=of f3, visible on=<10->] (f4) {Server kompiliert alle PDFs neu};
-		\node[box=ffgreen, right=of f4, visible on=<11->] (f5) {Moodle-Link zeigt neue Version};
+		\node[box=ffgreen, right=of f3, visible on=<10->] (f4) {Server kompiliert PDFs};
+		\node[box=ffgreen, right=of f4, visible on=<11->] (f5) {Moodle zeigt neue Version};
 		\foreach \a/\b [count=\i from 8] in {f1/f2,f2/f3,f3/f4,f4/f5} \draw[pfeil, visible on=<\i->] (\a) -- (\b);
 		\node[font=\small\bfseries, text=ffgreen, right=2mm of f5, text width=1.5cm, visible on=<12->] {Minuten};
 	\end{tikzpicture}
 
 	\vspace{6mm}
-	\small\visible<13->{Die nächste Klasse arbeitet oft schon am selben Tag mit der korrigierten Version.}\\
-	\visible<14->{Für konstruktive Meldungen gibt es Punkte, die sich auf die Zeugnisnote auswirken können.}
+	\small\visible<13->{Oft hat schon die nächste Klasse die korrigierte Version.}\\
+	\visible<14->{Konstruktive Meldungen geben Punkte für die Zeugnisnote.}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 4 Entstehung: Zeitstrahl und Commits
 % -----------------------------------------------------------------------
 \begin{frame}{Entstehung}
-	\zeit{03:15}{04:30}
+	\zeit{04:15}{05:30}
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[
@@ -184,16 +288,15 @@
 
 	\vspace{1mm}
 	\begin{tikzpicture}[x=1.62cm]
-		\draw[gray!50, line width=1.2pt, -{Stealth}] (0,0) -- (7.6,0);
+		\draw[gray!50, line width=1.2pt, -{Stealth}] (0,0) -- (6.6,0);
 		\foreach \x/\datum/\txt [count=\i from 3] in {
 				0/10.2023/{Start an der KLW\\(Name \enquote{LeeTeX})},
-				1/06.2024/{PDFs werden auf eigenem Server kompiliert},
-				2/11.2024/{auch Geografie und andere Fächer},
+				1/06.2024/{PDFs vom eigenen Server},
+				2/11.2024/{weitere Fächer, z.\,B. Geografie},
 				3/03.2026/{Website mit Anleitungen},
-				4/05.2026/{neuer Name FreeFlower, öffentlich auf fit-in-IT},
+				4/05.2026/{Name FreeFlower, öffentlich auf fit-in-IT},
 				5/06.2026/{Artikel im SVIA-Interface},
-				6/11.2026/{Netzlabor statt Filius},
-				7/heute/{1967 Commits}} {
+				6/heute/{1967 Commits}} {
 				\fill[ffblue, visible on=<\i->] (\x,0) circle (1.1mm);
 				\node[above, font=\tiny\bfseries, text=ffblue, visible on=<\i->] at (\x,.08) {\datum};
 				\node[below, font=\tiny, text width=1.5cm, align=center, visible on=<\i->] at (\x,-.1) {\txt};
@@ -205,28 +308,28 @@
 % 5 Wer arbeitet mit
 % -----------------------------------------------------------------------
 \begin{frame}{Wer arbeitet mit?}
-	\zeit{04:30}{05:30}
+	\zeit{05:30}{06:30}
 	\centering
 	\begin{tikzpicture}
 		\node[inner sep=0] (logo) at (0,0) {\includegraphics[height=1.5cm]{Logos/FreeFlower.pdf}};
 		\node[personbox=ffblue, visible on=<2->] (tg) at (-4.3,1.55) {\textbf{Thomas Graf}, KLW\\610 Commits\\Ergänzungsfach, Programmieren, Robotik};
 		\node[personbox=ffblue, visible on=<3->] (cb) at (4.3,1.55) {\textbf{Cyril Blum}, KLW und FDU\\1306 Commits\\Grundlagenfach, Pipeline, Website};
 		\node[personbox=fflight, visible on=<4->] (ma) at (-4.3,-.55) {\textbf{Michael Anderegg}, KLW\\23 Commits\\Robotik, Kryptologie};
-		\node[personbox=fflight, visible on=<5->] (wei) at (4.3,-.55) {\textbf{weitere Beiträge}\\Beat Jäckle, Jonathan Rappl, JudyBee\\(je 2 bis 6 Commits)};
-		\node[personbox=ffgreen, visible on=<6->] (sus) at (-2.2,-2.45) {\textbf{SchülerInnen}\\Fehlermeldungen und Vorschläge im Moodle-Forum};
-		\node[personbox=fforange, visible on=<7->] (ki) at (2.2,-2.45) {\textbf{KI-Agenten}\\84 Commits mit Vermerk, alle seit März 2026};
+		\node[personbox=fflight, visible on=<5->] (wei) at (4.3,-.55) {\textbf{weitere Beiträge}\\Beat Jäckle, Jonathan Rappl, JudyBee\\(2 bis 6 Commits)};
+		\node[personbox=ffgreen, visible on=<6->] (sus) at (-2.2,-2.45) {\textbf{SchülerInnen}\\Meldungen im Moodle-Forum};
+		\node[personbox=fforange, visible on=<7->] (ki) at (2.2,-2.45) {\textbf{KI-Agenten}\\84 Commits seit März 2026};
 		\foreach \n [count=\i from 2] in {tg,cb,ma,wei,sus,ki} \draw[gray!50, thick, visible on=<\i->] (logo) -- (\n);
 	\end{tikzpicture}
 
 	\vspace{2mm}
-	\visible<7->{\scriptsize\color{gray} Zählung: \texttt{git log} bis 19.11.2026, alle Commits einer Person zusammengezählt (auch frühere Konten).}
+	\visible<7->{\scriptsize\color{gray} \texttt{git log} bis 19.11.2026, Konten pro Person zusammengezählt}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 6 Inhalte: Themenlandkarte
 % -----------------------------------------------------------------------
 \begin{frame}{Was ist schon drin?}
-	\zeit{05:30}{07:00}
+	\zeit{06:30}{08:00}
 	\centering
 	\resizebox{\textwidth}{!}{%
 	\begin{tikzpicture}[node distance=1.2mm]
@@ -265,19 +368,19 @@
 				\node[zahl, visible on=<\k->] at (\i*2.1,0) {{\color{ffblue}\Large\bfseries \z}\\\t};
 			}
 	\end{tikzpicture}\\
-	\visible<10->{\tiny\color{gray} Fette Zahlen: Seiten des Skripts mit Lösungen. Stand 22.11.2026.}
+	\visible<10->{\tiny\color{gray} Fett: Seiten mit Lösungen, Stand 22.11.2026}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 7 Ein Quelltext, viele Dokumente, automatische Veröffentlichung
 % -----------------------------------------------------------------------
 \begin{frame}{Ein Quelltext, viele Dokumente}
-	\zeit{07:00}{08:00}
+	\zeit{08:00}{09:00}
 	\centering
 	\begin{tikzpicture}[node distance=3.5mm and 9mm]
 		\node[box, font=\small, text width=2.0cm, minimum height=1.6cm] (src) {\faFileCode\\[1mm]\texttt{Kapitel.tex}\\{\tiny Text, Aufgaben, Lösungen, TikZ}};
 		\node[box=ffgreen, right=1.0cm of src, yshift=1.95cm, text width=3.0cm, visible on=<2->] (b1) {Skript mit Lösungen {\tiny(\texttt{book})}};
-		\node[box=ffgreen, below=of b1, text width=3.0cm, visible on=<3->] (b2) {Skript ohne Lösungen {\tiny(Schalter \texttt{exerciseonly})}};
+		\node[box=ffgreen, below=of b1, text width=3.0cm, visible on=<3->] (b2) {Skript ohne Lösungen {\tiny(\texttt{exerciseonly})}};
 		\node[box=ffgreen, below=of b2, text width=3.0cm, visible on=<4->] (b3) {Folien {\tiny(\texttt{beamer})}};
 		\node[box=ffgreen, below=of b3, text width=3.0cm, visible on=<5->] (b4) {Prüfungen, Lernkarten, Merkblätter};
 		\foreach \b [count=\i from 2] in {b1,b2,b3,b4} \draw[pfeil, visible on=<\i->] (src.east) -- (\b.west);
@@ -290,52 +393,52 @@
 		\foreach \b in {b1,b2,b3,b4} \draw[pfeil, gray!40, visible on=<6->] (\b.east) -- (pipe.west);
 
 		\node[box=fforange, right=6mm of pipe, yshift=8mm, text width=2.3cm, visible on=<7->] (moodle) {\faLink{} feste PDF-Links in Moodle};
-		\node[box=fforange, right=6mm of pipe, yshift=-8mm, text width=2.3cm, visible on=<8->] (web) {\faGlobe{} Übersicht auf der Website};
+		\node[box=fforange, right=6mm of pipe, yshift=-8mm, text width=2.3cm, visible on=<8->] (web) {\faGlobe{} Website};
 		\draw[pfeil, visible on=<7->] (pipe.east) -- (moodle.west);
 		\draw[pfeil, visible on=<8->] (pipe.east) -- (web.west);
 	\end{tikzpicture}
 
 	\vspace{4mm}
-	\small\visible<9->{Keine manuelle Verteilung: Wer eine Datei ändert, löst die neue Version aller betroffenen PDFs aus.}
+	\small\visible<9->{Jede Änderung erneuert automatisch alle betroffenen PDFs.}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 8 Blick in die Skripte
 % -----------------------------------------------------------------------
 \begin{frame}{Ein Blick in die Skripte}
-	\zeit{08:00}{09:00}
+	\zeit{09:00}{10:00}
 	\centering
-	\visible<1->{\skriptseite{skript_programmieren.pdf}{Programmieren: Flussdiagramm und Code}}\hfill
+	% Programmieren: ganze Seiten 46 (TikZ-Grafik) und 47 (Aufgabe Wurzelspirale)
+	\visible<1->{\skriptseite{skript_prog_funktion.pdf}{Programmieren: Funktion als Box (TikZ)}}\hfill
+	\visible<1->{\skriptseite{skript_prog_aufgabe.pdf}{Programmieren: Aufgabe Wurzelspirale}}\hfill
 	\visible<2->{\skriptseite{skript_addierer.pdf}{Computer und Kodierungen: 4-Bit-Addierer}}\hfill
-	\visible<3->{\skriptseite{skript_hamming.pdf}{Datenintegrität: Lösung mit Überwachungstabelle}}\hfill
-	\visible<4->{\skriptseite{skript_netzlabor.pdf}{Netzwerke: Aufgaben mit Netzlabor}}
+	\visible<3->{\skriptseite{skript_hamming.pdf}{Datenintegrität: Überwachungstabelle}}
 
 	\vspace{2mm}
-	\visible<5->{\scriptsize Aufgaben mit Musterlösungen, farbige Boxen für Definitionen, Beispiele und Challenges, Glossar und Lernziele im Anhang.}
+	\visible<4->{\scriptsize Musterlösungen, farbige Boxen, Glossar und Lernziele im Anhang}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 9 Textbasiert = bereit für Agenten
 % -----------------------------------------------------------------------
-\begin{frame}[fragile]{Warum Text? Weil Agenten (und Menschen) Text lesen können}
-	\zeit{09:00}{10:30}
+\begin{frame}[fragile]{Reiner Text: lesbar für Menschen und Agenten}
+	\zeit{10:00}{11:30}
 	\begin{columns}[T, onlytextwidth]
 		\begin{column}{.5\textwidth}
-			{\scriptsize\bfseries Eine Änderung als \texttt{git diff} (Netzwerke, 18.11.2026)}
+			{\scriptsize\bfseries \texttt{git diff} einer Forumsmeldung (30.10.2026)}
 			\begin{tikzpicture}
 				\node[draw=gray!40, fill=gray!5, rounded corners=2pt, inner sep=4pt, text width=6.1cm, font=\tiny\ttfamily, align=left] {%
-					{\color{red!70!black}- \textbackslash begin\{myexercise\}[Filius: Installation]}\\
-					{\color{red!70!black}-~~Installieren Sie das Programm Filius, ...}\\
-					{\color{green!45!black}+ \textbackslash begin\{myexercise\}[Netzlabor öffnen]}\\
-					{\color{green!45!black}+~~Öffnen Sie Netzlabor unter}\\
-					{\color{green!45!black}+~~\textbackslash url\{https://netz.cblum.ch\}. ...}};
+					{\color{red!70!black}- ... ein Währungssystem von sieben verschiedene Münztypen.}\\
+					{\color{green!45!black}+ ... ein Währungssystem von sieben verschiedenen Münztypen.}\\[1mm]
+					{\color{red!70!black}- Wenn es sich um ein Schwarz-Weiss-Bild handelt ist dies ...}\\
+					{\color{green!45!black}+ Wenn es sich um ein Schwarz-Weiss-Bild handelt, ist dies ...}};
 			\end{tikzpicture}
 
 			\vspace{3mm}
 			\begin{tikzpicture}[node distance=3mm]
 				\node[box, text width=1.6cm, visible on=<2->] (m) {\faUser\\Lehrperson beschreibt};
 				\node[box=fforange, right=of m, text width=1.6cm, visible on=<3->] (a) {\faRobot\\Agent ändert \texttt{.tex}};
-				\node[box, right=of a, text width=1.6cm, visible on=<4->] (p) {\faSearch\\Lehrperson prüft Diff und PDF};
+				\node[box, right=of a, text width=1.6cm, visible on=<4->] (p) {\faSearch\\prüft Diff und PDF};
 				\draw[pfeil, visible on=<3->] (m) -- (a);
 				\draw[pfeil, visible on=<4->] (a) -- (p);
 				\draw[pfeil, visible on=<5->] (p.south) to[bend left=25] node[below, font=\tiny] {Korrektur} (a.south);
@@ -345,17 +448,17 @@
 			\begin{tikzpicture}
 				\node[tile=ffblue, text width=5.3cm, minimum height=0, visible on=<6->] {%
 					\textbf{Von Hand geschrieben}\\
-					Fast alle Texte, Aufgaben und Lösungen sind von Hand entstanden, seit Oktober 2023. 1883 der 1967 Commits haben keinen KI-Vermerk.};
+					Texte, Aufgaben und Lösungen seit 10.2023. 1883 von 1967 Commits ohne KI-Vermerk.};
 			\end{tikzpicture}\\[2mm]
 			\begin{tikzpicture}
 				\node[tile=fforange, text width=5.3cm, minimum height=0, visible on=<7->] {%
 					\textbf{Seit 2026 mit Agenten}\\
-					TikZ-Grafiken, Folien zu bestehenden Kapiteln, Rückmeldungen aus dem Forum einarbeiten, Aufgabennummern zwischen Skript und Folien abgleichen, abgeschnittenen Text auf Folien finden.};
+					TikZ-Grafiken, Folien zu bestehenden Kapiteln, Forumsmeldungen einarbeiten, Aufgabennummern abgleichen, abgeschnittenen Text finden.};
 			\end{tikzpicture}\\[2mm]
 			\begin{tikzpicture}
 				\node[tile=ffgreen, text width=5.3cm, minimum height=0, visible on=<8->] {%
 					\textbf{Was das möglich macht}\\
-					Offener Quelltext, reine Textdateien, Versionsverwaltung. Jede Änderung ist sichtbar und lässt sich zurücknehmen.};
+					Offener Quelltext, Textdateien, Git. Jede Änderung ist sichtbar und umkehrbar.};
 			\end{tikzpicture}
 		\end{column}
 	\end{columns}
@@ -364,8 +467,130 @@
 % -----------------------------------------------------------------------
 % 10 KI für TikZ: Beispiel Hamming-Folien
 % -----------------------------------------------------------------------
+% Makros aus Grundlagen_Info/05_Datenintegritaet/Slides/05_Hamming.tex übernommen
+% Kartentrick-Codewort: a1..a16, dann c1..c9
+\def\ktWerte{0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,0,0,1,1,0,0,1,1,0}
+
+% Überwachungstabelle der Kartentrick-Methode (16 Nachrichtenbits, 9 Kontrollbits)
+\newcommand{\kartentrickUeberwachung}{%
+    % Tabellenhintergrund
+    \fill[blue!25] (0,0) rectangle (26,1);
+    \fill[blue!15] (0,-9) rectangle (1,0);
+    \fill[gray!8] (1,-9) rectangle (26,0);
+    % Spalten- und Zeilenbeschriftung
+    \foreach \i in {1,...,16} {
+            \node at (\i+.5,.5) {\(a_{\i}\)};
+        }
+    \foreach \i in {1,...,9} {
+            \pgfmathtruncatemacro{\col}{16+\i}
+            \node at (\col+.5,.5) {\(c_{\i}\)};
+            \node at (.5,.5-\i) {\(c_{\i}\)};
+        }
+    % c1 bis c4 überwachen die Spalten der Kartentrick-Tabelle
+    \foreach \j in {1,...,4} {
+            \foreach \r in {0,...,3} {
+                    \pgfmathtruncatemacro{\col}{\j+4*\r}
+                    \node at (\col+.5,.5-\j) {\(\times\)};
+                }
+        }
+    % c5 bis c8 überwachen die Zeilen
+    \foreach \r in {1,...,4} {
+            \pgfmathtruncatemacro{\row}{\r+4}
+            \foreach \j in {1,...,4} {
+                    \pgfmathtruncatemacro{\col}{4*(\r-1)+\j}
+                    \node at (\col+.5,.5-\row) {\(\times\)};
+                }
+        }
+    % jedes Kontrollbit überwacht sich selbst
+    \foreach \i in {1,...,8} {
+            \pgfmathtruncatemacro{\col}{16+\i}
+            \node at (\col+.5,.5-\i) {\(\times\)};
+        }
+    % c9 überwacht sämtliche Bits
+    \foreach \col in {1,...,25} {
+            \node at (\col+.5,-8.5) {\(\times\)};
+        }
+    \draw[step=1,black!30,thin] (0,-9) grid (26,1);
+    \draw[black!65] (0,-9) rectangle (26,1);
+}
+
+% Zeile mit den Werten des Codeworts über der Tabelle; #1 = umgedrehtes Bit (0 = keines)
+\newcommand{\kartentrickWertzeile}[1]{%
+    \node[font=\scriptsize\itshape,anchor=east] at (1,1.5) {Wert};
+    \foreach \col in {1,...,25} {
+            \pgfmathtruncatemacro{\wert}{{\ktWerte}[\col-1]}
+            \ifnum\col=#1
+                \pgfmathtruncatemacro{\wert}{1-\wert}
+                \node[magenta,font=\scriptsize\bfseries\ttfamily] at (\col+.5,1.5) {\wert};
+            \else
+                \node[font=\scriptsize\ttfamily] at (\col+.5,1.5) {\wert};
+            \fi
+        }
+}
+
+% TikZ-Schlüssel onslide aus 05_Hamming.tex: Optionen nur auf bestimmten Folien
+\tikzset{onslide/.code args={<#1>#2}{\only<#1>{\pgfkeysalso{#2}}}}
+% Frame aus 05_Hamming.tex übernommen (Übergang Kartentrick-Tabelle zu Überwachungstabelle)
+\begin{frame}{Beispiel: von der Kartentrick-Tabelle zur Überwachungstabelle}
+    \zeit{11:30}{12:00}
+    \begin{center}
+        \begin{tikzpicture}[every node/.style={font=\tiny}]
+            % links: Kartentrick-Tabelle mit den Namen der Bits
+            \begin{scope}[x=.5cm,y=.5cm]
+                \foreach \r in {1,...,4} {
+                        \foreach \c in {1,...,4} {
+                                \pgfmathtruncatemacro{\nr}{4*(\r-1)+\c}
+                                \fill[gray!12] (\c-1,-\r) rectangle (\c,-\r+1);
+                                \node at (\c-.5,-\r+.5) {\(a_{\nr}\)};
+                            }
+                    }
+                \foreach \c in {1,...,4} {
+                        \fill[blue!20] (\c-1,0) rectangle (\c,1);
+                        \node at (\c-.5,.5) {\(c_{\c}\)};
+                    }
+                \foreach \r in {1,...,4} {
+                        \pgfmathtruncatemacro{\nr}{\r+4}
+                        \fill[blue!20] (4,-\r) rectangle (5,-\r+1);
+                        \node at (4.5,-\r+.5) {\(c_{\nr}\)};
+                    }
+                \fill[blue!20] (4,0) rectangle (5,1);
+                \node at (4.5,.5) {\(c_9\)};
+                \draw[step=1,black!65] (0,-4) grid (5,1);
+                % a1 liegt in der Spalte von c1 und in der Zeile von c5
+                \draw<2>[magenta,very thick] (0,-1) rectangle (1,0);
+                \draw<2>[magenta,thick,dashed] (0,0) rectangle (1,1);
+                \draw<2>[magenta,thick,dashed] (4,-1) rectangle (5,0);
+                \coordinate (g-a1) at (0,-.5);
+                % Bereich von c1: die erste Spalte
+                \draw<3>[orange,very thick,rounded corners=2pt] (0,-4) rectangle (1,1);
+                \coordinate (g-c1) at (1,.5);
+            \end{scope}
+            % rechts: Überwachungstabelle, erst ab Schritt 2 sichtbar (Platz bleibt reserviert, damit nichts springt)
+            \begin{scope}[x=.4cm,y=.4cm,shift={(3cm,0)},onslide=<1>{opacity=0}]
+                \kartentrickUeberwachung
+                % Spalte von a1: Kreuze bei c1, c5, c9
+                \draw<2>[magenta,very thick] (1,-9) rectangle (2,1);
+                % dieselben Kontrollbits c1 und c5 wie links gestrichelt
+                \draw<2>[magenta,thick,dashed] (1.15,-.85) rectangle (1.85,-.15);
+                \draw<2>[magenta,thick,dashed] (1.15,-4.85) rectangle (1.85,-4.15);
+                \coordinate (t-a1) at (1.5,-9);
+                % Zeile von c1: a1, a5, a9, a13 und c1
+                \draw<3>[orange,very thick] (0,-1) rectangle (26,0);
+                \coordinate (t-c1) at (0,-.5);
+            \end{scope}
+            % Pfeil links um die Kartentrick-Tabelle herum zur Spalte von a1
+            \draw<2>[->,magenta,very thick,rounded corners=4pt] (g-a1) -- (-.3cm,-.25cm) -- (-.3cm,-3.85cm) -| (t-a1);
+            \draw<3>[->,orange,very thick] (g-c1) to[out=0,in=180] (t-c1);
+        \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item<2-> \(a_1\) liegt in Spalte \(c_1\) und Zeile \(c_5\), \(c_9\) zählt alles $\rightarrow$ Spalte \(a_1\): \(c_1, c_5, c_9\)
+        \item<3-> \(c_1\) prüft die erste Spalte $\rightarrow$ Zeile \(c_1\): \(a_1, a_5, a_9, a_{13}, c_1\)
+    \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Beispiel: komplexe TikZ-Grafiken mit KI}
-	\zeit{10:30}{11:15}
+	\zeit{12:00}{12:30}
 	\begin{columns}[T, onlytextwidth]
 		\begin{column}{.4\textwidth}
 \begin{lstlisting}[language={[LaTeX]TeX}, basicstyle=\tiny\ttfamily, frame=single, rulecolor=\color{gray!40}, backgroundcolor=\color{gray!5}, keywordstyle=\color{ffblue}, columns=fullflexible]
@@ -384,83 +609,83 @@
           {\texttt{\wert}};
       ...
 \end{lstlisting}
-			{\tiny\color{gray} Ausschnitt aus \texttt{05\_Hamming.tex}, mit Claude erstellt (November 2026)}
+			{\tiny\color{gray} \texttt{05\_Hamming.tex}, mit Claude erstellt (11.2026)}
 		\end{column}
 		\begin{column}{.58\textwidth}
 			\centering
-			\visible<2->{\bild{width=.82\linewidth}{\edupath/Figures/folie_hamming_signatur.pdf}}\\[1.5mm]
-			\visible<3->{\bild{width=.5\linewidth}{\edupath/Figures/folie_hamming_zonen.pdf}}
-		\end{column}
-	\end{columns}
-	\vspace{1mm}
-	\visible<4->{\scriptsize Früher hätte ich für solche Grafiken Stunden gebraucht. Heute beschreibe ich, was die Grafik zeigen soll, und prüfe das Resultat.}
-\end{frame}
-
-% -----------------------------------------------------------------------
-% 11a Netzlabor: Zeitstrahl
-% -----------------------------------------------------------------------
-\begin{frame}{Beispiel: von Filius zu Netzlabor an einem Nachmittag}
-	\zeit{11:15}{12:15}
-	\begin{columns}[c, onlytextwidth]
-		\begin{column}{.36\textwidth}
-			\begin{tikzpicture}
-				\draw[gray!50, line width=1.2pt] (0,.2) -- (0,-5.4);
-				\foreach \y/\uhr/\txt/\farbe [count=\i] in {
-						0/12:47/{Funktionsplan und Design-Entwurf}/ffblue,
-						-.95/13:57/{Simulationskern: Ethernet, ARP, Switch, IP, TCP, DNS, HTTP, Router}/ffblue,
-						-2.05/14:47/{online auf netz.cblum.ch, öffnet Filius-Dateien}/ffblue,
-						-3.0/17:50/{Skript, Folien und Aufgaben umgestellt}/ffgreen,
-						-3.95/18:12/{sieben Erklärvideos, automatisch aufgenommen}/fforange} {
-						\fill[\farbe, visible on=<\i->] (0,\y) circle (1.2mm);
-						\node[anchor=north west, font=\scriptsize\bfseries, text=\farbe, visible on=<\i->] at (.22,\y+.17) {\uhr};
-						\node[anchor=north west, font=\tiny, text width=3.3cm, visible on=<\i->] at (.22,\y-.17) {\txt};
+			% Überwachungstabelle mit denselben Schritten wie auf der Folie in 05_Hamming.tex
+			\visible<2->{\resizebox{\linewidth}{!}{%
+				\begin{tikzpicture}[x=.46cm,y=.4cm,every node/.style={font=\scriptsize}]
+					\kartentrickUeberwachung
+					\uncover<3->{\kartentrickWertzeile{0}}
+					\uncover<4->{
+						\node[font=\scriptsize\itshape] at (27.3,.5) {Einsen};
+						\foreach \n [count=\i] in {2,2,4,4,2,4,2,4,14} {
+								\node[green!50!black] at (27.3,.5-\i) {\n\ \checkmark};
+							}
 					}
-				\node[anchor=north west, font=\tiny\color{gray}, text width=3.5cm, visible on=<5->] at (-.1,-4.95) {18.11.2026, Zeitpunkte der Commits};
-			\end{tikzpicture}
-		\end{column}
-		\begin{column}{.62\textwidth}
-			\centering
-			\visible<3->{\bild{width=\linewidth}{\edupath/Figures/netzlabor_simulieren.png}\\[1mm]
-			{\tiny Netzlabor im Simulationsmodus: Befehlszeile mit \texttt{traceroute}, Datenaustausch Schicht für Schicht}}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-% -----------------------------------------------------------------------
-% 11b Netzlabor: vorher und nachher im Skript
-% -----------------------------------------------------------------------
-\begin{frame}{Im Skript: vorher und nachher}
-	\zeit{12:15}{13:00}
-	\begin{columns}[T, onlytextwidth]
-		\begin{column}{.62\textwidth}
-			{\scriptsize\bfseries\color{gray!70!black} Vorher: Filius (Java-Programm, Installation nötig)}\\[1mm]
-			\bild{height=2.45cm}{\edupath/Figures/filius_echo.png}\\[2mm]
-			\visible<2->{{\scriptsize\bfseries\color{ffgreen} Nachher: Netzlabor im Browser}\\[1mm]
-			\bild{height=2.45cm}{\edupath/Figures/netzlabor_bauen.png}}
-		\end{column}
-		\begin{column}{.36\textwidth}
-			\centering
-			\visible<3->{\bild{height=5.6cm}{\edupath/Figures/skript_netzlabor.pdf}\\[1mm]
-			{\tiny Skript Netzwerke, aktuelle Fassung}}
+					\draw<4->[orange,very thick] (0,-1) rectangle (26,0);
+				\end{tikzpicture}}\\[1mm]
+			{\tiny\color{gray} Folie \enquote{Überwachungstabelle}, animiert}}
 		\end{column}
 	\end{columns}
 	\vspace{1mm}
-	\visible<4->{\scriptsize Die Abbildung im Skript und die Werte in der Musterlösung stammen aus demselben Simulationslauf.}
+	\visible<5->{\scriptsize Ich beschreibe, was die Grafik zeigen soll, und prüfe das Resultat. Von Hand bräuchte ich Stunden.}
+\end{frame}
+
+% -----------------------------------------------------------------------
+% 10b Beispiel: animierte Folie Kasiski-Test
+% Frame aus Grundlagen_Info/03_Kryptologie/Slides/L02d_Kryptoanalyse_Vigenere_Kasiski.tex
+% -----------------------------------------------------------------------
+\providecommand{\gold}[1]{\textcolor{Gold}{#1}}
+\providecommand{\annotKasiski}[4]{\textcolor{#1}{\(\underset{\text{\tiny #4}}{\texttt{#2}}\)#3}}
+\begin{frame}[fragile]{Beispiel: animierte Folie zum Kasiski-Test}{Kryptologie}
+	\zeit{12:30}{13:00}
+  \only<1->{\texttt{M\only<1-4>{EIN}\only<5->{\gold{EIN}}KL\only<1-4>{EIN}\only<5->{\red{EIN}}ERREIMSCH\only<1-4>{EIN}\only<5->{\red{EIN}}TK\only<1-4>{EIN}\only<5->{\green{EIN}}ERZUS\only<1-4>{EIN}\only<5->{\green{EIN}}}}
+
+  % feste Höhe: Schlüssel, Alternative und durchgestrichene Alternative am selben Ort
+  \begin{overprint}
+    \onslide<1>\mbox{}
+    \onslide<2-8,11->\texttt{C\only<1-4>{ODE}\only<5->{\gold{ODE}}CO\only<1-4>{DEC}\only<5->{\red{DEC}}ODECODECO\only<1-4>{DEC}\only<5->{\red{DEC}}OD\only<1-4>{ECO}\only<5->{\green{ECO}}DECOD\only<1-4>{ECO}\only<5->{\green{ECO}}}
+    \onslide<9>\texttt{ABCDEFGHIJKLABCDEFGHIJKLABCDEFGHIJ??}
+    \onslide<10>\sout{\texttt{ABCDEFGHIJKLABCDEFGHIJKLABCDEFGHIJ??}}
+  \end{overprint}
+
+  \visible<3->{\rule{0pt}{0pt}\(\vphantom{\underset{\text{\tiny 2}}{\texttt{S}}}\)\texttt{O\only<1-3>{SLR}\only<4->{\annotKasiski{Gold}{S}{LR}{2}}MZ\only<1-3>{HMP}\only<4->{\annotKasiski{red}{H}{MP}{7}}SUVGWPWEV\only<1-3>{HMP}\only<4->{\annotKasiski{red}{H}{MP}{19}}HN\only<1-3>{IKB}\only<4->{\annotKasiski{ForestGreen}{I}{KB}{24}}HVBIV\only<1-3>{IKB}\only<4->{\annotKasiski{ForestGreen}{I}{KB}{32}}}}\\[.5cm]
+
+  \begin{itemize}
+    \item<4-> \enquote{\red{HMP}} und \enquote{\green{IKB}} kommen je zweimal im Geheimtext vor
+
+          \begin{itemize}
+            \item<6-> \texttt{HMP}: Positionen 7 und 19. $\rightarrow$ 19-7 = 12 = $\blue{\mathbf{2\times 2}} \times 3$
+                  \visible<12->{
+                    \begin{tcolorbox}
+                      $\mathbf{\underset{\text{Position 1 \texttt{HMP}}}{7}+\underset{\text{Codewort-Länge!}}{\blue{4}}\times \underset{\text{Anzahl Codewörter}}{3} = \underset{\text{Position 2 \texttt{HMP}}}{19}}$
+                    \end{tcolorbox}
+                  }
+            \item<7-> \texttt{IKB}: Positionen 24 und 32. $\rightarrow$ 32-24 = 8  = $\blue{\mathbf{2\times 2}}\times 2$\visible<13->{
+                    \begin{tcolorbox}
+                      $\mathbf{\underset{\text{Position 1 \texttt{IKB}}}{24}+\underset{\text{Codewort-Länge!}}{\blue{4}}\times \underset{\text{Anzahl Codewörter}}{2} = \underset{\text{Position 2 \texttt{IKB}}}{32}}$
+                    \end{tcolorbox}
+                  }
+            \item<8-> \textbf{Könnte die Schlüssellänge auch 12 sein?} \visible<10->{Nein, denn dann würden die beiden \texttt{IKB} nicht auf den selben Schlüsselteil fallen!}
+            \item<11-> Distanz zwischen Positionen = Vielfaches der Schlüssellänge?
+          \end{itemize}
+  \end{itemize}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 12 Ideen für den eigenen Unterricht
 % -----------------------------------------------------------------------
 \begin{frame}{Was Sie davon übernehmen könnten}
-	\zeit{13:00}{14:00}
+	\zeit{13:00}{13:45}
 	\centering
 	\begin{tikzpicture}[x=4.1cm, y=2.55cm, every node/.append style={minimum height=2.3cm}]
-		\node[tile=ffblue, visible on=<1->] at (0,0) {{\color{ffblue}\Large\faComments}\\[.5mm]\textbf{Fehler-Forum in Moodle}\\SuS melden Fehler und Unklarheiten, gute Meldungen geben Punkte.};
-		\node[tile=ffblue, visible on=<2->] at (1,0) {{\color{ffblue}\Large\faToggleOn}\\[.5mm]\textbf{Lösungen per Schalter}\\Dieselbe Quelle ergibt das Skript mit und ohne Lösungen.};
-		\node[tile=ffblue, visible on=<3->] at (2,0) {{\color{ffblue}\Large\faCodeBranch}\\[.5mm]\textbf{Git als Unterrichtsthema}\\SuS sehen an echten Commits, wie Software entsteht.};
-		\node[tile=ffgreen, visible on=<4->] at (0,-1) {{\color{ffgreen}\Large\faTools}\\[.5mm]\textbf{Eigene Werkzeuge bauen}\\Netzlabor ist frei nutzbar, auch ohne FreeFlower.};
-		\node[tile=ffgreen, visible on=<5->] at (1,-1) {{\color{ffgreen}\Large\faCheckDouble}\\[.5mm]\textbf{Automatische Kontrollen}\\Aufgabennummern in Skript und Folien, abgeschnittener Text, Kompilierfehler.};
-		\node[tile=ffgreen, visible on=<6->] at (2,-1) {{\color{ffgreen}\Large\faDatabase}\\[.5mm]\textbf{Moodle-Fragen als Dateien}\\Dasselbe Prinzip für Fragesammlungen: versioniert und überprüfbar.};
+		\node[tile=ffblue, visible on=<1->] at (0,0) {{\color{ffblue}\Large\faComments}\\[.5mm]\textbf{Fehler-Forum in Moodle}\\SuS melden Fehler, gute Meldungen geben Punkte.};
+		\node[tile=ffblue, visible on=<2->] at (1,0) {{\color{ffblue}\Large\faToggleOn}\\[.5mm]\textbf{Lösungen per Schalter}\\Eine Quelle, Skript mit und ohne Lösungen.};
+		\node[tile=ffblue, visible on=<3->] at (2,0) {{\color{ffblue}\Large\faCodeBranch}\\[.5mm]\textbf{Git als Unterrichtsthema}\\Echte Commits zeigen, wie Software entsteht.};
+		\node[tile=ffgreen, visible on=<4->] at (.5,-1) {{\color{ffgreen}\Large\faCheckDouble}\\[.5mm]\textbf{Automatische Kontrollen}\\Aufgabennummern, abgeschnittener Text, Kompilierfehler.};
+		\node[tile=ffgreen, visible on=<5->] at (1.5,-1) {{\color{ffgreen}\Large\faDatabase}\\[.5mm]\textbf{Moodle-Fragen als Dateien}\\Fragesammlungen versioniert und überprüfbar.};
 	\end{tikzpicture}
 \end{frame}
 
@@ -468,13 +693,13 @@
 % 13 Grenzen
 % -----------------------------------------------------------------------
 \begin{frame}{Was (noch) nicht gut läuft}
-	\zeit{14:00}{14:45}
+	\zeit{13:45}{14:30}
 	\centering
 	\begin{tikzpicture}[x=6.1cm, y=2.0cm, every node/.append style={minimum height=1.75cm}]
-		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<1->] at (0,0) {\textbf{LaTeX ist eine Hürde}\\Zum Lesen und Unterrichten braucht es nur die PDFs. Wer mitschreiben will, muss LaTeX und Git lernen (oder einen Agenten fragen).};
-		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<2->] at (1,0) {\textbf{KI-Fehler klingen plausibel}\\Jede Änderung eines Agenten muss jemand lesen, der das Fach versteht.};
-		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<3->] at (0,-1) {\textbf{Wenige tragen die Wartung}\\Bisher stammen über 95\,\% der Commits von zwei Personen.};
-		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<4->] at (1,-1) {\textbf{Bildrechte}\\Fremdbilder nur mit passender Lizenz und Quellenangabe. Das kostet Zeit.};
+		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<1->] at (0,0) {\textbf{LaTeX ist eine Hürde}\\Zum Unterrichten reichen die PDFs. Mitschreiben braucht LaTeX und Git (oder einen Agenten).};
+		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<2->] at (1,0) {\textbf{KI-Fehler klingen plausibel}\\Jede Agenten-Änderung muss jemand mit Fachwissen prüfen.};
+		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<3->] at (0,-1) {\textbf{Wenige tragen die Wartung}\\Über 95\,\% der Commits stammen von zwei Personen.};
+		\node[tile=fforange, text width=5.4cm, minimum width=5.6cm, visible on=<4->] at (1,-1) {\textbf{Bildrechte}\\Fremdbilder nur mit Lizenz und Quelle, das kostet Zeit.};
 	\end{tikzpicture}
 \end{frame}
 
@@ -482,43 +707,41 @@
 % 14 Ausprobieren
 % -----------------------------------------------------------------------
 \begin{frame}{Jetzt ausprobieren}
-	\zeit{14:45}{17:30}
+	\zeit{14:30}{17:15}
 	\centering
 	\qrkarte{\faFilePdf}{PDFs online lesen}{https://cyrilblum.github.io/FreeFlower/compiled-files.html}\hfill
 	\qrkarte{\faCode}{Quelltext im Browser (VS Code)}{https://github.dev/CyrilBlum/FreeFlower}\hfill
-	\qrkarte{\faDownload}{Repository als ZIP}{https://github.com/CyrilBlum/FreeFlower/archive/refs/heads/main.zip}\hfill
-	\qrkarte{\faNetworkWired}{Netzlabor}{https://netz.cblum.ch}
+	\qrkarte{\faDownload}{Repository als ZIP}{https://github.com/CyrilBlum/FreeFlower/archive/refs/heads/main.zip}
 
 	\vspace{4mm}
-	\begin{tikzpicture}
-		\node[box, font=\small, text width=11.6cm, align=left, visible on=<2->] {%
-			\leavevmode\aufgabebox{Zu zweit, etwa 4 Minuten}\par\vspace{1.5mm}
-			Wählen Sie ein Thema, das Sie selbst unterrichten, und blättern Sie im Skript oder in den Folien.
-			Was würden Sie übernehmen? Was fehlt, was stört Sie?};
-	\end{tikzpicture}
+	% Auftrag als schlichte Box: Kennzeichnung oben, Text darunter linksbündig
+	\only<2->{%
+		\begin{tcolorbox}[center, width=11.6cm, colback=ffblue!6, colframe=ffblue!55, boxrule=.6pt, arc=2pt, left=3mm, right=3mm, top=2mm, bottom=2mm, fontupper=\small]
+			\aufgabebox{Zu zweit, etwa 4 Minuten}\par\smallskip
+			Blättern Sie in einem Thema, das Sie unterrichten.\par\smallskip
+			Was würden Sie übernehmen, was fehlt, was stört?
+		\end{tcolorbox}}
 
 	\vspace{1mm}
-	\visible<2->{\tiny\color{gray} Kein LaTeX nötig. Auf GitHub öffnet die Taste \texttt{.} denselben Editor im Browser.}
+	\visible<2->{\tiny\color{gray} Auf GitHub öffnet die Taste \texttt{.} denselben Editor.}
 \end{frame}
 
 % -----------------------------------------------------------------------
 % 15 Offene Diskussion
 % -----------------------------------------------------------------------
-\begin{frame}{Diskussion: Ihre ehrliche Meinung}
-	\zeit{17:30}{20:00}
+\begin{frame}{Offene Fragen}
+	\zeit{17:15}{20:00}
 	\begin{columns}[c, onlytextwidth]
 		\begin{column}{.34\textwidth}
 			\centering
-			{\color{ffblue}\fontsize{60}{60}\selectfont\faComments}\\[4mm]
-			{\small offene Runde}\\[1mm]
-			{\scriptsize\color{gray} Kritik ist ausdrücklich erwünscht.}
+			\includegraphics[height=2.6cm]{Logos/FreeFlower.pdf}
 		\end{column}
 		\begin{column}{.62\textwidth}
 			\begin{tikzpicture}[node distance=2.5mm]
-				\node[box, text width=6.4cm, align=left, font=\small, visible on=<2->] (q1) {Was würden Sie in Ihrem Unterricht verwenden?};
-				\node[box, text width=6.4cm, align=left, font=\small, below=of q1, visible on=<3->] (q2) {Was überzeugt Sie nicht?};
-				\node[box, text width=6.4cm, align=left, font=\small, below=of q2, visible on=<4->] (q3) {Würden Sie mitschreiben? Was bräuchten Sie dafür?};
-				\node[box=fforange, text width=6.4cm, align=left, font=\small, below=of q3, visible on=<5->] (q4) {Wie stehen Sie zu Lehrmitteln, an denen KI-Agenten mitarbeiten?};
+				\node[box, text width=6.4cm, align=left, font=\small, visible on=<2->] (q1) {Was würden Sie übernehmen, was nicht, und weshalb?};
+				\node[box, text width=6.4cm, align=left, font=\small, below=of q1, visible on=<3->] (q2) {Was müsste passieren, damit nicht alle das Rad neu erfinden?};
+				\node[box, text width=6.4cm, align=left, font=\small, below=of q2, visible on=<4->] (q3) {Was bräuchten Sie, um mitzuschreiben?};
+				\node[box=fforange, text width=6.4cm, align=left, font=\small, below=of q3, visible on=<5->] (q4) {Wo ziehen Sie die Grenze für KI-Agenten bei Lehrmitteln?};
 			\end{tikzpicture}
 
 			\vspace{5mm}
@@ -534,10 +757,10 @@
 	\gdef\zeitangabe{Reserve}
 	\centering
 	\begin{tikzpicture}[node distance=5mm, every node/.append style={text width=2.3cm, minimum height=1.3cm}]
-		\node[box] (a) {\faEye\\PDFs nutzen, wie sie sind};
+		\node[box] (a) {\faEye\\PDFs nutzen};
 		\node[box, right=of a, visible on=<2->] (b) {\faCodeBranch\\Fork oder Branch anlegen};
-		\node[box, right=of b, visible on=<3->] (c) {\faEdit\\eigene Anpassung in \texttt{.tex}};
-		\node[box=ffgreen, right=of c, visible on=<4->] (d) {\faShare\\Pull Request zurück ins Projekt};
+		\node[box, right=of b, visible on=<3->] (c) {\faEdit\\Anpassung in \texttt{.tex}};
+		\node[box=ffgreen, right=of c, visible on=<4->] (d) {\faShare\\Pull Request};
 		\foreach \x/\y [count=\i from 2] in {a/b,b/c,c/d} \draw[pfeil, visible on=<\i->] (\x) -- (\y);
 	\end{tikzpicture}
 
