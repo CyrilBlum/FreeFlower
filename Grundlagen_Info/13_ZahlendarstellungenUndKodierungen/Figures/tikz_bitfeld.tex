@@ -1,0 +1,93 @@
+% ===========================================================================
+%  Bitfeld einer Gleitkomma-Darstellung
+%  Thema 13: Zahlendarstellungen und Kodierungen
+%
+%  Aufruf:  \Bitfeld[<Schlüssel>=<Wert>, ...]
+%
+%    vz        Anzahl der Vorzeichenbits               (Standard: 1)
+%    exp       Anzahl der Exponentbits                 (Standard: 8)
+%    mant      Anzahl der Mantissenbits                (Standard: 23)
+%    width     Gesamtbreite des Balkens in cm          (Standard: aus cell)
+%    cell      Breite einer Bit-Zelle in cm            (Standard: 0.4)
+%    height    Höhe des Balkens in cm                  (Standard: 0.72)
+%    explabel  Feldname des Exponenten                 (Standard: Exponent)
+%    mantlabel Feldname der Mantisse                   (Standard: Mantisse)
+%
+%  Im Balken steht das Massband der Bitpositionen (15 … 0), darunter benennen
+%  Klammern die drei Felder samt ihrer Breite.
+%
+%  Das Standardformat ist IEEE 754 einfach (1/8/23), also 32 Bit.
+%  Für das 16-Bit-Format aus Übung 1.32:  \Bitfeld[exp=5, mant=10, width=13.2]
+% ===========================================================================
+\pgfkeys{
+  /bitfeld/.is family,
+  /bitfeld/.cd,
+  vz/.store in        = \bfvz,
+  exp/.store in       = \bfexp,
+  mant/.store in      = \bfmant,
+  width/.store in     = \bfwidth,
+  cell/.store in      = \bfcell,
+  height/.store in    = \bfheight,
+  explabel/.store in  = \bfexplabel,
+  mantlabel/.store in = \bfmantlabel,
+  % Standardwerte
+  vz        = 1,
+  exp       = 8,
+  mant      = 23,
+  width     = 0,
+  cell      = 0.4,
+  height    = 0.72,
+  explabel  = {Exponent},
+  mantlabel = {Mantisse},
+}
+
+\newcommand{\Bitfeld}[1][]{%
+  \begingroup
+  \pgfkeys{/bitfeld/.cd, #1}%
+  % Anzahl Bits sowie die Feldgrenzen in Bit-Einheiten
+  \pgfmathtruncatemacro{\bfn}{\bfvz+\bfexp+\bfmant}%
+  \pgfmathtruncatemacro{\bfnlast}{\bfn-1}%
+  \pgfmathtruncatemacro{\bfa}{\bfvz}%          Grenze Vorzeichen/Exponent
+  \pgfmathtruncatemacro{\bfb}{\bfvz+\bfexp}%   Grenze Exponent/Mantisse
+  % Zellbreite: entweder vorgegeben oder aus der Gesamtbreite berechnet
+  \pgfmathsetmacro{\bfcell}{(\bfwidth>0.1) ? \bfwidth/\bfn : \bfcell}%
+  % dieselben Grenzen als x-Koordinaten
+  \pgfmathsetmacro{\bfxA}{\bfa*\bfcell}%
+  \pgfmathsetmacro{\bfxB}{\bfb*\bfcell}%
+  \pgfmathsetmacro{\bfxC}{\bfn*\bfcell}%
+  \begin{tikzpicture}[x=1cm, y=1cm]
+    % --- Felder hinterlegen ---------------------------------------------
+    \fill[Crimson!10]     (0,0) rectangle (\bfxA,\bfheight);
+    \fill[RoyalBlue!12]   (\bfxA,0) rectangle (\bfxB,\bfheight);
+    \fill[ForestGreen!12] (\bfxB,0) rectangle (\bfxC,\bfheight);
+    % --- Massband der Bitpositionen ------------------------------------
+    \foreach \i in {0,...,\bfnlast}{
+      \node[font=\scriptsize\ttfamily, text=black!45, inner sep=0pt]
+        at ({(\i+0.5)*\bfcell},{0.5*\bfheight}) {\pgfmathparse{int(\bfnlast-\i)}\pgfmathresult};
+    }
+    % --- feine Zellgrenzen ---------------------------------------------
+    \foreach \i in {1,...,\bfn}{
+      \draw[black!18, line width=0.4pt]
+        ({\i*\bfcell},0) -- ({\i*\bfcell},\bfheight);
+    }
+    % --- Rahmen und Feldgrenzen ----------------------------------------
+    \draw[black!75, line width=0.9pt] (0,0) rectangle (\bfxC,\bfheight);
+    \draw[black!75, line width=0.9pt] (\bfxA,0) -- (\bfxA,\bfheight);
+    \draw[black!75, line width=0.9pt] (\bfxB,0) -- (\bfxB,\bfheight);
+    % --- Feldnamen mit Klammer -----------------------------------------
+    \def\bflabely{-0.46}%
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}, black!55, line width=0.5pt]
+      ([yshift=-1pt]0,0) -- ([yshift=-1pt]\bfxA,0);
+    \node[font=\footnotesize, text=Crimson!80!black, align=center, inner sep=0pt]
+      at ({0.5*\bfxA},\bflabely) {Vorzeichen\\[-4pt]{\scriptsize\bfvz\ Bit}};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}, black!55, line width=0.5pt]
+      ([yshift=-1pt]\bfxA,0) -- ([yshift=-1pt]\bfxB,0);
+    \node[font=\footnotesize, text=RoyalBlue!80!black, align=center, inner sep=0pt]
+      at ({0.5*(\bfxA+\bfxB)},\bflabely) {\bfexplabel\\[-4pt]{\scriptsize\bfexp\ Bit}};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}, black!55, line width=0.5pt]
+      ([yshift=-1pt]\bfxB,0) -- ([yshift=-1pt]\bfxC,0);
+    \node[font=\footnotesize, text=ForestGreen!70!black, align=center, inner sep=0pt]
+      at ({0.5*(\bfxB+\bfxC)},\bflabely) {\bfmantlabel\\[-4pt]{\scriptsize\bfmant\ Bit}};
+  \end{tikzpicture}%
+  \endgroup
+}

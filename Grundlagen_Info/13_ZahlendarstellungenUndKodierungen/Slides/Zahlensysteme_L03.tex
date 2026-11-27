@@ -1,3 +1,6 @@
+% Bitfeld-Diagramm für Gleitkomma-Darstellungen (Definition von \Bitfeld)
+\input{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/tikz_bitfeld.tex}
+
 \begin{frame}
     \centering
     \begin{figure}[H]
@@ -269,12 +272,10 @@ Der \textcolor{red}{rote} Teil ist mit dem obigen Ansatz \enquote{präzise} darg
         =&[10^{-31}, 10^{-30}),&[10^{-30}, 10^{-29}),&...,&\underbrace{[10^{-2}, 10^{-1})}_{=[0.01, 0.1)},&\underbrace{[10^{-1}, 10^0)}_{=[0.1, 1)},& \underbrace{[10^0, 10^1)}_{=[1, 10)}&
     \end{align*}\normalsize
     \item Allgemein schreiben wir ein Intervall als $[10^i, 10^{i+1})$.
-    \item Wir teilen jedes Intervall in gleich viele Unter-Intervalle auf, z.B. in Schritten von $0.01\cdot 10^i$ (d.h. je 900 Unter-Intervalle pro Intervall)\only<4->{\footnote{Die Unter-Intervalle des grössten Intervalls sind beispielsweise: $[1.00, 1.01), [1.01, 1.02), [1.02, 1.03), ..., [9.98, 9.99), [9.99, 10.00)$}}. Dann beträgt der relative Fehler immer $\frac{0.005\cdot 10^i}{10^i}=0.005$ und ist somit nun unabhängig von der Zahl!
+    \item Wir teilen jedes Intervall in gleich viele Unter-Intervalle auf, z.B. in Schritten von $0.01\cdot 10^i$ (d.h. je 900 Unter-Intervalle pro Intervall)\only<4>{\footnote{Die Unter-Intervalle des grössten Intervalls sind beispielsweise: $[1.00, 1.01), [1.01, 1.02), [1.02, 1.03), ..., [9.98, 9.99), [9.99, 10.00)$}}. Dann beträgt der relative Fehler immer $\frac{0.005\cdot 10^i}{10^i}=0.005$ und ist somit nun unabhängig von der Zahl!
     \item Umsetzung im Computer:
-    \begin{figure}[H]
-        \centering
-        \includegraphics[keepaspectratio, width=0.75\paperwidth, height=\paperheight]{Grundlagen_Info/13_ZahlendarstellungenUndKodierungen/Figures/4-ex132.png}
-    \end{figure}
+    % 16-Bit-Format aus Übung 1.32: 1 Bit Vorzeichen, 5 Bit Exponent, 10 Bit Mantisse
+    {\centering\Bitfeld[exp=5, mant=10, width=13.2]\par}
 \end{itemize}
 \end{frame}
 
